@@ -8,23 +8,26 @@ import { CookieConsent } from "@/components/compliance/CookieConsent";
 
 export const metadata: Metadata = {
   title: {
-    default: "ArqAI - The Command Platform for Enterprise AI",
+    default: "ArqAI | The Enterprise Foundry for Trusted AI",
     template: "%s | ArqAI",
   },
   description:
-    "Move from high-risk AI chaos to a secure, compliant, and fully governed AI workforce. ArqAI is the industry's first integrated command platform for enterprise AI governance.",
+    "Build, run, and govern your mission-critical AI workforce with confidence. ArqAI is the enterprise foundry that turns AI chaos into governed, ROI-driven intelligence.",
   keywords: [
     "enterprise AI",
     "AI governance",
     "AI compliance",
-    "AI security",
-    "AI orchestration",
     "trusted AI",
-    "AI audit",
+    "AI orchestration",
+    "AI workforce",
     "AI platform",
     "HIPAA AI",
     "GDPR AI",
     "SOC 2 AI",
+    "AI security",
+    "AI audit",
+    "DevSecOps AI",
+    "FinSecOps AI",
   ],
   authors: [{ name: "ArqAI" }],
   creator: "ArqAI",
@@ -45,9 +48,9 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://thearq.ai",
     siteName: "ArqAI",
-    title: "ArqAI - The Command Platform for Enterprise AI",
+    title: "ArqAI | The Enterprise Foundry for Trusted AI",
     description:
-      "Move from high-risk AI chaos to a secure, compliant, and fully governed AI workforce.",
+      "Build, run, and govern your mission-critical AI workforce with confidence.",
     images: [
       {
         url: "/og-image.png",
@@ -59,9 +62,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "ArqAI - The Command Platform for Enterprise AI",
+    title: "ArqAI | The Enterprise Foundry for Trusted AI",
     description:
-      "Move from high-risk AI chaos to a secure, compliant, and fully governed AI workforce.",
+      "Build, run, and govern your mission-critical AI workforce with confidence.",
     images: ["/og-image.png"],
     creator: "@arqai",
   },
@@ -78,7 +81,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-  themeColor: "#0052CC",
+  themeColor: "#FAF7F6",
 };
 
 export default function RootLayout({
@@ -92,7 +95,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&family=Funnel+Sans:ital,wght@0,300..800;1,300..800&display=swap"
           rel="stylesheet"
         />
       </head>

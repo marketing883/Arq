@@ -1,379 +1,562 @@
 "use client";
 
+import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { Button } from "@/components/ui/Button";
-import { Card, FeatureCard, TestimonialCard } from "@/components/ui/Card";
-import { Section, SectionHeader, LogoAccent } from "@/components/ui/Section";
-import {
-  ComplianceIcon,
-  BrokenShieldIcon,
-  GearStopIcon,
-  BlueprintIcon,
-  CertificateIcon,
-  DashboardIcon,
-  ArrowRightIcon,
-  CheckIcon,
-} from "@/components/ui/Icons";
 import { HomeStructuredData } from "@/components/seo/StructuredData";
+
+// Star icon component used throughout the page
+function StarIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 20 20"
+      fill="currentColor"
+      className={className}
+    >
+      <path d="M19.6,9.6h-3.9c-.4,0-1.8-.2-1.8-.2-.6,0-1.1-.2-1.6-.6-.5-.3-.9-.8-1.2-1.2-.3-.4-.4-.9-.5-1.4,0,0,0-1.1-.2-1.5V.4c0-.2-.2-.4-.4-.4s-.4.2-.4.4v4.4c0,.4-.2,1.5-.2,1.5,0,.5-.2,1-.5,1.4-.3.5-.7.9-1.2,1.2s-1,.5-1.6.6c0,0-1.2,0-1.7.2H.4c-.2,0-.4.2-.4.4s.2.4.4.4h4.1c.4,0,1.7.2,1.7.2.6,0,1.1.2,1.6.6.4.3.8.7,1.1,1.1.3.5.5,1,.6,1.6,0,0,0,1.3.2,1.7v4.1c0,.2.2.4.4.4s.4-.2.4-.4v-4.1c0-.4.2-1.7.2-1.7,0-.6.2-1.1.6-1.6.3-.4.7-.8,1.1-1.1.5-.3,1-.5,1.6-.6,0,0,1.3,0,1.8-.2h3.9c.2,0,.4-.2.4-.4s-.2-.4-.4-.4h0Z" />
+    </svg>
+  );
+}
+
+// Stats data
+const stats = [
+  { value: "30+", label: "Governed workflows deployed", description: "Pilots to production in 30 days." },
+  { value: "3", label: "Patented technologies", description: "Governance built in, not bolted on." },
+  { value: "20+", label: "Years of expertise", description: "Solving enterprise data, security, and compliance at scale." },
+  { value: "40%", label: "Faster audit preparation", description: "Automatic compliance evidence." },
+];
+
+// Marquee text items
+const marqueeItems = [
+  "Enterprise Intelligence Fabric",
+  "Data-to-Action Bridge",
+  "Built for Real Ops",
+  "Risk-Conscious Intelligence",
+  "Outcomes Without Overhead",
+];
+
+// Products data
+const products = [
+  {
+    id: "arqrelease",
+    name: "ArqRelease™",
+    category: "DevSecOps",
+    tagline: "40% faster releases, zero violations",
+    description: "Automated documentation agent for technical teams. ArqRelease continuously monitors your CI/CD pipeline for significant changes, drafts relevant JIRA tickets, and keeps your documentation up-to-date.",
+    image: "/img/products/arqrelease.webp",
+  },
+  {
+    id: "arqoptimize",
+    name: "ArqOptimize™",
+    category: "FinSecOps",
+    tagline: "25-40% cost reduction",
+    description: "Cloud cost optimization agent for FinOps teams. ArqOptimize analyzes your cloud spending patterns, identifies savings opportunities, and provides actionable recommendations.",
+    image: "/img/products/arqoptimize.webp",
+  },
+  {
+    id: "arqestate",
+    name: "ArqEstate™",
+    category: "Real Estate",
+    tagline: "100% traceable assignments",
+    description: "Real estate assignment automation with full audit trails. ArqEstate handles property assignments, compliance tracking, and reporting.",
+    image: "/img/products/arqestate.webp",
+  },
+  {
+    id: "arqintel",
+    name: "ArqIntel™",
+    category: "Investment DD",
+    tagline: "70% faster screening",
+    description: "AI-powered investment due diligence screening. ArqIntel accelerates your deal flow with intelligent company analysis and risk assessment.",
+    image: "/img/products/arqintel.webp",
+  },
+];
+
+// Industries data
+const industries = [
+  {
+    name: "Retail & E-Commerce",
+    compliance: ["GDPR", "CCPA", "PCI-DSS"],
+    description: "Customer data protection, payment security, and cross-border compliance.",
+  },
+  {
+    name: "BFSI",
+    compliance: ["PCI-DSS", "SOX", "GLBA", "MiFID II"],
+    description: "Financial data governance, trading compliance, and regulatory reporting.",
+  },
+  {
+    name: "Manufacturing",
+    compliance: ["ISO 9001", "AS9100", "ITAR"],
+    description: "Quality management, aerospace standards, and export control.",
+  },
+  {
+    name: "Healthcare",
+    compliance: ["HIPAA", "HITECH"],
+    description: "Patient data protection, medical records security, and health IT compliance.",
+  },
+];
+
+// Three pillars data
+const pillars = [
+  {
+    name: "TAO",
+    fullName: "Trust-Aware Agent Orchestration",
+    description: "Cryptographic identity and non-repudiable audit trails for every agent action.",
+  },
+  {
+    name: "CAPC",
+    fullName: "Compliance-Aware Prompt Compiler",
+    description: "Business rules and compliance requirements baked directly into agent behavior.",
+  },
+  {
+    name: "ODA-RAG",
+    fullName: "Observability-Driven Adaptive RAG",
+    description: "Real-time quality scoring and self-improving knowledge retrieval.",
+  },
+];
 
 export default function HomePage() {
   return (
     <>
       <HomeStructuredData />
       <Header />
-      <main>
-        {/* Hero Section */}
-        <section className="relative min-h-screen flex items-center pt-20 overflow-hidden">
-          {/* Background accents */}
-          <LogoAccent position="top-right" type="lime" size="lg" />
-          <LogoAccent position="bottom-left" type="blue" size="md" />
 
-          <div className="container relative z-10">
-            <div className="max-w-4xl mx-auto text-center">
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-              >
-                <span className="inline-block px-4 py-2 rounded-full bg-[var(--arq-blue)]/10 text-[var(--arq-blue)] text-sm font-semibold mb-6">
-                  The Future of Enterprise AI
-                </span>
-              </motion.div>
+      <main className="bg-base dark:bg-base-opp">
+        {/* Hero Section */}
+        <section className="mxd-hero min-h-screen flex flex-col justify-between pt-24 pb-12 relative overflow-hidden">
+          <div className="container mx-auto px-4 md:px-6 flex-1 flex flex-col justify-center">
+            {/* Hero Title */}
+            <div className="relative mb-12">
+              {/* Floating decorative image */}
+              <div className="absolute -right-4 md:right-8 -top-8 md:top-0 w-24 h-24 md:w-40 md:h-40 animate-rotate-slow">
+                <Image
+                  src="/img/hero/03_hero-img.webp"
+                  alt="Decorative element"
+                  width={160}
+                  height={160}
+                  className="w-full h-full object-contain"
+                />
+              </div>
 
               <motion.h1
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.1 }}
-                className="text-4xl md:text-5xl lg:text-6xl font-bold text-[var(--arq-black)] mb-6 leading-tight"
+                transition={{ duration: 0.6 }}
+                className="text-display-xl md:text-[clamp(4rem,10vw,8rem)] font-display leading-[0.95] text-text-bright dark:text-text-opp-bright"
               >
-                The Command Platform for{" "}
-                <span className="text-[var(--arq-blue)]">Enterprise AI</span>
+                <span className="block">The Enterprise Foundry</span>
+                <span className="flex items-center gap-4 flex-wrap">
+                  <StarIcon className="w-8 h-8 md:w-12 md:h-12 text-additional" />
+                  <span>for Trusted AI</span>
+                </span>
               </motion.h1>
-
-              <motion.p
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="text-xl text-[var(--arq-gray-600)] mb-8 max-w-2xl mx-auto"
-              >
-                Move from high-risk AI chaos to a secure, compliant, and fully
-                governed AI workforce.
-              </motion.p>
-
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-                className="flex flex-col sm:flex-row gap-4 justify-center"
-              >
-                <Button href="/demo" size="lg">
-                  Request a Demo
-                </Button>
-                <Button href="/platform" variant="secondary" size="lg">
-                  Explore the Platform
-                </Button>
-              </motion.div>
             </div>
 
-            {/* Dashboard Preview */}
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.5 }}
-              className="mt-16 relative"
-            >
-              <div className="glass-card p-4 md:p-8 mx-auto max-w-5xl">
-                <div className="aspect-video bg-gradient-to-br from-[var(--arq-gray-100)] to-[var(--arq-gray-200)] rounded-lg flex items-center justify-center">
-                  <div className="text-center">
-                    <DashboardIcon
-                      size={64}
-                      className="mx-auto mb-4 text-[var(--arq-blue)]"
-                    />
-                    <p className="text-[var(--arq-gray-500)]">
-                      Operations Center Dashboard Preview
-                    </p>
+            {/* Hero Bottom Section */}
+            <div className="grid md:grid-cols-2 gap-8 items-end">
+              {/* Left Side - Description */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="space-y-6"
+              >
+                <div className="w-full h-px bg-stroke-muted dark:bg-stroke-opp-bright" />
+                <p className="text-body-lg text-text-medium dark:text-text-opp-medium max-w-lg">
+                  Build, run, and govern your mission-critical AI workforce with confidence.
+                  The governance fabric that makes enterprise AI safe, auditable, and production-ready.
+                </p>
+                <div className="flex items-center gap-6 text-body-sm text-text-muted dark:text-text-opp-muted">
+                  <div className="flex items-center gap-2">
+                    <StarIcon className="w-4 h-4" />
+                    <span>Build</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <StarIcon className="w-4 h-4" />
+                    <span>Run</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <StarIcon className="w-4 h-4" />
+                    <span>Govern</span>
                   </div>
                 </div>
+              </motion.div>
+
+              {/* Right Side - Video */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                className="relative rounded-lg overflow-hidden aspect-video"
+              >
+                <video
+                  className="w-full h-full object-cover"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  poster="/img/hero/video-poster.jpg"
+                >
+                  <source src="/video/hero-video.mp4" type="video/mp4" />
+                  <source src="/video/hero-video.webm" type="video/webm" />
+                </video>
+                <Link
+                  href="/demo"
+                  className="absolute bottom-4 right-4 w-16 h-16 rounded-full bg-additional flex items-center justify-center hover:scale-110 transition-transform"
+                >
+                  <svg className="w-6 h-6 text-base-opp ml-1" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                </Link>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+
+        {/* Problem Statement Section */}
+        <section className="py-section bg-base dark:bg-base-opp">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+              <div>
+                <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  className="flex items-center gap-2 text-body-sm text-accent dark:text-additional mb-4"
+                >
+                  <StarIcon className="w-4 h-4" />
+                  The Hidden Crisis
+                </motion.p>
+                <motion.h2
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.1 }}
+                  className="text-display-lg font-display text-text-bright dark:text-text-opp-bright mb-6"
+                >
+                  Your AI Future is Being Built on a Foundation of Chaos
+                </motion.h2>
+                <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.2 }}
+                  className="text-body-md text-text-muted dark:text-text-opp-muted mb-8"
+                >
+                  Three patented technologies compile your policies into infrastructure.
+                  Deploy governed AI across any cloud, any model, any vertical—in weeks, not quarters.
+                </motion.p>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.3 }}
+                >
+                  <Link href="/demo" className="btn group">
+                    Build with ArqAI
+                    <svg className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
+                    </svg>
+                  </Link>
+                </motion.div>
               </div>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+                className="relative"
+              >
+                <Image
+                  src="/img/demo/01_fea-img.webp"
+                  alt="AI Platform Architecture"
+                  width={600}
+                  height={400}
+                  className="rounded-lg w-full"
+                />
+              </motion.div>
+            </div>
+          </div>
+        </section>
+
+        {/* Statistics Section */}
+        <section className="py-section-sm bg-base-tint dark:bg-base-opp-tint">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+              {stats.map((stat, index) => (
+                <motion.div
+                  key={stat.value}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className="card p-6 md:p-8 text-center"
+                >
+                  <div className="text-display-lg md:text-display-xl font-display text-accent dark:text-additional mb-2">
+                    {stat.value}
+                  </div>
+                  <div className="text-body-md font-medium text-text-bright dark:text-text-opp-bright mb-2">
+                    {stat.label}
+                  </div>
+                  <div className="text-body-sm text-text-muted dark:text-text-opp-muted">
+                    {stat.description}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Marquee Section */}
+        <section className="py-8 bg-accent dark:bg-additional overflow-hidden">
+          <div className="marquee">
+            <div className="marquee__content animate-marquee flex gap-12">
+              {[...marqueeItems, ...marqueeItems].map((item, index) => (
+                <span
+                  key={index}
+                  className="text-display-sm font-display text-base-tint dark:text-base-opp whitespace-nowrap flex items-center gap-4"
+                >
+                  {item}
+                  <StarIcon className="w-6 h-6" />
+                </span>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Platform Overview Section */}
+        <section className="py-section bg-base dark:bg-base-opp">
+          <div className="container mx-auto px-4 md:px-6">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-16"
+            >
+              <p className="flex items-center justify-center gap-2 text-body-sm text-accent dark:text-additional mb-4">
+                <StarIcon className="w-4 h-4" />
+                Platform Overview
+              </p>
+              <h2 className="text-display-lg font-display text-text-bright dark:text-text-opp-bright">
+                The Governance Engine Behind Every Product
+              </h2>
+            </motion.div>
+
+            {/* Workflow Diagram Placeholder */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="card p-8 md:p-12"
+            >
+              <Image
+                src="/img/demo/02_fea-img.webp"
+                alt="Platform Workflow Diagram"
+                width={1200}
+                height={600}
+                className="w-full rounded-lg"
+              />
             </motion.div>
           </div>
         </section>
 
-        {/* Social Proof Bar */}
-        <Section background="muted" className="py-12">
-          <div className="text-center">
-            <p className="text-sm font-semibold text-[var(--arq-gray-500)] uppercase tracking-wider mb-8">
-              Trusted by Leaders in the World&apos;s Most Demanding Industries
-            </p>
-            <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-60">
-              {/* Placeholder logos */}
-              {["Top 5 Global Bank", "Fortune 100 Insurer", "Major Healthcare System", "Enterprise Tech", "Financial Services"].map(
-                (company, i) => (
-                  <div
-                    key={i}
-                    className="text-[var(--arq-gray-400)] font-semibold text-sm"
-                  >
-                    [{company}]
-                  </div>
-                )
-              )}
-            </div>
-          </div>
-        </Section>
-
-        {/* Problem Section */}
-        <Section id="problem">
-          <SectionHeader
-            eyebrow="The Hidden Crisis"
-            title="Your AI Future is Being Built on a Foundation of Chaos"
-            description="Enterprises are racing to deploy AI, but this rapid adoption has created a hidden crisis of 'Shadow AI.' Uncontrolled agents, disconnected tools, and a lack of oversight create unacceptable risks and stall true innovation."
-          />
-
-          <div className="grid md:grid-cols-3 gap-8">
-            <FeatureCard
-              icon={<ComplianceIcon size={28} />}
-              title="Crippling Compliance Risk"
-              description="Agents operating without guardrails risk multi-million dollar fines from GDPR, HIPAA, and industry-specific violations."
-            />
-            <FeatureCard
-              icon={<BrokenShieldIcon size={28} />}
-              title="Catastrophic Security Breaches"
-              description="Ungoverned agents can expose sensitive customer data and proprietary information, leading to irreversible brand damage."
-            />
-            <FeatureCard
-              icon={<GearStopIcon size={28} />}
-              title="Stalled Innovation"
-              description="The inability to prove safety and compliance means the most valuable AI projects never make it to production."
-            />
-          </div>
-        </Section>
-
-        {/* Solution Section */}
-        <Section background="gradient" id="solution">
-          <SectionHeader
-            eyebrow="Introducing the Foundry"
-            title="It's Time to Move from AI Chaos to AI Command"
-            description="You can't just put a fence around the chaos. You need an industrial-strength solution. The ArqAI Foundry is the industry's first integrated command platform."
-          />
-
-          <div className="grid md:grid-cols-3 gap-8">
-            <Card glass>
-              <div className="flex flex-col items-center text-center gap-4">
-                <div className="w-16 h-16 rounded-2xl bg-[var(--arq-blue)] flex items-center justify-center text-white">
-                  <BlueprintIcon size={32} />
-                </div>
-                <h3 className="text-xl font-semibold">Build with Confidence</h3>
-                <p className="text-[var(--arq-gray-600)]">
-                  Visually assemble agents and bake compliance rules directly
-                  into their DNA with our patented Policy Compiler.
-                </p>
-              </div>
-            </Card>
-
-            <Card glass>
-              <div className="flex flex-col items-center text-center gap-4">
-                <div className="w-16 h-16 rounded-2xl bg-[var(--arq-blue)] flex items-center justify-center text-white">
-                  <CertificateIcon size={32} />
-                </div>
-                <h3 className="text-xl font-semibold">Run with Trust</h3>
-                <p className="text-[var(--arq-gray-600)]">
-                  Every action taken by every agent is secured by a
-                  cryptographic, non-repudiable audit trail.
-                </p>
-              </div>
-            </Card>
-
-            <Card glass>
-              <div className="flex flex-col items-center text-center gap-4">
-                <div className="w-16 h-16 rounded-2xl bg-[var(--arq-blue)] flex items-center justify-center text-white">
-                  <DashboardIcon size={32} />
-                </div>
-                <h3 className="text-xl font-semibold">Govern with Insight</h3>
-                <p className="text-[var(--arq-gray-600)]">
-                  Get real-time quality scores and performance metrics for your
-                  entire AI workforce from a single pane of glass.
-                </p>
-              </div>
-            </Card>
-          </div>
-        </Section>
-
-        {/* How It Works Section */}
-        <Section id="how-it-works">
-          <SectionHeader
-            eyebrow="How It Works"
-            title="From Blueprint to Operation in Minutes"
-          />
-
-          <div className="grid md:grid-cols-3 gap-8 relative">
-            {/* Connecting line */}
-            <div className="hidden md:block absolute top-1/2 left-0 right-0 h-0.5 bg-[var(--arq-gray-200)] -translate-y-1/2 z-0" />
-
-            {[
-              {
-                step: "01",
-                title: "Define Policy",
-                description:
-                  "In the Policy Hub, define and enable the precise business and compliance rules your agent must follow.",
-              },
-              {
-                step: "02",
-                title: "Assemble & Deploy",
-                description:
-                  "In the Agent Builder, configure your agent's skills and logic, attaching the relevant policies with a single click.",
-              },
-              {
-                step: "03",
-                title: "Operate & Audit",
-                description:
-                  "Run your agent in the Operations Center and monitor its performance, quality, and compliance in real-time.",
-              },
-            ].map((item, index) => (
-              <motion.div
-                key={item.step}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.2 }}
-                className="relative z-10"
-              >
-                <Card className="text-center h-full">
-                  <div className="w-12 h-12 rounded-full bg-[var(--arq-lime)] text-[var(--arq-black)] font-bold text-lg flex items-center justify-center mx-auto mb-4">
-                    {item.step}
-                  </div>
-                  <h3 className="text-xl font-semibold mb-3">{item.title}</h3>
-                  <p className="text-[var(--arq-gray-600)]">
-                    {item.description}
-                  </p>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-        </Section>
-
-        {/* Testimonial Section */}
-        <Section background="muted" id="testimonials">
-          <div className="max-w-4xl mx-auto">
-            <TestimonialCard
-              quote="ArqAI is the only platform we've seen that can provide the level of security and auditability required to automate our most critical compliance processes. It's a game-changer for enterprise AI."
-              author="Head of Innovation"
-              role="Top 5 Global Bank"
-              className="text-center"
-            />
-          </div>
-        </Section>
-
-        {/* Features Checklist Section */}
-        <Section>
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <SectionHeader
-                eyebrow="Enterprise Ready"
-                title="Built for the World's Most Demanding Environments"
-                description="ArqAI is designed from the ground up for enterprises that require the highest levels of security, compliance, and control."
-                centered={false}
-              />
-
-              <div className="space-y-4">
-                {[
-                  "Policy enforcement before action execution",
-                  "Automatic audit trail generation",
-                  "Cryptographic evidence for every action",
-                  "Data residency and jurisdiction controls",
-                  "Role-based access with least-privilege",
-                  "Human-in-the-loop for high-risk actions",
-                ].map((feature, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.1 }}
-                    className="flex items-center gap-3"
-                  >
-                    <div className="w-6 h-6 rounded-full bg-[var(--arq-lime)] flex items-center justify-center flex-shrink-0">
-                      <CheckIcon size={14} className="text-[var(--arq-black)]" />
-                    </div>
-                    <span className="text-[var(--arq-gray-700)]">{feature}</span>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-
-            <div className="glass-card p-8">
-              <div className="space-y-6">
-                <h4 className="font-semibold text-lg">Compliance Frameworks</h4>
-                <div className="grid grid-cols-2 gap-4">
-                  {[
-                    "HIPAA",
-                    "GDPR",
-                    "CCPA",
-                    "SOX",
-                    "Fed SR 11-7",
-                    "EU AI Act",
-                    "NIST AI RMF",
-                    "SOC 2",
-                  ].map((framework) => (
-                    <div
-                      key={framework}
-                      className="flex items-center gap-2 text-sm"
-                    >
-                      <CheckIcon
-                        size={16}
-                        className="text-[var(--arq-blue)]"
-                      />
-                      <span>{framework}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </Section>
-
-        {/* CTA Section */}
-        <Section background="dark" className="relative overflow-hidden">
-          <LogoAccent position="top-right" type="lime" size="lg" />
-
-          <div className="text-center max-w-3xl mx-auto relative z-10">
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6"
-            >
-              Ready to take command of your AI workforce?
-            </motion.h2>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="text-lg text-[var(--arq-gray-300)] mb-8"
-            >
-              Schedule a personalized demo to see how the ArqAI Foundry can help
-              you de-risk innovation and accelerate your enterprise AI strategy.
-            </motion.p>
+        {/* Products Section */}
+        <section className="py-section bg-base-tint dark:bg-base-opp-tint">
+          <div className="container mx-auto px-4 md:px-6">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
+              className="text-center mb-16"
             >
-              <Button
-                href="/demo"
-                variant="accent"
-                size="lg"
-                rightIcon={<ArrowRightIcon size={20} />}
+              <p className="flex items-center justify-center gap-2 text-body-sm text-accent dark:text-additional mb-4">
+                <StarIcon className="w-4 h-4" />
+                Our Products
+              </p>
+              <h2 className="text-display-lg font-display text-text-bright dark:text-text-opp-bright">
+                Purpose-Built AI Solutions
+              </h2>
+            </motion.div>
+
+            <div className="grid md:grid-cols-2 gap-6">
+              {products.map((product, index) => (
+                <motion.div
+                  key={product.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className="card p-6 md:p-8 group hover:border-accent dark:hover:border-additional transition-colors"
+                >
+                  <div className="flex items-start justify-between mb-4">
+                    <div>
+                      <span className="tag mb-2">{product.category}</span>
+                      <h3 className="text-display-sm font-display text-text-bright dark:text-text-opp-bright">
+                        {product.name}
+                      </h3>
+                    </div>
+                    <div className="text-body-lg font-medium text-additional dark:text-accent">
+                      {product.tagline}
+                    </div>
+                  </div>
+                  <p className="text-body-md text-text-muted dark:text-text-opp-muted">
+                    {product.description}
+                  </p>
+                </motion.div>
+              ))}
+
+              {/* Custom Solutions Card */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.4 }}
+                className="card p-6 md:p-8 bg-accent dark:bg-additional text-base-opp md:col-span-2"
               >
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                  <div>
+                    <h3 className="text-display-sm font-display mb-2">
+                      Custom Solutions
+                    </h3>
+                    <p className="text-body-md opacity-80">
+                      30-day deployment. We build governed AI solutions tailored to your specific workflows.
+                    </p>
+                  </div>
+                  <Link
+                    href="/contact"
+                    className="btn-outline border-base-opp text-base-opp hover:bg-base-opp hover:text-accent inline-flex items-center gap-2 whitespace-nowrap"
+                  >
+                    Let&apos;s Talk
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
+                    </svg>
+                  </Link>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+
+        {/* Industries Section */}
+        <section className="py-section bg-base dark:bg-base-opp">
+          <div className="container mx-auto px-4 md:px-6">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-16"
+            >
+              <p className="flex items-center justify-center gap-2 text-body-sm text-accent dark:text-additional mb-4">
+                <StarIcon className="w-4 h-4" />
+                Industries We Serve
+              </p>
+              <h2 className="text-display-lg font-display text-text-bright dark:text-text-opp-bright">
+                Built for Regulated Environments
+              </h2>
+            </motion.div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {industries.map((industry, index) => (
+                <motion.div
+                  key={industry.name}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className="card p-6 flex flex-col h-full"
+                >
+                  <h3 className="text-display-sm font-display text-text-bright dark:text-text-opp-bright mb-4">
+                    {industry.name}
+                  </h3>
+                  <p className="text-body-sm text-text-muted dark:text-text-opp-muted mb-6 flex-1">
+                    {industry.description}
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {industry.compliance.map((item) => (
+                      <span key={item} className="tag">
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Three Pillars Section */}
+        <section className="py-section bg-base-opp dark:bg-base text-text-opp-bright dark:text-text-bright">
+          <div className="container mx-auto px-4 md:px-6">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-16"
+            >
+              <p className="flex items-center justify-center gap-2 text-body-sm text-additional dark:text-accent mb-4">
+                <StarIcon className="w-4 h-4" />
+                Our Technology
+              </p>
+              <h2 className="text-display-lg font-display">
+                Three Patented Technologies
+              </h2>
+            </motion.div>
+
+            <div className="grid md:grid-cols-3 gap-6">
+              {pillars.map((pillar, index) => (
+                <motion.div
+                  key={pillar.name}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className="p-6 md:p-8 rounded-lg border border-stroke-opp-bright dark:border-stroke-muted"
+                >
+                  <div className="text-display-md font-display text-additional dark:text-accent mb-2">
+                    {pillar.name}
+                  </div>
+                  <h3 className="text-body-lg font-medium mb-4">
+                    {pillar.fullName}
+                  </h3>
+                  <p className="text-body-md text-text-opp-muted dark:text-text-muted">
+                    {pillar.description}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Final CTA Section */}
+        <section className="py-section bg-base dark:bg-base-opp">
+          <div className="container mx-auto px-4 md:px-6 text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="max-w-3xl mx-auto"
+            >
+              <h2 className="text-display-lg md:text-display-xl font-display text-text-bright dark:text-text-opp-bright mb-6">
+                Ready to take command of your AI workforce?
+              </h2>
+              <p className="text-body-lg text-text-muted dark:text-text-opp-muted mb-8">
+                Schedule a personalized demo to see how the ArqAI Foundry can help you
+                de-risk innovation and accelerate your enterprise AI strategy.
+              </p>
+              <Link href="/contact" className="btn">
                 Request a Demo
-              </Button>
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
+                </svg>
+              </Link>
             </motion.div>
           </div>
-        </Section>
+        </section>
       </main>
+
       <Footer />
     </>
   );

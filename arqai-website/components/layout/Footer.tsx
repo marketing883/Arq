@@ -1,175 +1,239 @@
 "use client";
 
 import Link from "next/link";
-import { Logo } from "./Logo";
-import { LanguageSwitcher } from "@/components/i18n/LanguageSwitcher";
+import { useState } from "react";
 
-const footerLinks = {
-  platform: {
-    title: "Platform",
-    links: [
-      { name: "CAPC", href: "/platform#capc" },
-      { name: "TAO", href: "/platform#tao" },
-      { name: "ODA-RAG", href: "/platform#oda-rag" },
-      { name: "Integrations", href: "/platform#integrations" },
-    ],
-  },
-  solutions: {
-    title: "Solutions",
-    links: [
-      { name: "Financial Services", href: "/solutions#financial" },
-      { name: "Insurance", href: "/solutions#insurance" },
-      { name: "Healthcare", href: "/solutions#healthcare" },
-    ],
-  },
-  company: {
-    title: "Company",
-    links: [
-      { name: "About Us", href: "/about" },
-      { name: "Careers", href: "/careers" },
-      { name: "Contact", href: "/demo" },
-    ],
-  },
-  resources: {
-    title: "Resources",
-    links: [
-      { name: "Blog", href: "/resources" },
-      { name: "Whitepapers", href: "/resources#whitepapers" },
-      { name: "Case Studies", href: "/customers" },
-    ],
-  },
-  legal: {
-    title: "Legal",
-    links: [
-      { name: "Privacy Policy", href: "/privacy" },
-      { name: "Cookie Policy", href: "/cookies" },
-      { name: "Terms of Service", href: "/terms" },
-    ],
-  },
-};
+const footerNav = [
+  { name: "Home", href: "/" },
+  { name: "About", href: "/about" },
+  { name: "Contact", href: "/contact" },
+];
 
 const socialLinks = [
-  {
-    name: "LinkedIn",
-    href: "https://linkedin.com/company/arqai",
-    icon: (
-      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
-      </svg>
-    ),
-  },
-  {
-    name: "Twitter",
-    href: "https://twitter.com/arqai",
-    icon: (
-      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-      </svg>
-    ),
-  },
+  { name: "LinkedIn", href: "https://www.linkedin.com/company/108201443" },
+  { name: "Instagram", href: "https://www.instagram.com/thearq.ai/" },
+  { name: "YouTube", href: "https://www.youtube.com/@TheArqAI" },
+  { name: "Twitter", href: "https://x.com/The_ArqAI" },
 ];
 
 export function Footer() {
-  const currentYear = new Date().getFullYear();
+  const [email, setEmail] = useState("");
+  const [subscribeStatus, setSubscribeStatus] = useState<"idle" | "success" | "error">("idle");
+
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) return;
+
+    try {
+      // TODO: Integrate with email service
+      setSubscribeStatus("success");
+      setEmail("");
+    } catch {
+      setSubscribeStatus("error");
+    }
+  };
 
   return (
-    <footer className="bg-[var(--arq-gray-900)] text-white">
-      {/* Main Footer */}
-      <div className="container py-16">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
-          {/* Logo & Description */}
-          <div className="col-span-2 md:col-span-3 lg:col-span-1">
-            <div className="mb-6">
-              <svg
-                width="120"
-                height="40"
-                viewBox="0 0 200 60"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M8 52L28 8L38 28L48 8L58 52H48L42 32L32 52L22 32L16 52H8Z"
-                  fill="#0052CC"
-                />
-                <path
-                  d="M28 8L38 28L32 40L22 20L28 8Z"
-                  fill="#0052CC"
-                />
-                <circle cx="52" cy="18" r="6" fill="#CCFF00" />
-                <text
-                  x="70"
-                  y="38"
-                  fontFamily="system-ui, sans-serif"
-                  fontSize="28"
-                  fontWeight="700"
-                  fill="#FFFFFF"
-                >
-                  ArqAI
-                </text>
-              </svg>
-            </div>
-            <p className="text-[var(--arq-gray-400)] text-sm mb-6">
-              Intelligence, By Design. The command platform for enterprise AI governance.
-            </p>
-            {/* Social Links */}
-            <div className="flex gap-4">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.name}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[var(--arq-gray-400)] hover:text-white transition-colors"
-                  aria-label={social.name}
-                >
-                  {social.icon}
-                </a>
-              ))}
-            </div>
-          </div>
+    <footer className="mxd-footer bg-base dark:bg-base-opp">
+      {/* Large CTA Text */}
+      <div className="container mx-auto px-4 md:px-6 py-16 md:py-24">
+        <div className="mxd-footer__text-wrap mb-16 md:mb-24">
+          <h2 className="text-display-xl md:text-[clamp(4rem,12vw,10rem)] font-display leading-[0.9] text-text-bright dark:text-text-opp-bright">
+            Get in touch<span className="text-additional dark:text-accent">.</span>
+          </h2>
+        </div>
 
-          {/* Footer Link Columns */}
-          {Object.values(footerLinks).map((section) => (
-            <div key={section.title}>
-              <h4 className="text-sm font-semibold text-white mb-4">
-                {section.title}
-              </h4>
-              <ul className="space-y-3">
-                {section.links.map((link) => (
-                  <li key={link.name}>
+        {/* Footer Grid */}
+        <div className="mxd-footer__blocks grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {/* Column 1 - Navigation */}
+          <div className="card p-6 md:p-8 flex flex-col justify-between min-h-[300px]">
+            <nav className="footer-nav">
+              <ul className="space-y-4">
+                {footerNav.map((item) => (
+                  <li key={item.name}>
                     <Link
-                      href={link.href}
-                      className="text-sm text-[var(--arq-gray-400)] hover:text-white transition-colors"
+                      href={item.href}
+                      className="text-display-sm font-display text-text-bright dark:text-text-opp-bright hover:text-accent transition-colors"
                     >
-                      {link.name}
+                      {item.name}
                     </Link>
                   </li>
                 ))}
               </ul>
+            </nav>
+            <div className="mt-8 pt-6 border-t border-stroke-muted dark:border-stroke-opp-bright">
+              <p className="text-body-xs text-text-muted dark:text-text-opp-muted">
+                New Jersey, USA
+              </p>
             </div>
-          ))}
-        </div>
-      </div>
+          </div>
 
-      {/* Bottom Bar */}
-      <div className="border-t border-[var(--arq-gray-800)]">
-        <div className="container py-6">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-sm text-[var(--arq-gray-400)]">
-              &copy; {currentYear} ArqAI. All rights reserved.
-            </p>
-            <div className="flex items-center gap-6">
-              <span className="text-xs text-[var(--arq-gray-500)]">
-                Headquarters: New Jersey, USA
-              </span>
-              <span className="text-xs text-[var(--arq-gray-500)]">
-                Global Offices: US, MENA, Europe, India, LATAM
-              </span>
-              <LanguageSwitcher variant="footer" />
+          {/* Column 2 - Contact Info & Subscribe */}
+          <div className="space-y-6">
+            {/* Email */}
+            <div className="card p-6">
+              <div className="flex items-center gap-3 text-text-bright dark:text-text-opp-bright">
+                <StarIcon />
+                <a
+                  href="mailto:hello@thearq.ai"
+                  className="text-body-md hover:text-accent transition-colors"
+                >
+                  hello@thearq.ai
+                </a>
+              </div>
+            </div>
+
+            {/* Phone */}
+            <div className="card p-6">
+              <div className="flex items-center gap-3 text-text-bright dark:text-text-opp-bright">
+                <StarIcon />
+                <a
+                  href="tel:+18565400149"
+                  className="text-body-md hover:text-accent transition-colors"
+                >
+                  +1 856-540-0149
+                </a>
+              </div>
+            </div>
+
+            {/* Subscribe Form */}
+            <div className="card card-filled p-6">
+              <p className="text-body-sm font-medium text-text-bright dark:text-text-opp-bright mb-4">
+                Subscribe to our insights:
+              </p>
+              {subscribeStatus === "success" ? (
+                <p className="text-body-sm text-additional">
+                  Done! Thanks for subscribing.
+                </p>
+              ) : subscribeStatus === "error" ? (
+                <p className="text-body-sm text-red-500">
+                  Oops! Something went wrong. Please try again.
+                </p>
+              ) : (
+                <form onSubmit={handleSubscribe} className="flex gap-2">
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Your Email"
+                    required
+                    className="flex-1 px-4 py-2 rounded-lg bg-base dark:bg-base-opp border border-stroke-muted dark:border-stroke-opp-bright text-body-sm text-text-bright dark:text-text-opp-bright placeholder:text-text-muted-extra focus:outline-none focus:ring-2 focus:ring-accent"
+                  />
+                  <button
+                    type="submit"
+                    className="w-10 h-10 rounded-lg bg-accent flex items-center justify-center hover:opacity-90 transition-opacity"
+                    aria-label="Subscribe"
+                  >
+                    <svg
+                      className="w-4 h-4 text-base-opp"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
+                    </svg>
+                  </button>
+                </form>
+              )}
+            </div>
+          </div>
+
+          {/* Column 3 - Socials */}
+          <div className="card p-6 md:p-8 flex flex-col justify-between min-h-[300px]">
+            <div>
+              <h3 className="text-display-sm font-display text-text-bright dark:text-text-opp-bright mb-6">
+                Let&apos;s Socialize
+              </h3>
+              <ul className="space-y-3">
+                {socialLinks.map((item) => (
+                  <li key={item.name}>
+                    <a
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-body-md text-text-muted dark:text-text-opp-muted hover:text-accent transition-colors"
+                    >
+                      {item.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="mt-8 pt-6 border-t border-stroke-muted dark:border-stroke-opp-bright">
+              <p className="text-body-xs text-text-muted dark:text-text-opp-muted">
+                <a href="https://thearq.ai" className="hover:text-accent transition-colors">
+                  ArqAI
+                </a>
+                {" "}&copy; {new Date().getFullYear()}
+              </p>
+            </div>
+          </div>
+
+          {/* Column 4 - Brand Statement */}
+          <div className="card p-6 md:p-8 bg-accent dark:bg-additional text-base-opp flex flex-col justify-between min-h-[300px]">
+            <div>
+              <p className="text-body-lg font-medium mb-4">
+                The Enterprise Foundry for Trusted AI
+              </p>
+              <p className="text-body-sm opacity-80">
+                Build, run, and govern your mission-critical AI workforce with confidence.
+              </p>
+            </div>
+            <div className="mt-8">
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-2 text-body-md font-medium hover:opacity-80 transition-opacity"
+              >
+                Request a Demo
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
+                </svg>
+              </Link>
             </div>
           </div>
         </div>
       </div>
+
+      {/* To Top Button */}
+      <button
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        className="fixed bottom-6 right-6 w-12 h-12 rounded-full bg-base-tint dark:bg-base-opp-tint shadow-lg flex items-center justify-center text-text-bright dark:text-text-opp-bright hover:bg-accent hover:text-base-opp transition-all z-40"
+        aria-label="Back to top"
+      >
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+        </svg>
+      </button>
     </footer>
+  );
+}
+
+// Star icon used in the original template
+function StarIcon() {
+  return (
+    <svg
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="currentColor"
+    >
+      <path
+        fill="currentColor"
+        d="M19.6,9.6c0,0-3,0-4,0c-0.4,0-1.8-0.2-1.8-0.2c-0.6-0.1-1.1-0.2-1.6-0.6c-0.5-0.3-0.9-0.8-1.2-1.2
+        c-0.3-0.4-0.4-0.9-0.5-1.4c0,0-0.1-1.1-0.2-1.5c-0.1-1.1,0-4.4,0-4.4C10.4,0.2,10.2,0,10,0S9.6,0.2,9.6,0.4c0,0,0.1,3.3,0,4.4
+        c0,0.4-0.2,1.5-0.2,1.5C9.4,6.7,9.2,7.2,9,7.6C8.7,8.1,8.2,8.5,7.8,8.9c-0.5,0.3-1,0.5-1.6,0.6c0,0-1.2,0.1-1.7,0.2
+        c-1,0.1-4.2,0-4.2,0C0.2,9.6,0,9.8,0,10c0,0.2,0.2,0.4,0.4,0.4c0,0,3.1-0.1,4.2,0c0.4,0,1.7,0.2,1.7,0.2c0.6,0.1,1.1,0.2,1.6,0.6
+        c0.4,0.3,0.8,0.7,1.1,1.1c0.3,0.5,0.5,1,0.6,1.6c0,0,0.1,1.3,0.2,1.7c0,1,0,4.1,0,4.1c0,0.2,0.2,0.4,0.4,0.4s0.4-0.2,0.4-0.4
+        c0,0,0-3.1,0-4.1c0-0.4,0.2-1.7,0.2-1.7c0.1-0.6,0.2-1.1,0.6-1.6c0.3-0.4,0.7-0.8,1.1-1.1c0.5-0.3,1-0.5,1.6-0.6
+        c0,0,1.3-0.1,1.8-0.2c1,0,4,0,4,0c0.2,0,0.4-0.2,0.4-0.4C20,9.8,19.8,9.6,19.6,9.6L19.6,9.6z"
+      />
+    </svg>
   );
 }
