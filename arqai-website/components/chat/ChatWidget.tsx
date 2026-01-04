@@ -1,0 +1,315 @@
+"use client";
+
+import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { usePathname } from "next/navigation";
+import { ChatMessage } from "./ChatMessage";
+import { ChatInput } from "./ChatInput";
+import { FallbackForm } from "./FallbackForm";
+import { LogoIcon } from "@/components/layout/Logo";
+import { MinimizeIcon } from "@/components/ui/Icons";
+import { GREETING_MESSAGES } from "@/lib/ai/knowledge-base";
+
+interface Message {
+  id: string;
+  role: "user" | "assistant";
+  content: string;
+  timestamp: Date;
+}
+
+interface UserInfo {
+  name?: string;
+  email?: string;
+  company?: string;
+  jobTitle?: string;
+  phone?: string;
+}
+
+export function ChatWidget() {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [isTyping, setIsTyping] = useState(false);
+  const [showFallbackForm, setShowFallbackForm] = useState(false);
+  const [userInfo, setUserInfo] = useState<UserInfo>({});
+  const [hasGreeted, setHasGreeted] = useState(false);
+  const [errorCount, setErrorCount] = useState(0);
+
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
+
+  // Scroll to bottom when messages change
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  // Load conversation from localStorage
+  useEffect(() => {
+    const savedMessages = localStorage.getItem("arqai_chat_messages");
+    const savedUserInfo = localStorage.getItem("arqai_user_info");
+
+    if (savedMessages) {
+      try {
+        const parsed = JSON.parse(savedMessages);
+        setMessages(parsed.map((m: Message) => ({
+          ...m,
+          timestamp: new Date(m.timestamp),
+        })));
+        setHasGreeted(true);
+      } catch (e) {
+        console.error("Failed to parse saved messages:", e);
+      }
+    }
+
+    if (savedUserInfo) {
+      try {
+        setUserInfo(JSON.parse(savedUserInfo));
+      } catch (e) {
+        console.error("Failed to parse saved user info:", e);
+      }
+    }
+  }, []);
+
+  // Save conversation to localStorage
+  useEffect(() => {
+    if (messages.length > 0) {
+      localStorage.setItem("arqai_chat_messages", JSON.stringify(messages));
+    }
+  }, [messages]);
+
+  // Save user info to localStorage
+  useEffect(() => {
+    if (Object.keys(userInfo).length > 0) {
+      localStorage.setItem("arqai_user_info", JSON.stringify(userInfo));
+    }
+  }, [userInfo]);
+
+  // Send greeting when expanded for first time
+  useEffect(() => {
+    if (!isExpanded || hasGreeted) return;
+
+    const greeting = GREETING_MESSAGES[pathname] || GREETING_MESSAGES.default;
+
+    const greetingMessage: Message = {
+      id: `greeting-${Date.now()}`,
+      role: "assistant",
+      content: greeting,
+      timestamp: new Date(),
+    };
+
+    const timer = setTimeout(() => {
+      setMessages([greetingMessage]);
+      setHasGreeted(true);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [pathname, hasGreeted, isExpanded]);
+
+  // Close on click outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+        setIsExpanded(false);
+      }
+    };
+
+    if (isExpanded) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isExpanded]);
+
+  // Send message to API
+  const sendMessage = async (content: string) => {
+    if (!content.trim()) return;
+
+    const userMessage: Message = {
+      id: `user-${Date.now()}`,
+      role: "user",
+      content,
+      timestamp: new Date(),
+    };
+
+    setMessages((prev) => [...prev, userMessage]);
+    setIsTyping(true);
+
+    const conversationHistory = messages.map((m) => ({
+      role: m.role,
+      content: m.content,
+    }));
+
+    try {
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          message: content,
+          context: {
+            currentPage: pathname,
+            userName: userInfo.name,
+            userEmail: userInfo.email,
+            userCompany: userInfo.company,
+            conversationHistory,
+          },
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to get response");
+      }
+
+      const data = await response.json();
+
+      if (data.extractedInfo && Object.keys(data.extractedInfo).length > 0) {
+        setUserInfo((prev) => ({ ...prev, ...data.extractedInfo }));
+      }
+
+      const assistantMessage: Message = {
+        id: `assistant-${Date.now()}`,
+        role: "assistant",
+        content: data.response,
+        timestamp: new Date(),
+      };
+
+      setMessages((prev) => [...prev, assistantMessage]);
+      setErrorCount(0);
+
+      if (data.morphTrigger) {
+        window.dispatchEvent(
+          new CustomEvent("arqai:morph", {
+            detail: { type: data.morphTrigger },
+          })
+        );
+      }
+    } catch (error) {
+      console.error("Chat error:", error);
+      setErrorCount((prev) => prev + 1);
+
+      if (errorCount >= 2) {
+        setShowFallbackForm(true);
+      } else {
+        const errorMessage: Message = {
+          id: `error-${Date.now()}`,
+          role: "assistant",
+          content: "I apologize, but I'm having trouble connecting. Please try again.",
+          timestamp: new Date(),
+        };
+        setMessages((prev) => [...prev, errorMessage]);
+      }
+    } finally {
+      setIsTyping(false);
+    }
+  };
+
+  return (
+    <div
+      ref={containerRef}
+      className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-[600px]"
+    >
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
+        className="relative"
+      >
+        {/* Expanded Messages Panel */}
+        <AnimatePresence>
+          {isExpanded && (
+            <motion.div
+              initial={{ opacity: 0, height: 0, y: 10 }}
+              animate={{ opacity: 1, height: "350px", y: 0 }}
+              exit={{ opacity: 0, height: 0, y: 10 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+              className="mb-2 bg-white border border-[var(--arq-gray-200)] rounded-2xl shadow-xl overflow-hidden flex flex-col"
+            >
+              {/* Header */}
+              <div className="flex items-center justify-between px-4 py-2 border-b border-[var(--arq-gray-100)] bg-[var(--arq-gray-50)]">
+                <div className="flex items-center gap-2">
+                  <div className="w-6 h-6 rounded-full bg-[var(--arq-blue)] flex items-center justify-center">
+                    <LogoIcon size={14} className="[&_path]:fill-white [&_circle]:fill-[var(--arq-lime)]" />
+                  </div>
+                  <span className="text-sm font-medium text-[var(--arq-black)]">ArqAI Assistant</span>
+                  {isTyping && (
+                    <span className="text-xs text-[var(--arq-gray-500)]">typing...</span>
+                  )}
+                </div>
+                <button
+                  onClick={() => setIsExpanded(false)}
+                  className="p-1.5 text-[var(--arq-gray-400)] hover:text-[var(--arq-gray-600)] hover:bg-[var(--arq-gray-100)] rounded-lg transition-colors"
+                  aria-label="Minimize"
+                >
+                  <MinimizeIcon size={16} />
+                </button>
+              </div>
+
+              {/* Messages */}
+              <div className="flex-1 overflow-y-auto px-4 py-3 space-y-3">
+                {messages.map((message) => (
+                  <ChatMessage key={message.id} message={message} />
+                ))}
+
+                {isTyping && (
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-2 h-2 bg-[var(--arq-gray-400)] rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
+                    <span className="w-2 h-2 bg-[var(--arq-gray-400)] rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
+                    <span className="w-2 h-2 bg-[var(--arq-gray-400)] rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+                  </div>
+                )}
+
+                {showFallbackForm && (
+                  <FallbackForm
+                    onSubmit={(data) => {
+                      setUserInfo((prev) => ({ ...prev, ...data }));
+                      setShowFallbackForm(false);
+                      const thankYouMessage: Message = {
+                        id: `thanks-${Date.now()}`,
+                        role: "assistant",
+                        content: `Thanks${data.name ? `, ${data.name}` : ""}! We'll be in touch soon.`,
+                        timestamp: new Date(),
+                      };
+                      setMessages((prev) => [...prev, thankYouMessage]);
+                    }}
+                    onCancel={() => setShowFallbackForm(false)}
+                  />
+                )}
+
+                <div ref={messagesEndRef} />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Input Bar - Always Visible */}
+        <div
+          className={`bg-white border border-[var(--arq-gray-200)] rounded-full shadow-lg transition-shadow ${
+            isExpanded ? "shadow-xl" : "hover:shadow-xl"
+          }`}
+        >
+          <div className="flex items-center gap-2 px-3 py-1">
+            {!isExpanded && (
+              <div className="w-8 h-8 rounded-full bg-[var(--arq-blue)] flex items-center justify-center flex-shrink-0">
+                <LogoIcon size={16} className="[&_path]:fill-white [&_circle]:fill-[var(--arq-lime)]" />
+              </div>
+            )}
+            <div className="flex-1" onClick={() => setIsExpanded(true)}>
+              <ChatInput
+                onSend={(msg) => {
+                  setIsExpanded(true);
+                  sendMessage(msg);
+                }}
+                disabled={isTyping || showFallbackForm}
+                onFocus={() => setIsExpanded(true)}
+                compact
+              />
+            </div>
+          </div>
+        </div>
+      </motion.div>
+    </div>
+  );
+}
