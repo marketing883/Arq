@@ -47,62 +47,45 @@ export function Header() {
 
   return (
     <>
-      {/* Navigation Hamburger */}
-      <nav className="fixed top-0 left-0 z-[100] p-4 md:p-6">
-        <div className="loading__fade">
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className={`mxd-nav__hamburger relative w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300 ${
-              isMenuOpen
-                ? "bg-accent"
-                : "bg-base-tint dark:bg-base-opp-tint"
-            }`}
-            aria-label="Toggle menu"
-          >
-            <span className={`hamburger-line absolute w-5 h-[2px] transition-all duration-300 ${
-              isMenuOpen
-                ? "bg-base-opp rotate-45 translate-y-0"
-                : "bg-text-bright dark:bg-text-opp-bright -translate-y-1.5"
-            }`} />
-            <span className={`hamburger-line absolute w-5 h-[2px] transition-all duration-300 ${
-              isMenuOpen
-                ? "bg-base-opp -rotate-45 translate-y-0"
-                : "bg-text-bright dark:bg-text-opp-bright translate-y-1.5"
-            }`} />
-          </button>
-        </div>
-      </nav>
-
-      {/* Header Logo & Controls */}
-      <header className="fixed top-0 left-0 right-0 z-50 pointer-events-none">
+      {/* Header */}
+      <header className="fixed top-0 left-0 right-0 z-[100]">
         <div className="container mx-auto px-4 md:px-6 py-4 md:py-6 flex items-center justify-between">
-          {/* Logo */}
+          {/* Logo - Left Side */}
           <Link
             href="/"
-            className="mxd-logo flex items-center gap-2 pointer-events-auto loading__fade"
+            className="mxd-logo flex items-center gap-2 loading__fade"
           >
+            {/* Light mode logo (dark logo for light bg) */}
             <Image
               src="/img/favicon/ArqAI-favicon.png"
               alt="ArqAI Logo"
               width={40}
               height={40}
-              className="w-8 h-8 md:w-10 md:h-10"
+              className="w-8 h-8 md:w-10 md:h-10 dark:hidden"
             />
-            <span className="mxd-logo__text font-display font-semibold text-xl md:text-2xl text-text-bright dark:text-text-opp-bright">
+            {/* Dark mode logo (light logo for dark bg) */}
+            <Image
+              src="/img/favicon/ArqAI-favicon.png"
+              alt="ArqAI Logo"
+              width={40}
+              height={40}
+              className="w-8 h-8 md:w-10 md:h-10 hidden dark:block brightness-0 invert"
+            />
+            <span className="mxd-logo__text font-display font-semibold text-xl md:text-2xl text-text-bright">
               ArqAI
             </span>
           </Link>
 
-          {/* Controls */}
-          <div className="flex items-center gap-3 md:gap-4 pointer-events-auto loading__fade">
+          {/* Controls - Right Side */}
+          <div className="flex items-center gap-3 md:gap-4 loading__fade">
             {/* Dark Mode Toggle */}
             <button
               onClick={toggleDarkMode}
-              className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-base-tint dark:bg-base-opp-tint flex items-center justify-center transition-colors hover:bg-base-shade dark:hover:bg-stroke-opp-bright"
+              className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-base-tint flex items-center justify-center transition-colors hover:bg-base-shade"
               aria-label="Toggle dark mode"
             >
               {isDarkMode ? (
-                <svg className="w-5 h-5 text-text-opp-bright" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-5 h-5 text-text-bright" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" />
                 </svg>
               ) : (
@@ -110,6 +93,28 @@ export function Header() {
                   <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
                 </svg>
               )}
+            </button>
+
+            {/* Hamburger Menu Button */}
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className={`mxd-nav__hamburger relative w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center transition-all duration-300 ${
+                isMenuOpen
+                  ? "bg-accent"
+                  : "bg-base-tint"
+              }`}
+              aria-label="Toggle menu"
+            >
+              <span className={`hamburger-line absolute w-5 h-[2px] transition-all duration-300 ${
+                isMenuOpen
+                  ? "bg-base-opp rotate-45 translate-y-0"
+                  : "bg-text-bright -translate-y-1.5"
+              }`} />
+              <span className={`hamburger-line absolute w-5 h-[2px] transition-all duration-300 ${
+                isMenuOpen
+                  ? "bg-base-opp -rotate-45 translate-y-0"
+                  : "bg-text-bright translate-y-1.5"
+              }`} />
             </button>
 
             {/* Say Hello Button */}
@@ -139,7 +144,7 @@ export function Header() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-[90] bg-base dark:bg-base-opp"
+            className="fixed inset-0 z-[90] bg-base"
           >
             <div className="h-full flex items-center justify-center">
               <div className="container mx-auto px-6">
@@ -150,7 +155,7 @@ export function Header() {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.2 }}
-                      className="text-body-lg text-text-muted dark:text-text-opp-muted max-w-md"
+                      className="text-body-lg text-text-muted max-w-md"
                     >
                       ArqAI turns AI pilots into governed, ROI-driven intelligence.
                     </motion.p>
@@ -171,7 +176,7 @@ export function Header() {
                             className={`block text-display-md md:text-display-lg font-display transition-colors ${
                               pathname === item.href
                                 ? "text-accent"
-                                : "text-text-bright dark:text-text-opp-bright hover:text-accent"
+                                : "text-text-bright hover:text-accent"
                             }`}
                             onClick={() => setIsMenuOpen(false)}
                           >
@@ -186,18 +191,18 @@ export function Header() {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.4 }}
-                      className="mt-12 pt-8 border-t border-stroke-muted dark:border-stroke-opp-bright"
+                      className="mt-12 pt-8 border-t border-stroke-muted"
                     >
                       <div className="flex flex-col sm:flex-row gap-4 sm:gap-8">
                         <a
                           href="mailto:hello@thearq.ai"
-                          className="text-body-sm text-text-muted dark:text-text-opp-muted hover:text-accent transition-colors"
+                          className="text-body-sm text-text-muted hover:text-accent transition-colors"
                         >
                           hello@thearq.ai
                         </a>
                         <a
                           href="tel:+18565400149"
-                          className="text-body-sm text-text-muted dark:text-text-opp-muted hover:text-accent transition-colors"
+                          className="text-body-sm text-text-muted hover:text-accent transition-colors"
                         >
                           +1 856-540-0149
                         </a>

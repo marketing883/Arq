@@ -34,12 +34,12 @@ export function Footer() {
   };
 
   return (
-    <footer className="mxd-footer bg-base dark:bg-base-opp">
+    <footer className="mxd-footer bg-base">
       {/* Large CTA Text */}
       <div className="container mx-auto px-4 md:px-6 py-16 md:py-24">
         <div className="mxd-footer__text-wrap mb-16 md:mb-24">
-          <h2 className="text-display-xl md:text-[clamp(4rem,12vw,10rem)] font-display leading-[0.9] text-text-bright dark:text-text-opp-bright">
-            Get in touch<span className="text-additional dark:text-accent">.</span>
+          <h2 className="text-display-xl md:text-[clamp(4rem,12vw,10rem)] font-display leading-[0.9] text-text-bright">
+            Get in touch<span className="text-additional">.</span>
           </h2>
         </div>
 
@@ -53,7 +53,7 @@ export function Footer() {
                   <li key={item.name}>
                     <Link
                       href={item.href}
-                      className="text-display-sm font-display text-text-bright dark:text-text-opp-bright hover:text-accent transition-colors"
+                      className="text-display-sm font-display text-text-bright hover:text-accent transition-colors"
                     >
                       {item.name}
                     </Link>
@@ -61,8 +61,8 @@ export function Footer() {
                 ))}
               </ul>
             </nav>
-            <div className="mt-8 pt-6 border-t border-stroke-muted dark:border-stroke-opp-bright">
-              <p className="text-body-xs text-text-muted dark:text-text-opp-muted">
+            <div className="mt-8 pt-6 border-t border-stroke-muted">
+              <p className="text-body-xs text-text-muted">
                 New Jersey, USA
               </p>
             </div>
@@ -72,7 +72,7 @@ export function Footer() {
           <div className="space-y-6">
             {/* Email */}
             <div className="card p-6">
-              <div className="flex items-center gap-3 text-text-bright dark:text-text-opp-bright">
+              <div className="flex items-center gap-3 text-text-bright">
                 <StarIcon />
                 <a
                   href="mailto:hello@thearq.ai"
@@ -85,7 +85,7 @@ export function Footer() {
 
             {/* Phone */}
             <div className="card p-6">
-              <div className="flex items-center gap-3 text-text-bright dark:text-text-opp-bright">
+              <div className="flex items-center gap-3 text-text-bright">
                 <StarIcon />
                 <a
                   href="tel:+18565400149"
@@ -98,7 +98,7 @@ export function Footer() {
 
             {/* Subscribe Form */}
             <div className="card card-filled p-6">
-              <p className="text-body-sm font-medium text-text-bright dark:text-text-opp-bright mb-4">
+              <p className="text-body-sm font-medium text-text-bright mb-4">
                 Subscribe to our insights:
               </p>
               {subscribeStatus === "success" ? (
@@ -117,7 +117,7 @@ export function Footer() {
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Your Email"
                     required
-                    className="flex-1 px-4 py-2 rounded-lg bg-base dark:bg-base-opp border border-stroke-muted dark:border-stroke-opp-bright text-body-sm text-text-bright dark:text-text-opp-bright placeholder:text-text-muted-extra focus:outline-none focus:ring-2 focus:ring-accent"
+                    className="flex-1 px-4 py-2 rounded-lg bg-base border border-stroke-muted text-body-sm text-text-bright placeholder:text-text-muted-extra focus:outline-none focus:ring-2 focus:ring-accent"
                   />
                   <button
                     type="submit"
@@ -125,7 +125,7 @@ export function Footer() {
                     aria-label="Subscribe"
                   >
                     <svg
-                      className="w-4 h-4 text-base-opp"
+                      className="w-4 h-4 text-base"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -141,7 +141,7 @@ export function Footer() {
           {/* Column 3 - Socials */}
           <div className="card p-6 md:p-8 flex flex-col justify-between min-h-[300px]">
             <div>
-              <h3 className="text-display-sm font-display text-text-bright dark:text-text-opp-bright mb-6">
+              <h3 className="text-display-sm font-display text-text-bright mb-6">
                 Let&apos;s Socialize
               </h3>
               <ul className="space-y-3">
@@ -151,7 +151,7 @@ export function Footer() {
                       href={item.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-body-md text-text-muted dark:text-text-opp-muted hover:text-accent transition-colors"
+                      className="text-body-md text-text-muted hover:text-accent transition-colors"
                     >
                       {item.name}
                     </a>
@@ -159,8 +159,8 @@ export function Footer() {
                 ))}
               </ul>
             </div>
-            <div className="mt-8 pt-6 border-t border-stroke-muted dark:border-stroke-opp-bright">
-              <p className="text-body-xs text-text-muted dark:text-text-opp-muted">
+            <div className="mt-8 pt-6 border-t border-stroke-muted">
+              <p className="text-body-xs text-text-muted">
                 <a href="https://thearq.ai" className="hover:text-accent transition-colors">
                   ArqAI
                 </a>
@@ -170,7 +170,7 @@ export function Footer() {
           </div>
 
           {/* Column 4 - Brand Statement */}
-          <div className="card p-6 md:p-8 bg-accent dark:bg-additional text-base-opp flex flex-col justify-between min-h-[300px]">
+          <div className="card p-6 md:p-8 bg-accent text-base flex flex-col justify-between min-h-[300px]">
             <div>
               <p className="text-body-lg font-medium mb-4">
                 The Enterprise Foundry for Trusted AI
@@ -202,7 +202,7 @@ export function Footer() {
       {/* To Top Button */}
       <button
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        className="fixed bottom-6 right-6 w-12 h-12 rounded-full bg-base-tint dark:bg-base-opp-tint shadow-lg flex items-center justify-center text-text-bright dark:text-text-opp-bright hover:bg-accent hover:text-base-opp transition-all z-40"
+        className="fixed bottom-6 right-6 w-12 h-12 rounded-full bg-base-tint shadow-lg flex items-center justify-center text-text-bright hover:bg-accent hover:text-base transition-all z-40"
         aria-label="Back to top"
       >
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

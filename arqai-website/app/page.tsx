@@ -124,7 +124,7 @@ export default function HomePage() {
       <HomeStructuredData />
       <Header />
 
-      <main className="bg-base dark:bg-base-opp">
+      <main className="bg-base">
         {/* Hero Section */}
         <section className="mxd-hero min-h-screen flex flex-col justify-between pt-24 pb-12 relative overflow-hidden">
           <div className="container mx-auto px-4 md:px-6 flex-1 flex flex-col justify-center">
@@ -145,7 +145,7 @@ export default function HomePage() {
                 initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
-                className="text-display-xl md:text-[clamp(4rem,10vw,8rem)] font-display leading-[0.95] text-text-bright dark:text-text-opp-bright"
+                className="text-display-xl md:text-[clamp(4rem,10vw,8rem)] font-display leading-[0.95] text-text-bright"
               >
                 <span className="block">The Enterprise Foundry</span>
                 <span className="flex items-center gap-4 flex-wrap">
@@ -164,12 +164,12 @@ export default function HomePage() {
                 transition={{ duration: 0.6, delay: 0.2 }}
                 className="space-y-6"
               >
-                <div className="w-full h-px bg-stroke-muted dark:bg-stroke-opp-bright" />
-                <p className="text-body-lg text-text-medium dark:text-text-opp-medium max-w-lg">
+                <div className="w-full h-px bg-stroke-muted" />
+                <p className="text-body-lg text-text-medium max-w-lg">
                   Build, run, and govern your mission-critical AI workforce with confidence.
                   The governance fabric that makes enterprise AI safe, auditable, and production-ready.
                 </p>
-                <div className="flex items-center gap-6 text-body-sm text-text-muted dark:text-text-opp-muted">
+                <div className="flex items-center gap-6 text-body-sm text-text-muted">
                   <div className="flex items-center gap-2">
                     <StarIcon className="w-4 h-4" />
                     <span>Build</span>
@@ -217,7 +217,7 @@ export default function HomePage() {
         </section>
 
         {/* Problem Statement Section */}
-        <section className="py-section bg-base dark:bg-base-opp">
+        <section className="py-section bg-base">
           <div className="container mx-auto px-4 md:px-6">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div>
@@ -225,7 +225,7 @@ export default function HomePage() {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  className="flex items-center gap-2 text-body-sm text-accent dark:text-additional mb-4"
+                  className="flex items-center gap-2 text-body-sm text-accent mb-4"
                 >
                   <StarIcon className="w-4 h-4" />
                   The Hidden Crisis
@@ -235,7 +235,7 @@ export default function HomePage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.1 }}
-                  className="text-display-lg font-display text-text-bright dark:text-text-opp-bright mb-6"
+                  className="text-display-lg font-display text-text-bright mb-6"
                 >
                   Your AI Future is Being Built on a Foundation of Chaos
                 </motion.h2>
@@ -244,7 +244,7 @@ export default function HomePage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.2 }}
-                  className="text-body-md text-text-muted dark:text-text-opp-muted mb-8"
+                  className="text-body-md text-text-muted mb-8"
                 >
                   Three patented technologies compile your policies into infrastructure.
                   Deploy governed AI across any cloud, any model, any vertical—in weeks, not quarters.
@@ -283,7 +283,7 @@ export default function HomePage() {
         </section>
 
         {/* Statistics Section */}
-        <section className="py-section-sm bg-base-tint dark:bg-base-opp-tint">
+        <section className="py-section-sm bg-base-tint">
           <div className="container mx-auto px-4 md:px-6">
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
               {stats.map((stat, index) => (
@@ -295,13 +295,13 @@ export default function HomePage() {
                   transition={{ delay: index * 0.1 }}
                   className="card p-6 md:p-8 text-center"
                 >
-                  <div className="text-display-lg md:text-display-xl font-display text-accent dark:text-additional mb-2">
+                  <div className="text-display-lg md:text-display-xl font-display text-accent mb-2">
                     {stat.value}
                   </div>
-                  <div className="text-body-md font-medium text-text-bright dark:text-text-opp-bright mb-2">
+                  <div className="text-body-md font-medium text-text-bright mb-2">
                     {stat.label}
                   </div>
-                  <div className="text-body-sm text-text-muted dark:text-text-opp-muted">
+                  <div className="text-body-sm text-text-muted">
                     {stat.description}
                   </div>
                 </motion.div>
@@ -311,13 +311,13 @@ export default function HomePage() {
         </section>
 
         {/* Marquee Section */}
-        <section className="py-8 bg-accent dark:bg-additional overflow-hidden">
+        <section className="py-8 bg-accent overflow-hidden">
           <div className="marquee">
             <div className="marquee__content animate-marquee flex gap-12">
               {[...marqueeItems, ...marqueeItems].map((item, index) => (
                 <span
                   key={index}
-                  className="text-display-sm font-display text-base-tint dark:text-base-opp whitespace-nowrap flex items-center gap-4"
+                  className="text-display-sm font-display text-base whitespace-nowrap flex items-center gap-4"
                 >
                   {item}
                   <StarIcon className="w-6 h-6" />
@@ -328,7 +328,7 @@ export default function HomePage() {
         </section>
 
         {/* Platform Overview Section */}
-        <section className="py-section bg-base dark:bg-base-opp">
+        <section className="py-section bg-base">
           <div className="container mx-auto px-4 md:px-6">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -336,11 +336,11 @@ export default function HomePage() {
               viewport={{ once: true }}
               className="text-center mb-16"
             >
-              <p className="flex items-center justify-center gap-2 text-body-sm text-accent dark:text-additional mb-4">
+              <p className="flex items-center justify-center gap-2 text-body-sm text-accent mb-4">
                 <StarIcon className="w-4 h-4" />
                 Platform Overview
               </p>
-              <h2 className="text-display-lg font-display text-text-bright dark:text-text-opp-bright">
+              <h2 className="text-display-lg font-display text-text-bright">
                 The Governance Engine Behind Every Product
               </h2>
             </motion.div>
@@ -364,7 +364,7 @@ export default function HomePage() {
         </section>
 
         {/* Products Section */}
-        <section className="py-section bg-base-tint dark:bg-base-opp-tint">
+        <section className="py-section bg-base-tint">
           <div className="container mx-auto px-4 md:px-6">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -372,11 +372,11 @@ export default function HomePage() {
               viewport={{ once: true }}
               className="text-center mb-16"
             >
-              <p className="flex items-center justify-center gap-2 text-body-sm text-accent dark:text-additional mb-4">
+              <p className="flex items-center justify-center gap-2 text-body-sm text-accent mb-4">
                 <StarIcon className="w-4 h-4" />
                 Our Products
               </p>
-              <h2 className="text-display-lg font-display text-text-bright dark:text-text-opp-bright">
+              <h2 className="text-display-lg font-display text-text-bright">
                 Purpose-Built AI Solutions
               </h2>
             </motion.div>
@@ -389,20 +389,20 @@ export default function HomePage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className="card p-6 md:p-8 group hover:border-accent dark:hover:border-additional transition-colors"
+                  className="card p-6 md:p-8 group hover:border-accent transition-colors"
                 >
                   <div className="flex items-start justify-between mb-4">
                     <div>
                       <span className="tag mb-2">{product.category}</span>
-                      <h3 className="text-display-sm font-display text-text-bright dark:text-text-opp-bright">
+                      <h3 className="text-display-sm font-display text-text-bright">
                         {product.name}
                       </h3>
                     </div>
-                    <div className="text-body-lg font-medium text-additional dark:text-accent">
+                    <div className="text-body-lg font-medium text-additional">
                       {product.tagline}
                     </div>
                   </div>
-                  <p className="text-body-md text-text-muted dark:text-text-opp-muted">
+                  <p className="text-body-md text-text-muted">
                     {product.description}
                   </p>
                 </motion.div>
@@ -414,7 +414,7 @@ export default function HomePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.4 }}
-                className="card p-6 md:p-8 bg-accent dark:bg-additional text-base-opp md:col-span-2"
+                className="card p-6 md:p-8 bg-accent text-base md:col-span-2"
               >
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                   <div>
@@ -427,7 +427,7 @@ export default function HomePage() {
                   </div>
                   <Link
                     href="/contact"
-                    className="btn-outline border-base-opp text-base-opp hover:bg-base-opp hover:text-accent inline-flex items-center gap-2 whitespace-nowrap"
+                    className="btn btn-outline border-base text-base hover:bg-base hover:text-accent inline-flex items-center gap-2 whitespace-nowrap"
                   >
                     Let&apos;s Talk
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -441,7 +441,7 @@ export default function HomePage() {
         </section>
 
         {/* Industries Section */}
-        <section className="py-section bg-base dark:bg-base-opp">
+        <section className="py-section bg-base">
           <div className="container mx-auto px-4 md:px-6">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -449,11 +449,11 @@ export default function HomePage() {
               viewport={{ once: true }}
               className="text-center mb-16"
             >
-              <p className="flex items-center justify-center gap-2 text-body-sm text-accent dark:text-additional mb-4">
+              <p className="flex items-center justify-center gap-2 text-body-sm text-accent mb-4">
                 <StarIcon className="w-4 h-4" />
                 Industries We Serve
               </p>
-              <h2 className="text-display-lg font-display text-text-bright dark:text-text-opp-bright">
+              <h2 className="text-display-lg font-display text-text-bright">
                 Built for Regulated Environments
               </h2>
             </motion.div>
@@ -468,10 +468,10 @@ export default function HomePage() {
                   transition={{ delay: index * 0.1 }}
                   className="card p-6 flex flex-col h-full"
                 >
-                  <h3 className="text-display-sm font-display text-text-bright dark:text-text-opp-bright mb-4">
+                  <h3 className="text-display-sm font-display text-text-bright mb-4">
                     {industry.name}
                   </h3>
-                  <p className="text-body-sm text-text-muted dark:text-text-opp-muted mb-6 flex-1">
+                  <p className="text-body-sm text-text-muted mb-6 flex-1">
                     {industry.description}
                   </p>
                   <div className="flex flex-wrap gap-2">
@@ -487,8 +487,8 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Three Pillars Section */}
-        <section className="py-section bg-base-opp dark:bg-base text-text-opp-bright dark:text-text-bright">
+        {/* Three Pillars Section - Dark background section */}
+        <section className="py-section bg-base-opp">
           <div className="container mx-auto px-4 md:px-6">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -496,11 +496,11 @@ export default function HomePage() {
               viewport={{ once: true }}
               className="text-center mb-16"
             >
-              <p className="flex items-center justify-center gap-2 text-body-sm text-additional dark:text-accent mb-4">
+              <p className="flex items-center justify-center gap-2 text-body-sm text-additional mb-4">
                 <StarIcon className="w-4 h-4" />
                 Our Technology
               </p>
-              <h2 className="text-display-lg font-display">
+              <h2 className="text-display-lg font-display text-base">
                 Three Patented Technologies
               </h2>
             </motion.div>
@@ -513,15 +513,15 @@ export default function HomePage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className="p-6 md:p-8 rounded-lg border border-stroke-opp-bright dark:border-stroke-muted"
+                  className="p-6 md:p-8 rounded-lg border border-stroke-medium"
                 >
-                  <div className="text-display-md font-display text-additional dark:text-accent mb-2">
+                  <div className="text-display-md font-display text-additional mb-2">
                     {pillar.name}
                   </div>
-                  <h3 className="text-body-lg font-medium mb-4">
+                  <h3 className="text-body-lg font-medium text-base mb-4">
                     {pillar.fullName}
                   </h3>
-                  <p className="text-body-md text-text-opp-muted dark:text-text-muted">
+                  <p className="text-body-md text-base/70">
                     {pillar.description}
                   </p>
                 </motion.div>
@@ -531,7 +531,7 @@ export default function HomePage() {
         </section>
 
         {/* Final CTA Section */}
-        <section className="py-section bg-base dark:bg-base-opp">
+        <section className="py-section bg-base">
           <div className="container mx-auto px-4 md:px-6 text-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -539,10 +539,10 @@ export default function HomePage() {
               viewport={{ once: true }}
               className="max-w-3xl mx-auto"
             >
-              <h2 className="text-display-lg md:text-display-xl font-display text-text-bright dark:text-text-opp-bright mb-6">
+              <h2 className="text-display-lg md:text-display-xl font-display text-text-bright mb-6">
                 Ready to take command of your AI workforce?
               </h2>
-              <p className="text-body-lg text-text-muted dark:text-text-opp-muted mb-8">
+              <p className="text-body-lg text-text-muted mb-8">
                 Schedule a personalized demo to see how the ArqAI Foundry can help you
                 de-risk innovation and accelerate your enterprise AI strategy.
               </p>
