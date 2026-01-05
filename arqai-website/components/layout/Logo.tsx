@@ -86,23 +86,18 @@ export function LogoIcon({ className = "", size = 40 }: { className?: string; si
     <svg
       width={size}
       height={size}
-      viewBox="0 0 60 60"
+      viewBox="0 0 100 100"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
     >
-      {/* Logo Mark - Stylized A with arrow */}
+      {/* ArqAI Logo Mark - Blue stylized A */}
       <path
-        d="M8 52L28 8L38 28L48 8L58 52H48L42 32L32 52L22 32L16 52H8Z"
-        fill="#0052CC"
+        d="M80.92,10.57l-19.34,40.04h16.67l7.34,15.35h-31.68l-11.67,22.69h-20.01l11.34-22.69h-11.34l9.01-13.34c2.55-3.22,8.6-.96,10.66-2.68L59.69,15.02c.91-1.39,3.99-4.45,5.56-4.45h15.67Z"
+        fill="#0432a5"
       />
-      <path
-        d="M28 8L38 28L32 40L22 20L28 8Z"
-        fill="#0052CC"
-      />
-
       {/* Lime accent dot */}
-      <circle cx="52" cy="18" r="6" fill="#CCFF00" />
+      <circle cx="85.59" cy="36.27" r="10.69" fill="#d0f438" />
     </svg>
   );
 }

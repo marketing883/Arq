@@ -230,8 +230,8 @@ export function ChatWidget() {
               {/* Header */}
               <div className="flex items-center justify-between px-4 py-2 border-b border-[var(--arq-gray-100)] bg-[var(--arq-gray-50)]">
                 <div className="flex items-center gap-2">
-                  <div className="w-6 h-6 rounded-full bg-[var(--arq-blue)] flex items-center justify-center">
-                    <LogoIcon size={14} className="[&_path]:fill-white [&_circle]:fill-[var(--arq-lime)]" />
+                  <div className="w-6 h-6 flex items-center justify-center">
+                    <LogoIcon size={22} />
                   </div>
                   <span className="text-sm font-medium text-[var(--arq-black)]">ArqAI Assistant</span>
                   {isTyping && (
@@ -292,8 +292,8 @@ export function ChatWidget() {
         >
           <div className="flex items-center gap-2 px-3 py-1">
             {!isExpanded && (
-              <div className="w-8 h-8 rounded-full bg-[var(--arq-blue)] flex items-center justify-center flex-shrink-0">
-                <LogoIcon size={16} className="[&_path]:fill-white [&_circle]:fill-[var(--arq-lime)]" />
+              <div className="w-8 h-8 flex items-center justify-center flex-shrink-0">
+                <LogoIcon size={28} />
               </div>
             )}
             <div className="flex-1" onClick={() => setIsExpanded(true)}>
