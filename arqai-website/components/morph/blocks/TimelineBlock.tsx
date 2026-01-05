@@ -126,7 +126,7 @@ export function TimelineBlock() {
         {/* Vertical Line */}
         <div className="absolute left-8 md:left-1/2 md:-translate-x-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[var(--arq-blue)] via-[var(--arq-lime)] to-[var(--arq-blue)]" />
 
-        <div className="space-y-8">
+        <div className="space-y-12">
           {timelinePhases.map((phase, index) => (
             <motion.div
               key={phase.phase}
@@ -143,52 +143,52 @@ export function TimelineBlock() {
               {/* Content Card */}
               <div
                 className={`flex-1 ml-16 md:ml-0 ${
-                  index % 2 === 0 ? "md:pr-12" : "md:pl-12"
+                  index % 2 === 0 ? "md:pr-16" : "md:pl-16"
                 }`}
               >
-                <div className="p-6 rounded-xl bg-white border border-[var(--arq-gray-200)] shadow-sm hover:shadow-md transition-shadow">
+                <div className="p-8 md:p-10 rounded-2xl bg-white border border-[var(--arq-gray-200)] shadow-sm hover:shadow-md transition-shadow">
                   {/* Header */}
-                  <div className="flex items-start justify-between mb-4">
+                  <div className="flex items-start justify-between gap-4 mb-6">
                     <div>
-                      <span className="inline-block px-2 py-0.5 rounded text-xs font-semibold bg-[var(--arq-blue)]/10 text-[var(--arq-blue)] mb-2">
+                      <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-[var(--arq-blue)]/10 text-[var(--arq-blue)] mb-3">
                         Phase {phase.phase}
                       </span>
-                      <h3 className="text-lg font-bold text-[var(--arq-black)]">
+                      <h3 className="text-xl font-bold text-[var(--arq-black)]">
                         {phase.title}
                       </h3>
                     </div>
-                    <span className="text-sm font-semibold text-[var(--arq-lime)] bg-[var(--arq-black)] px-3 py-1 rounded-full">
+                    <span className="text-sm font-semibold text-[var(--arq-lime)] bg-[var(--arq-black)] px-4 py-1.5 rounded-full whitespace-nowrap">
                       {phase.duration}
                     </span>
                   </div>
 
-                  <p className="text-[var(--arq-gray-600)] mb-4">
+                  <p className="text-[var(--arq-gray-600)] mb-6 leading-relaxed">
                     {phase.description}
                   </p>
 
                   {/* Activities & Deliverables */}
-                  <div className="grid md:grid-cols-2 gap-4">
+                  <div className="grid md:grid-cols-2 gap-6">
                     <div>
-                      <h4 className="text-sm font-semibold text-[var(--arq-gray-700)] mb-2">
+                      <h4 className="text-sm font-semibold text-[var(--arq-gray-700)] mb-3">
                         Key Activities
                       </h4>
-                      <ul className="space-y-1">
+                      <ul className="space-y-2">
                         {phase.activities.map((activity, i) => (
                           <li
                             key={i}
                             className="flex items-start gap-2 text-sm text-[var(--arq-gray-600)]"
                           >
-                            <span className="w-1 h-1 rounded-full bg-[var(--arq-blue)] mt-2 flex-shrink-0" />
+                            <span className="w-1.5 h-1.5 rounded-full bg-[var(--arq-blue)] mt-1.5 flex-shrink-0" />
                             {activity}
                           </li>
                         ))}
                       </ul>
                     </div>
                     <div>
-                      <h4 className="text-sm font-semibold text-[var(--arq-gray-700)] mb-2">
+                      <h4 className="text-sm font-semibold text-[var(--arq-gray-700)] mb-3">
                         Deliverables
                       </h4>
-                      <ul className="space-y-1">
+                      <ul className="space-y-2">
                         {phase.deliverables.map((deliverable, i) => (
                           <li
                             key={i}

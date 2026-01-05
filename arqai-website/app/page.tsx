@@ -412,20 +412,20 @@ export default function HomePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.4 }}
-                className="card bg-accent text-base md:col-span-2"
+                className="card bg-accent md:col-span-2"
               >
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
                   <div>
-                    <h3 className="text-display-sm font-display mb-3">
+                    <h3 className="text-display-sm font-display mb-3 text-white">
                       Custom Solutions
                     </h3>
-                    <p className="text-body-md opacity-80">
+                    <p className="text-body-md text-white/80">
                       30-day deployment. We build governed AI solutions tailored to your specific workflows.
                     </p>
                   </div>
                   <Link
                     href="/contact"
-                    className="btn btn-outline border-base text-base hover:bg-base hover:text-accent"
+                    className="btn btn-outline border-white text-white hover:bg-white hover:text-accent"
                   >
                     Let&apos;s Talk
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -466,7 +466,7 @@ export default function HomePage() {
                   transition={{ delay: index * 0.1 }}
                   className="card flex flex-col h-full"
                 >
-                  <h3 className="text-body-lg md:text-display-sm font-display text-text-bright mb-4 break-words hyphens-auto">
+                  <h3 className="text-body-md md:text-body-lg font-display text-text-bright mb-4">
                     {industry.name}
                   </h3>
                   <p className="text-body-sm text-text-muted mb-6 flex-1 leading-relaxed">

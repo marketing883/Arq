@@ -48,7 +48,7 @@ export function Header() {
   return (
     <>
       {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-[100]">
+      <header className="fixed top-0 left-0 right-0 z-[100] bg-base/80 backdrop-blur-md border-b border-stroke-muted/30">
         <div className="container mx-auto px-4 md:px-6 py-4 md:py-6 flex items-center justify-between">
           {/* Logo - Left Side */}
           <Link
