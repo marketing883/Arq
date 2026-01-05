@@ -70,21 +70,23 @@ export function Header() {
             href="/"
             className="mxd-logo flex items-center loading__fade"
           >
-            {/* Light mode logo */}
+            {/* Light mode logo (blue) */}
             <Image
               src="/img/arq-ai-logo.svg"
               alt="ArqAI Logo"
               width={120}
               height={40}
               className="h-8 md:h-10 w-auto dark:hidden"
+              priority
             />
-            {/* Dark mode logo (inverted) */}
+            {/* Dark mode logo (white) */}
             <Image
-              src="/img/arq-ai-logo.svg"
+              src="/img/arq-ai-logo-white.svg"
               alt="ArqAI Logo"
               width={120}
               height={40}
-              className="h-8 md:h-10 w-auto hidden dark:block brightness-0 invert"
+              className="h-8 md:h-10 w-auto hidden dark:block"
+              priority
             />
           </Link>
 
