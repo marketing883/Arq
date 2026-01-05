@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 
 interface Whitepaper {
   id: string;
@@ -118,6 +119,16 @@ export function WhitepaperSection({ whitepaper }: WhitepaperSectionProps) {
                   {whitepaper.page_count} pages • PDF format
                 </p>
               )}
+
+              <Link
+                href="/resources/whitepapers"
+                className="inline-flex items-center gap-2 mt-6 text-white/70 hover:text-white transition-colors text-sm font-medium"
+              >
+                View All Whitepapers
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </Link>
             </motion.div>
 
             {/* Cover Image */}
