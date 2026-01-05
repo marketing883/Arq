@@ -274,13 +274,19 @@
 
   /* Section spacing */
   .section {
-    padding-top: clamp(4rem, 10vw, 8rem);
+    padding-top: clamp(5rem, 12vw, 10rem);
     padding-bottom: clamp(4rem, 10vw, 8rem);
   }
 
   .section-sm {
-    padding-top: clamp(2rem, 5vw, 4rem);
+    padding-top: clamp(3rem, 6vw, 5rem);
     padding-bottom: clamp(2rem, 5vw, 4rem);
+  }
+
+  /* Section header with breathing room */
+  .section-header {
+    padding-top: clamp(1rem, 3vw, 2rem);
+    margin-bottom: clamp(2.5rem, 6vw, 4rem);
   }
 
   /* Button styles matching original */

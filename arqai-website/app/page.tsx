@@ -334,7 +334,7 @@ export default function HomePage() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-center mb-16"
+              className="section-header text-center"
             >
               <p className="flex items-center justify-center gap-2 text-body-sm text-accent mb-4">
                 <StarIcon className="w-4 h-4" />
@@ -370,7 +370,7 @@ export default function HomePage() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-center mb-16"
+              className="section-header text-center"
             >
               <p className="flex items-center justify-center gap-2 text-body-sm text-accent mb-4">
                 <StarIcon className="w-4 h-4" />
@@ -445,7 +445,7 @@ export default function HomePage() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-center mb-16"
+              className="section-header text-center"
             >
               <p className="flex items-center justify-center gap-2 text-body-sm text-accent mb-4">
                 <StarIcon className="w-4 h-4" />
@@ -466,7 +466,7 @@ export default function HomePage() {
                   transition={{ delay: index * 0.1 }}
                   className="card flex flex-col h-full"
                 >
-                  <h3 className="text-display-sm font-display text-text-bright mb-4">
+                  <h3 className="text-body-lg md:text-display-sm font-display text-text-bright mb-4 break-words hyphens-auto">
                     {industry.name}
                   </h3>
                   <p className="text-body-sm text-text-muted mb-6 flex-1 leading-relaxed">
@@ -474,7 +474,7 @@ export default function HomePage() {
                   </p>
                   <div className="flex flex-wrap gap-2">
                     {industry.compliance.map((item) => (
-                      <span key={item} className="tag">
+                      <span key={item} className="tag text-xs">
                         {item}
                       </span>
                     ))}
@@ -492,7 +492,7 @@ export default function HomePage() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-center mb-16"
+              className="section-header text-center"
             >
               <p className="flex items-center justify-center gap-2 text-body-sm text-additional mb-4">
                 <StarIcon className="w-4 h-4" />
