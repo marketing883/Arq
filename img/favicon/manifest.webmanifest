@@ -1,0 +1,11 @@
+{
+  "name": "ArqAI | Governed AI Services for Enterprise Outcomes",
+  "short_name": "ArqAI",
+  "icons": [
+    { "src": "/img/favicon/ArqAI-favicon.png", "type": "image/png", "sizes": "192x192" },
+    { "src": "/img/favicon/ArqAI-favicon.png", "type": "image/png", "sizes": "512x512" }
+  ],
+  "theme_color": "#efefef",
+  "background_color": "#efefef",
+  "display": "standalone"
+}
