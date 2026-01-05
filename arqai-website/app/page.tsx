@@ -295,7 +295,7 @@ export default function HomePage() {
                   transition={{ delay: index * 0.1 }}
                   className="card text-center"
                 >
-                  <div className="text-display-lg md:text-display-xl font-display text-accent mb-3">
+                  <div className="text-6xl md:text-7xl lg:text-8xl font-display font-bold text-accent mb-4 leading-none">
                     {stat.value}
                   </div>
                   <div className="text-body-md font-medium text-text-bright mb-3">
