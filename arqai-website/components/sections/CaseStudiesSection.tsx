@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 
@@ -135,40 +136,61 @@ export function CaseStudiesSection({ caseStudies }: CaseStudiesSectionProps) {
   );
 }
 
-// Static placeholder version
-export function CaseStudiesSectionStatic() {
-  const placeholderStudies: CaseStudy[] = [
-    {
-      id: "1",
-      slug: "global-bank-loan-underwriting",
-      title: "Automated Loan Underwriting with 100% Audit Compliance",
-      client_name: "Top 5 Global Bank",
-      industry: "Financial Services",
-      challenge_summary: "Manual compliance checks were slowing loan processing by 70%, creating bottlenecks and customer dissatisfaction.",
-      results_summary: "Achieved 70% faster underwriting with zero regulatory findings and $2.3M annual savings.",
-      key_metrics: [
-        { label: "Faster Processing", value: "70%" },
-        { label: "Audit Compliance", value: "100%" },
-        { label: "Annual Savings", value: "$2.3M" },
-        { label: "Regulatory Issues", value: "Zero" },
-      ],
-    },
-    {
-      id: "2",
-      slug: "healthcare-hipaa-compliance",
-      title: "HIPAA-Compliant Patient Data Management at Scale",
-      client_name: "Major Health System",
-      industry: "Healthcare",
-      challenge_summary: "Needed AI for patient data summarization without risking HIPAA violations across multiple facilities.",
-      results_summary: "50% reduced admin time with 100% HIPAA compliance and 3x AI deployment scale.",
-      key_metrics: [
-        { label: "Admin Time Saved", value: "50%" },
-        { label: "HIPAA Compliance", value: "100%" },
-        { label: "Care Coordination", value: "+40%" },
-        { label: "Deployment Scale", value: "3x" },
-      ],
-    },
-  ];
+// Placeholder case studies for fallback
+const placeholderStudies: CaseStudy[] = [
+  {
+    id: "1",
+    slug: "global-bank-loan-underwriting",
+    title: "Automated Loan Underwriting with 100% Audit Compliance",
+    client_name: "Top 5 Global Bank",
+    industry: "Financial Services",
+    challenge_summary: "Manual compliance checks were slowing loan processing by 70%, creating bottlenecks and customer dissatisfaction.",
+    results_summary: "Achieved 70% faster underwriting with zero regulatory findings and $2.3M annual savings.",
+    key_metrics: [
+      { label: "Faster Processing", value: "70%" },
+      { label: "Audit Compliance", value: "100%" },
+      { label: "Annual Savings", value: "$2.3M" },
+      { label: "Regulatory Issues", value: "Zero" },
+    ],
+  },
+  {
+    id: "2",
+    slug: "healthcare-hipaa-compliance",
+    title: "HIPAA-Compliant Patient Data Management at Scale",
+    client_name: "Major Health System",
+    industry: "Healthcare",
+    challenge_summary: "Needed AI for patient data summarization without risking HIPAA violations across multiple facilities.",
+    results_summary: "50% reduced admin time with 100% HIPAA compliance and 3x AI deployment scale.",
+    key_metrics: [
+      { label: "Admin Time Saved", value: "50%" },
+      { label: "HIPAA Compliance", value: "100%" },
+      { label: "Care Coordination", value: "+40%" },
+      { label: "Deployment Scale", value: "3x" },
+    ],
+  },
+];
 
-  return <CaseStudiesSection caseStudies={placeholderStudies} />;
+// Dynamic version that fetches from database
+export function CaseStudiesSectionStatic() {
+  const [caseStudies, setCaseStudies] = useState<CaseStudy[]>(placeholderStudies);
+
+  useEffect(() => {
+    async function fetchCaseStudies() {
+      try {
+        const response = await fetch("/api/case-studies/featured");
+        if (response.ok) {
+          const data = await response.json();
+          if (data.caseStudies && data.caseStudies.length > 0) {
+            setCaseStudies(data.caseStudies);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching case studies:", error);
+      }
+    }
+
+    fetchCaseStudies();
+  }, []);
+
+  return <CaseStudiesSection caseStudies={caseStudies} />;
 }
