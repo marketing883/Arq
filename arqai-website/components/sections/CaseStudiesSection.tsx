@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 
 interface CaseStudy {
   id: string;
@@ -12,6 +13,7 @@ interface CaseStudy {
   industry: string;
   challenge_summary: string;
   results_summary: string;
+  image?: string;
   key_metrics?: { label: string; value: string }[];
 }
 
@@ -35,14 +37,41 @@ function StarIcon({ className = "" }: { className?: string }) {
 }
 
 export function CaseStudiesSection({ caseStudies }: CaseStudiesSectionProps) {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const sectionRef = useRef<HTMLElement>(null);
+  const textRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!sectionRef.current) return;
+
+      const sectionTop = sectionRef.current.offsetTop;
+      const scrollPosition = window.scrollY - sectionTop + window.innerHeight / 2;
+
+      textRefs.current.forEach((ref, index) => {
+        if (ref) {
+          const refTop = ref.offsetTop;
+          const refBottom = refTop + ref.offsetHeight;
+
+          if (scrollPosition >= refTop && scrollPosition < refBottom) {
+            setActiveIndex(index);
+          }
+        }
+      });
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [caseStudies.length]);
+
   if (!caseStudies || caseStudies.length === 0) {
     return null;
   }
 
   return (
-    <section className="py-section bg-base">
+    <section ref={sectionRef} className="py-section bg-base">
       <div className="container mx-auto px-4 md:px-6">
-        {/* Section Header - matches old design "Real Products. Real Results." */}
+        {/* Section Header */}
         <div className="grid grid-cols-12 gap-6 mb-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -84,83 +113,136 @@ export function CaseStudiesSection({ caseStudies }: CaseStudiesSectionProps) {
           </motion.div>
         </div>
 
-        {/* Case Studies List - Clean list design matching old template */}
-        <div className="space-y-0">
-          {caseStudies.map((study, index) => (
-            <motion.div
-              key={study.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className="group"
-            >
-              {/* Top border */}
-              <div className="h-px bg-stroke-muted" />
+        {/* Pinned Scroll Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
+          {/* Left Side - Sticky Image */}
+          <div className="hidden lg:block">
+            <div className="sticky top-32">
+              <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-base-tint">
+                {caseStudies.map((study, index) => (
+                  <motion.div
+                    key={study.id}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: activeIndex === index ? 1 : 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="absolute inset-0"
+                  >
+                    <Image
+                      src={study.image || `/img/services/use-case-${index + 1}.webp`}
+                      alt={study.client_name}
+                      fill
+                      className="object-cover"
+                    />
+                  </motion.div>
+                ))}
+              </div>
 
-              <Link href={`/case-studies/${study.slug}`} className="block py-8 hover:bg-base-tint/50 transition-colors -mx-4 px-4 md:-mx-6 md:px-6">
-                <div className="grid grid-cols-12 gap-6 items-start">
-                  {/* Icon */}
-                  <div className="col-span-12 md:col-span-2 lg:col-span-1">
-                    <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center">
-                      <StarIcon className="w-6 h-6 text-accent" />
-                    </div>
-                  </div>
+              {/* Progress Indicators */}
+              <div className="flex gap-2 mt-6 justify-center">
+                {caseStudies.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => {
+                      const ref = textRefs.current[index];
+                      if (ref) {
+                        ref.scrollIntoView({ behavior: "smooth", block: "center" });
+                      }
+                    }}
+                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                      activeIndex === index
+                        ? "w-8 bg-accent"
+                        : "bg-stroke-muted hover:bg-stroke-bright"
+                    }`}
+                    aria-label={`Go to case study ${index + 1}`}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
 
-                  {/* Title & Meta */}
-                  <div className="col-span-12 md:col-span-4 lg:col-span-3">
-                    <h3 className="text-lg font-display font-semibold text-text-bright mb-2 group-hover:text-accent transition-colors">
-                      {study.client_name}
-                    </h3>
-                    <p className="text-body-sm text-text-muted">
-                      <strong>Industry:</strong> {study.industry}
-                    </p>
-                    <p className="text-body-sm text-text-muted">
-                      <strong>Solution:</strong> {study.title}
-                    </p>
-                  </div>
-
-                  {/* Results */}
-                  <div className="col-span-12 md:col-span-6 lg:col-span-7">
-                    <p className="text-body-sm font-semibold text-text-bright mb-2">Results:</p>
-                    {study.key_metrics && study.key_metrics.length > 0 ? (
-                      <ul className="space-y-1">
-                        {study.key_metrics.slice(0, 4).map((metric, i) => (
-                          <li key={i} className="text-body-sm text-text-muted flex items-start gap-2">
-                            <span className="text-accent">•</span>
-                            <span><strong className="text-accent">{metric.value}</strong> {metric.label}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    ) : (
-                      <p className="text-body-sm text-text-muted">{study.results_summary}</p>
-                    )}
-                  </div>
-
-                  {/* Arrow - shows on hover */}
-                  <div className="hidden lg:flex col-span-1 items-center justify-end">
-                    <div className="w-10 h-10 rounded-full bg-accent flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                      <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
-                      </svg>
-                    </div>
+          {/* Right Side - Scrolling Text */}
+          <div className="space-y-16 lg:space-y-32">
+            {caseStudies.map((study, index) => (
+              <motion.div
+                key={study.id}
+                ref={(el) => {
+                  textRefs.current[index] = el;
+                }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ delay: 0.1 }}
+                className={`transition-opacity duration-300 ${
+                  activeIndex === index ? "opacity-100" : "lg:opacity-50"
+                }`}
+              >
+                {/* Mobile Image */}
+                <div className="lg:hidden mb-6">
+                  <div className="relative aspect-[4/3] rounded-xl overflow-hidden bg-base-tint">
+                    <Image
+                      src={study.image || `/img/services/use-case-${index + 1}.webp`}
+                      alt={study.client_name}
+                      fill
+                      className="object-cover"
+                    />
                   </div>
                 </div>
-              </Link>
 
-              {/* Bottom border for last item */}
-              {index === caseStudies.length - 1 && (
-                <div className="h-px bg-stroke-muted" />
-              )}
-            </motion.div>
-          ))}
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center">
+                    <StarIcon className="w-5 h-5 text-accent" />
+                  </div>
+                  <span className="text-body-sm text-text-muted">{study.industry}</span>
+                </div>
+
+                <h3 className="text-2xl lg:text-3xl font-display font-bold text-text-bright mb-2">
+                  {study.client_name}
+                </h3>
+
+                <p className="text-body-md text-accent font-medium mb-4">
+                  {study.title}
+                </p>
+
+                <p className="text-body-md text-text-muted mb-6 leading-relaxed">
+                  {study.challenge_summary}
+                </p>
+
+                {/* Results */}
+                {study.key_metrics && study.key_metrics.length > 0 && (
+                  <div className="mb-6">
+                    <p className="text-body-sm font-semibold text-text-bright mb-3">Results:</p>
+                    <ul className="space-y-2">
+                      {study.key_metrics.slice(0, 4).map((metric, i) => (
+                        <li key={i} className="flex items-start gap-3">
+                          <span className="text-accent text-lg leading-none">•</span>
+                          <span className="text-body-md text-text-muted">
+                            <strong className="text-accent">{metric.value}</strong> {metric.label}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                <Link
+                  href={`/case-studies/${study.slug}`}
+                  className="inline-flex items-center gap-2 text-body-md font-medium text-accent hover:gap-3 transition-all"
+                >
+                  Read Full Case Study
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
+                  </svg>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
   );
 }
 
-// Placeholder case studies for fallback - matching the old design's data format
+// Placeholder case studies with images
 const placeholderStudies: CaseStudy[] = [
   {
     id: "1",
@@ -168,10 +250,11 @@ const placeholderStudies: CaseStudy[] = [
     title: "ArqRelease",
     client_name: "DevSecOps Team, SaaS Company",
     industry: "B2B SaaS",
-    challenge_summary: "Security review bottlenecks and cloud waste.",
+    image: "/img/services/use-case-1.webp",
+    challenge_summary: "Security review bottlenecks were slowing releases, and cloud waste from orphaned resources was costing $230K annually.",
     results_summary: "Reduced security review time from 6 weeks to 4 days with $230K annual savings.",
     key_metrics: [
-      { label: "security review (6 weeks → 4 days)", value: "96%" },
+      { label: "faster security review (6 weeks → 4 days)", value: "96%" },
       { label: "annual savings in cloud waste prevention", value: "$230K" },
       { label: "compliance violations in 18 months", value: "Zero" },
       { label: "increase in deployment frequency", value: "2.5x" },
@@ -183,27 +266,29 @@ const placeholderStudies: CaseStudy[] = [
     title: "ArqOptimize",
     client_name: "FinOps Team, E-commerce Platform",
     industry: "E-commerce",
-    challenge_summary: "Cloud cost visibility and anomaly detection challenges.",
+    image: "/img/services/use-case-2.webp",
+    challenge_summary: "Cloud cost visibility across 40+ teams was impossible, and anomaly detection took days instead of minutes.",
     results_summary: "42% reduction in monthly cloud spend with 90% faster anomaly detection.",
     key_metrics: [
       { label: "reduction in monthly cloud spend", value: "42%" },
       { label: "faster anomaly detection (minutes vs. days)", value: "90%" },
-      { label: "Real-time cost attribution across 40+ teams", value: "40+" },
-      { label: "developer complaints about resource constraints", value: "Zero" },
+      { label: "teams with real-time cost attribution", value: "40+" },
+      { label: "developer complaints about resources", value: "Zero" },
     ],
   },
   {
     id: "3",
     slug: "ai-team-investment-firm",
     title: "ArqIntel",
-    client_name: "AI Team, Investment Firm (Pilot)",
-    industry: "Private Equity / Venture Capital",
-    challenge_summary: "Inconsistent deal screening and slow due diligence process.",
+    client_name: "AI Team, Investment Firm",
+    industry: "Private Equity / VC",
+    image: "/img/services/use-case-3.webp",
+    challenge_summary: "Deal screening was inconsistent and slow. Each analyst had different criteria, making due diligence unreliable.",
     results_summary: "68% reduction in initial screening time with 100% consistent scoring.",
     key_metrics: [
       { label: "reduction in initial screening time", value: "68%" },
       { label: "consistent scoring across all deals", value: "100%" },
-      { label: "Audit-ready reports in hours, not weeks", value: "Hours" },
+      { label: "time to audit-ready reports", value: "Hours" },
       { label: "regulatory concerns in 6-month pilot", value: "Zero" },
     ],
   },

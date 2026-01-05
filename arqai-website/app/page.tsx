@@ -13,7 +13,7 @@ import { CaseStudiesSectionStatic } from "@/components/sections/CaseStudiesSecti
 import { WhitepaperSectionStatic } from "@/components/sections/WhitepaperSection";
 
 // Scroll-aware marquee component
-function ScrollAwareMarquee({ items, children }: { items: string[]; children?: React.ReactNode }) {
+function ScrollAwareMarquee({ items }: { items: string[] }) {
   const [scrollDirection, setScrollDirection] = useState<"left" | "right">("left");
   const lastScrollY = useRef(0);
 
@@ -32,17 +32,21 @@ function ScrollAwareMarquee({ items, children }: { items: string[]; children?: R
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Triple the items to ensure smooth infinite scroll
+  const tripleItems = [...items, ...items, ...items];
+
   return (
-    <div className="marquee overflow-hidden">
+    <div className="overflow-hidden whitespace-nowrap">
       <div
-        className={`marquee__content flex gap-12 ${
+        className={`inline-flex gap-12 ${
           scrollDirection === "left" ? "animate-marquee" : "animate-marquee-reverse"
         }`}
+        style={{ width: "max-content" }}
       >
-        {[...items, ...items].map((item, index) => (
+        {tripleItems.map((item, index) => (
           <span
             key={index}
-            className="text-display-sm font-display text-base whitespace-nowrap flex items-center gap-4"
+            className="text-display-sm font-display text-base whitespace-nowrap inline-flex items-center gap-4"
           >
             {item}
             <StarIcon className="w-6 h-6" />
@@ -53,44 +57,49 @@ function ScrollAwareMarquee({ items, children }: { items: string[]; children?: R
   );
 }
 
-// Animated counter component with rotate/flip effect
+// Animated counter component with countdown effect
 function AnimatedCounter({ value, suffix = "" }: { value: number; suffix?: string }) {
   const [count, setCount] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
-  const [hasAnimated, setHasAnimated] = useState(false);
+  const hasAnimatedRef = useRef(false);
 
   useEffect(() => {
+    const element = ref.current;
+    if (!element) return;
+
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting && !hasAnimated) {
-          setHasAnimated(true);
+        if (entries[0].isIntersecting && !hasAnimatedRef.current) {
+          hasAnimatedRef.current = true;
+
           const duration = 2000;
           const steps = 60;
+          const stepTime = duration / steps;
           const increment = value / steps;
           let current = 0;
+          let step = 0;
 
-          const timer = setInterval(() => {
-            current += increment;
-            if (current >= value) {
-              setCount(value);
-              clearInterval(timer);
+          const animate = () => {
+            step++;
+            current = Math.min(current + increment, value);
+            setCount(Math.floor(current));
+
+            if (step < steps && current < value) {
+              setTimeout(animate, stepTime);
             } else {
-              setCount(Math.floor(current));
+              setCount(value);
             }
-          }, duration / steps);
+          };
 
-          return () => clearInterval(timer);
+          animate();
         }
       },
-      { threshold: 0.3 }
+      { threshold: 0.1 }
     );
 
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-
+    observer.observe(element);
     return () => observer.disconnect();
-  }, [value, hasAnimated]);
+  }, [value]);
 
   return (
     <div ref={ref} className="inline-block">
@@ -482,8 +491,8 @@ export default function HomePage() {
                   className="card group hover:border-accent transition-colors"
                 >
                   <div className="flex items-center gap-3 mb-4">
-                    <span className="tag">{product.category}</span>
-                    <span className="text-body-sm font-medium text-additional">
+                    <span className="text-body-xs text-text-muted">{product.category}</span>
+                    <span className="px-3 py-1 rounded-full bg-additional/20 text-body-sm font-medium text-additional">
                       {product.tagline}
                     </span>
                   </div>
@@ -506,16 +515,16 @@ export default function HomePage() {
               >
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
                   <div>
-                    <h3 className="text-display-sm font-display mb-3 text-white">
+                    <h3 className="text-display-sm font-display mb-3 text-white dark:text-black">
                       Custom Solutions
                     </h3>
-                    <p className="text-body-md text-white/80">
+                    <p className="text-body-md text-white/80 dark:text-black/80">
                       30-day deployment. We build governed AI solutions tailored to your specific workflows.
                     </p>
                   </div>
                   <Link
                     href="/contact"
-                    className="btn btn-outline border-white text-white hover:bg-white hover:text-accent dark:border-black dark:bg-black dark:text-white dark:hover:bg-white dark:hover:text-black transition-all"
+                    className="btn bg-additional text-black hover:opacity-90 dark:bg-black dark:text-white dark:hover:bg-white dark:hover:text-black transition-all"
                   >
                     Let&apos;s Talk
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -615,7 +624,7 @@ export default function HomePage() {
                   transition={{ delay: index * 0.1 }}
                   className="p-6 md:p-8 rounded-lg border border-stroke-medium"
                 >
-                  <div className="text-display-md font-display text-additional mb-2">
+                  <div className="text-2xl font-display text-additional mb-2">
                     {pillar.name}
                   </div>
                   <h3 className="text-sm font-medium text-base mb-4">
@@ -646,7 +655,7 @@ export default function HomePage() {
                 Schedule a personalized demo to see how the ArqAI Foundry can help you
                 de-risk innovation and accelerate your enterprise AI strategy.
               </p>
-              <Link href="/contact" className="btn bg-accent text-white dark:text-black">
+              <Link href="/contact" className="btn bg-accent text-white">
                 Request a Demo
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />

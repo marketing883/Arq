@@ -170,7 +170,7 @@ export function Footer() {
           </div>
 
           {/* Column 4 - Brand Statement */}
-          <div className="card p-6 md:p-8 bg-accent text-white dark:text-black flex flex-col justify-between min-h-[300px]">
+          <div className="card p-6 md:p-8 bg-accent text-white flex flex-col justify-between min-h-[300px]">
             <div>
               <p className="text-body-lg font-medium mb-4">
                 The Enterprise Foundry for Trusted AI
