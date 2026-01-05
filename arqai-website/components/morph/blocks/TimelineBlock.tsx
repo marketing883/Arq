@@ -2,6 +2,11 @@
 
 import { motion } from "framer-motion";
 import { CheckIcon, ArrowRightIcon } from "@/components/ui/Icons";
+import { CardCustomization } from "@/lib/chat/types";
+
+interface TimelineBlockProps {
+  customizations?: CardCustomization | null;
+}
 
 const timelinePhases = [
   {
@@ -96,12 +101,14 @@ const timelinePhases = [
   },
 ];
 
-export function TimelineBlock() {
+export function TimelineBlock({ customizations }: TimelineBlockProps) {
+  const introText = customizations?.subheadline ||
+    "Our proven implementation methodology ensures a smooth deployment of the ArqAI Foundry platform in your enterprise environment.";
+
   return (
     <div className="space-y-8">
       <p className="text-gray-600 dark:text-gray-400 text-center max-w-2xl mx-auto">
-        Our proven implementation methodology ensures a smooth deployment of the
-        ArqAI Foundry platform in your enterprise environment.
+        {introText}
       </p>
 
       {/* Timeline Total */}

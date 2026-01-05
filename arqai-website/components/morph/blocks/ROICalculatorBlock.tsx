@@ -1,7 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { CardCustomization } from "@/lib/chat/types";
+
+interface ROICalculatorBlockProps {
+  customizations?: CardCustomization | null;
+}
 
 interface ROIInputs {
   aiAgents: number;
@@ -22,13 +27,29 @@ const riskLabels = {
   high: "High (Healthcare, Finance)",
 };
 
-export function ROICalculatorBlock() {
-  const [inputs, setInputs] = useState<ROIInputs>({
-    aiAgents: 10,
-    avgSalary: 120000,
-    complianceRisk: "medium",
-    manualAuditHours: 20,
-  });
+export function ROICalculatorBlock({ customizations }: ROICalculatorBlockProps) {
+  // Initialize with customization defaults if available
+  const defaultInputs: ROIInputs = {
+    aiAgents: customizations?.roiDefaults?.aiAgentCount || 10,
+    avgSalary: customizations?.roiDefaults?.avgSalary || 120000,
+    complianceRisk: (customizations?.roiDefaults?.complianceLevel as "low" | "medium" | "high") || "medium",
+    manualAuditHours: customizations?.roiDefaults?.auditHoursPerAgent || 20,
+  };
+
+  const [inputs, setInputs] = useState<ROIInputs>(defaultInputs);
+
+  // Update inputs when customizations change
+  useEffect(() => {
+    if (customizations?.roiDefaults) {
+      setInputs({
+        aiAgents: customizations.roiDefaults.aiAgentCount || inputs.aiAgents,
+        avgSalary: customizations.roiDefaults.avgSalary || inputs.avgSalary,
+        complianceRisk: (customizations.roiDefaults.complianceLevel as "low" | "medium" | "high") || inputs.complianceRisk,
+        manualAuditHours: customizations.roiDefaults.auditHoursPerAgent || inputs.manualAuditHours,
+      });
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [customizations]);
 
   // Calculate ROI metrics
   const hourlyRate = inputs.avgSalary / 2080;
@@ -51,11 +72,13 @@ export function ROICalculatorBlock() {
   // Total annual value
   const totalAnnualValue = annualCostSavings + riskMitigationValue + productivityGain;
 
+  const introText = customizations?.subheadline ||
+    "Estimate the potential return on investment from implementing ArqAI's enterprise AI governance platform.";
+
   return (
     <div className="space-y-8">
       <p className="text-gray-600 dark:text-gray-400 text-center max-w-2xl mx-auto">
-        Estimate the potential return on investment from implementing ArqAI&apos;s
-        enterprise AI governance platform.
+        {introText}
       </p>
 
       <div className="grid lg:grid-cols-2 gap-8">

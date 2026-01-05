@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   BlueprintIcon,
@@ -9,6 +9,11 @@ import {
   CheckIcon,
   ArrowRightIcon,
 } from "@/components/ui/Icons";
+import { CardCustomization } from "@/lib/chat/types";
+
+interface FeaturesBlockProps {
+  customizations?: CardCustomization | null;
+}
 
 const featureCategories = [
   {
@@ -169,8 +174,26 @@ const featureCategories = [
   },
 ];
 
-export function FeaturesBlock() {
-  const [activeCategory, setActiveCategory] = useState(featureCategories[0]);
+export function FeaturesBlock({ customizations }: FeaturesBlockProps) {
+  // Determine the initial category based on customizations
+  const initialCategory = useMemo(() => {
+    if (customizations?.highlightedFeatures && customizations.highlightedFeatures.length > 0) {
+      // Try to find a category that matches highlighted features
+      const highlightedLower = customizations.highlightedFeatures.map(f => f.toLowerCase());
+      if (highlightedLower.some(f => f.includes("compliance") || f.includes("policy") || f.includes("audit"))) {
+        return featureCategories[0]; // Compliance
+      }
+      if (highlightedLower.some(f => f.includes("security") || f.includes("trust") || f.includes("access"))) {
+        return featureCategories[1]; // Security
+      }
+      if (highlightedLower.some(f => f.includes("monitor") || f.includes("dashboard") || f.includes("observ"))) {
+        return featureCategories[2]; // Operations
+      }
+    }
+    return featureCategories[0];
+  }, [customizations]);
+
+  const [activeCategory, setActiveCategory] = useState(initialCategory);
   const [activeFeature, setActiveFeature] = useState(activeCategory.features[0]);
 
   const handleCategoryChange = (category: typeof featureCategories[0]) => {
@@ -180,11 +203,14 @@ export function FeaturesBlock() {
 
   const Icon = activeCategory.icon;
 
+  // Personalized intro text
+  const introText = customizations?.subheadline ||
+    "Explore the comprehensive capabilities of the ArqAI Foundry platform across compliance, security, and operations.";
+
   return (
     <div className="space-y-8">
       <p className="text-gray-600 dark:text-gray-400 text-center max-w-2xl mx-auto">
-        Explore the comprehensive capabilities of the ArqAI Foundry platform
-        across compliance, security, and operations.
+        {introText}
       </p>
 
       {/* Category Tabs */}

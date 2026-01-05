@@ -10,9 +10,13 @@ import { TimelineBlock } from "./blocks/TimelineBlock";
 import { IntegrationBlock } from "./blocks/IntegrationBlock";
 import { FeaturesBlock } from "./blocks/FeaturesBlock";
 import { CloseIcon } from "@/components/ui/Icons";
+import { CardCustomization } from "@/lib/chat/types";
+
+// Component type with optional customizations prop
+type MorphBlockComponent = React.ComponentType<{ customizations?: CardCustomization | null }>;
 
 // Use a function to get component to avoid SSR/hydration issues
-function getMorphComponent(type: Exclude<MorphType, null>) {
+function getMorphComponent(type: Exclude<MorphType, null>): MorphBlockComponent | null {
   switch (type) {
     case "comparison":
       return ComparisonBlock;
@@ -21,6 +25,7 @@ function getMorphComponent(type: Exclude<MorphType, null>) {
     case "architecture":
       return ArchitectureBlock;
     case "case-study":
+    case "casestudy":
       return CaseStudyBlock;
     case "timeline":
       return TimelineBlock;
@@ -39,6 +44,7 @@ const morphTitles: Record<Exclude<MorphType, null>, string> = {
   roi: "Calculate Your ROI",
   architecture: "Platform Architecture",
   "case-study": "Success Stories",
+  casestudy: "Success Stories",
   timeline: "Implementation Timeline",
   integration: "Integration Checklist",
   features: "Feature Deep Dive",
@@ -46,7 +52,7 @@ const morphTitles: Record<Exclude<MorphType, null>, string> = {
 };
 
 export function ContentMorpher() {
-  const { activeMorph, clearMorph } = useMorph();
+  const { activeMorph, customizations, clearMorph } = useMorph();
 
   if (!activeMorph) return null;
 
@@ -58,6 +64,9 @@ export function ContentMorpher() {
     clearMorph();
     return null;
   }
+
+  // Get personalized title if available
+  const title = customizations?.headline || morphTitles[activeMorph];
 
   return (
     <AnimatePresence mode="wait">
@@ -94,7 +103,7 @@ export function ContentMorpher() {
             <div className="flex items-center gap-3">
               <div className="w-2 h-2 rounded-full bg-[#d0f438] animate-pulse" />
               <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                {morphTitles[activeMorph]}
+                {title}
               </h2>
             </div>
             <button
@@ -108,7 +117,7 @@ export function ContentMorpher() {
 
           {/* Dynamic Content */}
           <div className="p-6 md:p-8 bg-white dark:bg-gray-900">
-            <MorphComponent />
+            <MorphComponent customizations={customizations} />
           </div>
         </motion.div>
       </motion.div>

@@ -2,6 +2,11 @@
 
 import { motion } from "framer-motion";
 import { BlueprintIcon, CertificateIcon, DashboardIcon, ArrowRightIcon } from "@/components/ui/Icons";
+import { CardCustomization } from "@/lib/chat/types";
+
+interface ArchitectureBlockProps {
+  customizations?: CardCustomization | null;
+}
 
 const architectureLayers = [
   {
@@ -58,12 +63,14 @@ const integrationPoints = [
   { name: "Data Platforms", items: ["Snowflake", "Databricks", "BigQuery", "Redshift"] },
 ];
 
-export function ArchitectureBlock() {
+export function ArchitectureBlock({ customizations }: ArchitectureBlockProps) {
+  const introText = customizations?.subheadline ||
+    "The ArqAI Foundry is an integrated platform with three core pillars that work together to provide end-to-end enterprise AI governance.";
+
   return (
     <div className="space-y-8">
       <p className="text-gray-600 dark:text-gray-400 text-center max-w-2xl mx-auto">
-        The ArqAI Foundry is an integrated platform with three core pillars that
-        work together to provide end-to-end enterprise AI governance.
+        {introText}
       </p>
 
       {/* Architecture Diagram */}

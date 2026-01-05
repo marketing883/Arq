@@ -1,23 +1,36 @@
 "use client";
 
 import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from "react";
+import { CardCustomization } from "@/lib/chat/types";
 
 export type MorphType =
   | "comparison"
   | "roi"
   | "architecture"
   | "case-study"
+  | "casestudy"
   | "timeline"
   | "integration"
   | "features"
   | "pricing"
   | null;
 
-const VALID_MORPH_TYPES = ["comparison", "roi", "architecture", "case-study", "timeline", "integration", "features", "pricing"];
+const VALID_MORPH_TYPES = [
+  "comparison",
+  "roi",
+  "architecture",
+  "case-study",
+  "casestudy",
+  "timeline",
+  "integration",
+  "features",
+  "pricing",
+];
 
 interface MorphContextType {
   activeMorph: MorphType;
-  setActiveMorph: (type: MorphType) => void;
+  customizations: CardCustomization | null;
+  setActiveMorph: (type: MorphType, customizations?: CardCustomization) => void;
   clearMorph: () => void;
   morphHistory: MorphType[];
 }
@@ -26,10 +39,12 @@ const MorphContext = createContext<MorphContextType | undefined>(undefined);
 
 export function MorphProvider({ children }: { children: ReactNode }) {
   const [activeMorph, setActiveMorphState] = useState<MorphType>(null);
+  const [customizations, setCustomizations] = useState<CardCustomization | null>(null);
   const [morphHistory, setMorphHistory] = useState<MorphType[]>([]);
 
-  const setActiveMorph = useCallback((type: MorphType) => {
+  const setActiveMorph = useCallback((type: MorphType, cardCustomizations?: CardCustomization) => {
     setActiveMorphState(type);
+    setCustomizations(cardCustomizations || null);
     if (type) {
       setMorphHistory((prev) => [...prev, type]);
     }
@@ -37,15 +52,21 @@ export function MorphProvider({ children }: { children: ReactNode }) {
 
   const clearMorph = useCallback(() => {
     setActiveMorphState(null);
+    setCustomizations(null);
   }, []);
 
   // Listen for morph events from the chat widget
   useEffect(() => {
-    const handleMorphEvent = (event: CustomEvent<{ type: string }>) => {
+    const handleMorphEvent = (event: CustomEvent<{ type: string; customizations?: CardCustomization }>) => {
       const morphType = event.detail.type;
+      const morphCustomizations = event.detail.customizations;
+
+      // Normalize type (case-study vs casestudy)
+      const normalizedType = morphType === "case-study" ? "casestudy" : morphType;
+
       // Only set morph if it's a valid type
-      if (morphType && VALID_MORPH_TYPES.includes(morphType)) {
-        setActiveMorph(morphType as MorphType);
+      if (normalizedType && VALID_MORPH_TYPES.includes(normalizedType)) {
+        setActiveMorph(normalizedType as MorphType, morphCustomizations);
       } else {
         console.warn(`Invalid morph type received: ${morphType}`);
       }
@@ -61,6 +82,7 @@ export function MorphProvider({ children }: { children: ReactNode }) {
     <MorphContext.Provider
       value={{
         activeMorph,
+        customizations,
         setActiveMorph,
         clearMorph,
         morphHistory,

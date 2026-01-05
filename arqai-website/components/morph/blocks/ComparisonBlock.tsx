@@ -2,6 +2,11 @@
 
 import { motion } from "framer-motion";
 import { CheckIcon, CloseIcon } from "@/components/ui/Icons";
+import { CardCustomization } from "@/lib/chat/types";
+
+interface ComparisonBlockProps {
+  customizations?: CardCustomization | null;
+}
 
 interface ComparisonFeature {
   feature: string;
@@ -135,12 +140,14 @@ function FeatureCell({ value }: { value: boolean | "partial" }) {
   );
 }
 
-export function ComparisonBlock() {
+export function ComparisonBlock({ customizations }: ComparisonBlockProps) {
+  const introText = customizations?.subheadline ||
+    "See how ArqAI's integrated approach to enterprise AI governance compares to traditional point solutions and general-purpose platforms.";
+
   return (
     <div className="space-y-8">
       <p className="text-gray-600 dark:text-gray-400 text-center max-w-2xl mx-auto">
-        See how ArqAI&apos;s integrated approach to enterprise AI governance compares
-        to traditional point solutions and general-purpose platforms.
+        {introText}
       </p>
 
       {/* Comparison Table */}

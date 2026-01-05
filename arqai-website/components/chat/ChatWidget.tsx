@@ -25,6 +25,14 @@ interface UserInfo {
   phone?: string;
 }
 
+interface ContextSummary {
+  industry?: string;
+  painPoints?: string[];
+  complianceFrameworks?: string[];
+  engagementLevel?: "low" | "medium" | "high";
+  completeness?: number;
+}
+
 export function ChatWidget() {
   const [isExpanded, setIsExpanded] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -33,6 +41,9 @@ export function ChatWidget() {
   const [userInfo, setUserInfo] = useState<UserInfo>({});
   const [hasGreeted, setHasGreeted] = useState(false);
   const [errorCount, setErrorCount] = useState(0);
+  const [sessionId, setSessionId] = useState<string | null>(null);
+  const [userContext, setUserContext] = useState<string | null>(null);
+  const [contextSummary, setContextSummary] = useState<ContextSummary | null>(null);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -43,10 +54,12 @@ export function ChatWidget() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  // Load conversation from localStorage
+  // Load conversation and context from localStorage
   useEffect(() => {
     const savedMessages = localStorage.getItem("arqai_chat_messages");
     const savedUserInfo = localStorage.getItem("arqai_user_info");
+    const savedSessionId = localStorage.getItem("arqai_session_id");
+    const savedUserContext = localStorage.getItem("arqai_user_context");
 
     if (savedMessages) {
       try {
@@ -68,6 +81,14 @@ export function ChatWidget() {
         console.error("Failed to parse saved user info:", e);
       }
     }
+
+    if (savedSessionId) {
+      setSessionId(savedSessionId);
+    }
+
+    if (savedUserContext) {
+      setUserContext(savedUserContext);
+    }
   }, []);
 
   // Save conversation to localStorage
@@ -83,6 +104,19 @@ export function ChatWidget() {
       localStorage.setItem("arqai_user_info", JSON.stringify(userInfo));
     }
   }, [userInfo]);
+
+  // Save session ID and user context to localStorage
+  useEffect(() => {
+    if (sessionId) {
+      localStorage.setItem("arqai_session_id", sessionId);
+    }
+  }, [sessionId]);
+
+  useEffect(() => {
+    if (userContext) {
+      localStorage.setItem("arqai_user_context", userContext);
+    }
+  }, [userContext]);
 
   // Send greeting when expanded for first time
   useEffect(() => {
@@ -149,12 +183,14 @@ export function ChatWidget() {
         },
         body: JSON.stringify({
           message: content,
+          sessionId,
+          userContext,
+          conversationHistory,
           context: {
             currentPage: pathname,
             userName: userInfo.name,
             userEmail: userInfo.email,
             userCompany: userInfo.company,
-            conversationHistory,
           },
         }),
       });
@@ -165,6 +201,22 @@ export function ChatWidget() {
 
       const data = await response.json();
 
+      // Update session ID if provided
+      if (data.sessionId && !sessionId) {
+        setSessionId(data.sessionId);
+      }
+
+      // Update user context for future requests
+      if (data.userContext) {
+        setUserContext(data.userContext);
+      }
+
+      // Update context summary for UI display
+      if (data.contextSummary) {
+        setContextSummary(data.contextSummary);
+      }
+
+      // Update user info from extracted entities
       if (data.extractedInfo && Object.keys(data.extractedInfo).length > 0) {
         setUserInfo((prev) => ({ ...prev, ...data.extractedInfo }));
       }
@@ -179,10 +231,14 @@ export function ChatWidget() {
       setMessages((prev) => [...prev, assistantMessage]);
       setErrorCount(0);
 
+      // Handle morph trigger with customizations
       if (data.morphTrigger) {
         window.dispatchEvent(
           new CustomEvent("arqai:morph", {
-            detail: { type: data.morphTrigger },
+            detail: {
+              type: data.morphTrigger.type,
+              customizations: data.morphTrigger.customizations,
+            },
           })
         );
       }
@@ -236,6 +292,10 @@ export function ChatWidget() {
                   <span className="text-sm font-medium text-gray-900 dark:text-gray-100">ArqAI Assistant</span>
                   {isTyping && (
                     <span className="text-xs text-gray-500 dark:text-gray-400">typing...</span>
+                  )}
+                  {/* Show engagement indicator */}
+                  {contextSummary?.engagementLevel === "high" && (
+                    <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" title="Highly engaged" />
                   )}
                 </div>
                 <button

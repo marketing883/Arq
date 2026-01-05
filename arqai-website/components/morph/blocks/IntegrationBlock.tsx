@@ -3,6 +3,11 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { CheckIcon, ArrowRightIcon } from "@/components/ui/Icons";
+import { CardCustomization } from "@/lib/chat/types";
+
+interface IntegrationBlockProps {
+  customizations?: CardCustomization | null;
+}
 
 const integrationCategories = [
   {
@@ -71,15 +76,16 @@ const integrationCategories = [
   },
 ];
 
-export function IntegrationBlock() {
+export function IntegrationBlock({ customizations }: IntegrationBlockProps) {
   const [activeCategory, setActiveCategory] = useState(integrationCategories[0]);
+
+  const introText = customizations?.subheadline ||
+    "ArqAI integrates seamlessly with your existing infrastructure. Our open architecture ensures you can connect to any system while maintaining complete governance.";
 
   return (
     <div className="space-y-8">
       <p className="text-gray-600 dark:text-gray-400 text-center max-w-2xl mx-auto">
-        ArqAI integrates seamlessly with your existing infrastructure. Our open
-        architecture ensures you can connect to any system while maintaining
-        complete governance.
+        {introText}
       </p>
 
       {/* Category Tabs */}

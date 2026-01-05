@@ -1,10 +1,27 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRightIcon, CheckIcon } from "@/components/ui/Icons";
+import { CardCustomization } from "@/lib/chat/types";
 
-const caseStudies = [
+interface CaseStudyBlockProps {
+  customizations?: CardCustomization | null;
+}
+
+interface CaseStudy {
+  id: string;
+  industry: string;
+  badge: string;
+  title: string;
+  challenge: string;
+  solution: string;
+  results: Array<{ metric: string; label: string }>;
+  quote: string;
+  quoteAuthor: string;
+}
+
+const defaultCaseStudies: CaseStudy[] = [
   {
     id: "financial",
     industry: "Financial Services",
@@ -64,14 +81,43 @@ const caseStudies = [
   },
 ];
 
-export function CaseStudyBlock() {
-  const [activeStudy, setActiveStudy] = useState(caseStudies[0]);
+export function CaseStudyBlock({ customizations }: CaseStudyBlockProps) {
+  // Build case studies list - put personalized study first if available
+  const caseStudies = useMemo(() => {
+    if (customizations?.caseStudy) {
+      const personalizedStudy: CaseStudy = {
+        id: "personalized",
+        industry: customizations.caseStudy.industry || "Your Industry",
+        badge: customizations.caseStudy.companyType || "Enterprise",
+        title: customizations.caseStudy.title || "AI Governance Success Story",
+        challenge: customizations.caseStudy.challenge || "Organizations needed better AI governance.",
+        solution: customizations.caseStudy.solution || "ArqAI provided comprehensive governance.",
+        results: customizations.caseStudy.results || [
+          { metric: "70%", label: "Time Savings" },
+          { metric: "100%", label: "Compliance" },
+        ],
+        quote: customizations.caseStudy.quote || "ArqAI transformed our AI governance.",
+        quoteAuthor: customizations.caseStudy.quoteAuthor || "Executive",
+      };
+      // Filter out any default study that matches the personalized industry
+      const otherStudies = defaultCaseStudies.filter(
+        (s) => s.industry.toLowerCase() !== personalizedStudy.industry.toLowerCase()
+      );
+      return [personalizedStudy, ...otherStudies];
+    }
+    return defaultCaseStudies;
+  }, [customizations]);
+
+  const [activeStudy, setActiveStudy] = useState<CaseStudy>(caseStudies[0]);
+
+  // Personalized intro text
+  const introText = customizations?.subheadline ||
+    "See how leading enterprises across industries are using ArqAI to govern their AI workforce with confidence.";
 
   return (
     <div className="space-y-8">
       <p className="text-gray-600 dark:text-gray-400 text-center max-w-2xl mx-auto">
-        See how leading enterprises across industries are using ArqAI to govern
-        their AI workforce with confidence.
+        {introText}
       </p>
 
       {/* Industry Tabs */}
