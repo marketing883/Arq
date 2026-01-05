@@ -62,9 +62,16 @@ export async function POST(request: NextRequest) {
       message: rawMessage,
       sessionId: clientSessionId,
       userInfo,
-      pageContext: clientContext,
+      pageContext: clientPageContext,
+      context: clientContext,
       userContext: serializedUserContext,
     } = validation.data!;
+
+    // Get page context from either pageContext or context field (frontend sends context)
+    const currentPage = clientContext?.currentPage || clientPageContext?.path || "/";
+    const userName = clientContext?.userName || userInfo?.name;
+    const userEmail = clientContext?.userEmail || userInfo?.email;
+    const userCompany = clientContext?.userCompany || userInfo?.company;
 
     const conversationHistory = body.conversationHistory || [];
 
@@ -167,18 +174,11 @@ export async function POST(request: NextRequest) {
 
     // Build enhanced context for AI response
     const enhancedContext = {
-      currentPage: clientContext?.path || "/",
+      currentPage,
+      userName: userContext.name || userName,
+      userEmail: userContext.email || userEmail,
+      userCompany: userContext.companyName || userCompany,
       conversationHistory,
-      userProfile: {
-        industry: userContext.industry,
-        companySize: userContext.companySize,
-        painPoints: userContext.painPoints,
-        complianceFrameworks: userContext.complianceFrameworks,
-        hasExistingAI: userContext.hasExistingAI,
-        aiAgentCount: userContext.aiAgentCount,
-      },
-      currentIntent: intent,
-      engagementLevel,
     };
 
     let response: string;
@@ -266,7 +266,7 @@ export async function POST(request: NextRequest) {
     recordSession(sessionId, {
       ipAddress,
       userAgent,
-      currentPage: clientContext?.path,
+      currentPage,
     }).catch((error) => {
       console.error("Session recording error:", error instanceof Error ? error.message : "Unknown");
     });
