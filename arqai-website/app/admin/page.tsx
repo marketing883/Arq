@@ -447,7 +447,7 @@ export default function AdminDashboard() {
                     {/* Signals Preview */}
                     {lead.intelligence.behavioral_signals && lead.intelligence.behavioral_signals.length > 0 && (
                       <div className="flex flex-wrap gap-1.5 mb-4">
-                        {[...new Set(lead.intelligence.behavioral_signals.map(s => s.type))].slice(0, 3).map((type) => (
+                        {Array.from(new Set(lead.intelligence.behavioral_signals.map(s => s.type))).slice(0, 3).map((type) => (
                           <span
                             key={type}
                             className="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded-lg"
@@ -579,10 +579,10 @@ export default function AdminDashboard() {
                 <div className="p-6 bg-gradient-to-r from-slate-900 to-slate-800 text-white">
                   <div className="flex items-start justify-between">
                     <div>
-                      <div className={`inline-flex px-3 py-1 ${getPriorityTier(selectedLead).color} rounded-full text-xs font-semibold mb-3`}>
+                      <div className={`inline-flex px-3 py-1 ${getPriorityTier(selectedLead).color} rounded-full text-xs font-semibold text-white mb-3`}>
                         {getPriorityTier(selectedLead).tier}
                       </div>
-                      <h2 className="text-2xl font-bold">
+                      <h2 className="text-2xl font-bold text-white">
                         {selectedLead.user.name || "Anonymous Lead"}
                       </h2>
                       <p className="text-slate-300 mt-1">
@@ -603,15 +603,15 @@ export default function AdminDashboard() {
                   <div className="grid grid-cols-3 gap-4 mt-6">
                     <div className="bg-white/10 rounded-xl p-3">
                       <p className="text-slate-300 text-xs">Intent Score</p>
-                      <p className="text-2xl font-bold">{selectedLead.intelligence.buy_intent_score}/100</p>
+                      <p className="text-2xl font-bold text-white">{selectedLead.intelligence.buy_intent_score}/100</p>
                     </div>
                     <div className="bg-white/10 rounded-xl p-3">
                       <p className="text-slate-300 text-xs">Category</p>
-                      <p className="text-xl font-bold capitalize">{selectedLead.intelligence.intent_category}</p>
+                      <p className="text-xl font-bold text-white capitalize">{selectedLead.intelligence.intent_category}</p>
                     </div>
                     <div className="bg-white/10 rounded-xl p-3">
                       <p className="text-slate-300 text-xs">Urgency</p>
-                      <p className="text-xl font-bold capitalize">{selectedLead.intelligence.urgency}</p>
+                      <p className="text-xl font-bold text-white capitalize">{selectedLead.intelligence.urgency}</p>
                     </div>
                   </div>
                 </div>
@@ -646,7 +646,7 @@ export default function AdminDashboard() {
                     <div>
                       <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-3">Behavioral Signals</h3>
                       <div className="space-y-2">
-                        {[...new Map(selectedLead.intelligence.behavioral_signals.map(s => [s.type + s.content.substring(0, 30), s])).values()]
+                        {Array.from(new Map(selectedLead.intelligence.behavioral_signals.map(s => [s.type + s.content.substring(0, 30), s])).values())
                           .slice(0, 8)
                           .map((signal: BehavioralSignal, idx: number) => (
                           <div key={idx} className="flex items-start gap-3 p-3 bg-slate-50 rounded-xl">

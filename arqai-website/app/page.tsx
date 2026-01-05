@@ -6,6 +6,10 @@ import { motion } from "framer-motion";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { HomeStructuredData } from "@/components/seo/StructuredData";
+import { StatsSection, homepageStats } from "@/components/sections/StatsSection";
+import { BlogSectionStatic } from "@/components/sections/BlogSection";
+import { CaseStudiesSectionStatic } from "@/components/sections/CaseStudiesSection";
+import { WhitepaperSectionStatic } from "@/components/sections/WhitepaperSection";
 
 // Star icon component used throughout the page
 function StarIcon({ className = "" }: { className?: string }) {
@@ -494,6 +498,18 @@ export default function HomePage() {
             </div>
           </div>
         </section>
+
+        {/* Animated Stats Section */}
+        <StatsSection stats={homepageStats} />
+
+        {/* Case Studies Section */}
+        <CaseStudiesSectionStatic />
+
+        {/* Whitepaper Download Section */}
+        <WhitepaperSectionStatic />
+
+        {/* Blog Section */}
+        <BlogSectionStatic />
 
         {/* Three Pillars Section - Dark background section */}
         <section className="py-section bg-base-opp">
