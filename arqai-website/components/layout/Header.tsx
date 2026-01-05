@@ -6,17 +6,99 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 
+interface PromoContent {
+  type: "webinar" | "whitepaper" | "case-study";
+  title: string;
+  description: string;
+  slug: string;
+  image: string;
+  date?: string;
+  status?: string;
+  category?: string;
+  industry?: string;
+  link: string;
+  cta: string;
+}
+
 const navigation = [
   { name: "Home", href: "/" },
   { name: "About", href: "/about" },
+  { name: "Resources", href: "#", hasDropdown: true },
   { name: "Contact", href: "/contact" },
 ];
+
+const resourceLinks = [
+  {
+    name: "Blog",
+    href: "/blog",
+    description: "Insights and updates",
+    icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+      </svg>
+    ),
+  },
+  {
+    name: "Case Studies",
+    href: "/case-studies",
+    description: "Real client success stories",
+    icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+      </svg>
+    ),
+  },
+  {
+    name: "Whitepapers",
+    href: "/whitepapers",
+    description: "In-depth research & guides",
+    icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+      </svg>
+    ),
+  },
+  {
+    name: "Webinars",
+    href: "/webinars",
+    description: "Live & on-demand sessions",
+    icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+      </svg>
+    ),
+  },
+];
+
+function formatPromoDate(dateString: string): string {
+  const date = new Date(dateString);
+  return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+  }).format(date);
+}
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [promoContent, setPromoContent] = useState<PromoContent | null>(null);
+  const [resourcesExpanded, setResourcesExpanded] = useState(false);
   const pathname = usePathname();
+
+  // Fetch promo content
+  useEffect(() => {
+    fetch("/api/promo-content")
+      .then(res => res.json())
+      .then(data => {
+        if (data.promo) {
+          setPromoContent(data.promo);
+        }
+      })
+      .catch(err => console.error("Failed to fetch promo:", err));
+  }, []);
 
   // Handle scroll to show/hide header background
   useEffect(() => {
@@ -42,6 +124,7 @@ export function Header() {
   // Close menu on route change
   useEffect(() => {
     setIsMenuOpen(false);
+    setResourcesExpanded(false);
   }, [pathname]);
 
   // Prevent body scroll when menu is open
@@ -158,21 +241,99 @@ export function Header() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-[90] bg-base"
+            className="fixed inset-0 z-[90] bg-base overflow-y-auto"
           >
-            <div className="h-full flex items-center justify-center">
-              <div className="container mx-auto px-6">
-                <div className="grid md:grid-cols-2 gap-12">
-                  {/* Left Side - Caption */}
-                  <div className="hidden md:flex flex-col justify-center">
+            <div className="min-h-full flex items-center justify-center py-24 px-4">
+              <div className="container mx-auto px-2 md:px-6">
+                <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
+                  {/* Left Side - Caption + Promo (Desktop) */}
+                  <div className="hidden lg:flex flex-col justify-center">
                     <motion.p
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.2 }}
-                      className="text-body-lg text-text-muted max-w-md"
+                      className="text-body-lg text-text-muted max-w-md mb-8"
                     >
                       ArqAI turns AI pilots into governed, ROI-driven intelligence.
                     </motion.p>
+
+                    {/* Promotional Content (Desktop Only) */}
+                    {promoContent && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.3 }}
+                        className="max-w-md"
+                      >
+                        <Link
+                          href={promoContent.link}
+                          onClick={() => setIsMenuOpen(false)}
+                          className="block group"
+                        >
+                          <div className="bg-base-tint rounded-2xl overflow-hidden border border-stroke-muted/30 hover:border-accent/50 transition-all">
+                            {/* Image */}
+                            {promoContent.image && (
+                              <div className="relative h-40 bg-gradient-to-br from-blue-600 to-purple-700">
+                                <img
+                                  src={promoContent.image}
+                                  alt={promoContent.title}
+                                  className="w-full h-full object-cover"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                                {/* Badge */}
+                                <div className="absolute top-3 left-3">
+                                  {promoContent.type === "webinar" && (
+                                    <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${
+                                      promoContent.status === "live"
+                                        ? "bg-green-500 text-white"
+                                        : "bg-blue-500 text-white"
+                                    }`}>
+                                      {promoContent.status === "live" && (
+                                        <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+                                      )}
+                                      {promoContent.status === "live" ? "Live Now" : "Upcoming Webinar"}
+                                    </span>
+                                  )}
+                                  {promoContent.type === "whitepaper" && (
+                                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-purple-500 text-white">
+                                      Free Download
+                                    </span>
+                                  )}
+                                  {promoContent.type === "case-study" && (
+                                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-teal-500 text-white">
+                                      Case Study
+                                    </span>
+                                  )}
+                                </div>
+                              </div>
+                            )}
+                            {/* Content */}
+                            <div className="p-5">
+                              {promoContent.type === "webinar" && promoContent.date && (
+                                <p className="text-xs text-text-muted mb-2 flex items-center gap-1.5">
+                                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                  </svg>
+                                  {formatPromoDate(promoContent.date)}
+                                </p>
+                              )}
+                              <h4 className="text-lg font-semibold text-text-bright group-hover:text-accent transition-colors line-clamp-2 mb-2">
+                                {promoContent.title}
+                              </h4>
+                              <p className="text-sm text-text-muted line-clamp-2 mb-4">
+                                {promoContent.description}
+                              </p>
+                              <span className="inline-flex items-center gap-1.5 text-sm font-medium text-accent group-hover:gap-2.5 transition-all">
+                                {promoContent.cta}
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                </svg>
+                              </span>
+                            </div>
+                          </div>
+                        </Link>
+                      </motion.div>
+                    )}
                   </div>
 
                   {/* Right Side - Navigation */}
@@ -185,17 +346,113 @@ export function Header() {
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: 0.1 + index * 0.1 }}
                         >
-                          <Link
-                            href={item.href}
-                            className={`block text-display-md md:text-display-lg font-display transition-colors ${
-                              pathname === item.href
-                                ? "text-accent"
-                                : "text-text-bright hover:text-accent"
-                            }`}
-                            onClick={() => setIsMenuOpen(false)}
-                          >
-                            {item.name}
-                          </Link>
+                          {item.hasDropdown ? (
+                            <div>
+                              <button
+                                onClick={() => setResourcesExpanded(!resourcesExpanded)}
+                                className={`flex items-center gap-3 text-display-md md:text-display-lg font-display transition-colors ${
+                                  resourcesExpanded || pathname.startsWith("/blog") || pathname.startsWith("/case-studies") || pathname.startsWith("/whitepapers") || pathname.startsWith("/webinars")
+                                    ? "text-accent"
+                                    : "text-text-bright hover:text-accent"
+                                }`}
+                              >
+                                {item.name}
+                                <svg
+                                  className={`w-6 h-6 transition-transform ${resourcesExpanded ? "rotate-180" : ""}`}
+                                  fill="none"
+                                  stroke="currentColor"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                </svg>
+                              </button>
+
+                              <AnimatePresence>
+                                {resourcesExpanded && (
+                                  <motion.div
+                                    initial={{ opacity: 0, height: 0 }}
+                                    animate={{ opacity: 1, height: "auto" }}
+                                    exit={{ opacity: 0, height: 0 }}
+                                    transition={{ duration: 0.2 }}
+                                    className="overflow-hidden"
+                                  >
+                                    <div className="pt-4 pl-4 space-y-3">
+                                      {resourceLinks.map((link) => (
+                                        <Link
+                                          key={link.name}
+                                          href={link.href}
+                                          onClick={() => setIsMenuOpen(false)}
+                                          className={`flex items-center gap-3 py-2 transition-colors group ${
+                                            pathname.startsWith(link.href)
+                                              ? "text-accent"
+                                              : "text-text-muted hover:text-accent"
+                                          }`}
+                                        >
+                                          <span className="text-text-muted group-hover:text-accent transition-colors">
+                                            {link.icon}
+                                          </span>
+                                          <div>
+                                            <span className="text-body-lg font-medium block">{link.name}</span>
+                                            <span className="text-body-sm text-text-muted">{link.description}</span>
+                                          </div>
+                                        </Link>
+                                      ))}
+                                    </div>
+
+                                    {/* Mobile Promo */}
+                                    {promoContent && (
+                                      <div className="lg:hidden mt-6 pt-4 border-t border-stroke-muted/30">
+                                        <Link
+                                          href={promoContent.link}
+                                          onClick={() => setIsMenuOpen(false)}
+                                          className="flex items-center gap-4 p-3 bg-base-tint rounded-xl group"
+                                        >
+                                          {promoContent.image && (
+                                            <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-gradient-to-br from-blue-600 to-purple-700">
+                                              <img
+                                                src={promoContent.image}
+                                                alt=""
+                                                className="w-full h-full object-cover"
+                                              />
+                                            </div>
+                                          )}
+                                          <div className="flex-1 min-w-0">
+                                            <span className={`inline-block text-xs font-medium px-2 py-0.5 rounded-full mb-1 ${
+                                              promoContent.type === "webinar"
+                                                ? "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400"
+                                                : promoContent.type === "whitepaper"
+                                                ? "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400"
+                                                : "bg-teal-100 text-teal-700 dark:bg-teal-900/30 dark:text-teal-400"
+                                            }`}>
+                                              {promoContent.type === "webinar" ? "Webinar" : promoContent.type === "whitepaper" ? "Whitepaper" : "Case Study"}
+                                            </span>
+                                            <p className="text-sm font-medium text-text-bright truncate group-hover:text-accent transition-colors">
+                                              {promoContent.title}
+                                            </p>
+                                          </div>
+                                          <svg className="w-5 h-5 text-text-muted group-hover:text-accent transition-colors flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                          </svg>
+                                        </Link>
+                                      </div>
+                                    )}
+                                  </motion.div>
+                                )}
+                              </AnimatePresence>
+                            </div>
+                          ) : (
+                            <Link
+                              href={item.href}
+                              className={`block text-display-md md:text-display-lg font-display transition-colors ${
+                                pathname === item.href
+                                  ? "text-accent"
+                                  : "text-text-bright hover:text-accent"
+                              }`}
+                              onClick={() => setIsMenuOpen(false)}
+                            >
+                              {item.name}
+                            </Link>
+                          )}
                         </motion.li>
                       ))}
                     </ul>
