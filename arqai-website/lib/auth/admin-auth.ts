@@ -26,7 +26,7 @@ function getJWTSecret(): Uint8Array {
 const ADMIN_USERNAME = process.env.ADMIN_USERNAME || "arqadmin";
 const ADMIN_PASSWORD_HASH = process.env.ADMIN_PASSWORD_HASH ||
   // Default dev hash for "AdminDev2026!" - CHANGE IN PRODUCTION
-  "$2a$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/X4edVy3qPF0nS5.Ey";
+  "$2a$12$DTnQmO4EalX9n/UeZUh.3OV2hTjtJD9dQBh2txDG8eQnTZR/GXaZu";
 
 export interface AdminSession {
   username: string;
