@@ -345,19 +345,19 @@ export default function HomePage() {
               </h2>
             </motion.div>
 
-            {/* Workflow Diagram Placeholder */}
+            {/* Platform Architecture Diagram */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="card p-8 md:p-12"
+              className="flex justify-center"
             >
               <Image
-                src="/img/demo/02_fea-img.webp"
-                alt="Platform Workflow Diagram"
-                width={1200}
-                height={600}
-                className="w-full rounded-lg"
+                src="/img/hero/arq-wf.png"
+                alt="ArqAI Platform Architecture - The Governance Fabric with Three Patented Technologies"
+                width={800}
+                height={1000}
+                className="w-full max-w-3xl rounded-lg"
               />
             </motion.div>
           </div>
