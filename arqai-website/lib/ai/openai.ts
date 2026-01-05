@@ -7,8 +7,17 @@ let openaiClient: OpenAI | null = null;
 
 function getOpenAIClient(): OpenAI {
   if (!openaiClient) {
+    const apiKey = process.env.OPENAI_API_KEY;
+
+    // Debug: Log if API key is present (not the actual key)
+    console.log("[OpenAI] API key present:", !!apiKey, "Length:", apiKey?.length || 0);
+
+    if (!apiKey) {
+      throw new Error("OPENAI_API_KEY environment variable is not set");
+    }
+
     openaiClient = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY,
+      apiKey: apiKey,
     });
   }
   return openaiClient;

@@ -6,8 +6,17 @@ let anthropicClient: Anthropic | null = null;
 
 function getAnthropicClient(): Anthropic {
   if (!anthropicClient) {
+    const apiKey = process.env.ANTHROPIC_API_KEY;
+
+    // Debug: Log if API key is present (not the actual key)
+    console.log("[Anthropic] API key present:", !!apiKey, "Length:", apiKey?.length || 0);
+
+    if (!apiKey) {
+      throw new Error("ANTHROPIC_API_KEY environment variable is not set");
+    }
+
     anthropicClient = new Anthropic({
-      apiKey: process.env.ANTHROPIC_API_KEY,
+      apiKey: apiKey,
     });
   }
   return anthropicClient;
