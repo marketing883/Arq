@@ -176,7 +176,7 @@ export default function ContentPage() {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex flex-col items-start gap-1 p-4 rounded-xl text-left transition-all ${
+              className={`flex flex-col items-start gap-1 p-4 rounded-md text-left transition-all ${
                 activeTab === tab.id
                   ? "bg-blue-600 text-white shadow-lg shadow-blue-500/25"
                   : "bg-white text-slate-600 hover:bg-slate-50 border border-slate-200"
@@ -194,7 +194,7 @@ export default function ContentPage() {
         </div>
 
         {/* Content Area */}
-        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+        <div className="bg-white rounded-md shadow-sm border border-slate-200 overflow-hidden">
           {/* Action Bar */}
           <div className="p-4 border-b border-slate-200 flex items-center justify-between">
             <div>
@@ -228,7 +228,7 @@ export default function ContentPage() {
               <p className="text-sm text-slate-400 mt-1 mb-6">Get started by creating your first item</p>
               <button
                 onClick={handleAddNew}
-                className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white font-medium rounded-xl hover:bg-blue-700 transition-colors shadow-lg shadow-blue-500/25"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 transition-colors shadow-lg shadow-blue-500/25"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -311,7 +311,7 @@ export default function ContentPage() {
             <Link
               key={tab.id}
               href={`/admin/content/${tab.id}/new`}
-              className="flex items-center gap-3 p-4 bg-white border border-slate-200 rounded-xl hover:border-blue-300 hover:shadow-sm transition-all group"
+              className="flex items-center gap-3 p-4 bg-white border border-slate-200 rounded-md hover:border-blue-300 hover:shadow-sm transition-all group"
             >
               <div className="w-10 h-10 rounded-lg bg-slate-100 group-hover:bg-blue-100 flex items-center justify-center transition-colors">
                 <span className="text-slate-500 group-hover:text-blue-600 transition-colors">

@@ -286,7 +286,7 @@ export default function NewWebinarPage() {
 
       <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
         {/* Basic Info */}
-        <section className="bg-white rounded-xl shadow-sm p-6">
+        <section className="bg-white rounded-md shadow-sm p-6">
           <h2 className="text-lg font-semibold text-slate-900 mb-6 pb-4 border-b">Webinar Details</h2>
           <div className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
@@ -336,7 +336,7 @@ export default function NewWebinarPage() {
         </section>
 
         {/* Date & Time */}
-        <section className="bg-white rounded-xl shadow-sm p-6">
+        <section className="bg-white rounded-md shadow-sm p-6">
           <h2 className="text-lg font-semibold text-slate-900 mb-6 pb-4 border-b">Schedule</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div>
@@ -385,7 +385,7 @@ export default function NewWebinarPage() {
         </section>
 
         {/* Banner Image */}
-        <section className="bg-white rounded-xl shadow-sm p-6">
+        <section className="bg-white rounded-md shadow-sm p-6">
           <h2 className="text-lg font-semibold text-slate-900 mb-6 pb-4 border-b">Banner Image</h2>
           <p className="text-sm text-slate-500 mb-4">This image will be displayed on the webinar page. Recommended: 1920x1080px</p>
 
@@ -434,7 +434,7 @@ export default function NewWebinarPage() {
         </section>
 
         {/* Presenters */}
-        <section className="bg-white rounded-xl shadow-sm p-6">
+        <section className="bg-white rounded-md shadow-sm p-6">
           <div className="flex items-center justify-between mb-6 pb-4 border-b">
             <h2 className="text-lg font-semibold text-slate-900">Presenters</h2>
             <button
@@ -543,7 +543,7 @@ export default function NewWebinarPage() {
         </section>
 
         {/* What You'll Learn */}
-        <section className="bg-white rounded-xl shadow-sm p-6">
+        <section className="bg-white rounded-md shadow-sm p-6">
           <div className="flex items-center justify-between mb-6 pb-4 border-b">
             <h2 className="text-lg font-semibold text-slate-900">What You&apos;ll Learn</h2>
             <button
@@ -584,7 +584,7 @@ export default function NewWebinarPage() {
         </section>
 
         {/* Registration & Recording Links */}
-        <section className="bg-white rounded-xl shadow-sm p-6">
+        <section className="bg-white rounded-md shadow-sm p-6">
           <h2 className="text-lg font-semibold text-slate-900 mb-6 pb-4 border-b">Registration & Recording</h2>
           <div className="space-y-4">
             <div>
@@ -613,7 +613,7 @@ export default function NewWebinarPage() {
         </section>
 
         {/* Status Info */}
-        <section className="bg-slate-50 rounded-xl p-6 border border-slate-200">
+        <section className="bg-slate-50 rounded-md p-6 border border-slate-200">
           <h3 className="text-sm font-semibold text-slate-700 mb-3">Status Guide</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {statusOptions.map(status => (

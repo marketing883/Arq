@@ -176,7 +176,7 @@ export default function NewBlogPostPage() {
             />
 
             {/* Editor */}
-            <div className="bg-white rounded-xl shadow-sm">
+            <div className="bg-white rounded-md shadow-sm">
               <TiptapEditor
                 content={formData.content}
                 onChange={(content) => setFormData(prev => ({ ...prev, content }))}
@@ -188,7 +188,7 @@ export default function NewBlogPostPage() {
           {/* Sidebar */}
           <div className="w-80 flex-shrink-0 space-y-6">
             {/* Post Settings */}
-            <div className="bg-white rounded-xl shadow-sm p-6">
+            <div className="bg-white rounded-md shadow-sm p-6">
               <h3 className="font-semibold text-slate-900 mb-4">Post Settings</h3>
 
               {/* Slug */}
@@ -284,7 +284,7 @@ export default function NewBlogPostPage() {
             </div>
 
             {/* Featured Image */}
-            <div className="bg-white rounded-xl shadow-sm p-6">
+            <div className="bg-white rounded-md shadow-sm p-6">
               <h3 className="font-semibold text-slate-900 mb-4">Featured Image</h3>
 
               {formData.featured_image ? (

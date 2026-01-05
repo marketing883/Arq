@@ -165,7 +165,7 @@ export default function NewWhitepaperPage() {
 
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
         {/* Basic Info */}
-        <section className="bg-white rounded-xl shadow-sm p-6">
+        <section className="bg-white rounded-md shadow-sm p-6">
           <h2 className="text-lg font-semibold text-slate-900 mb-6 pb-4 border-b">Whitepaper Details</h2>
           <div className="space-y-4">
             <div>
@@ -226,7 +226,7 @@ export default function NewWhitepaperPage() {
         </section>
 
         {/* Cover Image */}
-        <section className="bg-white rounded-xl shadow-sm p-6">
+        <section className="bg-white rounded-md shadow-sm p-6">
           <h2 className="text-lg font-semibold text-slate-900 mb-6 pb-4 border-b">Cover Image</h2>
           <p className="text-sm text-slate-500 mb-4">This image will be displayed on the homepage whitepaper section and download cards.</p>
 
@@ -275,7 +275,7 @@ export default function NewWhitepaperPage() {
         </section>
 
         {/* PDF File */}
-        <section className="bg-white rounded-xl shadow-sm p-6">
+        <section className="bg-white rounded-md shadow-sm p-6">
           <h2 className="text-lg font-semibold text-slate-900 mb-6 pb-4 border-b">PDF File</h2>
           <p className="text-sm text-slate-500 mb-4">Upload the whitepaper PDF that users will download.</p>
 

@@ -47,7 +47,7 @@ export function TiptapEditor({ content, onChange, placeholder = "Start writing..
     },
     editorProps: {
       attributes: {
-        class: "prose prose-lg max-w-none focus:outline-none min-h-[400px] px-4 py-3",
+        class: "editor-content max-w-none focus:outline-none min-h-[400px] px-4 py-3",
       },
     },
   });
@@ -126,14 +126,14 @@ export function TiptapEditor({ content, onChange, placeholder = "Start writing..
 
   if (!editor) {
     return (
-      <div className="border border-slate-200 rounded-lg p-4 min-h-[400px] flex items-center justify-center">
+      <div className="border border-slate-200 rounded-md p-4 min-h-[400px] flex items-center justify-center">
         <div className="w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className="border border-slate-200 rounded-lg overflow-hidden bg-white">
+    <div className="border border-slate-200 rounded-md overflow-hidden bg-white">
       {/* Toolbar */}
       <div className="border-b border-slate-200 bg-slate-50 p-2 flex flex-wrap gap-1">
         {/* Text Formatting */}

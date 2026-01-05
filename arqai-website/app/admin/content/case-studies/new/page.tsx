@@ -243,7 +243,7 @@ export default function NewCaseStudyPage() {
 
       <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
         {/* Header Section */}
-        <section className="bg-white rounded-xl shadow-sm p-6">
+        <section className="bg-white rounded-md shadow-sm p-6">
           <h2 className="text-lg font-semibold text-slate-900 mb-6 pb-4 border-b">Header Information</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
@@ -342,7 +342,7 @@ export default function NewCaseStudyPage() {
         </section>
 
         {/* Overview Section */}
-        <section className="bg-white rounded-xl shadow-sm p-6">
+        <section className="bg-white rounded-md shadow-sm p-6">
           <h2 className="text-lg font-semibold text-slate-900 mb-4 pb-4 border-b">Overview</h2>
           <textarea
             value={formData.overview}
@@ -354,7 +354,7 @@ export default function NewCaseStudyPage() {
         </section>
 
         {/* Challenge Section */}
-        <section className="bg-white rounded-xl shadow-sm p-6">
+        <section className="bg-white rounded-md shadow-sm p-6">
           <h2 className="text-lg font-semibold text-slate-900 mb-4 pb-4 border-b">The Challenge</h2>
           <div className="space-y-4">
             <div>
@@ -401,7 +401,7 @@ export default function NewCaseStudyPage() {
         </section>
 
         {/* Solution Section */}
-        <section className="bg-white rounded-xl shadow-sm p-6">
+        <section className="bg-white rounded-md shadow-sm p-6">
           <h2 className="text-lg font-semibold text-slate-900 mb-4 pb-4 border-b">Our Solution</h2>
           <div className="space-y-4">
             <div>
@@ -448,7 +448,7 @@ export default function NewCaseStudyPage() {
         </section>
 
         {/* Metrics Section */}
-        <section className="bg-white rounded-xl shadow-sm p-6">
+        <section className="bg-white rounded-md shadow-sm p-6">
           <h2 className="text-lg font-semibold text-slate-900 mb-4 pb-4 border-b">Key Metrics (max 6)</h2>
           <div className="space-y-4">
             {formData.metrics.map((metric, index) => (
@@ -501,7 +501,7 @@ export default function NewCaseStudyPage() {
         </section>
 
         {/* Impact Section */}
-        <section className="bg-white rounded-xl shadow-sm p-6">
+        <section className="bg-white rounded-md shadow-sm p-6">
           <h2 className="text-lg font-semibold text-slate-900 mb-4 pb-4 border-b">Impact Summary</h2>
           <textarea
             value={formData.impact_summary}
@@ -513,7 +513,7 @@ export default function NewCaseStudyPage() {
         </section>
 
         {/* Testimonial Section */}
-        <section className="bg-white rounded-xl shadow-sm p-6">
+        <section className="bg-white rounded-md shadow-sm p-6">
           <h2 className="text-lg font-semibold text-slate-900 mb-4 pb-4 border-b">Client Testimonial</h2>
           <div className="space-y-4">
             <div>

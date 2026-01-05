@@ -222,7 +222,7 @@ export default function AdminDashboard() {
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl text-red-700 flex items-center gap-3"
+            className="mb-6 p-4 bg-red-50 border border-red-200 rounded-md text-red-700 flex items-center gap-3"
           >
             <svg className="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
@@ -235,10 +235,10 @@ export default function AdminDashboard() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mb-8 p-6 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 rounded-2xl text-white shadow-lg shadow-blue-500/25"
+          className="mb-8 p-6 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 rounded-lg text-white shadow-lg shadow-blue-500/25"
         >
           <div className="flex items-start gap-4">
-            <div className="p-3 bg-white/20 rounded-xl">
+            <div className="p-3 bg-white/20 rounded-md">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
               </svg>
@@ -260,7 +260,7 @@ export default function AdminDashboard() {
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 hover:shadow-md transition-shadow"
+              className="bg-white rounded-lg p-5 shadow-sm border border-slate-200 hover:shadow-md transition-shadow"
             >
               <div className="flex items-center justify-between mb-3">
                 <span className="text-slate-500 text-sm font-medium">Total Leads</span>
@@ -277,7 +277,7 @@ export default function AdminDashboard() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.1 }}
-              className="bg-gradient-to-br from-red-50 to-orange-50 rounded-2xl p-5 shadow-sm border border-red-100 hover:shadow-md transition-shadow"
+              className="bg-gradient-to-br from-red-50 to-orange-50 rounded-lg p-5 shadow-sm border border-red-100 hover:shadow-md transition-shadow"
             >
               <div className="flex items-center justify-between mb-3">
                 <span className="text-red-600 text-sm font-medium">Hot Leads</span>
@@ -295,7 +295,7 @@ export default function AdminDashboard() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2 }}
-              className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-5 shadow-sm border border-green-100 hover:shadow-md transition-shadow"
+              className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-lg p-5 shadow-sm border border-green-100 hover:shadow-md transition-shadow"
             >
               <div className="flex items-center justify-between mb-3">
                 <span className="text-green-600 text-sm font-medium">Qualified</span>
@@ -313,7 +313,7 @@ export default function AdminDashboard() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.3 }}
-              className="bg-gradient-to-br from-purple-50 to-indigo-50 rounded-2xl p-5 shadow-sm border border-purple-100 hover:shadow-md transition-shadow"
+              className="bg-gradient-to-br from-purple-50 to-indigo-50 rounded-lg p-5 shadow-sm border border-purple-100 hover:shadow-md transition-shadow"
             >
               <div className="flex items-center justify-between mb-3">
                 <span className="text-purple-600 text-sm font-medium">Last 24h</span>
@@ -335,7 +335,7 @@ export default function AdminDashboard() {
             <select
               value={filters.intent_category || ""}
               onChange={(e) => setFilters({ ...filters, intent_category: e.target.value || undefined })}
-              className="px-4 py-2.5 bg-white rounded-xl border border-slate-200 text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="px-4 py-2.5 bg-white rounded-md border border-slate-200 text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
               <option value="">All Intent</option>
               <option value="hot">🔥 Hot</option>
@@ -346,7 +346,7 @@ export default function AdminDashboard() {
             <select
               value={filters.urgency || ""}
               onChange={(e) => setFilters({ ...filters, urgency: e.target.value || undefined })}
-              className="px-4 py-2.5 bg-white rounded-xl border border-slate-200 text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="px-4 py-2.5 bg-white rounded-md border border-slate-200 text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
               <option value="">All Urgency</option>
               <option value="immediate">⚡ Immediate</option>
@@ -358,7 +358,7 @@ export default function AdminDashboard() {
             <select
               value={filters.company_size || ""}
               onChange={(e) => setFilters({ ...filters, company_size: e.target.value || undefined })}
-              className="px-4 py-2.5 bg-white rounded-xl border border-slate-200 text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="px-4 py-2.5 bg-white rounded-md border border-slate-200 text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
               <option value="">All Sizes</option>
               <option value="enterprise">🏢 Enterprise</option>
@@ -377,7 +377,7 @@ export default function AdminDashboard() {
             )}
           </div>
 
-          <div className="flex items-center gap-2 bg-slate-100 rounded-xl p-1">
+          <div className="flex items-center gap-2 bg-slate-100 rounded-md p-1">
             <button
               onClick={() => setViewMode("cards")}
               className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
@@ -402,7 +402,7 @@ export default function AdminDashboard() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="bg-white rounded-2xl p-12 text-center shadow-sm border border-slate-200"
+            className="bg-white rounded-lg p-12 text-center shadow-sm border border-slate-200"
           >
             <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <svg className="w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -427,7 +427,7 @@ export default function AdminDashboard() {
                     exit={{ opacity: 0, scale: 0.95 }}
                     transition={{ delay: idx * 0.05 }}
                     onClick={() => setSelectedLead(lead)}
-                    className="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 hover:shadow-lg hover:border-slate-300 cursor-pointer transition-all group"
+                    className="bg-white rounded-lg p-5 shadow-sm border border-slate-200 hover:shadow-lg hover:border-slate-300 cursor-pointer transition-all group"
                   >
                     {/* Priority Badge */}
                     <div className="flex items-start justify-between mb-4">
@@ -482,7 +482,7 @@ export default function AdminDashboard() {
                     </div>
 
                     {/* Recommended Action */}
-                    <div className="mt-3 p-3 bg-slate-50 rounded-xl">
+                    <div className="mt-3 p-3 bg-slate-50 rounded-md">
                       <p className="text-xs text-slate-600">
                         <span className="font-medium">Recommended:</span> {priority.action}
                       </p>
@@ -494,7 +494,7 @@ export default function AdminDashboard() {
           </div>
         ) : (
           /* Table View */
-          <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+          <div className="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead className="bg-slate-50 border-b border-slate-200">
@@ -581,7 +581,7 @@ export default function AdminDashboard() {
                 initial={{ opacity: 0, scale: 0.95, y: 20 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                className="bg-white rounded-3xl shadow-2xl max-w-3xl w-full max-h-[85vh] overflow-hidden"
+                className="bg-white rounded-lg shadow-2xl max-w-3xl w-full max-h-[85vh] overflow-hidden"
                 onClick={(e) => e.stopPropagation()}
               >
                 {/* Modal Header */}
@@ -600,7 +600,7 @@ export default function AdminDashboard() {
                     </div>
                     <button
                       onClick={() => setSelectedLead(null)}
-                      className="p-2 hover:bg-white/10 rounded-xl transition-colors"
+                      className="p-2 hover:bg-white/10 rounded-md transition-colors"
                     >
                       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -610,15 +610,15 @@ export default function AdminDashboard() {
 
                   {/* Quick Stats */}
                   <div className="grid grid-cols-3 gap-4 mt-6">
-                    <div className="bg-white/10 rounded-xl p-3">
+                    <div className="bg-white/10 rounded-md p-3">
                       <p className="text-slate-300 text-xs">Intent Score</p>
                       <p className="text-2xl font-bold text-white">{selectedLead.intelligence.buy_intent_score}/100</p>
                     </div>
-                    <div className="bg-white/10 rounded-xl p-3">
+                    <div className="bg-white/10 rounded-md p-3">
                       <p className="text-slate-300 text-xs">Category</p>
                       <p className="text-xl font-bold text-white capitalize">{selectedLead.intelligence.intent_category}</p>
                     </div>
-                    <div className="bg-white/10 rounded-xl p-3">
+                    <div className="bg-white/10 rounded-md p-3">
                       <p className="text-slate-300 text-xs">Urgency</p>
                       <p className="text-xl font-bold text-white capitalize">{selectedLead.intelligence.urgency}</p>
                     </div>
@@ -631,19 +631,19 @@ export default function AdminDashboard() {
                   <div>
                     <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-3">Contact Details</h3>
                     <div className="grid grid-cols-2 gap-4">
-                      <div className="p-4 bg-slate-50 rounded-xl">
+                      <div className="p-4 bg-slate-50 rounded-md">
                         <p className="text-xs text-slate-500 mb-1">Company</p>
                         <p className="font-medium text-slate-900">{selectedLead.user.company || "Not provided"}</p>
                       </div>
-                      <div className="p-4 bg-slate-50 rounded-xl">
+                      <div className="p-4 bg-slate-50 rounded-md">
                         <p className="text-xs text-slate-500 mb-1">Job Title</p>
                         <p className="font-medium text-slate-900">{selectedLead.user.job_title || "Not provided"}</p>
                       </div>
-                      <div className="p-4 bg-slate-50 rounded-xl">
+                      <div className="p-4 bg-slate-50 rounded-md">
                         <p className="text-xs text-slate-500 mb-1">Phone</p>
                         <p className="font-medium text-slate-900">{selectedLead.user.phone || "Not provided"}</p>
                       </div>
-                      <div className="p-4 bg-slate-50 rounded-xl">
+                      <div className="p-4 bg-slate-50 rounded-md">
                         <p className="text-xs text-slate-500 mb-1">Company Size</p>
                         <p className="font-medium text-slate-900 capitalize">{selectedLead.intelligence.company_size || "Unknown"}</p>
                       </div>
@@ -658,7 +658,7 @@ export default function AdminDashboard() {
                         {Array.from(new Map(selectedLead.intelligence.behavioral_signals.map(s => [s.type + s.content.substring(0, 30), s])).values())
                           .slice(0, 8)
                           .map((signal: BehavioralSignal, idx: number) => (
-                          <div key={idx} className="flex items-start gap-3 p-3 bg-slate-50 rounded-xl">
+                          <div key={idx} className="flex items-start gap-3 p-3 bg-slate-50 rounded-md">
                             <span className="px-2.5 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded-lg whitespace-nowrap">
                               {formatSignalType(signal.type)}
                             </span>
@@ -678,7 +678,7 @@ export default function AdminDashboard() {
                   {selectedLead.intelligence.company_research && (
                     <div>
                       <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-3">Company Research</h3>
-                      <div className="p-4 bg-slate-50 rounded-xl space-y-3">
+                      <div className="p-4 bg-slate-50 rounded-md space-y-3">
                         {selectedLead.intelligence.company_research.industry && (
                           <div>
                             <p className="text-xs text-slate-500">Industry</p>
@@ -705,7 +705,7 @@ export default function AdminDashboard() {
                   {/* Recommended Actions */}
                   <div>
                     <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-3">Recommended Actions</h3>
-                    <div className="p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border border-blue-100">
+                    <div className="p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-md border border-blue-100">
                       <p className="text-blue-800 font-medium">{getPriorityTier(selectedLead).action}</p>
                       {selectedLead.user.email && (
                         <a
