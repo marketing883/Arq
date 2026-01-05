@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { Logo } from "@/components/layout/Logo";
+import Image from "next/image";
 
 export default function AdminLoginPage() {
   const [username, setUsername] = useState("");
@@ -52,7 +52,14 @@ export default function AdminLoginPage() {
         <div className="glass-card p-8">
           {/* Logo */}
           <div className="flex justify-center mb-8">
-            <Logo />
+            <Image
+              src="/img/ArqAI-logo.png"
+              alt="ArqAI - Intelligence, By Design"
+              width={180}
+              height={60}
+              className="h-14 w-auto"
+              priority
+            />
           </div>
 
           <h1 className="text-2xl font-bold text-center text-[var(--arq-black)] mb-2">

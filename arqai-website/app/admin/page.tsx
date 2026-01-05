@@ -3,7 +3,8 @@
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { Logo } from "@/components/layout/Logo";
+import Image from "next/image";
+import Link from "next/link";
 import type { LeadIntelligence, User } from "@/types";
 
 interface LeadData {
@@ -121,7 +122,16 @@ export default function AdminDashboard() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-4">
-              <Logo />
+              <Link href="/">
+                <Image
+                  src="/img/ArqAI-logo.png"
+                  alt="ArqAI - Intelligence, By Design"
+                  width={140}
+                  height={46}
+                  className="h-10 w-auto"
+                  priority
+                />
+              </Link>
               <span className="text-[var(--arq-gray-400)]">|</span>
               <span className="font-semibold text-[var(--arq-gray-700)]">
                 Admin Dashboard
