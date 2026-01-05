@@ -126,12 +126,12 @@ export default function HomePage() {
 
       <main className="bg-base">
         {/* Hero Section */}
-        <section className="mxd-hero min-h-screen flex flex-col justify-between pt-24 pb-12 relative overflow-hidden">
-          <div className="container mx-auto px-4 md:px-6 flex-1 flex flex-col justify-center">
+        <section className="mxd-hero min-h-screen flex flex-col justify-between pt-28 pb-16 relative overflow-hidden">
+          <div className="container mx-auto px-4 md:px-6 lg:px-8 flex-1 flex flex-col justify-center">
             {/* Hero Title */}
-            <div className="relative mb-12">
-              {/* Floating decorative image */}
-              <div className="absolute -right-4 md:right-8 -top-8 md:top-0 w-24 h-24 md:w-40 md:h-40 animate-rotate-slow">
+            <div className="relative mb-16">
+              {/* Floating decorative image - positioned to not overlap text */}
+              <div className="absolute right-0 md:right-0 lg:right-[5%] top-0 md:-top-12 w-20 h-20 md:w-28 md:h-28 lg:w-36 lg:h-36 animate-rotate-slow z-10">
                 <Image
                   src="/img/hero/03_hero-img.webp"
                   alt="Decorative element"
@@ -145,18 +145,18 @@ export default function HomePage() {
                 initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
-                className="text-display-xl md:text-[clamp(4rem,10vw,8rem)] font-display leading-[0.95] text-text-bright"
+                className="text-display-xl md:text-[clamp(3.5rem,8vw,7rem)] font-display leading-[0.95] text-text-bright max-w-[90%] lg:max-w-[85%]"
               >
                 <span className="block">The Enterprise Foundry</span>
                 <span className="flex items-center gap-4 flex-wrap">
-                  <StarIcon className="w-8 h-8 md:w-12 md:h-12 text-additional" />
+                  <StarIcon className="w-6 h-6 md:w-10 md:h-10 text-additional" />
                   <span>for Trusted AI</span>
                 </span>
               </motion.h1>
             </div>
 
             {/* Hero Bottom Section */}
-            <div className="grid md:grid-cols-2 gap-8 items-end">
+            <div className="grid md:grid-cols-2 gap-12 items-end">
               {/* Left Side - Description */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -185,12 +185,12 @@ export default function HomePage() {
                 </div>
               </motion.div>
 
-              {/* Right Side - Video */}
+              {/* Right Side - Video (smaller) */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.4 }}
-                className="relative rounded-lg overflow-hidden aspect-video"
+                className="relative rounded-2xl overflow-hidden aspect-[4/3] max-w-md ml-auto"
               >
                 <video
                   className="w-full h-full object-cover"
@@ -205,9 +205,9 @@ export default function HomePage() {
                 </video>
                 <Link
                   href="/demo"
-                  className="absolute bottom-4 right-4 w-16 h-16 rounded-full bg-additional flex items-center justify-center hover:scale-110 transition-transform"
+                  className="absolute bottom-4 right-4 w-14 h-14 rounded-full bg-additional flex items-center justify-center hover:scale-110 transition-transform"
                 >
-                  <svg className="w-6 h-6 text-base-opp ml-1" fill="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 text-base-opp ml-0.5" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M8 5v14l11-7z" />
                   </svg>
                 </Link>
@@ -283,9 +283,9 @@ export default function HomePage() {
         </section>
 
         {/* Statistics Section */}
-        <section className="py-section-sm bg-base-tint">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+        <section className="py-section bg-base-tint">
+          <div className="container mx-auto px-4 md:px-6 lg:px-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
               {stats.map((stat, index) => (
                 <motion.div
                   key={stat.value}
@@ -293,15 +293,15 @@ export default function HomePage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className="card p-6 md:p-8 text-center"
+                  className="card text-center"
                 >
-                  <div className="text-display-lg md:text-display-xl font-display text-accent mb-2">
+                  <div className="text-display-lg md:text-display-xl font-display text-accent mb-3">
                     {stat.value}
                   </div>
-                  <div className="text-body-md font-medium text-text-bright mb-2">
+                  <div className="text-body-md font-medium text-text-bright mb-3">
                     {stat.label}
                   </div>
-                  <div className="text-body-sm text-text-muted">
+                  <div className="text-body-sm text-text-muted leading-relaxed">
                     {stat.description}
                   </div>
                 </motion.div>
@@ -381,7 +381,7 @@ export default function HomePage() {
               </h2>
             </motion.div>
 
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid md:grid-cols-2 gap-8">
               {products.map((product, index) => (
                 <motion.div
                   key={product.id}
@@ -389,20 +389,18 @@ export default function HomePage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className="card p-6 md:p-8 group hover:border-accent transition-colors"
+                  className="card group hover:border-accent transition-colors"
                 >
-                  <div className="flex items-start justify-between mb-4">
-                    <div>
-                      <span className="tag mb-2">{product.category}</span>
-                      <h3 className="text-display-sm font-display text-text-bright">
-                        {product.name}
-                      </h3>
-                    </div>
-                    <div className="text-body-lg font-medium text-additional">
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="tag">{product.category}</span>
+                    <span className="text-body-sm font-medium text-additional">
                       {product.tagline}
-                    </div>
+                    </span>
                   </div>
-                  <p className="text-body-md text-text-muted">
+                  <h3 className="text-display-sm font-display text-text-bright mb-4">
+                    {product.name}
+                  </h3>
+                  <p className="text-body-md text-text-muted leading-relaxed">
                     {product.description}
                   </p>
                 </motion.div>
@@ -414,11 +412,11 @@ export default function HomePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.4 }}
-                className="card p-6 md:p-8 bg-accent text-base md:col-span-2"
+                className="card bg-accent text-base md:col-span-2"
               >
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
                   <div>
-                    <h3 className="text-display-sm font-display mb-2">
+                    <h3 className="text-display-sm font-display mb-3">
                       Custom Solutions
                     </h3>
                     <p className="text-body-md opacity-80">
@@ -427,7 +425,7 @@ export default function HomePage() {
                   </div>
                   <Link
                     href="/contact"
-                    className="btn btn-outline border-base text-base hover:bg-base hover:text-accent inline-flex items-center gap-2 whitespace-nowrap"
+                    className="btn btn-outline border-base text-base hover:bg-base hover:text-accent"
                   >
                     Let&apos;s Talk
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -442,7 +440,7 @@ export default function HomePage() {
 
         {/* Industries Section */}
         <section className="py-section bg-base">
-          <div className="container mx-auto px-4 md:px-6">
+          <div className="container mx-auto px-4 md:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -458,7 +456,7 @@ export default function HomePage() {
               </h2>
             </motion.div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
               {industries.map((industry, index) => (
                 <motion.div
                   key={industry.name}
@@ -466,12 +464,12 @@ export default function HomePage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className="card p-6 flex flex-col h-full"
+                  className="card flex flex-col h-full"
                 >
                   <h3 className="text-display-sm font-display text-text-bright mb-4">
                     {industry.name}
                   </h3>
-                  <p className="text-body-sm text-text-muted mb-6 flex-1">
+                  <p className="text-body-sm text-text-muted mb-6 flex-1 leading-relaxed">
                     {industry.description}
                   </p>
                   <div className="flex flex-wrap gap-2">
