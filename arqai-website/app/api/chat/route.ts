@@ -27,26 +27,88 @@ import {
 import {
   generateCardCustomizations,
   getCardFollowUp,
-  getContextualWelcome,
 } from "@/lib/chat/contentEngine";
+import { applyRateLimit } from "@/lib/security/rate-limiter";
+import { validateInput, chatMessageSchema, sanitizeString } from "@/lib/security/validation";
+import { analyzePrompt, quickSafetyCheck, sanitizePrompt } from "@/lib/security/prompt-guard";
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
-    const {
-      message,
-      context: clientContext,
-      sessionId: clientSessionId,
-      userContext: serializedUserContext,
-      conversationHistory = [],
-    } = body;
+    // Apply rate limiting
+    const rateLimitResult = applyRateLimit(request, "/api/chat", "chat");
 
-    if (!message) {
+    if (!rateLimitResult.allowed) {
       return NextResponse.json(
-        { error: "Message is required" },
-        { status: 400 }
+        { error: "Too many requests. Please slow down." },
+        {
+          status: 429,
+          headers: rateLimitResult.headers,
+        }
       );
     }
+
+    const body = await request.json();
+
+    // Validate input with zod
+    const validation = validateInput(chatMessageSchema, body);
+    if (!validation.success) {
+      return NextResponse.json(
+        { error: "Invalid input" },
+        { status: 400, headers: rateLimitResult.headers }
+      );
+    }
+
+    const {
+      message: rawMessage,
+      sessionId: clientSessionId,
+      userInfo,
+      pageContext: clientContext,
+      userContext: serializedUserContext,
+    } = validation.data!;
+
+    const conversationHistory = body.conversationHistory || [];
+
+    // ============================================
+    // ArqAI Prompt Guard™ - Multi-layer Protection
+    // ============================================
+
+    // Quick safety check first (fast path)
+    if (!quickSafetyCheck(rawMessage)) {
+      const threatAnalysis = analyzePrompt(rawMessage);
+
+      // Log potential attack for security monitoring
+      console.warn("[SECURITY] Potential prompt injection detected:", {
+        threatLevel: threatAnalysis.threatLevel,
+        score: threatAnalysis.score,
+        sessionId: clientSessionId || "unknown",
+      });
+
+      // If critical threat, reject outright
+      if (threatAnalysis.threatLevel === "critical") {
+        return NextResponse.json(
+          {
+            response: "I'm here to help with questions about ArqAI and enterprise AI governance. How can I assist you today?",
+            morphTrigger: null,
+            sessionId: clientSessionId || uuidv4(),
+            blocked: true,
+          },
+          { headers: rateLimitResult.headers }
+        );
+      }
+
+      // For high threats, use sanitized version
+      if (threatAnalysis.threatLevel === "high" && threatAnalysis.sanitizedInput) {
+        // Continue with sanitized input
+      }
+    }
+
+    // Full threat analysis for logging
+    const threatAnalysis = analyzePrompt(rawMessage);
+
+    // Use sanitized message if there's any threat detected
+    const message = threatAnalysis.safe
+      ? sanitizeString(rawMessage)
+      : sanitizePrompt(rawMessage);
 
     // Get or generate session ID
     const sessionId = clientSessionId || uuidv4();
@@ -105,7 +167,7 @@ export async function POST(request: NextRequest) {
 
     // Build enhanced context for AI response
     const enhancedContext = {
-      ...clientContext,
+      currentPage: clientContext?.path || "/",
       conversationHistory,
       userProfile: {
         industry: userContext.industry,
@@ -183,57 +245,60 @@ export async function POST(request: NextRequest) {
     }
 
     // Process message for lead intelligence (non-blocking)
-    const userInfo = {
+    const leadUserInfo = {
       name: userContext.name || extractedInfo.name,
       email: userContext.email || extractedInfo.email,
       company: userContext.companyName || extractedInfo.company,
       jobTitle: extractedInfo.jobTitle,
     };
 
-    processMessageForIntelligence(sessionId, message, userInfo, conversationHistory)
+    processMessageForIntelligence(sessionId, message, leadUserInfo, conversationHistory)
       .then(({ priorityTier }) => {
         if (priorityTier === "tier1") {
           console.log(`[LEAD ALERT] Hot lead detected in session ${sessionId}`);
         }
       })
       .catch((error) => {
-        console.error("Lead intelligence processing error:", error);
+        console.error("Lead intelligence processing error:", error instanceof Error ? error.message : "Unknown");
       });
 
     // Record session activity (non-blocking)
     recordSession(sessionId, {
       ipAddress,
       userAgent,
-      currentPage: clientContext?.currentPage,
+      currentPage: clientContext?.path,
     }).catch((error) => {
-      console.error("Session recording error:", error);
+      console.error("Session recording error:", error instanceof Error ? error.message : "Unknown");
     });
 
-    return NextResponse.json({
-      response,
-      morphTrigger: morphTrigger
-        ? {
-            type: morphTrigger.cardType,
-            confidence: morphTrigger.confidence,
-            reason: morphTrigger.reason,
-            customizations: cardCustomizations,
-          }
-        : null,
-      cardFollowUp,
-      extractedInfo,
-      usedFallback,
-      sessionId,
-      userContext: serializeContext(userContext),
-      contextSummary: {
-        industry: userContext.industry,
-        painPoints: userContext.painPoints,
-        complianceFrameworks: userContext.complianceFrameworks,
-        engagementLevel: userContext.engagementLevel,
-        completeness: getContextCompleteness(userContext),
+    return NextResponse.json(
+      {
+        response,
+        morphTrigger: morphTrigger
+          ? {
+              type: morphTrigger.cardType,
+              confidence: morphTrigger.confidence,
+              reason: morphTrigger.reason,
+              customizations: cardCustomizations,
+            }
+          : null,
+        cardFollowUp,
+        extractedInfo,
+        usedFallback,
+        sessionId,
+        userContext: serializeContext(userContext),
+        contextSummary: {
+          industry: userContext.industry,
+          painPoints: userContext.painPoints,
+          complianceFrameworks: userContext.complianceFrameworks,
+          engagementLevel: userContext.engagementLevel,
+          completeness: getContextCompleteness(userContext),
+        },
       },
-    });
+      { headers: rateLimitResult.headers }
+    );
   } catch (error) {
-    console.error("Chat API error:", error);
+    console.error("Chat API error:", error instanceof Error ? error.message : "Unknown");
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }
@@ -241,7 +306,7 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// Helper to calculate context completeness (imported separately to avoid circular deps)
+// Helper to calculate context completeness
 function getContextCompleteness(context: UserContext): number {
   let score = 0;
   if (context.industry) score += 20;

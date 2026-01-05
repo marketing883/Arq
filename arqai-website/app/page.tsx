@@ -126,17 +126,17 @@ export default function HomePage() {
 
       <main className="bg-base">
         {/* Hero Section */}
-        <section className="mxd-hero min-h-screen flex flex-col justify-between pt-28 pb-16 relative overflow-hidden">
+        <section className="mxd-hero min-h-screen flex flex-col justify-between pt-40 md:pt-48 pb-16 relative overflow-hidden">
           <div className="container mx-auto px-4 md:px-6 lg:px-8 flex-1 flex flex-col justify-center">
             {/* Hero Title */}
             <div className="relative mb-16">
               {/* Floating decorative image - positioned to not overlap text */}
-              <div className="absolute right-0 md:right-0 lg:right-[5%] top-0 md:-top-12 w-20 h-20 md:w-28 md:h-28 lg:w-36 lg:h-36 animate-rotate-slow z-10">
+              <div className="absolute right-0 md:right-0 lg:right-[5%] top-4 md:top-0 w-16 h-16 md:w-24 md:h-24 lg:w-28 lg:h-28 animate-rotate-slow z-10">
                 <Image
                   src="/img/hero/03_hero-img.webp"
                   alt="Decorative element"
-                  width={160}
-                  height={160}
+                  width={120}
+                  height={120}
                   className="w-full h-full object-contain"
                 />
               </div>
@@ -190,7 +190,7 @@ export default function HomePage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.4 }}
-                className="relative rounded-2xl overflow-hidden aspect-[4/3] max-w-md ml-auto"
+                className="relative rounded-2xl overflow-hidden aspect-video max-w-xs md:max-w-sm ml-auto"
               >
                 <video
                   className="w-full h-full object-cover"
@@ -205,9 +205,9 @@ export default function HomePage() {
                 </video>
                 <Link
                   href="/demo"
-                  className="absolute bottom-4 right-4 w-14 h-14 rounded-full bg-additional flex items-center justify-center hover:scale-110 transition-transform"
+                  className="absolute bottom-3 right-3 w-12 h-12 rounded-full bg-additional flex items-center justify-center hover:scale-110 transition-transform"
                 >
-                  <svg className="w-5 h-5 text-base-opp ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 text-base-opp ml-0.5" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M8 5v14l11-7z" />
                   </svg>
                 </Link>
