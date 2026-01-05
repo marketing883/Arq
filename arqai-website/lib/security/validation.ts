@@ -65,8 +65,21 @@ export const chatMessageSchema = z.object({
       title: z.string().max(200).optional(),
     })
     .optional(),
+  // Also accept 'context' field from frontend (alternative naming)
+  context: z
+    .object({
+      currentPage: z.string().max(500).optional(),
+      userName: z.string().max(100).optional(),
+      userEmail: z.string().max(254).optional(),
+      userCompany: z.string().max(200).optional(),
+    })
+    .optional(),
   userContext: z.string().max(10000).optional(),
-});
+  conversationHistory: z.array(z.object({
+    role: z.enum(["user", "assistant"]),
+    content: z.string().max(10000),
+  })).optional(),
+}).passthrough();
 
 export const consentSchema = z.object({
   consent_given: z.boolean(),
