@@ -68,27 +68,24 @@ export function Header() {
           {/* Logo - Left Side */}
           <Link
             href="/"
-            className="mxd-logo flex items-center gap-2 loading__fade"
+            className="mxd-logo flex items-center loading__fade"
           >
-            {/* Light mode logo (dark logo for light bg) */}
+            {/* Light mode logo */}
             <Image
-              src="/img/favicon/ArqAI-favicon.png"
+              src="/img/arq-ai-logo.svg"
               alt="ArqAI Logo"
-              width={40}
+              width={120}
               height={40}
-              className="w-8 h-8 md:w-10 md:h-10 dark:hidden"
+              className="h-8 md:h-10 w-auto dark:hidden"
             />
-            {/* Dark mode logo (light logo for dark bg) */}
+            {/* Dark mode logo (inverted) */}
             <Image
-              src="/img/favicon/ArqAI-favicon.png"
+              src="/img/arq-ai-logo.svg"
               alt="ArqAI Logo"
-              width={40}
+              width={120}
               height={40}
-              className="w-8 h-8 md:w-10 md:h-10 hidden dark:block brightness-0 invert"
+              className="h-8 md:h-10 w-auto hidden dark:block brightness-0 invert"
             />
-            <span className="mxd-logo__text font-display font-semibold text-xl md:text-2xl text-text-bright">
-              ArqAI
-            </span>
           </Link>
 
           {/* Controls - Right Side */}

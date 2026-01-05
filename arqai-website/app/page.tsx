@@ -476,7 +476,7 @@ export default function HomePage() {
                   transition={{ delay: index * 0.1 }}
                   className="card flex flex-col h-full"
                 >
-                  <h3 className="text-body-md md:text-body-lg font-display text-text-bright mb-4">
+                  <h3 className="text-lg font-display font-semibold text-text-bright mb-4">
                     {industry.name}
                   </h3>
                   <p className="text-body-sm text-text-muted mb-6 flex-1 leading-relaxed">
