@@ -52,8 +52,11 @@ export async function POST(request: NextRequest) {
     // Validate input with zod
     const validation = validateInput(chatMessageSchema, body);
     if (!validation.success) {
+      console.error("[Chat API] Validation failed:", validation.errors);
+      console.error("[Chat API] Request body keys:", Object.keys(body));
+      console.error("[Chat API] Message field:", typeof body.message, body.message?.substring?.(0, 50));
       return NextResponse.json(
-        { error: "Invalid input" },
+        { error: "Invalid input", details: validation.errors },
         { status: 400, headers: rateLimitResult.headers }
       );
     }
