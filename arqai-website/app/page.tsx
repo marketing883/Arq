@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { HomeStructuredData } from "@/components/seo/StructuredData";
-import { StatsSection, homepageStats } from "@/components/sections/StatsSection";
+import { StatsSection } from "@/components/sections/StatsSection";
 import { BlogSectionStatic } from "@/components/sections/BlogSection";
 import { CaseStudiesSectionStatic } from "@/components/sections/CaseStudiesSection";
 import { WhitepaperSectionStatic } from "@/components/sections/WhitepaperSection";
@@ -500,7 +500,7 @@ export default function HomePage() {
         </section>
 
         {/* Animated Stats Section */}
-        <StatsSection stats={homepageStats} />
+        <StatsSection />
 
         {/* Case Studies Section */}
         <CaseStudiesSectionStatic />

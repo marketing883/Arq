@@ -582,6 +582,14 @@
     animation: float 3s ease-in-out infinite;
   }
 
+  .animate-spin-slow {
+    animation: rotateSlow 30s linear infinite;
+  }
+
+  .animate-spin-reverse {
+    animation: rotateSlow 25s linear infinite reverse;
+  }
+
   /* Reveal animation classes */
   .reveal {
     opacity: 0;
