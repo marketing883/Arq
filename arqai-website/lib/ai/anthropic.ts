@@ -130,11 +130,11 @@ export function extractLeadInfo(message: string): Partial<{
     phone: string;
   }> = {};
 
-  // Email regex
-  const emailRegex = /[\w.-]+@[\w.-]+\.\w+/g;
+  // Email regex - case insensitive
+  const emailRegex = /[\w.-]+@[\w.-]+\.\w+/gi;
   const emailMatch = message.match(emailRegex);
   if (emailMatch) {
-    extracted.email = emailMatch[0];
+    extracted.email = emailMatch[0].toLowerCase();
   }
 
   // Phone regex (various formats)
@@ -144,44 +144,65 @@ export function extractLeadInfo(message: string): Partial<{
     extracted.phone = phoneMatch[0];
   }
 
-  // Name patterns (e.g., "I'm John", "My name is John Smith", "This is John")
+  // Enhanced name patterns - much more flexible, handles lowercase input
   const namePatterns = [
-    /(?:i'm|i am|my name is|this is|call me)\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+)?)/i,
-    /^([A-Z][a-z]+(?:\s+[A-Z][a-z]+)?)\s+here/i,
+    // "I'm John Smith" or "I am John" - handles any case
+    /(?:i'?m|i am|my name is|my name's|this is|call me|it's|its|hey,?\s*(?:i'?m|this is)?)\s+([a-z][a-z'-]*(?:\s+[a-z][a-z'-]*)?)/i,
+    // "John here" or "John Smith here"
+    /^([a-z][a-z'-]+(?:\s+[a-z][a-z'-]+)?)\s+here/i,
+    // "name: John" or "name - John Smith" or "name is john"
+    /name(?:\s+is)?[\s:=-]+([a-z][a-z'-]+(?:\s+[a-z][a-z'-]+)?)/i,
+    // Looking for standalone name after greeting: "Hi, I'm john" -> "john"
+    /(?:hi|hello|hey)[,!.]?\s+(?:i'?m|my name is)\s+([a-z][a-z'-]+(?:\s+[a-z][a-z'-]+)?)/i,
   ];
 
   for (const pattern of namePatterns) {
     const match = message.match(pattern);
-    if (match) {
-      extracted.name = match[1];
+    if (match && match[1]) {
+      // Capitalize properly: "john smith" -> "John Smith"
+      const name = match[1].trim();
+      extracted.name = name.split(/\s+/)
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+        .join(' ');
       break;
     }
   }
 
-  // Company patterns
+  // Enhanced company patterns - more flexible
   const companyPatterns = [
-    /(?:work at|work for|from|at|with)\s+([A-Z][A-Za-z0-9\s&]+?)(?:\.|,|$|\s+and|\s+in)/i,
-    /(?:company is|company's|our company)\s+([A-Z][A-Za-z0-9\s&]+?)(?:\.|,|$)/i,
+    /(?:work(?:ing)?\s+(?:at|for)|from|representing|with)\s+([A-Za-z][A-Za-z0-9\s&.'-]+?)(?:\.|,|!|\?|$|\s+and\s|\s+in\s|\s+as\s)/i,
+    /(?:company(?:'s| is| name is)?|our company|organization|business)\s+(?:is\s+)?([A-Za-z][A-Za-z0-9\s&.'-]+?)(?:\.|,|!|\?|$)/i,
+    /(?:we're|we are|i represent)\s+([A-Za-z][A-Za-z0-9\s&.'-]+?)(?:\.|,|!|\?|$|\s+and)/i,
+    /company[\s:=-]+([A-Za-z][A-Za-z0-9\s&.'-]+?)(?:\.|,|!|\?|$)/i,
   ];
 
   for (const pattern of companyPatterns) {
     const match = message.match(pattern);
-    if (match) {
-      extracted.company = match[1].trim();
-      break;
+    if (match && match[1]) {
+      const company = match[1].trim();
+      // Filter out common false positives
+      const falsePositives = ['a', 'the', 'an', 'my', 'our', 'your', 'this', 'that', 'here', 'there'];
+      if (!falsePositives.includes(company.toLowerCase()) && company.length > 1) {
+        extracted.company = company;
+        break;
+      }
     }
   }
 
-  // Job title patterns
+  // Enhanced job title patterns
   const titlePatterns = [
-    /(?:i'm a|i am a|i'm the|i am the|work as a?|my role is|my title is)\s+([A-Za-z\s]+?)(?:\s+at|\s+for|\.|,|$)/i,
+    /(?:i'?m\s+(?:a|the|an)?|i am\s+(?:a|the|an)?|work(?:ing)?\s+as\s+(?:a|an)?|my (?:role|title|position) is)\s+([A-Za-z\s]+?)(?:\s+at|\s+for|\s+in|\.|,|!|\?|$)/i,
+    /(?:role|title|position)[\s:=-]+([A-Za-z\s]+?)(?:\.|,|!|\?|$)/i,
   ];
 
   for (const pattern of titlePatterns) {
     const match = message.match(pattern);
-    if (match) {
-      extracted.jobTitle = match[1].trim();
-      break;
+    if (match && match[1]) {
+      const title = match[1].trim();
+      if (title.length > 1) {
+        extracted.jobTitle = title;
+        break;
+      }
     }
   }
 

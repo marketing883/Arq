@@ -44,7 +44,6 @@ const SIGNAL_PATTERNS = {
     /looking at other/i,
   ],
   timeline_mention: [
-    /when/i,
     /timeline/i,
     /how (long|soon)/i,
     /implement(ation)?/i,
@@ -53,6 +52,7 @@ const SIGNAL_PATTERNS = {
     /deadline/i,
     /quarter/i,
     /this (week|month|year)/i,
+    /next (week|month)/i,
   ],
   pain_point: [
     /challeng(e|ing)/i,
@@ -65,6 +65,8 @@ const SIGNAL_PATTERNS = {
     /compliance (issue|problem|risk)/i,
     /audit/i,
     /regulat/i,
+    /need help/i,
+    /looking for/i,
   ],
   feature_interest: [
     /feature/i,
@@ -72,18 +74,29 @@ const SIGNAL_PATTERNS = {
     /can (you|it|arqai)/i,
     /does (it|arqai)/i,
     /support for/i,
-    /integration/i,
     /how does/i,
+    /automat/i,
+    /workflow/i,
+    /bot/i,
   ],
   demo_request: [
     /demo/i,
     /trial/i,
-    /test/i,
     /poc/i,
     /proof of concept/i,
     /pilot/i,
     /see it in action/i,
     /show me/i,
+    /meeting/i,
+    /schedule/i,
+    /call/i,
+    /talk/i,
+    /discuss/i,
+    /chat with/i,
+    /speak with/i,
+    /connect with/i,
+    /set up/i,
+    /book/i,
   ],
   compliance_mention: [
     /hipaa/i,
@@ -106,6 +119,9 @@ const SIGNAL_PATTERNS = {
     /azure/i,
     /aws/i,
     /slack/i,
+    /erp/i,
+    /crm/i,
+    /salesforce/i,
   ],
 };
 
@@ -333,6 +349,26 @@ export function extractIndustry(messages: string[]): string | undefined {
 }
 
 /**
+ * Deduplicate signals by creating a unique key from type and content
+ */
+function deduplicateSignals(signals: BehavioralSignal[]): BehavioralSignal[] {
+  const seen = new Map<string, BehavioralSignal>();
+
+  for (const signal of signals) {
+    // Create a unique key from type and content (first 50 chars)
+    const contentKey = signal.content.substring(0, 50).toLowerCase().trim();
+    const key = `${signal.type}:${contentKey}`;
+
+    // Keep the signal with higher confidence, or the first one if same
+    if (!seen.has(key) || (seen.get(key)!.confidence < signal.confidence)) {
+      seen.set(key, signal);
+    }
+  }
+
+  return Array.from(seen.values());
+}
+
+/**
  * Generate lead intelligence from conversation data
  */
 export function generateLeadIntelligence(
@@ -347,11 +383,14 @@ export function generateLeadIntelligence(
   existingSignals: BehavioralSignal[] = []
 ): Partial<LeadIntelligence> {
   // Detect new signals from all messages
-  const allSignals = [...existingSignals];
+  const rawSignals = [...existingSignals];
   for (const message of messages) {
     const newSignals = detectBehavioralSignals(message);
-    allSignals.push(...newSignals);
+    rawSignals.push(...newSignals);
   }
+
+  // Deduplicate signals to prevent repetition
+  const allSignals = deduplicateSignals(rawSignals);
 
   // Calculate scores
   const intentScore = calculateIntentScore(allSignals);
