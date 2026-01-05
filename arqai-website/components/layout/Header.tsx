@@ -153,9 +153,9 @@ export function Header() {
             href="/"
             className="mxd-logo flex items-center loading__fade"
           >
-            {/* Light mode logo (blue with tagline) */}
+            {/* Light mode logo (colored) */}
             <Image
-              src="/img/ArqAI-logo.png"
+              src="/img/arq-ai-logo.svg"
               alt="ArqAI - Intelligence, By Design"
               width={180}
               height={60}

@@ -1,15 +1,103 @@
 "use client";
 
+import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { HomeStructuredData } from "@/components/seo/StructuredData";
-import { StatsSection } from "@/components/sections/StatsSection";
+// import { StatsSection } from "@/components/sections/StatsSection"; // Disabled per user request
 import { BlogSectionStatic } from "@/components/sections/BlogSection";
 import { CaseStudiesSectionStatic } from "@/components/sections/CaseStudiesSection";
 import { WhitepaperSectionStatic } from "@/components/sections/WhitepaperSection";
+
+// Scroll-aware marquee component
+function ScrollAwareMarquee({ items, children }: { items: string[]; children?: React.ReactNode }) {
+  const [scrollDirection, setScrollDirection] = useState<"left" | "right">("left");
+  const lastScrollY = useRef(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      if (currentScrollY > lastScrollY.current) {
+        setScrollDirection("left");
+      } else if (currentScrollY < lastScrollY.current) {
+        setScrollDirection("right");
+      }
+      lastScrollY.current = currentScrollY;
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  return (
+    <div className="marquee overflow-hidden">
+      <div
+        className={`marquee__content flex gap-12 ${
+          scrollDirection === "left" ? "animate-marquee" : "animate-marquee-reverse"
+        }`}
+      >
+        {[...items, ...items].map((item, index) => (
+          <span
+            key={index}
+            className="text-display-sm font-display text-base whitespace-nowrap flex items-center gap-4"
+          >
+            {item}
+            <StarIcon className="w-6 h-6" />
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// Animated counter component with rotate/flip effect
+function AnimatedCounter({ value, suffix = "" }: { value: number; suffix?: string }) {
+  const [count, setCount] = useState(0);
+  const ref = useRef<HTMLDivElement>(null);
+  const [hasAnimated, setHasAnimated] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !hasAnimated) {
+          setHasAnimated(true);
+          const duration = 2000;
+          const steps = 60;
+          const increment = value / steps;
+          let current = 0;
+
+          const timer = setInterval(() => {
+            current += increment;
+            if (current >= value) {
+              setCount(value);
+              clearInterval(timer);
+            } else {
+              setCount(Math.floor(current));
+            }
+          }, duration / steps);
+
+          return () => clearInterval(timer);
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => observer.disconnect();
+  }, [value, hasAnimated]);
+
+  return (
+    <div ref={ref} className="inline-block">
+      <span className="tabular-nums">{count}</span>{suffix}
+    </div>
+  );
+}
 
 // Star icon component used throughout the page
 function StarIcon({ className = "" }: { className?: string }) {
@@ -26,12 +114,12 @@ function StarIcon({ className = "" }: { className?: string }) {
   );
 }
 
-// Stats data
+// Stats data with numeric values for animation
 const stats = [
-  { value: "30+", label: "Governed workflows deployed", description: "Pilots to production in 30 days." },
-  { value: "3", label: "Patented technologies", description: "Governance built in, not bolted on." },
-  { value: "20+", label: "Years of expertise", description: "Solving enterprise data, security, and compliance at scale." },
-  { value: "40%", label: "Faster audit preparation", description: "Automatic compliance evidence." },
+  { numValue: 30, suffix: "+", label: "Governed workflows deployed", description: "Pilots to production in 30 days." },
+  { numValue: 3, suffix: "", label: "Patented technologies", description: "Governance built in, not bolted on." },
+  { numValue: 20, suffix: "+", label: "Years of expertise", description: "Solving enterprise data, security, and compliance at scale." },
+  { numValue: 40, suffix: "%", label: "Faster audit preparation", description: "Automatic compliance evidence." },
 ];
 
 // Marquee text items
@@ -292,7 +380,7 @@ export default function HomePage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
               {stats.map((stat, index) => (
                 <motion.div
-                  key={stat.value}
+                  key={stat.label}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -300,7 +388,7 @@ export default function HomePage() {
                   className="card text-center"
                 >
                   <div className="text-6xl md:text-7xl lg:text-8xl font-display font-bold text-accent mb-4 leading-none">
-                    {stat.value}
+                    <AnimatedCounter value={stat.numValue} suffix={stat.suffix} />
                   </div>
                   <div className="text-body-md font-medium text-text-bright mb-3">
                     {stat.label}
@@ -314,21 +402,9 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Marquee Section */}
+        {/* Marquee Section - Scrolls based on user scroll direction */}
         <section className="py-8 bg-accent overflow-hidden">
-          <div className="marquee">
-            <div className="marquee__content animate-marquee flex gap-12">
-              {[...marqueeItems, ...marqueeItems].map((item, index) => (
-                <span
-                  key={index}
-                  className="text-display-sm font-display text-base whitespace-nowrap flex items-center gap-4"
-                >
-                  {item}
-                  <StarIcon className="w-6 h-6" />
-                </span>
-              ))}
-            </div>
-          </div>
+          <ScrollAwareMarquee items={marqueeItems} />
         </section>
 
         {/* Platform Overview Section */}
@@ -430,16 +506,16 @@ export default function HomePage() {
               >
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
                   <div>
-                    <h3 className="text-display-sm font-display mb-3 text-white dark:text-black">
+                    <h3 className="text-display-sm font-display mb-3 text-white">
                       Custom Solutions
                     </h3>
-                    <p className="text-body-md text-white/80 dark:text-black/80">
+                    <p className="text-body-md text-white/80">
                       30-day deployment. We build governed AI solutions tailored to your specific workflows.
                     </p>
                   </div>
                   <Link
                     href="/contact"
-                    className="btn btn-outline border-white text-white hover:bg-white hover:text-accent"
+                    className="btn btn-outline border-white text-white hover:bg-white hover:text-accent dark:border-black dark:bg-black dark:text-white dark:hover:bg-white dark:hover:text-black transition-all"
                   >
                     Let&apos;s Talk
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -480,7 +556,7 @@ export default function HomePage() {
                   transition={{ delay: index * 0.1 }}
                   className="card flex flex-col h-full"
                 >
-                  <h3 className="text-lg font-display font-semibold text-text-bright mb-4">
+                  <h3 className="text-2xl font-display font-semibold text-text-bright mb-4">
                     {industry.name}
                   </h3>
                   <p className="text-body-sm text-text-muted mb-6 flex-1 leading-relaxed">
@@ -499,8 +575,8 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Animated Stats Section */}
-        <StatsSection />
+        {/* Animated Stats Section - Disabled per user request */}
+        {/* <StatsSection /> */}
 
         {/* Case Studies Section */}
         <CaseStudiesSectionStatic />

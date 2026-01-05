@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { StatsSection } from "@/components/sections/StatsSection";
+// import { StatsSection } from "@/components/sections/StatsSection"; // Disabled per user request
 
 const values = [
   {
@@ -81,8 +81,8 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Stats Section */}
-        <StatsSection />
+        {/* Stats Section - Disabled per user request */}
+        {/* <StatsSection /> */}
 
         {/* Mission Section */}
         <section className="py-20 bg-white dark:bg-[var(--arq-gray-800)]">

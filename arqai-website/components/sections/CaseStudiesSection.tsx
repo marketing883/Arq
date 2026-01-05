@@ -19,12 +19,20 @@ interface CaseStudiesSectionProps {
   caseStudies: CaseStudy[];
 }
 
-const industryColors: Record<string, string> = {
-  "Financial Services": "from-blue-500 to-blue-700",
-  "Healthcare": "from-green-500 to-green-700",
-  "Insurance": "from-purple-500 to-purple-700",
-  "Government": "from-gray-500 to-gray-700",
-};
+// Star icon - matching the site design
+function StarIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 20 20"
+      fill="currentColor"
+      className={className}
+    >
+      <path d="M19.6,9.6h-3.9c-.4,0-1.8-.2-1.8-.2-.6,0-1.1-.2-1.6-.6-.5-.3-.9-.8-1.2-1.2-.3-.4-.4-.9-.5-1.4,0,0,0-1.1-.2-1.5V.4c0-.2-.2-.4-.4-.4s-.4.2-.4.4v4.4c0,.4-.2,1.5-.2,1.5,0,.5-.2,1-.5,1.4-.3.5-.7.9-1.2,1.2s-1,.5-1.6.6c0,0-1.2,0-1.7.2H.4c-.2,0-.4.2-.4.4s.2.4.4.4h4.1c.4,0,1.7.2,1.7.2.6,0,1.1.2,1.6.6.4.3.8.7,1.1,1.1.3.5.5,1,.6,1.6,0,0,0,1.3.2,1.7v4.1c0,.2.2.4.4.4s.4-.2.4-.4v-4.1c0-.4.2-1.7.2-1.7,0-.6.2-1.1.6-1.6.3-.4.7-.8,1.1-1.1.5-.3,1-.5,1.6-.6,0,0,1.3,0,1.8-.2h3.9c.2,0,.4-.2.4-.4s-.2-.4-.4-.4h0Z" />
+    </svg>
+  );
+}
 
 export function CaseStudiesSection({ caseStudies }: CaseStudiesSectionProps) {
   if (!caseStudies || caseStudies.length === 0) {
@@ -32,140 +40,171 @@ export function CaseStudiesSection({ caseStudies }: CaseStudiesSectionProps) {
   }
 
   return (
-    <section className="py-20 bg-white dark:bg-[var(--arq-gray-800)]">
+    <section className="py-section bg-base">
       <div className="container mx-auto px-4 md:px-6">
-        {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-12"
-        >
-          <span className="inline-block px-4 py-2 rounded-full bg-[var(--arq-lime)]/20 text-[var(--arq-lime-dark)] dark:text-[var(--arq-lime)] text-sm font-semibold mb-4">
-            Customer Success
-          </span>
-          <h2 className="text-3xl md:text-4xl font-bold text-[var(--arq-black)] dark:text-white mb-4">
-            Real Results from Real Enterprises
-          </h2>
-          <p className="text-[var(--arq-gray-600)] dark:text-[var(--arq-gray-400)] max-w-2xl mx-auto">
-            See how leading organizations are transforming their AI operations with ArqAI
-          </p>
-        </motion.div>
+        {/* Section Header - matches old design "Real Products. Real Results." */}
+        <div className="grid grid-cols-12 gap-6 mb-12">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="col-span-12 lg:col-span-6"
+          >
+            <h2 className="text-display-lg font-display text-text-bright">
+              Real Products. Real Results.
+            </h2>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="col-span-12 lg:col-span-3"
+          >
+            <p className="text-body-md text-text-muted">Proven</p>
+            <p className="text-body-md text-text-muted">Scalable</p>
+            <p className="text-body-md text-text-muted">Impactful.</p>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="col-span-12 lg:col-span-3 flex lg:justify-end items-start"
+          >
+            <Link
+              href="/case-studies"
+              className="btn btn-outline group"
+            >
+              <span>View All Case Studies</span>
+              <svg className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
+              </svg>
+            </Link>
+          </motion.div>
+        </div>
 
-        {/* Case Studies Grid */}
-        <div className="grid md:grid-cols-2 gap-8">
-          {caseStudies.slice(0, 2).map((study, index) => (
+        {/* Case Studies List - Clean list design matching old template */}
+        <div className="space-y-0">
+          {caseStudies.map((study, index) => (
             <motion.div
               key={study.id}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: index * 0.2 }}
+              transition={{ delay: index * 0.1 }}
               className="group"
             >
-              <Link href={`/customers/${study.slug}`}>
-                <div className="bg-[var(--arq-gray-50)] dark:bg-[var(--arq-gray-900)] rounded-2xl overflow-hidden border border-[var(--arq-gray-200)] dark:border-[var(--arq-gray-700)] hover:border-[var(--arq-blue)] transition-all duration-300 h-full">
-                  {/* Header with gradient */}
-                  <div className={`bg-gradient-to-r ${industryColors[study.industry] || "from-[var(--arq-blue)] to-[var(--arq-blue-dark)]"} p-6`}>
-                    <div className="flex items-center gap-3 mb-4">
-                      <span className="text-white/90 text-sm font-medium">{study.industry}</span>
+              {/* Top border */}
+              <div className="h-px bg-stroke-muted" />
+
+              <Link href={`/case-studies/${study.slug}`} className="block py-8 hover:bg-base-tint/50 transition-colors -mx-4 px-4 md:-mx-6 md:px-6">
+                <div className="grid grid-cols-12 gap-6 items-start">
+                  {/* Icon */}
+                  <div className="col-span-12 md:col-span-2 lg:col-span-1">
+                    <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center">
+                      <StarIcon className="w-6 h-6 text-accent" />
                     </div>
-                    <h3 className="text-xl font-bold text-white mb-2">{study.client_name}</h3>
-                    <p className="text-white/80 text-sm">{study.title}</p>
                   </div>
 
-                  {/* Content */}
-                  <div className="p-6">
-                    <div className="mb-4">
-                      <p className="text-xs font-semibold text-[var(--arq-gray-500)] uppercase tracking-wider mb-2">
-                        Challenge
-                      </p>
-                      <p className="text-[var(--arq-gray-700)] dark:text-[var(--arq-gray-300)] text-sm line-clamp-2">
-                        {study.challenge_summary}
-                      </p>
-                    </div>
+                  {/* Title & Meta */}
+                  <div className="col-span-12 md:col-span-4 lg:col-span-3">
+                    <h3 className="text-lg font-display font-semibold text-text-bright mb-2 group-hover:text-accent transition-colors">
+                      {study.client_name}
+                    </h3>
+                    <p className="text-body-sm text-text-muted">
+                      <strong>Industry:</strong> {study.industry}
+                    </p>
+                    <p className="text-body-sm text-text-muted">
+                      <strong>Solution:</strong> {study.title}
+                    </p>
+                  </div>
 
-                    {study.key_metrics && study.key_metrics.length > 0 && (
-                      <div className="grid grid-cols-2 gap-4 mb-4">
+                  {/* Results */}
+                  <div className="col-span-12 md:col-span-6 lg:col-span-7">
+                    <p className="text-body-sm font-semibold text-text-bright mb-2">Results:</p>
+                    {study.key_metrics && study.key_metrics.length > 0 ? (
+                      <ul className="space-y-1">
                         {study.key_metrics.slice(0, 4).map((metric, i) => (
-                          <div key={i} className="text-center p-3 bg-white dark:bg-[var(--arq-gray-800)] rounded-lg">
-                            <div className="text-xl font-bold text-[var(--arq-blue)]">
-                              {metric.value}
-                            </div>
-                            <div className="text-xs text-[var(--arq-gray-500)]">
-                              {metric.label}
-                            </div>
-                          </div>
+                          <li key={i} className="text-body-sm text-text-muted flex items-start gap-2">
+                            <span className="text-accent">•</span>
+                            <span><strong className="text-accent">{metric.value}</strong> {metric.label}</span>
+                          </li>
                         ))}
-                      </div>
+                      </ul>
+                    ) : (
+                      <p className="text-body-sm text-text-muted">{study.results_summary}</p>
                     )}
+                  </div>
 
-                    <span className="inline-flex items-center gap-2 text-[var(--arq-blue)] font-medium text-sm group-hover:gap-3 transition-all">
-                      Read Case Study
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  {/* Arrow - shows on hover */}
+                  <div className="hidden lg:flex col-span-1 items-center justify-end">
+                    <div className="w-10 h-10 rounded-full bg-accent flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                      <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
                       </svg>
-                    </span>
+                    </div>
                   </div>
                 </div>
               </Link>
+
+              {/* Bottom border for last item */}
+              {index === caseStudies.length - 1 && (
+                <div className="h-px bg-stroke-muted" />
+              )}
             </motion.div>
           ))}
         </div>
-
-        {/* View All Link */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.4 }}
-          className="text-center mt-10"
-        >
-          <Link
-            href="/customers"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--arq-blue)] text-white font-semibold rounded-full hover:bg-[var(--arq-blue-dark)] transition-colors"
-          >
-            View All Case Studies
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </Link>
-        </motion.div>
       </div>
     </section>
   );
 }
 
-// Placeholder case studies for fallback
+// Placeholder case studies for fallback - matching the old design's data format
 const placeholderStudies: CaseStudy[] = [
   {
     id: "1",
-    slug: "global-bank-loan-underwriting",
-    title: "Automated Loan Underwriting with 100% Audit Compliance",
-    client_name: "Top 5 Global Bank",
-    industry: "Financial Services",
-    challenge_summary: "Manual compliance checks were slowing loan processing by 70%, creating bottlenecks and customer dissatisfaction.",
-    results_summary: "Achieved 70% faster underwriting with zero regulatory findings and $2.3M annual savings.",
+    slug: "devsecops-saas-company",
+    title: "ArqRelease",
+    client_name: "DevSecOps Team, SaaS Company",
+    industry: "B2B SaaS",
+    challenge_summary: "Security review bottlenecks and cloud waste.",
+    results_summary: "Reduced security review time from 6 weeks to 4 days with $230K annual savings.",
     key_metrics: [
-      { label: "Faster Processing", value: "70%" },
-      { label: "Audit Compliance", value: "100%" },
-      { label: "Annual Savings", value: "$2.3M" },
-      { label: "Regulatory Issues", value: "Zero" },
+      { label: "security review (6 weeks → 4 days)", value: "96%" },
+      { label: "annual savings in cloud waste prevention", value: "$230K" },
+      { label: "compliance violations in 18 months", value: "Zero" },
+      { label: "increase in deployment frequency", value: "2.5x" },
     ],
   },
   {
     id: "2",
-    slug: "healthcare-hipaa-compliance",
-    title: "HIPAA-Compliant Patient Data Management at Scale",
-    client_name: "Major Health System",
-    industry: "Healthcare",
-    challenge_summary: "Needed AI for patient data summarization without risking HIPAA violations across multiple facilities.",
-    results_summary: "50% reduced admin time with 100% HIPAA compliance and 3x AI deployment scale.",
+    slug: "finops-ecommerce-platform",
+    title: "ArqOptimize",
+    client_name: "FinOps Team, E-commerce Platform",
+    industry: "E-commerce",
+    challenge_summary: "Cloud cost visibility and anomaly detection challenges.",
+    results_summary: "42% reduction in monthly cloud spend with 90% faster anomaly detection.",
     key_metrics: [
-      { label: "Admin Time Saved", value: "50%" },
-      { label: "HIPAA Compliance", value: "100%" },
-      { label: "Care Coordination", value: "+40%" },
-      { label: "Deployment Scale", value: "3x" },
+      { label: "reduction in monthly cloud spend", value: "42%" },
+      { label: "faster anomaly detection (minutes vs. days)", value: "90%" },
+      { label: "Real-time cost attribution across 40+ teams", value: "40+" },
+      { label: "developer complaints about resource constraints", value: "Zero" },
+    ],
+  },
+  {
+    id: "3",
+    slug: "ai-team-investment-firm",
+    title: "ArqIntel",
+    client_name: "AI Team, Investment Firm (Pilot)",
+    industry: "Private Equity / Venture Capital",
+    challenge_summary: "Inconsistent deal screening and slow due diligence process.",
+    results_summary: "68% reduction in initial screening time with 100% consistent scoring.",
+    key_metrics: [
+      { label: "reduction in initial screening time", value: "68%" },
+      { label: "consistent scoring across all deals", value: "100%" },
+      { label: "Audit-ready reports in hours, not weeks", value: "Hours" },
+      { label: "regulatory concerns in 6-month pilot", value: "Zero" },
     ],
   },
 ];

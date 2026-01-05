@@ -99,6 +99,10 @@ const config: Config = {
           "0%": { transform: "translateX(0%)" },
           "100%": { transform: "translateX(-50%)" },
         },
+        "marquee-reverse": {
+          "0%": { transform: "translateX(-50%)" },
+          "100%": { transform: "translateX(0%)" },
+        },
         "rotate": {
           "0%": { transform: "rotate(0deg)" },
           "100%": { transform: "rotate(360deg)" },
@@ -117,6 +121,7 @@ const config: Config = {
         "fade-in": "fade-in 0.4s ease-out forwards",
         "scale-in": "scale-in 0.4s ease-out forwards",
         "marquee": "marquee 30s linear infinite",
+        "marquee-reverse": "marquee-reverse 30s linear infinite",
         "rotate-slow": "rotate 20s linear infinite",
         "rotate-reverse": "rotate 20s linear infinite reverse",
         "pulse-glow": "pulse-glow 2s ease-in-out infinite",
