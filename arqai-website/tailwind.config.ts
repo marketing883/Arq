@@ -50,11 +50,11 @@ const config: Config = {
         sans: ['"Funnel Sans"', "sans-serif"],
       },
       fontSize: {
-        // Matching the template sizes
-        "display-xl": ["clamp(3rem, 8vw, 8rem)", { lineHeight: "1", letterSpacing: "-0.02em" }],
-        "display-lg": ["clamp(2.5rem, 6vw, 6rem)", { lineHeight: "1.05", letterSpacing: "-0.02em" }],
-        "display-md": ["clamp(2rem, 4vw, 4rem)", { lineHeight: "1.1", letterSpacing: "-0.01em" }],
-        "display-sm": ["clamp(1.5rem, 3vw, 2.5rem)", { lineHeight: "1.2", letterSpacing: "-0.01em" }],
+        // Matching the template sizes (H2 sizes reduced by 10%)
+        "display-xl": ["clamp(2.7rem, 7.2vw, 7.2rem)", { lineHeight: "1", letterSpacing: "-0.02em" }],
+        "display-lg": ["clamp(2.25rem, 5.4vw, 5.4rem)", { lineHeight: "1.05", letterSpacing: "-0.02em" }],
+        "display-md": ["clamp(1.8rem, 3.6vw, 3.6rem)", { lineHeight: "1.1", letterSpacing: "-0.01em" }],
+        "display-sm": ["clamp(1.35rem, 2.7vw, 2.25rem)", { lineHeight: "1.2", letterSpacing: "-0.01em" }],
         "body-lg": ["1.25rem", { lineHeight: "1.6" }],
         "body-md": ["1.125rem", { lineHeight: "1.6" }],
         "body-sm": ["1rem", { lineHeight: "1.6" }],

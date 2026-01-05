@@ -610,7 +610,7 @@ export default function HomePage() {
                 Our Technology
               </p>
               <h2 className="text-display-lg font-display text-base">
-                Three Core Technologies
+                Three Proprietary Technologies
               </h2>
             </motion.div>
 
