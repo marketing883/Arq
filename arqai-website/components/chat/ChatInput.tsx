@@ -52,13 +52,13 @@ export function ChatInput({ onSend, disabled = false, onFocus, compact = false }
           placeholder="Ask ArqAI anything..."
           disabled={disabled}
           rows={1}
-          className="flex-1 resize-none bg-transparent px-2 py-2 text-sm focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed placeholder:text-[var(--arq-gray-400)]"
+          className="flex-1 resize-none bg-transparent px-2 py-2 text-sm focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed placeholder:text-gray-400 text-gray-900 dark:text-gray-100"
           style={{ maxHeight: "40px" }}
         />
         <button
           type="submit"
           disabled={!message.trim() || disabled}
-          className="w-9 h-9 rounded-full bg-[var(--arq-blue)] text-white flex items-center justify-center hover:bg-[var(--arq-blue-dark)] transition-colors disabled:opacity-30 disabled:cursor-not-allowed flex-shrink-0"
+          className="w-9 h-9 rounded-full bg-[#0432a5] text-white flex items-center justify-center hover:bg-[#02256f] transition-colors disabled:opacity-30 disabled:cursor-not-allowed flex-shrink-0"
           aria-label="Send message"
         >
           <SendIcon size={16} />
@@ -70,7 +70,7 @@ export function ChatInput({ onSend, disabled = false, onFocus, compact = false }
   return (
     <form
       onSubmit={handleSubmit}
-      className="border-t border-[var(--arq-gray-200)] p-3"
+      className="border-t border-gray-200 dark:border-gray-700 p-3"
     >
       <div className="flex items-end gap-2">
         <textarea
@@ -82,19 +82,19 @@ export function ChatInput({ onSend, disabled = false, onFocus, compact = false }
           placeholder="Type your message..."
           disabled={disabled}
           rows={1}
-          className="flex-1 resize-none rounded-xl border border-[var(--arq-gray-200)] px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--arq-blue)] focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed bg-white"
+          className="flex-1 resize-none rounded-xl border border-gray-200 dark:border-gray-700 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#0432a5] focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
           style={{ maxHeight: "120px" }}
         />
         <button
           type="submit"
           disabled={!message.trim() || disabled}
-          className="w-9 h-9 rounded-full bg-[var(--arq-blue)] text-white flex items-center justify-center hover:bg-[var(--arq-blue-dark)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0"
+          className="w-9 h-9 rounded-full bg-[#0432a5] text-white flex items-center justify-center hover:bg-[#02256f] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0"
           aria-label="Send message"
         >
           <SendIcon size={16} />
         </button>
       </div>
-      <p className="text-xs text-[var(--arq-gray-400)] mt-2 text-center">
+      <p className="text-xs text-gray-400 mt-2 text-center">
         Press Enter to send, Shift+Enter for new line
       </p>
     </form>

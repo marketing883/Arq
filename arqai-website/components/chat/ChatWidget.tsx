@@ -225,22 +225,22 @@ export function ChatWidget() {
               animate={{ opacity: 1, height: "350px", y: 0 }}
               exit={{ opacity: 0, height: 0, y: 10 }}
               transition={{ duration: 0.2, ease: "easeOut" }}
-              className="mb-2 bg-white border border-[var(--arq-gray-200)] rounded-2xl shadow-xl overflow-hidden flex flex-col"
+              className="mb-2 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-xl overflow-hidden flex flex-col"
             >
               {/* Header */}
-              <div className="flex items-center justify-between px-4 py-2 border-b border-[var(--arq-gray-100)] bg-[var(--arq-gray-50)]">
+              <div className="flex items-center justify-between px-4 py-2 border-b border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-800">
                 <div className="flex items-center gap-2">
                   <div className="w-6 h-6 flex items-center justify-center">
                     <LogoIcon size={22} />
                   </div>
-                  <span className="text-sm font-medium text-[var(--arq-black)]">ArqAI Assistant</span>
+                  <span className="text-sm font-medium text-gray-900 dark:text-gray-100">ArqAI Assistant</span>
                   {isTyping && (
-                    <span className="text-xs text-[var(--arq-gray-500)]">typing...</span>
+                    <span className="text-xs text-gray-500 dark:text-gray-400">typing...</span>
                   )}
                 </div>
                 <button
                   onClick={() => setIsExpanded(false)}
-                  className="p-1.5 text-[var(--arq-gray-400)] hover:text-[var(--arq-gray-600)] hover:bg-[var(--arq-gray-100)] rounded-lg transition-colors"
+                  className="p-1.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
                   aria-label="Minimize"
                 >
                   <MinimizeIcon size={16} />
@@ -248,16 +248,16 @@ export function ChatWidget() {
               </div>
 
               {/* Messages */}
-              <div className="flex-1 overflow-y-auto px-4 py-3 space-y-3">
+              <div className="flex-1 overflow-y-auto px-4 py-3 space-y-3 bg-white dark:bg-gray-900">
                 {messages.map((message) => (
                   <ChatMessage key={message.id} message={message} />
                 ))}
 
                 {isTyping && (
                   <div className="flex items-center gap-1.5">
-                    <span className="w-2 h-2 bg-[var(--arq-gray-400)] rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
-                    <span className="w-2 h-2 bg-[var(--arq-gray-400)] rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
-                    <span className="w-2 h-2 bg-[var(--arq-gray-400)] rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+                    <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
+                    <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
+                    <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
                   </div>
                 )}
 
@@ -286,7 +286,7 @@ export function ChatWidget() {
 
         {/* Input Bar - Always Visible */}
         <div
-          className={`bg-white border border-[var(--arq-gray-200)] rounded-full shadow-lg transition-shadow ${
+          className={`bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-full shadow-lg transition-shadow ${
             isExpanded ? "shadow-xl" : "hover:shadow-xl"
           }`}
         >
