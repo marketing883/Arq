@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 
@@ -8,7 +8,8 @@ interface Whitepaper {
   id: string;
   title: string;
   description: string;
-  cover_image_url?: string;
+  cover_image?: string;
+  file_url?: string;
   page_count?: number;
   topics?: string[];
 }
@@ -130,9 +131,9 @@ export function WhitepaperSection({ whitepaper }: WhitepaperSectionProps) {
                 <div className="absolute inset-0 bg-black/20 rounded-lg transform rotate-3 translate-x-4 translate-y-4" />
                 <div className="absolute inset-0 bg-black/10 rounded-lg transform rotate-1 translate-x-2 translate-y-2" />
                 <div className="relative bg-white rounded-lg shadow-2xl overflow-hidden h-full">
-                  {whitepaper.cover_image_url ? (
+                  {whitepaper.cover_image ? (
                     <Image
-                      src={whitepaper.cover_image_url}
+                      src={whitepaper.cover_image}
                       alt={whitepaper.title}
                       fill
                       className="object-cover"
@@ -264,21 +265,42 @@ export function WhitepaperSection({ whitepaper }: WhitepaperSectionProps) {
   );
 }
 
-// Static placeholder version
-export function WhitepaperSectionStatic() {
-  const placeholderWhitepaper: Whitepaper = {
-    id: "enterprise-ai-governance-2025",
-    title: "The Enterprise AI Governance Playbook 2025",
-    description: "Your comprehensive guide to building compliant, secure, and scalable AI operations. Learn from the strategies used by Fortune 500 companies to deploy AI at scale.",
-    page_count: 45,
-    topics: [
-      "Building a governance-first AI strategy",
-      "Compliance frameworks for regulated industries",
-      "Zero-trust security architecture for AI agents",
-      "Measuring and optimizing AI workforce ROI",
-      "Case studies from financial services and healthcare",
-    ],
-  };
+// Placeholder whitepaper for fallback
+const placeholderWhitepaper: Whitepaper = {
+  id: "enterprise-ai-governance-2025",
+  title: "The Enterprise AI Governance Playbook 2025",
+  description: "Your comprehensive guide to building compliant, secure, and scalable AI operations. Learn from the strategies used by Fortune 500 companies to deploy AI at scale.",
+  page_count: 45,
+  topics: [
+    "Building a governance-first AI strategy",
+    "Compliance frameworks for regulated industries",
+    "Zero-trust security architecture for AI agents",
+    "Measuring and optimizing AI workforce ROI",
+    "Case studies from financial services and healthcare",
+  ],
+};
 
-  return <WhitepaperSection whitepaper={placeholderWhitepaper} />;
+// Dynamic version that fetches from database
+export function WhitepaperSectionStatic() {
+  const [whitepaper, setWhitepaper] = useState<Whitepaper>(placeholderWhitepaper);
+
+  useEffect(() => {
+    async function fetchWhitepaper() {
+      try {
+        const response = await fetch("/api/whitepapers/featured");
+        if (response.ok) {
+          const data = await response.json();
+          if (data.whitepaper) {
+            setWhitepaper(data.whitepaper);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching whitepaper:", error);
+      }
+    }
+
+    fetchWhitepaper();
+  }, []);
+
+  return <WhitepaperSection whitepaper={whitepaper} />;
 }
