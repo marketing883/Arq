@@ -272,22 +272,22 @@
     padding-right: 1.5rem;
   }
 
-  /* Section spacing - more generous padding */
+  /* Section spacing - balanced padding */
   .section,
   .py-section {
-    padding-top: clamp(6rem, 15vw, 14rem);
-    padding-bottom: clamp(6rem, 15vw, 14rem);
+    padding-top: clamp(3rem, 7.5vw, 7rem);
+    padding-bottom: clamp(3rem, 7.5vw, 7rem);
   }
 
   .section-sm {
-    padding-top: clamp(4rem, 10vw, 8rem);
-    padding-bottom: clamp(4rem, 10vw, 8rem);
+    padding-top: clamp(2rem, 5vw, 4rem);
+    padding-bottom: clamp(2rem, 5vw, 4rem);
   }
 
   /* Section header with breathing room */
   .section-header {
-    padding-top: clamp(2rem, 5vw, 4rem);
-    margin-bottom: clamp(3.5rem, 8vw, 6rem);
+    padding-top: clamp(1rem, 2.5vw, 2rem);
+    margin-bottom: clamp(2rem, 4vw, 3rem);
   }
 
   /* Button styles matching original */
