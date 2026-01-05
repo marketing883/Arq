@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useCallback } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useCallback, useEffect } from "react";
+import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { TiptapEditor } from "@/components/editor/TiptapEditor";
@@ -16,8 +16,12 @@ const categories = [
   "Best Practices",
 ];
 
-export default function NewBlogPostPage() {
+export default function EditBlogPostPage() {
   const router = useRouter();
+  const params = useParams();
+  const postId = params.id as string;
+
+  const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     title: "",
@@ -29,10 +33,46 @@ export default function NewBlogPostPage() {
     tags: [] as string[],
     author: "ArqAI Team",
     status: "draft" as "draft" | "published",
+    published_at: null as string | null,
   });
   const [tagInput, setTagInput] = useState("");
   const [isUploadingImage, setIsUploadingImage] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
+
+  useEffect(() => {
+    async function fetchPost() {
+      try {
+        const response = await fetch(`/api/admin/content/blog/${postId}`);
+        if (response.ok) {
+          const data = await response.json();
+          if (data.item) {
+            setFormData({
+              title: data.item.title || "",
+              slug: data.item.slug || "",
+              excerpt: data.item.excerpt || "",
+              content: data.item.content || "",
+              featured_image: data.item.featured_image || "",
+              category: data.item.category || "",
+              tags: data.item.tags || [],
+              author: data.item.author || "ArqAI Team",
+              status: data.item.status || "draft",
+              published_at: data.item.published_at || null,
+            });
+          }
+        } else {
+          alert("Failed to load blog post");
+          router.push("/admin/content");
+        }
+      } catch (error) {
+        console.error("Error fetching post:", error);
+        alert("Failed to load blog post");
+        router.push("/admin/content");
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    fetchPost();
+  }, [postId, router]);
 
   const generateSlug = (title: string) => {
     return title
@@ -46,7 +86,6 @@ export default function NewBlogPostPage() {
     setFormData(prev => ({
       ...prev,
       title,
-      slug: prev.slug || generateSlug(title),
     }));
   };
 
@@ -122,9 +161,10 @@ export default function NewBlogPostPage() {
     setIsSubmitting(true);
     try {
       const response = await fetch("/api/admin/content/blog", {
-        method: "POST",
+        method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          id: postId,
           ...formData,
           status: publishStatus,
           slug: formData.slug || generateSlug(formData.title),
@@ -136,15 +176,23 @@ export default function NewBlogPostPage() {
       if (data.success) {
         router.push("/admin/content");
       } else {
-        alert(data.error || "Failed to create blog post");
+        alert(data.error || "Failed to update blog post");
       }
     } catch (error) {
       console.error("Submit error:", error);
-      alert("Failed to create blog post");
+      alert("Failed to update blog post");
     } finally {
       setIsSubmitting(false);
     }
   };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-slate-100 flex items-center justify-center">
+        <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-slate-100">
@@ -163,6 +211,13 @@ export default function NewBlogPostPage() {
               <Image src="/img/ArqAI-logo.png" alt="ArqAI" width={100} height={32} className="h-7 w-auto" />
             </div>
             <div className="flex items-center gap-3">
+              <Link
+                href={`/blog/${formData.slug}`}
+                target="_blank"
+                className="px-4 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-50"
+              >
+                Preview
+              </Link>
               <button
                 onClick={() => handleSubmit("draft")}
                 disabled={isSubmitting}
@@ -175,7 +230,7 @@ export default function NewBlogPostPage() {
                 disabled={isSubmitting}
                 className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 disabled:opacity-50"
               >
-                {isSubmitting ? "Publishing..." : "Publish"}
+                {isSubmitting ? "Saving..." : formData.status === "published" ? "Update" : "Publish"}
               </button>
             </div>
           </div>
@@ -210,6 +265,19 @@ export default function NewBlogPostPage() {
             {/* Post Settings */}
             <div className="bg-white rounded-md shadow-sm p-6">
               <h3 className="font-semibold text-slate-900 mb-4">Post Settings</h3>
+
+              {/* Status Indicator */}
+              <div className="mb-4 p-3 bg-slate-50 rounded-lg">
+                <div className="flex items-center gap-2">
+                  <span className={`w-2 h-2 rounded-full ${formData.status === "published" ? "bg-green-500" : "bg-yellow-500"}`} />
+                  <span className="text-sm font-medium text-slate-700 capitalize">{formData.status}</span>
+                </div>
+                {formData.published_at && (
+                  <p className="text-xs text-slate-500 mt-1">
+                    Published: {new Date(formData.published_at).toLocaleDateString()}
+                  </p>
+                )}
+              </div>
 
               {/* Slug */}
               <div className="mb-4">
@@ -342,7 +410,9 @@ export default function NewBlogPostPage() {
                         <svg className="w-10 h-10 mx-auto text-slate-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
-                        <p className="text-sm text-slate-500">{isDragging ? "Drop image here" : "Click or drag to upload"}</p>
+                        <p className="text-sm text-slate-500">
+                          {isDragging ? "Drop image here" : "Click or drag to upload"}
+                        </p>
                         <p className="text-xs text-slate-400 mt-1">PNG, JPG up to 10MB</p>
                       </>
                     )}

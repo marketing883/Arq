@@ -49,6 +49,9 @@ export function ChatWidget() {
   const containerRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
 
+  // Disable chat widget on admin pages
+  const isAdminPage = pathname?.startsWith("/admin");
+
   // Scroll to bottom when messages change
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -261,6 +264,11 @@ export function ChatWidget() {
       setIsTyping(false);
     }
   };
+
+  // Don't render chat widget on admin pages
+  if (isAdminPage) {
+    return null;
+  }
 
   return (
     <div
