@@ -426,10 +426,10 @@ export default function HomePage() {
               >
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
                   <div>
-                    <h3 className="text-display-sm font-display mb-3 text-white">
+                    <h3 className="text-display-sm font-display mb-3 text-white dark:text-black">
                       Custom Solutions
                     </h3>
-                    <p className="text-body-md text-white/80">
+                    <p className="text-body-md text-white/80 dark:text-black/80">
                       30-day deployment. We build governed AI solutions tailored to your specific workflows.
                     </p>
                   </div>
@@ -526,7 +526,7 @@ export default function HomePage() {
                   <div className="text-display-md font-display text-additional mb-2">
                     {pillar.name}
                   </div>
-                  <h3 className="text-body-lg font-medium text-base mb-4">
+                  <h3 className="text-sm font-medium text-base mb-4">
                     {pillar.fullName}
                   </h3>
                   <p className="text-body-md text-base/70">
@@ -554,7 +554,7 @@ export default function HomePage() {
                 Schedule a personalized demo to see how the ArqAI Foundry can help you
                 de-risk innovation and accelerate your enterprise AI strategy.
               </p>
-              <Link href="/contact" className="btn">
+              <Link href="/contact" className="btn bg-accent text-white dark:text-black">
                 Request a Demo
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
