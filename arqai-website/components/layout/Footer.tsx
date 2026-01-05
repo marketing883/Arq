@@ -170,19 +170,19 @@ export function Footer() {
           </div>
 
           {/* Column 4 - Brand Statement */}
-          <div className="card p-6 md:p-8 bg-accent text-white flex flex-col justify-between min-h-[300px]">
+          <div className="card p-6 md:p-8 bg-accent flex flex-col justify-between min-h-[300px]">
             <div>
-              <p className="text-body-lg font-medium mb-4">
+              <p className="text-body-lg font-medium mb-4 text-white">
                 The Enterprise Foundry for Trusted AI
               </p>
-              <p className="text-body-sm opacity-80">
+              <p className="text-body-sm text-white/80">
                 Build, run, and govern your mission-critical AI workforce with confidence.
               </p>
             </div>
             <div className="mt-8">
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-2 text-body-md font-medium hover:opacity-80 transition-opacity"
+                className="inline-flex items-center gap-2 text-body-md font-medium text-white hover:opacity-80 transition-opacity"
               >
                 Request a Demo
                 <svg

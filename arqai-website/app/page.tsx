@@ -492,7 +492,7 @@ export default function HomePage() {
                 >
                   <div className="flex items-center gap-3 mb-4">
                     <span className="text-body-xs text-text-muted">{product.category}</span>
-                    <span className="px-3 py-1 rounded-full bg-additional/20 text-body-sm font-medium text-additional">
+                    <span className="px-3 py-1 rounded-full bg-accent/10 text-body-sm font-medium text-accent">
                       {product.tagline}
                     </span>
                   </div>
@@ -610,7 +610,7 @@ export default function HomePage() {
                 Our Technology
               </p>
               <h2 className="text-display-lg font-display text-base">
-                Three Patented Technologies
+                Three Core Technologies
               </h2>
             </motion.div>
 
@@ -624,10 +624,10 @@ export default function HomePage() {
                   transition={{ delay: index * 0.1 }}
                   className="p-6 md:p-8 rounded-lg border border-stroke-medium"
                 >
-                  <div className="text-2xl font-display text-additional mb-2">
+                  <div className="text-base font-bold text-additional mb-2">
                     {pillar.name}
                   </div>
-                  <h3 className="text-sm font-medium text-base mb-4">
+                  <h3 className="text-2xl font-display font-medium text-base mb-4">
                     {pillar.fullName}
                   </h3>
                   <p className="text-body-md text-base/70">
