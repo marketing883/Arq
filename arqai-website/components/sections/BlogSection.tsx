@@ -3,13 +3,14 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 interface BlogPost {
   id: string;
   slug: string;
   title: string;
   excerpt: string;
-  cover_image?: string;
+  featured_image?: string;
   category?: string;
   published_at: string;
   read_time_minutes?: number;
@@ -67,9 +68,9 @@ export function BlogSection({ posts }: BlogSectionProps) {
               <Link href={`/blog/${post.slug}`} className="block">
                 {/* Image Container */}
                 <div className="relative aspect-[16/10] rounded-2xl overflow-hidden mb-5 bg-[var(--arq-gray-200)] dark:bg-[var(--arq-gray-700)]">
-                  {post.cover_image ? (
+                  {post.featured_image ? (
                     <Image
-                      src={post.cover_image}
+                      src={post.featured_image}
                       alt={post.title}
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -142,37 +143,61 @@ export function BlogSection({ posts }: BlogSectionProps) {
   );
 }
 
-// Static placeholder version for when database isn't connected
-export function BlogSectionStatic() {
-  const placeholderPosts: BlogPost[] = [
-    {
-      id: "1",
-      slug: "enterprise-ai-governance-guide",
-      title: "The Complete Guide to Enterprise AI Governance in 2025",
-      excerpt: "Learn how leading organizations are building AI governance frameworks that enable innovation while maintaining compliance.",
-      category: "AI Governance",
-      published_at: new Date().toISOString(),
-      read_time_minutes: 8,
-    },
-    {
-      id: "2",
-      slug: "zero-trust-ai-security",
-      title: "Zero-Trust Security for AI Agents: A Technical Deep Dive",
-      excerpt: "Explore the architectural patterns and security controls needed to deploy AI agents in zero-trust enterprise environments.",
-      category: "Security",
-      published_at: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
-      read_time_minutes: 12,
-    },
-    {
-      id: "3",
-      slug: "ai-compliance-financial-services",
-      title: "AI Compliance in Financial Services: Meeting Fed SR 11-7",
-      excerpt: "A practical guide to achieving model risk management compliance for AI systems in banking and financial services.",
-      category: "Compliance",
-      published_at: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
-      read_time_minutes: 10,
-    },
-  ];
+// Placeholder posts for fallback
+const placeholderPosts: BlogPost[] = [
+  {
+    id: "1",
+    slug: "enterprise-ai-governance-guide",
+    title: "The Complete Guide to Enterprise AI Governance in 2025",
+    excerpt: "Learn how leading organizations are building AI governance frameworks that enable innovation while maintaining compliance.",
+    category: "AI Governance",
+    published_at: new Date().toISOString(),
+    read_time_minutes: 8,
+  },
+  {
+    id: "2",
+    slug: "zero-trust-ai-security",
+    title: "Zero-Trust Security for AI Agents: A Technical Deep Dive",
+    excerpt: "Explore the architectural patterns and security controls needed to deploy AI agents in zero-trust enterprise environments.",
+    category: "Security",
+    published_at: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+    read_time_minutes: 12,
+  },
+  {
+    id: "3",
+    slug: "ai-compliance-financial-services",
+    title: "AI Compliance in Financial Services: Meeting Fed SR 11-7",
+    excerpt: "A practical guide to achieving model risk management compliance for AI systems in banking and financial services.",
+    category: "Compliance",
+    published_at: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
+    read_time_minutes: 10,
+  },
+];
 
-  return <BlogSection posts={placeholderPosts} />;
+// Dynamic version that fetches from database
+export function BlogSectionStatic() {
+  const [posts, setPosts] = useState<BlogPost[]>(placeholderPosts);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchPosts() {
+      try {
+        const response = await fetch("/api/blog/published");
+        if (response.ok) {
+          const data = await response.json();
+          if (data.posts && data.posts.length > 0) {
+            setPosts(data.posts);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching blog posts:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchPosts();
+  }, []);
+
+  return <BlogSection posts={posts} />;
 }
