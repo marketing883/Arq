@@ -15,7 +15,18 @@ const navigation = [
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
+
+  // Handle scroll to show/hide header background
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll(); // Check initial state
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // Handle dark mode toggle
   useEffect(() => {
@@ -48,7 +59,11 @@ export function Header() {
   return (
     <>
       {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-[100] bg-base/80 backdrop-blur-md border-b border-stroke-muted/30">
+      <header className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ${
+        isScrolled
+          ? "bg-base/80 backdrop-blur-md border-b border-stroke-muted/30"
+          : "bg-transparent border-b border-transparent"
+      }`}>
         <div className="container mx-auto px-4 md:px-6 py-4 md:py-6 flex items-center justify-between">
           {/* Logo - Left Side */}
           <Link

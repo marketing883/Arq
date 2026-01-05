@@ -345,20 +345,30 @@ export default function HomePage() {
               </h2>
             </motion.div>
 
-            {/* Platform Architecture Diagram */}
+            {/* Platform Architecture Animation */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               className="flex justify-center"
             >
-              <Image
-                src="/img/hero/arq-wf.png"
-                alt="ArqAI Platform Architecture - The Governance Fabric with Three Patented Technologies"
-                width={800}
-                height={1000}
-                className="w-full max-w-3xl rounded-lg"
-              />
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full max-w-4xl rounded-lg"
+              >
+                <source src="/img/hero/workflow-ai.webm" type="video/webm" />
+                {/* Fallback to static image if video not supported */}
+                <Image
+                  src="/img/hero/arq-wf.png"
+                  alt="ArqAI Platform Architecture - The Governance Fabric with Three Patented Technologies"
+                  width={800}
+                  height={1000}
+                  className="w-full max-w-3xl rounded-lg"
+                />
+              </video>
             </motion.div>
           </div>
         </section>
