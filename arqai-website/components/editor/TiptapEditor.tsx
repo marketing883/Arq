@@ -1,10 +1,9 @@
 "use client";
 
-import { useEditor, EditorContent, BubbleMenu } from "@tiptap/react";
+import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Image from "@tiptap/extension-image";
 import Link from "@tiptap/extension-link";
-import Placeholder from "@tiptap/extension-placeholder";
 import Youtube from "@tiptap/extension-youtube";
 import { useState, useCallback } from "react";
 
@@ -35,9 +34,6 @@ export function TiptapEditor({ content, onChange, placeholder = "Start writing..
         HTMLAttributes: {
           class: "text-blue-600 underline",
         },
-      }),
-      Placeholder.configure({
-        placeholder,
       }),
       Youtube.configure({
         HTMLAttributes: {
@@ -143,6 +139,7 @@ export function TiptapEditor({ content, onChange, placeholder = "Start writing..
         {/* Text Formatting */}
         <div className="flex gap-1 pr-2 border-r border-slate-200">
           <button
+            type="button"
             onClick={() => editor.chain().focus().toggleBold().run()}
             className={`p-2 rounded hover:bg-slate-200 ${editor.isActive("bold") ? "bg-slate-200" : ""}`}
             title="Bold"
@@ -153,21 +150,26 @@ export function TiptapEditor({ content, onChange, placeholder = "Start writing..
             </svg>
           </button>
           <button
+            type="button"
             onClick={() => editor.chain().focus().toggleItalic().run()}
             className={`p-2 rounded hover:bg-slate-200 ${editor.isActive("italic") ? "bg-slate-200" : ""}`}
             title="Italic"
           >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 4h4m-2 0v16m-4 0h8" transform="skewX(-10)" />
+            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <line x1="19" y1="4" x2="10" y2="4" strokeWidth="2" strokeLinecap="round"/>
+              <line x1="14" y1="20" x2="5" y2="20" strokeWidth="2" strokeLinecap="round"/>
+              <line x1="15" y1="4" x2="9" y2="20" strokeWidth="2" strokeLinecap="round"/>
             </svg>
           </button>
           <button
+            type="button"
             onClick={() => editor.chain().focus().toggleStrike().run()}
             className={`p-2 rounded hover:bg-slate-200 ${editor.isActive("strike") ? "bg-slate-200" : ""}`}
             title="Strikethrough"
           >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14M12 5v14" />
+            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <line x1="5" y1="12" x2="19" y2="12"/>
+              <path d="M16 6C16 6 14.5 4 12 4C9.5 4 7 5.5 7 8C7 12 17 12 17 16C17 18.5 14.5 20 12 20C9.5 20 8 18 8 18"/>
             </svg>
           </button>
         </div>
@@ -175,6 +177,7 @@ export function TiptapEditor({ content, onChange, placeholder = "Start writing..
         {/* Headings */}
         <div className="flex gap-1 pr-2 border-r border-slate-200">
           <button
+            type="button"
             onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
             className={`p-2 rounded hover:bg-slate-200 text-sm font-bold ${editor.isActive("heading", { level: 1 }) ? "bg-slate-200" : ""}`}
             title="Heading 1"
@@ -182,6 +185,7 @@ export function TiptapEditor({ content, onChange, placeholder = "Start writing..
             H1
           </button>
           <button
+            type="button"
             onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
             className={`p-2 rounded hover:bg-slate-200 text-sm font-bold ${editor.isActive("heading", { level: 2 }) ? "bg-slate-200" : ""}`}
             title="Heading 2"
@@ -189,6 +193,7 @@ export function TiptapEditor({ content, onChange, placeholder = "Start writing..
             H2
           </button>
           <button
+            type="button"
             onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
             className={`p-2 rounded hover:bg-slate-200 text-sm font-bold ${editor.isActive("heading", { level: 3 }) ? "bg-slate-200" : ""}`}
             title="Heading 3"
@@ -200,6 +205,7 @@ export function TiptapEditor({ content, onChange, placeholder = "Start writing..
         {/* Lists */}
         <div className="flex gap-1 pr-2 border-r border-slate-200">
           <button
+            type="button"
             onClick={() => editor.chain().focus().toggleBulletList().run()}
             className={`p-2 rounded hover:bg-slate-200 ${editor.isActive("bulletList") ? "bg-slate-200" : ""}`}
             title="Bullet List"
@@ -209,6 +215,7 @@ export function TiptapEditor({ content, onChange, placeholder = "Start writing..
             </svg>
           </button>
           <button
+            type="button"
             onClick={() => editor.chain().focus().toggleOrderedList().run()}
             className={`p-2 rounded hover:bg-slate-200 ${editor.isActive("orderedList") ? "bg-slate-200" : ""}`}
             title="Numbered List"
@@ -222,6 +229,7 @@ export function TiptapEditor({ content, onChange, placeholder = "Start writing..
         {/* Block Elements */}
         <div className="flex gap-1 pr-2 border-r border-slate-200">
           <button
+            type="button"
             onClick={() => editor.chain().focus().toggleBlockquote().run()}
             className={`p-2 rounded hover:bg-slate-200 ${editor.isActive("blockquote") ? "bg-slate-200" : ""}`}
             title="Quote"
@@ -231,6 +239,7 @@ export function TiptapEditor({ content, onChange, placeholder = "Start writing..
             </svg>
           </button>
           <button
+            type="button"
             onClick={() => editor.chain().focus().toggleCodeBlock().run()}
             className={`p-2 rounded hover:bg-slate-200 ${editor.isActive("codeBlock") ? "bg-slate-200" : ""}`}
             title="Code Block"
@@ -244,6 +253,7 @@ export function TiptapEditor({ content, onChange, placeholder = "Start writing..
         {/* Links & Media */}
         <div className="flex gap-1 pr-2 border-r border-slate-200">
           <button
+            type="button"
             onClick={setLink}
             className={`p-2 rounded hover:bg-slate-200 ${editor.isActive("link") ? "bg-slate-200" : ""}`}
             title="Add Link"
@@ -253,6 +263,7 @@ export function TiptapEditor({ content, onChange, placeholder = "Start writing..
             </svg>
           </button>
           <button
+            type="button"
             onClick={addImage}
             disabled={isUploading}
             className="p-2 rounded hover:bg-slate-200 disabled:opacity-50"
@@ -267,6 +278,7 @@ export function TiptapEditor({ content, onChange, placeholder = "Start writing..
             )}
           </button>
           <button
+            type="button"
             onClick={addImageFromUrl}
             className="p-2 rounded hover:bg-slate-200"
             title="Image from URL"
@@ -276,6 +288,7 @@ export function TiptapEditor({ content, onChange, placeholder = "Start writing..
             </svg>
           </button>
           <button
+            type="button"
             onClick={addYoutubeVideo}
             className="p-2 rounded hover:bg-slate-200"
             title="YouTube Video"
@@ -289,6 +302,7 @@ export function TiptapEditor({ content, onChange, placeholder = "Start writing..
         {/* Undo/Redo */}
         <div className="flex gap-1">
           <button
+            type="button"
             onClick={() => editor.chain().focus().undo().run()}
             disabled={!editor.can().undo()}
             className="p-2 rounded hover:bg-slate-200 disabled:opacity-30"
@@ -299,6 +313,7 @@ export function TiptapEditor({ content, onChange, placeholder = "Start writing..
             </svg>
           </button>
           <button
+            type="button"
             onClick={() => editor.chain().focus().redo().run()}
             disabled={!editor.can().redo()}
             className="p-2 rounded hover:bg-slate-200 disabled:opacity-30"
@@ -310,32 +325,6 @@ export function TiptapEditor({ content, onChange, placeholder = "Start writing..
           </button>
         </div>
       </div>
-
-      {/* Bubble Menu for selected text */}
-      {editor && (
-        <BubbleMenu editor={editor} tippyOptions={{ duration: 100 }}>
-          <div className="bg-slate-800 text-white rounded-lg shadow-lg flex overflow-hidden">
-            <button
-              onClick={() => editor.chain().focus().toggleBold().run()}
-              className={`px-3 py-1.5 hover:bg-slate-700 ${editor.isActive("bold") ? "bg-slate-700" : ""}`}
-            >
-              B
-            </button>
-            <button
-              onClick={() => editor.chain().focus().toggleItalic().run()}
-              className={`px-3 py-1.5 hover:bg-slate-700 ${editor.isActive("italic") ? "bg-slate-700" : ""}`}
-            >
-              I
-            </button>
-            <button
-              onClick={setLink}
-              className={`px-3 py-1.5 hover:bg-slate-700 ${editor.isActive("link") ? "bg-slate-700" : ""}`}
-            >
-              Link
-            </button>
-          </div>
-        </BubbleMenu>
-      )}
 
       {/* Editor Content */}
       <EditorContent editor={editor} />
