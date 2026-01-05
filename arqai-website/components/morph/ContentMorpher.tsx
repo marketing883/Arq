@@ -77,7 +77,7 @@ export function ContentMorpher() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="absolute inset-0 bg-[var(--arq-black)]/20 backdrop-blur-sm"
+          className="absolute inset-0 bg-black/40 dark:bg-black/60 backdrop-blur-sm"
           onClick={clearMorph}
         />
 
@@ -87,27 +87,27 @@ export function ContentMorpher() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 30 }}
           transition={{ delay: 0.1, duration: 0.4 }}
-          className="relative w-full max-w-5xl max-h-[85vh] overflow-auto glass-morph rounded-2xl shadow-2xl"
+          className="relative w-full max-w-5xl max-h-[85vh] overflow-auto bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700"
         >
           {/* Header */}
-          <div className="sticky top-0 z-10 flex items-center justify-between px-6 py-4 border-b border-white/20 bg-white/80 backdrop-blur-xl rounded-t-2xl">
+          <div className="sticky top-0 z-10 flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 rounded-t-2xl">
             <div className="flex items-center gap-3">
-              <div className="w-2 h-2 rounded-full bg-[var(--arq-lime)] animate-pulse" />
-              <h2 className="text-lg font-semibold text-[var(--arq-black)]">
+              <div className="w-2 h-2 rounded-full bg-[#d0f438] animate-pulse" />
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
                 {morphTitles[activeMorph]}
               </h2>
             </div>
             <button
               onClick={clearMorph}
-              className="p-2 rounded-lg hover:bg-[var(--arq-gray-100)] transition-colors"
+              className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
               aria-label="Close"
             >
-              <CloseIcon size={20} className="text-[var(--arq-gray-600)]" />
+              <CloseIcon size={20} className="text-gray-600 dark:text-gray-400" />
             </button>
           </div>
 
           {/* Dynamic Content */}
-          <div className="p-6 md:p-8">
+          <div className="p-6 md:p-8 bg-white dark:bg-gray-900">
             <MorphComponent />
           </div>
         </motion.div>

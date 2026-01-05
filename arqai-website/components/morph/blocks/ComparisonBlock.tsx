@@ -111,8 +111,8 @@ function FeatureCell({ value }: { value: boolean | "partial" }) {
   if (value === true) {
     return (
       <div className="flex items-center justify-center">
-        <div className="w-6 h-6 rounded-full bg-[var(--arq-lime)]/20 flex items-center justify-center">
-          <CheckIcon size={14} className="text-green-600" />
+        <div className="w-6 h-6 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
+          <CheckIcon size={14} className="text-green-600 dark:text-green-400" />
         </div>
       </div>
     );
@@ -120,7 +120,7 @@ function FeatureCell({ value }: { value: boolean | "partial" }) {
   if (value === "partial") {
     return (
       <div className="flex items-center justify-center">
-        <span className="text-xs font-medium text-amber-600 bg-amber-50 px-2 py-1 rounded">
+        <span className="text-xs font-medium text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/30 px-2 py-1 rounded">
           Partial
         </span>
       </div>
@@ -128,7 +128,7 @@ function FeatureCell({ value }: { value: boolean | "partial" }) {
   }
   return (
     <div className="flex items-center justify-center">
-      <div className="w-6 h-6 rounded-full bg-red-50 flex items-center justify-center">
+      <div className="w-6 h-6 rounded-full bg-red-50 dark:bg-red-900/30 flex items-center justify-center">
         <CloseIcon size={14} className="text-red-400" />
       </div>
     </div>
@@ -138,7 +138,7 @@ function FeatureCell({ value }: { value: boolean | "partial" }) {
 export function ComparisonBlock() {
   return (
     <div className="space-y-8">
-      <p className="text-[var(--arq-gray-600)] text-center max-w-2xl mx-auto">
+      <p className="text-gray-600 dark:text-gray-400 text-center max-w-2xl mx-auto">
         See how ArqAI&apos;s integrated approach to enterprise AI governance compares
         to traditional point solutions and general-purpose platforms.
       </p>
@@ -147,24 +147,24 @@ export function ComparisonBlock() {
       <div className="overflow-x-auto">
         <table className="w-full">
           <thead>
-            <tr className="border-b border-[var(--arq-gray-200)]">
-              <th className="text-left py-4 px-4 font-semibold text-[var(--arq-black)]">
+            <tr className="border-b border-gray-200 dark:border-gray-700">
+              <th className="text-left py-4 px-4 font-semibold text-gray-900 dark:text-gray-100">
                 Feature
               </th>
               <th className="text-center py-4 px-4 min-w-[120px]">
                 <div className="flex flex-col items-center gap-1">
-                  <span className="font-bold text-[var(--arq-blue)]">ArqAI</span>
-                  <span className="text-xs text-[var(--arq-gray-500)]">
+                  <span className="font-bold text-[#0432a5] dark:text-[#d0f438]">ArqAI</span>
+                  <span className="text-xs text-gray-500 dark:text-gray-400">
                     Foundry Platform
                   </span>
                 </div>
               </th>
               <th className="text-center py-4 px-4 min-w-[120px]">
                 <div className="flex flex-col items-center gap-1">
-                  <span className="font-semibold text-[var(--arq-gray-600)]">
+                  <span className="font-semibold text-gray-600 dark:text-gray-400">
                     Others
                   </span>
-                  <span className="text-xs text-[var(--arq-gray-500)]">
+                  <span className="text-xs text-gray-500 dark:text-gray-400">
                     Point Solutions
                   </span>
                 </div>
@@ -179,10 +179,10 @@ export function ComparisonBlock() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: catIndex * 0.1 }}
               >
-                <tr className="bg-[var(--arq-gray-50)]">
+                <tr className="bg-gray-50 dark:bg-gray-800">
                   <td
                     colSpan={3}
-                    className="py-3 px-4 font-semibold text-[var(--arq-black)] text-sm uppercase tracking-wide"
+                    className="py-3 px-4 font-semibold text-gray-900 dark:text-gray-100 text-sm uppercase tracking-wide"
                   >
                     {category.name}
                   </td>
@@ -193,14 +193,14 @@ export function ComparisonBlock() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: catIndex * 0.1 + index * 0.05 }}
-                    className="border-b border-[var(--arq-gray-100)] hover:bg-[var(--arq-gray-50)]/50 transition-colors"
+                    className="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50/50 dark:hover:bg-gray-800/50 transition-colors"
                   >
                     <td className="py-3 px-4">
                       <div className="flex flex-col gap-1">
-                        <span className="text-[var(--arq-black)] font-medium">
+                        <span className="text-gray-900 dark:text-gray-100 font-medium">
                           {item.feature}
                         </span>
-                        <span className="text-xs text-[var(--arq-gray-500)]">
+                        <span className="text-xs text-gray-500 dark:text-gray-400">
                           {item.tooltip}
                         </span>
                       </div>
@@ -226,12 +226,12 @@ export function ComparisonBlock() {
         transition={{ delay: 0.5 }}
         className="text-center pt-4"
       >
-        <p className="text-sm text-[var(--arq-gray-600)] mb-4">
+        <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
           Want to see these capabilities in action?
         </p>
         <a
           href="/demo"
-          className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--arq-blue)] text-white rounded-lg font-semibold hover:bg-[var(--arq-blue)]/90 transition-colors"
+          className="inline-flex items-center gap-2 px-6 py-3 bg-[#0432a5] text-white rounded-lg font-semibold hover:opacity-90 transition-colors"
         >
           Schedule a Demo
         </a>

@@ -10,7 +10,7 @@ const architectureLayers = [
     fullName: "Compliance-Aware Prompt Compiler",
     description: "Build with Confidence",
     icon: BlueprintIcon,
-    color: "var(--arq-blue)",
+    color: "#d0f438",
     features: [
       "Policy Hub for centralized rule management",
       "Automatic compliance injection at build time",
@@ -61,7 +61,7 @@ const integrationPoints = [
 export function ArchitectureBlock() {
   return (
     <div className="space-y-8">
-      <p className="text-[var(--arq-gray-600)] text-center max-w-2xl mx-auto">
+      <p className="text-gray-600 dark:text-gray-400 text-center max-w-2xl mx-auto">
         The ArqAI Foundry is an integrated platform with three core pillars that
         work together to provide end-to-end enterprise AI governance.
       </p>
@@ -69,7 +69,7 @@ export function ArchitectureBlock() {
       {/* Architecture Diagram */}
       <div className="relative">
         {/* Flow Lines */}
-        <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-[var(--arq-blue)] via-green-500 to-purple-500 opacity-20" />
+        <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-[#d0f438] via-green-500 to-purple-500 opacity-20" />
 
         <div className="space-y-6">
           {architectureLayers.map((layer, index) => {
@@ -89,23 +89,23 @@ export function ArchitectureBlock() {
                 >
                   {/* Info Card */}
                   <div
-                    className={`p-6 rounded-xl border-2 bg-white shadow-sm ${
+                    className={`p-6 rounded-xl border-2 bg-white dark:bg-gray-800 shadow-sm ${
                       index % 2 === 1 ? "md:order-2" : ""
                     }`}
-                    style={{ borderColor: `${layer.color}20` }}
+                    style={{ borderColor: `${layer.color}30` }}
                   >
                     <div className="flex items-center gap-3 mb-4">
                       <div
                         className="w-12 h-12 rounded-xl flex items-center justify-center"
-                        style={{ backgroundColor: `${layer.color}15`, color: layer.color }}
+                        style={{ backgroundColor: `${layer.color}20`, color: layer.color }}
                       >
                         <Icon size={24} />
                       </div>
                       <div>
-                        <h3 className="font-bold text-[var(--arq-black)]">
+                        <h3 className="font-bold text-gray-900 dark:text-gray-100">
                           {layer.name}
                         </h3>
-                        <p className="text-sm text-[var(--arq-gray-500)]">
+                        <p className="text-sm text-gray-500 dark:text-gray-400">
                           {layer.fullName}
                         </p>
                       </div>
@@ -120,7 +120,7 @@ export function ArchitectureBlock() {
                       {layer.features.map((feature, i) => (
                         <li
                           key={i}
-                          className="flex items-start gap-2 text-sm text-[var(--arq-gray-600)]"
+                          className="flex items-start gap-2 text-sm text-gray-600 dark:text-gray-400"
                         >
                           <span
                             className="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0"
@@ -143,7 +143,7 @@ export function ArchitectureBlock() {
                       animate={{ scale: 1, opacity: 1 }}
                       transition={{ delay: index * 0.15 + 0.1 }}
                       className="relative w-32 h-32 rounded-2xl flex items-center justify-center"
-                      style={{ backgroundColor: `${layer.color}10`, color: layer.color }}
+                      style={{ backgroundColor: `${layer.color}15`, color: layer.color }}
                     >
                       <Icon size={48} />
                       {index < architectureLayers.length - 1 && (
@@ -155,7 +155,7 @@ export function ArchitectureBlock() {
                         >
                           <ArrowRightIcon
                             size={24}
-                            className="rotate-90 text-[var(--arq-gray-300)]"
+                            className="rotate-90 text-gray-300 dark:text-gray-600"
                           />
                         </motion.div>
                       )}
@@ -173,9 +173,9 @@ export function ArchitectureBlock() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.6 }}
-        className="mt-12 pt-8 border-t border-[var(--arq-gray-200)]"
+        className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700"
       >
-        <h3 className="text-center font-semibold text-[var(--arq-black)] mb-6">
+        <h3 className="text-center font-semibold text-gray-900 dark:text-gray-100 mb-6">
           Seamless Integration Ecosystem
         </h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -185,16 +185,16 @@ export function ArchitectureBlock() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7 + index * 0.1 }}
-              className="p-4 rounded-xl bg-[var(--arq-gray-50)] text-center"
+              className="p-4 rounded-xl bg-gray-50 dark:bg-gray-800 text-center"
             >
-              <h4 className="text-sm font-semibold text-[var(--arq-black)] mb-2">
+              <h4 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">
                 {point.name}
               </h4>
               <div className="flex flex-wrap justify-center gap-1">
                 {point.items.map((item) => (
                   <span
                     key={item}
-                    className="text-xs px-2 py-1 bg-white rounded border border-[var(--arq-gray-200)] text-[var(--arq-gray-600)]"
+                    className="text-xs px-2 py-1 bg-white dark:bg-gray-700 rounded border border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-400"
                   >
                     {item}
                   </span>
@@ -214,7 +214,7 @@ export function ArchitectureBlock() {
       >
         <a
           href="/platform"
-          className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--arq-blue)] text-white rounded-lg font-semibold hover:bg-[var(--arq-blue)]/90 transition-colors"
+          className="inline-flex items-center gap-2 px-6 py-3 bg-[#0432a5] text-white rounded-lg font-semibold hover:opacity-90 transition-colors"
         >
           Explore the Platform
           <ArrowRightIcon size={18} />

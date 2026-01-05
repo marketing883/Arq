@@ -15,7 +15,7 @@ const featureCategories = [
     id: "compliance",
     name: "Compliance",
     icon: BlueprintIcon,
-    color: "var(--arq-blue)",
+    color: "#d0f438",
     features: [
       {
         title: "Policy Hub",
@@ -182,27 +182,27 @@ export function FeaturesBlock() {
 
   return (
     <div className="space-y-8">
-      <p className="text-[var(--arq-gray-600)] text-center max-w-2xl mx-auto">
+      <p className="text-gray-600 dark:text-gray-400 text-center max-w-2xl mx-auto">
         Explore the comprehensive capabilities of the ArqAI Foundry platform
         across compliance, security, and operations.
       </p>
 
       {/* Category Tabs */}
-      <div className="flex justify-center gap-4">
+      <div className="flex justify-center gap-4 flex-wrap">
         {featureCategories.map((category) => {
           const CategoryIcon = category.icon;
+          const isActive = activeCategory.id === category.id;
           return (
             <button
               key={category.id}
               onClick={() => handleCategoryChange(category)}
               className={`flex items-center gap-2 px-5 py-3 rounded-xl font-medium transition-all ${
-                activeCategory.id === category.id
-                  ? "text-white shadow-lg"
-                  : "bg-[var(--arq-gray-100)] text-[var(--arq-gray-600)] hover:bg-[var(--arq-gray-200)]"
+                isActive
+                  ? "text-gray-900 shadow-lg"
+                  : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700"
               }`}
               style={{
-                backgroundColor:
-                  activeCategory.id === category.id ? category.color : undefined,
+                backgroundColor: isActive ? category.color : undefined,
               }}
             >
               <CategoryIcon size={20} />
@@ -223,27 +223,27 @@ export function FeaturesBlock() {
         >
           {/* Feature List */}
           <div className="space-y-2">
-            {activeCategory.features.map((feature) => (
-              <button
-                key={feature.title}
-                onClick={() => setActiveFeature(feature)}
-                className={`w-full text-left p-4 rounded-xl transition-all ${
-                  activeFeature.title === feature.title
-                    ? "bg-white shadow-md border-2"
-                    : "bg-[var(--arq-gray-50)] hover:bg-white border-2 border-transparent"
-                }`}
-                style={{
-                  borderColor:
-                    activeFeature.title === feature.title
-                      ? activeCategory.color
-                      : undefined,
-                }}
-              >
-                <h4 className="font-semibold text-[var(--arq-black)]">
-                  {feature.title}
-                </h4>
-              </button>
-            ))}
+            {activeCategory.features.map((feature) => {
+              const isActiveFeature = activeFeature.title === feature.title;
+              return (
+                <button
+                  key={feature.title}
+                  onClick={() => setActiveFeature(feature)}
+                  className={`w-full text-left p-4 rounded-xl transition-all border-2 ${
+                    isActiveFeature
+                      ? "bg-white dark:bg-gray-800 shadow-md"
+                      : "bg-gray-50 dark:bg-gray-800/50 hover:bg-white dark:hover:bg-gray-800 border-transparent"
+                  }`}
+                  style={{
+                    borderColor: isActiveFeature ? activeCategory.color : "transparent",
+                  }}
+                >
+                  <h4 className="font-semibold text-gray-900 dark:text-gray-100">
+                    {feature.title}
+                  </h4>
+                </button>
+              );
+            })}
           </div>
 
           {/* Feature Details */}
@@ -254,25 +254,25 @@ export function FeaturesBlock() {
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
-                className="p-6 rounded-xl bg-white border border-[var(--arq-gray-200)] shadow-sm h-full"
+                className="p-6 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm h-full"
               >
                 <div className="flex items-center gap-3 mb-4">
                   <div
                     className="w-10 h-10 rounded-xl flex items-center justify-center"
-                    style={{ backgroundColor: `${activeCategory.color}15`, color: activeCategory.color }}
+                    style={{ backgroundColor: `${activeCategory.color}20`, color: activeCategory.color }}
                   >
                     <Icon size={20} />
                   </div>
-                  <h3 className="text-xl font-bold text-[var(--arq-black)]">
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100">
                     {activeFeature.title}
                   </h3>
                 </div>
 
-                <p className="text-[var(--arq-gray-600)] mb-6">
+                <p className="text-gray-600 dark:text-gray-400 mb-6">
                   {activeFeature.description}
                 </p>
 
-                <h4 className="text-sm font-semibold text-[var(--arq-gray-700)] mb-3">
+                <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
                   Key Capabilities
                 </h4>
                 <div className="grid grid-cols-2 gap-3">
@@ -289,7 +289,7 @@ export function FeaturesBlock() {
                         size={16}
                         className="flex-shrink-0"
                       />
-                      <span className="text-sm text-[var(--arq-gray-600)]">
+                      <span className="text-sm text-gray-600 dark:text-gray-400">
                         {capability}
                       </span>
                     </motion.div>
@@ -297,12 +297,11 @@ export function FeaturesBlock() {
                 </div>
 
                 <div
-                  className="mt-6 pt-6 border-t"
-                  style={{ borderColor: `${activeCategory.color}20` }}
+                  className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700"
                 >
                   <a
                     href="/platform"
-                    className="inline-flex items-center gap-2 text-sm font-medium transition-colors"
+                    className="inline-flex items-center gap-2 text-sm font-medium transition-colors hover:opacity-80"
                     style={{ color: activeCategory.color }}
                   >
                     Learn more about {activeCategory.name}
@@ -324,7 +323,7 @@ export function FeaturesBlock() {
       >
         <a
           href="/demo"
-          className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--arq-blue)] text-white rounded-lg font-semibold hover:bg-[var(--arq-blue)]/90 transition-colors"
+          className="inline-flex items-center gap-2 px-6 py-3 bg-[#0432a5] text-white rounded-lg font-semibold hover:opacity-90 transition-colors"
         >
           See Features in Action
           <ArrowRightIcon size={18} />

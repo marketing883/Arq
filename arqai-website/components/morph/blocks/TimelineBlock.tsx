@@ -99,7 +99,7 @@ const timelinePhases = [
 export function TimelineBlock() {
   return (
     <div className="space-y-8">
-      <p className="text-[var(--arq-gray-600)] text-center max-w-2xl mx-auto">
+      <p className="text-gray-600 dark:text-gray-400 text-center max-w-2xl mx-auto">
         Our proven implementation methodology ensures a smooth deployment of the
         ArqAI Foundry platform in your enterprise environment.
       </p>
@@ -110,12 +110,12 @@ export function TimelineBlock() {
         animate={{ opacity: 1, y: 0 }}
         className="flex justify-center"
       >
-        <div className="inline-flex items-center gap-4 px-6 py-3 rounded-full bg-[var(--arq-blue)]/10 border border-[var(--arq-blue)]/20">
-          <span className="text-[var(--arq-gray-600)]">Typical Timeline:</span>
-          <span className="text-xl font-bold text-[var(--arq-blue)]">
+        <div className="inline-flex items-center gap-4 px-6 py-3 rounded-full bg-[#0432a5]/10 dark:bg-[#d0f438]/10 border border-[#0432a5]/20 dark:border-[#d0f438]/20">
+          <span className="text-gray-600 dark:text-gray-400">Typical Timeline:</span>
+          <span className="text-xl font-bold text-[#0432a5] dark:text-[#d0f438]">
             30-90 Days
           </span>
-          <span className="text-sm text-[var(--arq-gray-500)]">
+          <span className="text-sm text-gray-500 dark:text-gray-400">
             to production
           </span>
         </div>
@@ -124,7 +124,7 @@ export function TimelineBlock() {
       {/* Timeline */}
       <div className="relative">
         {/* Vertical Line */}
-        <div className="absolute left-8 md:left-1/2 md:-translate-x-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[var(--arq-blue)] via-[var(--arq-lime)] to-[var(--arq-blue)]" />
+        <div className="absolute left-8 md:left-1/2 md:-translate-x-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[#0432a5] via-[#d0f438] to-[#0432a5]" />
 
         <div className="space-y-12">
           {timelinePhases.map((phase, index) => (
@@ -138,7 +138,7 @@ export function TimelineBlock() {
               }`}
             >
               {/* Phase Indicator */}
-              <div className="absolute left-8 md:left-1/2 md:-translate-x-1/2 w-4 h-4 rounded-full bg-[var(--arq-blue)] border-4 border-white shadow-lg z-10" />
+              <div className="absolute left-8 md:left-1/2 md:-translate-x-1/2 w-4 h-4 rounded-full bg-[#0432a5] dark:bg-[#d0f438] border-4 border-white dark:border-gray-900 shadow-lg z-10" />
 
               {/* Content Card */}
               <div
@@ -146,57 +146,57 @@ export function TimelineBlock() {
                   index % 2 === 0 ? "md:pr-16" : "md:pl-16"
                 }`}
               >
-                <div className="p-8 md:p-10 rounded-2xl bg-white border border-[var(--arq-gray-200)] shadow-sm hover:shadow-md transition-shadow">
+                <div className="p-8 md:p-10 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md transition-shadow">
                   {/* Header */}
                   <div className="flex items-start justify-between gap-4 mb-6">
                     <div>
-                      <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-[var(--arq-blue)]/10 text-[var(--arq-blue)] mb-3">
+                      <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-[#0432a5]/10 dark:bg-[#d0f438]/10 text-[#0432a5] dark:text-[#d0f438] mb-3">
                         Phase {phase.phase}
                       </span>
-                      <h3 className="text-xl font-bold text-[var(--arq-black)]">
+                      <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100">
                         {phase.title}
                       </h3>
                     </div>
-                    <span className="text-sm font-semibold text-[var(--arq-lime)] bg-[var(--arq-black)] px-4 py-1.5 rounded-full whitespace-nowrap">
+                    <span className="text-sm font-semibold text-[#d0f438] bg-gray-900 dark:bg-gray-700 px-4 py-1.5 rounded-full whitespace-nowrap">
                       {phase.duration}
                     </span>
                   </div>
 
-                  <p className="text-[var(--arq-gray-600)] mb-6 leading-relaxed">
+                  <p className="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
                     {phase.description}
                   </p>
 
                   {/* Activities & Deliverables */}
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
-                      <h4 className="text-sm font-semibold text-[var(--arq-gray-700)] mb-3">
+                      <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
                         Key Activities
                       </h4>
                       <ul className="space-y-2">
                         {phase.activities.map((activity, i) => (
                           <li
                             key={i}
-                            className="flex items-start gap-2 text-sm text-[var(--arq-gray-600)]"
+                            className="flex items-start gap-2 text-sm text-gray-600 dark:text-gray-400"
                           >
-                            <span className="w-1.5 h-1.5 rounded-full bg-[var(--arq-blue)] mt-1.5 flex-shrink-0" />
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#0432a5] dark:bg-[#d0f438] mt-1.5 flex-shrink-0" />
                             {activity}
                           </li>
                         ))}
                       </ul>
                     </div>
                     <div>
-                      <h4 className="text-sm font-semibold text-[var(--arq-gray-700)] mb-3">
+                      <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
                         Deliverables
                       </h4>
                       <ul className="space-y-2">
                         {phase.deliverables.map((deliverable, i) => (
                           <li
                             key={i}
-                            className="flex items-start gap-2 text-sm text-[var(--arq-gray-600)]"
+                            className="flex items-start gap-2 text-sm text-gray-600 dark:text-gray-400"
                           >
                             <CheckIcon
                               size={14}
-                              className="text-[var(--arq-lime)] mt-0.5 flex-shrink-0"
+                              className="text-[#d0f438] mt-0.5 flex-shrink-0"
                             />
                             {deliverable}
                           </li>
@@ -221,12 +221,12 @@ export function TimelineBlock() {
         transition={{ delay: 0.8 }}
         className="text-center pt-8"
       >
-        <p className="text-sm text-[var(--arq-gray-600)] mb-4">
+        <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
           Ready to start your implementation journey?
         </p>
         <a
           href="/demo"
-          className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--arq-blue)] text-white rounded-lg font-semibold hover:bg-[var(--arq-blue)]/90 transition-colors"
+          className="inline-flex items-center gap-2 px-6 py-3 bg-[#0432a5] text-white rounded-lg font-semibold hover:opacity-90 transition-colors"
         >
           Schedule a Discovery Call
           <ArrowRightIcon size={18} />

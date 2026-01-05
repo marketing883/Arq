@@ -69,7 +69,7 @@ export function CaseStudyBlock() {
 
   return (
     <div className="space-y-8">
-      <p className="text-[var(--arq-gray-600)] text-center max-w-2xl mx-auto">
+      <p className="text-gray-600 dark:text-gray-400 text-center max-w-2xl mx-auto">
         See how leading enterprises across industries are using ArqAI to govern
         their AI workforce with confidence.
       </p>
@@ -82,8 +82,8 @@ export function CaseStudyBlock() {
             onClick={() => setActiveStudy(study)}
             className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
               activeStudy.id === study.id
-                ? "bg-[var(--arq-blue)] text-white"
-                : "bg-[var(--arq-gray-100)] text-[var(--arq-gray-600)] hover:bg-[var(--arq-gray-200)]"
+                ? "bg-[#0432a5] text-white"
+                : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700"
             }`}
           >
             {study.industry}
@@ -104,34 +104,34 @@ export function CaseStudyBlock() {
           {/* Left Column - Details */}
           <div className="space-y-6">
             <div>
-              <span className="inline-block px-3 py-1 rounded-full bg-[var(--arq-blue)]/10 text-[var(--arq-blue)] text-sm font-semibold mb-3">
+              <span className="inline-block px-3 py-1 rounded-full bg-[#0432a5]/10 dark:bg-[#d0f438]/10 text-[#0432a5] dark:text-[#d0f438] text-sm font-semibold mb-3">
                 {activeStudy.badge}
               </span>
-              <h3 className="text-xl font-bold text-[var(--arq-black)] mb-2">
+              <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">
                 {activeStudy.title}
               </h3>
             </div>
 
             <div>
-              <h4 className="font-semibold text-[var(--arq-black)] mb-2">
+              <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">
                 The Challenge
               </h4>
-              <p className="text-[var(--arq-gray-600)]">{activeStudy.challenge}</p>
+              <p className="text-gray-600 dark:text-gray-400">{activeStudy.challenge}</p>
             </div>
 
             <div>
-              <h4 className="font-semibold text-[var(--arq-black)] mb-2">
+              <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">
                 The Solution
               </h4>
-              <p className="text-[var(--arq-gray-600)]">{activeStudy.solution}</p>
+              <p className="text-gray-600 dark:text-gray-400">{activeStudy.solution}</p>
             </div>
 
             {/* Quote */}
-            <div className="p-6 rounded-xl bg-[var(--arq-gray-50)] border-l-4 border-[var(--arq-blue)]">
-              <blockquote className="text-[var(--arq-gray-700)] italic mb-3">
+            <div className="p-6 rounded-xl bg-gray-50 dark:bg-gray-800 border-l-4 border-[#0432a5] dark:border-[#d0f438]">
+              <blockquote className="text-gray-700 dark:text-gray-300 italic mb-3">
                 &ldquo;{activeStudy.quote}&rdquo;
               </blockquote>
-              <p className="text-sm font-semibold text-[var(--arq-gray-500)]">
+              <p className="text-sm font-semibold text-gray-500 dark:text-gray-400">
                 — {activeStudy.quoteAuthor}, {activeStudy.badge}
               </p>
             </div>
@@ -139,7 +139,7 @@ export function CaseStudyBlock() {
 
           {/* Right Column - Results */}
           <div className="space-y-6">
-            <h4 className="font-semibold text-[var(--arq-black)]">Results</h4>
+            <h4 className="font-semibold text-gray-900 dark:text-gray-100">Results</h4>
             <div className="grid grid-cols-2 gap-4">
               {activeStudy.results.map((result, index) => (
                 <motion.div
@@ -147,12 +147,12 @@ export function CaseStudyBlock() {
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: index * 0.1 }}
-                  className="p-6 rounded-xl bg-white border border-[var(--arq-gray-200)] text-center shadow-sm"
+                  className="p-6 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-center shadow-sm"
                 >
-                  <div className="text-3xl font-bold text-[var(--arq-blue)] mb-1">
+                  <div className="text-3xl font-bold text-[#0432a5] dark:text-[#d0f438] mb-1">
                     {result.metric}
                   </div>
-                  <div className="text-sm text-[var(--arq-gray-600)]">
+                  <div className="text-sm text-gray-600 dark:text-gray-400">
                     {result.label}
                   </div>
                 </motion.div>
@@ -160,7 +160,7 @@ export function CaseStudyBlock() {
             </div>
 
             {/* Key Outcomes */}
-            <div className="p-6 rounded-xl bg-[var(--arq-black)] text-white">
+            <div className="p-6 rounded-xl bg-gray-900 dark:bg-gray-800 text-white">
               <h4 className="font-semibold mb-4">Key Outcomes</h4>
               <ul className="space-y-3">
                 {[
@@ -170,7 +170,7 @@ export function CaseStudyBlock() {
                   "Reduced risk of compliance violations",
                 ].map((outcome, index) => (
                   <li key={index} className="flex items-center gap-3">
-                    <CheckIcon size={16} className="text-[var(--arq-lime)]" />
+                    <CheckIcon size={16} className="text-[#d0f438]" />
                     <span className="text-white/90">{outcome}</span>
                   </li>
                 ))}
@@ -187,12 +187,12 @@ export function CaseStudyBlock() {
         transition={{ delay: 0.5 }}
         className="text-center pt-4"
       >
-        <p className="text-sm text-[var(--arq-gray-600)] mb-4">
+        <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
           Want to achieve similar results for your organization?
         </p>
         <a
           href="/demo"
-          className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--arq-blue)] text-white rounded-lg font-semibold hover:bg-[var(--arq-blue)]/90 transition-colors"
+          className="inline-flex items-center gap-2 px-6 py-3 bg-[#0432a5] text-white rounded-lg font-semibold hover:opacity-90 transition-colors"
         >
           Request a Demo
           <ArrowRightIcon size={18} />
