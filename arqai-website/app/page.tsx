@@ -374,13 +374,24 @@ export default function HomePage() {
                 transition={{ delay: 0.2 }}
                 className="relative"
               >
-                <Image
-                  src="/img/demo/01_fea-img.webp"
-                  alt="AI Platform Architecture"
-                  width={600}
-                  height={400}
-                  className="rounded-lg w-full"
-                />
+                {/* Modern device frame for video */}
+                <div className="relative rounded-2xl overflow-hidden bg-base-opp/5 p-1 shadow-2xl shadow-accent/10">
+                  <div className="rounded-xl overflow-hidden bg-base-opp">
+                    <video
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      preload="metadata"
+                      className="w-full h-auto"
+                      poster="/img/demo/arqai-foundry-poster.webp"
+                    >
+                      <source src="/video/ArqAI-foundry-optimized.webm" type="video/webm" />
+                      <source src="/video/ArqAI-foundry-optimized.mp4" type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
+                  </div>
+                </div>
               </motion.div>
             </div>
           </div>
