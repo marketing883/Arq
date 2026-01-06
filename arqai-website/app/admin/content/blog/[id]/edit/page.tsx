@@ -452,7 +452,7 @@ export default function EditBlogPostPage() {
             </AIFieldWrapper>
 
             {/* Editor */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm mt-4 overflow-hidden">
+            <div className="bg-white dark:bg-gray-800 rounded shadow-sm mt-4 overflow-hidden border border-slate-200 dark:border-gray-700">
               <TiptapEditor
                 content={formData.content}
                 onChange={(content) => setFormData(prev => ({ ...prev, content }))}
@@ -464,8 +464,8 @@ export default function EditBlogPostPage() {
           {/* Right Sidebar - Post Settings */}
           <div className="w-72 flex-shrink-0 space-y-4">
             {/* Post Settings */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-5">
-              <h3 className="font-semibold text-slate-900 dark:text-white mb-4">Post Settings</h3>
+            <div className="bg-white dark:bg-gray-800 rounded shadow-sm p-4 border border-slate-200 dark:border-gray-700">
+              <h3 className="font-semibold text-slate-900 dark:text-white mb-4 text-sm">Post Settings</h3>
 
               {/* Status Indicator */}
               <div className="mb-4 p-3 bg-slate-50 dark:bg-gray-700/50 rounded-lg">
@@ -573,8 +573,8 @@ export default function EditBlogPostPage() {
             </div>
 
             {/* Featured Image */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-5">
-              <h3 className="font-semibold text-slate-900 dark:text-white mb-4">Featured Image</h3>
+            <div className="bg-white dark:bg-gray-800 rounded shadow-sm p-4 border border-slate-200 dark:border-gray-700">
+              <h3 className="font-semibold text-slate-900 dark:text-white mb-3 text-sm">Featured Image</h3>
 
               {formData.featured_image ? (
                 <div className="relative">
