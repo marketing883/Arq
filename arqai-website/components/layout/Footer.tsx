@@ -5,8 +5,22 @@ import { useState } from "react";
 
 const footerNav = [
   { name: "Home", href: "/" },
+  { name: "Platform", href: "/platform" },
+  { name: "Solutions", href: "/solutions" },
   { name: "About", href: "/about" },
   { name: "Contact", href: "/contact" },
+];
+
+const resourceNav = [
+  { name: "Blog", href: "/blog" },
+  { name: "Case Studies", href: "/case-studies" },
+  { name: "Whitepapers", href: "/resources/whitepapers" },
+  { name: "Webinars", href: "/webinars" },
+];
+
+const legalNav = [
+  { name: "Privacy Policy", href: "/privacy" },
+  { name: "Terms of Service", href: "/terms" },
 ];
 
 const socialLinks = [
@@ -47,24 +61,49 @@ export function Footer() {
         <div className="mxd-footer__blocks grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {/* Column 1 - Navigation */}
           <div className="card p-6 md:p-8 flex flex-col justify-between min-h-[300px]">
-            <nav className="footer-nav">
-              <ul className="space-y-4">
-                {footerNav.map((item) => (
+            <div>
+              <h3 className="text-body-sm font-semibold text-text-muted uppercase tracking-wider mb-4">Navigation</h3>
+              <nav className="footer-nav">
+                <ul className="space-y-3">
+                  {footerNav.map((item) => (
+                    <li key={item.name}>
+                      <Link
+                        href={item.href}
+                        className="text-body-md text-text-bright hover:text-accent transition-colors"
+                      >
+                        {item.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+              <h3 className="text-body-sm font-semibold text-text-muted uppercase tracking-wider mt-6 mb-4">Resources</h3>
+              <ul className="space-y-3">
+                {resourceNav.map((item) => (
                   <li key={item.name}>
                     <Link
                       href={item.href}
-                      className="text-display-sm font-display text-text-bright hover:text-accent transition-colors"
+                      className="text-body-md text-text-bright hover:text-accent transition-colors"
                     >
                       {item.name}
                     </Link>
                   </li>
                 ))}
               </ul>
-            </nav>
-            <div className="mt-8 pt-6 border-t border-stroke-muted">
-              <p className="text-body-xs text-text-muted">
-                New Jersey, USA
-              </p>
+            </div>
+            <div className="mt-6 pt-6 border-t border-stroke-muted">
+              <ul className="flex flex-wrap gap-4">
+                {legalNav.map((item) => (
+                  <li key={item.name}>
+                    <Link
+                      href={item.href}
+                      className="text-body-xs text-text-muted hover:text-accent transition-colors"
+                    >
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
 

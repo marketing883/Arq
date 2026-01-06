@@ -99,7 +99,7 @@ export default function DemoPage() {
                   keep us awake at night.&rdquo;
                 </blockquote>
                 <p className="text-sm text-[var(--arq-gray-500)]">
-                  — CISO, Fortune 500 Financial Services Company
+                  - CISO, Fortune 500 Financial Services Company
                 </p>
               </div>
 

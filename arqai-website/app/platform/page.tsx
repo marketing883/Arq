@@ -163,7 +163,7 @@ export default function PlatformPage() {
               <p className="text-[var(--arq-gray-600)] mb-6">
                 Before execution, the platform issues a single-use, cryptographically-signed
                 capability token that serves as permission. This token is consumed upon use,
-                and the entire lifecycle—issuance, validation, and consumption—is recorded
+                and the entire lifecycle (issuance, validation, and consumption) is recorded
                 on an immutable audit log.
               </p>
 

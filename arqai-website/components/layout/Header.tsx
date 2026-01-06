@@ -22,6 +22,8 @@ interface PromoContent {
 
 const navigation = [
   { name: "Home", href: "/" },
+  { name: "Platform", href: "/platform" },
+  { name: "Solutions", href: "/solutions" },
   { name: "About", href: "/about" },
   { name: "Resources", href: "#", hasDropdown: true },
   { name: "Contact", href: "/contact" },
@@ -50,7 +52,7 @@ const resourceLinks = [
   },
   {
     name: "Whitepapers",
-    href: "/whitepapers",
+    href: "/resources/whitepapers",
     description: "In-depth research & guides",
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

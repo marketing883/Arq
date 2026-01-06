@@ -19,7 +19,7 @@ const values = [
   },
   {
     title: "Enterprise-Grade",
-    description: "We build for the world's most demanding environments—security, compliance, and scale are non-negotiable.",
+    description: "We build for the world's most demanding environments. Security, compliance, and scale are non-negotiable.",
     icon: (
       <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
@@ -101,12 +101,12 @@ export default function AboutPage() {
                 </h2>
                 <p className="text-lg text-[var(--arq-gray-600)] dark:text-[var(--arq-gray-400)] mb-6">
                   Enterprises are racing to deploy AI, but this rapid adoption has created a hidden crisis
-                  of &quot;Shadow AI&quot;—uncontrolled agents, disconnected tools, and a lack of oversight that
+                  of &quot;Shadow AI&quot;: uncontrolled agents, disconnected tools, and a lack of oversight that
                   creates unacceptable risks.
                 </p>
                 <p className="text-lg text-[var(--arq-gray-600)] dark:text-[var(--arq-gray-400)]">
                   ArqAI exists to solve this problem. We provide the governance fabric that makes
-                  enterprise AI safe, auditable, and production-ready—so organizations can innovate
+                  enterprise AI safe, auditable, and production-ready, so organizations can innovate
                   without compromising on security or compliance.
                 </p>
               </motion.div>

@@ -178,7 +178,7 @@ export function CaseStudyBlock({ customizations }: CaseStudyBlockProps) {
                 &ldquo;{activeStudy.quote}&rdquo;
               </blockquote>
               <p className="text-sm font-semibold text-gray-500 dark:text-gray-400">
-                — {activeStudy.quoteAuthor}, {activeStudy.badge}
+                - {activeStudy.quoteAuthor}, {activeStudy.badge}
               </p>
             </div>
           </div>

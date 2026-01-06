@@ -351,7 +351,7 @@ export default function HomePage() {
                   transition={{ delay: 0.2 }}
                   className="text-body-md text-text-muted mb-8"
                 >
-                  When enterprises need AI governance that enables production, not just compliance theater—they build on ArqAI. From leading telecom players to healthcare&apos;s most sensitive workflows, our three patented technologies are the foundation for autonomous agents operating at scale.
+                  When enterprises need AI governance that enables production, not just compliance theater, they build on ArqAI. From leading telecom players to healthcare&apos;s most sensitive workflows, our three patented technologies are the foundation for autonomous agents operating at scale.
                 </motion.p>
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -483,7 +483,7 @@ export default function HomePage() {
                 Built on ArqAI. Deployed with Confidence.
               </h2>
               <p className="text-body-lg text-text-muted max-w-3xl mx-auto">
-                These autonomous agents were forged in our foundry—engineered with TAO, CAPC, and ODA-RAG.
+                These autonomous agents were forged in our foundry, engineered with TAO, CAPC, and ODA-RAG.
                 Each one is audit-ready, explainable, and built for the demands of regulated industries.
               </p>
             </motion.div>
@@ -637,7 +637,7 @@ export default function HomePage() {
                           ✓ {product.deployment}
                         </p>
                       )}
-                      <Link href={`/solutions#${product.id}`} className="absolute inset-0">
+                      <Link href={`/solutions/${product.id}`} className="absolute inset-0">
                         <span className="sr-only">Learn more about {product.name}</span>
                       </Link>
                     </motion.div>
@@ -670,7 +670,7 @@ export default function HomePage() {
                     </h3>
                     <p className="text-body-md text-white/80 max-w-xl">
                       We&apos;ll forge a governed AI agent tailored to your specific use case.
-                      From pilot to production in 30 days—with full audit trails and compliance built in.
+                      From pilot to production in 30 days, with full audit trails and compliance built in.
                     </p>
                   </div>
                   <div className="shrink-0">
