@@ -27,8 +27,8 @@ export function AIGenerateButton({
     }
   };
 
-  const sizeClasses = size === "sm" ? "p-1.5" : "p-2";
-  const iconSize = size === "sm" ? "w-4 h-4" : "w-5 h-5";
+  const sizeClasses = size === "sm" ? "p-1" : "p-1.5";
+  const iconSize = size === "sm" ? "w-3.5 h-3.5" : "w-4 h-4";
 
   return (
     <button
@@ -36,7 +36,7 @@ export function AIGenerateButton({
       onClick={handleClick}
       disabled={disabled || isLoading}
       title={title}
-      className={`${sizeClasses} rounded-lg bg-gradient-to-r from-purple-500 to-indigo-500 text-white hover:from-purple-600 hover:to-indigo-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-sm hover:shadow-md`}
+      className={`${sizeClasses} rounded bg-gradient-to-r from-purple-500 to-indigo-500 text-white hover:from-purple-600 hover:to-indigo-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all`}
     >
       {isLoading ? (
         <svg
@@ -105,12 +105,12 @@ export function AIFieldWrapper({
   };
 
   return (
-    <div className="space-y-1.5">
+    <div className="space-y-1">
       <div className="flex items-center justify-between">
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+        <label className="block text-xs font-medium text-slate-600">
           {label}
         </label>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5">
           {charCount !== undefined && maxChars !== undefined && (
             <span
               className={`text-xs ${
@@ -118,7 +118,7 @@ export function AIFieldWrapper({
                   ? "text-red-500"
                   : charCount > maxChars * 0.9
                   ? "text-yellow-500"
-                  : "text-gray-400"
+                  : "text-slate-400"
               }`}
             >
               {charCount}/{maxChars}
@@ -133,7 +133,7 @@ export function AIFieldWrapper({
       </div>
       {children}
       {helpText && (
-        <p className={`text-xs ${status ? statusColors[status] : "text-gray-500"}`}>
+        <p className={`text-xs ${status ? statusColors[status] : "text-slate-500"}`}>
           {helpText}
         </p>
       )}

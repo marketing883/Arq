@@ -60,11 +60,11 @@ export function KeywordResearchPanel({
   };
 
   const getDifficultyColor = (difficulty?: number) => {
-    if (!difficulty) return "bg-gray-200 text-gray-700";
-    if (difficulty < 30) return "bg-green-100 text-green-700";
-    if (difficulty < 50) return "bg-yellow-100 text-yellow-700";
-    if (difficulty < 70) return "bg-orange-100 text-orange-700";
-    return "bg-red-100 text-red-700";
+    if (!difficulty) return "bg-gray-100 text-gray-600";
+    if (difficulty < 30) return "bg-green-50 text-green-700";
+    if (difficulty < 50) return "bg-yellow-50 text-yellow-700";
+    if (difficulty < 70) return "bg-orange-50 text-orange-700";
+    return "bg-red-50 text-red-700";
   };
 
   const getDifficultyLabel = (difficulty?: number) => {
@@ -85,9 +85,9 @@ export function KeywordResearchPanel({
   };
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
-      <div className="p-4 border-b border-gray-200 dark:border-gray-700">
-        <h3 className="text-sm font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+    <div className="bg-white rounded border border-slate-200 shadow-sm overflow-hidden">
+      <div className="px-4 py-3 border-b border-slate-200">
+        <h3 className="text-sm font-semibold text-slate-900 flex items-center gap-2">
           <svg className="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
@@ -98,7 +98,7 @@ export function KeywordResearchPanel({
       <div className="p-4 space-y-4">
         {/* Keyword Input */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
+          <label className="block text-xs font-medium text-slate-600 mb-1.5">
             Enter your topic or target keyword
           </label>
           <div className="flex gap-2">
@@ -108,12 +108,12 @@ export function KeywordResearchPanel({
               onChange={(e) => setKeyword(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleResearch()}
               placeholder="e.g., enterprise ai governance"
-              className="flex-1 px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="flex-1 px-3 py-2 rounded border border-slate-200 bg-white text-slate-900 placeholder-slate-400 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
             />
             <button
               onClick={handleResearch}
               disabled={isLoading || !keyword.trim()}
-              className="px-4 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 font-medium transition-colors"
+              className="px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1.5 text-sm font-medium transition-colors"
             >
               {isLoading ? (
                 <>
@@ -133,41 +133,41 @@ export function KeywordResearchPanel({
               )}
             </button>
           </div>
-          {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
+          {error && <p className="mt-1.5 text-xs text-red-500">{error}</p>}
         </div>
 
         {/* Insights Panel */}
         {showInsights && researchData && (
-          <div className="space-y-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+          <div className="space-y-4 pt-4 border-t border-slate-200">
             {/* Metrics Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              <div className="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-3">
-                <p className="text-xs text-gray-500 dark:text-gray-400">Search Volume</p>
-                <p className="text-xl font-bold text-gray-900 dark:text-white">
+            <div className="grid grid-cols-2 gap-2">
+              <div className="bg-slate-50 rounded p-2.5">
+                <p className="text-xs text-slate-500">Search Volume</p>
+                <p className="text-lg font-bold text-slate-900">
                   {researchData.metrics.searchVolume.toLocaleString()}
-                  <span className="text-xs font-normal text-gray-500">/mo</span>
+                  <span className="text-xs font-normal text-slate-500">/mo</span>
                 </p>
               </div>
-              <div className="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-3">
-                <p className="text-xs text-gray-500 dark:text-gray-400">Difficulty</p>
-                <div className="flex items-center gap-2">
-                  <span className={`px-2 py-0.5 rounded text-xs font-medium ${getDifficultyColor(researchData.metrics.keywordDifficulty)}`}>
+              <div className="bg-slate-50 rounded p-2.5">
+                <p className="text-xs text-slate-500">Difficulty</p>
+                <div className="flex items-center gap-1.5">
+                  <span className={`px-1.5 py-0.5 rounded text-xs font-medium ${getDifficultyColor(researchData.metrics.keywordDifficulty)}`}>
                     {researchData.metrics.keywordDifficulty || "N/A"}
                   </span>
-                  <span className="text-sm text-gray-600 dark:text-gray-300">
+                  <span className="text-xs text-slate-600">
                     {getDifficultyLabel(researchData.metrics.keywordDifficulty)}
                   </span>
                 </div>
               </div>
-              <div className="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-3">
-                <p className="text-xs text-gray-500 dark:text-gray-400">CPC</p>
-                <p className="text-xl font-bold text-gray-900 dark:text-white">
+              <div className="bg-slate-50 rounded p-2.5">
+                <p className="text-xs text-slate-500">CPC</p>
+                <p className="text-lg font-bold text-slate-900">
                   ${researchData.metrics.cpc.toFixed(2)}
                 </p>
               </div>
-              <div className="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-3">
-                <p className="text-xs text-gray-500 dark:text-gray-400">Trend</p>
-                <p className="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-1">
+              <div className="bg-slate-50 rounded p-2.5">
+                <p className="text-xs text-slate-500">Trend</p>
+                <p className="text-lg font-bold text-slate-900 flex items-center gap-1">
                   {getTrendIcon(researchData.metrics.trendDirection)}
                   {researchData.metrics.trendPercent > 0 ? "+" : ""}
                   {researchData.metrics.trendPercent}%
@@ -177,26 +177,26 @@ export function KeywordResearchPanel({
 
             {/* Suggestions */}
             {researchData.suggestions.length > 0 && (
-              <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4">
-                <p className="text-sm font-medium text-blue-800 dark:text-blue-200 mb-2 flex items-center gap-2">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="bg-blue-50 rounded p-3">
+                <p className="text-xs font-medium text-blue-800 mb-2 flex items-center gap-1.5">
+                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                   </svg>
-                  Alternative Keywords with Better Opportunity
+                  Alternative Keywords
                 </p>
-                <div className="space-y-2">
+                <div className="space-y-1.5">
                   {researchData.suggestions.map((s, i) => (
                     <div
                       key={i}
-                      className="flex items-center justify-between bg-white dark:bg-gray-800 rounded-lg p-3"
+                      className="flex items-center justify-between bg-white rounded p-2"
                     >
                       <div>
-                        <p className="font-medium text-gray-900 dark:text-white">{s.keyword}</p>
-                        <p className="text-xs text-gray-500">{s.reason}</p>
+                        <p className="text-sm font-medium text-slate-900">{s.keyword}</p>
+                        <p className="text-xs text-slate-500">{s.reason}</p>
                       </div>
                       <button
                         onClick={() => handleSwitchKeyword(s.keyword)}
-                        className="px-3 py-1 text-sm bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors"
+                        className="px-2 py-1 text-xs bg-blue-100 text-blue-700 rounded hover:bg-blue-200 transition-colors"
                       >
                         Use This
                       </button>
@@ -209,14 +209,14 @@ export function KeywordResearchPanel({
             {/* Related Keywords */}
             {researchData.relatedKeywords.length > 0 && (
               <div>
-                <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <p className="text-xs font-medium text-slate-600 mb-1.5">
                   Related Keywords
                 </p>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-1.5">
                   {researchData.relatedKeywords.slice(0, 10).map((kw, i) => (
                     <span
                       key={i}
-                      className="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-xs text-gray-700 dark:text-gray-300"
+                      className="px-2 py-0.5 bg-slate-100 rounded text-xs text-slate-600"
                     >
                       {kw.keyword} ({kw.searchVolume})
                     </span>
@@ -228,12 +228,12 @@ export function KeywordResearchPanel({
             {/* Questions */}
             {researchData.questions.length > 0 && (
               <div>
-                <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <p className="text-xs font-medium text-slate-600 mb-1.5">
                   Questions People Ask
                 </p>
                 <ul className="space-y-1">
                   {researchData.questions.slice(0, 5).map((q, i) => (
-                    <li key={i} className="text-sm text-gray-600 dark:text-gray-400 flex items-start gap-2">
+                    <li key={i} className="text-xs text-slate-600 flex items-start gap-1.5">
                       <span className="text-blue-500">•</span>
                       {q.question}
                     </li>
@@ -245,16 +245,16 @@ export function KeywordResearchPanel({
             {/* Competitors */}
             {researchData.competitors.length > 0 && (
               <div>
-                <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <p className="text-xs font-medium text-slate-600 mb-1.5">
                   Top Competitor Articles
                 </p>
-                <div className="space-y-2">
+                <div className="space-y-1.5">
                   {researchData.competitors.slice(0, 3).map((c, i) => (
-                    <div key={i} className="text-sm">
-                      <p className="text-gray-900 dark:text-white font-medium truncate">
+                    <div key={i} className="text-xs">
+                      <p className="text-slate-900 font-medium truncate">
                         {i + 1}. {c.title}
                       </p>
-                      <p className="text-xs text-gray-500 truncate">{c.domain}</p>
+                      <p className="text-slate-500 truncate">{c.domain}</p>
                     </div>
                   ))}
                 </div>
@@ -262,10 +262,10 @@ export function KeywordResearchPanel({
             )}
 
             {/* Action Buttons */}
-            <div className="flex gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
+            <div className="flex gap-2 pt-3 border-t border-slate-200">
               <button
                 onClick={handleConfirm}
-                className="flex-1 px-4 py-2.5 bg-green-600 text-white rounded-lg hover:bg-green-700 font-medium transition-colors flex items-center justify-center gap-2"
+                className="flex-1 px-3 py-2 bg-green-600 text-white rounded hover:bg-green-700 text-sm font-medium transition-colors flex items-center justify-center gap-1.5"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -277,9 +277,9 @@ export function KeywordResearchPanel({
                   setShowInsights(false);
                   setResearchData(null);
                 }}
-                className="px-4 py-2.5 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 font-medium transition-colors"
+                className="px-3 py-2 border border-slate-300 text-slate-700 rounded hover:bg-slate-50 text-sm font-medium transition-colors"
               >
-                Try Different Keyword
+                Try Different
               </button>
             </div>
           </div>
@@ -289,7 +289,7 @@ export function KeywordResearchPanel({
         {!showInsights && (
           <button
             onClick={() => onKeywordConfirmed(keyword.trim() || "untitled", null)}
-            className="text-sm text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+            className="text-xs text-slate-500 hover:text-slate-700"
           >
             Skip research and continue without SEO data →
           </button>

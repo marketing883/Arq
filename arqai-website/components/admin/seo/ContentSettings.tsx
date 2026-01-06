@@ -53,9 +53,9 @@ export function ContentSettings({
   const selectedLength = LENGTH_OPTIONS.find((l) => l.id === settings.lengthId);
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
-      <div className="p-4 border-b border-gray-200 dark:border-gray-700">
-        <h3 className="text-sm font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+    <div className="bg-white rounded border border-slate-200 shadow-sm overflow-hidden">
+      <div className="px-4 py-3 border-b border-slate-200">
+        <h3 className="text-sm font-semibold text-slate-900 flex items-center gap-2">
           <svg className="w-4 h-4 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
           </svg>
@@ -63,23 +63,23 @@ export function ContentSettings({
         </h3>
       </div>
 
-      <div className="p-4 space-y-6">
+      <div className="p-4 space-y-5">
         {/* Target Audience */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          <label className="block text-xs font-medium text-slate-600 mb-2">
             Target Audience
           </label>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-1.5">
             {AUDIENCE_PRESETS.map((audience) => (
               <button
                 key={audience.id}
                 type="button"
                 onClick={() => toggleAudience(audience.id)}
                 disabled={disabled}
-                className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+                className={`px-2.5 py-1 rounded text-xs font-medium transition-colors ${
                   settings.audienceIds.includes(audience.id)
-                    ? "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300 border-2 border-purple-500"
-                    : "bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300 border-2 border-transparent hover:bg-gray-200 dark:hover:bg-gray-600"
+                    ? "bg-purple-100 text-purple-700 border border-purple-300"
+                    : "bg-slate-50 text-slate-600 border border-slate-200 hover:bg-slate-100"
                 }`}
                 title={audience.description}
               >
@@ -89,21 +89,21 @@ export function ContentSettings({
           </div>
 
           {/* Custom Audience */}
-          <div className="mt-3">
+          <div className="mt-2">
             <button
               type="button"
               onClick={() => setShowCustomAudience(!showCustomAudience)}
-              className="text-sm text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300"
+              className="text-xs text-purple-600 hover:text-purple-700"
             >
-              {showCustomAudience ? "− Hide" : "+ Add"} custom audience context
+              {showCustomAudience ? "− Hide" : "+ Add"} custom audience
             </button>
             {showCustomAudience && (
               <textarea
                 value={settings.customAudience}
                 onChange={(e) => updateSetting("customAudience", e.target.value)}
                 disabled={disabled}
-                placeholder="Add specific details about your target audience, industry focus, pain points..."
-                className="mt-2 w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                placeholder="Add specific details about your target audience..."
+                className="mt-1.5 w-full px-2.5 py-1.5 rounded border border-slate-200 bg-white text-slate-900 placeholder-slate-400 text-xs focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500"
                 rows={2}
               />
             )}
@@ -112,17 +112,17 @@ export function ContentSettings({
 
         {/* Content Length */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          <label className="block text-xs font-medium text-slate-600 mb-2">
             Content Length
           </label>
-          <div className="space-y-2">
+          <div className="space-y-1.5">
             {LENGTH_OPTIONS.map((length) => (
               <label
                 key={length.id}
-                className={`flex items-start gap-3 p-3 rounded-lg cursor-pointer transition-colors ${
+                className={`flex items-start gap-2.5 p-2.5 rounded cursor-pointer transition-colors ${
                   settings.lengthId === length.id
-                    ? "bg-blue-50 dark:bg-blue-900/20 border-2 border-blue-500"
-                    : "bg-gray-50 dark:bg-gray-700/50 border-2 border-transparent hover:bg-gray-100 dark:hover:bg-gray-700"
+                    ? "bg-blue-50 border border-blue-200"
+                    : "bg-slate-50 border border-transparent hover:bg-slate-100"
                 }`}
               >
                 <input
@@ -132,21 +132,21 @@ export function ContentSettings({
                   checked={settings.lengthId === length.id}
                   onChange={() => updateSetting("lengthId", length.id)}
                   disabled={disabled}
-                  className="mt-1"
+                  className="mt-0.5"
                 />
                 <div className="flex-1">
                   <div className="flex items-center gap-2">
-                    <span className="font-medium text-gray-900 dark:text-white">
+                    <span className="text-sm font-medium text-slate-900">
                       {length.label}
                     </span>
-                    <span className="text-xs text-gray-500 dark:text-gray-400">
+                    <span className="text-xs text-slate-500">
                       {length.wordRange}
                     </span>
-                    <span className="text-xs text-gray-400 dark:text-gray-500">
+                    <span className="text-xs text-slate-400">
                       ~{length.readTime}
                     </span>
                   </div>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+                  <p className="text-xs text-slate-500 mt-0.5">
                     {length.bestFor}
                   </p>
                 </div>
@@ -154,22 +154,22 @@ export function ContentSettings({
             ))}
           </div>
           {selectedLength && (
-            <p className="mt-2 text-xs text-blue-600 dark:text-blue-400">
-              SEO Note: {selectedLength.seoNote}
+            <p className="mt-1.5 text-xs text-blue-600">
+              SEO: {selectedLength.seoNote}
             </p>
           )}
         </div>
 
         {/* Tone & Voice */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          <label className="block text-xs font-medium text-slate-600 mb-1.5">
             Tone & Voice
           </label>
           <select
             value={settings.toneId}
             onChange={(e) => updateSetting("toneId", e.target.value)}
             disabled={disabled}
-            className="w-full px-3 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+            className="w-full px-2.5 py-1.5 rounded border border-slate-200 bg-white text-slate-900 text-sm focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500"
           >
             {TONE_OPTIONS.map((tone) => (
               <option key={tone.id} value={tone.id}>
@@ -178,7 +178,7 @@ export function ContentSettings({
             ))}
           </select>
           {selectedTone && (
-            <p className="mt-1.5 text-xs text-gray-500 dark:text-gray-400">
+            <p className="mt-1 text-xs text-slate-500">
               {selectedTone.description}
             </p>
           )}
@@ -186,20 +186,20 @@ export function ContentSettings({
 
         {/* Include Options */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          <label className="block text-xs font-medium text-slate-600 mb-2">
             Include in Content
           </label>
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-2 gap-1.5">
             {[
-              { key: "includeStats", label: "Statistics & Data Points" },
-              { key: "includeFaqs", label: "FAQ Section (for AEO)" },
-              { key: "includeActionables", label: "Actionable Takeaways" },
-              { key: "includeCaseStudies", label: "Case Study Examples" },
-              { key: "includeInternalLinks", label: "Internal Links to ArqAI" },
+              { key: "includeStats", label: "Statistics & Data" },
+              { key: "includeFaqs", label: "FAQ Section" },
+              { key: "includeActionables", label: "Actionable Tips" },
+              { key: "includeCaseStudies", label: "Case Studies" },
+              { key: "includeInternalLinks", label: "Internal Links" },
             ].map((option) => (
               <label
                 key={option.key}
-                className="flex items-center gap-2 cursor-pointer"
+                className="flex items-center gap-1.5 cursor-pointer"
               >
                 <input
                   type="checkbox"
@@ -211,9 +211,9 @@ export function ContentSettings({
                     )
                   }
                   disabled={disabled}
-                  className="rounded border-gray-300 text-purple-600 focus:ring-purple-500"
+                  className="rounded border-slate-300 text-purple-600 focus:ring-purple-500"
                 />
-                <span className="text-sm text-gray-700 dark:text-gray-300">
+                <span className="text-xs text-slate-700">
                   {option.label}
                 </span>
               </label>

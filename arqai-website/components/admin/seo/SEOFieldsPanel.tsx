@@ -73,7 +73,6 @@ export function SEOFieldsPanel({
         throw new Error(data.error || "Generation failed");
       }
 
-      // Handle different response types
       if (fieldType === "title") {
         if (data.options?.length > 1) {
           setGenerationOptions({ field: "metaTitle", options: data.options });
@@ -120,9 +119,9 @@ export function SEOFieldsPanel({
   };
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
-      <div className="p-4 border-b border-gray-200 dark:border-gray-700">
-        <h3 className="text-sm font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+    <div className="bg-white rounded border border-slate-200 shadow-sm overflow-hidden">
+      <div className="px-4 py-3 border-b border-slate-200">
+        <h3 className="text-sm font-semibold text-slate-900 flex items-center gap-2">
           <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
           </svg>
@@ -130,10 +129,10 @@ export function SEOFieldsPanel({
         </h3>
       </div>
 
-      <div className="p-4 space-y-5">
+      <div className="p-4 space-y-4">
         {/* Focus Keyword */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
+          <label className="block text-xs font-medium text-slate-600 mb-1">
             Focus Keyword
           </label>
           <input
@@ -142,7 +141,7 @@ export function SEOFieldsPanel({
             onChange={(e) => updateField("focusKeyword", e.target.value)}
             disabled={disabled}
             placeholder="Primary keyword to rank for"
-            className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+            className="w-full px-2.5 py-1.5 rounded border border-slate-200 bg-white text-slate-900 placeholder-slate-400 text-sm focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500"
           />
         </div>
 
@@ -156,8 +155,8 @@ export function SEOFieldsPanel({
           helpText={
             fields.metaTitle.length > 0
               ? fields.metaTitle.length <= 60
-                ? "Good length for search results"
-                : "May be truncated in search results"
+                ? "Good length"
+                : "May be truncated"
               : "50-60 characters recommended"
           }
           status={
@@ -173,22 +172,22 @@ export function SEOFieldsPanel({
             value={fields.metaTitle}
             onChange={(e) => updateField("metaTitle", e.target.value)}
             disabled={disabled}
-            placeholder="SEO-optimized title for search engines"
-            className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+            placeholder="SEO-optimized title"
+            className="w-full px-2.5 py-1.5 rounded border border-slate-200 bg-white text-slate-900 placeholder-slate-400 text-sm focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500"
           />
         </AIFieldWrapper>
 
         {/* Generation Options for Meta Title */}
         {generationOptions?.field === "metaTitle" && (
-          <div className="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-3 space-y-2">
-            <p className="text-xs font-medium text-purple-700 dark:text-purple-300">
-              Alternative options (click to use):
+          <div className="bg-purple-50 rounded p-2.5 space-y-1.5">
+            <p className="text-xs font-medium text-purple-700">
+              Alternatives:
             </p>
             {generationOptions.options.map((option, i) => (
               <button
                 key={i}
                 onClick={() => selectOption("metaTitle", option)}
-                className="block w-full text-left px-3 py-2 bg-white dark:bg-gray-800 rounded text-sm text-gray-700 dark:text-gray-300 hover:bg-purple-100 dark:hover:bg-purple-900/30 transition-colors"
+                className="block w-full text-left px-2.5 py-1.5 bg-white rounded text-xs text-slate-700 hover:bg-purple-100 transition-colors"
               >
                 {option}
               </button>
@@ -206,8 +205,8 @@ export function SEOFieldsPanel({
           helpText={
             fields.metaDescription.length > 0
               ? fields.metaDescription.length <= 160
-                ? "Good length for search snippets"
-                : "May be truncated in search results"
+                ? "Good length"
+                : "May be truncated"
               : "150-160 characters recommended"
           }
           status={
@@ -224,21 +223,21 @@ export function SEOFieldsPanel({
             disabled={disabled}
             placeholder="Compelling description for search results"
             rows={2}
-            className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+            className="w-full px-2.5 py-1.5 rounded border border-slate-200 bg-white text-slate-900 placeholder-slate-400 text-sm focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500 resize-none"
           />
         </AIFieldWrapper>
 
         {/* Generation Options for Meta Description */}
         {generationOptions?.field === "metaDescription" && (
-          <div className="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-3 space-y-2">
-            <p className="text-xs font-medium text-purple-700 dark:text-purple-300">
-              Alternative options:
+          <div className="bg-purple-50 rounded p-2.5 space-y-1.5">
+            <p className="text-xs font-medium text-purple-700">
+              Alternatives:
             </p>
             {generationOptions.options.map((option, i) => (
               <button
                 key={i}
                 onClick={() => selectOption("metaDescription", option)}
-                className="block w-full text-left px-3 py-2 bg-white dark:bg-gray-800 rounded text-sm text-gray-700 dark:text-gray-300 hover:bg-purple-100 dark:hover:bg-purple-900/30 transition-colors"
+                className="block w-full text-left px-2.5 py-1.5 bg-white rounded text-xs text-slate-700 hover:bg-purple-100 transition-colors"
               >
                 {option}
               </button>
@@ -251,7 +250,7 @@ export function SEOFieldsPanel({
           label="Secondary Keywords"
           onGenerate={() => generateField("extract_keywords")}
           generateDisabled={disabled || isGenerating === "extract_keywords" || !fields.focusKeyword}
-          helpText="Related terms to naturally include in content"
+          helpText="Related terms to naturally include"
         >
           <input
             type="text"
@@ -264,20 +263,20 @@ export function SEOFieldsPanel({
             }
             disabled={disabled}
             placeholder="keyword1, keyword2, keyword3"
-            className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+            className="w-full px-2.5 py-1.5 rounded border border-slate-200 bg-white text-slate-900 placeholder-slate-400 text-sm focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500"
           />
         </AIFieldWrapper>
 
         {/* FAQ Schema */}
         <AIFieldWrapper
-          label="FAQ Schema (for AEO/Featured Snippets)"
+          label="FAQ Schema (for AEO)"
           onGenerate={() => generateField("faq")}
           generateDisabled={disabled || isGenerating === "faq" || !fields.focusKeyword}
-          helpText="Q&A pairs for structured data and voice search"
+          helpText="Q&A pairs for structured data"
         >
-          <div className="space-y-3">
+          <div className="space-y-2">
             {fields.faqSchema.map((faq, index) => (
-              <div key={index} className="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-3 space-y-2">
+              <div key={index} className="bg-slate-50 rounded p-2 space-y-1.5">
                 <div className="flex items-start justify-between gap-2">
                   <input
                     type="text"
@@ -289,7 +288,7 @@ export function SEOFieldsPanel({
                     }}
                     disabled={disabled}
                     placeholder="Question"
-                    className="flex-1 px-2 py-1.5 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-green-500"
+                    className="flex-1 px-2 py-1 rounded border border-slate-200 bg-white text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-green-500"
                   />
                   <button
                     type="button"
@@ -297,9 +296,9 @@ export function SEOFieldsPanel({
                       const newFaqs = fields.faqSchema.filter((_, i) => i !== index);
                       updateField("faqSchema", newFaqs);
                     }}
-                    className="p-1 text-gray-400 hover:text-red-500"
+                    className="p-0.5 text-slate-400 hover:text-red-500"
                   >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                     </svg>
                   </button>
@@ -314,7 +313,7 @@ export function SEOFieldsPanel({
                   disabled={disabled}
                   placeholder="Answer"
                   rows={2}
-                  className="w-full px-2 py-1.5 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-green-500"
+                  className="w-full px-2 py-1 rounded border border-slate-200 bg-white text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-green-500 resize-none"
                 />
               </div>
             ))}
@@ -324,7 +323,7 @@ export function SEOFieldsPanel({
                 updateField("faqSchema", [...fields.faqSchema, { question: "", answer: "" }])
               }
               disabled={disabled}
-              className="text-sm text-green-600 hover:text-green-700 dark:text-green-400 dark:hover:text-green-300"
+              className="text-xs text-green-600 hover:text-green-700"
             >
               + Add FAQ
             </button>
@@ -333,8 +332,8 @@ export function SEOFieldsPanel({
 
         {/* Key Entities */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
-            Key Entities (for GEO/AI Citations)
+          <label className="block text-xs font-medium text-slate-600 mb-1">
+            Key Entities (for GEO)
           </label>
           <input
             type="text"
@@ -347,19 +346,19 @@ export function SEOFieldsPanel({
             }
             disabled={disabled}
             placeholder="ArqAI, HIPAA, SOC 2, GDPR"
-            className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+            className="w-full px-2.5 py-1.5 rounded border border-slate-200 bg-white text-slate-900 placeholder-slate-400 text-sm focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500"
           />
-          <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
-            Companies, products, regulations, and concepts mentioned
+          <p className="mt-1 text-xs text-slate-500">
+            Companies, products, regulations mentioned
           </p>
         </div>
 
         {/* Social Media Preview */}
-        <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
-          <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
-            Social Media Preview (Open Graph)
+        <div className="pt-3 border-t border-slate-200">
+          <p className="text-xs font-medium text-slate-600 mb-2">
+            Open Graph (Social)
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-3">
             <AIFieldWrapper
               label="OG Title"
               charCount={fields.ogTitle.length}
@@ -373,7 +372,7 @@ export function SEOFieldsPanel({
                 onChange={(e) => updateField("ogTitle", e.target.value)}
                 disabled={disabled}
                 placeholder="Social media title"
-                className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm"
+                className="w-full px-2.5 py-1.5 rounded border border-slate-200 bg-white text-slate-900 placeholder-slate-400 text-sm focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500"
               />
             </AIFieldWrapper>
 
@@ -390,7 +389,7 @@ export function SEOFieldsPanel({
                 onChange={(e) => updateField("ogDescription", e.target.value)}
                 disabled={disabled}
                 placeholder="Social media description"
-                className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm"
+                className="w-full px-2.5 py-1.5 rounded border border-slate-200 bg-white text-slate-900 placeholder-slate-400 text-sm focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500"
               />
             </AIFieldWrapper>
           </div>
