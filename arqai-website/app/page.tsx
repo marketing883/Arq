@@ -342,7 +342,7 @@ export default function HomePage() {
                   transition={{ delay: 0.1 }}
                   className="text-display-lg font-display text-text-bright mb-6"
                 >
-                  The Platform Powering Mission-Critical AI in Regulated Industries
+                  Production AI for Regulated Industries
                 </motion.h2>
                 <motion.p
                   initial={{ opacity: 0, y: 20 }}
@@ -384,10 +384,10 @@ export default function HomePage() {
                       playsInline
                       preload="metadata"
                       className="w-full h-auto scale-110"
-                      poster="/img/demo/arqai-foundry-poster.webp"
+                      poster="/img/demo/arqai-foundry-v2-poster.webp"
                     >
-                      <source src="/video/ArqAI-foundry-optimized.webm" type="video/webm" />
-                      <source src="/video/ArqAI-foundry-optimized.mp4" type="video/mp4" />
+                      <source src="/video/ArqAI-foundry-v2.webm" type="video/webm" />
+                      <source src="/video/ArqAI-foundry-v2.mp4" type="video/mp4" />
                       Your browser does not support the video tag.
                     </video>
                   </div>
