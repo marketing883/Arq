@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useCallback } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useCallback, useEffect } from "react";
+import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { TiptapEditor } from "@/components/editor/TiptapEditor";
@@ -30,13 +30,18 @@ const categories = [
 
 type EditorStep = "research" | "settings" | "content";
 
-export default function NewBlogPostPage() {
+export default function EditBlogPostPage() {
   const router = useRouter();
+  const params = useParams();
+  const postId = params.id as string;
+
+  const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [currentStep, setCurrentStep] = useState<EditorStep>("research");
+  const [currentStep, setCurrentStep] = useState<EditorStep>("content");
   const [seoData, setSeoData] = useState<KeywordResearchResult | null>(null);
   const [contentSettings, setContentSettings] = useState<ContentSettingsData>(getDefaultSettings());
   const [seoFields, setSeoFields] = useState<SEOFieldsData>(getDefaultSEOFields());
+  const [showSEOPanel, setShowSEOPanel] = useState(true);
 
   const [formData, setFormData] = useState({
     title: "",
@@ -48,11 +53,61 @@ export default function NewBlogPostPage() {
     tags: [] as string[],
     author: "ArqAI Team",
     status: "draft" as "draft" | "published",
+    published_at: null as string | null,
   });
   const [tagInput, setTagInput] = useState("");
   const [isUploadingImage, setIsUploadingImage] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
-  const [showSEOPanel, setShowSEOPanel] = useState(true);
+
+  useEffect(() => {
+    async function fetchPost() {
+      try {
+        const response = await fetch(`/api/admin/content/blog/${postId}`);
+        if (response.ok) {
+          const data = await response.json();
+          if (data.item) {
+            setFormData({
+              title: data.item.title || "",
+              slug: data.item.slug || "",
+              excerpt: data.item.excerpt || "",
+              content: data.item.content || "",
+              featured_image: data.item.featured_image || "",
+              category: data.item.category || "",
+              tags: data.item.tags || [],
+              author: data.item.author || "ArqAI Team",
+              status: data.item.status || "draft",
+              published_at: data.item.published_at || null,
+            });
+            // Load existing SEO fields
+            setSeoFields({
+              focusKeyword: data.item.focus_keyword || "",
+              metaTitle: data.item.meta_title || "",
+              metaDescription: data.item.meta_description || "",
+              secondaryKeywords: data.item.secondary_keywords || [],
+              faqSchema: data.item.faq_schema || [],
+              keyEntities: data.item.key_entities || [],
+              ogTitle: data.item.og_title || "",
+              ogDescription: data.item.og_description || "",
+            });
+            // If there's a focus keyword, start in content step
+            if (data.item.focus_keyword) {
+              setCurrentStep("content");
+            }
+          }
+        } else {
+          alert("Failed to load blog post");
+          router.push("/admin/content");
+        }
+      } catch (error) {
+        console.error("Error fetching post:", error);
+        alert("Failed to load blog post");
+        router.push("/admin/content");
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    fetchPost();
+  }, [postId, router]);
 
   const generateSlug = (title: string) => {
     return title
@@ -74,7 +129,6 @@ export default function NewBlogPostPage() {
 
   const handleOutlineGenerated = (_outline: string) => {
     // Outline is shown in the ContentGenerator component
-    // User can then choose to generate full content
   };
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -82,7 +136,6 @@ export default function NewBlogPostPage() {
     setFormData(prev => ({
       ...prev,
       title,
-      slug: prev.slug || generateSlug(title),
     }));
   };
 
@@ -110,7 +163,7 @@ export default function NewBlogPostPage() {
         setFormData(prev => ({
           ...prev,
           title: data.result,
-          slug: generateSlug(data.result),
+          slug: prev.slug || generateSlug(data.result),
         }));
       }
     } catch (error) {
@@ -190,9 +243,10 @@ export default function NewBlogPostPage() {
     setIsSubmitting(true);
     try {
       const response = await fetch("/api/admin/content/blog", {
-        method: "POST",
+        method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          id: postId,
           ...formData,
           status: publishStatus,
           slug: formData.slug || generateSlug(formData.title),
@@ -213,15 +267,23 @@ export default function NewBlogPostPage() {
       if (data.success) {
         router.push("/admin/content");
       } else {
-        alert(data.error || "Failed to create blog post");
+        alert(data.error || "Failed to update blog post");
       }
     } catch (error) {
       console.error("Submit error:", error);
-      alert("Failed to create blog post");
+      alert("Failed to update blog post");
     } finally {
       setIsSubmitting(false);
     }
   };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-slate-100 dark:bg-gray-900 flex items-center justify-center">
+        <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-slate-100 dark:bg-gray-900">
@@ -238,7 +300,7 @@ export default function NewBlogPostPage() {
               </Link>
               <div className="h-6 w-px bg-slate-200 dark:bg-gray-700" />
               <Image src="/img/ArqAI-logo.png" alt="ArqAI" width={100} height={32} className="h-7 w-auto" />
-              <span className="text-sm font-medium text-slate-500 dark:text-gray-400">New Blog Post</span>
+              <span className="text-sm font-medium text-slate-500 dark:text-gray-400">Edit Blog Post</span>
             </div>
             <div className="flex items-center gap-3">
               <button
@@ -254,6 +316,13 @@ export default function NewBlogPostPage() {
                 </svg>
                 SEO Tools
               </button>
+              <Link
+                href={`/blog/${formData.slug}`}
+                target="_blank"
+                className="px-4 py-2 text-sm font-medium text-slate-700 dark:text-gray-300 bg-white dark:bg-gray-700 border border-slate-300 dark:border-gray-600 rounded-lg hover:bg-slate-50 dark:hover:bg-gray-600"
+              >
+                Preview
+              </Link>
               <button
                 onClick={() => handleSubmit("draft")}
                 disabled={isSubmitting}
@@ -266,7 +335,7 @@ export default function NewBlogPostPage() {
                 disabled={isSubmitting}
                 className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 disabled:opacity-50"
               >
-                {isSubmitting ? "Publishing..." : "Publish"}
+                {isSubmitting ? "Saving..." : formData.status === "published" ? "Update" : "Publish"}
               </button>
             </div>
           </div>
@@ -285,17 +354,17 @@ export default function NewBlogPostPage() {
                   className={`flex items-center gap-1 px-2 py-1 rounded ${
                     currentStep === "research"
                       ? "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400"
-                      : seoData
+                      : seoData || seoFields.focusKeyword
                       ? "text-green-600 dark:text-green-400"
                       : "text-slate-400"
                   }`}
                 >
-                  {seoData && currentStep !== "research" ? "✓" : "1."} Research
+                  {(seoData || seoFields.focusKeyword) && currentStep !== "research" ? "✓" : "1."} Research
                 </button>
                 <span className="text-slate-300">→</span>
                 <button
-                  onClick={() => seoData && setCurrentStep("settings")}
-                  disabled={!seoData}
+                  onClick={() => (seoData || seoFields.focusKeyword) && setCurrentStep("settings")}
+                  disabled={!seoData && !seoFields.focusKeyword}
                   className={`flex items-center gap-1 px-2 py-1 rounded ${
                     currentStep === "settings"
                       ? "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400"
@@ -308,8 +377,8 @@ export default function NewBlogPostPage() {
                 </button>
                 <span className="text-slate-300">→</span>
                 <button
-                  onClick={() => seoData && setCurrentStep("content")}
-                  disabled={!seoData}
+                  onClick={() => (seoData || seoFields.focusKeyword) && setCurrentStep("content")}
+                  disabled={!seoData && !seoFields.focusKeyword}
                   className={`flex items-center gap-1 px-2 py-1 rounded ${
                     currentStep === "content"
                       ? "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400"
@@ -397,6 +466,19 @@ export default function NewBlogPostPage() {
             {/* Post Settings */}
             <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-5">
               <h3 className="font-semibold text-slate-900 dark:text-white mb-4">Post Settings</h3>
+
+              {/* Status Indicator */}
+              <div className="mb-4 p-3 bg-slate-50 dark:bg-gray-700/50 rounded-lg">
+                <div className="flex items-center gap-2">
+                  <span className={`w-2 h-2 rounded-full ${formData.status === "published" ? "bg-green-500" : "bg-yellow-500"}`} />
+                  <span className="text-sm font-medium text-slate-700 dark:text-gray-300 capitalize">{formData.status}</span>
+                </div>
+                {formData.published_at && (
+                  <p className="text-xs text-slate-500 dark:text-gray-400 mt-1">
+                    Published: {new Date(formData.published_at).toLocaleDateString()}
+                  </p>
+                )}
+              </div>
 
               {/* Slug */}
               <div className="mb-4">
