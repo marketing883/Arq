@@ -157,7 +157,7 @@ export function Header() {
           >
             {/* Light mode logo (colored PNG with tagline) */}
             <Image
-              src="/img/ArqAI-logo.png"
+              src="/img/ArqAI-logo-transparent-bg.png"
               alt="ArqAI - Intelligence, By Design"
               width={160}
               height={50}
