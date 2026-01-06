@@ -44,7 +44,7 @@ export function SEOFieldsPanel({
   };
 
   const generateField = async (
-    fieldType: "title" | "description" | "faq" | "og_title" | "og_description" | "extract_keywords"
+    fieldType: "title" | "description" | "faq" | "og_title" | "og_description" | "extract_keywords" | "extract_entities"
   ) => {
     if (!fields.focusKeyword) {
       alert("Please enter a focus keyword first");
@@ -102,6 +102,12 @@ export function SEOFieldsPanel({
           updateField("secondaryKeywords", data.result.secondaryKeywords);
         }
         if (data.result?.entities) {
+          updateField("keyEntities", data.result.entities);
+        }
+      } else if (fieldType === "extract_entities") {
+        if (Array.isArray(data.result)) {
+          updateField("keyEntities", data.result);
+        } else if (data.result?.entities) {
           updateField("keyEntities", data.result.entities);
         }
       }
@@ -331,10 +337,12 @@ export function SEOFieldsPanel({
         </AIFieldWrapper>
 
         {/* Key Entities */}
-        <div>
-          <label className="block text-xs font-medium text-slate-600 mb-1">
-            Key Entities (for GEO)
-          </label>
+        <AIFieldWrapper
+          label="Key Entities (for GEO)"
+          onGenerate={() => generateField("extract_entities")}
+          generateDisabled={disabled || isGenerating === "extract_entities" || !fields.focusKeyword}
+          helpText="Companies, products, regulations mentioned"
+        >
           <input
             type="text"
             value={fields.keyEntities.join(", ")}
@@ -348,10 +356,7 @@ export function SEOFieldsPanel({
             placeholder="ArqAI, HIPAA, SOC 2, GDPR"
             className="w-full px-2.5 py-1.5 rounded border border-slate-200 bg-white text-slate-900 placeholder-slate-400 text-sm focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500"
           />
-          <p className="mt-1 text-xs text-slate-500">
-            Companies, products, regulations mentioned
-          </p>
-        </div>
+        </AIFieldWrapper>
 
         {/* Social Media Preview */}
         <div className="pt-3 border-t border-slate-200">

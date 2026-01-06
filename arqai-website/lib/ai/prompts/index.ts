@@ -332,6 +332,40 @@ Provide exactly 3 options, each on its own line. No numbering, no explanations.`
   return { system, user };
 }
 
+// ==================== ENTITY EXTRACTION (for GEO) ====================
+
+export function buildEntityExtractionPrompt(context: GenerationContext): {
+  system: string;
+  user: string;
+} {
+  const seoContext = buildSEOContext(context.seoData);
+
+  const system = `You are an SEO and knowledge graph expert specializing in Generative Engine Optimization (GEO). Your task is to identify key entities for structured data and AI-driven search visibility.
+
+Entities include:
+- Companies and organizations (e.g., Google, Microsoft, ArqAI)
+- Technologies and platforms (e.g., Kubernetes, AWS, React)
+- Standards and regulations (e.g., HIPAA, SOC 2, GDPR, ISO 27001)
+- Concepts and methodologies (e.g., Zero Trust, DevSecOps, MLOps)
+- Industry terms and proper nouns`;
+
+  const user = `Identify 5-10 key entities relevant to this topic for GEO optimization:
+
+Topic: ${context.topic}
+Focus Keyword: "${context.focusKeyword}"
+${seoContext}
+
+Return ONLY a JSON array of entity strings, no explanation:
+["Entity1", "Entity2", "Entity3", ...]
+
+Focus on:
+- Entities that would appear in knowledge graphs
+- Named organizations, technologies, standards
+- Specific proper nouns, not generic terms`;
+
+  return { system, user };
+}
+
 // ==================== KEYWORD/ENTITY EXTRACTION ====================
 
 export function buildKeywordExtractionPrompt(content: string): {

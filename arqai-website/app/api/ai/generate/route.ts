@@ -8,6 +8,7 @@ import {
   buildFAQPrompt,
   buildOGPrompt,
   buildKeywordExtractionPrompt,
+  buildEntityExtractionPrompt,
   buildAnalysisPrompt,
 } from "@/lib/ai/prompts";
 import type { KeywordResearchResult } from "@/lib/dataforseo/types";
@@ -23,6 +24,7 @@ type GenerationType =
   | "og_title"
   | "og_description"
   | "extract_keywords"
+  | "extract_entities"
   | "analyze";
 
 interface GenerationRequest {
@@ -133,6 +135,11 @@ export async function POST(request: NextRequest) {
         options = { maxTokens: 500, temperature: 0.3 };
         break;
 
+      case "extract_entities":
+        prompt = buildEntityExtractionPrompt(context);
+        options = { maxTokens: 500, temperature: 0.4 };
+        break;
+
       case "analyze":
         if (!existingContent) {
           return NextResponse.json(
@@ -150,8 +157,8 @@ export async function POST(request: NextRequest) {
 
     const result = await generateWithClaude(prompt.system, prompt.user, options);
 
-    // Parse structured responses (FAQ, extract_keywords, analyze)
-    if (type === "faq" || type === "extract_keywords" || type === "analyze") {
+    // Parse structured responses (FAQ, extract_keywords, extract_entities, analyze)
+    if (type === "faq" || type === "extract_keywords" || type === "extract_entities" || type === "analyze") {
       try {
         // Extract JSON from the response
         const jsonMatch = result.match(/\[[\s\S]*\]|\{[\s\S]*\}/);
