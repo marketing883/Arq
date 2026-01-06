@@ -19,7 +19,7 @@ export async function GET() {
     // Get the most recently published whitepaper
     const { data, error } = await supabase
       .from("whitepapers")
-      .select("id, title, slug, description, cover_image, file_url, category, topics, page_count")
+      .select("id, title, slug, description, cover_image, file_url, category")
       .eq("status", "published")
       .order("published_at", { ascending: false })
       .limit(1)
@@ -40,8 +40,6 @@ export async function GET() {
         description: data.description,
         cover_image: data.cover_image,
         file_url: data.file_url,
-        topics: data.topics,
-        page_count: data.page_count,
       }
     });
   } catch (error) {
