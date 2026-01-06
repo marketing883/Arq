@@ -648,6 +648,39 @@ Provide exactly 3 testimonial quote options, each separated by ---. These should
   return { system, user };
 }
 
+export function buildCaseStudyMetricsPrompt(context: CaseStudyContext): {
+  system: string;
+  user: string;
+} {
+  const system = `You are an expert B2B case study writer. Your task is to suggest compelling, realistic key performance metrics that demonstrate business impact.
+
+Guidelines:
+- Suggest 3-4 specific, quantifiable metrics
+- Use industry-appropriate benchmarks
+- Focus on metrics that matter to executives (ROI, efficiency gains, cost savings, time to value)
+- Be realistic but impressive
+- Include the metric label, value, and brief description`;
+
+  const user = `Suggest key metrics for a case study:
+
+Client: ${context.client_name || "Enterprise client"}
+Industry: ${context.industry || "Technology"}
+${context.overview ? `Overview: ${context.overview}` : ""}
+${context.solution_description ? `Solution: ${context.solution_description}` : ""}
+
+Provide exactly 4 metrics in this JSON format:
+[
+  {"label": "Metric Label", "value": "XX%", "description": "Brief description of what this measures"},
+  {"label": "Metric Label", "value": "$XM", "description": "Brief description"},
+  {"label": "Metric Label", "value": "XX%", "description": "Brief description"},
+  {"label": "Metric Label", "value": "X months", "description": "Brief description"}
+]
+
+Focus on realistic metrics for the ${context.industry || "technology"} industry.`;
+
+  return { system, user };
+}
+
 // ==================== WEBINAR PROMPTS ====================
 
 interface WebinarContext {

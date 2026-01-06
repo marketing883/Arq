@@ -3,6 +3,7 @@
 import { useState, useCallback, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
+import { AIGenerateButton } from "@/components/admin/seo/AIGenerateButton";
 
 const industries = [
   "Healthcare",
@@ -112,6 +113,189 @@ export default function EditCaseStudyPage() {
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/(^-|-$)/g, "");
+  };
+
+  // AI Generation Functions
+  const generateTitle = async () => {
+    try {
+      const response = await fetch("/api/ai/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "casestudy_title",
+          client_name: formData.client_name,
+          industry: formData.industry,
+          overview: formData.overview,
+        }),
+      });
+      const data = await response.json();
+      if (data.result) {
+        setFormData(prev => ({
+          ...prev,
+          title: data.result,
+        }));
+      }
+    } catch (error) {
+      console.error("Title generation error:", error);
+    }
+  };
+
+  const generateOverview = async () => {
+    try {
+      const response = await fetch("/api/ai/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "casestudy_overview",
+          client_name: formData.client_name,
+          industry: formData.industry,
+          challenge_description: formData.challenge_description,
+          solution_description: formData.solution_description,
+        }),
+      });
+      const data = await response.json();
+      if (data.result) {
+        setFormData(prev => ({ ...prev, overview: data.result }));
+      }
+    } catch (error) {
+      console.error("Overview generation error:", error);
+    }
+  };
+
+  const generateChallenge = async () => {
+    try {
+      const response = await fetch("/api/ai/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "casestudy_challenge",
+          client_name: formData.client_name,
+          industry: formData.industry,
+          overview: formData.overview,
+        }),
+      });
+      const data = await response.json();
+      if (data.result) {
+        const descMatch = data.result.match(/DESCRIPTION:\s*([\s\S]*?)(?=POINTS:|$)/);
+        const pointsMatch = data.result.match(/POINTS:\s*([\s\S]*)/);
+
+        if (descMatch) {
+          setFormData(prev => ({ ...prev, challenge_description: descMatch[1].trim() }));
+        }
+        if (pointsMatch) {
+          const points = pointsMatch[1]
+            .split("\n")
+            .map((line: string) => line.replace(/^[-•]\s*/, "").trim())
+            .filter((line: string) => line.length > 0)
+            .slice(0, 5)
+            .map((text: string) => ({ text }));
+          setFormData(prev => ({ ...prev, challenge_points: points }));
+        }
+      }
+    } catch (error) {
+      console.error("Challenge generation error:", error);
+    }
+  };
+
+  const generateSolution = async () => {
+    try {
+      const response = await fetch("/api/ai/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "casestudy_solution",
+          client_name: formData.client_name,
+          industry: formData.industry,
+          challenge_description: formData.challenge_description,
+          overview: formData.overview,
+        }),
+      });
+      const data = await response.json();
+      if (data.result) {
+        const descMatch = data.result.match(/DESCRIPTION:\s*([\s\S]*?)(?=POINTS:|$)/);
+        const pointsMatch = data.result.match(/POINTS:\s*([\s\S]*)/);
+
+        if (descMatch) {
+          setFormData(prev => ({ ...prev, solution_description: descMatch[1].trim() }));
+        }
+        if (pointsMatch) {
+          const points = pointsMatch[1]
+            .split("\n")
+            .map((line: string) => line.replace(/^[-•]\s*/, "").trim())
+            .filter((line: string) => line.length > 0)
+            .slice(0, 5)
+            .map((text: string) => ({ text }));
+          setFormData(prev => ({ ...prev, solution_points: points }));
+        }
+      }
+    } catch (error) {
+      console.error("Solution generation error:", error);
+    }
+  };
+
+  const generateImpact = async () => {
+    try {
+      const response = await fetch("/api/ai/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "casestudy_impact",
+          client_name: formData.client_name,
+          industry: formData.industry,
+          solution_description: formData.solution_description,
+        }),
+      });
+      const data = await response.json();
+      if (data.result) {
+        setFormData(prev => ({ ...prev, impact_summary: data.result }));
+      }
+    } catch (error) {
+      console.error("Impact generation error:", error);
+    }
+  };
+
+  const generateTestimonial = async () => {
+    try {
+      const response = await fetch("/api/ai/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "casestudy_testimonial",
+          client_name: formData.client_name,
+          industry: formData.industry,
+          overview: formData.overview,
+          solution_description: formData.solution_description,
+        }),
+      });
+      const data = await response.json();
+      if (data.result) {
+        setFormData(prev => ({ ...prev, testimonial_quote: data.result }));
+      }
+    } catch (error) {
+      console.error("Testimonial generation error:", error);
+    }
+  };
+
+  const generateMetrics = async () => {
+    try {
+      const response = await fetch("/api/ai/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "casestudy_metrics",
+          client_name: formData.client_name,
+          industry: formData.industry,
+          overview: formData.overview,
+          solution_description: formData.solution_description,
+        }),
+      });
+      const data = await response.json();
+      if (data.result && Array.isArray(data.result)) {
+        setFormData(prev => ({ ...prev, metrics: data.result.slice(0, 6) }));
+      }
+    } catch (error) {
+      console.error("Metrics generation error:", error);
+    }
   };
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -324,7 +508,10 @@ export default function EditCaseStudyPage() {
           <h2 className="text-lg font-semibold text-slate-900 mb-6 pb-4 border-b">Header Information</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Case Study Title *</label>
+              <div className="flex items-center justify-between mb-1">
+                <label className="block text-sm font-medium text-slate-700">Case Study Title *</label>
+                <AIGenerateButton onClick={generateTitle} title="Generate title with AI" />
+              </div>
               <input
                 type="text"
                 value={formData.title}
@@ -427,7 +614,10 @@ export default function EditCaseStudyPage() {
 
         {/* Overview Section */}
         <section className="bg-white rounded-md shadow-sm p-6">
-          <h2 className="text-lg font-semibold text-slate-900 mb-4 pb-4 border-b">Overview</h2>
+          <div className="flex items-center justify-between mb-4 pb-4 border-b">
+            <h2 className="text-lg font-semibold text-slate-900">Overview</h2>
+            <AIGenerateButton onClick={generateOverview} title="Generate overview with AI" />
+          </div>
           <textarea
             value={formData.overview}
             onChange={(e) => setFormData(prev => ({ ...prev, overview: e.target.value }))}
@@ -439,7 +629,10 @@ export default function EditCaseStudyPage() {
 
         {/* Challenge Section */}
         <section className="bg-white rounded-md shadow-sm p-6">
-          <h2 className="text-lg font-semibold text-slate-900 mb-4 pb-4 border-b">The Challenge</h2>
+          <div className="flex items-center justify-between mb-4 pb-4 border-b">
+            <h2 className="text-lg font-semibold text-slate-900">The Challenge</h2>
+            <AIGenerateButton onClick={generateChallenge} title="Generate challenge section with AI" />
+          </div>
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-1">Challenge Description</label>
@@ -486,7 +679,10 @@ export default function EditCaseStudyPage() {
 
         {/* Solution Section */}
         <section className="bg-white rounded-md shadow-sm p-6">
-          <h2 className="text-lg font-semibold text-slate-900 mb-4 pb-4 border-b">Our Solution</h2>
+          <div className="flex items-center justify-between mb-4 pb-4 border-b">
+            <h2 className="text-lg font-semibold text-slate-900">Our Solution</h2>
+            <AIGenerateButton onClick={generateSolution} title="Generate solution section with AI" />
+          </div>
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-1">Solution Description</label>
@@ -533,7 +729,10 @@ export default function EditCaseStudyPage() {
 
         {/* Metrics Section */}
         <section className="bg-white rounded-md shadow-sm p-6">
-          <h2 className="text-lg font-semibold text-slate-900 mb-4 pb-4 border-b">Key Metrics (max 6)</h2>
+          <div className="flex items-center justify-between mb-4 pb-4 border-b">
+            <h2 className="text-lg font-semibold text-slate-900">Key Metrics (max 6)</h2>
+            <AIGenerateButton onClick={generateMetrics} title="Generate metrics with AI" />
+          </div>
           <div className="space-y-4">
             {formData.metrics.map((metric, index) => (
               <div key={index} className="p-4 bg-slate-50 rounded-lg">
@@ -586,7 +785,10 @@ export default function EditCaseStudyPage() {
 
         {/* Impact Section */}
         <section className="bg-white rounded-md shadow-sm p-6">
-          <h2 className="text-lg font-semibold text-slate-900 mb-4 pb-4 border-b">Impact Summary</h2>
+          <div className="flex items-center justify-between mb-4 pb-4 border-b">
+            <h2 className="text-lg font-semibold text-slate-900">Impact Summary</h2>
+            <AIGenerateButton onClick={generateImpact} title="Generate impact summary with AI" />
+          </div>
           <textarea
             value={formData.impact_summary}
             onChange={(e) => setFormData(prev => ({ ...prev, impact_summary: e.target.value }))}
@@ -601,7 +803,10 @@ export default function EditCaseStudyPage() {
           <h2 className="text-lg font-semibold text-slate-900 mb-4 pb-4 border-b">Client Testimonial</h2>
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Quote</label>
+              <div className="flex items-center justify-between mb-1">
+                <label className="block text-sm font-medium text-slate-700">Quote</label>
+                <AIGenerateButton onClick={generateTestimonial} title="Generate testimonial quote with AI" />
+              </div>
               <textarea
                 value={formData.testimonial_quote}
                 onChange={(e) => setFormData(prev => ({ ...prev, testimonial_quote: e.target.value }))}

@@ -18,6 +18,7 @@ import {
   buildCaseStudySolutionPrompt,
   buildCaseStudyImpactPrompt,
   buildCaseStudyTestimonialPrompt,
+  buildCaseStudyMetricsPrompt,
   // Webinar prompts
   buildWebinarTitlePrompt,
   buildWebinarDescriptionPrompt,
@@ -52,6 +53,7 @@ type GenerationType =
   | "casestudy_solution"
   | "casestudy_impact"
   | "casestudy_testimonial"
+  | "casestudy_metrics"
   // Webinar types
   | "webinar_title"
   | "webinar_description"
@@ -262,6 +264,16 @@ export async function POST(request: NextRequest) {
         options = { maxTokens: 600, temperature: 0.8 };
         break;
 
+      case "casestudy_metrics":
+        prompt = buildCaseStudyMetricsPrompt({
+          client_name: body.client_name,
+          industry: body.industry,
+          overview: body.overview,
+          solution_description: body.solution_description,
+        });
+        options = { maxTokens: 800, temperature: 0.6 };
+        break;
+
       // Webinar generation types
       case "webinar_title":
         prompt = buildWebinarTitlePrompt({
@@ -345,8 +357,8 @@ export async function POST(request: NextRequest) {
 
     const result = await generateWithClaude(prompt.system, prompt.user, options);
 
-    // Parse structured responses (FAQ, extract_keywords, suggest_keywords, extract_entities, analyze)
-    if (type === "faq" || type === "extract_keywords" || type === "suggest_keywords" || type === "extract_entities" || type === "analyze") {
+    // Parse structured responses (FAQ, extract_keywords, suggest_keywords, extract_entities, analyze, casestudy_metrics)
+    if (type === "faq" || type === "extract_keywords" || type === "suggest_keywords" || type === "extract_entities" || type === "analyze" || type === "casestudy_metrics") {
       try {
         // Extract JSON from the response
         const jsonMatch = result.match(/\[[\s\S]*\]|\{[\s\S]*\}/);

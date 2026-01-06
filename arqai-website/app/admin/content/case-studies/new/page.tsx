@@ -229,6 +229,28 @@ export default function NewCaseStudyPage() {
     }
   };
 
+  const generateMetrics = async () => {
+    try {
+      const response = await fetch("/api/ai/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "casestudy_metrics",
+          client_name: formData.client_name,
+          industry: formData.industry,
+          overview: formData.overview,
+          solution_description: formData.solution_description,
+        }),
+      });
+      const data = await response.json();
+      if (data.result && Array.isArray(data.result)) {
+        setFormData(prev => ({ ...prev, metrics: data.result.slice(0, 6) }));
+      }
+    } catch (error) {
+      console.error("Metrics generation error:", error);
+    }
+  };
+
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const title = e.target.value;
     setFormData(prev => ({
@@ -626,7 +648,10 @@ export default function NewCaseStudyPage() {
 
         {/* Metrics Section */}
         <section className="bg-white rounded-md shadow-sm p-6">
-          <h2 className="text-lg font-semibold text-slate-900 mb-4 pb-4 border-b">Key Metrics (max 6)</h2>
+          <div className="flex items-center justify-between mb-4 pb-4 border-b">
+            <h2 className="text-lg font-semibold text-slate-900">Key Metrics (max 6)</h2>
+            <AIGenerateButton onClick={generateMetrics} title="Generate metrics with AI" />
+          </div>
           <div className="space-y-4">
             {formData.metrics.map((metric, index) => (
               <div key={index} className="p-4 bg-slate-50 rounded-lg">
