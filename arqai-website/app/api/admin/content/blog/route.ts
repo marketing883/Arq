@@ -70,6 +70,15 @@ export async function POST(request: Request) {
       author: body.author || "ArqAI Team",
       status: body.status || "draft",
       published_at: body.status === "published" ? new Date().toISOString() : null,
+      // SEO fields
+      meta_title: body.meta_title || null,
+      meta_description: body.meta_description || null,
+      focus_keyword: body.focus_keyword || null,
+      secondary_keywords: body.secondary_keywords || [],
+      faq_schema: body.faq_schema || null,
+      key_entities: body.key_entities || [],
+      og_title: body.og_title || null,
+      og_description: body.og_description || null,
     };
 
     const { data, error } = await supabase
@@ -135,6 +144,15 @@ export async function PUT(request: Request) {
       published_at: body.status === "published" && !body.published_at
         ? new Date().toISOString()
         : body.published_at,
+      // SEO fields
+      meta_title: body.meta_title || null,
+      meta_description: body.meta_description || null,
+      focus_keyword: body.focus_keyword || null,
+      secondary_keywords: body.secondary_keywords || [],
+      faq_schema: body.faq_schema || null,
+      key_entities: body.key_entities || [],
+      og_title: body.og_title || null,
+      og_description: body.og_description || null,
     };
 
     const { data, error } = await supabase
