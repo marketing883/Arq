@@ -145,34 +145,38 @@ const products = [
   {
     id: "arqrelease",
     name: "ArqRelease™",
-    category: "DevSecOps",
-    tagline: "40% faster releases, zero violations",
-    description: "Automated documentation agent for technical teams. ArqRelease continuously monitors your CI/CD pipeline for significant changes, drafts relevant JIRA tickets, and keeps your documentation up-to-date.",
-    image: "/img/products/arqrelease.webp",
+    category: "For Enterprise Tech Teams",
+    headline: "Autonomous DevSecOps documentation that never falls behind",
+    features: ["40% faster releases", "Zero compliance violations", "Full audit trails"],
+    description: "Continuously monitors CI/CD pipelines, auto-generates JIRA tickets for significant changes, keeps technical documentation current. Built on Trust-Aware Orchestration.",
+    deployment: "In production at AT&T",
   },
   {
     id: "arqoptimize",
     name: "ArqOptimize™",
-    category: "FinSecOps",
-    tagline: "25-40% cost reduction",
-    description: "Cloud cost optimization agent for FinOps teams. ArqOptimize analyzes your cloud spending patterns, identifies savings opportunities, and provides actionable recommendations.",
-    image: "/img/products/arqoptimize.webp",
+    category: "For FinOps & Platform Teams",
+    headline: "Autonomous cloud cost optimization across your entire stack",
+    features: ["25-40% cost reduction", "Real-time recommendations", "Multi-cloud support"],
+    description: "Analyzes spending patterns, identifies waste, provides actionable recommendations. Connects project management tools to infrastructure for full visibility.",
+    deployment: null,
   },
   {
-    id: "arqestate",
-    name: "ArqEstate™",
-    category: "Real Estate",
-    tagline: "100% traceable assignments",
-    description: "Real estate assignment automation with full audit trails. ArqEstate handles property assignments, compliance tracking, and reporting.",
-    image: "/img/products/arqestate.webp",
+    id: "arqfwa",
+    name: "ArqFWA™",
+    category: "For TPAs & Insurance Carriers",
+    headline: "Intelligent insurance workflow automation with compliance built-in",
+    features: ["70% faster claim processing", "Regulatory compliance by design", "Auditable decisions"],
+    description: "Automates underwriting, claims processing, and compliance tracking. Every decision carries verifiable evidence chains.",
+    deployment: null,
   },
   {
     id: "arqintel",
     name: "ArqIntel™",
-    category: "Investment DD",
-    tagline: "70% faster screening",
-    description: "AI-powered investment due diligence screening. ArqIntel accelerates your deal flow with intelligent company analysis and risk assessment.",
-    image: "/img/products/arqintel.webp",
+    category: "For VCs & Private Equity",
+    headline: "AI-powered investment due diligence at scale",
+    features: ["70% faster screening", "Deeper portfolio insights", "Risk assessment automation"],
+    description: "Accelerates deal flow with intelligent company analysis, market positioning evaluation, and automated risk scoring.",
+    deployment: null,
   },
 ];
 
@@ -468,15 +472,14 @@ export default function HomePage() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="section-header text-center"
+              className="section-header text-center mb-12"
             >
-              <p className="flex items-center justify-center gap-2 text-body-sm text-accent mb-4">
-                <StarIcon className="w-4 h-4" />
-                Our Products
-              </p>
-              <h2 className="text-display-lg font-display text-text-bright">
+              <h2 className="text-display-lg font-display text-text-bright mb-4">
                 Purpose-Built AI Solutions
               </h2>
+              <p className="text-body-lg text-text-muted max-w-2xl mx-auto">
+                Governed agents for your most critical workflows. Production-ready in weeks.
+              </p>
             </motion.div>
 
             <div className="grid md:grid-cols-2 gap-8">
@@ -489,18 +492,34 @@ export default function HomePage() {
                   transition={{ delay: index * 0.1 }}
                   className="card group hover:border-accent transition-colors"
                 >
-                  <div className="flex items-center gap-3 mb-4">
-                    <span className="text-body-xs text-text-muted">{product.category}</span>
-                    <span className="px-3 py-1 rounded-full bg-accent/10 text-body-sm font-medium text-accent">
-                      {product.tagline}
-                    </span>
-                  </div>
-                  <h3 className="text-display-sm font-display text-text-bright mb-4">
+                  <p className="text-body-sm text-text-muted mb-2">{product.category}</p>
+                  <h3 className="text-display-sm font-display text-text-bright mb-2">
                     {product.name}
                   </h3>
-                  <p className="text-body-md text-text-muted leading-relaxed">
+                  <p className="text-body-md text-accent font-medium mb-4">
+                    {product.headline}
+                  </p>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {product.features.map((feature, i) => (
+                      <span key={i} className="px-3 py-1 rounded-full bg-accent/10 text-body-xs font-medium text-accent">
+                        {feature}
+                      </span>
+                    ))}
+                  </div>
+                  <p className="text-body-md text-text-muted leading-relaxed mb-4">
                     {product.description}
                   </p>
+                  {product.deployment && (
+                    <p className="text-body-sm text-text-medium font-medium mb-4">
+                      {product.deployment}
+                    </p>
+                  )}
+                  <Link href={`/solutions#${product.id}`} className="inline-flex items-center gap-1 text-body-sm text-accent hover:underline group-hover:gap-2 transition-all">
+                    Learn More
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </Link>
                 </motion.div>
               ))}
 
