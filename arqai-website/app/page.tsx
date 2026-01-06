@@ -376,14 +376,14 @@ export default function HomePage() {
               >
                 {/* Modern device frame for video */}
                 <div className="relative rounded-md overflow-hidden bg-base-opp/5 p-1 shadow-2xl shadow-accent/10">
-                  <div className="rounded overflow-hidden bg-base-opp aspect-[16/10]">
+                  <div className="rounded overflow-hidden bg-base-opp">
                     <video
                       autoPlay
                       muted
                       loop
                       playsInline
                       preload="metadata"
-                      className="w-full h-full object-cover animate-video-pan"
+                      className="w-full h-auto scale-110"
                       poster="/img/demo/arqai-foundry-poster.webp"
                     >
                       <source src="/video/ArqAI-foundry-optimized.webm" type="video/webm" />
