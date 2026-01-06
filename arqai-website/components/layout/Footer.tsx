@@ -211,14 +211,14 @@ export function Footer() {
           {/* Column 4 - Brand Statement */}
           <div className="card p-6 md:p-8 bg-accent flex flex-col justify-between min-h-[300px]">
             <div>
-              <p className="text-body-lg font-medium mb-4 text-white dark:text-black">
+              <p className="text-xl font-semibold mb-3 text-white dark:text-black">
                 The Enterprise Foundry for Trusted AI
               </p>
-              <p className="text-body-sm text-white/80 dark:text-black/70">
+              <p className="text-body-sm leading-snug text-white/90 dark:text-black/70">
                 ArqAI enables regulated industries to build, run, and govern mission-critical agent workforces at production scale. Through three patented technologies, ArqAI compiles regulatory policies and security controls directly into AI infrastructure, eliminating the choice between speed and safety. Deployed across healthcare, financial services, manufacturing, and telecommunications, ArqAI delivers 30-day pilot-to-production deployments with cryptographic audit trails and adaptive performance monitoring built into every agent&apos;s DNA.
               </p>
             </div>
-            <div className="mt-8">
+            <div className="mt-6">
               <Link
                 href="/contact"
                 className="inline-flex items-center gap-2 text-body-md font-medium text-white dark:text-black hover:opacity-80 transition-opacity"
