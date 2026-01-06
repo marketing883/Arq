@@ -149,7 +149,7 @@ const products = [
     headline: "Autonomous DevSecOps documentation that never falls behind",
     features: ["40% faster releases", "Zero compliance violations", "Full audit trails"],
     description: "Continuously monitors CI/CD pipelines, auto-generates JIRA tickets for significant changes, keeps technical documentation current. Built on Trust-Aware Orchestration.",
-    deployment: "In production at AT&T",
+    deployment: "In production at a leading telecom provider",
   },
   {
     id: "arqoptimize",
