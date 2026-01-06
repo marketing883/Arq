@@ -25,6 +25,8 @@ export default function SubscribersPage() {
   const [stats, setStats] = useState<Stats | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
+  const [exporting, setExporting] = useState(false);
 
   useEffect(() => {
     fetchSubscriptions();
@@ -52,6 +54,43 @@ export default function SubscribersPage() {
       setError(err instanceof Error ? err.message : "An error occurred");
     } finally {
       setLoading(false);
+    }
+  }
+
+  async function deleteSubscription(id: string) {
+    try {
+      const response = await fetch(`/api/newsletter?id=${id}`, {
+        method: "DELETE",
+      });
+      if (response.ok) {
+        setSubscriptions(subscriptions.filter(s => s.id !== id));
+        setDeleteConfirm(null);
+        if (stats) {
+          setStats({ ...stats, total: stats.total - 1 });
+        }
+      }
+    } catch (err) {
+      console.error("Failed to delete subscription:", err);
+    }
+  }
+
+  async function exportCSV() {
+    setExporting(true);
+    try {
+      const response = await fetch("/api/admin/export?type=subscribers");
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `subscribers-${new Date().toISOString().split("T")[0]}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error("Failed to export:", err);
+    } finally {
+      setExporting(false);
     }
   }
 
@@ -112,12 +151,24 @@ export default function SubscribersPage() {
               </Link>
               <h1 className="text-xl font-semibold text-gray-900">Newsletter Subscribers</h1>
             </div>
-            <button
-              onClick={fetchSubscriptions}
-              className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50"
-            >
-              Refresh
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={exportCSV}
+                disabled={exporting || subscriptions.length === 0}
+                className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 flex items-center gap-2"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+                {exporting ? "Exporting..." : "Export CSV"}
+              </button>
+              <button
+                onClick={fetchSubscriptions}
+                className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50"
+              >
+                Refresh
+              </button>
+            </div>
           </div>
         </div>
       </header>
@@ -194,6 +245,9 @@ export default function SubscribersPage() {
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Subscribed
                     </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Actions
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
@@ -222,6 +276,14 @@ export default function SubscribersPage() {
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                           {formatDate(sub.created_at)}
                         </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <button
+                            onClick={() => setDeleteConfirm(sub.id)}
+                            className="text-red-600 hover:text-red-800 text-sm font-medium"
+                          >
+                            Delete
+                          </button>
+                        </td>
                       </tr>
                     );
                   })}
@@ -231,6 +293,30 @@ export default function SubscribersPage() {
           )}
         </div>
       </main>
+
+      {/* Delete Confirmation Modal */}
+      {deleteConfirm && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-lg max-w-md w-full p-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">Delete Subscriber</h3>
+            <p className="text-gray-600 mb-6">Are you sure you want to delete this subscriber? This action cannot be undone.</p>
+            <div className="flex justify-end gap-3">
+              <button
+                onClick={() => setDeleteConfirm(null)}
+                className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => deleteSubscription(deleteConfirm)}
+                className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

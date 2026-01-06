@@ -109,6 +109,7 @@ export default function AdminDashboard() {
   const [filters, setFilters] = useState<Filters>({});
   const [selectedLead, setSelectedLead] = useState<LeadData | null>(null);
   const [viewMode, setViewMode] = useState<"cards" | "table">("cards");
+  const [exporting, setExporting] = useState(false);
   const router = useRouter();
 
   const fetchData = useCallback(async () => {
@@ -150,6 +151,26 @@ export default function AdminDashboard() {
   const handleLogout = async () => {
     await fetch("/api/admin/logout", { method: "POST" });
     router.push("/admin/login");
+  };
+
+  const handleExportAll = async () => {
+    setExporting(true);
+    try {
+      const response = await fetch("/api/admin/export?type=all");
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `all-leads-${new Date().toISOString().split("T")[0]}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error("Failed to export:", err);
+    } finally {
+      setExporting(false);
+    }
   };
 
   const insights = generateInsights(leads, stats);
@@ -233,6 +254,17 @@ export default function AdminDashboard() {
                 </svg>
                 Content
               </Link>
+              <button
+                onClick={handleExportAll}
+                disabled={exporting}
+                className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-slate-600 to-slate-700 text-white text-sm font-medium rounded-lg hover:from-slate-700 hover:to-slate-800 transition-all shadow-sm disabled:opacity-50"
+                title="Export all leads to CSV"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+                {exporting ? "Exporting..." : "Export All"}
+              </button>
               <button
                 onClick={fetchData}
                 className="p-2 text-slate-500 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors"

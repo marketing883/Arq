@@ -187,3 +187,40 @@ export async function GET() {
     );
   }
 }
+
+// DELETE endpoint to remove a subscription (admin only)
+export async function DELETE(request: NextRequest) {
+  try {
+    const session = await getAdminSession();
+    if (!session) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get("id");
+
+    if (!id) {
+      return NextResponse.json({ error: "ID is required" }, { status: 400 });
+    }
+
+    const client = getSupabaseClient();
+    if (!client) {
+      return NextResponse.json({ error: "Database not configured" }, { status: 500 });
+    }
+
+    const { error } = await client
+      .from("newsletter_subscriptions")
+      .delete()
+      .eq("id", id);
+
+    if (error) {
+      console.error("Delete error:", error);
+      return NextResponse.json({ error: "Failed to delete subscription" }, { status: 500 });
+    }
+
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error("Newsletter delete error:", error);
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+  }
+}
