@@ -28,7 +28,8 @@ export async function POST(request: Request) {
 
     const supabase = getSupabase();
     if (supabase) {
-      await supabase.from("resource_leads").insert({
+      // Insert lead record with the resource info
+      const { error: insertError } = await supabase.from("resource_leads").insert({
         name,
         email,
         company: company || null,
@@ -39,6 +40,10 @@ export async function POST(request: Request) {
         token_expires_at: expiresAt.toISOString(),
         token_used: false,
       });
+
+      if (insertError) {
+        console.error("Error inserting lead:", insertError);
+      }
     }
 
     return NextResponse.json({ success: true, token, expires_at: expiresAt.toISOString() });
@@ -58,46 +63,80 @@ export async function GET(request: Request) {
     }
 
     const supabase = getSupabase();
-    if (supabase) {
-      const { data: lead, error } = await supabase
-        .from("resource_leads")
-        .select("*")
-        .eq("download_token", token)
+    if (!supabase) {
+      return NextResponse.json({ error: "Database connection not available" }, { status: 500 });
+    }
+
+    // Get the lead record with the token
+    const { data: lead, error: leadError } = await supabase
+      .from("resource_leads")
+      .select("*")
+      .eq("download_token", token)
+      .single();
+
+    if (leadError || !lead) {
+      return NextResponse.json({ error: "Invalid or expired download link" }, { status: 404 });
+    }
+
+    if (new Date(lead.token_expires_at) < new Date()) {
+      return NextResponse.json({ error: "Download link has expired" }, { status: 410 });
+    }
+
+    // Fetch the actual resource based on resource_type and resource_id
+    let resourceData = null;
+
+    if (lead.resource_type === "whitepaper") {
+      const { data: whitepaper, error: wpError } = await supabase
+        .from("whitepapers")
+        .select("id, title, description, file_url, file_name, cover_image")
+        .eq("id", lead.resource_id)
         .single();
 
-      if (error || !lead) {
-        return NextResponse.json({ error: "Invalid or expired download link" }, { status: 404 });
+      if (wpError || !whitepaper) {
+        console.error("Error fetching whitepaper:", wpError);
+        return NextResponse.json({ error: "Resource not found" }, { status: 404 });
       }
 
-      if (new Date(lead.token_expires_at) < new Date()) {
-        return NextResponse.json({ error: "Download link has expired" }, { status: 410 });
+      resourceData = {
+        title: whitepaper.title,
+        description: whitepaper.description || "Download your resource",
+        download_url: whitepaper.file_url,
+        file_name: whitepaper.file_name || `${whitepaper.title.toLowerCase().replace(/\s+/g, '-')}.pdf`,
+        cover_image: whitepaper.cover_image,
+        expires_at: lead.token_expires_at,
+      };
+    } else if (lead.resource_type === "webinar") {
+      const { data: webinar, error: webError } = await supabase
+        .from("webinars")
+        .select("id, title, description, recording_url")
+        .eq("id", lead.resource_id)
+        .single();
+
+      if (webError || !webinar) {
+        console.error("Error fetching webinar:", webError);
+        return NextResponse.json({ error: "Resource not found" }, { status: 404 });
       }
 
-      if (lead.token_used) {
-        return NextResponse.json({ error: "This download link has already been used" }, { status: 410 });
-      }
+      resourceData = {
+        title: webinar.title,
+        description: webinar.description || "Watch the recording",
+        download_url: webinar.recording_url,
+        file_name: `${webinar.title.toLowerCase().replace(/\s+/g, '-')}-recording`,
+        expires_at: lead.token_expires_at,
+      };
+    } else {
+      return NextResponse.json({ error: "Unknown resource type" }, { status: 400 });
+    }
 
+    // Mark token as used only after successful resource fetch
+    if (!lead.token_used) {
       await supabase
         .from("resource_leads")
         .update({ token_used: true, downloaded_at: new Date().toISOString() })
         .eq("id", lead.id);
-
-      return NextResponse.json({
-        title: "The Enterprise AI Governance Playbook 2025",
-        description: "Your comprehensive guide to AI governance",
-        download_url: "/downloads/enterprise-ai-governance-playbook-2025.pdf",
-        file_name: "enterprise-ai-governance-playbook-2025.pdf",
-        expires_at: lead.token_expires_at,
-      });
     }
 
-    return NextResponse.json({
-      title: "The Enterprise AI Governance Playbook 2025",
-      description: "Your comprehensive guide to AI governance",
-      download_url: "/downloads/enterprise-ai-governance-playbook-2025.pdf",
-      file_name: "enterprise-ai-governance-playbook-2025.pdf",
-      expires_at: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
-    });
+    return NextResponse.json(resourceData);
   } catch (error) {
     console.error("Error validating download token:", error);
     return NextResponse.json({ error: "Failed to validate download link" }, { status: 500 });
