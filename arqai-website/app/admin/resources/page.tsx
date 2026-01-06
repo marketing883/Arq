@@ -30,18 +30,8 @@ export default function ResourceLeadsPage() {
   async function fetchLeads() {
     try {
       setLoading(true);
-      const token = localStorage.getItem("admin_token");
 
-      if (!token) {
-        router.push("/admin/login");
-        return;
-      }
-
-      const response = await fetch("/api/admin/resource-leads", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await fetch("/api/admin/resource-leads");
 
       if (response.status === 401) {
         router.push("/admin/login");

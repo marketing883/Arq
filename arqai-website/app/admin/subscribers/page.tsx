@@ -33,18 +33,8 @@ export default function SubscribersPage() {
   async function fetchSubscriptions() {
     try {
       setLoading(true);
-      const token = localStorage.getItem("admin_token");
 
-      if (!token) {
-        router.push("/admin/login");
-        return;
-      }
-
-      const response = await fetch("/api/newsletter", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await fetch("/api/newsletter");
 
       if (response.status === 401) {
         router.push("/admin/login");

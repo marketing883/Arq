@@ -30,18 +30,8 @@ export default function ContactsPage() {
   async function fetchContacts() {
     try {
       setLoading(true);
-      const token = localStorage.getItem("admin_token");
 
-      if (!token) {
-        router.push("/admin/login");
-        return;
-      }
-
-      const response = await fetch("/api/admin/contacts", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await fetch("/api/admin/contacts");
 
       if (response.status === 401) {
         router.push("/admin/login");
@@ -63,12 +53,10 @@ export default function ContactsPage() {
 
   async function updateStatus(id: string, status: string) {
     try {
-      const token = localStorage.getItem("admin_token");
       await fetch("/api/admin/contacts", {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ id, status }),
       });

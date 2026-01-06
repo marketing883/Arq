@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
+import { getAdminSession } from "@/lib/auth/admin-auth";
 
 // Lazy initialize Supabase client
 let supabase: SupabaseClient | null = null;
@@ -128,11 +129,11 @@ function getSegment(source: string): string {
 }
 
 // GET endpoint to fetch subscriptions (admin only)
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
-    // Check for admin auth header (simple check)
-    const authHeader = request.headers.get("authorization");
-    if (!authHeader) {
+    // Verify admin session
+    const session = await getAdminSession();
+    if (!session) {
       return NextResponse.json(
         { error: "Unauthorized" },
         { status: 401 }
