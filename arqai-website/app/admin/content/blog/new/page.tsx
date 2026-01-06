@@ -11,6 +11,7 @@ import {
   ContentGenerator,
   SEOFieldsPanel,
   AIFieldWrapper,
+  AIGenerateButton,
   getDefaultSettings,
   getDefaultSEOFields,
   type ContentSettingsData,
@@ -115,6 +116,32 @@ export default function NewBlogPostPage() {
       }
     } catch (error) {
       console.error("Title generation error:", error);
+    }
+  };
+
+  const generateExcerpt = async () => {
+    if (!formData.content) {
+      alert("Please write some content first");
+      return;
+    }
+
+    try {
+      const response = await fetch("/api/ai/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "excerpt",
+          existingContent: formData.content,
+          focusKeyword: seoFields.focusKeyword,
+        }),
+      });
+
+      const data = await response.json();
+      if (data.result) {
+        setFormData(prev => ({ ...prev, excerpt: data.result }));
+      }
+    } catch (error) {
+      console.error("Excerpt generation error:", error);
     }
   };
 
@@ -412,7 +439,10 @@ export default function NewBlogPostPage() {
 
               {/* Excerpt */}
               <div className="mb-3">
-                <label className="block text-xs font-medium text-slate-600 mb-1">Excerpt</label>
+                <div className="flex items-center justify-between mb-1">
+                  <label className="block text-xs font-medium text-slate-600">Excerpt</label>
+                  <AIGenerateButton onClick={generateExcerpt} title="Generate excerpt from content" />
+                </div>
                 <textarea
                   value={formData.excerpt}
                   onChange={(e) => setFormData(prev => ({ ...prev, excerpt: e.target.value }))}

@@ -3,6 +3,7 @@ import { generateWithClaude, isConfigured } from "@/lib/ai/client";
 import {
   buildTitlePrompt,
   buildDescriptionPrompt,
+  buildExcerptPrompt,
   buildOutlinePrompt,
   buildContentPrompt,
   buildFAQPrompt,
@@ -37,6 +38,7 @@ export const maxDuration = 60; // Allow up to 60 seconds for content generation
 type GenerationType =
   | "title"
   | "description"
+  | "excerpt"
   | "outline"
   | "content"
   | "faq"
@@ -146,6 +148,17 @@ export async function POST(request: NextRequest) {
 
       case "description":
         prompt = buildDescriptionPrompt(context);
+        options = { maxTokens: 500, temperature: 0.7 };
+        break;
+
+      case "excerpt":
+        if (!existingContent) {
+          return NextResponse.json(
+            { error: "Content is required for excerpt generation" },
+            { status: 400 }
+          );
+        }
+        prompt = buildExcerptPrompt(existingContent, focusKeyword);
         options = { maxTokens: 500, temperature: 0.7 };
         break;
 
@@ -396,6 +409,7 @@ export async function POST(request: NextRequest) {
 
     // For content with multiple options separated by ---
     if (
+      type === "excerpt" ||
       type === "casestudy_overview" ||
       type === "casestudy_impact" ||
       type === "casestudy_testimonial" ||

@@ -62,6 +62,14 @@ export function CaseStudiesSection({ caseStudies }: CaseStudiesSectionProps) {
   return (
     <section ref={sectionRef} className="py-section bg-base-tint">
       <div className="container mx-auto px-4 md:px-6">
+        {/* Section Header */}
+        <div className="section-header text-center mb-12 lg:mb-16">
+          <h2 className="text-text-bright mb-4">Solutions in Action</h2>
+          <p className="text-body-lg text-text-muted max-w-2xl mx-auto">
+            See how enterprises transform operations with ArqAI&apos;s governance-first AI platform.
+          </p>
+        </div>
+
         {/* Pinned Scroll Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
           {/* Left Side - Sticky Image */}

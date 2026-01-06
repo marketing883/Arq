@@ -164,6 +164,32 @@ Provide exactly 3 meta description options, each on its own line. No numbering, 
   return { system, user };
 }
 
+// ==================== EXCERPT GENERATION ====================
+
+export function buildExcerptPrompt(content: string, focusKeyword?: string): {
+  system: string;
+  user: string;
+} {
+  const system = `You are an expert content writer. Your task is to create compelling blog post excerpts/summaries that encourage readers to click and read the full article.
+
+Guidelines:
+- Length: 150-200 characters (2-3 sentences)
+- Capture the main value proposition of the article
+- Create curiosity without giving everything away
+- Write in an engaging, professional tone
+- Include the focus keyword naturally if provided`;
+
+  const user = `Create a brief excerpt/summary for this blog post content:
+
+${focusKeyword ? `Focus Keyword: "${focusKeyword}"\n` : ""}
+Content (first 2000 chars):
+${content.substring(0, 2000)}
+
+Provide exactly 3 excerpt options, each separated by ---. No numbering, just the excerpts.`;
+
+  return { system, user };
+}
+
 // ==================== OUTLINE GENERATION ====================
 
 export function buildOutlinePrompt(context: GenerationContext): {
