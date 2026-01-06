@@ -62,7 +62,7 @@ export function Footer() {
           {/* Column 1 - Navigation */}
           <div className="card p-6 md:p-8 flex flex-col justify-between min-h-[300px]">
             <div>
-              <h3 className="text-body-sm font-semibold text-text-muted uppercase tracking-wider mb-4">Navigation</h3>
+              <h3 className="text-[28px] font-display text-text-bright mb-4">Navigation</h3>
               <nav className="footer-nav">
                 <ul className="space-y-3">
                   {footerNav.map((item) => (
@@ -77,7 +77,7 @@ export function Footer() {
                   ))}
                 </ul>
               </nav>
-              <h3 className="text-body-sm font-semibold text-text-muted uppercase tracking-wider mt-6 mb-4">Resources</h3>
+              <h3 className="text-[28px] font-display text-text-bright mt-6 mb-4">Resources</h3>
               <ul className="space-y-3">
                 {resourceNav.map((item) => (
                   <li key={item.name}>
@@ -180,7 +180,7 @@ export function Footer() {
           {/* Column 3 - Socials */}
           <div className="card p-6 md:p-8 flex flex-col justify-between min-h-[300px]">
             <div>
-              <h3 className="text-display-sm font-display text-text-bright mb-6">
+              <h3 className="text-[28px] font-display text-text-bright mb-6">
                 Let&apos;s Socialize
               </h3>
               <ul className="space-y-3">
