@@ -44,7 +44,7 @@ export function SEOFieldsPanel({
   };
 
   const generateField = async (
-    fieldType: "title" | "description" | "faq" | "og_title" | "og_description" | "extract_keywords" | "extract_entities"
+    fieldType: "title" | "description" | "faq" | "og_title" | "og_description" | "extract_keywords" | "suggest_keywords" | "extract_entities"
   ) => {
     if (!fields.focusKeyword) {
       alert("Please enter a focus keyword first");
@@ -103,6 +103,10 @@ export function SEOFieldsPanel({
         }
         if (data.result?.entities) {
           updateField("keyEntities", data.result.entities);
+        }
+      } else if (fieldType === "suggest_keywords") {
+        if (Array.isArray(data.result)) {
+          updateField("secondaryKeywords", data.result);
         }
       } else if (fieldType === "extract_entities") {
         if (Array.isArray(data.result)) {
@@ -254,8 +258,8 @@ export function SEOFieldsPanel({
         {/* Secondary Keywords */}
         <AIFieldWrapper
           label="Secondary Keywords"
-          onGenerate={() => generateField("extract_keywords")}
-          generateDisabled={disabled || isGenerating === "extract_keywords" || !fields.focusKeyword}
+          onGenerate={() => generateField("suggest_keywords")}
+          generateDisabled={disabled || isGenerating === "suggest_keywords" || !fields.focusKeyword}
           helpText="Related terms to naturally include"
         >
           <input

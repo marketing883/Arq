@@ -366,6 +366,40 @@ Focus on:
   return { system, user };
 }
 
+// ==================== SECONDARY KEYWORD SUGGESTION ====================
+
+export function buildKeywordSuggestionPrompt(context: GenerationContext): {
+  system: string;
+  user: string;
+} {
+  const seoContext = buildSEOContext(context.seoData);
+
+  const system = `You are an SEO keyword research expert. Your task is to suggest secondary keywords that complement a focus keyword for better SEO coverage and topic authority.
+
+Secondary keywords should:
+- Be semantically related to the focus keyword
+- Include long-tail variations
+- Cover different search intents (informational, navigational, transactional)
+- Be relevant to enterprise B2B audiences`;
+
+  const user = `Suggest 6-10 secondary keywords for this topic:
+
+Topic: ${context.topic}
+Focus Keyword: "${context.focusKeyword}"
+${seoContext}
+
+Return ONLY a JSON array of keyword strings, no explanation:
+["keyword phrase 1", "keyword phrase 2", ...]
+
+Include:
+- Long-tail variations of the focus keyword
+- Related concepts and terms
+- Question-based keywords where relevant
+- Industry-specific terminology`;
+
+  return { system, user };
+}
+
 // ==================== KEYWORD/ENTITY EXTRACTION ====================
 
 export function buildKeywordExtractionPrompt(content: string): {

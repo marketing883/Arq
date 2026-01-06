@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { KeywordResearchResult } from "@/lib/dataforseo/types";
 import type { ContentSettingsData } from "./ContentSettings";
+import { markdownToHtml } from "@/lib/utils/markdown";
 
 interface ContentGeneratorProps {
   focusKeyword: string;
@@ -63,7 +64,9 @@ export function ContentGenerator({
         setShowOutline(true);
         onOutlineGenerated(data.result);
       } else {
-        onContentGenerated(data.result);
+        // Convert markdown to HTML for the TiptapEditor
+        const htmlContent = markdownToHtml(data.result);
+        onContentGenerated(htmlContent);
       }
     } catch (error) {
       console.error("Generation error:", error);
