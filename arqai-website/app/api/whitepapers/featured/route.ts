@@ -13,27 +13,33 @@ export async function GET() {
     const supabase = getSupabase();
 
     if (!supabase) {
+      console.log("Featured whitepaper: Supabase not configured");
       return NextResponse.json({ whitepaper: null });
     }
 
     // Try to get a published whitepaper first
+    console.log("Fetching published whitepapers...");
     let { data, error } = await supabase
       .from("whitepapers")
-      .select("id, title, slug, description, cover_image, file_url, category, topics, page_count")
+      .select("id, title, slug, description, cover_image, file_url, category, topics, page_count, status")
       .eq("status", "published")
       .order("created_at", { ascending: false })
       .limit(1)
       .maybeSingle();
 
+    console.log("Published whitepaper query result:", { data, error: error?.message });
+
     // If no published whitepaper, try to get any whitepaper (for development)
-    if (!data && process.env.NODE_ENV !== "production") {
+    if (!data) {
+      console.log("No published whitepaper, trying any whitepaper...");
       const result = await supabase
         .from("whitepapers")
-        .select("id, title, slug, description, cover_image, file_url, category, topics, page_count")
+        .select("id, title, slug, description, cover_image, file_url, category, topics, page_count, status")
         .order("created_at", { ascending: false })
         .limit(1)
         .maybeSingle();
 
+      console.log("Any whitepaper query result:", { data: result.data, error: result.error?.message });
       data = result.data;
       error = result.error;
     }
@@ -42,6 +48,8 @@ export async function GET() {
       console.log("No whitepaper found:", error?.message || "No data");
       return NextResponse.json({ whitepaper: null });
     }
+
+    console.log("Returning whitepaper:", data.title, "with ID:", data.id);
 
     return NextResponse.json({
       whitepaper: {

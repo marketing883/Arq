@@ -299,12 +299,13 @@ export function WhitepaperSectionStatic() {
   useEffect(() => {
     async function fetchWhitepaper() {
       try {
+        console.log("Fetching featured whitepaper...");
         const response = await fetch("/api/whitepapers/featured");
-        if (response.ok) {
-          const data = await response.json();
-          if (data.whitepaper) {
-            setWhitepaper(data.whitepaper);
-          }
+        const data = await response.json();
+        console.log("Featured whitepaper response:", data);
+
+        if (response.ok && data.whitepaper) {
+          setWhitepaper(data.whitepaper);
         }
       } catch (error) {
         console.error("Error fetching whitepaper:", error);
