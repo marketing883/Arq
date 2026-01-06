@@ -88,7 +88,7 @@ export async function GET(request: Request) {
     if (lead.resource_type === "whitepaper") {
       const { data: whitepaper, error: wpError } = await supabase
         .from("whitepapers")
-        .select("id, title, description, file_url, file_name, cover_image")
+        .select("id, title, description, file_url, cover_image")
         .eq("id", lead.resource_id)
         .single();
 
@@ -101,7 +101,7 @@ export async function GET(request: Request) {
         title: whitepaper.title,
         description: whitepaper.description || "Download your resource",
         download_url: whitepaper.file_url,
-        file_name: whitepaper.file_name || `${whitepaper.title.toLowerCase().replace(/\s+/g, '-')}.pdf`,
+        file_name: `${whitepaper.title.toLowerCase().replace(/\s+/g, '-')}.pdf`,
         cover_image: whitepaper.cover_image,
         expires_at: lead.token_expires_at,
       };
