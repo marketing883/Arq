@@ -465,3 +465,426 @@ Provide analysis as JSON:
 
   return { system, user };
 }
+
+// ==================== CASE STUDY PROMPTS ====================
+
+interface CaseStudyContext {
+  client_name?: string;
+  industry?: string;
+  overview?: string;
+  challenge_description?: string;
+  solution_description?: string;
+}
+
+export function buildCaseStudyTitlePrompt(context: CaseStudyContext): {
+  system: string;
+  user: string;
+} {
+  const system = `You are an expert B2B marketing copywriter specializing in enterprise case studies. Your task is to create compelling case study titles that highlight measurable business outcomes.
+
+Guidelines:
+- Include the client industry or company type
+- Feature a specific, quantifiable result when possible
+- Keep titles between 60-80 characters
+- Use action-oriented language
+- Avoid generic phrases like "How X Achieved Y"`;
+
+  const user = `Generate 3 case study title options based on this context:
+
+Client: ${context.client_name || "Enterprise client"}
+Industry: ${context.industry || "Technology"}
+Overview: ${context.overview || "AI-powered solution implementation"}
+
+Provide exactly 3 title options, each on its own line. No numbering, no explanations.`;
+
+  return { system, user };
+}
+
+export function buildCaseStudyOverviewPrompt(context: CaseStudyContext): {
+  system: string;
+  user: string;
+} {
+  const system = `You are an expert B2B case study writer. Your task is to write compelling executive summaries that capture the essence of a customer success story.
+
+Guidelines:
+- Keep it to 2-3 sentences (80-150 words)
+- Start with the client's challenge
+- Briefly mention the solution
+- End with the key outcome/benefit
+- Use professional, authoritative tone`;
+
+  const user = `Write a case study overview/executive summary:
+
+Client: ${context.client_name || "Enterprise client"}
+Industry: ${context.industry || "Technology"}
+${context.challenge_description ? `Challenge: ${context.challenge_description}` : ""}
+${context.solution_description ? `Solution: ${context.solution_description}` : ""}
+
+Provide exactly 3 overview options, each separated by ---. No numbering.`;
+
+  return { system, user };
+}
+
+export function buildCaseStudyChallengePrompt(context: CaseStudyContext): {
+  system: string;
+  user: string;
+} {
+  const system = `You are an expert B2B case study writer. Your task is to articulate customer challenges in a way that resonates with similar prospects.
+
+Guidelines:
+- Start with the business context
+- Describe 3-5 specific pain points
+- Use concrete examples where possible
+- Connect challenges to business impact
+- Write in past tense
+- Keep description to 150-250 words`;
+
+  const user = `Write the challenge section for a case study:
+
+Client: ${context.client_name || "Enterprise client"}
+Industry: ${context.industry || "Technology"}
+${context.overview ? `Context: ${context.overview}` : ""}
+
+Provide:
+1. A challenge description paragraph (150-200 words)
+2. A list of 4-5 specific challenge bullet points
+
+Format:
+DESCRIPTION:
+[paragraph]
+
+POINTS:
+- Point 1
+- Point 2
+- Point 3
+- Point 4`;
+
+  return { system, user };
+}
+
+export function buildCaseStudySolutionPrompt(context: CaseStudyContext): {
+  system: string;
+  user: string;
+} {
+  const system = `You are an expert B2B case study writer. Your task is to describe how the solution addressed the customer's challenges.
+
+Guidelines:
+- Focus on the approach and methodology
+- Highlight key features and capabilities used
+- Describe the implementation process
+- Connect solution elements to specific challenges
+- Write in past tense
+- Keep description to 150-250 words`;
+
+  const user = `Write the solution section for a case study:
+
+Client: ${context.client_name || "Enterprise client"}
+Industry: ${context.industry || "Technology"}
+${context.challenge_description ? `Challenges: ${context.challenge_description}` : ""}
+${context.overview ? `Context: ${context.overview}` : ""}
+
+Provide:
+1. A solution description paragraph (150-200 words)
+2. A list of 4-5 specific solution bullet points
+
+Format:
+DESCRIPTION:
+[paragraph]
+
+POINTS:
+- Point 1
+- Point 2
+- Point 3
+- Point 4`;
+
+  return { system, user };
+}
+
+export function buildCaseStudyImpactPrompt(context: CaseStudyContext): {
+  system: string;
+  user: string;
+} {
+  const system = `You are an expert B2B case study writer. Your task is to write compelling impact summaries that highlight measurable business outcomes.
+
+Guidelines:
+- Focus on quantifiable results (percentages, time saved, cost reduction)
+- Connect outcomes to original challenges
+- Use strong, active language
+- Keep it concise but impactful (50-100 words)`;
+
+  const user = `Write an impact summary for a case study:
+
+Client: ${context.client_name || "Enterprise client"}
+Industry: ${context.industry || "Technology"}
+${context.solution_description ? `Solution: ${context.solution_description}` : ""}
+
+Provide exactly 3 impact summary options, each separated by ---. Focus on different types of business impact (efficiency, cost, growth, etc.).`;
+
+  return { system, user };
+}
+
+export function buildCaseStudyTestimonialPrompt(context: CaseStudyContext): {
+  system: string;
+  user: string;
+} {
+  const system = `You are an expert B2B case study writer. Your task is to write authentic-sounding customer testimonial quotes.
+
+Guidelines:
+- Write in first person from the customer's perspective
+- Include specific benefits experienced
+- Sound authentic and conversational, not overly polished
+- Keep quotes to 2-3 sentences
+- Reference specific outcomes or features`;
+
+  const user = `Write a testimonial quote for a case study:
+
+Client: ${context.client_name || "Enterprise client"}
+Industry: ${context.industry || "Technology"}
+${context.overview ? `Context: ${context.overview}` : ""}
+${context.solution_description ? `Solution: ${context.solution_description}` : ""}
+
+Provide exactly 3 testimonial quote options, each separated by ---. These should sound like real customer quotes.`;
+
+  return { system, user };
+}
+
+// ==================== WEBINAR PROMPTS ====================
+
+interface WebinarContext {
+  title?: string;
+  description?: string;
+  presenters?: string;
+  topic?: string;
+}
+
+export function buildWebinarTitlePrompt(context: WebinarContext): {
+  system: string;
+  user: string;
+} {
+  const system = `You are an expert B2B marketing copywriter specializing in webinar titles. Your task is to create compelling titles that drive registrations.
+
+Guidelines:
+- Create curiosity and urgency
+- Promise specific value or learning outcomes
+- Keep titles between 50-70 characters
+- Avoid generic phrases
+- Consider using formats like "How to...", "X Ways to...", "The Future of..."`;
+
+  const user = `Generate 3 webinar title options:
+
+Topic: ${context.topic || context.title || "Enterprise AI"}
+${context.description ? `Description: ${context.description}` : ""}
+${context.presenters ? `Presenters: ${context.presenters}` : ""}
+
+Provide exactly 3 title options, each on its own line. No numbering, no explanations.`;
+
+  return { system, user };
+}
+
+export function buildWebinarDescriptionPrompt(context: WebinarContext): {
+  system: string;
+  user: string;
+} {
+  const system = `You are an expert B2B marketing copywriter. Your task is to write webinar descriptions that drive registrations.
+
+Guidelines:
+- Start with a hook that addresses the audience's pain point
+- Clearly state what attendees will learn
+- Include presenter credentials if relevant
+- Create urgency without being pushy
+- Keep to 150-250 words
+- End with a call-to-action`;
+
+  const user = `Write a webinar description:
+
+Title: ${context.title || "Enterprise AI Webinar"}
+${context.topic ? `Topic: ${context.topic}` : ""}
+${context.presenters ? `Presenters: ${context.presenters}` : ""}
+
+Provide exactly 2 description options, separated by ---. Each should be 150-200 words.`;
+
+  return { system, user };
+}
+
+export function buildWebinarLearningPointsPrompt(context: WebinarContext): {
+  system: string;
+  user: string;
+} {
+  const system = `You are an expert B2B content strategist. Your task is to create compelling learning outcomes for webinar promotions.
+
+Guidelines:
+- Start each point with an action verb
+- Be specific about the value
+- Keep each point to one clear sentence
+- Focus on practical takeaways
+- Make outcomes measurable when possible`;
+
+  const user = `Generate learning points for a webinar:
+
+Title: ${context.title || "Enterprise AI Webinar"}
+${context.description ? `Description: ${context.description}` : ""}
+${context.topic ? `Topic: ${context.topic}` : ""}
+
+Provide exactly 5 learning points as a bulleted list. Format:
+- Learning point 1
+- Learning point 2
+- Learning point 3
+- Learning point 4
+- Learning point 5`;
+
+  return { system, user };
+}
+
+export function buildWebinarPromoPrompt(context: WebinarContext): {
+  system: string;
+  user: string;
+} {
+  const system = `You are an expert B2B marketing copywriter. Your task is to write promotional copy for webinar marketing campaigns.
+
+Guidelines:
+- Create urgency and FOMO
+- Highlight key takeaways
+- Include social proof if relevant
+- Keep copy concise for email/social`;
+
+  const user = `Write promotional copy for a webinar:
+
+Title: ${context.title || "Enterprise AI Webinar"}
+${context.description ? `Description: ${context.description}` : ""}
+${context.presenters ? `Presenters: ${context.presenters}` : ""}
+
+Provide 3 versions:
+1. Email subject line (under 60 characters)
+2. Social media post (under 280 characters)
+3. Short promotional paragraph (2-3 sentences)
+
+Format:
+EMAIL SUBJECT:
+[subject line]
+
+SOCIAL POST:
+[social media copy]
+
+PROMO PARAGRAPH:
+[promotional paragraph]`;
+
+  return { system, user };
+}
+
+// ==================== WHITEPAPER PROMPTS ====================
+
+interface WhitepaperContext {
+  title?: string;
+  description?: string;
+  topic?: string;
+  category?: string;
+}
+
+export function buildWhitepaperTitlePrompt(context: WhitepaperContext): {
+  system: string;
+  user: string;
+} {
+  const system = `You are an expert B2B content strategist specializing in thought leadership content. Your task is to create authoritative whitepaper titles.
+
+Guidelines:
+- Sound authoritative and research-backed
+- Include industry-specific terminology
+- Keep titles between 50-80 characters
+- Avoid clickbait - maintain credibility
+- Consider formats like "The Complete Guide to...", "State of...", "[Year] Report:"`;
+
+  const user = `Generate 3 whitepaper title options:
+
+Topic: ${context.topic || context.title || "Enterprise AI Governance"}
+${context.category ? `Category: ${context.category}` : ""}
+${context.description ? `Description: ${context.description}` : ""}
+
+Provide exactly 3 title options, each on its own line. No numbering, no explanations.`;
+
+  return { system, user };
+}
+
+export function buildWhitepaperDescriptionPrompt(context: WhitepaperContext): {
+  system: string;
+  user: string;
+} {
+  const system = `You are an expert B2B content strategist. Your task is to write whitepaper descriptions that drive downloads through gated content forms.
+
+Guidelines:
+- Establish the problem or opportunity
+- Promise specific insights or frameworks
+- Highlight unique research or data
+- Build credibility with specifics
+- Keep to 100-150 words
+- End with what readers will gain`;
+
+  const user = `Write a whitepaper description:
+
+Title: ${context.title || "Enterprise AI Whitepaper"}
+${context.topic ? `Topic: ${context.topic}` : ""}
+${context.category ? `Category: ${context.category}` : ""}
+
+Provide exactly 2 description options, separated by ---. Each should be 100-150 words.`;
+
+  return { system, user };
+}
+
+export function buildWhitepaperOutlinePrompt(context: WhitepaperContext): {
+  system: string;
+  user: string;
+} {
+  const system = `You are an expert B2B content strategist specializing in thought leadership whitepapers. Your task is to create comprehensive whitepaper outlines.
+
+Guidelines:
+- Structure for 10-20 pages of content
+- Include executive summary section
+- Build logical progression of ideas
+- Include data/research sections where appropriate
+- End with actionable recommendations
+- Use clear section titles`;
+
+  const user = `Create a whitepaper outline:
+
+Title: ${context.title || "Enterprise AI Whitepaper"}
+${context.topic ? `Topic: ${context.topic}` : ""}
+${context.category ? `Category: ${context.category}` : ""}
+${context.description ? `Description: ${context.description}` : ""}
+
+Provide a detailed outline with:
+- Executive Summary
+- 5-7 main sections with subsections
+- Conclusion/Recommendations
+
+Format with markdown headings (## for main sections, ### for subsections).`;
+
+  return { system, user };
+}
+
+export function buildWhitepaperKeyTakeawaysPrompt(context: WhitepaperContext): {
+  system: string;
+  user: string;
+} {
+  const system = `You are an expert B2B content strategist. Your task is to create compelling key takeaways for whitepaper landing pages.
+
+Guidelines:
+- Each takeaway should be specific and valuable
+- Use numbers and data where possible
+- Focus on actionable insights
+- Keep each takeaway to one sentence
+- Make it clear what makes this whitepaper worth downloading`;
+
+  const user = `Generate key takeaways for a whitepaper:
+
+Title: ${context.title || "Enterprise AI Whitepaper"}
+${context.description ? `Description: ${context.description}` : ""}
+${context.topic ? `Topic: ${context.topic}` : ""}
+
+Provide exactly 5 key takeaways as a bulleted list. Format:
+- Takeaway 1
+- Takeaway 2
+- Takeaway 3
+- Takeaway 4
+- Takeaway 5`;
+
+  return { system, user };
+}
