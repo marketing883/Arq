@@ -375,15 +375,15 @@ export default function HomePage() {
                 className="relative"
               >
                 {/* Modern device frame for video */}
-                <div className="relative rounded-2xl overflow-hidden bg-base-opp/5 p-1 shadow-2xl shadow-accent/10">
-                  <div className="rounded-xl overflow-hidden bg-base-opp">
+                <div className="relative rounded-md overflow-hidden bg-base-opp/5 p-1 shadow-2xl shadow-accent/10">
+                  <div className="rounded overflow-hidden bg-base-opp aspect-[16/10]">
                     <video
                       autoPlay
                       muted
                       loop
                       playsInline
                       preload="metadata"
-                      className="w-full h-auto"
+                      className="w-full h-full object-cover animate-video-pan"
                       poster="/img/demo/arqai-foundry-poster.webp"
                     >
                       <source src="/video/ArqAI-foundry-optimized.webm" type="video/webm" />
@@ -512,9 +512,9 @@ export default function HomePage() {
               >
                 <div className="relative">
                   {/* Foundry Card */}
-                  <div className="bg-gradient-to-br from-base-opp to-base-opp/90 rounded-2xl p-8 border border-stroke-medium">
+                  <div className="bg-gradient-to-br from-base-opp to-base-opp/90 rounded-lg p-8 border border-stroke-medium">
                     <div className="flex items-center gap-3 mb-6">
-                      <div className="w-10 h-10 rounded-lg bg-accent/20 flex items-center justify-center">
+                      <div className="w-10 h-10 rounded bg-accent/20 flex items-center justify-center">
                         <svg className="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
                         </svg>
@@ -532,10 +532,10 @@ export default function HomePage() {
                     {/* Technology Stack */}
                     <div className="space-y-4">
                       {/* TAO */}
-                      <div className="group relative bg-base/5 hover:bg-base/10 rounded-xl p-4 transition-all cursor-default border border-base/10">
-                        <div className="flex items-start gap-4">
-                          <div className="w-12 h-12 rounded-lg bg-accent flex items-center justify-center shrink-0">
-                            <span className="text-sm font-bold text-white dark:text-black">TAO</span>
+                      <div className="group relative bg-base/5 hover:bg-base/10 rounded-lg p-4 transition-all cursor-default border border-base/10">
+                        <div className="flex items-center gap-4">
+                          <div className="w-12 h-12 rounded bg-accent flex items-center justify-center shrink-0">
+                            <span className="text-sm font-bold text-white">TAO</span>
                           </div>
                           <div className="flex-1 min-w-0">
                             <h4 className="text-body-md font-semibold text-base mb-1">Trust-Aware Orchestration™</h4>
@@ -545,10 +545,10 @@ export default function HomePage() {
                       </div>
 
                       {/* CAPC */}
-                      <div className="group relative bg-base/5 hover:bg-base/10 rounded-xl p-4 transition-all cursor-default border border-base/10">
-                        <div className="flex items-start gap-4">
-                          <div className="w-12 h-12 rounded-lg bg-accent flex items-center justify-center shrink-0">
-                            <span className="text-sm font-bold text-white dark:text-black">CAPC</span>
+                      <div className="group relative bg-base/5 hover:bg-base/10 rounded-lg p-4 transition-all cursor-default border border-base/10">
+                        <div className="flex items-center gap-4">
+                          <div className="w-12 h-12 rounded bg-accent flex items-center justify-center shrink-0">
+                            <span className="text-sm font-bold text-white">CAPC</span>
                           </div>
                           <div className="flex-1 min-w-0">
                             <h4 className="text-body-md font-semibold text-base mb-1">Compliance-Aware Compiler™</h4>
@@ -558,10 +558,10 @@ export default function HomePage() {
                       </div>
 
                       {/* ODA-RAG */}
-                      <div className="group relative bg-base/5 hover:bg-base/10 rounded-xl p-4 transition-all cursor-default border border-base/10">
-                        <div className="flex items-start gap-4">
-                          <div className="w-12 h-12 rounded-lg bg-accent flex items-center justify-center shrink-0">
-                            <span className="text-[11px] font-bold text-white dark:text-black leading-tight text-center">ODA<br/>RAG</span>
+                      <div className="group relative bg-base/5 hover:bg-base/10 rounded-lg p-4 transition-all cursor-default border border-base/10">
+                        <div className="flex items-center gap-4">
+                          <div className="w-12 h-12 rounded bg-accent flex items-center justify-center shrink-0">
+                            <span className="text-[11px] font-bold text-white leading-tight text-center">ODA<br/>RAG</span>
                           </div>
                           <div className="flex-1 min-w-0">
                             <h4 className="text-body-md font-semibold text-base mb-1">Observability-Driven RAG™</h4>
@@ -603,7 +603,7 @@ export default function HomePage() {
                 className="lg:col-span-5"
               >
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center">
+                  <div className="w-10 h-10 rounded bg-accent/10 flex items-center justify-center">
                     <svg className="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
