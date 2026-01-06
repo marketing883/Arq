@@ -138,13 +138,13 @@ export function CaseStudiesSection({ caseStudies }: CaseStudiesSectionProps) {
                   {study.title}
                 </h3>
 
-                {/* Tags / Metrics - Blue bg + lime text (light), Lime bg + black text (dark) */}
+                {/* Tags / Metrics - Blue bg + lime green text */}
                 {study.tags && study.tags.length > 0 ? (
                   <div className="flex flex-wrap gap-3 mb-6">
                     {study.tags.map((tag, i) => (
                       <span
                         key={i}
-                        className="px-5 py-2.5 rounded-full bg-accent text-additional dark:text-[#161616] font-semibold text-sm"
+                        className="px-5 py-2.5 rounded-full bg-accent text-[#CDEA68] font-semibold text-sm"
                       >
                         {tag}
                       </span>
@@ -155,7 +155,7 @@ export function CaseStudiesSection({ caseStudies }: CaseStudiesSectionProps) {
                     {study.key_metrics.slice(0, 4).map((metric, i) => (
                       <span
                         key={i}
-                        className="px-5 py-2.5 rounded-full bg-accent text-additional dark:text-[#161616] font-semibold text-sm"
+                        className="px-5 py-2.5 rounded-full bg-accent text-[#CDEA68] font-semibold text-sm"
                       >
                         {metric.value} {metric.label}
                       </span>
