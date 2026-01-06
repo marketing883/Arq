@@ -465,93 +465,228 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Products Section */}
-        <section className="py-section bg-base-tint">
+        {/* Platform → Agents Section */}
+        <section className="py-section bg-base-tint overflow-hidden">
           <div className="container mx-auto px-4 md:px-6">
+            {/* Section Header */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="section-header text-center mb-12"
+              className="section-header text-center mb-16"
             >
+              <p className="flex items-center justify-center gap-2 text-body-sm text-accent mb-4">
+                <StarIcon className="w-4 h-4" />
+                Our Solutions
+              </p>
               <h2 className="text-display-lg font-display text-text-bright mb-4">
-                Purpose-Built AI Solutions
+                Built on ArqAI. Deployed with Confidence.
               </h2>
-              <p className="text-body-lg text-text-muted max-w-2xl mx-auto">
-                Governed agents for your most critical workflows. Production-ready in weeks.
+              <p className="text-body-lg text-text-muted max-w-3xl mx-auto">
+                These autonomous agents were forged in our foundry—engineered with TAO, CAPC, and ODA-RAG.
+                Each one is audit-ready, explainable, and built for the demands of regulated industries.
               </p>
             </motion.div>
 
-            <div className="grid md:grid-cols-2 gap-8">
-              {products.map((product, index) => (
-                <motion.div
-                  key={product.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className="card group hover:border-accent transition-colors"
-                >
-                  <p className="text-body-sm text-text-muted mb-2">{product.category}</p>
-                  <h3 className="text-display-sm font-display text-text-bright mb-2">
-                    {product.name}
-                  </h3>
-                  <p className="text-body-md text-accent font-medium mb-4">
-                    {product.headline}
-                  </p>
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {product.features.map((feature, i) => (
-                      <span key={i} className="px-3 py-1 rounded-full bg-accent/10 text-body-xs font-medium text-accent">
-                        {feature}
-                      </span>
-                    ))}
-                  </div>
-                  <p className="text-body-md text-text-muted leading-relaxed mb-4">
-                    {product.description}
-                  </p>
-                  {product.deployment && (
-                    <p className="text-body-sm text-text-medium font-medium mb-4">
-                      {product.deployment}
-                    </p>
-                  )}
-                  <Link href={`/solutions#${product.id}`} className="inline-flex items-center gap-1 text-body-sm text-accent hover:underline group-hover:gap-2 transition-all">
-                    Learn More
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
-                  </Link>
-                </motion.div>
-              ))}
+            {/* Platform → Agents Flow Layout */}
+            <div className="grid lg:grid-cols-12 gap-8 lg:gap-6 items-start">
 
-              {/* Custom Solutions Card */}
+              {/* Left Side - The Foundry Core */}
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: 0.4 }}
-                className="card bg-accent md:col-span-2"
+                transition={{ duration: 0.5 }}
+                className="lg:col-span-5"
               >
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
-                  <div>
-                    <h3 className="text-display-sm font-display mb-3 text-white dark:text-black">
-                      Custom Solutions
-                    </h3>
-                    <p className="text-body-md text-white/80 dark:text-black/80">
-                      30-day deployment. We build governed AI solutions tailored to your specific workflows.
+                <div className="relative">
+                  {/* Foundry Card */}
+                  <div className="bg-gradient-to-br from-base-opp to-base-opp/90 rounded-2xl p-8 border border-stroke-medium">
+                    <div className="flex items-center gap-3 mb-6">
+                      <div className="w-10 h-10 rounded-lg bg-accent/20 flex items-center justify-center">
+                        <svg className="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                        </svg>
+                      </div>
+                      <div>
+                        <p className="text-body-xs text-additional/70 uppercase tracking-wider">The Foundry Core</p>
+                        <h3 className="text-display-sm font-display text-base">ArqAI Platform</h3>
+                      </div>
+                    </div>
+
+                    <p className="text-body-sm text-base/60 mb-8">
+                      The governance fabric that powers every agent we build. Three patented technologies working in harmony.
                     </p>
+
+                    {/* Technology Stack */}
+                    <div className="space-y-4">
+                      {/* TAO */}
+                      <div className="group relative bg-base/5 hover:bg-base/10 rounded-xl p-4 transition-all cursor-default border border-base/10">
+                        <div className="flex items-start gap-4">
+                          <div className="w-12 h-12 rounded-lg bg-accent flex items-center justify-center shrink-0">
+                            <span className="text-sm font-bold text-white dark:text-black">TAO</span>
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <h4 className="text-body-md font-semibold text-base mb-1">Trust-Aware Orchestration™</h4>
+                            <p className="text-body-xs text-base/60">Cryptographic identity & non-repudiable audit trails for every agent action.</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* CAPC */}
+                      <div className="group relative bg-base/5 hover:bg-base/10 rounded-xl p-4 transition-all cursor-default border border-base/10">
+                        <div className="flex items-start gap-4">
+                          <div className="w-12 h-12 rounded-lg bg-accent flex items-center justify-center shrink-0">
+                            <span className="text-sm font-bold text-white dark:text-black">CAPC</span>
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <h4 className="text-body-md font-semibold text-base mb-1">Compliance-Aware Compiler™</h4>
+                            <p className="text-body-xs text-base/60">Business rules & compliance baked directly into agent behavior.</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* ODA-RAG */}
+                      <div className="group relative bg-base/5 hover:bg-base/10 rounded-xl p-4 transition-all cursor-default border border-base/10">
+                        <div className="flex items-start gap-4">
+                          <div className="w-12 h-12 rounded-lg bg-accent flex items-center justify-center shrink-0">
+                            <span className="text-[11px] font-bold text-white dark:text-black leading-tight text-center">ODA<br/>RAG</span>
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <h4 className="text-body-md font-semibold text-base mb-1">Observability-Driven RAG™</h4>
+                            <p className="text-body-xs text-base/60">Real-time quality scoring & self-improving knowledge retrieval.</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <Link
-                    href="/contact"
-                    className="btn bg-additional text-black hover:opacity-90 dark:bg-black dark:text-white dark:hover:bg-white dark:hover:text-black transition-all"
-                  >
-                    Let&apos;s Talk
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
+                </div>
+              </motion.div>
+
+              {/* Center - Flow Arrow (visible on lg+) */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.5 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.3, delay: 0.3 }}
+                className="hidden lg:flex lg:col-span-2 items-center justify-center"
+              >
+                <div className="flex flex-col items-center gap-2">
+                  <div className="w-px h-12 bg-gradient-to-b from-transparent via-accent to-transparent" />
+                  <div className="w-16 h-16 rounded-full bg-accent/10 border-2 border-accent flex items-center justify-center">
+                    <svg className="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                     </svg>
-                  </Link>
+                  </div>
+                  <p className="text-body-xs text-text-muted font-medium">Powers</p>
+                  <div className="w-px h-12 bg-gradient-to-b from-transparent via-accent to-transparent" />
+                </div>
+              </motion.div>
+
+              {/* Right Side - Agents Built Here */}
+              <motion.div
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="lg:col-span-5"
+              >
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center">
+                    <svg className="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-body-xs text-accent uppercase tracking-wider">Deployed Solutions</p>
+                    <h3 className="text-display-sm font-display text-text-bright">Agents Built Here</h3>
+                  </div>
+                </div>
+
+                {/* Product Cards */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {products.map((product, index) => (
+                    <motion.div
+                      key={product.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.3 + index * 0.1 }}
+                      className="group card relative hover:border-accent transition-all hover:shadow-lg hover:shadow-accent/5"
+                    >
+                      <div className="flex items-start justify-between mb-3">
+                        <h4 className="text-lg font-display font-semibold text-text-bright group-hover:text-accent transition-colors">
+                          {product.name}
+                        </h4>
+                        <svg className="w-4 h-4 text-text-muted group-hover:text-accent transition-colors shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
+                        </svg>
+                      </div>
+                      <p className="text-body-xs text-text-muted mb-3 line-clamp-2">
+                        {product.headline}
+                      </p>
+                      <div className="flex flex-wrap gap-1.5">
+                        {product.features.slice(0, 2).map((feature, i) => (
+                          <span key={i} className="px-2 py-0.5 rounded-full bg-accent/10 text-[10px] font-medium text-accent">
+                            {feature}
+                          </span>
+                        ))}
+                      </div>
+                      {product.deployment && (
+                        <p className="text-[10px] text-text-medium font-medium mt-3 pt-3 border-t border-stroke-muted">
+                          ✓ {product.deployment}
+                        </p>
+                      )}
+                      <Link href={`/solutions#${product.id}`} className="absolute inset-0">
+                        <span className="sr-only">Learn more about {product.name}</span>
+                      </Link>
+                    </motion.div>
+                  ))}
                 </div>
               </motion.div>
             </div>
+
+            {/* Bottom CTA - Custom Workflows */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.5 }}
+              className="mt-16"
+            >
+              <div className="relative bg-gradient-to-r from-accent via-accent to-accent/90 rounded-2xl p-8 md:p-10 overflow-hidden">
+                {/* Decorative elements */}
+                <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2" />
+                <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2" />
+
+                <div className="relative flex flex-col md:flex-row md:items-center justify-between gap-6">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-3">
+                      <StarIcon className="w-4 h-4 text-additional" />
+                      <span className="text-body-xs text-white/80 dark:text-black/80 uppercase tracking-wider">Custom Build</span>
+                    </div>
+                    <h3 className="text-display-sm font-display mb-3 text-white dark:text-black">
+                      Need a custom workflow?
+                    </h3>
+                    <p className="text-body-md text-white/80 dark:text-black/80 max-w-xl">
+                      We&apos;ll forge a governed AI agent tailored to your specific use case.
+                      From pilot to production in 30 days—with full audit trails and compliance built in.
+                    </p>
+                  </div>
+                  <div className="shrink-0">
+                    <Link
+                      href="/contact"
+                      className="inline-flex items-center gap-2 px-6 py-3 bg-white dark:bg-black text-accent dark:text-white font-semibold rounded-lg hover:shadow-lg hover:shadow-black/20 transition-all group"
+                    >
+                      Let&apos;s Build Together
+                      <svg className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
+                      </svg>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </section>
 

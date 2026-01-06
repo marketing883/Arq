@@ -67,7 +67,7 @@ export function TiptapEditor({ content, onChange, placeholder = "Start writing..
     // Only update if the content actually differs (avoid cursor jumping)
     const currentContent = editor.getHTML();
     if (content !== currentContent) {
-      editor.commands.setContent(content, false);
+      editor.commands.setContent(content, { emitUpdate: false });
     }
   }, [content, editor]);
 

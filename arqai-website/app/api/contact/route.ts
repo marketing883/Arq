@@ -1,10 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
+import { createClient, SupabaseClient } from "@supabase/supabase-js";
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL || "",
-  process.env.SUPABASE_SERVICE_ROLE_KEY || ""
-);
+// Lazy initialize Supabase client
+let supabase: SupabaseClient | null = null;
+
+function getSupabaseClient(): SupabaseClient | null {
+  if (supabase) return supabase;
+
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+  if (!url || !key) {
+    return null;
+  }
+
+  supabase = createClient(url, key);
+  return supabase;
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -28,23 +40,28 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Store the contact submission
-    const { error: dbError } = await supabase
-      .from("contact_submissions")
-      .insert({
-        name,
-        email,
-        company: company || null,
-        job_title: jobTitle || null,
-        message,
-        inquiry_type: inquiryType || "general",
-        status: "new",
-      });
+    // Store the contact submission if Supabase is configured
+    const client = getSupabaseClient();
+    if (client) {
+      const { error: dbError } = await client
+        .from("contact_submissions")
+        .insert({
+          name,
+          email,
+          company: company || null,
+          job_title: jobTitle || null,
+          message,
+          inquiry_type: inquiryType || "general",
+          status: "new",
+        });
 
-    if (dbError) {
-      console.error("Database error:", dbError);
-      // Don't fail if DB insert fails - we might not have the table yet
-      // In production, you'd want proper error handling
+      if (dbError) {
+        console.error("Database error:", dbError);
+        // Don't fail if DB insert fails - we might not have the table yet
+        // In production, you'd want proper error handling
+      }
+    } else {
+      console.log("Supabase not configured - skipping database storage");
     }
 
     // TODO: Add email notification here (SendGrid, Resend, etc.)

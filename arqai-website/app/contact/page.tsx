@@ -337,18 +337,18 @@ export default function ContactPage() {
         </Section>
 
         {/* CTA Section */}
-        <Section background="accent">
+        <Section background="dark">
           <div className="text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-text-opp-bright mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
               Ready to See ArqAI in Action?
             </h2>
-            <p className="text-lg text-text-opp-bright/80 mb-8 max-w-2xl mx-auto">
+            <p className="text-lg text-white/80 mb-8 max-w-2xl mx-auto">
               Schedule a personalized demo and discover how to build, run, and govern
               your AI workforce with confidence.
             </p>
             <a
               href="/demo"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-base text-accent font-semibold rounded-lg hover:opacity-90 transition-opacity"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-accent text-white font-semibold rounded-lg hover:opacity-90 transition-opacity"
             >
               Schedule a Demo
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
