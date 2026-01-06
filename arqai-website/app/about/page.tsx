@@ -5,7 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-// import { StatsSection } from "@/components/sections/StatsSection"; // Disabled per user request
 
 const values = [
   {
@@ -59,21 +58,21 @@ export default function AboutPage() {
       <Header />
       <main className="bg-base">
         {/* Hero Section */}
-        <section className="pt-40 pb-20 bg-gradient-to-br from-[var(--arq-gray-50)] to-white dark:from-[var(--arq-gray-900)] dark:to-[var(--arq-gray-800)]">
+        <section className="pt-40 pb-20 bg-base-tint">
           <div className="container mx-auto px-4 md:px-6">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               className="max-w-4xl mx-auto text-center"
             >
-              <span className="inline-block px-4 py-2 rounded-full bg-[var(--arq-blue)]/10 text-[var(--arq-blue)] text-sm font-semibold mb-6">
+              <span className="inline-block px-4 py-2 rounded-full bg-accent/10 text-accent text-sm font-semibold mb-6">
                 About ArqAI
               </span>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[var(--arq-black)] dark:text-white mb-6 leading-tight">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-text-bright mb-6 leading-tight">
                 Building the Foundation for
-                <span className="text-[var(--arq-blue)]"> Trusted AI</span>
+                <span className="text-accent"> Trusted AI</span>
               </h1>
-              <p className="text-xl text-[var(--arq-gray-600)] dark:text-[var(--arq-gray-400)] max-w-2xl mx-auto">
+              <p className="text-xl text-text-muted max-w-2xl mx-auto">
                 We&apos;re on a mission to make enterprise AI safe, auditable, and production-ready.
                 Our platform enables organizations to deploy AI with confidence.
               </p>
@@ -81,11 +80,8 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Stats Section - Disabled per user request */}
-        {/* <StatsSection /> */}
-
         {/* Mission Section */}
-        <section className="py-20 bg-white dark:bg-[var(--arq-gray-800)]">
+        <section className="py-20 bg-base">
           <div className="container mx-auto px-4 md:px-6">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <motion.div
@@ -93,18 +89,18 @@ export default function AboutPage() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
               >
-                <span className="inline-block px-4 py-2 rounded-full bg-[var(--arq-lime)]/20 text-[var(--arq-lime-dark)] dark:text-[var(--arq-lime)] text-sm font-semibold mb-4">
+                <span className="inline-block px-4 py-2 rounded-full bg-additional/20 text-additional text-sm font-semibold mb-4">
                   Our Mission
                 </span>
-                <h2 className="text-3xl md:text-4xl font-bold text-[var(--arq-black)] dark:text-white mb-6">
+                <h2 className="text-3xl md:text-4xl font-display font-bold text-text-bright mb-6">
                   From AI Chaos to AI Command
                 </h2>
-                <p className="text-lg text-[var(--arq-gray-600)] dark:text-[var(--arq-gray-400)] mb-6">
+                <p className="text-lg text-text-muted mb-6">
                   Enterprises are racing to deploy AI, but this rapid adoption has created a hidden crisis
                   of &quot;Shadow AI&quot;: uncontrolled agents, disconnected tools, and a lack of oversight that
                   creates unacceptable risks.
                 </p>
-                <p className="text-lg text-[var(--arq-gray-600)] dark:text-[var(--arq-gray-400)]">
+                <p className="text-lg text-text-muted">
                   ArqAI exists to solve this problem. We provide the governance fabric that makes
                   enterprise AI safe, auditable, and production-ready, so organizations can innovate
                   without compromising on security or compliance.
@@ -116,7 +112,7 @@ export default function AboutPage() {
                 viewport={{ once: true }}
                 className="relative"
               >
-                <div className="aspect-square bg-gradient-to-br from-[var(--arq-blue)] to-[var(--arq-blue-dark)] rounded-2xl flex items-center justify-center">
+                <div className="aspect-square bg-gradient-to-br from-accent to-accent/80 rounded-2xl flex items-center justify-center">
                   <Image
                     src="/img/hero/arq-wf.png"
                     alt="ArqAI Platform"
@@ -131,7 +127,7 @@ export default function AboutPage() {
         </section>
 
         {/* Values Section */}
-        <section className="py-20 bg-[var(--arq-gray-50)] dark:bg-[var(--arq-gray-900)]">
+        <section className="py-20 bg-base-tint">
           <div className="container mx-auto px-4 md:px-6">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -139,10 +135,10 @@ export default function AboutPage() {
               viewport={{ once: true }}
               className="text-center mb-12"
             >
-              <span className="inline-block px-4 py-2 rounded-full bg-[var(--arq-blue)]/10 text-[var(--arq-blue)] text-sm font-semibold mb-4">
+              <span className="inline-block px-4 py-2 rounded-full bg-accent/10 text-accent text-sm font-semibold mb-4">
                 Our Values
               </span>
-              <h2 className="text-3xl md:text-4xl font-bold text-[var(--arq-black)] dark:text-white">
+              <h2 className="text-3xl md:text-4xl font-display font-bold text-text-bright">
                 What We Stand For
               </h2>
             </motion.div>
@@ -155,15 +151,15 @@ export default function AboutPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className="bg-white dark:bg-[var(--arq-gray-800)] rounded-2xl p-8 text-center"
+                  className="card text-center"
                 >
-                  <div className="w-16 h-16 rounded-xl bg-[var(--arq-blue)]/10 flex items-center justify-center mx-auto mb-4 text-[var(--arq-blue)]">
+                  <div className="w-16 h-16 rounded-xl bg-accent/10 flex items-center justify-center mx-auto mb-4 text-accent">
                     {value.icon}
                   </div>
-                  <h3 className="text-xl font-semibold text-[var(--arq-black)] dark:text-white mb-3">
+                  <h3 className="text-xl font-display font-semibold text-text-bright mb-3">
                     {value.title}
                   </h3>
-                  <p className="text-[var(--arq-gray-600)] dark:text-[var(--arq-gray-400)]">
+                  <p className="text-text-muted">
                     {value.description}
                   </p>
                 </motion.div>
@@ -173,7 +169,7 @@ export default function AboutPage() {
         </section>
 
         {/* Leadership Section */}
-        <section className="py-20 bg-white dark:bg-[var(--arq-gray-800)]">
+        <section className="py-20 bg-base">
           <div className="container mx-auto px-4 md:px-6">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -181,10 +177,10 @@ export default function AboutPage() {
               viewport={{ once: true }}
               className="text-center mb-12"
             >
-              <span className="inline-block px-4 py-2 rounded-full bg-[var(--arq-lime)]/20 text-[var(--arq-lime-dark)] dark:text-[var(--arq-lime)] text-sm font-semibold mb-4">
+              <span className="inline-block px-4 py-2 rounded-full bg-additional/20 text-additional text-sm font-semibold mb-4">
                 Leadership
               </span>
-              <h2 className="text-3xl md:text-4xl font-bold text-[var(--arq-black)] dark:text-white">
+              <h2 className="text-3xl md:text-4xl font-display font-bold text-text-bright">
                 Meet the Team
               </h2>
             </motion.div>
@@ -199,13 +195,13 @@ export default function AboutPage() {
                   transition={{ delay: index * 0.1 }}
                   className="text-center"
                 >
-                  <div className="w-32 h-32 rounded-full bg-gradient-to-br from-[var(--arq-gray-200)] to-[var(--arq-gray-300)] dark:from-[var(--arq-gray-700)] dark:to-[var(--arq-gray-600)] mx-auto mb-4 flex items-center justify-center">
-                    <span className="text-2xl font-bold text-[var(--arq-gray-500)]">{person.name}</span>
+                  <div className="w-32 h-32 rounded-full bg-base-tint mx-auto mb-4 flex items-center justify-center border border-stroke-muted">
+                    <span className="text-2xl font-bold text-text-muted">{person.name}</span>
                   </div>
-                  <h3 className="text-lg font-semibold text-[var(--arq-black)] dark:text-white">
+                  <h3 className="text-lg font-display font-semibold text-text-bright">
                     {person.role}
                   </h3>
-                  <p className="text-sm text-[var(--arq-gray-500)] mt-1">{person.bio}</p>
+                  <p className="text-sm text-text-muted mt-1">{person.bio}</p>
                 </motion.div>
               ))}
             </div>
@@ -213,7 +209,7 @@ export default function AboutPage() {
         </section>
 
         {/* CTA Section */}
-        <section className="py-20 bg-gradient-to-r from-[var(--arq-blue)] to-[var(--arq-blue-dark)]">
+        <section className="py-20 bg-accent">
           <div className="container mx-auto px-4 md:px-6 text-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -221,7 +217,7 @@ export default function AboutPage() {
               viewport={{ once: true }}
               className="max-w-2xl mx-auto"
             >
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+              <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-6">
                 Ready to Transform Your AI Strategy?
               </h2>
               <p className="text-xl text-white/80 mb-8">
@@ -229,7 +225,7 @@ export default function AboutPage() {
               </p>
               <Link
                 href="/demo"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-[var(--arq-lime)] text-[var(--arq-black)] font-bold rounded-full hover:bg-[var(--arq-lime-dark)] transition-colors"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-additional text-black font-bold rounded-lg hover:opacity-90 transition-opacity"
               >
                 Request a Demo
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
