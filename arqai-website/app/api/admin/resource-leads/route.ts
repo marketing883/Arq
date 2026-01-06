@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
+import { getAdminSession } from "@/lib/auth/admin-auth";
 
 function getSupabase() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -10,6 +11,15 @@ function getSupabase() {
 
 export async function GET() {
   try {
+    // Verify admin session
+    const session = await getAdminSession();
+    if (!session) {
+      return NextResponse.json(
+        { error: "Unauthorized" },
+        { status: 401 }
+      );
+    }
+
     const supabase = getSupabase();
     if (!supabase) {
       return NextResponse.json({ leads: [] });

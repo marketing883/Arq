@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
+import { sendContactFormNotification } from "@/lib/email/resend";
 
 // Lazy initialize Supabase client
 let supabase: SupabaseClient | null = null;
@@ -64,15 +65,14 @@ export async function POST(request: NextRequest) {
       console.log("Supabase not configured - skipping database storage");
     }
 
-    // TODO: Add email notification here (SendGrid, Resend, etc.)
-    // For now, just log the submission
-    console.log("Contact form submission:", {
+    // Send email notification to team
+    await sendContactFormNotification({
       name,
       email,
-      company,
-      jobTitle,
-      inquiryType,
-      message: message.substring(0, 100) + "...",
+      company: company || undefined,
+      jobTitle: jobTitle || undefined,
+      message,
+      inquiryType: inquiryType || "general",
     });
 
     return NextResponse.json({ success: true });
