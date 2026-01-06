@@ -3,6 +3,7 @@
 import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { AIGenerateButton } from "@/components/admin/seo/AIGenerateButton";
 
 const timezones = [
   { value: "America/New_York", label: "Eastern Time (ET)" },
@@ -68,6 +69,83 @@ export default function NewWebinarPage() {
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/(^-|-$)/g, "");
+  };
+
+  // AI Generation Functions
+  const generateTitle = async () => {
+    try {
+      const response = await fetch("/api/ai/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "webinar_title",
+          title: formData.title,
+          description: formData.description,
+          topic: formData.title || formData.description,
+          presenters: formData.presenters.map(p => p.name).filter(Boolean).join(", "),
+        }),
+      });
+      const data = await response.json();
+      if (data.result) {
+        setFormData(prev => ({
+          ...prev,
+          title: data.result,
+          slug: prev.slug || generateSlug(data.result),
+        }));
+      }
+    } catch (error) {
+      console.error("Title generation error:", error);
+    }
+  };
+
+  const generateDescription = async () => {
+    try {
+      const response = await fetch("/api/ai/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "webinar_description",
+          title: formData.title,
+          topic: formData.title,
+          presenters: formData.presenters.map(p => `${p.name} (${p.title} at ${p.company})`).filter(p => p !== "( at )").join(", "),
+        }),
+      });
+      const data = await response.json();
+      if (data.result) {
+        setFormData(prev => ({ ...prev, description: data.result }));
+      }
+    } catch (error) {
+      console.error("Description generation error:", error);
+    }
+  };
+
+  const generateLearningPoints = async () => {
+    try {
+      const response = await fetch("/api/ai/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "webinar_learning_points",
+          title: formData.title,
+          description: formData.description,
+          topic: formData.title,
+        }),
+      });
+      const data = await response.json();
+      if (data.result) {
+        // Parse the response to extract bullet points
+        const points = data.result
+          .split("\n")
+          .map((line: string) => line.replace(/^[-•]\s*/, "").trim())
+          .filter((line: string) => line.length > 0)
+          .slice(0, 6);
+        if (points.length > 0) {
+          setFormData(prev => ({ ...prev, learning_points: points }));
+        }
+      }
+    } catch (error) {
+      console.error("Learning points generation error:", error);
+    }
   };
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -291,7 +369,10 @@ export default function NewWebinarPage() {
           <div className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <div className="col-span-2">
-                <label className="block text-sm font-medium text-slate-700 mb-1">Title *</label>
+                <div className="flex items-center justify-between mb-1">
+                  <label className="block text-sm font-medium text-slate-700">Title *</label>
+                  <AIGenerateButton onClick={generateTitle} title="Generate title with AI" />
+                </div>
                 <input
                   type="text"
                   value={formData.title}
@@ -323,7 +404,10 @@ export default function NewWebinarPage() {
               </div>
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Description</label>
+              <div className="flex items-center justify-between mb-1">
+                <label className="block text-sm font-medium text-slate-700">Description</label>
+                <AIGenerateButton onClick={generateDescription} title="Generate description with AI" />
+              </div>
               <textarea
                 value={formData.description}
                 onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
@@ -546,13 +630,16 @@ export default function NewWebinarPage() {
         <section className="bg-white rounded-xl shadow-sm p-6">
           <div className="flex items-center justify-between mb-6 pb-4 border-b">
             <h2 className="text-lg font-semibold text-slate-900">What You&apos;ll Learn</h2>
-            <button
-              onClick={addLearningPoint}
-              disabled={formData.learning_points.length >= 6}
-              className="px-3 py-1.5 text-sm font-medium text-blue-600 hover:bg-blue-50 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              + Add Point
-            </button>
+            <div className="flex items-center gap-2">
+              <AIGenerateButton onClick={generateLearningPoints} title="Generate learning points with AI" />
+              <button
+                onClick={addLearningPoint}
+                disabled={formData.learning_points.length >= 6}
+                className="px-3 py-1.5 text-sm font-medium text-blue-600 hover:bg-blue-50 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                + Add Point
+              </button>
+            </div>
           </div>
 
           <div className="space-y-3">

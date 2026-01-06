@@ -4,6 +4,7 @@ import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import { AIGenerateButton } from "@/components/admin/seo/AIGenerateButton";
 
 const categories = ["Technical", "Business", "Research", "Guide", "Industry Report"];
 
@@ -29,6 +30,54 @@ export default function NewWhitepaperPage() {
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/(^-|-$)/g, "");
+  };
+
+  // AI Generation Functions
+  const generateTitle = async () => {
+    try {
+      const response = await fetch("/api/ai/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "whitepaper_title",
+          title: formData.title,
+          description: formData.description,
+          topic: formData.title || formData.description,
+          category: formData.category,
+        }),
+      });
+      const data = await response.json();
+      if (data.result) {
+        setFormData(prev => ({
+          ...prev,
+          title: data.result,
+          slug: prev.slug || generateSlug(data.result),
+        }));
+      }
+    } catch (error) {
+      console.error("Title generation error:", error);
+    }
+  };
+
+  const generateDescription = async () => {
+    try {
+      const response = await fetch("/api/ai/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "whitepaper_description",
+          title: formData.title,
+          topic: formData.title,
+          category: formData.category,
+        }),
+      });
+      const data = await response.json();
+      if (data.result) {
+        setFormData(prev => ({ ...prev, description: data.result }));
+      }
+    } catch (error) {
+      console.error("Description generation error:", error);
+    }
   };
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -169,7 +218,10 @@ export default function NewWhitepaperPage() {
           <h2 className="text-lg font-semibold text-slate-900 mb-6 pb-4 border-b">Whitepaper Details</h2>
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Title *</label>
+              <div className="flex items-center justify-between mb-1">
+                <label className="block text-sm font-medium text-slate-700">Title *</label>
+                <AIGenerateButton onClick={generateTitle} title="Generate title with AI" />
+              </div>
               <input
                 type="text"
                 value={formData.title}
@@ -189,7 +241,10 @@ export default function NewWhitepaperPage() {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Description</label>
+              <div className="flex items-center justify-between mb-1">
+                <label className="block text-sm font-medium text-slate-700">Description</label>
+                <AIGenerateButton onClick={generateDescription} title="Generate description with AI" />
+              </div>
               <textarea
                 value={formData.description}
                 onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
