@@ -267,8 +267,8 @@ export default function HomePage() {
               >
                 <div className="w-full h-px bg-stroke-muted" />
                 <p className="text-body-lg text-text-medium max-w-lg">
-                  Build, run, and govern your mission-critical AI workforce with confidence.
-                  The governance fabric that makes enterprise AI safe, auditable, and production-ready.
+                  Build, run, and govern mission-critical agent workforces in regulated industries.
+                  From pilot to production in 30 days, with compliance, security, and accountability built into the DNA.
                 </p>
                 <div className="flex items-center gap-6 text-body-sm text-text-muted">
                   <div className="flex items-center gap-2">
