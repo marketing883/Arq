@@ -13,7 +13,7 @@ export async function GET() {
     const supabase = getSupabase();
 
     if (!supabase) {
-      return NextResponse.json({ whitepaper: null });
+      return NextResponse.json({ whitepaper: null, debug: "supabase_not_configured" });
     }
 
     // Get the most recently published whitepaper
@@ -25,8 +25,12 @@ export async function GET() {
       .limit(1)
       .maybeSingle();
 
-    if (error || !data) {
-      return NextResponse.json({ whitepaper: null });
+    if (error) {
+      return NextResponse.json({ whitepaper: null, debug: "query_error", error: error.message });
+    }
+
+    if (!data) {
+      return NextResponse.json({ whitepaper: null, debug: "no_published_whitepapers" });
     }
 
     return NextResponse.json({
@@ -42,6 +46,6 @@ export async function GET() {
     });
   } catch (error) {
     console.error("Error in featured whitepaper API:", error);
-    return NextResponse.json({ whitepaper: null });
+    return NextResponse.json({ whitepaper: null, debug: "exception" });
   }
 }
