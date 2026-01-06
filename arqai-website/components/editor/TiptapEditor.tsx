@@ -5,7 +5,7 @@ import StarterKit from "@tiptap/starter-kit";
 import Image from "@tiptap/extension-image";
 import Link from "@tiptap/extension-link";
 import Youtube from "@tiptap/extension-youtube";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 
 interface TiptapEditorProps {
   content: string;
@@ -15,6 +15,7 @@ interface TiptapEditorProps {
 
 export function TiptapEditor({ content, onChange, placeholder = "Start writing..." }: TiptapEditorProps) {
   const [isUploading, setIsUploading] = useState(false);
+  const isInternalChange = useRef(false);
 
   const editor = useEditor({
     immediatelyRender: false,
@@ -43,6 +44,7 @@ export function TiptapEditor({ content, onChange, placeholder = "Start writing..
     ],
     content,
     onUpdate: ({ editor }) => {
+      isInternalChange.current = true;
       onChange(editor.getHTML());
     },
     editorProps: {
@@ -51,6 +53,23 @@ export function TiptapEditor({ content, onChange, placeholder = "Start writing..
       },
     },
   });
+
+  // Sync external content changes to the editor
+  useEffect(() => {
+    if (!editor) return;
+
+    // If this was an internal change (user typing), skip the sync
+    if (isInternalChange.current) {
+      isInternalChange.current = false;
+      return;
+    }
+
+    // Only update if the content actually differs (avoid cursor jumping)
+    const currentContent = editor.getHTML();
+    if (content !== currentContent) {
+      editor.commands.setContent(content, false);
+    }
+  }, [content, editor]);
 
   const handleImageUpload = useCallback(async (file: File) => {
     if (!editor) return;
