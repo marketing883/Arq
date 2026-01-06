@@ -663,12 +663,12 @@ export default function HomePage() {
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-3">
                       <StarIcon className="w-4 h-4 text-additional" />
-                      <span className="text-body-xs text-white/80 dark:text-black/80 uppercase tracking-wider">Custom Build</span>
+                      <span className="text-body-xs text-white/80 uppercase tracking-wider">Custom Build</span>
                     </div>
-                    <h3 className="text-display-sm font-display mb-3 text-white dark:text-black">
+                    <h3 className="text-display-sm font-display mb-3 text-white">
                       Need a custom workflow?
                     </h3>
-                    <p className="text-body-md text-white/80 dark:text-black/80 max-w-xl">
+                    <p className="text-body-md text-white/80 max-w-xl">
                       We&apos;ll forge a governed AI agent tailored to your specific use case.
                       From pilot to production in 30 days—with full audit trails and compliance built in.
                     </p>
@@ -676,7 +676,7 @@ export default function HomePage() {
                   <div className="shrink-0">
                     <Link
                       href="/contact"
-                      className="inline-flex items-center gap-2 px-6 py-3 bg-white dark:bg-black text-accent dark:text-white font-semibold rounded-lg hover:shadow-lg hover:shadow-black/20 transition-all group"
+                      className="inline-flex items-center gap-2 px-6 py-3 bg-white text-accent font-semibold rounded-lg hover:shadow-lg hover:shadow-black/20 transition-all group"
                     >
                       Let&apos;s Build Together
                       <svg className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
