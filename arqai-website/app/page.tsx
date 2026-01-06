@@ -329,7 +329,7 @@ export default function HomePage() {
                   className="flex items-center gap-2 text-body-sm text-accent mb-4"
                 >
                   <StarIcon className="w-4 h-4" />
-                  The Hidden Crisis
+                  Trusted by Industry Leaders
                 </motion.p>
                 <motion.h2
                   initial={{ opacity: 0, y: 20 }}
@@ -338,7 +338,7 @@ export default function HomePage() {
                   transition={{ delay: 0.1 }}
                   className="text-display-lg font-display text-text-bright mb-6"
                 >
-                  Your AI Future is Being Built on a Foundation of Chaos
+                  The Platform Powering Mission-Critical AI in Regulated Industries
                 </motion.h2>
                 <motion.p
                   initial={{ opacity: 0, y: 20 }}
@@ -347,8 +347,7 @@ export default function HomePage() {
                   transition={{ delay: 0.2 }}
                   className="text-body-md text-text-muted mb-8"
                 >
-                  Three patented technologies compile your policies into infrastructure.
-                  Deploy governed AI across any cloud, any model, any vertical—in weeks, not quarters.
+                  When enterprises need AI governance that enables production, not just compliance theater—they build on ArqAI. From leading telecom players to healthcare&apos;s most sensitive workflows, our three patented technologies are the foundation for autonomous agents operating at scale.
                 </motion.p>
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
