@@ -281,6 +281,136 @@ export async function sendUserConfirmation(
 /**
  * Send meeting booked notification
  */
+interface ContactFormData {
+  name: string;
+  email: string;
+  company?: string;
+  jobTitle?: string;
+  message: string;
+  inquiryType: string;
+}
+
+/**
+ * Send contact form notification to team
+ */
+export async function sendContactFormNotification(
+  data: ContactFormData
+): Promise<boolean> {
+  const resend = getResendClient();
+  if (!resend) return false;
+
+  try {
+    const inquiryLabels: Record<string, string> = {
+      general: "General Inquiry",
+      demo: "Demo Request",
+      partnership: "Partnership",
+      pricing: "Pricing",
+      support: "Support",
+    };
+
+    const inquiryLabel = inquiryLabels[data.inquiryType] || data.inquiryType;
+    const isHighPriority = data.inquiryType === "demo" || data.inquiryType === "pricing";
+    const priorityEmoji = isHighPriority ? "🔥" : "📬";
+
+    const subject = `${priorityEmoji} New Contact Form: ${data.name} - ${inquiryLabel}`;
+
+    const html = `
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <meta charset="utf-8">
+          <style>
+            body { font-family: 'Inter', -apple-system, sans-serif; margin: 0; padding: 0; background: #f5f7fa; }
+            .container { max-width: 600px; margin: 0 auto; background: white; }
+            .header { background: #0052CC; color: white; padding: 32px; text-align: center; }
+            .header h1 { margin: 0; font-size: 24px; }
+            .badge { display: inline-block; padding: 6px 12px; border-radius: 6px; font-size: 14px; font-weight: 600; }
+            .badge-demo { background: #fef2f2; color: #dc2626; }
+            .badge-pricing { background: #fff7ed; color: #ea580c; }
+            .badge-general { background: #eff6ff; color: #2563eb; }
+            .content { padding: 32px; }
+            .section { margin-bottom: 24px; }
+            .section h3 { color: #374151; margin: 0 0 12px 0; font-size: 16px; }
+            .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+            .info-item { padding: 12px; background: #f9fafb; border-radius: 8px; }
+            .info-label { font-size: 12px; color: #6b7280; margin-bottom: 4px; }
+            .info-value { font-weight: 600; color: #1f2937; }
+            .message-box { background: #f3f4f6; padding: 16px; border-radius: 8px; font-size: 14px; color: #4b5563; white-space: pre-wrap; }
+            .cta { text-align: center; margin-top: 24px; }
+            .cta a { display: inline-block; padding: 12px 24px; background: #0052CC; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; }
+            .reply-btn { display: inline-block; padding: 10px 20px; background: #16a34a; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; margin-right: 12px; }
+            .footer { padding: 24px; text-align: center; color: #6b7280; font-size: 12px; }
+          </style>
+        </head>
+        <body>
+          <div class="container">
+            <div class="header">
+              <h1>📬 New Contact Form Submission</h1>
+            </div>
+            <div class="content">
+              <div class="section" style="text-align: center;">
+                <span class="badge badge-${data.inquiryType === 'demo' ? 'demo' : data.inquiryType === 'pricing' ? 'pricing' : 'general'}">${inquiryLabel}</span>
+              </div>
+
+              <div class="section">
+                <h3>Contact Information</h3>
+                <div class="info-grid">
+                  <div class="info-item">
+                    <div class="info-label">Name</div>
+                    <div class="info-value">${data.name}</div>
+                  </div>
+                  <div class="info-item">
+                    <div class="info-label">Email</div>
+                    <div class="info-value">${data.email}</div>
+                  </div>
+                  <div class="info-item">
+                    <div class="info-label">Company</div>
+                    <div class="info-value">${data.company || "Not provided"}</div>
+                  </div>
+                  <div class="info-item">
+                    <div class="info-label">Role</div>
+                    <div class="info-value">${data.jobTitle || "Not provided"}</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="section">
+                <h3>Message</h3>
+                <div class="message-box">${data.message}</div>
+              </div>
+
+              <div class="cta">
+                <a href="mailto:${data.email}" class="reply-btn">Reply to ${data.name}</a>
+                <a href="${process.env.NEXT_PUBLIC_SITE_URL || "https://thearq.ai"}/admin/contacts">View in Dashboard</a>
+              </div>
+            </div>
+            <div class="footer">
+              ArqAI Contact Form Notification
+            </div>
+          </div>
+        </body>
+      </html>
+    `;
+
+    await resend.emails.send({
+      from: FROM_EMAIL,
+      to: TEAM_EMAIL,
+      subject,
+      html,
+      reply_to: data.email,
+    });
+
+    console.log(`Contact form notification sent for ${data.name}`);
+    return true;
+  } catch (error) {
+    console.error("Failed to send contact form notification:", error);
+    return false;
+  }
+}
+
+/**
+ * Send meeting booked notification
+ */
 export async function sendMeetingBookedNotification(
   data: MeetingBookedData
 ): Promise<boolean> {

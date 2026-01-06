@@ -257,8 +257,8 @@ export async function processMessageForIntelligence(
     // Determine priority tier
     const priorityTier = getLeadPriorityTier(intelligence);
 
-    // Send notifications for high-priority leads (non-blocking)
-    if (priorityTier === "tier1" || intelligence.intent_category === "hot") {
+    // Send notifications for all leads with email (non-blocking)
+    if (userInfo.email) {
       sendLeadNotification({
         name: userInfo.name,
         email: userInfo.email,
@@ -272,7 +272,7 @@ export async function processMessageForIntelligence(
         complianceRequirements: intelligence.company_research?.compliance_requirements,
         signalSummary: intelligence.behavioral_signals
           ?.slice(-5)
-          .map((s) => `${s.type}: ${s.content.substring(0, 50)}...`)
+          .map((s: BehavioralSignal) => `${s.type}: ${s.content.substring(0, 50)}...`)
           .join("\n"),
       }).catch(console.error);
     }
