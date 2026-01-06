@@ -30,6 +30,8 @@ async function apiRequest<T>(
   endpoint: string,
   body: unknown[]
 ): Promise<DataForSEOResponse<T>> {
+  console.log(`DataForSEO API request to: ${endpoint}`);
+
   const response = await fetch(`${DATAFORSEO_API_URL}${endpoint}`, {
     method: "POST",
     headers: {
@@ -41,10 +43,18 @@ async function apiRequest<T>(
 
   if (!response.ok) {
     const errorText = await response.text();
+    console.error(`DataForSEO API error ${response.status}:`, errorText);
     throw new Error(`DataForSEO API error: ${response.status} - ${errorText}`);
   }
 
-  return response.json();
+  const data = await response.json();
+
+  // Check for API-level errors
+  if (data.status_code !== 20000) {
+    console.error("DataForSEO API status error:", data.status_message);
+  }
+
+  return data;
 }
 
 /**
