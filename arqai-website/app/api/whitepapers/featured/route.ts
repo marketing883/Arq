@@ -16,16 +16,30 @@ export async function GET() {
       return NextResponse.json({ whitepaper: null });
     }
 
-    // Get the most recently published whitepaper
-    const { data, error } = await supabase
+    // Try to get a published whitepaper first
+    let { data, error } = await supabase
       .from("whitepapers")
-      .select("id, title, slug, description, cover_image, file_url, category")
+      .select("id, title, slug, description, cover_image, file_url, category, topics, page_count")
       .eq("status", "published")
-      .order("published_at", { ascending: false })
+      .order("created_at", { ascending: false })
       .limit(1)
-      .single();
+      .maybeSingle();
+
+    // If no published whitepaper, try to get any whitepaper (for development)
+    if (!data && process.env.NODE_ENV !== "production") {
+      const result = await supabase
+        .from("whitepapers")
+        .select("id, title, slug, description, cover_image, file_url, category, topics, page_count")
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .maybeSingle();
+
+      data = result.data;
+      error = result.error;
+    }
 
     if (error || !data) {
+      console.log("No whitepaper found:", error?.message || "No data");
       return NextResponse.json({ whitepaper: null });
     }
 
@@ -36,6 +50,8 @@ export async function GET() {
         description: data.description,
         cover_image: data.cover_image,
         file_url: data.file_url,
+        topics: data.topics,
+        page_count: data.page_count,
       }
     });
   } catch (error) {

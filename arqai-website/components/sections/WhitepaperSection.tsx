@@ -293,7 +293,8 @@ const placeholderWhitepaper: Whitepaper = {
 
 // Dynamic version that fetches from database
 export function WhitepaperSectionStatic() {
-  const [whitepaper, setWhitepaper] = useState<Whitepaper>(placeholderWhitepaper);
+  const [whitepaper, setWhitepaper] = useState<Whitepaper | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function fetchWhitepaper() {
@@ -307,11 +308,18 @@ export function WhitepaperSectionStatic() {
         }
       } catch (error) {
         console.error("Error fetching whitepaper:", error);
+      } finally {
+        setIsLoading(false);
       }
     }
 
     fetchWhitepaper();
   }, []);
+
+  // Don't render anything if no whitepaper found or still loading
+  if (isLoading || !whitepaper) {
+    return null;
+  }
 
   return <WhitepaperSection whitepaper={whitepaper} />;
 }
