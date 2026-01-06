@@ -1,8 +1,62 @@
 import { createClient } from "@supabase/supabase-js";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import type { Metadata } from "next";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { generateCaseStudySchema, generateBreadcrumbSchema } from "@/lib/seo/structured-data";
+
+function getSupabase() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!supabaseUrl || !supabaseKey) return null;
+  return createClient(supabaseUrl, supabaseKey);
+}
+
+// Generate dynamic metadata for SEO
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const supabase = getSupabase();
+
+  if (!supabase) {
+    return { title: "Case Study | ArqAI" };
+  }
+
+  const { data: caseStudy } = await supabase
+    .from("case_studies")
+    .select("title, overview, industry, client_name, featured_image")
+    .eq("slug", slug)
+    .eq("status", "published")
+    .single();
+
+  if (!caseStudy) {
+    return { title: "Case Study Not Found | ArqAI" };
+  }
+
+  const title = `${caseStudy.title} | ArqAI Case Study`;
+  const description = caseStudy.overview || `See how ${caseStudy.client_name || "our client"} in ${caseStudy.industry} transformed their operations with ArqAI's governed AI solutions.`;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: "article",
+      url: `https://thearq.ai/case-studies/${slug}`,
+      images: caseStudy.featured_image ? [{ url: caseStudy.featured_image, alt: caseStudy.title }] : [],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: caseStudy.featured_image ? [caseStudy.featured_image] : [],
+    },
+    alternates: {
+      canonical: `https://thearq.ai/case-studies/${slug}`,
+    },
+  };
+}
 
 // Industry color mapping
 const industryColors: Record<string, { gradient: string; accent: string }> = {
@@ -17,14 +71,8 @@ const industryColors: Record<string, { gradient: string; accent: string }> = {
 };
 
 async function getCaseStudy(slug: string) {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-
-  if (!supabaseUrl || !supabaseKey) {
-    return null;
-  }
-
-  const supabase = createClient(supabaseUrl, supabaseKey);
+  const supabase = getSupabase();
+  if (!supabase) return null;
 
   const { data, error } = await supabase
     .from("case_studies")
@@ -33,10 +81,7 @@ async function getCaseStudy(slug: string) {
     .eq("status", "published")
     .single();
 
-  if (error || !data) {
-    return null;
-  }
-
+  if (error || !data) return null;
   return data;
 }
 
@@ -53,8 +98,35 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
   const challengePoints = caseStudy.challenge_points || [];
   const solutionPoints = caseStudy.solution_points || [];
 
+  // Generate structured data for SEO/AEO
+  const caseStudySchema = generateCaseStudySchema({
+    title: caseStudy.title,
+    description: caseStudy.overview || caseStudy.title,
+    url: `https://thearq.ai/case-studies/${slug}`,
+    image: caseStudy.featured_image,
+    client: caseStudy.client_name || "Enterprise Client",
+    industry: caseStudy.industry,
+    publishedDate: caseStudy.created_at || new Date().toISOString(),
+    metrics: metrics,
+  });
+
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: "Home", url: "https://thearq.ai" },
+    { name: "Case Studies", url: "https://thearq.ai/case-studies" },
+    { name: caseStudy.title, url: `https://thearq.ai/case-studies/${slug}` },
+  ]);
+
   return (
     <>
+      {/* Structured Data for SEO/AEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(caseStudySchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <Header />
       <main className="min-h-screen bg-[var(--background)]">
         {/* Hero Section */}

@@ -172,6 +172,102 @@ export function generateBreadcrumbSchema(
 }
 
 /**
+ * Generate Article structured data for blog posts (SEO/AEO)
+ */
+export interface ArticleData {
+  title: string;
+  description: string;
+  url: string;
+  image?: string;
+  author: string;
+  publishedDate: string;
+  modifiedDate?: string;
+  category?: string;
+  tags?: string[];
+}
+
+export function generateArticleSchema(article: ArticleData): Record<string, unknown> {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: article.title,
+    description: article.description,
+    url: article.url,
+    image: article.image || "https://thearq.ai/og-image.png",
+    author: {
+      "@type": "Person",
+      name: article.author,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "ArqAI",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://thearq.ai/logo.png",
+      },
+    },
+    datePublished: article.publishedDate,
+    dateModified: article.modifiedDate || article.publishedDate,
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": article.url,
+    },
+    ...(article.category && { articleSection: article.category }),
+    ...(article.tags && { keywords: article.tags.join(", ") }),
+  };
+}
+
+/**
+ * Generate CaseStudy structured data (SEO/AEO)
+ */
+export interface CaseStudyData {
+  title: string;
+  description: string;
+  url: string;
+  image?: string;
+  client: string;
+  industry: string;
+  publishedDate: string;
+  metrics?: Array<{ label: string; value: string }>;
+}
+
+export function generateCaseStudySchema(caseStudy: CaseStudyData): Record<string, unknown> {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "@id": caseStudy.url,
+    headline: caseStudy.title,
+    description: caseStudy.description,
+    url: caseStudy.url,
+    image: caseStudy.image || "https://thearq.ai/og-image.png",
+    author: {
+      "@type": "Organization",
+      name: "ArqAI",
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "ArqAI",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://thearq.ai/logo.png",
+      },
+    },
+    datePublished: caseStudy.publishedDate,
+    about: {
+      "@type": "Organization",
+      name: caseStudy.client,
+      industry: caseStudy.industry,
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": caseStudy.url,
+    },
+    articleSection: "Case Study",
+    keywords: `${caseStudy.industry}, AI case study, enterprise AI, ${caseStudy.client}`,
+  };
+}
+
+/**
  * Default FAQs for the website (AEO optimization)
  */
 export const defaultFAQs: FAQData[] = [
