@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { Button } from "@/components/ui/Button";
@@ -13,6 +14,7 @@ import {
   CheckIcon,
   ArrowRightIcon,
 } from "@/components/ui/Icons";
+import { getIntegrationLogo } from "@/components/ui/IntegrationLogos";
 import type { Metadata } from "next";
 
 export default function PlatformPage() {
@@ -110,13 +112,16 @@ export default function PlatformPage() {
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="glass-card p-8"
+              className="glass-card p-4"
             >
-              <div className="aspect-video bg-gradient-to-br from-[var(--arq-gray-100)] to-[var(--arq-gray-200)] rounded-lg flex items-center justify-center">
-                <div className="text-center">
-                  <BlueprintIcon size={48} className="mx-auto mb-4 text-[var(--arq-blue)]" />
-                  <p className="text-[var(--arq-gray-500)]">Policy Hub Interface</p>
-                </div>
+              <div className="aspect-video relative rounded-lg overflow-hidden">
+                <Image
+                  src="/img/Policy-Hub-Interface.png"
+                  alt="Policy Hub Interface - Central hub for managing compliance policies"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                />
               </div>
             </motion.div>
           </div>
@@ -129,13 +134,16 @@ export default function PlatformPage() {
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="glass-card p-8 order-2 lg:order-1"
+              className="glass-card p-4 order-2 lg:order-1"
             >
-              <div className="aspect-video bg-gradient-to-br from-[var(--arq-gray-100)] to-[var(--arq-gray-200)] rounded-lg flex items-center justify-center">
-                <div className="text-center">
-                  <CertificateIcon size={48} className="mx-auto mb-4 text-[var(--arq-blue)]" />
-                  <p className="text-[var(--arq-gray-500)]">Audit Log Interface</p>
-                </div>
+              <div className="aspect-video relative rounded-lg overflow-hidden">
+                <Image
+                  src="/img/Audit-logs.png"
+                  alt="Audit Log Interface - Immutable audit trail for every AI action"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                />
               </div>
             </motion.div>
 
@@ -236,13 +244,16 @@ export default function PlatformPage() {
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="glass-card p-8"
+              className="glass-card p-4"
             >
-              <div className="aspect-video bg-gradient-to-br from-[var(--arq-gray-100)] to-[var(--arq-gray-200)] rounded-lg flex items-center justify-center">
-                <div className="text-center">
-                  <DashboardIcon size={48} className="mx-auto mb-4 text-[var(--arq-blue)]" />
-                  <p className="text-[var(--arq-gray-500)]">Operations Center Dashboard</p>
-                </div>
+              <div className="aspect-video relative rounded-lg overflow-hidden">
+                <Image
+                  src="/img/Operations-center.png"
+                  alt="Operations Center Dashboard - Real-time monitoring and quality scoring"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                />
               </div>
             </motion.div>
           </div>
@@ -270,21 +281,30 @@ export default function PlatformPage() {
               "ServiceNow",
               "Snowflake",
               "Databricks",
-            ].map((integration, index) => (
-              <motion.div
-                key={integration}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.05 }}
-              >
-                <Card className="text-center py-8">
-                  <span className="text-[var(--arq-gray-600)] font-medium">
-                    {integration}
-                  </span>
-                </Card>
-              </motion.div>
-            ))}
+            ].map((integration, index) => {
+              const LogoComponent = getIntegrationLogo(integration);
+              return (
+                <motion.div
+                  key={integration}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.05 }}
+                >
+                  <Card className="flex flex-col items-center justify-center py-6 px-4 bg-white border border-[var(--arq-gray-200)] hover:border-[var(--arq-lime)] transition-colors group">
+                    {LogoComponent && (
+                      <LogoComponent
+                        size={40}
+                        className="text-[var(--arq-black)] group-hover:text-[var(--arq-gray-800)] transition-colors mb-3"
+                      />
+                    )}
+                    <span className="text-sm text-[var(--arq-gray-600)] font-medium group-hover:text-[var(--arq-black)] transition-colors">
+                      {integration}
+                    </span>
+                  </Card>
+                </motion.div>
+              );
+            })}
           </div>
         </Section>
 
