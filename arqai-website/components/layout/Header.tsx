@@ -25,6 +25,7 @@ const navigation = [
   { name: "Platform", href: "/platform" },
   { name: "Solutions", href: "/solutions" },
   { name: "About", href: "/about" },
+  { name: "Partners", href: "/partners" },
   { name: "Resources", href: "#", hasDropdown: true },
   { name: "Contact", href: "/contact" },
 ];
