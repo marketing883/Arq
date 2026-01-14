@@ -171,48 +171,6 @@ export default function DemoPage() {
             </motion.div>
           </div>
         </Section>
-
-        {/* FAQ Section */}
-        <Section background="muted">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="text-2xl font-bold text-center mb-8">
-              Frequently Asked Questions
-            </h2>
-
-            <div className="space-y-6">
-              {[
-                {
-                  q: "How long does implementation typically take?",
-                  a: "Implementation timelines vary based on complexity, but typically range from 30-90 days for initial deployment. Our team will provide a detailed timeline during your demo.",
-                },
-                {
-                  q: "What compliance frameworks do you support?",
-                  a: "We support HIPAA, GDPR, CCPA, SOX, FINRA, NAIC, EU AI Act, NIST AI RMF, and more. Our platform is designed to be configurable for your specific regulatory requirements.",
-                },
-                {
-                  q: "Can ArqAI integrate with our existing AI infrastructure?",
-                  a: "Yes, ArqAI is designed to work as a governance layer on top of your existing AI infrastructure. We integrate with major cloud providers, LLM providers, and enterprise tools.",
-                },
-                {
-                  q: "Is there a minimum company size requirement?",
-                  a: "ArqAI is built for enterprises with significant AI governance needs. We typically work with organizations deploying AI at scale in regulated industries.",
-                },
-              ].map((faq, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className="bg-white rounded-xl p-6 shadow-sm"
-                >
-                  <h3 className="text-base font-semibold mb-2">{faq.q}</h3>
-                  <p className="text-[var(--arq-gray-600)]">{faq.a}</p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </Section>
       </main>
       <Footer />
     </>
