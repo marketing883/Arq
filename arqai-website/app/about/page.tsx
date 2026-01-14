@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Image from "next/image";
 import Link from "next/link";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -80,46 +79,83 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Mission Section */}
+        {/* Mission & Vision Section */}
         <section className="py-20 bg-base">
           <div className="container mx-auto px-4 md:px-6">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="max-w-4xl mx-auto">
+              {/* Mission */}
               <motion.div
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
+                className="mb-16"
               >
-                <span className="inline-block px-4 py-2 rounded-full bg-additional/20 text-additional text-sm font-semibold mb-4">
+                <span className="inline-block px-4 py-2 rounded-full bg-accent/10 text-accent text-sm font-semibold mb-4">
                   Our Mission
                 </span>
                 <h2 className="text-3xl md:text-4xl font-display font-bold text-text-bright mb-6">
-                  From AI Chaos to AI Command
+                  Empowering Enterprises to Harness AI with Confidence
                 </h2>
-                <p className="text-lg text-text-muted mb-6">
-                  Enterprises are racing to deploy AI, but this rapid adoption has created a hidden crisis
-                  of &quot;Shadow AI&quot;: uncontrolled agents, disconnected tools, and a lack of oversight that
-                  creates unacceptable risks.
-                </p>
                 <p className="text-lg text-text-muted">
-                  ArqAI exists to solve this problem. We provide the governance fabric that makes
-                  enterprise AI safe, auditable, and production-ready, so organizations can innovate
-                  without compromising on security or compliance.
+                  We exist to bridge the gap between AI&apos;s transformative potential and the rigorous
+                  governance enterprises demand. Our mission is to provide the infrastructure that makes
+                  AI deployment safe, auditable, and aligned with business objectives—so organizations
+                  can innovate boldly without compromising on security, compliance, or control.
                 </p>
               </motion.div>
+
+              {/* Vision */}
               <motion.div
-                initial={{ opacity: 0, x: 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="relative"
+                className="mb-16"
               >
-                <div className="aspect-square bg-gradient-to-br from-accent to-accent/80 rounded-2xl flex items-center justify-center">
-                  <Image
-                    src="/img/hero/arq-wf.png"
-                    alt="ArqAI Platform"
-                    width={400}
-                    height={400}
-                    className="w-3/4 h-auto"
-                  />
+                <span className="inline-block px-4 py-2 rounded-full bg-additional/20 text-additional text-sm font-semibold mb-4">
+                  Our Vision
+                </span>
+                <h2 className="text-3xl md:text-4xl font-display font-bold text-text-bright mb-6">
+                  A World Where AI Works for Everyone
+                </h2>
+                <p className="text-lg text-text-muted">
+                  We envision a future where every enterprise can deploy AI agents that are as trustworthy
+                  as their best employees—transparent in their reasoning, accountable for their actions,
+                  and aligned with organizational values. A future where &quot;Shadow AI&quot; is a relic of the past,
+                  and every AI interaction strengthens rather than undermines trust.
+                </p>
+              </motion.div>
+
+              {/* Origin Story */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+              >
+                <span className="inline-block px-4 py-2 rounded-full bg-accent/10 text-accent text-sm font-semibold mb-4">
+                  Our Story
+                </span>
+                <h2 className="text-3xl md:text-4xl font-display font-bold text-text-bright mb-6">
+                  Born from a Real Problem
+                </h2>
+                <div className="space-y-6 text-lg text-text-muted">
+                  <p>
+                    ArqAI was founded in 2023 by a team of enterprise architects and AI researchers who
+                    witnessed firsthand the chaos unfolding inside Fortune 500 companies. Teams were
+                    deploying AI tools in silos—some sanctioned, many not. Security teams were blindsided.
+                    Compliance officers were scrambling. And executives were asking a question no one
+                    could answer: &quot;What is AI actually doing in our organization?&quot;
+                  </p>
+                  <p>
+                    We knew there had to be a better way. Not another AI tool, but a governance layer—an
+                    &quot;architecture&quot; (hence Arq) that could bring order to AI chaos while preserving the
+                    speed and innovation enterprises needed to compete.
+                  </p>
+                  <p>
+                    Today, ArqAI serves organizations across financial services, healthcare, and technology,
+                    helping them transform AI from a risk factor into a competitive advantage. We&apos;re
+                    proud to be building the foundation for the next era of enterprise technology—one
+                    where AI and trust go hand in hand.
+                  </p>
                 </div>
               </motion.div>
             </div>
@@ -168,7 +204,7 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Leadership Section */}
+        {/* Leadership Section - Temporarily hidden until team photos are ready
         <section className="py-20 bg-base">
           <div className="container mx-auto px-4 md:px-6">
             <motion.div
@@ -207,6 +243,7 @@ export default function AboutPage() {
             </div>
           </div>
         </section>
+        */}
 
         {/* CTA Section */}
         <section className="py-20 bg-accent">
