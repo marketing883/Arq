@@ -7,6 +7,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { sanitizeHtml } from "@/lib/security/sanitize";
 
 interface BlogPost {
   id: string;
@@ -211,7 +212,7 @@ export default function BlogPostPage() {
             {/* Content */}
             <div
               className="blog-content max-w-none"
-              dangerouslySetInnerHTML={{ __html: post.content || "" }}
+              dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.content || "") }}
             />
 
             {/* Tags */}

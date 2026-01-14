@@ -1,6 +1,7 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import crypto from "crypto";
+import { applyRateLimit } from "@/lib/security/rate-limiter";
 
 function getSupabase() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -13,8 +14,17 @@ function generateToken(): string {
   return crypto.randomBytes(32).toString("hex");
 }
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
+    // Apply rate limiting
+    const rateLimitResult = applyRateLimit(request, "/api/resources/download", "api");
+    if (!rateLimitResult.allowed) {
+      return NextResponse.json(
+        { error: "Too many requests. Please try again later." },
+        { status: 429, headers: rateLimitResult.headers }
+      );
+    }
+
     const body = await request.json();
     const { name, email, company, job_title, resource_id, resource_type } = body;
 

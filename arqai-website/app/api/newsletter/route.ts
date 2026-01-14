@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
 import { getAdminSession } from "@/lib/auth/admin-auth";
+import { applyRateLimit } from "@/lib/security/rate-limiter";
 
 // Lazy initialize Supabase client
 let supabase: SupabaseClient | null = null;
@@ -21,6 +22,15 @@ function getSupabaseClient(): SupabaseClient | null {
 
 export async function POST(request: NextRequest) {
   try {
+    // Apply rate limiting
+    const rateLimitResult = applyRateLimit(request, "/api/newsletter", "api");
+    if (!rateLimitResult.allowed) {
+      return NextResponse.json(
+        { error: "Too many requests. Please try again later." },
+        { status: 429, headers: rateLimitResult.headers }
+      );
+    }
+
     const body = await request.json();
     const { email, source = "footer" } = body;
 

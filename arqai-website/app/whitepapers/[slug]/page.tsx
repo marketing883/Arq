@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { sanitizeHtml } from "@/lib/security/sanitize";
 
 interface Whitepaper {
   id: string;
@@ -228,7 +229,7 @@ export default function WhitepaperDetailPage() {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.2 }}
                       className="prose prose-lg dark:prose-invert max-w-none"
-                      dangerouslySetInnerHTML={{ __html: whitepaper.content }}
+                      dangerouslySetInnerHTML={{ __html: sanitizeHtml(whitepaper.content) }}
                     />
                   )}
                 </div>

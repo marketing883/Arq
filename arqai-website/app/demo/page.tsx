@@ -146,6 +146,7 @@ export default function DemoPage() {
                   width="100%"
                   height="600"
                   frameBorder="0"
+                  sandbox="allow-scripts allow-forms allow-same-origin allow-popups allow-popups-to-escape-sandbox"
                   onLoad={() => setIsCalLoaded(true)}
                   className={`rounded-lg transition-opacity duration-300 ${
                     isCalLoaded ? "opacity-100" : "opacity-0"

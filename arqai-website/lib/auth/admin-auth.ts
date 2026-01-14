@@ -9,9 +9,14 @@ function getJWTSecret(): Uint8Array {
   if (!_jwtSecret) {
     const secret = process.env.JWT_SECRET;
 
-    // Warn in production if secret is not set
+    // Require JWT_SECRET in production
     if (process.env.NODE_ENV === "production" && !secret) {
-      console.error("[SECURITY WARNING] JWT_SECRET not set in production environment");
+      throw new Error("[CRITICAL] JWT_SECRET environment variable must be set in production");
+    }
+
+    // Warn about weak secret
+    if (secret && secret.length < 32) {
+      console.warn("[SECURITY WARNING] JWT_SECRET should be at least 32 characters for security");
     }
 
     _jwtSecret = new TextEncoder().encode(
@@ -79,7 +84,7 @@ export async function createAdminSession(username: string): Promise<string> {
   })
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
-    .setExpirationTime("8h") // Reduced from 24h for security
+    .setExpirationTime("2h") // Short session for security
     .setJti(crypto.randomUUID()) // Unique token ID
     .sign(getJWTSecret());
 
@@ -129,7 +134,7 @@ export async function setAdminSessionCookie(token: string): Promise<void> {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "strict", // Changed from "lax" for better CSRF protection
-    maxAge: 60 * 60 * 8, // 8 hours (matches token expiry)
+    maxAge: 60 * 60 * 2, // 2 hours (matches token expiry)
     path: "/",
   });
 }
