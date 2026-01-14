@@ -14,6 +14,7 @@ import {
   CheckIcon,
   ArrowRightIcon,
 } from "@/components/ui/Icons";
+import { getIntegrationLogo } from "@/components/ui/IntegrationLogos";
 import type { Metadata } from "next";
 
 export default function PlatformPage() {
@@ -280,21 +281,30 @@ export default function PlatformPage() {
               "ServiceNow",
               "Snowflake",
               "Databricks",
-            ].map((integration, index) => (
-              <motion.div
-                key={integration}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.05 }}
-              >
-                <Card className="text-center py-8">
-                  <span className="text-[var(--arq-gray-600)] font-medium">
-                    {integration}
-                  </span>
-                </Card>
-              </motion.div>
-            ))}
+            ].map((integration, index) => {
+              const LogoComponent = getIntegrationLogo(integration);
+              return (
+                <motion.div
+                  key={integration}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.05 }}
+                >
+                  <Card className="flex flex-col items-center justify-center py-6 px-4 bg-white border border-[var(--arq-gray-200)] hover:border-[var(--arq-lime)] transition-colors group">
+                    {LogoComponent && (
+                      <LogoComponent
+                        size={40}
+                        className="text-[var(--arq-black)] group-hover:text-[var(--arq-gray-800)] transition-colors mb-3"
+                      />
+                    )}
+                    <span className="text-sm text-[var(--arq-gray-600)] font-medium group-hover:text-[var(--arq-black)] transition-colors">
+                      {integration}
+                    </span>
+                  </Card>
+                </motion.div>
+              );
+            })}
           </div>
         </Section>
 
