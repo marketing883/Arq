@@ -7,6 +7,7 @@ interface CardProps {
   className?: string;
   hover?: boolean;
   glass?: boolean;
+  onClick?: () => void;
 }
 
 export function Card({
@@ -14,6 +15,7 @@ export function Card({
   className = "",
   hover = true,
   glass = false,
+  onClick,
 }: CardProps) {
   const baseStyles = glass
     ? "glass-card p-6"
@@ -27,6 +29,7 @@ export function Card({
       transition={{ duration: 0.5 }}
       whileHover={hover ? { y: -4, boxShadow: "var(--shadow-lg)" } : undefined}
       className={`${baseStyles} ${className}`}
+      onClick={onClick}
     >
       {children}
     </motion.div>

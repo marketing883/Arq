@@ -240,9 +240,82 @@ const certifications = [
   { provider: "Salesforce", certs: ["Summit Partner", "AI Associate", "Platform Developer"] },
 ];
 
+interface FormData {
+  name: string;
+  email: string;
+  company: string;
+  phone: string;
+  jobTitle: string;
+  partnershipType: string;
+  companySize: string;
+  message: string;
+  website: string;
+}
+
 export default function PartnersPage() {
   const [activeModel, setActiveModel] = useState<number | null>(null);
   const [showAllCerts, setShowAllCerts] = useState(false);
+  const [showForm, setShowForm] = useState(false);
+  const [formSubmitting, setFormSubmitting] = useState(false);
+  const [formSuccess, setFormSuccess] = useState(false);
+  const [formError, setFormError] = useState<string | null>(null);
+  const [formData, setFormData] = useState<FormData>({
+    name: "",
+    email: "",
+    company: "",
+    phone: "",
+    jobTitle: "",
+    partnershipType: "",
+    companySize: "",
+    message: "",
+    website: "",
+  });
+
+  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleFormSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setFormSubmitting(true);
+    setFormError(null);
+
+    try {
+      const response = await fetch("/api/partner-enquiry", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || "Failed to submit enquiry");
+      }
+
+      setFormSuccess(true);
+      setFormData({
+        name: "",
+        email: "",
+        company: "",
+        phone: "",
+        jobTitle: "",
+        partnershipType: "",
+        companySize: "",
+        message: "",
+        website: "",
+      });
+    } catch (err) {
+      setFormError(err instanceof Error ? err.message : "An error occurred");
+    } finally {
+      setFormSubmitting(false);
+    }
+  };
+
+  const openForm = () => {
+    setShowForm(true);
+    setFormSuccess(false);
+    setFormError(null);
+  };
 
   return (
     <>
@@ -686,14 +759,13 @@ export default function PartnersPage() {
               </div>
 
               <div className="flex justify-center">
-                <Button
-                  href="/contact?type=partner"
-                  variant="accent"
-                  size="lg"
-                  rightIcon={<ArrowRightIcon size={20} />}
+                <button
+                  onClick={openForm}
+                  className="inline-flex items-center gap-2 px-8 py-4 bg-[var(--arq-lime)] text-[var(--arq-black)] font-semibold rounded-lg hover:bg-[var(--arq-lime-hover)] transition-colors text-lg"
                 >
                   Start the Conversation
-                </Button>
+                  <ArrowRightIcon size={20} />
+                </button>
               </div>
 
               <p className="mt-6 text-sm text-[var(--arq-gray-400)]">
@@ -707,6 +779,236 @@ export default function PartnersPage() {
         </Section>
       </main>
       <Footer />
+
+      {/* Partner Enquiry Form Modal */}
+      {showForm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          {/* Backdrop */}
+          <div
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            onClick={() => setShowForm(false)}
+          />
+
+          {/* Modal */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            className="relative bg-white rounded-lg shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto"
+          >
+            {/* Close Button */}
+            <button
+              onClick={() => setShowForm(false)}
+              className="absolute top-4 right-4 p-2 text-[var(--arq-gray-400)] hover:text-[var(--arq-gray-600)] transition-colors z-10"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            {formSuccess ? (
+              /* Success State */
+              <div className="p-8 text-center">
+                <div className="w-16 h-16 bg-[var(--arq-lime)]/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <CheckIcon size={32} className="text-[var(--arq-lime)]" />
+                </div>
+                <h3 className="text-2xl font-bold text-[var(--arq-black)] mb-2">
+                  Thanks for reaching out!
+                </h3>
+                <p className="text-[var(--arq-gray-600)] mb-6">
+                  We&apos;ve received your partnership enquiry and will be in touch within 1-2 business days.
+                </p>
+                <button
+                  onClick={() => setShowForm(false)}
+                  className="px-6 py-3 bg-[var(--arq-blue)] text-white font-semibold rounded-lg hover:bg-[var(--arq-blue-hover)] transition-colors"
+                >
+                  Close
+                </button>
+              </div>
+            ) : (
+              /* Form */
+              <form onSubmit={handleFormSubmit} className="p-8">
+                <div className="mb-6">
+                  <h3 className="text-2xl font-bold text-[var(--arq-black)] mb-2">
+                    Start the Conversation
+                  </h3>
+                  <p className="text-[var(--arq-gray-600)]">
+                    Tell us about your organization and how you&apos;d like to partner with ArqAI.
+                  </p>
+                </div>
+
+                {formError && (
+                  <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
+                    {formError}
+                  </div>
+                )}
+
+                <div className="grid md:grid-cols-2 gap-4 mb-4">
+                  <div>
+                    <label className="block text-sm font-medium text-[var(--arq-gray-700)] mb-1">
+                      Name <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleFormChange}
+                      required
+                      className="w-full px-4 py-3 border border-[var(--arq-gray-300)] rounded-lg focus:ring-2 focus:ring-[var(--arq-blue)] focus:border-transparent outline-none transition-all"
+                      placeholder="Your name"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-[var(--arq-gray-700)] mb-1">
+                      Email <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleFormChange}
+                      required
+                      className="w-full px-4 py-3 border border-[var(--arq-gray-300)] rounded-lg focus:ring-2 focus:ring-[var(--arq-blue)] focus:border-transparent outline-none transition-all"
+                      placeholder="you@company.com"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-4 mb-4">
+                  <div>
+                    <label className="block text-sm font-medium text-[var(--arq-gray-700)] mb-1">
+                      Company
+                    </label>
+                    <input
+                      type="text"
+                      name="company"
+                      value={formData.company}
+                      onChange={handleFormChange}
+                      className="w-full px-4 py-3 border border-[var(--arq-gray-300)] rounded-lg focus:ring-2 focus:ring-[var(--arq-blue)] focus:border-transparent outline-none transition-all"
+                      placeholder="Company name"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-[var(--arq-gray-700)] mb-1">
+                      Job Title
+                    </label>
+                    <input
+                      type="text"
+                      name="jobTitle"
+                      value={formData.jobTitle}
+                      onChange={handleFormChange}
+                      className="w-full px-4 py-3 border border-[var(--arq-gray-300)] rounded-lg focus:ring-2 focus:ring-[var(--arq-blue)] focus:border-transparent outline-none transition-all"
+                      placeholder="Your role"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-4 mb-4">
+                  <div>
+                    <label className="block text-sm font-medium text-[var(--arq-gray-700)] mb-1">
+                      Partnership Type
+                    </label>
+                    <select
+                      name="partnershipType"
+                      value={formData.partnershipType}
+                      onChange={handleFormChange}
+                      className="w-full px-4 py-3 border border-[var(--arq-gray-300)] rounded-lg focus:ring-2 focus:ring-[var(--arq-blue)] focus:border-transparent outline-none transition-all bg-white"
+                    >
+                      <option value="">Select type...</option>
+                      <option value="technology">Technology Alliance</option>
+                      <option value="implementation">Implementation Partner</option>
+                      <option value="reseller">Reseller Partner</option>
+                      <option value="strategic">Strategic Alliance</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-[var(--arq-gray-700)] mb-1">
+                      Company Size
+                    </label>
+                    <select
+                      name="companySize"
+                      value={formData.companySize}
+                      onChange={handleFormChange}
+                      className="w-full px-4 py-3 border border-[var(--arq-gray-300)] rounded-lg focus:ring-2 focus:ring-[var(--arq-blue)] focus:border-transparent outline-none transition-all bg-white"
+                    >
+                      <option value="">Select size...</option>
+                      <option value="startup">Startup (1-50)</option>
+                      <option value="small">Small (51-200)</option>
+                      <option value="mid-market">Mid-Market (201-1000)</option>
+                      <option value="enterprise">Enterprise (1000+)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-4 mb-4">
+                  <div>
+                    <label className="block text-sm font-medium text-[var(--arq-gray-700)] mb-1">
+                      Phone
+                    </label>
+                    <input
+                      type="tel"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleFormChange}
+                      className="w-full px-4 py-3 border border-[var(--arq-gray-300)] rounded-lg focus:ring-2 focus:ring-[var(--arq-blue)] focus:border-transparent outline-none transition-all"
+                      placeholder="+1 (555) 000-0000"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-[var(--arq-gray-700)] mb-1">
+                      Website
+                    </label>
+                    <input
+                      type="url"
+                      name="website"
+                      value={formData.website}
+                      onChange={handleFormChange}
+                      className="w-full px-4 py-3 border border-[var(--arq-gray-300)] rounded-lg focus:ring-2 focus:ring-[var(--arq-blue)] focus:border-transparent outline-none transition-all"
+                      placeholder="https://yourcompany.com"
+                    />
+                  </div>
+                </div>
+
+                <div className="mb-6">
+                  <label className="block text-sm font-medium text-[var(--arq-gray-700)] mb-1">
+                    Tell us about your partnership interests
+                  </label>
+                  <textarea
+                    name="message"
+                    value={formData.message}
+                    onChange={handleFormChange}
+                    rows={4}
+                    className="w-full px-4 py-3 border border-[var(--arq-gray-300)] rounded-lg focus:ring-2 focus:ring-[var(--arq-blue)] focus:border-transparent outline-none transition-all resize-none"
+                    placeholder="What kind of partnership are you looking for? What problems would you like to solve together?"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={formSubmitting}
+                  className="w-full px-6 py-4 bg-[var(--arq-blue)] text-white font-semibold rounded-lg hover:bg-[var(--arq-blue-hover)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                >
+                  {formSubmitting ? (
+                    <>
+                      <svg className="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                      </svg>
+                      Submitting...
+                    </>
+                  ) : (
+                    <>
+                      Submit Partnership Enquiry
+                      <ArrowRightIcon size={20} />
+                    </>
+                  )}
+                </button>
+              </form>
+            )}
+          </motion.div>
+        </div>
+      )}
     </>
   );
 }

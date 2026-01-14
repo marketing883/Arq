@@ -409,6 +409,160 @@ export async function sendContactFormNotification(
 }
 
 /**
+ * Partner Enquiry Notification Data
+ */
+interface PartnerEnquiryData {
+  name: string;
+  email: string;
+  company?: string;
+  phone?: string;
+  jobTitle?: string;
+  partnershipType: string;
+  companySize?: string;
+  message?: string;
+  website?: string;
+  priority: string;
+}
+
+/**
+ * Send partner enquiry notification to team
+ */
+export async function sendPartnerEnquiryNotification(
+  data: PartnerEnquiryData
+): Promise<boolean> {
+  const resend = getResendClient();
+  if (!resend) return false;
+
+  try {
+    const partnershipLabels: Record<string, string> = {
+      technology: "Technology Alliance",
+      reseller: "Reseller Partner",
+      integration: "Integration Partner",
+      strategic: "Strategic Alliance",
+      general: "General Partnership",
+    };
+
+    const partnershipLabel = partnershipLabels[data.partnershipType] || data.partnershipType;
+    const isHighPriority = data.priority === "high";
+    const priorityEmoji = isHighPriority ? "🤝🔥" : "🤝";
+
+    const subject = `${priorityEmoji} New Partner Enquiry: ${data.name}${data.company ? ` (${data.company})` : ""} - ${partnershipLabel}`;
+
+    const html = `
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <meta charset="utf-8">
+          <style>
+            body { font-family: 'Inter', -apple-system, sans-serif; margin: 0; padding: 0; background: #f5f7fa; }
+            .container { max-width: 600px; margin: 0 auto; background: white; }
+            .header { background: linear-gradient(135deg, #0052CC 0%, #6366F1 100%); color: white; padding: 32px; text-align: center; }
+            .header h1 { margin: 0; font-size: 24px; }
+            .badge { display: inline-block; padding: 6px 12px; border-radius: 6px; font-size: 14px; font-weight: 600; margin: 4px; }
+            .badge-strategic { background: #fef2f2; color: #dc2626; }
+            .badge-technology { background: #eff6ff; color: #2563eb; }
+            .badge-reseller { background: #f0fdf4; color: #16a34a; }
+            .badge-integration { background: #fff7ed; color: #ea580c; }
+            .badge-general { background: #f3f4f6; color: #374151; }
+            .badge-priority { background: #fef3c7; color: #d97706; }
+            .content { padding: 32px; }
+            .section { margin-bottom: 24px; }
+            .section h3 { color: #374151; margin: 0 0 12px 0; font-size: 16px; }
+            .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+            .info-item { padding: 12px; background: #f9fafb; border-radius: 8px; }
+            .info-label { font-size: 12px; color: #6b7280; margin-bottom: 4px; }
+            .info-value { font-weight: 600; color: #1f2937; }
+            .message-box { background: #f3f4f6; padding: 16px; border-radius: 8px; font-size: 14px; color: #4b5563; white-space: pre-wrap; }
+            .cta { text-align: center; margin-top: 24px; }
+            .cta a { display: inline-block; padding: 12px 24px; background: #0052CC; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 4px; }
+            .reply-btn { background: #16a34a !important; }
+            .footer { padding: 24px; text-align: center; color: #6b7280; font-size: 12px; }
+          </style>
+        </head>
+        <body>
+          <div class="container">
+            <div class="header">
+              <h1>🤝 New Partner Enquiry</h1>
+              <p style="margin: 8px 0 0 0; opacity: 0.9;">Someone wants to partner with ArqAI!</p>
+            </div>
+            <div class="content">
+              <div class="section" style="text-align: center;">
+                <span class="badge badge-${data.partnershipType}">${partnershipLabel}</span>
+                ${data.priority === "high" ? '<span class="badge badge-priority">⚡ High Priority</span>' : ""}
+                ${data.companySize ? `<span class="badge badge-general">${data.companySize}</span>` : ""}
+              </div>
+
+              <div class="section">
+                <h3>Contact Information</h3>
+                <div class="info-grid">
+                  <div class="info-item">
+                    <div class="info-label">Name</div>
+                    <div class="info-value">${data.name}</div>
+                  </div>
+                  <div class="info-item">
+                    <div class="info-label">Email</div>
+                    <div class="info-value">${data.email}</div>
+                  </div>
+                  <div class="info-item">
+                    <div class="info-label">Company</div>
+                    <div class="info-value">${data.company || "Not provided"}</div>
+                  </div>
+                  <div class="info-item">
+                    <div class="info-label">Role</div>
+                    <div class="info-value">${data.jobTitle || "Not provided"}</div>
+                  </div>
+                  ${data.phone ? `
+                  <div class="info-item">
+                    <div class="info-label">Phone</div>
+                    <div class="info-value">${data.phone}</div>
+                  </div>
+                  ` : ""}
+                  ${data.website ? `
+                  <div class="info-item">
+                    <div class="info-label">Website</div>
+                    <div class="info-value"><a href="${data.website}" style="color: #0052CC;">${data.website}</a></div>
+                  </div>
+                  ` : ""}
+                </div>
+              </div>
+
+              ${data.message ? `
+              <div class="section">
+                <h3>Message / Use Case</h3>
+                <div class="message-box">${data.message}</div>
+              </div>
+              ` : ""}
+
+              <div class="cta">
+                <a href="mailto:${data.email}" class="reply-btn">Reply to ${data.name}</a>
+                <a href="${process.env.NEXT_PUBLIC_SITE_URL || "https://thearq.ai"}/admin/partners">View in Dashboard</a>
+              </div>
+            </div>
+            <div class="footer">
+              ArqAI Partner Enquiry Notification
+            </div>
+          </div>
+        </body>
+      </html>
+    `;
+
+    await resend.emails.send({
+      from: FROM_EMAIL,
+      to: TEAM_EMAIL,
+      subject,
+      html,
+      reply_to: data.email,
+    });
+
+    console.log(`Partner enquiry notification sent for ${data.name}`);
+    return true;
+  } catch (error) {
+    console.error("Failed to send partner enquiry notification:", error);
+    return false;
+  }
+}
+
+/**
  * Send meeting booked notification
  */
 export async function sendMeetingBookedNotification(

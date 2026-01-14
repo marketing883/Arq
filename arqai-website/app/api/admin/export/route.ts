@@ -41,7 +41,7 @@ export async function GET(request: NextRequest) {
     }
 
     const { searchParams } = new URL(request.url);
-    const type = searchParams.get("type"); // contacts, resources, subscribers, all
+    const type = searchParams.get("type"); // contacts, resources, subscribers, partners, all
 
     const client = getSupabaseClient();
     if (!client) {
@@ -101,6 +101,25 @@ export async function GET(request: NextRequest) {
         csvContent += "Email,Source,Segment,Status,Subscribed Date\n";
         subs.forEach((s) => {
           csvContent += `${escapeCSV(s.email)},${escapeCSV(s.source)},${escapeCSV(s.segment)},${escapeCSV(s.status)},${escapeCSV(formatDate(s.created_at))}\n`;
+        });
+        if (type === "all") csvContent += "\n\n";
+      }
+    }
+
+    // Partner Enquiries
+    if (type === "partners" || type === "all") {
+      const { data: partners } = await client
+        .from("partner_enquiries")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+      if (partners && partners.length > 0) {
+        if (type === "all") {
+          csvContent += "=== PARTNER ENQUIRIES ===\n";
+        }
+        csvContent += "Name,Email,Company,Phone,Job Title,Partnership Type,Company Size,Status,Priority,Message,Website,Assigned To,Last Contact,Date\n";
+        partners.forEach((p) => {
+          csvContent += `${escapeCSV(p.name)},${escapeCSV(p.email)},${escapeCSV(p.company)},${escapeCSV(p.phone)},${escapeCSV(p.job_title)},${escapeCSV(p.partnership_type)},${escapeCSV(p.company_size)},${escapeCSV(p.status)},${escapeCSV(p.priority)},${escapeCSV(p.message)},${escapeCSV(p.website)},${escapeCSV(p.assigned_to)},${escapeCSV(formatDate(p.last_contact_at))},${escapeCSV(formatDate(p.created_at))}\n`;
         });
       }
     }
