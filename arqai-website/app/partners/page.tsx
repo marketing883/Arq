@@ -232,34 +232,6 @@ const testimonials = [
   },
 ];
 
-// Success Stories
-const successStories = [
-  {
-    title: "Fortune 100 Telecom Achieves 60% Faster AI Deployments",
-    challenge: "Legacy infrastructure limiting cloud-native AI adoption",
-    partners: ["AWS", "Salesforce"],
-    result: "18-month transformation delivered in 9 months",
-    metric: "60%",
-    metricLabel: "Faster Deployment",
-  },
-  {
-    title: "Global Bank Automates Compliance with Multi-Cloud Strategy",
-    challenge: "Manual compliance processes across 50+ jurisdictions",
-    partners: ["Azure", "ServiceNow"],
-    result: "$4.2M annual savings in compliance operations",
-    metric: "$4.2M",
-    metricLabel: "Annual Savings",
-  },
-  {
-    title: "Healthcare Network Deploys HIPAA-Compliant AI at Scale",
-    challenge: "Fragmented AI tools lacking audit capabilities",
-    partners: ["Google Cloud", "Anthropic"],
-    result: "Unified AI governance across 200+ facilities",
-    metric: "200+",
-    metricLabel: "Facilities Enabled",
-  },
-];
-
 // Certifications
 const certifications = [
   { provider: "AWS", certs: ["Advanced Consulting Partner", "Well-Architected", "AI/ML Competency"] },
@@ -317,7 +289,7 @@ export default function PartnersPage() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
-                className="flex flex-col sm:flex-row gap-4 justify-center"
+                className="flex justify-center"
               >
                 <Button
                   href="#become-partner"
@@ -326,13 +298,6 @@ export default function PartnersPage() {
                   rightIcon={<ArrowRightIcon size={20} />}
                 >
                   Become a Partner
-                </Button>
-                <Button
-                  href="#partner-ecosystem"
-                  variant="secondary"
-                  size="lg"
-                >
-                  View Partner Directory
                 </Button>
               </motion.div>
             </div>
@@ -603,67 +568,6 @@ export default function PartnersPage() {
           </div>
         </Section>
 
-        {/* Success Stories Section */}
-        <Section background="muted">
-          <SectionHeader
-            eyebrow="Customer Success"
-            title="Partnerships That Deliver Results"
-            description="See how our partner ecosystem creates real value for enterprise customers."
-          />
-
-          <div className="grid lg:grid-cols-3 gap-8">
-            {successStories.map((story, index) => (
-              <motion.div
-                key={story.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-              >
-                <Card className="p-6 bg-white border border-[var(--arq-gray-200)] h-full flex flex-col !rounded-lg">
-                  <div className="flex items-center gap-2 mb-4">
-                    {story.partners.map((partnerName) => {
-                      const LogoComponent = getIntegrationLogo(partnerName);
-                      return LogoComponent ? (
-                        <div
-                          key={partnerName}
-                          className="w-8 h-8 rounded bg-[var(--arq-gray-50)] flex items-center justify-center"
-                        >
-                          <LogoComponent size={20} className="text-[var(--arq-black)]" />
-                        </div>
-                      ) : null;
-                    })}
-                    <span className="text-xs text-[var(--arq-gray-500)]">+ ArqAI</span>
-                  </div>
-
-                  <h3 className="text-lg font-semibold text-[var(--arq-black)] mb-3">
-                    {story.title}
-                  </h3>
-
-                  <p className="text-sm text-[var(--arq-gray-600)] mb-4">
-                    <span className="font-medium">Challenge:</span> {story.challenge}
-                  </p>
-
-                  <div className="mt-auto pt-4 border-t border-[var(--arq-gray-100)]">
-                    <div className="flex items-end justify-between">
-                      <div>
-                        <p className="text-xs text-[var(--arq-gray-500)] mb-1">Result</p>
-                        <p className="text-sm text-[var(--arq-gray-700)]">{story.result}</p>
-                      </div>
-                      <div className="text-right">
-                        <div className="text-2xl font-bold text-[var(--arq-blue)]">
-                          {story.metric}
-                        </div>
-                        <p className="text-xs text-[var(--arq-gray-500)]">{story.metricLabel}</p>
-                      </div>
-                    </div>
-                  </div>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-        </Section>
-
         {/* Testimonials Section */}
         <Section>
           <SectionHeader
@@ -753,20 +657,21 @@ export default function PartnersPage() {
               viewport={{ once: true }}
             >
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
-                Ready to Build Enterprise Solutions Together?
+                Let&apos;s Build Something Great Together
               </h2>
               <p className="text-lg text-[var(--arq-gray-300)] mb-8 max-w-2xl mx-auto">
-                Join our growing ecosystem of technology leaders and unlock new opportunities
-                to deliver transformative AI solutions for enterprise customers.
+                We&apos;re always looking for like-minded innovators who share our passion for
+                transforming enterprise AI. If you believe in collaboration over competition,
+                we&apos;d love to hear from you.
               </p>
 
               {/* Process Steps */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
                 {[
-                  { step: "1", label: "Submit Application" },
-                  { step: "2", label: "Initial Assessment" },
-                  { step: "3", label: "Technical Review" },
-                  { step: "4", label: "Partnership Kickoff" },
+                  { step: "1", label: "Start a Conversation" },
+                  { step: "2", label: "Explore the Fit" },
+                  { step: "3", label: "Align on Goals" },
+                  { step: "4", label: "Launch Together" },
                 ].map((item, index) => (
                   <div key={item.step} className="text-center">
                     <div className="w-10 h-10 rounded-full bg-[var(--arq-lime)] text-[var(--arq-black)] font-bold flex items-center justify-center mx-auto mb-2">
@@ -787,7 +692,7 @@ export default function PartnersPage() {
                   size="lg"
                   rightIcon={<ArrowRightIcon size={20} />}
                 >
-                  Apply to Partner Program
+                  Start the Conversation
                 </Button>
               </div>
 
