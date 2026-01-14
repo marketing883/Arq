@@ -388,7 +388,7 @@ export default function PartnersPage() {
               {partnerStats.map((stat, index) => (
                 <Card
                   key={index}
-                  className="p-6 text-center bg-white border border-[var(--arq-gray-200)]"
+                  className="p-6 text-center bg-white border border-[var(--arq-gray-200)] !rounded-lg"
                 >
                   <div className="text-4xl md:text-5xl font-bold text-[var(--arq-blue)] mb-2">
                     {stat.value}
@@ -425,9 +425,9 @@ export default function PartnersPage() {
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.05 }}
                   >
-                    <Card className="p-6 bg-white border border-[var(--arq-gray-200)] hover:border-[var(--arq-blue)] hover:shadow-lg transition-all group">
+                    <Card className="p-6 bg-white border border-[var(--arq-gray-200)] hover:border-[var(--arq-blue)] hover:shadow-lg transition-all group !rounded-lg">
                       <div className="flex items-start gap-4">
-                        <div className="w-14 h-14 rounded-xl bg-[var(--arq-gray-50)] flex items-center justify-center group-hover:bg-[var(--arq-blue)]/10 transition-colors">
+                        <div className="w-14 h-14 rounded-lg bg-[var(--arq-gray-50)] flex items-center justify-center group-hover:bg-[var(--arq-blue)]/10 transition-colors">
                           {LogoComponent && (
                             <LogoComponent
                               size={32}
@@ -476,7 +476,7 @@ export default function PartnersPage() {
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.05 }}
                   >
-                    <Card className="p-4 bg-white border border-[var(--arq-gray-200)] hover:border-[var(--arq-lime)] transition-colors group text-center">
+                    <Card className="p-4 bg-white border border-[var(--arq-gray-200)] hover:border-[var(--arq-lime)] transition-colors group text-center !rounded-lg">
                       {LogoComponent && (
                         <LogoComponent
                           size={40}
@@ -515,14 +515,14 @@ export default function PartnersPage() {
                 transition={{ delay: index * 0.1 }}
               >
                 <Card
-                  className={`p-6 h-full bg-white border transition-all cursor-pointer ${
+                  className={`p-6 h-full bg-white border transition-all cursor-pointer !rounded-lg ${
                     activeModel === index
                       ? "border-[var(--arq-blue)] shadow-lg"
                       : "border-[var(--arq-gray-200)] hover:border-[var(--arq-gray-300)]"
                   }`}
                   onClick={() => setActiveModel(activeModel === index ? null : index)}
                 >
-                  <div className="w-14 h-14 rounded-xl bg-[var(--arq-blue)]/10 flex items-center justify-center text-[var(--arq-blue)] mb-4">
+                  <div className="w-14 h-14 rounded-lg bg-[var(--arq-blue)]/10 flex items-center justify-center text-[var(--arq-blue)] mb-4">
                     {model.icon}
                   </div>
                   <h3 className="text-lg font-semibold text-[var(--arq-black)] mb-2">
@@ -587,8 +587,8 @@ export default function PartnersPage() {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.05 }}
               >
-                <Card className="p-6 bg-white border border-[var(--arq-gray-200)] hover:shadow-md transition-shadow h-full">
-                  <div className="w-12 h-12 rounded-xl bg-[var(--arq-lime)]/20 flex items-center justify-center text-[var(--arq-black)] mb-4">
+                <Card className="p-6 bg-white border border-[var(--arq-gray-200)] hover:shadow-md transition-shadow h-full !rounded-lg">
+                  <div className="w-12 h-12 rounded-lg bg-[var(--arq-lime)]/20 flex items-center justify-center text-[var(--arq-black)] mb-4">
                     {benefit.icon}
                   </div>
                   <h3 className="text-lg font-semibold text-[var(--arq-black)] mb-2">
@@ -620,14 +620,14 @@ export default function PartnersPage() {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
               >
-                <Card className="p-6 bg-white border border-[var(--arq-gray-200)] h-full flex flex-col">
+                <Card className="p-6 bg-white border border-[var(--arq-gray-200)] h-full flex flex-col !rounded-lg">
                   <div className="flex items-center gap-2 mb-4">
                     {story.partners.map((partnerName) => {
                       const LogoComponent = getIntegrationLogo(partnerName);
                       return LogoComponent ? (
                         <div
                           key={partnerName}
-                          className="w-8 h-8 rounded-lg bg-[var(--arq-gray-50)] flex items-center justify-center"
+                          className="w-8 h-8 rounded bg-[var(--arq-gray-50)] flex items-center justify-center"
                         >
                           <LogoComponent size={20} className="text-[var(--arq-black)]" />
                         </div>
@@ -681,7 +681,7 @@ export default function PartnersPage() {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
               >
-                <Card className="p-6 bg-[var(--arq-gray-50)] border-0 h-full flex flex-col">
+                <Card className="p-6 bg-[var(--arq-gray-50)] border-0 h-full flex flex-col !rounded-lg">
                   <div className="mb-4">
                     <svg className="w-10 h-10 text-[var(--arq-blue)]/20" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
@@ -719,8 +719,8 @@ export default function PartnersPage() {
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.05 }}
                 >
-                  <Card className="p-6 bg-white border border-[var(--arq-gray-200)] text-center">
-                    <div className="w-16 h-16 mx-auto rounded-xl bg-[var(--arq-gray-50)] flex items-center justify-center mb-4">
+                  <Card className="p-6 bg-white border border-[var(--arq-gray-200)] text-center !rounded-lg">
+                    <div className="w-16 h-16 mx-auto rounded-lg bg-[var(--arq-gray-50)] flex items-center justify-center mb-4">
                       {LogoComponent && (
                         <LogoComponent size={36} className="text-[var(--arq-black)]" />
                       )}
@@ -780,7 +780,7 @@ export default function PartnersPage() {
                 ))}
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <div className="flex justify-center">
                 <Button
                   href="/contact?type=partner"
                   variant="accent"
@@ -788,14 +788,6 @@ export default function PartnersPage() {
                   rightIcon={<ArrowRightIcon size={20} />}
                 >
                   Apply to Partner Program
-                </Button>
-                <Button
-                  href="mailto:partners@thearq.ai"
-                  variant="secondary"
-                  size="lg"
-                  className="border-white text-white hover:bg-white hover:text-[var(--arq-black)]"
-                >
-                  Contact Partnership Team
                 </Button>
               </div>
 
