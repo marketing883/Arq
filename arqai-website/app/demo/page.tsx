@@ -60,7 +60,7 @@ export default function DemoPage() {
                     <span className="font-bold text-[var(--arq-black)]">1</span>
                   </div>
                   <div>
-                    <h3 className="font-semibold mb-1">Discovery Call</h3>
+                    <h3 className="text-lg font-semibold mb-1">Discovery Call</h3>
                     <p className="text-[var(--arq-gray-600)]">
                       We&apos;ll learn about your specific AI governance challenges and compliance requirements.
                     </p>
@@ -72,7 +72,7 @@ export default function DemoPage() {
                     <span className="font-bold text-[var(--arq-black)]">2</span>
                   </div>
                   <div>
-                    <h3 className="font-semibold mb-1">Platform Walkthrough</h3>
+                    <h3 className="text-lg font-semibold mb-1">Platform Walkthrough</h3>
                     <p className="text-[var(--arq-gray-600)]">
                       See CAPC, TAO, and ODA-RAG in action with use cases relevant to your industry.
                     </p>
@@ -84,7 +84,7 @@ export default function DemoPage() {
                     <span className="font-bold text-[var(--arq-black)]">3</span>
                   </div>
                   <div>
-                    <h3 className="font-semibold mb-1">Custom Roadmap</h3>
+                    <h3 className="text-lg font-semibold mb-1">Custom Roadmap</h3>
                     <p className="text-[var(--arq-gray-600)]">
                       Get a tailored implementation plan based on your organization&apos;s needs.
                     </p>
@@ -93,7 +93,7 @@ export default function DemoPage() {
               </div>
 
               <div className="mt-10 p-6 glass-card">
-                <h3 className="font-semibold mb-4">What Our Customers Say</h3>
+                <h3 className="text-lg font-semibold mb-4">What Our Customers Say</h3>
                 <blockquote className="text-[var(--arq-gray-600)] italic mb-4">
                   &ldquo;The demo was an eye-opener. ArqAI is solving the problems that
                   keep us awake at night.&rdquo;
@@ -104,7 +104,7 @@ export default function DemoPage() {
               </div>
 
               <div className="mt-8">
-                <h3 className="font-semibold mb-4">Trusted by Leaders In</h3>
+                <h3 className="text-lg font-semibold mb-4">Trusted by Leaders In</h3>
                 <div className="flex flex-wrap gap-4">
                   {["Financial Services", "Insurance", "Healthcare", "Enterprise Tech"].map(
                     (industry) => (
@@ -206,7 +206,7 @@ export default function DemoPage() {
                   transition={{ delay: index * 0.1 }}
                   className="bg-white rounded-xl p-6 shadow-sm"
                 >
-                  <h3 className="font-semibold mb-2">{faq.q}</h3>
+                  <h3 className="text-base font-semibold mb-2">{faq.q}</h3>
                   <p className="text-[var(--arq-gray-600)]">{faq.a}</p>
                 </motion.div>
               ))}
