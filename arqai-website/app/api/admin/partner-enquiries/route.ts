@@ -64,6 +64,13 @@ export async function GET(request: NextRequest) {
 
     if (error) {
       console.error("Database error:", error);
+      // Check if the table doesn't exist
+      if (error.code === "42P01" || error.message?.includes("does not exist")) {
+        return NextResponse.json(
+          { error: "Database table not set up. Please run the partner_enquiries SQL schema in your Supabase dashboard.", needsSetup: true },
+          { status: 500 }
+        );
+      }
       return NextResponse.json(
         { error: "Failed to fetch partner enquiries" },
         { status: 500 }

@@ -65,11 +65,12 @@ export default function PartnersAdminPage() {
         return;
       }
 
+      const data = await response.json();
+
       if (!response.ok) {
-        throw new Error("Failed to fetch partner enquiries");
+        throw new Error(data.error || "Failed to fetch partner enquiries");
       }
 
-      const data = await response.json();
       setEnquiries(data.enquiries || []);
       setStats(data.stats || null);
     } catch (err) {
@@ -316,7 +317,12 @@ export default function PartnersAdminPage() {
 
         {error && (
           <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
-            <p className="text-red-700">{error}</p>
+            <p className="text-red-700 font-medium mb-2">{error}</p>
+            {error.includes("SQL schema") && (
+              <p className="text-red-600 text-sm">
+                Run the SQL in <code className="bg-red-100 px-1 rounded">supabase-partner-enquiries.sql</code> in your Supabase SQL Editor to create the required table.
+              </p>
+            )}
           </div>
         )}
 

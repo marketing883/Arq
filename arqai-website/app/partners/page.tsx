@@ -761,7 +761,7 @@ export default function PartnersPage() {
               <div className="flex justify-center">
                 <button
                   onClick={openForm}
-                  className="inline-flex items-center gap-2 px-8 py-4 bg-[var(--arq-lime)] text-[var(--arq-black)] font-semibold rounded-lg hover:bg-[var(--arq-lime-hover)] transition-colors text-lg"
+                  className="inline-flex items-center gap-2 px-8 py-4 bg-[var(--arq-lime)] text-[var(--arq-black)] font-semibold rounded-lg hover:bg-[var(--arq-lime-dark)] transition-colors text-lg"
                 >
                   Start the Conversation
                   <ArrowRightIcon size={20} />
@@ -820,7 +820,7 @@ export default function PartnersPage() {
                 </p>
                 <button
                   onClick={() => setShowForm(false)}
-                  className="px-6 py-3 bg-[var(--arq-blue)] text-white font-semibold rounded-lg hover:bg-[var(--arq-blue-hover)] transition-colors"
+                  className="px-6 py-3 bg-[var(--arq-blue)] text-white font-semibold rounded-lg hover:bg-[var(--arq-blue-dark)] transition-colors"
                 >
                   Close
                 </button>
@@ -987,7 +987,7 @@ export default function PartnersPage() {
                 <button
                   type="submit"
                   disabled={formSubmitting}
-                  className="w-full px-6 py-4 bg-[var(--arq-blue)] text-white font-semibold rounded-lg hover:bg-[var(--arq-blue-hover)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  className="w-full px-6 py-4 bg-[var(--arq-blue)] text-white font-semibold rounded-lg hover:bg-[var(--arq-blue-dark)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
                   {formSubmitting ? (
                     <>
