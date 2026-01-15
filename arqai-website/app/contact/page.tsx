@@ -112,7 +112,7 @@ export default function ContactPage() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="font-semibold text-text-bright mb-1">Email Us</h3>
+                    <h5 className="text-lg font-semibold text-text-bright dark:text-[var(--arq-blue)] mb-1">Email Us</h5>
                     <a href="mailto:hello@thearq.ai" className="text-text-muted hover:text-accent transition-colors">
                       hello@thearq.ai
                     </a>
@@ -126,7 +126,7 @@ export default function ContactPage() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="font-semibold text-text-bright mb-1">Call Us</h3>
+                    <h5 className="text-lg font-semibold text-text-bright dark:text-[var(--arq-blue)] mb-1">Call Us</h5>
                     <a href="tel:+18565400149" className="text-text-muted hover:text-accent transition-colors">
                       +1 856-540-0149
                     </a>
@@ -141,7 +141,7 @@ export default function ContactPage() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="font-semibold text-text-bright mb-1">Headquarters</h3>
+                    <h5 className="text-lg font-semibold text-text-bright dark:text-[var(--arq-blue)] mb-1">Headquarters</h5>
                     <p className="text-text-muted">
                       United States
                     </p>
@@ -151,7 +151,7 @@ export default function ContactPage() {
 
               {/* Social Links */}
               <div className="mt-8 pt-8 border-t border-stroke-muted">
-                <h3 className="font-semibold text-text-bright mb-4">Follow Us</h3>
+                <h5 className="text-lg font-semibold text-text-bright dark:text-[var(--arq-blue)] mb-4">Follow Us</h5>
                 <div className="flex gap-4">
                   <a
                     href="https://linkedin.com/company/arqai"
@@ -315,7 +315,7 @@ export default function ContactPage() {
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-full md:w-auto px-8 py-4 bg-accent text-text-opp-bright font-semibold rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="w-full md:w-auto px-8 py-4 bg-[var(--arq-blue)] text-white dark:bg-[var(--arq-lime)] dark:text-black font-semibold rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {isSubmitting ? (
                         <span className="flex items-center justify-center gap-2">
