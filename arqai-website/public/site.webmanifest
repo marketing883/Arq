@@ -1,0 +1,21 @@
+{
+  "name": "ArqAI - Enterprise AI Governance Platform",
+  "short_name": "ArqAI",
+  "description": "Build, run, and govern your AI workforce with confidence",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0033A0",
+  "icons": [
+    {
+      "src": "/img/logo/arqai-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/img/logo/arqai-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

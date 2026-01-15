@@ -303,10 +303,9 @@ export default function HomePage() {
                   loop
                   muted
                   playsInline
-                  poster="/img/hero/video-poster.jpg"
                 >
-                  <source src="/video/hero-video.mp4" type="video/mp4" />
                   <source src="/video/hero-video.webm" type="video/webm" />
+                  <source src="/video/1920x1080_video.mp4" type="video/mp4" />
                 </video>
                 <Link
                   href="/demo"
