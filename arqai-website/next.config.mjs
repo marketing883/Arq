@@ -1,6 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+
+  // Optimize bundling - exclude heavy client-only packages from server bundle
+  serverExternalPackages: ["dompurify"],
+
   images: {
     domains: ["thearq.ai"],
     formats: ["image/avif", "image/webp"],
