@@ -1,6 +1,13 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 
+function generateSlug(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+}
+
 function getSupabase() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -49,9 +56,12 @@ export async function POST(request: Request) {
       }, { status: 400 });
     }
 
+    // Sanitize slug to ensure URL-safe
+    const sanitizedSlug = generateSlug(body.slug || body.title);
+
     const caseStudyData = {
       title: body.title,
-      slug: body.slug,
+      slug: sanitizedSlug,
       client_name: body.client_name,
       industry: body.industry || null,
       hero_image: body.hero_image || null,
@@ -110,9 +120,12 @@ export async function PUT(request: Request) {
       return NextResponse.json({ error: "Case study ID is required" }, { status: 400 });
     }
 
+    // Sanitize slug to ensure URL-safe
+    const sanitizedSlug = generateSlug(body.slug || body.title);
+
     const updateData = {
       title: body.title,
-      slug: body.slug,
+      slug: sanitizedSlug,
       client_name: body.client_name,
       industry: body.industry || null,
       hero_image: body.hero_image || null,
