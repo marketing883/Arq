@@ -141,22 +141,22 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
 
         {/* Metrics Section */}
         {metrics.length > 0 && (
-          <section className="py-16 bg-base-opp">
+          <section className="py-16 bg-[#161616]">
             <div className="container mx-auto px-4 md:px-6">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                 {metrics.map((metric: { label: string; value: string; description: string }, index: number) => (
                   <div
                     key={index}
-                    className="bg-base-opp-tint rounded-2xl p-6 text-center border border-stroke-muted"
+                    className="bg-[#1C1C1C] rounded-2xl p-6 text-center border border-[#252525]"
                   >
-                    <div className="text-4xl md:text-5xl font-bold text-accent mb-2">
+                    <div className="text-4xl md:text-5xl font-bold text-[#d0f438] mb-2">
                       {metric.value}
                     </div>
-                    <div className="font-semibold text-text-opp-bright mb-1">
+                    <div className="font-semibold text-white mb-1">
                       {metric.label}
                     </div>
                     {metric.description && (
-                      <div className="text-sm text-text-opp-muted">
+                      <div className="text-sm text-[#ACACAC]">
                         {metric.description}
                       </div>
                     )}
@@ -210,21 +210,21 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
 
         {/* Solution Section */}
         {(caseStudy.solution_description || solutionPoints.length > 0) && (
-          <section className="py-16 md:py-20 bg-base-opp">
+          <section className="py-16 md:py-20 bg-[#161616]">
             <div className="container mx-auto px-4 md:px-6">
               <div className="max-w-4xl mx-auto">
                 <div className="flex items-center gap-4 mb-8">
-                  <div className="w-12 h-12 rounded-xl bg-accent flex items-center justify-center">
-                    <svg className="w-6 h-6 text-base-opp" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="w-12 h-12 rounded-xl bg-[#0432a5] flex items-center justify-center">
+                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                     </svg>
                   </div>
-                  <h2 className="text-3xl md:text-4xl font-bold text-text-opp-bright">
+                  <h2 className="text-3xl md:text-4xl font-bold text-white">
                     Our Solution
                   </h2>
                 </div>
                 {caseStudy.solution_description && (
-                  <p className="text-lg text-text-opp-muted mb-8 leading-relaxed">
+                  <p className="text-lg text-[#ACACAC] mb-8 leading-relaxed">
                     {caseStudy.solution_description}
                   </p>
                 )}
@@ -237,7 +237,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                           </svg>
                         </div>
-                        <span className="text-text-opp-medium">
+                        <span className="text-[#E0E0E0]">
                           {point.text}
                         </span>
                       </li>
