@@ -112,6 +112,9 @@ export async function PUT(request: Request) {
     const body = await request.json();
     const supabase = getSupabase();
 
+    console.log("PUT case study - received slug:", body.slug);
+    console.log("PUT case study - received title:", body.title);
+
     if (!supabase) {
       return NextResponse.json({ error: "Database not configured" }, { status: 500 });
     }
@@ -122,6 +125,7 @@ export async function PUT(request: Request) {
 
     // Sanitize slug to ensure URL-safe
     const sanitizedSlug = generateSlug(body.slug || body.title);
+    console.log("PUT case study - sanitized slug:", sanitizedSlug);
 
     const updateData = {
       title: body.title,
