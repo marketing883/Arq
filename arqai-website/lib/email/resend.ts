@@ -41,7 +41,7 @@ interface MeetingBookedData {
   meetingTime: string;
 }
 
-const FROM_EMAIL = "ArqAI <notifications@thearq.ai>";
+const FROM_EMAIL = "ArqAI <onboarding@resend.dev>";
 const TEAM_EMAIL = "habib@thearq.ai";
 
 /**
