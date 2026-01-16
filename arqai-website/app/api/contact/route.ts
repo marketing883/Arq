@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
-import { sendContactFormNotification } from "@/lib/email/resend";
+import { sendContactFormNotification, sendUserConfirmation } from "@/lib/email/resend";
 import { applyRateLimit } from "@/lib/security/rate-limiter";
 
 // Lazy initialize Supabase client
@@ -76,7 +76,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Send email notification to team
-    await sendContactFormNotification({
+    const teamNotificationSent = await sendContactFormNotification({
       name,
       email,
       company: company || undefined,
@@ -84,6 +84,22 @@ export async function POST(request: NextRequest) {
       message,
       inquiryType: inquiryType || "general",
     });
+
+    if (!teamNotificationSent) {
+      console.error("Failed to send team notification email - check RESEND_API_KEY");
+    }
+
+    // Send confirmation email to user
+    const userConfirmationSent = await sendUserConfirmation({
+      name,
+      email,
+    });
+
+    if (!userConfirmationSent) {
+      console.error("Failed to send user confirmation email - check RESEND_API_KEY");
+    }
+
+    console.log(`Contact form processed: team=${teamNotificationSent}, user=${userConfirmationSent}`);
 
     return NextResponse.json({ success: true });
   } catch (error) {
