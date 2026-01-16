@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 
+// Disable Next.js route caching to ensure fresh data
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 function generateSlug(text: string): string {
   return text
     .toLowerCase()
