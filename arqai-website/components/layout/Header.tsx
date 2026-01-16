@@ -474,12 +474,6 @@ export function Header() {
                         >
                           hello@thearq.ai
                         </a>
-                        <a
-                          href="tel:+18565400149"
-                          className="text-body-sm text-text-muted hover:text-accent transition-colors"
-                        >
-                          +1 856-540-0149
-                        </a>
                       </div>
                     </motion.div>
                   </nav>

@@ -140,15 +140,6 @@ export function Footer() {
 
             {/* Phone */}
             <div className="card p-6">
-              <div className="flex items-center gap-3 text-text-bright">
-                <StarIcon />
-                <a
-                  href="tel:+18565400149"
-                  className="text-body-md hover:text-accent transition-colors"
-                >
-                  +1 856-540-0149
-                </a>
-              </div>
             </div>
 
             {/* Subscribe Form */}
