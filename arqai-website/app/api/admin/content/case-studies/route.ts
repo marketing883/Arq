@@ -108,18 +108,22 @@ export async function POST(request: Request) {
 }
 
 export async function PUT(request: Request) {
+  console.log("=== PUT case study request received ===");
   try {
     const body = await request.json();
     const supabase = getSupabase();
 
+    console.log("PUT case study - ID:", body.id);
     console.log("PUT case study - received slug:", body.slug);
     console.log("PUT case study - received title:", body.title);
 
     if (!supabase) {
+      console.log("PUT case study - ERROR: Database not configured");
       return NextResponse.json({ error: "Database not configured" }, { status: 500 });
     }
 
     if (!body.id) {
+      console.log("PUT case study - ERROR: No ID provided");
       return NextResponse.json({ error: "Case study ID is required" }, { status: 400 });
     }
 
@@ -152,6 +156,7 @@ export async function PUT(request: Request) {
         : body.published_at,
     };
 
+    console.log("PUT case study - calling Supabase update...");
     const { data, error } = await supabase
       .from("case_studies")
       .update(updateData)
@@ -160,13 +165,14 @@ export async function PUT(request: Request) {
       .single();
 
     if (error) {
-      console.error("Error updating case study:", error);
+      console.error("PUT case study - Supabase error:", error);
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
+    console.log("PUT case study - SUCCESS! Updated slug:", data?.slug);
     return NextResponse.json({ item: data, success: true });
   } catch (error) {
-    console.error("Error in case study PUT:", error);
+    console.error("PUT case study - Exception:", error);
     return NextResponse.json({ error: "Failed to update case study" }, { status: 500 });
   }
 }
