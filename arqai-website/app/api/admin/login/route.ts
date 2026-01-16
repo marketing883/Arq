@@ -8,6 +8,10 @@ import { applyRateLimit } from "@/lib/security/rate-limiter";
 import { validateInput, adminLoginSchema } from "@/lib/security/validation";
 
 export async function POST(request: NextRequest) {
+  console.log("Admin login attempt - checking env vars...");
+  console.log("JWT_SECRET set:", !!process.env.JWT_SECRET);
+  console.log("NODE_ENV:", process.env.NODE_ENV);
+
   try {
     // Apply strict rate limiting for auth endpoints
     const rateLimitResult = applyRateLimit(request, "/api/admin/login", "auth");
@@ -59,8 +63,12 @@ export async function POST(request: NextRequest) {
       { headers: rateLimitResult.headers }
     );
   } catch (error) {
-    // Log error securely (no sensitive data)
-    console.error("Admin login error:", error instanceof Error ? error.message : "Unknown error");
+    // Log error with stack trace for debugging
+    console.error("Admin login error:", error);
+    if (error instanceof Error) {
+      console.error("Error message:", error.message);
+      console.error("Error stack:", error.stack);
+    }
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }
