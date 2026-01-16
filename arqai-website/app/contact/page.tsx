@@ -229,12 +229,13 @@ export default function ContactPage() {
                     <div className="grid md:grid-cols-2 gap-6">
                       <div>
                         <label htmlFor="company" className="block text-sm font-medium text-text-bright mb-2">
-                          Company
+                          Company *
                         </label>
                         <input
                           type="text"
                           id="company"
                           name="company"
+                          required
                           value={formData.company}
                           onChange={handleChange}
                           className="w-full px-4 py-3 rounded-lg border border-stroke-muted bg-base text-text-bright placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all"
@@ -243,12 +244,13 @@ export default function ContactPage() {
                       </div>
                       <div>
                         <label htmlFor="jobTitle" className="block text-sm font-medium text-text-bright mb-2">
-                          Job Title
+                          Job Title *
                         </label>
                         <input
                           type="text"
                           id="jobTitle"
                           name="jobTitle"
+                          required
                           value={formData.jobTitle}
                           onChange={handleChange}
                           className="w-full px-4 py-3 rounded-lg border border-stroke-muted bg-base text-text-bright placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all"

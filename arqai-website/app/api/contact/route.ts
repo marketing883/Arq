@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
 import { sendContactFormNotification, sendUserConfirmation } from "@/lib/email/resend";
 import { applyRateLimit } from "@/lib/security/rate-limiter";
+import { analyzeLeadIntel, getIntentBasedEmailContent } from "@/lib/ai/lead-intel";
 
 // Lazy initialize Supabase client
 let supabase: SupabaseClient | null = null;
@@ -35,9 +36,9 @@ export async function POST(request: NextRequest) {
     const { name, email, company, jobTitle, message, inquiryType } = body;
 
     // Validate required fields
-    if (!name || !email || !message) {
+    if (!name || !email || !company || !jobTitle || !message) {
       return NextResponse.json(
-        { error: "Name, email, and message are required" },
+        { error: "Name, email, company, job title, and message are required" },
         { status: 400 }
       );
     }
@@ -51,6 +52,22 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Run AI analysis on the lead (non-blocking if it fails)
+    let aiIntel = null;
+    try {
+      aiIntel = await analyzeLeadIntel({
+        name,
+        email,
+        company,
+        jobTitle,
+        message,
+        inquiryType: inquiryType || "general",
+      });
+      console.log("AI Intel analysis completed:", aiIntel?.detectedIntent, aiIntel?.urgency);
+    } catch (error) {
+      console.error("AI Intel analysis failed (continuing without it):", error);
+    }
+
     // Store the contact submission if Supabase is configured
     const client = getSupabaseClient();
     if (client) {
@@ -59,47 +76,75 @@ export async function POST(request: NextRequest) {
         .insert({
           name,
           email,
-          company: company || null,
-          job_title: jobTitle || null,
+          company,
+          job_title: jobTitle,
           message,
           inquiry_type: inquiryType || "general",
           status: "new",
+          // AI Intel fields
+          ai_detected_intent: aiIntel?.detectedIntent || null,
+          ai_urgency: aiIntel?.urgency || null,
+          ai_company_industry: aiIntel?.companyIntel?.likelyIndustry || null,
+          ai_company_size: aiIntel?.companyIntel?.estimatedSize || null,
+          ai_contact_seniority: aiIntel?.contactIntel?.seniority || null,
+          ai_contact_department: aiIntel?.contactIntel?.department || null,
+          ai_decision_maker: aiIntel?.contactIntel?.decisionMaker || null,
+          ai_summary: aiIntel?.summary || null,
+          ai_intel_json: aiIntel ? JSON.stringify(aiIntel) : null,
         });
 
       if (dbError) {
         console.error("Database error:", dbError);
         // Don't fail if DB insert fails - we might not have the table yet
-        // In production, you'd want proper error handling
       }
     } else {
       console.log("Supabase not configured - skipping database storage");
     }
 
-    // Send email notification to team
+    // Get intent-based email content
+    const detectedIntent = aiIntel?.detectedIntent || inquiryType || "general";
+    const emailContent = getIntentBasedEmailContent(detectedIntent, name);
+
+    // Send email notification to team (include AI intel summary)
     const teamNotificationSent = await sendContactFormNotification({
       name,
       email,
-      company: company || undefined,
-      jobTitle: jobTitle || undefined,
+      company,
+      jobTitle,
       message,
       inquiryType: inquiryType || "general",
+      // Pass AI intel to team notification
+      aiIntel: aiIntel ? {
+        detectedIntent: aiIntel.detectedIntent,
+        urgency: aiIntel.urgency,
+        summary: aiIntel.summary,
+        companyIntel: aiIntel.companyIntel,
+        contactIntel: aiIntel.contactIntel,
+        researchSuggestions: aiIntel.researchSuggestions,
+      } : undefined,
     });
 
     if (!teamNotificationSent) {
       console.error("Failed to send team notification email - check RESEND_API_KEY");
     }
 
-    // Send confirmation email to user
+    // Send personalized confirmation email to user
     const userConfirmationSent = await sendUserConfirmation({
       name,
       email,
+      detectedIntent,
+      personalizedMessage: aiIntel?.personalizedMessage || emailContent.message,
+      customSubject: emailContent.subject,
+      customHeading: emailContent.heading,
+      ctaText: emailContent.ctaText,
+      ctaUrl: emailContent.ctaUrl,
     });
 
     if (!userConfirmationSent) {
       console.error("Failed to send user confirmation email - check RESEND_API_KEY");
     }
 
-    console.log(`Contact form processed: team=${teamNotificationSent}, user=${userConfirmationSent}`);
+    console.log(`Contact form processed: team=${teamNotificationSent}, user=${userConfirmationSent}, intent=${detectedIntent}`);
 
     return NextResponse.json({ success: true });
   } catch (error) {
