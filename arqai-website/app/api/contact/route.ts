@@ -1,0 +1,86 @@
+import { NextRequest, NextResponse } from "next/server";
+import { createClient, SupabaseClient } from "@supabase/supabase-js";
+import { sendContactFormNotification } from "@/lib/email/resend";
+
+// Lazy initialize Supabase client
+let supabase: SupabaseClient | null = null;
+
+function getSupabaseClient(): SupabaseClient | null {
+  if (supabase) return supabase;
+
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+  if (!url || !key) {
+    return null;
+  }
+
+  supabase = createClient(url, key);
+  return supabase;
+}
+
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json();
+    const { name, email, company, jobTitle, message, inquiryType } = body;
+
+    // Validate required fields
+    if (!name || !email || !message) {
+      return NextResponse.json(
+        { error: "Name, email, and message are required" },
+        { status: 400 }
+      );
+    }
+
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return NextResponse.json(
+        { error: "Invalid email address" },
+        { status: 400 }
+      );
+    }
+
+    // Store the contact submission if Supabase is configured
+    const client = getSupabaseClient();
+    if (client) {
+      const { error: dbError } = await client
+        .from("contact_submissions")
+        .insert({
+          name,
+          email,
+          company: company || null,
+          job_title: jobTitle || null,
+          message,
+          inquiry_type: inquiryType || "general",
+          status: "new",
+        });
+
+      if (dbError) {
+        console.error("Database error:", dbError);
+        // Don't fail if DB insert fails - we might not have the table yet
+        // In production, you'd want proper error handling
+      }
+    } else {
+      console.log("Supabase not configured - skipping database storage");
+    }
+
+    // Send email notification to team
+    await sendContactFormNotification({
+      name,
+      email,
+      company: company || undefined,
+      jobTitle: jobTitle || undefined,
+      message,
+      inquiryType: inquiryType || "general",
+    });
+
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error("Contact form error:", error);
+    return NextResponse.json(
+      { error: "Failed to submit contact form" },
+      { status: 500 }
+    );
+  }
+}
