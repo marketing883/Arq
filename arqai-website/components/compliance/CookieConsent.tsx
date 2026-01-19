@@ -49,6 +49,9 @@ export function CookieConsent() {
     localStorage.setItem("arqai_cookie_consent", JSON.stringify(consentData));
     setIsVisible(false);
 
+    // Dispatch custom event for same-tab listeners (like GoogleAnalytics)
+    window.dispatchEvent(new CustomEvent("arqai_consent_updated"));
+
     // Track consent in database (non-blocking)
     fetch("/api/consent", {
       method: "POST",
