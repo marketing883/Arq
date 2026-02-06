@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 
+// Disable Next.js route caching to ensure fresh data
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 function getSupabase() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -206,7 +210,7 @@ export async function GET() {
     // Analyze case studies
     const { data: caseStudies } = await supabase
       .from("case_studies")
-      .select("id, title, slug, overview, featured_image, status")
+      .select("id, title, slug, overview, hero_image, status")
       .order("created_at", { ascending: false });
 
     if (caseStudies) {
@@ -214,7 +218,7 @@ export async function GET() {
         const { score, issues } = analyzeSEO({
           title: study.title,
           overview: study.overview,
-          featured_image: study.featured_image,
+          featured_image: study.hero_image,
         });
         results.push({
           id: study.id,
@@ -225,7 +229,7 @@ export async function GET() {
           score,
           issues,
           hasMetaDescription: !!study.overview,
-          hasFeaturedImage: !!study.featured_image,
+          hasFeaturedImage: !!study.hero_image,
           titleLength: (study.title || "").length,
           descriptionLength: (study.overview || "").length,
           status: study.status,
