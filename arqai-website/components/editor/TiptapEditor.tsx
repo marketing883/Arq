@@ -90,7 +90,16 @@ export function TiptapEditor({ content, onChange, placeholder = "Start writing..
       if (data.url) {
         editor.chain().focus().setImage({ src: data.url }).run();
       } else {
-        alert(data.error || "Failed to upload image");
+        // Show detailed error message
+        let errorMsg = data.error || "Failed to upload image";
+        if (data.instructions) {
+          errorMsg += "\n\n" + data.instructions;
+        }
+        if (data.steps) {
+          errorMsg += "\n\n" + data.steps.join("\n");
+        }
+        alert(errorMsg);
+        console.error("Upload error:", data);
       }
     } catch (error) {
       console.error("Upload error:", error);

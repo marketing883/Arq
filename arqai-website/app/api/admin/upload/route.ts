@@ -4,6 +4,10 @@ import { createClient } from "@supabase/supabase-js";
 function getSupabase() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+  console.log("[Upload] Supabase URL configured:", !!supabaseUrl);
+  console.log("[Upload] Service key configured:", !!supabaseServiceKey);
+
   if (!supabaseUrl || !supabaseServiceKey) return null;
   return createClient(supabaseUrl, supabaseServiceKey);
 }
@@ -18,8 +22,14 @@ export async function POST(request: Request) {
     const supabase = getSupabase();
 
     if (!supabase) {
+      const missingVars = [];
+      if (!process.env.NEXT_PUBLIC_SUPABASE_URL) missingVars.push("NEXT_PUBLIC_SUPABASE_URL");
+      if (!process.env.SUPABASE_SERVICE_ROLE_KEY) missingVars.push("SUPABASE_SERVICE_ROLE_KEY");
+
       return NextResponse.json({
-        error: "Storage not configured. Please check your Supabase credentials."
+        error: "Storage not configured. Missing Supabase credentials.",
+        missing: missingVars,
+        instructions: "Add the missing environment variables to your .env.local file"
       }, { status: 500 });
     }
 
@@ -67,16 +77,33 @@ export async function POST(request: Request) {
 
     if (error) {
       console.error("Supabase storage error:", error);
+      console.error("Error details:", JSON.stringify(error, null, 2));
 
       // Check if bucket doesn't exist
-      if (error.message.includes("Bucket not found")) {
+      if (error.message?.includes("Bucket not found") || error.message?.includes("bucket") || error.statusCode === "404") {
         return NextResponse.json({
           error: `Storage bucket '${bucket}' not found. Please create it in Supabase Dashboard.`,
-          instructions: "Go to Supabase > Storage > New Bucket and create 'content-uploads'"
+          instructions: "Go to Supabase Dashboard > Storage > New Bucket > Name it 'content-uploads' > Make it PUBLIC",
+          steps: [
+            "1. Go to your Supabase Dashboard",
+            "2. Click on 'Storage' in the left sidebar",
+            "3. Click 'New bucket'",
+            "4. Name it: content-uploads",
+            "5. Check 'Public bucket' checkbox",
+            "6. Click 'Create bucket'"
+          ]
         }, { status: 500 });
       }
 
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      // Check for policy/permission errors
+      if (error.message?.includes("policy") || error.message?.includes("permission") || error.statusCode === "403") {
+        return NextResponse.json({
+          error: "Storage permission denied. The bucket may not be public.",
+          instructions: "Make sure the 'content-uploads' bucket is set to PUBLIC in Supabase Dashboard"
+        }, { status: 500 });
+      }
+
+      return NextResponse.json({ error: error.message || "Upload failed" }, { status: 500 });
     }
 
     // Get public URL
