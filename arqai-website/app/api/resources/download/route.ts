@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import crypto from "crypto";
 import { applyRateLimit } from "@/lib/security/rate-limiter";
+import { getOrCreateLeadProfile, recordTouchpointEvent } from "@/lib/lead/lead-profile-service";
 
 function getSupabase() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -54,6 +55,40 @@ export async function POST(request: NextRequest) {
       if (insertError) {
         console.error("Error inserting lead:", insertError);
       }
+
+      // Get resource title for V2 tracking
+      let resourceTitle = resource_type;
+      if (resource_type === "whitepaper") {
+        const { data: wp } = await supabase.from("whitepapers").select("title").eq("id", resource_id).single();
+        resourceTitle = wp?.title || resource_type;
+      } else if (resource_type === "webinar") {
+        const { data: wb } = await supabase.from("webinars").select("title").eq("id", resource_id).single();
+        resourceTitle = wb?.title || resource_type;
+      }
+
+      // Process for V2 lead intelligence (non-blocking)
+      getOrCreateLeadProfile(email)
+        .then(async (profile) => {
+          if (profile) {
+            await recordTouchpointEvent(
+              profile.id,
+              "resource_download",
+              resource_type,
+              {
+                resource_id,
+                resource_type,
+                resource_title: resourceTitle,
+                name,
+                company: company || null,
+                job_title: job_title || null,
+              }
+            );
+            console.log(`[LEAD V2] Resource download recorded: ${resourceTitle} for ${email}`);
+          }
+        })
+        .catch((error) => {
+          console.error("Lead V2 resource download error:", error instanceof Error ? error.message : "Unknown");
+        });
     }
 
     return NextResponse.json({ success: true, token, expires_at: expiresAt.toISOString() });

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { generateChatResponse, extractLeadInfo } from "@/lib/ai/anthropic";
 import { generateChatResponseOpenAI } from "@/lib/ai/openai";
 import { processMessageForIntelligence, recordSession } from "@/lib/lead/lead-service";
+import { processMessageForV2Intelligence } from "@/lib/lead/lead-profile-service";
 import { v4 as uuidv4 } from "uuid";
 import {
   UserContext,
@@ -263,6 +264,23 @@ export async function POST(request: NextRequest) {
       })
       .catch((error) => {
         console.error("Lead intelligence processing error:", error instanceof Error ? error.message : "Unknown");
+      });
+
+    // Process message for V2 lead intelligence (non-blocking, runs alongside V1)
+    processMessageForV2Intelligence(sessionId, message, leadUserInfo, currentPage)
+      .then(({ profile, alerts, journeyChanged }) => {
+        if (profile && profile.priority_tier === "P1") {
+          console.log(`[LEAD V2] P1 lead: ${profile.canonical_email}, score: ${profile.composite_score}`);
+        }
+        if (journeyChanged && profile) {
+          console.log(`[LEAD V2] Journey change: ${profile.journey_stage} for ${profile.canonical_email}`);
+        }
+        if (alerts.length > 0) {
+          console.log(`[LEAD V2] ${alerts.length} alerts triggered for session ${sessionId}`);
+        }
+      })
+      .catch((error) => {
+        console.error("Lead V2 intelligence error:", error instanceof Error ? error.message : "Unknown");
       });
 
     // Record session activity (non-blocking)

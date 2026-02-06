@@ -3,6 +3,7 @@ import { createClient, SupabaseClient } from "@supabase/supabase-js";
 import { sendContactFormNotification, sendUserConfirmation } from "@/lib/email/resend";
 import { applyRateLimit } from "@/lib/security/rate-limiter";
 import { analyzeLeadIntel, getIntentBasedEmailContent } from "@/lib/ai/lead-intel";
+import { getOrCreateLeadProfile, recordTouchpointEvent } from "@/lib/lead/lead-profile-service";
 
 // Lazy initialize Supabase client
 let supabase: SupabaseClient | null = null;
@@ -100,6 +101,33 @@ export async function POST(request: NextRequest) {
     } else {
       console.log("Supabase not configured - skipping database storage");
     }
+
+    // Process for V2 lead intelligence (non-blocking)
+    getOrCreateLeadProfile(email, undefined, undefined)
+      .then(async (profile) => {
+        if (profile) {
+          // Record contact form touchpoint
+          await recordTouchpointEvent(
+            profile.id,
+            "contact_form",
+            aiIntel?.detectedIntent || inquiryType || "general",
+            {
+              name,
+              company,
+              job_title: jobTitle,
+              inquiry_type: inquiryType || "general",
+              ai_detected_intent: aiIntel?.detectedIntent,
+              ai_urgency: aiIntel?.urgency,
+              ai_company_size: aiIntel?.companyIntel?.estimatedSize,
+            },
+            message // Content for signal detection
+          );
+          console.log(`[LEAD V2] Contact form recorded for ${email}, profile: ${profile.id}`);
+        }
+      })
+      .catch((error) => {
+        console.error("Lead V2 contact form error:", error instanceof Error ? error.message : "Unknown");
+      });
 
     // Get intent-based email content
     const detectedIntent = aiIntel?.detectedIntent || inquiryType || "general";

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
 import { getAdminSession } from "@/lib/auth/admin-auth";
 import { applyRateLimit } from "@/lib/security/rate-limiter";
+import { getOrCreateLeadProfile, recordTouchpointEvent } from "@/lib/lead/lead-profile-service";
 
 // Lazy initialize Supabase client
 let supabase: SupabaseClient | null = null;
@@ -106,6 +107,26 @@ export async function POST(request: NextRequest) {
       segment,
       timestamp: new Date().toISOString(),
     });
+
+    // Process for V2 lead intelligence (non-blocking)
+    getOrCreateLeadProfile(email)
+      .then(async (profile) => {
+        if (profile) {
+          await recordTouchpointEvent(
+            profile.id,
+            "newsletter",
+            "signup",
+            {
+              source,
+              segment,
+            }
+          );
+          console.log(`[LEAD V2] Newsletter signup recorded for ${email} from ${source}`);
+        }
+      })
+      .catch((error) => {
+        console.error("Lead V2 newsletter error:", error instanceof Error ? error.message : "Unknown");
+      });
 
     return NextResponse.json({
       success: true,
