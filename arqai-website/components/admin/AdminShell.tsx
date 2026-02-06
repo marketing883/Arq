@@ -65,7 +65,7 @@ export default function AdminShell({ children }: AdminShellProps) {
   return (
     <div className="min-h-screen bg-slate-50">
       <AdminSidebar />
-      <main className="ml-64 min-h-screen transition-all duration-300">
+      <main className="ml-56 min-h-screen transition-all duration-300">
         {children}
       </main>
     </div>
