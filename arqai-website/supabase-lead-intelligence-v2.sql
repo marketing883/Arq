@@ -459,19 +459,23 @@ $$ LANGUAGE plpgsql IMMUTABLE;
 -- TRIGGERS
 -- ============================================
 
--- Auto-update timestamps
+-- Auto-update timestamps (drop first to avoid "already exists" errors)
+DROP TRIGGER IF EXISTS update_lead_profiles_updated_at ON public.lead_profiles;
 CREATE TRIGGER update_lead_profiles_updated_at
     BEFORE UPDATE ON public.lead_profiles
     FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
+DROP TRIGGER IF EXISTS update_contact_submissions_updated_at ON public.contact_submissions;
 CREATE TRIGGER update_contact_submissions_updated_at
     BEFORE UPDATE ON public.contact_submissions
     FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
+DROP TRIGGER IF EXISTS update_domain_intelligence_updated_at ON public.domain_intelligence;
 CREATE TRIGGER update_domain_intelligence_updated_at
     BEFORE UPDATE ON public.domain_intelligence
     FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
+DROP TRIGGER IF EXISTS update_signal_definitions_updated_at ON public.signal_definitions;
 CREATE TRIGGER update_signal_definitions_updated_at
     BEFORE UPDATE ON public.signal_definitions
     FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
