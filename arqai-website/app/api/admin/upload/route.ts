@@ -1,15 +1,45 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
+import sharp from "sharp";
 
 function getSupabase() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-  console.log("[Upload] Supabase URL configured:", !!supabaseUrl);
-  console.log("[Upload] Service key configured:", !!supabaseServiceKey);
-
   if (!supabaseUrl || !supabaseServiceKey) return null;
   return createClient(supabaseUrl, supabaseServiceKey);
+}
+
+// Image optimization settings
+const IMAGE_SETTINGS = {
+  featured: { maxWidth: 1920, maxHeight: 1080, quality: 85 },
+  content: { maxWidth: 1200, maxHeight: 800, quality: 82 },
+  thumbnail: { maxWidth: 400, maxHeight: 300, quality: 80 },
+};
+
+// Optimize image using sharp
+async function optimizeImage(
+  buffer: Buffer,
+  folder: string
+): Promise<{ buffer: Buffer; format: string }> {
+  // Determine settings based on folder
+  let settings = IMAGE_SETTINGS.content;
+  if (folder.includes("featured")) {
+    settings = IMAGE_SETTINGS.featured;
+  } else if (folder.includes("thumb")) {
+    settings = IMAGE_SETTINGS.thumbnail;
+  }
+
+  // Process image with sharp
+  const optimized = await sharp(buffer)
+    .resize(settings.maxWidth, settings.maxHeight, {
+      fit: "inside",
+      withoutEnlargement: true,
+    })
+    .webp({ quality: settings.quality })
+    .toBuffer();
+
+  return { buffer: optimized, format: "webp" };
 }
 
 // Supported file types
@@ -59,19 +89,41 @@ export async function POST(request: Request) {
     // Generate unique filename
     const timestamp = Date.now();
     const randomStr = Math.random().toString(36).substring(2, 8);
-    const extension = file.name.split(".").pop();
-    const fileName = `${timestamp}-${randomStr}.${extension}`;
-    const filePath = folder ? `${folder}/${fileName}` : fileName;
 
     // Convert File to ArrayBuffer
     const arrayBuffer = await file.arrayBuffer();
-    const buffer = new Uint8Array(arrayBuffer);
+    const originalBuffer = Buffer.from(arrayBuffer);
+
+    // Optimize images (skip for PDFs and GIFs)
+    let uploadBuffer: Buffer | Uint8Array = originalBuffer;
+    let contentType = file.type;
+    let extension = file.name.split(".").pop();
+
+    const isOptimizableImage = ALLOWED_IMAGE_TYPES.includes(file.type) && file.type !== "image/gif";
+
+    if (isOptimizableImage) {
+      try {
+        const optimized = await optimizeImage(originalBuffer, folder);
+        uploadBuffer = optimized.buffer;
+        contentType = "image/webp";
+        extension = "webp";
+        console.log(`[Upload] Optimized image: ${file.size} bytes -> ${optimized.buffer.length} bytes (${Math.round((1 - optimized.buffer.length / file.size) * 100)}% reduction)`);
+      } catch (optError) {
+        console.error("[Upload] Optimization failed, using original:", optError);
+        uploadBuffer = new Uint8Array(arrayBuffer);
+      }
+    } else {
+      uploadBuffer = new Uint8Array(arrayBuffer);
+    }
+
+    const fileName = `${timestamp}-${randomStr}.${extension}`;
+    const filePath = folder ? `${folder}/${fileName}` : fileName;
 
     // Upload to Supabase Storage
     const { data, error } = await supabase.storage
       .from(bucket)
-      .upload(filePath, buffer, {
-        contentType: file.type,
+      .upload(filePath, uploadBuffer, {
+        contentType,
         upsert: false,
       });
 
