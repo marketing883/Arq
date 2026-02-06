@@ -79,8 +79,10 @@ export async function POST(request: Request) {
       console.error("Supabase storage error:", error);
       console.error("Error details:", JSON.stringify(error, null, 2));
 
+      const errorMsg = error.message || "";
+
       // Check if bucket doesn't exist
-      if (error.message?.includes("Bucket not found") || error.message?.includes("bucket") || error.statusCode === "404") {
+      if (errorMsg.includes("Bucket not found") || errorMsg.includes("bucket") || errorMsg.includes("not found")) {
         return NextResponse.json({
           error: `Storage bucket '${bucket}' not found. Please create it in Supabase Dashboard.`,
           instructions: "Go to Supabase Dashboard > Storage > New Bucket > Name it 'content-uploads' > Make it PUBLIC",
@@ -96,14 +98,14 @@ export async function POST(request: Request) {
       }
 
       // Check for policy/permission errors
-      if (error.message?.includes("policy") || error.message?.includes("permission") || error.statusCode === "403") {
+      if (errorMsg.includes("policy") || errorMsg.includes("permission") || errorMsg.includes("denied") || errorMsg.includes("unauthorized")) {
         return NextResponse.json({
           error: "Storage permission denied. The bucket may not be public.",
           instructions: "Make sure the 'content-uploads' bucket is set to PUBLIC in Supabase Dashboard"
         }, { status: 500 });
       }
 
-      return NextResponse.json({ error: error.message || "Upload failed" }, { status: 500 });
+      return NextResponse.json({ error: errorMsg || "Upload failed" }, { status: 500 });
     }
 
     // Get public URL
