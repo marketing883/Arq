@@ -606,7 +606,21 @@ export default function EditBlogPostPage() {
                 <label className="block text-sm font-medium text-slate-700 dark:text-gray-300 mb-1">Publish Date & Time</label>
                 <input
                   type="datetime-local"
-                  value={formData.published_at ? new Date(formData.published_at).toISOString().slice(0, 16) : ""}
+                  value={(() => {
+                    if (!formData.published_at) return "";
+                    try {
+                      const date = new Date(formData.published_at);
+                      // Format as YYYY-MM-DDTHH:MM in local timezone
+                      const year = date.getFullYear();
+                      const month = String(date.getMonth() + 1).padStart(2, '0');
+                      const day = String(date.getDate()).padStart(2, '0');
+                      const hours = String(date.getHours()).padStart(2, '0');
+                      const minutes = String(date.getMinutes()).padStart(2, '0');
+                      return `${year}-${month}-${day}T${hours}:${minutes}`;
+                    } catch {
+                      return "";
+                    }
+                  })()}
                   onChange={(e) => setFormData(prev => ({
                     ...prev,
                     published_at: e.target.value ? new Date(e.target.value).toISOString() : null
