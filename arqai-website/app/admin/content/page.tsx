@@ -198,8 +198,8 @@ export default function ContentPage() {
           {/* Action Bar */}
           <div className="p-4 border-b border-slate-200 flex items-center justify-between">
             <div>
-              <h2 className="font-semibold text-slate-900 capitalize">{activeTab.replace("-", " ")}</h2>
-              <p className="text-sm text-slate-500">{items.length} item{items.length !== 1 ? "s" : ""}</p>
+              <h2 className="text-base font-semibold text-slate-900 capitalize">{activeTab.replace("-", " ")}</h2>
+              <p className="text-xs text-slate-500">{items.length} item{items.length !== 1 ? "s" : ""}</p>
             </div>
             <button
               onClick={handleAddNew}
@@ -249,7 +249,7 @@ export default function ContentPage() {
                   <div className="flex items-center justify-between">
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-3">
-                        <h3 className="font-medium text-slate-900 truncate">{item.title}</h3>
+                        <h5 className="text-sm font-medium text-slate-900 truncate">{item.title}</h5>
                         <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${getStatusColor(item.status)}`}>
                           {item.status}
                         </span>

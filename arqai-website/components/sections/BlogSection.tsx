@@ -20,6 +20,23 @@ interface BlogSectionProps {
   posts: BlogPost[];
 }
 
+// Extract slug from potentially full URL
+function extractSlug(slugOrUrl: string): string {
+  if (!slugOrUrl) return "";
+  // If it contains /blog/, extract the part after it
+  if (slugOrUrl.includes("/blog/")) {
+    const parts = slugOrUrl.split("/blog/");
+    return parts[parts.length - 1].replace(/\/$/, ""); // Remove trailing slash
+  }
+  // If it starts with http, try to get the last path segment
+  if (slugOrUrl.startsWith("http")) {
+    const url = new URL(slugOrUrl);
+    const pathParts = url.pathname.split("/").filter(Boolean);
+    return pathParts[pathParts.length - 1] || slugOrUrl;
+  }
+  return slugOrUrl;
+}
+
 export function BlogSection({ posts }: BlogSectionProps) {
   if (!posts || posts.length === 0) {
     return null;
@@ -65,7 +82,7 @@ export function BlogSection({ posts }: BlogSectionProps) {
               transition={{ delay: index * 0.15 }}
               className="group"
             >
-              <Link href={`/blog/${post.slug}`} className="block">
+              <Link href={`/blog/${extractSlug(post.slug)}`} className="block">
                 {/* Image Container */}
                 <div className="relative aspect-[16/10] rounded-2xl overflow-hidden mb-5 bg-[var(--arq-gray-200)] dark:bg-[var(--arq-gray-700)]">
                   {post.featured_image ? (

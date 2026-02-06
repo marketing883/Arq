@@ -19,6 +19,25 @@ interface BlogPost {
   read_time_minutes?: number;
 }
 
+// Extract slug from potentially full URL
+function extractSlug(slugOrUrl: string): string {
+  if (!slugOrUrl) return "";
+  if (slugOrUrl.includes("/blog/")) {
+    const parts = slugOrUrl.split("/blog/");
+    return parts[parts.length - 1].replace(/\/$/, "");
+  }
+  if (slugOrUrl.startsWith("http")) {
+    try {
+      const url = new URL(slugOrUrl);
+      const pathParts = url.pathname.split("/").filter(Boolean);
+      return pathParts[pathParts.length - 1] || slugOrUrl;
+    } catch {
+      return slugOrUrl;
+    }
+  }
+  return slugOrUrl;
+}
+
 export default function BlogPage() {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -103,7 +122,7 @@ export default function BlogPage() {
                   transition={{ delay: index * 0.1 }}
                   className="group"
                 >
-                  <Link href={`/blog/${post.slug}`} className="block">
+                  <Link href={`/blog/${extractSlug(post.slug)}`} className="block">
                     {/* Image Container */}
                     <div className="relative aspect-[16/10] rounded-2xl overflow-hidden mb-5 bg-base-tint">
                       {post.featured_image ? (
