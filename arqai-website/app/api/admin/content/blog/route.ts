@@ -43,6 +43,7 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
+    console.log("[Blog POST] Received body.featured_image:", body.featured_image);
     const supabase = getSupabase();
 
     if (!supabase) {
@@ -81,6 +82,8 @@ export async function POST(request: Request) {
       og_description: body.og_description || null,
     };
 
+    console.log("[Blog POST] Saving postData.featured_image:", postData.featured_image);
+
     const { data, error } = await supabase
       .from("blog_posts")
       .insert(postData)
@@ -117,6 +120,7 @@ export async function POST(request: Request) {
 export async function PUT(request: Request) {
   try {
     const body = await request.json();
+    console.log("[Blog PUT] Received body.featured_image:", body.featured_image);
     const supabase = getSupabase();
 
     if (!supabase) {
@@ -154,6 +158,8 @@ export async function PUT(request: Request) {
       og_title: body.og_title || null,
       og_description: body.og_description || null,
     };
+
+    console.log("[Blog PUT] Saving updateData.featured_image:", updateData.featured_image);
 
     const { data, error } = await supabase
       .from("blog_posts")
