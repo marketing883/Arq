@@ -181,6 +181,13 @@ export interface LeadProfile {
   canonical_email?: string;
   session_ids: string[];
 
+  // Contact information
+  first_name?: string;
+  last_name?: string;
+  company?: string;
+  job_title?: string;
+  phone?: string;
+
   // Aggregated touchpoints
   touchpoints: AggregatedTouchpoints;
 
@@ -196,6 +203,8 @@ export interface LeadProfile {
   engagement_velocity: number;
   icp_fit_score: number;
   composite_score: number;
+  intent_score: number;
+  engagement_score: number;
 
   // Journey tracking
   journey_stage: JourneyStage;

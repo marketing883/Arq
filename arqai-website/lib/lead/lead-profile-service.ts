@@ -503,6 +503,7 @@ export async function promoteLeadStage(
 
 /**
  * Create a new alert
+ * Automatically sends email notifications for critical and high priority alerts
  */
 export async function createAlert(alert: Omit<LeadAlert, "id">): Promise<LeadAlert | null> {
   const supabase = getSupabaseClient();
@@ -530,7 +531,41 @@ export async function createAlert(alert: Omit<LeadAlert, "id">): Promise<LeadAle
       .single();
 
     if (error) throw error;
-    return data as LeadAlert;
+
+    const createdAlert = data as LeadAlert;
+
+    // Send email notification for critical and high priority alerts (non-blocking)
+    if (alert.priority === "critical" || alert.priority === "high") {
+      // Get profile info for the email
+      const profile = await getLeadProfile(alert.lead_profile_id);
+
+      // Import dynamically to avoid circular dependencies
+      import("@/lib/email/resend")
+        .then(({ sendSmartAlertNotification }) => {
+          sendSmartAlertNotification({
+            alertId: createdAlert.id,
+            alertType: createdAlert.alert_type,
+            priority: createdAlert.priority,
+            message: createdAlert.message,
+            leadEmail: profile?.canonical_email,
+            leadName: profile?.first_name
+              ? `${profile.first_name} ${profile.last_name || ""}`.trim()
+              : undefined,
+            company: profile?.company_intel?.company_name,
+            compositeScore: profile?.composite_score,
+            intentScore: profile?.intent_score,
+            journeyStage: profile?.journey_stage,
+            createdAt: createdAlert.created_at,
+          }).catch((err) => {
+            console.error("Failed to send alert email notification:", err);
+          });
+        })
+        .catch((err) => {
+          console.error("Failed to import email module:", err);
+        });
+    }
+
+    return createdAlert;
   } catch (error) {
     console.error("Error creating alert:", error);
     return null;

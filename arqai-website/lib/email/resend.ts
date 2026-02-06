@@ -713,3 +713,183 @@ export async function sendMeetingBookedNotification(
     return false;
   }
 }
+
+/**
+ * V2 Smart Alert Notification Data
+ */
+interface SmartAlertNotificationData {
+  alertId: string;
+  alertType: string;
+  priority: "critical" | "high" | "medium" | "low";
+  message: string;
+  leadEmail?: string;
+  leadName?: string;
+  company?: string;
+  compositeScore?: number;
+  intentScore?: number;
+  journeyStage?: string;
+  createdAt: string;
+}
+
+/**
+ * Send V2 smart alert notification to team
+ * Only sends for critical and high priority alerts
+ */
+export async function sendSmartAlertNotification(
+  data: SmartAlertNotificationData
+): Promise<boolean> {
+  const resend = getResendClient();
+  if (!resend) return false;
+
+  // Only send emails for critical and high priority alerts
+  if (data.priority !== "critical" && data.priority !== "high") {
+    console.log(`Skipping email for ${data.priority} priority alert`);
+    return true;
+  }
+
+  try {
+    const isCritical = data.priority === "critical";
+    const priorityEmoji = isCritical ? "🚨" : "🔥";
+    const priorityLabel = isCritical ? "CRITICAL" : "HIGH PRIORITY";
+    const alertTypeLabels: Record<string, string> = {
+      high_intent_score: "High Intent Score",
+      score_spike: "Score Spike Detected",
+      multiple_touchpoints: "Multiple Touchpoints",
+      stage_progression: "Stage Progression",
+      demo_request: "Demo Request",
+      budget_mention: "Budget Mentioned",
+      competitor_mention: "Competitor Mentioned",
+      urgent_timeline: "Urgent Timeline",
+      enterprise_company: "Enterprise Company",
+      returning_visitor: "Returning Visitor",
+    };
+    const alertTypeLabel = alertTypeLabels[data.alertType] || data.alertType;
+
+    const subject = `${priorityEmoji} [${priorityLabel}] ${alertTypeLabel}${data.leadEmail ? ` - ${data.leadEmail}` : ""}`;
+
+    const html = `
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <meta charset="utf-8">
+          <style>
+            body { font-family: 'Inter', -apple-system, sans-serif; margin: 0; padding: 0; background: #f5f7fa; }
+            .container { max-width: 600px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; }
+            .header { background: ${isCritical ? "linear-gradient(135deg, #dc2626 0%, #991b1b 100%)" : "linear-gradient(135deg, #ea580c 0%, #c2410c 100%)"}; color: white; padding: 24px 32px; }
+            .header h1 { margin: 0; font-size: 20px; font-weight: 600; }
+            .header .subtitle { opacity: 0.9; font-size: 14px; margin-top: 4px; }
+            .priority-banner { padding: 16px 32px; font-weight: 600; font-size: 14px; text-align: center; background: ${isCritical ? "#fef2f2" : "#fff7ed"}; color: ${isCritical ? "#dc2626" : "#ea580c"}; }
+            .content { padding: 32px; }
+            .alert-message { font-size: 16px; color: #1f2937; line-height: 1.6; padding: 16px; background: #f9fafb; border-radius: 8px; border-left: 4px solid ${isCritical ? "#dc2626" : "#ea580c"}; margin-bottom: 24px; }
+            .section { margin-bottom: 24px; }
+            .section h3 { color: #374151; margin: 0 0 12px 0; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+            .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+            .info-item { padding: 12px; background: #f9fafb; border-radius: 8px; }
+            .info-label { font-size: 11px; color: #6b7280; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+            .info-value { font-weight: 600; color: #1f2937; font-size: 14px; }
+            .score-highlight { font-size: 24px; font-weight: 700; color: ${isCritical ? "#dc2626" : "#ea580c"}; }
+            .cta { text-align: center; margin-top: 24px; }
+            .cta a { display: inline-block; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 14px; margin: 0 8px; }
+            .primary-btn { background: #0432a5; color: white; }
+            .secondary-btn { background: #f3f4f6; color: #374151; }
+            .footer { padding: 20px 32px; text-align: center; color: #6b7280; font-size: 12px; background: #f9fafb; }
+          </style>
+        </head>
+        <body>
+          <div style="padding: 20px; background: #f5f7fa;">
+            <div class="container">
+              <div class="header">
+                <h1>${priorityEmoji} Smart Alert</h1>
+                <div class="subtitle">${alertTypeLabel} • ${new Date(data.createdAt).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' })}</div>
+              </div>
+
+              <div class="priority-banner">
+                ${priorityEmoji} ${priorityLabel} - IMMEDIATE ACTION REQUIRED
+              </div>
+
+              <div class="content">
+                <div class="alert-message">
+                  ${data.message}
+                </div>
+
+                ${data.leadEmail || data.leadName || data.company ? `
+                <div class="section">
+                  <h3>Lead Information</h3>
+                  <div class="info-grid">
+                    ${data.leadName ? `
+                    <div class="info-item">
+                      <div class="info-label">Name</div>
+                      <div class="info-value">${data.leadName}</div>
+                    </div>
+                    ` : ""}
+                    ${data.leadEmail ? `
+                    <div class="info-item">
+                      <div class="info-label">Email</div>
+                      <div class="info-value">${data.leadEmail}</div>
+                    </div>
+                    ` : ""}
+                    ${data.company ? `
+                    <div class="info-item">
+                      <div class="info-label">Company</div>
+                      <div class="info-value">${data.company}</div>
+                    </div>
+                    ` : ""}
+                    ${data.journeyStage ? `
+                    <div class="info-item">
+                      <div class="info-label">Journey Stage</div>
+                      <div class="info-value" style="text-transform: capitalize;">${data.journeyStage}</div>
+                    </div>
+                    ` : ""}
+                  </div>
+                </div>
+                ` : ""}
+
+                ${data.compositeScore !== undefined || data.intentScore !== undefined ? `
+                <div class="section">
+                  <h3>Lead Scores</h3>
+                  <div class="info-grid">
+                    ${data.compositeScore !== undefined ? `
+                    <div class="info-item">
+                      <div class="info-label">Composite Score</div>
+                      <div class="score-highlight">${data.compositeScore}/100</div>
+                    </div>
+                    ` : ""}
+                    ${data.intentScore !== undefined ? `
+                    <div class="info-item">
+                      <div class="info-label">Intent Score</div>
+                      <div class="score-highlight">${data.intentScore}/100</div>
+                    </div>
+                    ` : ""}
+                  </div>
+                </div>
+                ` : ""}
+
+                <div class="cta">
+                  ${data.leadEmail ? `<a href="mailto:${data.leadEmail}?subject=Following up on your ArqAI inquiry" class="primary-btn">Reply to Lead</a>` : ""}
+                  <a href="${process.env.NEXT_PUBLIC_SITE_URL || "https://thearq.ai"}/admin/leads-v2" class="secondary-btn">View in Dashboard</a>
+                </div>
+              </div>
+              <div class="footer">
+                ArqAI Lead Intelligence V2 • Smart Alert System
+              </div>
+            </div>
+          </div>
+        </body>
+      </html>
+    `;
+
+    await resend.emails.send({
+      from: FROM_EMAIL,
+      to: TEAM_EMAIL,
+      subject,
+      html,
+      reply_to: data.leadEmail || undefined,
+    });
+
+    console.log(`Smart alert notification sent: ${data.alertType} (${data.priority})`);
+    return true;
+  } catch (error) {
+    console.error("Failed to send smart alert notification:", error);
+    return false;
+  }
+}
