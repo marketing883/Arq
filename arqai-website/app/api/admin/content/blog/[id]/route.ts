@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 
+// Force dynamic rendering - no caching
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 function getSupabase() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -35,6 +39,14 @@ export async function GET(
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
+    console.log("[Blog GET by ID] Returning item:", {
+      id: data.id,
+      title: data.title,
+      featured_image: data.featured_image,
+      meta_title: data.meta_title,
+      meta_description: data.meta_description,
+      published_at: data.published_at,
+    });
     return NextResponse.json({ item: data });
   } catch (error) {
     console.error("Error in blog GET by ID:", error);
