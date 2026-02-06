@@ -469,6 +469,55 @@ export async function getLeadStats(): Promise<{
 }
 
 /**
+ * Delete a lead and all associated data
+ */
+export async function deleteLead(userId: string): Promise<boolean> {
+  const supabase = getSupabaseClient();
+  if (!supabase) return false;
+
+  try {
+    // Get user to find session_id for cleaning up sessions
+    const { data: user } = await supabase
+      .from("users")
+      .select("session_id")
+      .eq("id", userId)
+      .single();
+
+    // Delete lead intelligence
+    await supabase
+      .from("lead_intelligence")
+      .delete()
+      .eq("user_id", userId);
+
+    // Delete conversations
+    await supabase
+      .from("conversations")
+      .delete()
+      .eq("user_id", userId);
+
+    // Delete sessions if we have a session_id
+    if (user?.session_id) {
+      await supabase
+        .from("sessions")
+        .delete()
+        .eq("session_id", user.session_id);
+    }
+
+    // Delete user
+    const { error } = await supabase
+      .from("users")
+      .delete()
+      .eq("id", userId);
+
+    if (error) throw error;
+    return true;
+  } catch (error) {
+    console.error("Error deleting lead:", error);
+    return false;
+  }
+}
+
+/**
  * Record a session for tracking
  */
 export async function recordSession(

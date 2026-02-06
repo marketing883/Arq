@@ -103,7 +103,31 @@ export default function AdminDashboard() {
   const [filters, setFilters] = useState<Filters>({});
   const [selectedLead, setSelectedLead] = useState<LeadData | null>(null);
   const [viewMode, setViewMode] = useState<"cards" | "table">("cards");
+  const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
   const router = useRouter();
+
+  const handleDeleteLead = async (userId: string) => {
+    setIsDeleting(true);
+    try {
+      const response = await fetch(`/api/admin/leads?userId=${userId}`, {
+        method: "DELETE",
+      });
+      if (response.ok) {
+        setLeads(leads.filter(lead => lead.user.id !== userId));
+        setDeleteConfirm(null);
+        if (selectedLead?.user.id === userId) {
+          setSelectedLead(null);
+        }
+        // Refresh stats
+        fetchData();
+      }
+    } catch (err) {
+      console.error("Failed to delete lead:", err);
+    } finally {
+      setIsDeleting(false);
+    }
+  };
 
   const fetchData = useCallback(async () => {
     try {
@@ -430,10 +454,22 @@ export default function AdminDashboard() {
                     </div>
 
                     {/* Recommended Action */}
-                    <div className="mt-2 p-2 bg-slate-50 rounded">
+                    <div className="mt-2 p-2 bg-slate-50 rounded flex items-center justify-between">
                       <p className="text-[10px] text-slate-500">
                         <span className="font-medium">Action:</span> {priority.action}
                       </p>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setDeleteConfirm(lead.user.id);
+                        }}
+                        className="p-1 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded transition-colors opacity-0 group-hover:opacity-100"
+                        title="Delete lead"
+                      >
+                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                      </button>
                     </div>
                   </motion.div>
                 );
@@ -453,6 +489,7 @@ export default function AdminDashboard() {
                     <th className="text-left px-4 py-3 text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Score</th>
                     <th className="text-left px-4 py-3 text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Priority</th>
                     <th className="text-left px-4 py-3 text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Updated</th>
+                    <th className="text-right px-4 py-3 text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
@@ -505,6 +542,20 @@ export default function AdminDashboard() {
                         </td>
                         <td className="px-4 py-3 text-xs text-slate-500">
                           {new Date(lead.intelligence.updated_at).toLocaleDateString()}
+                        </td>
+                        <td className="px-4 py-3 text-right">
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setDeleteConfirm(lead.user.id);
+                            }}
+                            className="p-1.5 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded transition-colors"
+                            title="Delete lead"
+                          >
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                          </button>
                         </td>
                       </tr>
                     );
@@ -668,6 +719,61 @@ export default function AdminDashboard() {
                       )}
                     </div>
                   </div>
+
+                  {/* Delete Lead */}
+                  <div className="pt-4 border-t border-slate-200">
+                    <button
+                      onClick={() => setDeleteConfirm(selectedLead.user.id)}
+                      className="text-xs text-red-600 hover:text-red-700 font-medium"
+                    >
+                      Delete this lead
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Delete Confirmation Modal */}
+        <AnimatePresence>
+          {deleteConfirm && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/50"
+              onClick={() => !isDeleting && setDeleteConfirm(null)}
+            >
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                className="bg-white rounded-md shadow-xl max-w-md w-full p-6"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <h3 className="text-lg font-semibold text-slate-900 mb-2">Delete Lead</h3>
+                <p className="text-sm text-slate-600 mb-6">
+                  Are you sure you want to delete this lead? This will permanently remove all their data including conversations and intelligence. This action cannot be undone.
+                </p>
+                <div className="flex justify-end gap-3">
+                  <button
+                    onClick={() => setDeleteConfirm(null)}
+                    disabled={isDeleting}
+                    className="px-4 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-300 rounded hover:bg-slate-50 disabled:opacity-50"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={() => handleDeleteLead(deleteConfirm)}
+                    disabled={isDeleting}
+                    className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded hover:bg-red-700 disabled:opacity-50 flex items-center gap-2"
+                  >
+                    {isDeleting && (
+                      <div className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    )}
+                    Delete
+                  </button>
                 </div>
               </motion.div>
             </motion.div>
