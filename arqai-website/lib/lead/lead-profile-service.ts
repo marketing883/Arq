@@ -820,6 +820,138 @@ export async function getLeadProfileStats(): Promise<{
 }
 
 // ============================================
+// BATCH OPERATIONS
+// ============================================
+
+/**
+ * Batch recalculate scores for all profiles
+ * This applies time decay to all signals and updates composite scores
+ * Should be run daily via cron job
+ */
+export async function batchRecalculateAllScores(): Promise<{
+  processed: number;
+  updated: number;
+  errors: number;
+  duration_ms: number;
+}> {
+  const supabase = getSupabaseClient();
+  const startTime = Date.now();
+  const result = { processed: 0, updated: 0, errors: 0, duration_ms: 0 };
+
+  if (!supabase) {
+    console.warn("Supabase not configured for batch recalculation");
+    return result;
+  }
+
+  try {
+    // Get all profile IDs
+    const { data: profiles, error: fetchError } = await supabase
+      .from("lead_profiles")
+      .select("id")
+      .order("updated_at", { ascending: true }); // Process oldest first
+
+    if (fetchError) throw fetchError;
+    if (!profiles || profiles.length === 0) {
+      console.log("No profiles to recalculate");
+      return result;
+    }
+
+    console.log(`Starting batch recalculation for ${profiles.length} profiles`);
+
+    // Process in batches of 10 to avoid overwhelming the database
+    const batchSize = 10;
+    for (let i = 0; i < profiles.length; i += batchSize) {
+      const batch = profiles.slice(i, i + batchSize);
+
+      await Promise.all(
+        batch.map(async (profile) => {
+          result.processed++;
+          try {
+            const updated = await recalculateProfileScores(profile.id);
+            if (updated) {
+              result.updated++;
+            }
+          } catch (err) {
+            result.errors++;
+            console.error(`Error recalculating profile ${profile.id}:`, err);
+          }
+        })
+      );
+
+      // Log progress every 50 profiles
+      if (result.processed % 50 === 0) {
+        console.log(`Batch recalculation progress: ${result.processed}/${profiles.length}`);
+      }
+    }
+
+    result.duration_ms = Date.now() - startTime;
+    console.log(
+      `Batch recalculation complete: ${result.updated}/${result.processed} updated, ${result.errors} errors, ${result.duration_ms}ms`
+    );
+
+    return result;
+  } catch (error) {
+    console.error("Batch recalculation failed:", error);
+    result.duration_ms = Date.now() - startTime;
+    return result;
+  }
+}
+
+/**
+ * Clean up old/expired alerts
+ * Removes dismissed alerts older than 30 days and expired alerts
+ */
+export async function cleanupOldAlerts(): Promise<number> {
+  const supabase = getSupabaseClient();
+  if (!supabase) return 0;
+
+  try {
+    const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
+    const now = new Date().toISOString();
+
+    // Count dismissed alerts older than 30 days before deleting
+    const { count: dismissedCount } = await supabase
+      .from("lead_alerts")
+      .select("*", { count: "exact", head: true })
+      .eq("status", "dismissed")
+      .lt("created_at", thirtyDaysAgo);
+
+    // Delete dismissed alerts older than 30 days
+    if (dismissedCount && dismissedCount > 0) {
+      await supabase
+        .from("lead_alerts")
+        .delete()
+        .eq("status", "dismissed")
+        .lt("created_at", thirtyDaysAgo);
+    }
+
+    // Count expired active alerts before updating
+    const { count: expiredCount } = await supabase
+      .from("lead_alerts")
+      .select("*", { count: "exact", head: true })
+      .eq("status", "active")
+      .lt("expires_at", now);
+
+    // Update expired alerts to dismissed status
+    if (expiredCount && expiredCount > 0) {
+      await supabase
+        .from("lead_alerts")
+        .update({ status: "dismissed" })
+        .eq("status", "active")
+        .lt("expires_at", now);
+    }
+
+    const total = (dismissedCount || 0) + (expiredCount || 0);
+    console.log(`Alert cleanup: ${dismissedCount || 0} deleted, ${expiredCount || 0} expired`);
+
+    return total;
+  } catch (error) {
+    console.error("Alert cleanup failed:", error);
+    return 0;
+  }
+}
+
+// ============================================
 // MIGRATION HELPERS
 // ============================================
 
