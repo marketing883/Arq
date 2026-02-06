@@ -600,6 +600,21 @@ export default function EditBlogPostPage() {
                   className="w-full px-3 py-2 border border-slate-200 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-700 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 />
               </div>
+
+              {/* Publish Date/Time */}
+              <div>
+                <label className="block text-sm font-medium text-slate-700 dark:text-gray-300 mb-1">Publish Date & Time</label>
+                <input
+                  type="datetime-local"
+                  value={formData.published_at ? new Date(formData.published_at).toISOString().slice(0, 16) : ""}
+                  onChange={(e) => setFormData(prev => ({
+                    ...prev,
+                    published_at: e.target.value ? new Date(e.target.value).toISOString() : null
+                  }))}
+                  className="w-full px-3 py-2 border border-slate-200 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-700 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                />
+                <p className="text-xs text-slate-500 dark:text-gray-400 mt-1">Leave empty to use current time when publishing</p>
+              </div>
             </div>
 
             {/* Featured Image */}

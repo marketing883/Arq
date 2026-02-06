@@ -95,7 +95,9 @@ export async function POST(request: Request) {
       tags: body.tags || [],
       author: body.author || "ArqAI Team",
       status: body.status || "draft",
-      published_at: body.status === "published" ? new Date().toISOString() : null,
+      published_at: body.status === "published"
+        ? (body.published_at || new Date().toISOString())
+        : null,
       // SEO fields
       meta_title: body.meta_title || null,
       meta_description: body.meta_description || null,
@@ -174,9 +176,9 @@ export async function PUT(request: Request) {
       tags: body.tags || [],
       author: body.author || "ArqAI Team",
       status: body.status || "draft",
-      published_at: body.status === "published" && !body.published_at
-        ? new Date().toISOString()
-        : body.published_at,
+      published_at: body.status === "published"
+        ? (body.published_at || new Date().toISOString())
+        : (body.published_at || null),
       // SEO fields
       meta_title: body.meta_title || null,
       meta_description: body.meta_description || null,

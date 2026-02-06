@@ -49,6 +49,7 @@ export default function NewBlogPostPage() {
     tags: [] as string[],
     author: "ArqAI Team",
     status: "draft" as "draft" | "published",
+    published_at: "",
   });
   const [tagInput, setTagInput] = useState("");
   const [isUploadingImage, setIsUploadingImage] = useState(false);
@@ -517,6 +518,21 @@ export default function NewBlogPostPage() {
                   onChange={(e) => setFormData(prev => ({ ...prev, author: e.target.value }))}
                   className="w-full px-2.5 py-1.5 border border-slate-200 rounded text-sm bg-white text-slate-900 focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
                 />
+              </div>
+
+              {/* Publish Date/Time */}
+              <div>
+                <label className="block text-xs font-medium text-slate-600 mb-1">Publish Date & Time</label>
+                <input
+                  type="datetime-local"
+                  value={formData.published_at || ""}
+                  onChange={(e) => setFormData(prev => ({
+                    ...prev,
+                    published_at: e.target.value || ""
+                  }))}
+                  className="w-full px-2.5 py-1.5 border border-slate-200 rounded text-sm bg-white text-slate-900 focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                />
+                <p className="text-xs text-slate-400 mt-1">Leave empty to use current time</p>
               </div>
             </div>
 
