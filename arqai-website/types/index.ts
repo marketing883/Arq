@@ -148,3 +148,11 @@ export interface APIResponse<T = unknown> {
   data?: T;
   error?: string;
 }
+
+// ============================================
+// Lead Intelligence V2 Types (Re-export)
+// ============================================
+// The V2 system adds enhanced lead scoring with time-decay,
+// journey tracking, and smart alerts. These are ADDITIVE -
+// all existing types above remain unchanged.
+export * from "./lead-intelligence-v2";
