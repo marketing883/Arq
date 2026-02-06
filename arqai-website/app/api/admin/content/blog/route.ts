@@ -1,6 +1,27 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 
+// Extract clean slug from potentially full URL
+function extractSlug(slugOrUrl: string): string {
+  if (!slugOrUrl) return "";
+  // If it contains /blog/, extract the part after it
+  if (slugOrUrl.includes("/blog/")) {
+    const parts = slugOrUrl.split("/blog/");
+    return parts[parts.length - 1].replace(/\/$/, "");
+  }
+  // If it starts with http, try to get the last path segment
+  if (slugOrUrl.startsWith("http")) {
+    try {
+      const url = new URL(slugOrUrl);
+      const pathParts = url.pathname.split("/").filter(Boolean);
+      return pathParts[pathParts.length - 1] || slugOrUrl;
+    } catch {
+      return slugOrUrl;
+    }
+  }
+  return slugOrUrl;
+}
+
 function getSupabase() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -60,9 +81,13 @@ export async function POST(request: Request) {
     }
 
     // Prepare the data with proper field mapping
+    // Clean the slug to ensure it's not a full URL
+    const cleanSlug = extractSlug(body.slug);
+    console.log("[Blog POST] Cleaned slug:", cleanSlug, "from:", body.slug);
+
     const postData = {
       title: body.title,
-      slug: body.slug,
+      slug: cleanSlug,
       excerpt: body.excerpt || null,
       content: body.content || null,
       featured_image: body.featured_image || body.featuredImage || null,
@@ -135,9 +160,13 @@ export async function PUT(request: Request) {
       }, { status: 400 });
     }
 
+    // Clean the slug to ensure it's not a full URL
+    const cleanSlug = extractSlug(body.slug);
+    console.log("[Blog PUT] Cleaned slug:", cleanSlug, "from:", body.slug);
+
     const updateData = {
       title: body.title,
-      slug: body.slug,
+      slug: cleanSlug,
       excerpt: body.excerpt || null,
       content: body.content || null,
       featured_image: body.featured_image || body.featuredImage || null,
