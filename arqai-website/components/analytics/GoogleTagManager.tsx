@@ -1,59 +1,59 @@
 "use client";
 
 import Script from "next/script";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 const GTM_ID = "GTM-PR74FLRQ";
 
-export function GoogleTagManager() {
-  const [consentGiven, setConsentGiven] = useState(false);
+// Declare gtag on window for TypeScript
+declare global {
+  interface Window {
+    dataLayer: Record<string, unknown>[];
+    gtag: (...args: unknown[]) => void;
+  }
+}
 
+export function GoogleTagManager() {
   useEffect(() => {
-    // Check if analytics consent was given
-    const checkConsent = () => {
+    // Update Google Consent Mode when consent changes
+    const updateConsent = () => {
       const savedConsent = localStorage.getItem("arqai_cookie_consent");
+      let analyticsConsent = false;
+      let marketingConsent = false;
+
       if (savedConsent) {
         try {
           const { categories } = JSON.parse(savedConsent);
-          if (categories?.analytics) {
-            setConsentGiven(true);
-          }
+          analyticsConsent = categories?.analytics ?? false;
+          marketingConsent = categories?.marketing ?? false;
         } catch {
-          // Invalid consent data
+          // Invalid consent data - keep defaults
         }
       }
-    };
 
-    // Check immediately
-    checkConsent();
-
-    // Also listen for consent changes
-    const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === "arqai_cookie_consent") {
-        checkConsent();
+      // Update Google Consent Mode
+      if (typeof window.gtag === "function") {
+        window.gtag("consent", "update", {
+          analytics_storage: analyticsConsent ? "granted" : "denied",
+          ad_storage: marketingConsent ? "granted" : "denied",
+          ad_user_data: marketingConsent ? "granted" : "denied",
+          ad_personalization: marketingConsent ? "granted" : "denied",
+        });
       }
     };
 
-    window.addEventListener("storage", handleStorageChange);
-
-    // Custom event for same-tab consent updates
-    const handleConsentUpdate = () => checkConsent();
+    // Listen for consent changes (initial consent is handled in layout head)
+    const handleConsentUpdate = () => updateConsent();
     window.addEventListener("arqai_consent_updated", handleConsentUpdate);
 
     return () => {
-      window.removeEventListener("storage", handleStorageChange);
       window.removeEventListener("arqai_consent_updated", handleConsentUpdate);
     };
   }, []);
 
-  // Don't load GTM if consent not given
-  if (!consentGiven) {
-    return null;
-  }
-
   return (
     <>
-      {/* Google Tag Manager - Script */}
+      {/* Google Tag Manager - always load, consent mode controls tracking */}
       <Script id="google-tag-manager" strategy="afterInteractive">
         {`
           (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -63,6 +63,7 @@ export function GoogleTagManager() {
           })(window,document,'script','dataLayer','${GTM_ID}');
         `}
       </Script>
+
       {/* Google Tag Manager - noscript fallback */}
       <noscript>
         <iframe

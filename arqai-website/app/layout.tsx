@@ -99,6 +99,39 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&family=Funnel+Sans:ital,wght@0,300..800;1,300..800&display=swap"
           rel="stylesheet"
         />
+        {/* Google Consent Mode initialization - must be in head before GTM */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+
+              // Default consent state - denied until user accepts
+              gtag('consent', 'default', {
+                'analytics_storage': 'denied',
+                'ad_storage': 'denied',
+                'ad_user_data': 'denied',
+                'ad_personalization': 'denied',
+                'wait_for_update': 500
+              });
+
+              // Check if consent was previously given
+              try {
+                var savedConsent = localStorage.getItem('arqai_cookie_consent');
+                if (savedConsent) {
+                  var parsed = JSON.parse(savedConsent);
+                  var categories = parsed.categories || {};
+                  gtag('consent', 'update', {
+                    'analytics_storage': categories.analytics ? 'granted' : 'denied',
+                    'ad_storage': categories.marketing ? 'granted' : 'denied',
+                    'ad_user_data': categories.marketing ? 'granted' : 'denied',
+                    'ad_personalization': categories.marketing ? 'granted' : 'denied'
+                  });
+                }
+              } catch(e) {}
+            `,
+          }}
+        />
       </head>
       <body className="antialiased" suppressHydrationWarning>
         <GoogleTagManager />

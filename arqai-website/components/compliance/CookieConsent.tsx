@@ -49,13 +49,9 @@ export function CookieConsent() {
     localStorage.setItem("arqai_cookie_consent", JSON.stringify(consentData));
     setIsVisible(false);
 
-    // Dispatch custom event for same-tab listeners (like GoogleAnalytics)
+    // Dispatch custom event for same-tab listeners (like GoogleTagManager)
+    // This triggers Google Consent Mode update without needing a page reload
     window.dispatchEvent(new CustomEvent("arqai_consent_updated"));
-
-    // Reload page to ensure GTM loads (Script component needs fresh render)
-    if (categories.analytics) {
-      window.location.reload();
-    }
 
     // Track consent in database (non-blocking)
     fetch("/api/consent", {
