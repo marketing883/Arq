@@ -33,7 +33,10 @@ export function GoogleTagManager() {
       }
     };
 
-    // Listen for consent changes (initial consent is handled in layout head)
+    // Check for existing consent on mount (returning users)
+    updateConsent();
+
+    // Listen for consent changes
     const handleConsentUpdate = () => updateConsent();
     window.addEventListener("arqai_consent_updated", handleConsentUpdate);
 
