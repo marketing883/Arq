@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { trackResourceDownload } from "@/lib/analytics/gtm-events";
 
 interface Whitepaper {
   id: string;
@@ -80,6 +81,15 @@ export default function WhitepapersPage() {
 
       if (!response.ok) {
         throw new Error(data.error || "Failed to process request");
+      }
+
+      // Track file_download event in GTM
+      if (selectedWhitepaper) {
+        trackResourceDownload({
+          resource_title: selectedWhitepaper.title,
+          resource_type: "whitepaper",
+          resource_id: selectedWhitepaper.id,
+        });
       }
 
       window.location.href = `/resources/thank-you?token=${data.token}`;

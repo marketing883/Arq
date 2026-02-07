@@ -8,6 +8,7 @@ import { useParams } from "next/navigation";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { sanitizeHtml } from "@/lib/security/sanitize";
+import { trackResourceDownload } from "@/lib/analytics/gtm-events";
 
 interface Whitepaper {
   id: string;
@@ -90,6 +91,13 @@ export default function WhitepaperDetailPage() {
       if (!response.ok) {
         throw new Error(data.error || "Failed to process request");
       }
+
+      // Track file_download event in GTM
+      trackResourceDownload({
+        resource_title: whitepaper.title,
+        resource_type: "whitepaper",
+        resource_id: whitepaper.id,
+      });
 
       window.location.href = `/resources/thank-you?token=${data.token}`;
     } catch (err) {

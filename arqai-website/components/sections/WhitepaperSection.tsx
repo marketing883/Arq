@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { trackResourceDownload } from "@/lib/analytics/gtm-events";
 
 interface Whitepaper {
   id: string;
@@ -51,6 +52,13 @@ export function WhitepaperSection({ whitepaper }: WhitepaperSectionProps) {
       if (!response.ok) {
         throw new Error(data.error || "Failed to process request");
       }
+
+      // Track file_download event in GTM
+      trackResourceDownload({
+        resource_title: whitepaper.title,
+        resource_type: "whitepaper",
+        resource_id: whitepaper.id,
+      });
 
       window.location.href = `/resources/thank-you?token=${data.token}`;
     } catch (err) {

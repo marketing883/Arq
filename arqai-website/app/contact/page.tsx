@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { Section, LogoAccent } from "@/components/ui/Section";
+import { trackContactFormSubmit } from "@/lib/analytics/gtm-events";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -31,6 +32,13 @@ export default function ContactPage() {
       });
 
       if (response.ok) {
+        // Track generate_lead event in GTM
+        trackContactFormSubmit({
+          name: formData.name,
+          company: formData.company,
+          inquiry_type: formData.inquiryType,
+        });
+
         setSubmitStatus("success");
         setFormData({
           name: "",

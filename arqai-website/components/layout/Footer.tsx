@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { trackNewsletterSignup } from "@/lib/analytics/gtm-events";
 
 const footerNav = [
   { name: "Home", href: "/" },
@@ -55,6 +56,9 @@ export function Footer() {
       if (!response.ok) {
         throw new Error("Subscription failed");
       }
+
+      // Track sign_up event in GTM
+      trackNewsletterSignup("footer");
 
       setSubscribeStatus("success");
       setEmail("");
