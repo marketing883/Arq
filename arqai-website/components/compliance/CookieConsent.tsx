@@ -52,6 +52,11 @@ export function CookieConsent() {
     // Dispatch custom event for same-tab listeners (like GoogleAnalytics)
     window.dispatchEvent(new CustomEvent("arqai_consent_updated"));
 
+    // Reload page to ensure GTM loads (Script component needs fresh render)
+    if (categories.analytics) {
+      window.location.reload();
+    }
+
     // Track consent in database (non-blocking)
     fetch("/api/consent", {
       method: "POST",
