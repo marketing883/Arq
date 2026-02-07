@@ -6,7 +6,8 @@ import { ContentMorpher } from "@/components/morph/ContentMorpher";
 import { MorphProvider } from "@/contexts/MorphContext";
 import { LocaleProvider } from "@/contexts/LocaleContext";
 import { CookieConsent } from "@/components/compliance/CookieConsent";
-import { GoogleTagManager as GTMConsentHandler } from "@/components/analytics/GoogleTagManager";
+// Temporarily disabled for GTM debugging
+// import { GoogleTagManager as GTMConsentHandler } from "@/components/analytics/GoogleTagManager";
 
 const GTM_ID = "GTM-PR74FLRQ";
 
@@ -96,15 +97,6 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {/* Consent Mode v2 defaults - must be before GTM */}
-        <Script
-          id="consent-defaults"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
-gtag('consent','default',{'analytics_storage':'denied','ad_storage':'denied','ad_user_data':'denied','ad_personalization':'denied'});`,
-          }}
-        />
         {/* Google Tag Manager */}
         <Script
           id="gtm"
@@ -133,8 +125,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             __html: `<iframe src="https://www.googletagmanager.com/ns.html?id=${GTM_ID}" height="0" width="0" style="display:none;visibility:hidden"></iframe>`,
           }}
         />
-        {/* Updates consent when user accepts cookies */}
-        <GTMConsentHandler />
         <LocaleProvider>
           <MorphProvider>
             {children}
