@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import Script from "next/script";
 import "./globals.css";
 import { ChatWidget } from "@/components/chat/ChatWidget";
 import { ContentMorpher } from "@/components/morph/ContentMorpher";
@@ -97,10 +96,8 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {/* Google Tag Manager */}
-        <Script
-          id="gtm"
-          strategy="beforeInteractive"
+        {/* Google Tag Manager - raw script for true synchronous head execution */}
+        <script
           dangerouslySetInnerHTML={{
             __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
