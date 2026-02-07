@@ -8,12 +8,7 @@
  * that GTM tags can use via Data Layer Variables.
  */
 
-// Ensure dataLayer exists
-declare global {
-  interface Window {
-    dataLayer: Record<string, unknown>[];
-  }
-}
+// Types are declared in types/gtm.d.ts
 
 /**
  * Check if analytics consent has been given

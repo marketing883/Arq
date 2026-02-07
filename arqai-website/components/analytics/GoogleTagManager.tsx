@@ -2,15 +2,7 @@
 
 import { useEffect } from "react";
 
-const GTM_ID = "GTM-PR74FLRQ";
-
-// Declare gtag on window for TypeScript
-declare global {
-  interface Window {
-    dataLayer: Record<string, unknown>[];
-    gtag: (...args: unknown[]) => void;
-  }
-}
+// Types are declared in types/gtm.d.ts
 
 export function GoogleTagManager() {
   useEffect(() => {

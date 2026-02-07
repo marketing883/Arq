@@ -5,7 +5,8 @@ import { ContentMorpher } from "@/components/morph/ContentMorpher";
 import { MorphProvider } from "@/contexts/MorphContext";
 import { LocaleProvider } from "@/contexts/LocaleContext";
 import { CookieConsent } from "@/components/compliance/CookieConsent";
-import { GoogleTagManager } from "@/components/analytics/GoogleTagManager";
+import { GoogleTagManager as GTMComponent } from "@/components/analytics/GoogleTagManager";
+import { GoogleTagManager } from "@next/third-parties/google";
 
 const GTM_ID = "GTM-PR74FLRQ";
 
@@ -95,16 +96,6 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {/* Google Tag Manager - MUST be as high in head as possible */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','${GTM_ID}');`,
-          }}
-        />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
@@ -113,16 +104,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         />
       </head>
       <body className="antialiased" suppressHydrationWarning>
-        {/* Google Tag Manager (noscript) - immediately after opening body tag */}
-        <noscript>
-          <iframe
-            src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
-            height="0"
-            width="0"
-            style={{ display: "none", visibility: "hidden" }}
-          />
-        </noscript>
-        <GoogleTagManager />
+        {/* Official Next.js GTM integration handles both script and noscript */}
+        <GoogleTagManager gtmId={GTM_ID} />
+        <GTMComponent />
         <LocaleProvider>
           <MorphProvider>
             {children}
