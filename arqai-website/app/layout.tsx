@@ -96,38 +96,25 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {/* GTM - Must be first in head for proper initialization */}
+        {/* Consent Mode v2 defaults - must be before GTM */}
         <Script
-          id="gtm-consent-init"
+          id="consent-defaults"
           strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
-            __html: `
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-window.gtag = gtag;
-gtag('consent', 'default', {
-  'analytics_storage': 'denied',
-  'ad_storage': 'denied',
-  'ad_user_data': 'denied',
-  'ad_personalization': 'denied',
-  'wait_for_update': 500
-});
-gtag('set', 'ads_data_redaction', true);
-gtag('set', 'url_passthrough', true);
-`,
+            __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag('consent','default',{'analytics_storage':'denied','ad_storage':'denied','ad_user_data':'denied','ad_personalization':'denied'});`,
           }}
         />
+        {/* Google Tag Manager */}
         <Script
-          id="gtm-main"
+          id="gtm"
           strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
-            __html: `
-(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','${GTM_ID}');
-`,
+})(window,document,'script','dataLayer','${GTM_ID}');`,
           }}
         />
         <link rel="preconnect" href="https://www.googletagmanager.com" />
@@ -140,17 +127,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         />
       </head>
       <body className="antialiased" suppressHydrationWarning>
-        {/* GTM NoScript fallback - must be first in body */}
-        <noscript>
-          <iframe
-            src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
-            height="0"
-            width="0"
-            style={{ display: 'none', visibility: 'hidden' }}
-            title="Google Tag Manager"
-          />
-        </noscript>
-        {/* GTM Consent Handler - updates consent when user accepts cookies */}
+        {/* Google Tag Manager (noscript) */}
+        <noscript
+          dangerouslySetInnerHTML={{
+            __html: `<iframe src="https://www.googletagmanager.com/ns.html?id=${GTM_ID}" height="0" width="0" style="display:none;visibility:hidden"></iframe>`,
+          }}
+        />
+        {/* Updates consent when user accepts cookies */}
         <GTMConsentHandler />
         <LocaleProvider>
           <MorphProvider>
