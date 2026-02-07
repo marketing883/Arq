@@ -64,9 +64,11 @@ export function trackGenerateLead(params: {
 }): void {
   pushToDataLayer({
     event: "generate_lead",
-    event_category: "Lead Generation",
-    event_label: params.form_name || "Contact Form",
-    event_value: params.value,
+    // GTM Data Layer Variables (camelCase for GTM compatibility)
+    eventCategory: "Lead Generation",
+    eventAction: "form_submit",
+    eventLabel: params.form_name || "Contact Form",
+    eventValue: params.value,
     // GA4 standard parameters
     value: params.value || 0,
     currency: params.currency || "USD",
@@ -89,9 +91,11 @@ export function trackSignUp(params: {
 }): void {
   pushToDataLayer({
     event: "sign_up",
-    event_category: "User Engagement",
-    event_label: params.source || "Newsletter",
-    event_value: undefined,
+    // GTM Data Layer Variables (camelCase for GTM compatibility)
+    eventCategory: "User Engagement",
+    eventAction: "signup",
+    eventLabel: params.source || "Newsletter",
+    eventValue: undefined,
     // GA4 standard parameters
     method: params.method || "newsletter",
     // Custom parameters
@@ -113,9 +117,11 @@ export function trackFileDownload(params: {
 }): void {
   pushToDataLayer({
     event: "file_download",
-    event_category: "Resource Downloads",
-    event_label: params.file_name,
-    event_value: undefined,
+    // GTM Data Layer Variables (camelCase for GTM compatibility)
+    eventCategory: params.resource_type || "Resource Downloads",
+    eventAction: "download",
+    eventLabel: params.file_name,
+    eventValue: undefined,
     // GA4 standard parameters
     file_name: params.file_name,
     file_extension: params.file_extension || "pdf",
@@ -135,11 +141,15 @@ export function trackContactFormSubmit(params: {
   company?: string;
   inquiry_type?: string;
 }): void {
+  const eventValue = params.company ? 100 : 50; // Higher value for B2B leads
+
   pushToDataLayer({
     event: "contact_form_submit",
-    event_category: "Lead Generation",
-    event_label: params.inquiry_type || "General Inquiry",
-    event_value: params.company ? 100 : 50, // Higher value for B2B leads
+    // GTM Data Layer Variables (camelCase for GTM compatibility)
+    eventCategory: "Lead Generation",
+    eventAction: "form_submit",
+    eventLabel: params.inquiry_type || "General Inquiry",
+    eventValue: eventValue,
     // Custom parameters
     inquiry_type: params.inquiry_type,
     has_company: !!params.company,
@@ -149,7 +159,7 @@ export function trackContactFormSubmit(params: {
   trackGenerateLead({
     form_name: "Contact Form",
     inquiry_type: params.inquiry_type,
-    value: params.company ? 100 : 50,
+    value: eventValue,
   });
 }
 
@@ -162,12 +172,16 @@ export function trackResourceDownload(params: {
   resource_type: string;
   resource_id?: string;
 }): void {
+  // Fire the resource_download event (matches GTM trigger name)
   pushToDataLayer({
-    event: "resource_download_form",
-    event_category: "Resource Downloads",
-    event_label: params.resource_title,
-    event_value: undefined,
+    event: "resource_download",
+    // GTM Data Layer Variables (camelCase for GTM compatibility)
+    eventCategory: params.resource_type || "Resource Downloads",
+    eventAction: "download_request",
+    eventLabel: params.resource_title,
+    eventValue: undefined,
     // Custom parameters
+    resource_title: params.resource_title,
     resource_type: params.resource_type,
     resource_id: params.resource_id,
   });
@@ -187,9 +201,11 @@ export function trackResourceDownload(params: {
 export function trackNewsletterSignup(source: string = "footer"): void {
   pushToDataLayer({
     event: "newsletter_signup",
-    event_category: "User Engagement",
-    event_label: source,
-    event_value: undefined,
+    // GTM Data Layer Variables (camelCase for GTM compatibility)
+    eventCategory: "User Engagement",
+    eventAction: "newsletter_subscribe",
+    eventLabel: source,
+    eventValue: undefined,
     signup_source: source,
   });
 
@@ -197,5 +213,28 @@ export function trackNewsletterSignup(source: string = "footer"): void {
   trackSignUp({
     method: "newsletter",
     source: source,
+  });
+}
+
+/**
+ * Track chat message interaction
+ * Maps to GTM trigger for "Chat Message"
+ */
+export function trackChatMessage(params: {
+  message_count?: number;
+  session_id?: string;
+  engagement_level?: "low" | "medium" | "high";
+}): void {
+  pushToDataLayer({
+    event: "chat_message",
+    // GTM Data Layer Variables (camelCase for GTM compatibility)
+    eventCategory: "Chat",
+    eventAction: "message_sent",
+    eventLabel: params.engagement_level || "interaction",
+    eventValue: params.message_count,
+    // Custom parameters
+    message_count: params.message_count,
+    session_id: params.session_id,
+    engagement_level: params.engagement_level,
   });
 }

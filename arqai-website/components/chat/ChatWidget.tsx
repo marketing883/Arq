@@ -9,6 +9,7 @@ import { FallbackForm } from "./FallbackForm";
 import { LogoIcon } from "@/components/layout/Logo";
 import { MinimizeIcon } from "@/components/ui/Icons";
 import { GREETING_MESSAGES } from "@/lib/ai/knowledge-base";
+import { trackChatMessage } from "@/lib/analytics/gtm-events";
 
 interface Message {
   id: string;
@@ -233,6 +234,13 @@ export function ChatWidget() {
 
       setMessages((prev) => [...prev, assistantMessage]);
       setErrorCount(0);
+
+      // Track chat interaction in GTM
+      trackChatMessage({
+        message_count: messages.length + 2, // +2 for the new user and assistant messages
+        session_id: sessionId || undefined,
+        engagement_level: contextSummary?.engagementLevel,
+      });
 
       // Handle morph trigger with customizations
       if (data.morphTrigger) {
