@@ -1,6 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import Script from "next/script";
-import { GoogleTagManager } from "@next/third-parties/google";
 import "./globals.css";
 import { ChatWidget } from "@/components/chat/ChatWidget";
 import { ContentMorpher } from "@/components/morph/ContentMorpher";
@@ -8,8 +6,7 @@ import { MorphProvider } from "@/contexts/MorphContext";
 import { LocaleProvider } from "@/contexts/LocaleContext";
 import { CookieConsent } from "@/components/compliance/CookieConsent";
 import { GoogleTagManager as GTMConsentHandler } from "@/components/analytics/GoogleTagManager";
-
-const GTM_ID = "GTM-PR74FLRQ";
+import { GTMScript, GTMNoScript } from "@/components/analytics/GTMScript";
 
 export const metadata: Metadata = {
   title: {
@@ -107,15 +104,11 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased" suppressHydrationWarning>
-        {/* Google Consent Mode Default - must be before GTM */}
-        <Script
-          id="gtm-consent-default"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('consent','default',{'analytics_storage':'denied','ad_storage':'denied','ad_user_data':'denied','ad_personalization':'denied','wait_for_update':500});`,
-          }}
-        />
-        <GoogleTagManager gtmId={GTM_ID} />
+        {/* GTM NoScript fallback - must be first in body */}
+        <GTMNoScript />
+        {/* GTM Script with Consent Mode v2 */}
+        <GTMScript />
+        {/* GTM Consent Handler - updates consent when user accepts cookies */}
         <GTMConsentHandler />
         <LocaleProvider>
           <MorphProvider>
