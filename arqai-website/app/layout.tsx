@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import "./globals.css";
 import { ChatWidget } from "@/components/chat/ChatWidget";
 import { ContentMorpher } from "@/components/morph/ContentMorpher";
@@ -6,7 +7,8 @@ import { MorphProvider } from "@/contexts/MorphContext";
 import { LocaleProvider } from "@/contexts/LocaleContext";
 import { CookieConsent } from "@/components/compliance/CookieConsent";
 import { GoogleTagManager as GTMConsentHandler } from "@/components/analytics/GoogleTagManager";
-import { GTMScript, GTMNoScript } from "@/components/analytics/GTMScript";
+
+const GTM_ID = "GTM-PR74FLRQ";
 
 export const metadata: Metadata = {
   title: {
@@ -94,6 +96,40 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        {/* GTM - Must be first in head for proper initialization */}
+        <Script
+          id="gtm-consent-init"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+window.gtag = gtag;
+gtag('consent', 'default', {
+  'analytics_storage': 'denied',
+  'ad_storage': 'denied',
+  'ad_user_data': 'denied',
+  'ad_personalization': 'denied',
+  'wait_for_update': 500
+});
+gtag('set', 'ads_data_redaction', true);
+gtag('set', 'url_passthrough', true);
+`,
+          }}
+        />
+        <Script
+          id="gtm-main"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','${GTM_ID}');
+`,
+          }}
+        />
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -105,9 +141,15 @@ export default function RootLayout({
       </head>
       <body className="antialiased" suppressHydrationWarning>
         {/* GTM NoScript fallback - must be first in body */}
-        <GTMNoScript />
-        {/* GTM Script with Consent Mode v2 */}
-        <GTMScript />
+        <noscript>
+          <iframe
+            src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
+            height="0"
+            width="0"
+            style={{ display: 'none', visibility: 'hidden' }}
+            title="Google Tag Manager"
+          />
+        </noscript>
         {/* GTM Consent Handler - updates consent when user accepts cookies */}
         <GTMConsentHandler />
         <LocaleProvider>
