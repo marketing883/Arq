@@ -13,7 +13,7 @@ const GTM_ID = "GTM-PR74FLRQ";
  * 3. Set default consent state (denied for privacy)
  * 4. Set ads_data_redaction and url_passthrough for enhanced privacy
  * 5. Push gtm.start event (BEFORE script loads - required by GTM)
- * 6. Dynamically load GTM script
+ * 6. Load GTM script via Next.js Script component
  *
  * The consent handler component (GoogleTagManager.tsx) updates consent
  * when users accept cookies.
@@ -21,57 +21,40 @@ const GTM_ID = "GTM-PR74FLRQ";
 export function GTMScript() {
   return (
     <>
-      {/*
-        Complete GTM initialization with Consent Mode v2
-        Following Google's recommended implementation order:
-        1. Initialize dataLayer
-        2. Define gtag function
-        3. Set default consent state
-        4. Push gtm.start event
-        5. Load GTM script
-      */}
+      {/* Step 1-5: Initialize dataLayer, gtag, consent, and gtm.start event */}
       <Script
         id="gtm-init"
         strategy="beforeInteractive"
         dangerouslySetInnerHTML={{
           __html: `
-(function(w,d,s,l,i){
-  // Initialize dataLayer
-  w[l]=w[l]||[];
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+window.gtag = gtag;
 
-  // Define gtag function
-  function gtag(){w[l].push(arguments);}
-  w.gtag = gtag;
+// Consent Mode v2 - default denied for GDPR compliance
+gtag('consent', 'default', {
+  'analytics_storage': 'denied',
+  'ad_storage': 'denied',
+  'ad_user_data': 'denied',
+  'ad_personalization': 'denied',
+  'wait_for_update': 500
+});
 
-  // Set default consent state (Consent Mode v2)
-  // All consent denied by default for GDPR/privacy compliance
-  gtag('consent', 'default', {
-    'analytics_storage': 'denied',
-    'ad_storage': 'denied',
-    'ad_user_data': 'denied',
-    'ad_personalization': 'denied',
-    'wait_for_update': 500
-  });
+// Enhanced privacy settings
+gtag('set', 'ads_data_redaction', true);
+gtag('set', 'url_passthrough', true);
 
-  // Set ads_data_redaction for enhanced privacy when consent is denied
-  gtag('set', 'ads_data_redaction', true);
-
-  // Enable URL passthrough for measurement without cookies
-  gtag('set', 'url_passthrough', true);
-
-  // Push GTM start event (must be before script loads)
-  w[l].push({'gtm.start': new Date().getTime(), event: 'gtm.js'});
-
-  // Load GTM script
-  var f=d.getElementsByTagName(s)[0],
-      j=d.createElement(s),
-      dl=l!='dataLayer'?'&l='+l:'';
-  j.async=true;
-  j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
-  f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','${GTM_ID}');
+// GTM start event - MUST be pushed before gtm.js loads
+dataLayer.push({'gtm.start': new Date().getTime(), event: 'gtm.js'});
 `.trim(),
         }}
+      />
+
+      {/* Step 6: Load GTM script */}
+      <Script
+        id="gtm-script"
+        strategy="afterInteractive"
+        src={`https://www.googletagmanager.com/gtm.js?id=${GTM_ID}`}
       />
     </>
   );
