@@ -856,7 +856,7 @@
 
 .blog-content ol {
   list-style-type: decimal !important;
-  counter-reset: none;
+  counter-reset: list-item;
 }
 
 .blog-content li {
@@ -864,6 +864,10 @@
   margin-bottom: 0.375rem;
   line-height: 1.7;
   display: list-item !important;
+}
+
+.blog-content ol > li {
+  counter-increment: list-item;
 }
 
 .blog-content blockquote {
