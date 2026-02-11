@@ -870,6 +870,10 @@
   counter-increment: list-item;
 }
 
+.blog-content ol > li::marker {
+  content: counter(list-item) ". ";
+}
+
 .blog-content blockquote {
   border-left: 4px solid var(--accent);
   padding-left: 1.25rem;
