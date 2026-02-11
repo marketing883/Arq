@@ -12953,7 +12953,7 @@ form textarea:required:valid {
 }
 
 .mxd-article__content ol {
-  list-style: decimal inside;
+  list-style: none;
   display: -webkit-box;
   display: -moz-box;
   display: -ms-flexbox;
@@ -12969,6 +12969,7 @@ form textarea:required:valid {
       -ms-flex-align: start;
           align-items: flex-start;
   gap: 1rem;
+  counter-reset: list-counter;
 }
 .mxd-article__content ol:not(:has(ol, ul)) {
   gap: 0;
@@ -12976,6 +12977,11 @@ form textarea:required:valid {
 .mxd-article__content ol li {
   font: normal var(--fw-regular) 1.8rem/1.6 var(--_font-accent);
   color: var(--t-medium);
+  counter-increment: list-counter;
+}
+.mxd-article__content ol li::before {
+  content: counter(list-counter) ". ";
+  font-weight: var(--fw-medium);
 }
 .mxd-article__content ol li span {
   font-weight: var(--fw-semibold);
