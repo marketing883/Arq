@@ -11,10 +11,13 @@ interface TiptapEditorProps {
   content: string;
   onChange: (content: string) => void;
   placeholder?: string;
+  maxHeight?: string;
 }
 
-export function TiptapEditor({ content, onChange, placeholder = "Start writing..." }: TiptapEditorProps) {
+export function TiptapEditor({ content, onChange, placeholder = "Start writing...", maxHeight = "500px" }: TiptapEditorProps) {
   const [isUploading, setIsUploading] = useState(false);
+  const [isHtmlMode, setIsHtmlMode] = useState(false);
+  const [htmlContent, setHtmlContent] = useState(content);
   const isInternalChange = useRef(false);
 
   const editor = useEditor({
@@ -45,14 +48,36 @@ export function TiptapEditor({ content, onChange, placeholder = "Start writing..
     content,
     onUpdate: ({ editor }) => {
       isInternalChange.current = true;
-      onChange(editor.getHTML());
+      const html = editor.getHTML();
+      setHtmlContent(html);
+      onChange(html);
     },
     editorProps: {
       attributes: {
-        class: "editor-content max-w-none focus:outline-none min-h-[400px] px-4 py-3",
+        class: "editor-content max-w-none focus:outline-none min-h-[300px] px-4 py-3",
       },
     },
   });
+
+  // Toggle between HTML and rich text mode
+  const toggleHtmlMode = useCallback(() => {
+    if (isHtmlMode && editor) {
+      // Switching from HTML to rich text - apply HTML content to editor
+      editor.commands.setContent(htmlContent, { emitUpdate: false });
+      onChange(htmlContent);
+    } else if (editor) {
+      // Switching from rich text to HTML - get current editor content
+      setHtmlContent(editor.getHTML());
+    }
+    setIsHtmlMode(!isHtmlMode);
+  }, [isHtmlMode, editor, htmlContent, onChange]);
+
+  // Handle HTML textarea changes
+  const handleHtmlChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const newHtml = e.target.value;
+    setHtmlContent(newHtml);
+    onChange(newHtml);
+  }, [onChange]);
 
   // Sync external content changes to the editor
   useEffect(() => {
@@ -68,8 +93,16 @@ export function TiptapEditor({ content, onChange, placeholder = "Start writing..
     const currentContent = editor.getHTML();
     if (content !== currentContent) {
       editor.commands.setContent(content, { emitUpdate: false });
+      setHtmlContent(content);
     }
   }, [content, editor]);
+
+  // Sync htmlContent when switching back from HTML mode
+  useEffect(() => {
+    if (!isHtmlMode) {
+      setHtmlContent(content);
+    }
+  }, [content, isHtmlMode]);
 
   const handleImageUpload = useCallback(async (file: File) => {
     if (!editor) return;
@@ -165,10 +198,11 @@ export function TiptapEditor({ content, onChange, placeholder = "Start writing..
       {/* Toolbar */}
       <div className="border-b border-slate-200 bg-slate-50 p-2 flex flex-wrap gap-1">
         {/* Text Formatting */}
-        <div className="flex gap-1 pr-2 border-r border-slate-200">
+        <div className={`flex gap-1 pr-2 border-r border-slate-200 ${isHtmlMode ? "opacity-50 pointer-events-none" : ""}`}>
           <button
             type="button"
             onClick={() => editor.chain().focus().toggleBold().run()}
+            disabled={isHtmlMode}
             className={`p-2 rounded hover:bg-slate-200 ${editor.isActive("bold") ? "bg-slate-200" : ""}`}
             title="Bold"
           >
@@ -180,6 +214,7 @@ export function TiptapEditor({ content, onChange, placeholder = "Start writing..
           <button
             type="button"
             onClick={() => editor.chain().focus().toggleItalic().run()}
+            disabled={isHtmlMode}
             className={`p-2 rounded hover:bg-slate-200 ${editor.isActive("italic") ? "bg-slate-200" : ""}`}
             title="Italic"
           >
@@ -192,6 +227,7 @@ export function TiptapEditor({ content, onChange, placeholder = "Start writing..
           <button
             type="button"
             onClick={() => editor.chain().focus().toggleStrike().run()}
+            disabled={isHtmlMode}
             className={`p-2 rounded hover:bg-slate-200 ${editor.isActive("strike") ? "bg-slate-200" : ""}`}
             title="Strikethrough"
           >
@@ -203,10 +239,11 @@ export function TiptapEditor({ content, onChange, placeholder = "Start writing..
         </div>
 
         {/* Headings */}
-        <div className="flex gap-1 pr-2 border-r border-slate-200">
+        <div className={`flex gap-1 pr-2 border-r border-slate-200 ${isHtmlMode ? "opacity-50 pointer-events-none" : ""}`}>
           <button
             type="button"
             onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
+            disabled={isHtmlMode}
             className={`p-2 rounded hover:bg-slate-200 text-sm font-bold ${editor.isActive("heading", { level: 1 }) ? "bg-slate-200" : ""}`}
             title="Heading 1"
           >
@@ -215,6 +252,7 @@ export function TiptapEditor({ content, onChange, placeholder = "Start writing..
           <button
             type="button"
             onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
+            disabled={isHtmlMode}
             className={`p-2 rounded hover:bg-slate-200 text-sm font-bold ${editor.isActive("heading", { level: 2 }) ? "bg-slate-200" : ""}`}
             title="Heading 2"
           >
@@ -223,6 +261,7 @@ export function TiptapEditor({ content, onChange, placeholder = "Start writing..
           <button
             type="button"
             onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
+            disabled={isHtmlMode}
             className={`p-2 rounded hover:bg-slate-200 text-sm font-bold ${editor.isActive("heading", { level: 3 }) ? "bg-slate-200" : ""}`}
             title="Heading 3"
           >
@@ -231,10 +270,11 @@ export function TiptapEditor({ content, onChange, placeholder = "Start writing..
         </div>
 
         {/* Lists */}
-        <div className="flex gap-1 pr-2 border-r border-slate-200">
+        <div className={`flex gap-1 pr-2 border-r border-slate-200 ${isHtmlMode ? "opacity-50 pointer-events-none" : ""}`}>
           <button
             type="button"
             onClick={() => editor.chain().focus().toggleBulletList().run()}
+            disabled={isHtmlMode}
             className={`p-2 rounded hover:bg-slate-200 ${editor.isActive("bulletList") ? "bg-slate-200" : ""}`}
             title="Bullet List"
           >
@@ -245,6 +285,7 @@ export function TiptapEditor({ content, onChange, placeholder = "Start writing..
           <button
             type="button"
             onClick={() => editor.chain().focus().toggleOrderedList().run()}
+            disabled={isHtmlMode}
             className={`p-2 rounded hover:bg-slate-200 ${editor.isActive("orderedList") ? "bg-slate-200" : ""}`}
             title="Numbered List"
           >
@@ -255,10 +296,11 @@ export function TiptapEditor({ content, onChange, placeholder = "Start writing..
         </div>
 
         {/* Block Elements */}
-        <div className="flex gap-1 pr-2 border-r border-slate-200">
+        <div className={`flex gap-1 pr-2 border-r border-slate-200 ${isHtmlMode ? "opacity-50 pointer-events-none" : ""}`}>
           <button
             type="button"
             onClick={() => editor.chain().focus().toggleBlockquote().run()}
+            disabled={isHtmlMode}
             className={`p-2 rounded hover:bg-slate-200 ${editor.isActive("blockquote") ? "bg-slate-200" : ""}`}
             title="Quote"
           >
@@ -269,6 +311,7 @@ export function TiptapEditor({ content, onChange, placeholder = "Start writing..
           <button
             type="button"
             onClick={() => editor.chain().focus().toggleCodeBlock().run()}
+            disabled={isHtmlMode}
             className={`p-2 rounded hover:bg-slate-200 ${editor.isActive("codeBlock") ? "bg-slate-200" : ""}`}
             title="Code Block"
           >
@@ -279,10 +322,11 @@ export function TiptapEditor({ content, onChange, placeholder = "Start writing..
         </div>
 
         {/* Links & Media */}
-        <div className="flex gap-1 pr-2 border-r border-slate-200">
+        <div className={`flex gap-1 pr-2 border-r border-slate-200 ${isHtmlMode ? "opacity-50 pointer-events-none" : ""}`}>
           <button
             type="button"
             onClick={setLink}
+            disabled={isHtmlMode}
             className={`p-2 rounded hover:bg-slate-200 ${editor.isActive("link") ? "bg-slate-200" : ""}`}
             title="Add Link"
           >
@@ -293,7 +337,7 @@ export function TiptapEditor({ content, onChange, placeholder = "Start writing..
           <button
             type="button"
             onClick={addImage}
-            disabled={isUploading}
+            disabled={isUploading || isHtmlMode}
             className="p-2 rounded hover:bg-slate-200 disabled:opacity-50"
             title="Upload Image"
           >
@@ -308,7 +352,8 @@ export function TiptapEditor({ content, onChange, placeholder = "Start writing..
           <button
             type="button"
             onClick={addImageFromUrl}
-            className="p-2 rounded hover:bg-slate-200"
+            disabled={isHtmlMode}
+            className="p-2 rounded hover:bg-slate-200 disabled:opacity-50"
             title="Image from URL"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -318,7 +363,8 @@ export function TiptapEditor({ content, onChange, placeholder = "Start writing..
           <button
             type="button"
             onClick={addYoutubeVideo}
-            className="p-2 rounded hover:bg-slate-200"
+            disabled={isHtmlMode}
+            className="p-2 rounded hover:bg-slate-200 disabled:opacity-50"
             title="YouTube Video"
           >
             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -328,11 +374,11 @@ export function TiptapEditor({ content, onChange, placeholder = "Start writing..
         </div>
 
         {/* Undo/Redo */}
-        <div className="flex gap-1">
+        <div className={`flex gap-1 pr-2 border-r border-slate-200 ${isHtmlMode ? "opacity-50 pointer-events-none" : ""}`}>
           <button
             type="button"
             onClick={() => editor.chain().focus().undo().run()}
-            disabled={!editor.can().undo()}
+            disabled={!editor.can().undo() || isHtmlMode}
             className="p-2 rounded hover:bg-slate-200 disabled:opacity-30"
             title="Undo"
           >
@@ -343,7 +389,7 @@ export function TiptapEditor({ content, onChange, placeholder = "Start writing..
           <button
             type="button"
             onClick={() => editor.chain().focus().redo().run()}
-            disabled={!editor.can().redo()}
+            disabled={!editor.can().redo() || isHtmlMode}
             className="p-2 rounded hover:bg-slate-200 disabled:opacity-30"
             title="Redo"
           >
@@ -352,10 +398,41 @@ export function TiptapEditor({ content, onChange, placeholder = "Start writing..
             </svg>
           </button>
         </div>
+
+        {/* HTML Mode Toggle */}
+        <div className="flex gap-1 ml-auto">
+          <button
+            type="button"
+            onClick={toggleHtmlMode}
+            className={`px-3 py-1 rounded text-sm font-medium transition-colors ${
+              isHtmlMode
+                ? "bg-blue-600 text-white hover:bg-blue-700"
+                : "bg-slate-100 text-slate-700 hover:bg-slate-200"
+            }`}
+            title={isHtmlMode ? "Switch to Rich Text" : "Switch to HTML"}
+          >
+            {isHtmlMode ? "Rich Text" : "HTML"}
+          </button>
+        </div>
       </div>
 
       {/* Editor Content */}
-      <EditorContent editor={editor} />
+      {isHtmlMode ? (
+        <div className="overflow-auto" style={{ maxHeight }}>
+          <textarea
+            value={htmlContent}
+            onChange={handleHtmlChange}
+            className="w-full min-h-[300px] h-full p-4 font-mono text-sm bg-slate-900 text-slate-100 focus:outline-none resize-none"
+            style={{ minHeight: maxHeight }}
+            placeholder="Enter HTML content..."
+            spellCheck={false}
+          />
+        </div>
+      ) : (
+        <div className="overflow-auto" style={{ maxHeight }}>
+          <EditorContent editor={editor} />
+        </div>
+      )}
     </div>
   );
 }
