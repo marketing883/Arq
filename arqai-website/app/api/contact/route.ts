@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
 import { sendContactFormNotification, sendUserConfirmation } from "@/lib/email/resend";
 import { applyRateLimit } from "@/lib/security/rate-limiter";
+import { validateAntiSpam } from "@/lib/security/anti-spam";
 import { analyzeLeadIntel, getIntentBasedEmailContent } from "@/lib/ai/lead-intel";
 import { getOrCreateLeadProfile, recordTouchpointEvent } from "@/lib/lead/lead-profile-service";
 
@@ -34,7 +35,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { name, email, company, jobTitle, message, inquiryType } = body;
+    const { name, email, company, jobTitle, message, inquiryType, website_url, _formLoadedAt } = body;
 
     // Validate required fields
     if (!name || !email || !company || !jobTitle || !message) {
@@ -51,6 +52,15 @@ export async function POST(request: NextRequest) {
         { error: "Invalid email address" },
         { status: 400 }
       );
+    }
+
+    // Anti-spam validation (honeypot, timing, work email)
+    const spamCheck = validateAntiSpam({ email, website_url, _formLoadedAt });
+    if (!spamCheck.passed) {
+      if (spamCheck.silent) {
+        return NextResponse.json({ success: true }); // Silently reject bots
+      }
+      return NextResponse.json({ error: spamCheck.error }, { status: 400 });
     }
 
     // Run AI analysis on the lead (non-blocking if it fails)

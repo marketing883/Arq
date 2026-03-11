@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import crypto from "crypto";
 import { applyRateLimit } from "@/lib/security/rate-limiter";
+import { validateAntiSpam } from "@/lib/security/anti-spam";
 import { getOrCreateLeadProfile, recordTouchpointEvent } from "@/lib/lead/lead-profile-service";
 
 function getSupabase() {
@@ -18,7 +19,7 @@ function generateToken(): string {
 export async function POST(request: NextRequest) {
   try {
     // Apply rate limiting
-    const rateLimitResult = applyRateLimit(request, "/api/resources/download", "api");
+    const rateLimitResult = applyRateLimit(request, "/api/resources/download", "sensitive");
     if (!rateLimitResult.allowed) {
       return NextResponse.json(
         { error: "Too many requests. Please try again later." },
@@ -27,10 +28,25 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { name, email, company, job_title, resource_id, resource_type } = body;
+    const { name, email, company, job_title, resource_id, resource_type, website_url, _formLoadedAt } = body;
 
     if (!name || !email || !resource_id || !resource_type) {
       return NextResponse.json({ error: "Name, email, resource ID, and resource type are required" }, { status: 400 });
+    }
+
+    // Email format validation (was missing)
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return NextResponse.json({ error: "Invalid email address" }, { status: 400 });
+    }
+
+    // Anti-spam validation (honeypot, timing, work email)
+    const spamCheck = validateAntiSpam({ email, website_url, _formLoadedAt });
+    if (!spamCheck.passed) {
+      if (spamCheck.silent) {
+        return NextResponse.json({ success: true, token: "invalid", expires_at: new Date().toISOString() });
+      }
+      return NextResponse.json({ error: spamCheck.error }, { status: 400 });
     }
 
     const token = generateToken();

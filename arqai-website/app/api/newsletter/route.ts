@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
 import { getAdminSession } from "@/lib/auth/admin-auth";
 import { applyRateLimit } from "@/lib/security/rate-limiter";
+import { validateAntiSpam } from "@/lib/security/anti-spam";
 import { getOrCreateLeadProfile, recordTouchpointEvent } from "@/lib/lead/lead-profile-service";
 
 // Lazy initialize Supabase client
@@ -24,7 +25,7 @@ function getSupabaseClient(): SupabaseClient | null {
 export async function POST(request: NextRequest) {
   try {
     // Apply rate limiting
-    const rateLimitResult = applyRateLimit(request, "/api/newsletter", "api");
+    const rateLimitResult = applyRateLimit(request, "/api/newsletter", "sensitive");
     if (!rateLimitResult.allowed) {
       return NextResponse.json(
         { error: "Too many requests. Please try again later." },
@@ -33,7 +34,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { email, source = "footer" } = body;
+    const { email, source = "footer", website_url, _formLoadedAt } = body;
 
     // Validate required fields
     if (!email) {
@@ -50,6 +51,15 @@ export async function POST(request: NextRequest) {
         { error: "Invalid email address" },
         { status: 400 }
       );
+    }
+
+    // Anti-spam validation (honeypot, timing, work email)
+    const spamCheck = validateAntiSpam({ email, website_url, _formLoadedAt });
+    if (!spamCheck.passed) {
+      if (spamCheck.silent) {
+        return NextResponse.json({ success: true, message: "Successfully subscribed to newsletter" });
+      }
+      return NextResponse.json({ error: spamCheck.error }, { status: 400 });
     }
 
     // Determine lead segment based on source

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { trackNewsletterSignup } from "@/lib/analytics/gtm-events";
 
 const footerNav = [
@@ -33,7 +33,13 @@ const socialLinks = [
 
 export function Footer() {
   const [email, setEmail] = useState("");
+  const [websiteUrl, setWebsiteUrl] = useState(""); // honeypot
   const [subscribeStatus, setSubscribeStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [formLoadedAt, setFormLoadedAt] = useState(0);
+
+  useEffect(() => {
+    setFormLoadedAt(Date.now());
+  }, []);
 
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -50,6 +56,8 @@ export function Footer() {
         body: JSON.stringify({
           email,
           source: "footer",
+          website_url: websiteUrl,
+          _formLoadedAt: formLoadedAt,
         }),
       });
 
@@ -62,6 +70,7 @@ export function Footer() {
 
       setSubscribeStatus("success");
       setEmail("");
+      setFormLoadedAt(Date.now());
     } catch {
       setSubscribeStatus("error");
     }
@@ -168,12 +177,23 @@ export function Footer() {
                   </button>
                 </div>
               ) : (
-                <form onSubmit={handleSubscribe} className="flex gap-2">
+                <form onSubmit={handleSubscribe} className="flex gap-2 relative">
+                  {/* Honeypot field - hidden from real users */}
+                  <div className="absolute left-[-9999px] opacity-0 pointer-events-none" aria-hidden="true" tabIndex={-1}>
+                    <input
+                      type="text"
+                      name="website_url"
+                      value={websiteUrl}
+                      onChange={(e) => setWebsiteUrl(e.target.value)}
+                      tabIndex={-1}
+                      autoComplete="off"
+                    />
+                  </div>
                   <input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Your Email"
+                    placeholder="Your work email"
                     required
                     disabled={subscribeStatus === "loading"}
                     className="flex-1 px-4 py-2 rounded-lg bg-base border border-stroke-muted text-body-sm text-text-bright placeholder:text-text-muted-extra focus:outline-none focus:ring-2 focus:ring-accent disabled:opacity-50"

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
 import { sendPartnerEnquiryNotification } from "@/lib/email/resend";
 import { applyRateLimit } from "@/lib/security/rate-limiter";
+import { validateAntiSpam } from "@/lib/security/anti-spam";
 
 // Lazy initialize Supabase client
 let supabase: SupabaseClient | null = null;
@@ -42,6 +43,8 @@ export async function POST(request: NextRequest) {
       companySize,
       message,
       website,
+      website_url,
+      _formLoadedAt,
     } = body;
 
     // Validate required fields
@@ -59,6 +62,15 @@ export async function POST(request: NextRequest) {
         { error: "Invalid email address" },
         { status: 400 }
       );
+    }
+
+    // Anti-spam validation (honeypot, timing, work email)
+    const spamCheck = validateAntiSpam({ email, website_url, _formLoadedAt });
+    if (!spamCheck.passed) {
+      if (spamCheck.silent) {
+        return NextResponse.json({ success: true });
+      }
+      return NextResponse.json({ error: spamCheck.error }, { status: 400 });
     }
 
     // Determine priority based on partnership type and company size

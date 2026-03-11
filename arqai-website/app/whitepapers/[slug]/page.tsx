@@ -34,9 +34,15 @@ export default function WhitepaperDetailPage() {
     name: "",
     email: "",
     company: "",
+    website_url: "", // honeypot
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const [formLoadedAt, setFormLoadedAt] = useState(0);
+
+  useEffect(() => {
+    setFormLoadedAt(Date.now());
+  }, []);
 
   useEffect(() => {
     async function fetchWhitepaper() {
@@ -83,6 +89,7 @@ export default function WhitepaperDetailPage() {
           ...formData,
           resource_id: whitepaper.id,
           resource_type: "whitepaper",
+          _formLoadedAt: formLoadedAt,
         }),
       });
 
@@ -348,6 +355,20 @@ export default function WhitepaperDetailPage() {
                     onChange={(e) => setFormData({ ...formData, company: e.target.value })}
                     className="w-full px-4 py-2.5 rounded-lg border border-stroke-muted bg-base text-text-bright focus:ring-2 focus:ring-accent focus:border-transparent"
                     placeholder="Acme Corp"
+                  />
+                </div>
+
+                {/* Honeypot field - hidden from real users */}
+                <div className="absolute left-[-9999px] opacity-0 pointer-events-none" aria-hidden="true" tabIndex={-1}>
+                  <label htmlFor="wpd_website_url">Website</label>
+                  <input
+                    type="text"
+                    id="wpd_website_url"
+                    name="website_url"
+                    value={formData.website_url}
+                    onChange={(e) => setFormData({ ...formData, website_url: e.target.value })}
+                    tabIndex={-1}
+                    autoComplete="off"
                   />
                 </div>
 

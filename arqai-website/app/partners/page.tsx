@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Header } from "@/components/layout/Header";
@@ -250,6 +250,7 @@ interface FormData {
   companySize: string;
   message: string;
   website: string;
+  website_url: string; // honeypot
 }
 
 export default function PartnersPage() {
@@ -269,7 +270,13 @@ export default function PartnersPage() {
     companySize: "",
     message: "",
     website: "",
+    website_url: "",
   });
+  const [formLoadedAt, setFormLoadedAt] = useState(0);
+
+  useEffect(() => {
+    setFormLoadedAt(Date.now());
+  }, []);
 
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -284,7 +291,7 @@ export default function PartnersPage() {
       const response = await fetch("/api/partner-enquiry", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, _formLoadedAt: formLoadedAt }),
       });
 
       if (!response.ok) {
@@ -303,7 +310,9 @@ export default function PartnersPage() {
         companySize: "",
         message: "",
         website: "",
+        website_url: "",
       });
+      setFormLoadedAt(Date.now());
     } catch (err) {
       setFormError(err instanceof Error ? err.message : "An error occurred");
     } finally {
@@ -981,6 +990,20 @@ export default function PartnersPage() {
                     rows={4}
                     className="w-full px-4 py-3 border border-[var(--arq-gray-300)] rounded-lg focus:ring-2 focus:ring-[var(--arq-blue)] focus:border-transparent outline-none transition-all resize-none"
                     placeholder="What kind of partnership are you looking for? What problems would you like to solve together?"
+                  />
+                </div>
+
+                {/* Honeypot field - hidden from real users */}
+                <div className="absolute left-[-9999px] opacity-0 pointer-events-none" aria-hidden="true" tabIndex={-1}>
+                  <label htmlFor="website_url">Website URL</label>
+                  <input
+                    type="text"
+                    id="website_url"
+                    name="website_url"
+                    value={formData.website_url}
+                    onChange={handleFormChange}
+                    tabIndex={-1}
+                    autoComplete="off"
                   />
                 </div>
 
