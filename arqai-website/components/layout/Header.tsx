@@ -23,6 +23,7 @@ interface PromoContent {
 const navigation = [
   { name: "Home", href: "/" },
   { name: "Platform", href: "/platform" },
+  { name: "AI Agents", href: "/agents" },
   { name: "Solutions", href: "/solutions" },
   { name: "About", href: "/about" },
   { name: "Partners", href: "/partners" },

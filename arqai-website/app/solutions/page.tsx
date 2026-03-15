@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -8,50 +9,19 @@ import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Section, SectionHeader, LogoAccent } from "@/components/ui/Section";
 import { CheckIcon, ArrowRightIcon } from "@/components/ui/Icons";
+import { industries as industriesData, type IndustryKey } from "@/lib/data/industries";
 
-type Industry = "financial" | "insurance" | "healthcare";
-
+// Use the centralized industries data, filtering to active industries for tabs
 const industries = {
-  financial: {
-    title: "Financial Services",
-    headline: "AI-Powered Automation with Unbreakable Compliance",
-    description:
-      "In an industry where a single compliance failure can cost millions, ArqAI provides the assurance to automate your most critical processes. From SOX and FINRA to the Fair Lending Act, our platform allows you to codify your regulatory obligations and build agents that adhere to them by design.",
-    useCases: [
-      "Automated Loan & Mortgage Underwriting",
-      "Algorithmic Trade Compliance Monitoring",
-      "KYC/AML Process Automation",
-      "Automated Generation of Regulatory Reports",
-    ],
-    regulations: ["SOX", "FINRA", "Fair Lending Act", "GLBA", "Basel III"],
-  },
-  insurance: {
-    title: "Insurance",
-    headline: "Build a Trusted Agent Workforce for Claims Processing",
-    description:
-      "The insurance industry runs on complex rules and sensitive data. ArqAI provides the foundry to build agents that can navigate this complexity securely. Automate claims, price policies, and detect fraud with a complete audit trail for every decision.",
-    useCases: [
-      "Autonomous Claims Adjudication & Processing",
-      "Dynamic Policy Underwriting & Pricing",
-      "Automated Fraud Detection & Flagging",
-      "Compliance with NAIC and IFRS 17 standards",
-    ],
-    regulations: ["NAIC Model Laws", "IFRS 17", "State Insurance Regulations", "HIPAA (Health)"],
-  },
-  healthcare: {
-    title: "Healthcare",
-    headline: "Securely Automate Clinical and Administrative Processes",
-    description:
-      "Patient data is your most sensitive asset. ArqAI's zero-trust architecture ensures that agents interacting with PHI do so with provable, audited permission. Build agents that can streamline operations while maintaining the highest standards of patient data privacy.",
-    useCases: [
-      "Patient Data Management & Summarization",
-      "Clinical Trial Reporting & Data Analysis (GxP)",
-      "Automated Medical Billing & Coding",
-      "Prior Authorization & Payer Communications",
-    ],
-    regulations: ["HIPAA", "HITECH", "GxP", "21 CFR Part 11", "GDPR (EU)"],
-  },
+  financial: industriesData.financial,
+  insurance: industriesData.insurance,
+  healthcare: industriesData.healthcare,
+  telecom: industriesData.telecom,
+  retail: industriesData.retail,
+  realEstate: industriesData.realEstate,
 };
+
+type Industry = keyof typeof industries;
 
 export default function SolutionsPage() {
   const [activeIndustry, setActiveIndustry] = useState<Industry>("financial");
@@ -67,13 +37,21 @@ export default function SolutionsPage() {
 
           <div className="container relative z-10">
             <div className="max-w-3xl mx-auto text-center">
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-sm text-[var(--arq-blue)] font-medium mb-4"
+              >
+                Governance-First AI Agents
+              </motion.p>
+
               <motion.h1
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
                 className="text-4xl md:text-5xl font-bold text-[var(--arq-black)] mb-6 leading-tight"
               >
-                Trusted AI for the World&apos;s{" "}
+                AI Agents for the World&apos;s{" "}
                 <span className="text-[var(--arq-blue)]">Most Demanding Industries</span>
               </motion.h1>
 
@@ -81,11 +59,25 @@ export default function SolutionsPage() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.1 }}
-                className="text-xl text-[var(--arq-gray-600)]"
+                className="text-xl text-[var(--arq-gray-600)] mb-6"
               >
-                ArqAI is engineered to solve the unique compliance, security, and
-                operational challenges of enterprises in highly regulated verticals.
+                Pre-built adaptive AI agents with governance built in. Solve compliance, security, and
+                operational challenges in regulated verticals.
               </motion.p>
+
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+              >
+                <Link
+                  href="/agents"
+                  className="inline-flex items-center gap-2 text-[var(--arq-blue)] font-medium hover:underline"
+                >
+                  Explore all AI agents and blueprints
+                  <ArrowRightIcon size={16} />
+                </Link>
+              </motion.div>
             </div>
           </div>
         </section>

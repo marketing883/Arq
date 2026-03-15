@@ -180,27 +180,65 @@ const products = [
   },
 ];
 
-// Industries data
+// Industries data - expanded to 6+ industries
 const industries = [
   {
-    name: "Retail & E-Commerce",
-    compliance: ["GDPR", "CCPA", "PCI-DSS"],
-    description: "Customer data protection, payment security, and cross-border compliance.",
-  },
-  {
-    name: "BFSI",
-    compliance: ["PCI-DSS", "SOX", "GLBA", "MiFID II"],
-    description: "Financial data governance, trading compliance, and regulatory reporting.",
-  },
-  {
-    name: "Manufacturing",
-    compliance: ["ISO 9001", "AS9100", "ITAR"],
-    description: "Quality management, aerospace standards, and export control.",
+    name: "Financial Services",
+    compliance: ["SOX", "FINRA", "GLBA", "Basel III"],
+    description: "Automated compliance, trade monitoring, and regulatory reporting with full audit trails.",
   },
   {
     name: "Healthcare",
-    compliance: ["HIPAA", "HITECH"],
-    description: "Patient data protection, medical records security, and health IT compliance.",
+    compliance: ["HIPAA", "HITECH", "GxP"],
+    description: "Patient data protection, clinical automation, and health IT compliance.",
+  },
+  {
+    name: "Insurance",
+    compliance: ["NAIC", "IFRS 17", "State Regs"],
+    description: "Claims processing, underwriting automation, and fraud detection.",
+  },
+  {
+    name: "Telecommunications",
+    compliance: ["FCC", "CPNI", "SOC 2"],
+    description: "Infrastructure automation, DevSecOps documentation, and network operations.",
+  },
+  {
+    name: "Retail & E-Commerce",
+    compliance: ["GDPR", "CCPA", "PCI-DSS"],
+    description: "Customer intelligence, inventory optimization, and payment security.",
+  },
+  {
+    name: "Real Estate",
+    compliance: ["Fair Housing", "RESPA", "AML"],
+    description: "Property analysis, due diligence automation, and transaction management.",
+  },
+];
+
+// Pre-built blueprints for homepage showcase
+const featuredBlueprints = [
+  {
+    name: "ArqRelease",
+    category: "IT Infrastructure",
+    metric: "40% faster releases",
+    status: "available" as const,
+  },
+  {
+    name: "ArqOptimize",
+    category: "FinOps",
+    metric: "25-40% cost reduction",
+    status: "available" as const,
+  },
+  {
+    name: "ArqFWA",
+    category: "Insurance",
+    metric: "70% faster claims",
+    status: "available" as const,
+  },
+  {
+    name: "ArqIntel",
+    category: "Investment",
+    metric: "70% faster screening",
+    status: "available" as const,
   },
 ];
 
@@ -711,14 +749,17 @@ export default function HomePage() {
             >
               <p className="flex items-center justify-center gap-2 text-body-sm text-accent mb-4">
                 <StarIcon className="w-4 h-4" />
-                Industries We Serve
+                AI Agents Across Industries
               </p>
-              <h2 className="text-display-lg font-display text-text-bright">
+              <h2 className="text-display-lg font-display text-text-bright mb-4">
                 Built for Regulated Environments
               </h2>
+              <p className="text-body-lg text-text-muted max-w-2xl mx-auto">
+                Pre-built adaptive AI agents configured for industry-specific compliance requirements.
+              </p>
             </motion.div>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
               {industries.map((industry, index) => (
                 <motion.div
                   key={industry.name}
@@ -726,17 +767,17 @@ export default function HomePage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className="card flex flex-col h-full"
+                  className="card flex flex-col h-full group hover:border-accent transition-all"
                 >
-                  <h3 className="text-2xl font-display font-semibold text-text-bright mb-4">
+                  <h3 className="text-xl font-display font-semibold text-text-bright mb-3 group-hover:text-accent transition-colors">
                     {industry.name}
                   </h3>
-                  <p className="text-body-sm text-text-muted mb-6 flex-1 leading-relaxed">
+                  <p className="text-body-sm text-text-muted mb-4 flex-1 leading-relaxed">
                     {industry.description}
                   </p>
                   <div className="flex flex-wrap gap-2">
                     {industry.compliance.map((item) => (
-                      <span key={item} className="tag text-xs">
+                      <span key={item} className="px-2 py-0.5 rounded-full bg-accent/10 text-[10px] font-medium text-accent">
                         {item}
                       </span>
                     ))}
@@ -744,6 +785,86 @@ export default function HomePage() {
                 </motion.div>
               ))}
             </div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mt-10"
+            >
+              <Link href="/agents" className="btn btn-outline group">
+                Explore All AI Agents
+                <svg className="w-4 h-4 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </Link>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Pre-Built Agent Blueprints Section */}
+        <section className="py-section bg-base-tint">
+          <div className="container mx-auto px-4 md:px-6 lg:px-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="section-header text-center"
+            >
+              <p className="flex items-center justify-center gap-2 text-body-sm text-accent mb-4">
+                <StarIcon className="w-4 h-4" />
+                Pre-Built Agents
+              </p>
+              <h2 className="text-display-lg font-display text-text-bright mb-4">
+                Adaptive AI Agent Blueprints
+              </h2>
+              <p className="text-body-lg text-text-muted max-w-2xl mx-auto">
+                Production-ready agents with governance built in. Deploy in 30 days.
+              </p>
+            </motion.div>
+
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {featuredBlueprints.map((blueprint, index) => (
+                <motion.div
+                  key={blueprint.name}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className="card group hover:border-accent transition-all relative"
+                >
+                  <span className="inline-block text-xs font-medium px-2 py-0.5 rounded-full bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 mb-3">
+                    Available
+                  </span>
+                  <p className="text-body-xs text-text-muted uppercase tracking-wider mb-1">
+                    {blueprint.category}
+                  </p>
+                  <h3 className="text-lg font-display font-semibold text-text-bright mb-2 group-hover:text-accent transition-colors">
+                    {blueprint.name}
+                  </h3>
+                  <p className="text-sm text-accent font-medium">
+                    {blueprint.metric}
+                  </p>
+                  <Link href="/agents" className="absolute inset-0">
+                    <span className="sr-only">Learn more about {blueprint.name}</span>
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mt-10"
+            >
+              <Link href="/agents" className="btn btn-outline group">
+                View All Blueprints
+                <svg className="w-4 h-4 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </Link>
+            </motion.div>
           </div>
         </section>
 
