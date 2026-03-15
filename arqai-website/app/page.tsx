@@ -125,10 +125,10 @@ function StarIcon({ className = "" }: { className?: string }) {
 
 // Stats data with numeric values for animation
 const stats = [
-  { numValue: 30, suffix: "+", label: "Governed workflows deployed", description: "Pilots to production in 30 days." },
-  { numValue: 3, suffix: "", label: "Patented technologies", description: "Governance built in, not bolted on." },
-  { numValue: 20, suffix: "+", label: "Years of expertise", description: "Solving enterprise data, security, and compliance at scale." },
-  { numValue: 40, suffix: "%", label: "Faster audit preparation", description: "Automatic compliance evidence." },
+  { numValue: 30, suffix: "", label: "Days to production", description: "From pilot to live deployment." },
+  { numValue: 4, suffix: "+", label: "Production agents", description: "Pre-built and ready to deploy." },
+  { numValue: 100, suffix: "%", label: "Audit coverage", description: "Every action traced and compliant." },
+  { numValue: 0, suffix: "", label: "Compliance gaps", description: "Governance built in by default." },
 ];
 
 // Marquee text items
@@ -290,10 +290,10 @@ export default function HomePage() {
                 transition={{ duration: 0.6 }}
                 className="text-display-xl md:text-[clamp(3.5rem,8vw,7rem)] font-display leading-[0.95] text-text-bright max-w-[90%] lg:max-w-[85%]"
               >
-                <span className="block">The Enterprise Foundry</span>
+                <span className="block">We Build Your</span>
                 <span className="flex items-center gap-4 flex-wrap">
                   <StarIcon className="w-6 h-6 md:w-10 md:h-10 text-additional" />
-                  <span>for Trusted AI</span>
+                  <span>AI Agent Workforce</span>
                 </span>
               </motion.h1>
             </div>
@@ -309,21 +309,21 @@ export default function HomePage() {
               >
                 <div className="w-full h-px bg-stroke-muted" />
                 <p className="text-body-lg text-text-medium max-w-lg">
-                  Build, run, and govern mission-critical agent workforces in regulated industries.
-                  From pilot to production in 30 days, with compliance, security, and accountability built into the DNA.
+                  ArqAI delivers production-ready AI agents for regulated industries. Not tools. Not frameworks.
+                  Working agents that automate your operations, with compliance built in from day one.
                 </p>
                 <div className="flex items-center gap-6 text-body-sm text-text-muted">
                   <div className="flex items-center gap-2">
                     <StarIcon className="w-4 h-4" />
-                    <span>Build</span>
+                    <span>30 Days to Production</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <StarIcon className="w-4 h-4" />
-                    <span>Run</span>
+                    <span>Compliance Built In</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <StarIcon className="w-4 h-4" />
-                    <span>Govern</span>
+                    <span>Full Audit Trails</span>
                   </div>
                 </div>
               </motion.div>
@@ -358,7 +358,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Problem Statement Section */}
+        {/* What We Do Section */}
         <section className="py-section bg-base">
           <div className="container mx-auto px-4 md:px-6">
             <div className="grid md:grid-cols-2 gap-12 items-center">
@@ -370,7 +370,7 @@ export default function HomePage() {
                   className="flex items-center gap-2 text-body-sm text-accent mb-4"
                 >
                   <StarIcon className="w-4 h-4" />
-                  Trusted by Industry Leaders
+                  What We Do
                 </motion.p>
                 <motion.h2
                   initial={{ opacity: 0, y: 20 }}
@@ -379,7 +379,7 @@ export default function HomePage() {
                   transition={{ delay: 0.1 }}
                   className="text-display-lg font-display text-text-bright mb-6"
                 >
-                  Production AI for Regulated Industries
+                  AI Agents That Actually Ship to Production
                 </motion.h2>
                 <motion.p
                   initial={{ opacity: 0, y: 20 }}
@@ -388,7 +388,7 @@ export default function HomePage() {
                   transition={{ delay: 0.2 }}
                   className="text-body-md text-text-muted mb-8"
                 >
-                  When enterprises need AI governance that enables production, not just compliance theater, they build on ArqAI. From leading telecom players to healthcare&apos;s most sensitive workflows, our three patented technologies are the foundation for autonomous agents operating at scale.
+                  Most enterprise AI gets stuck in pilot mode forever. We build agents that work: claims processors, compliance monitors, infrastructure automators, deal analyzers. Ready to deploy in your environment with full audit trails and regulatory compliance baked in.
                 </motion.p>
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}

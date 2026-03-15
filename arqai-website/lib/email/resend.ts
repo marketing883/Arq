@@ -267,9 +267,9 @@ export async function sendUserConfirmation(
                 <div class="resources">
                   <h4>While you wait, explore:</h4>
                   <ul>
-                    <li><a href="${siteUrl}/platform">Our Platform</a> – See how ArqAI works</li>
-                    <li><a href="${siteUrl}/solutions">Solutions</a> – Industry-specific AI governance</li>
-                    <li><a href="${siteUrl}/case-studies">Case Studies</a> – Real customer success stories</li>
+                    <li><a href="${siteUrl}/platform">Our Platform</a> - See how ArqAI works</li>
+                    <li><a href="${siteUrl}/solutions">Solutions</a> - Industry-specific AI governance</li>
+                    <li><a href="${siteUrl}/case-studies">Case Studies</a> - Real customer success stories</li>
                   </ul>
                 </div>
 

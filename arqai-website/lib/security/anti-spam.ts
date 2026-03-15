@@ -3,7 +3,7 @@
  * Blocks free email providers, honeypot bots, and suspiciously fast submissions
  */
 
-// Free/personal email domains to block — only work emails accepted
+// Free/personal email domains to block  - only work emails accepted
 const BLOCKED_EMAIL_DOMAINS = new Set([
   // Google
   "gmail.com",
@@ -71,7 +71,7 @@ const BLOCKED_EMAIL_DOMAINS = new Set([
   "trashmail.com",
 ]);
 
-// Minimum time (ms) between form load and submission — bots submit instantly
+// Minimum time (ms) between form load and submission  - bots submit instantly
 const MIN_SUBMISSION_TIME_MS = 3000;
 
 /**
@@ -84,7 +84,7 @@ export function isWorkEmail(email: string): boolean {
 }
 
 /**
- * Validate the honeypot field — should be empty for real users
+ * Validate the honeypot field  - should be empty for real users
  * Returns true if the submission is legitimate (field is empty/absent)
  */
 export function validateHoneypot(honeypotValue: string | undefined | null): boolean {
@@ -92,7 +92,7 @@ export function validateHoneypot(honeypotValue: string | undefined | null): bool
 }
 
 /**
- * Validate submission timing — reject if submitted too quickly after page load
+ * Validate submission timing  - reject if submitted too quickly after page load
  * Returns true if the timing is legitimate
  */
 export function validateSubmissionTiming(formLoadedAt: number | undefined | null): boolean {
@@ -116,17 +116,17 @@ export function validateAntiSpam(body: {
 }): { passed: true } | { passed: false; silent: true } | { passed: false; silent: false; error: string } {
   const { email, website_url, _formLoadedAt } = body;
 
-  // Honeypot check — bots fill hidden fields
+  // Honeypot check  - bots fill hidden fields
   if (!validateHoneypot(website_url)) {
     return { passed: false, silent: true };
   }
 
-  // Timing check — bots submit instantly
+  // Timing check  - bots submit instantly
   if (!validateSubmissionTiming(_formLoadedAt)) {
     return { passed: false, silent: true };
   }
 
-  // Work email check — show clear error to real users
+  // Work email check  - show clear error to real users
   if (email && !isWorkEmail(email)) {
     return {
       passed: false,

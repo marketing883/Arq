@@ -99,7 +99,7 @@ export default function AboutPage() {
                 <p className="text-lg text-text-muted">
                   We exist to bridge the gap between AI&apos;s transformative potential and the rigorous
                   governance enterprises demand. Our mission is to provide the infrastructure that makes
-                  AI deployment safe, auditable, and aligned with business objectives—so organizations
+                  AI deployment safe, auditable, and aligned with business objectives. Organizations
                   can innovate boldly without compromising on security, compliance, or control.
                 </p>
               </motion.div>
@@ -119,7 +119,7 @@ export default function AboutPage() {
                 </h2>
                 <p className="text-lg text-text-muted">
                   We envision a future where every enterprise can deploy AI agents that are as trustworthy
-                  as their best employees—transparent in their reasoning, accountable for their actions,
+                  as their best employees: transparent in their reasoning, accountable for their actions,
                   and aligned with organizational values. A future where &quot;Shadow AI&quot; is a relic of the past,
                   and every AI interaction strengthens rather than undermines trust.
                 </p>
@@ -141,19 +141,19 @@ export default function AboutPage() {
                   <p>
                     ArqAI was founded in 2023 by a team of enterprise architects and AI researchers who
                     witnessed firsthand the chaos unfolding inside Fortune 500 companies. Teams were
-                    deploying AI tools in silos—some sanctioned, many not. Security teams were blindsided.
+                    deploying AI tools in silos, some sanctioned, many not. Security teams were blindsided.
                     Compliance officers were scrambling. And executives were asking a question no one
                     could answer: &quot;What is AI actually doing in our organization?&quot;
                   </p>
                   <p>
-                    We knew there had to be a better way. Not another AI tool, but a governance layer—an
+                    We knew there had to be a better way. Not another AI tool, but a governance layer, an
                     &quot;architecture&quot; (hence Arq) that could bring order to AI chaos while preserving the
                     speed and innovation enterprises needed to compete.
                   </p>
                   <p>
                     Today, ArqAI serves organizations across financial services, healthcare, and technology,
                     helping them transform AI from a risk factor into a competitive advantage. We&apos;re
-                    proud to be building the foundation for the next era of enterprise technology—one
+                    proud to be building the foundation for the next era of enterprise technology, one
                     where AI and trust go hand in hand.
                   </p>
                 </div>

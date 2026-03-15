@@ -216,7 +216,7 @@ const partnerBenefits = [
 // Partner Testimonials
 const testimonials = [
   {
-    quote: "ArqAI doesn't just implement our platform—they extend it. Their deep technical expertise and customer-first approach make them our go-to partner for complex enterprise deployments.",
+    quote: "ArqAI doesn't just implement our platform, they extend it. Their deep technical expertise and customer-first approach make them our go-to partner for complex enterprise deployments.",
     author: "VP Strategic Partnerships",
     company: "Major Cloud Provider",
   },
@@ -362,7 +362,7 @@ export default function PartnersPage() {
                 transition={{ duration: 0.6, delay: 0.2 }}
                 className="text-xl text-[var(--arq-gray-600)] mb-8 max-w-3xl mx-auto"
               >
-                At ArqAI, we don&apos;t just work with technology leaders—we build integrated
+                At ArqAI, we don&apos;t just work with technology leaders. We build integrated
                 solutions that deliver measurable enterprise outcomes. Our partnerships extend
                 your capabilities and amplify your impact.
               </motion.p>
@@ -403,7 +403,7 @@ export default function PartnersPage() {
               <p className="text-lg text-[var(--arq-gray-600)] mb-6">
                 We believe the best enterprise solutions emerge from true collaboration,
                 not transactional vendor relationships. Our partners aren&apos;t logos on a
-                page—they&apos;re co-creators in delivering business transformation for
+                page. They&apos;re co-creators in delivering business transformation for
                 Fortune 500 clients.
               </p>
               <p className="text-[var(--arq-gray-600)] mb-8">
