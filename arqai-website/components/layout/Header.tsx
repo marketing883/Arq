@@ -90,7 +90,13 @@ export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [promoContent, setPromoContent] = useState<PromoContent | null>(null);
   const [resourcesExpanded, setResourcesExpanded] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
+
+  // Mark as mounted to prevent hydration mismatch
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Fetch promo content
   useEffect(() => {
@@ -143,6 +149,9 @@ export function Header() {
     };
   }, [isMenuOpen]);
 
+  // Use mounted check for dark mode conditional rendering to avoid hydration mismatch
+  const showDarkLogo = mounted && isDarkMode;
+
   return (
     <>
       {/* Header */}
@@ -163,7 +172,7 @@ export function Header() {
               alt="ArqAI - Intelligence, By Design"
               width={160}
               height={50}
-              className={`h-12 md:h-14 w-auto ${isDarkMode ? "hidden" : "block"}`}
+              className={`h-12 md:h-14 w-auto ${showDarkLogo ? "hidden" : "block"}`}
               priority
             />
             {/* Dark mode logo (white) */}
@@ -172,7 +181,7 @@ export function Header() {
               alt="ArqAI Logo"
               width={180}
               height={60}
-              className={`h-10 md:h-14 w-auto ${isDarkMode ? "block" : "hidden"}`}
+              className={`h-10 md:h-14 w-auto ${showDarkLogo ? "block" : "hidden"}`}
               priority
             />
           </Link>
@@ -185,7 +194,7 @@ export function Header() {
               className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-base-tint flex items-center justify-center transition-colors hover:bg-base-shade"
               aria-label="Toggle dark mode"
             >
-              {isDarkMode ? (
+              {showDarkLogo ? (
                 <svg className="w-5 h-5 text-text-bright" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" />
                 </svg>
