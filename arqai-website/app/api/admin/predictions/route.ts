@@ -17,9 +17,13 @@ import {
   extractFeatures,
   savePrediction,
   getActiveModel,
+  trainModel,
+  setActiveModel,
+  predict,
 } from "@/lib/analytics/predictive-scoring";
 import { createServiceClient } from "@/lib/supabase/server";
 import type { LeadProfile } from "@/types/lead-intelligence-v2";
+import type { TrainingDataPoint, ModelAccuracyMetrics, ConfusionMatrix } from "@/types/predictive";
 
 // ============================================
 // API HANDLERS
@@ -166,11 +170,141 @@ export async function POST(request: NextRequest) {
     const action = searchParams.get("action");
 
     if (action === "train") {
-      // Future: Implement model training endpoint
-      return NextResponse.json(
-        { error: "Model training not yet implemented" },
-        { status: 501 }
+      const supabase = await createServiceClient();
+
+      // Fetch all lead profiles for training
+      const { data: profiles, error: profilesError } = await supabase
+        .from("lead_profiles")
+        .select("*")
+        .order("created_at", { ascending: false })
+        .limit(1000);
+
+      if (profilesError || !profiles || profiles.length === 0) {
+        return NextResponse.json(
+          { error: "No profiles available for training" },
+          { status: 400 }
+        );
+      }
+
+      // Fetch conversion events to identify positive samples
+      const { data: conversions } = await supabase
+        .from("conversion_events")
+        .select("lead_profile_id, conversion_type");
+
+      const convertedProfileIds = new Set(
+        conversions?.map(c => c.lead_profile_id) ?? []
       );
+
+      // Build training dataset
+      const trainingData: TrainingDataPoint[] = profiles.map((profile) => {
+        const leadProfile = profile as LeadProfile;
+        const features = extractFeatures(leadProfile);
+        const isConverted = convertedProfileIds.has(leadProfile.id);
+
+        // Also consider high-stage leads as positive samples for bootstrapping
+        const isHighStage = ["qualified", "opportunity"].includes(leadProfile.journey_stage);
+
+        return {
+          feature_vector: features,
+          label: (isConverted || isHighStage ? 1 : 0) as 0 | 1,
+          weight: isConverted ? 2.0 : 1.0, // Weight actual conversions higher
+        };
+      });
+
+      // Ensure we have both positive and negative samples
+      const positiveCount = trainingData.filter(d => d.label === 1).length;
+      const negativeCount = trainingData.filter(d => d.label === 0).length;
+
+      if (positiveCount === 0 || negativeCount === 0) {
+        return NextResponse.json({
+          warning: "Insufficient training data",
+          positive_samples: positiveCount,
+          negative_samples: negativeCount,
+          message: "Need both converted and non-converted leads for training",
+        });
+      }
+
+      // Train the model
+      const newModel = trainModel(trainingData, {
+        learningRate: 0.01,
+        regularization: 0.1,
+        maxIterations: 1000,
+      });
+
+      // Set as active model
+      setActiveModel(newModel);
+
+      // Calculate accuracy metrics on training data
+      let truePositives = 0;
+      let trueNegatives = 0;
+      let falsePositives = 0;
+      let falseNegatives = 0;
+
+      for (const dataPoint of trainingData) {
+        const prediction = predict(dataPoint.feature_vector, newModel);
+        const predictedLabel = prediction >= 0.5 ? 1 : 0;
+
+        if (dataPoint.label === 1 && predictedLabel === 1) truePositives++;
+        else if (dataPoint.label === 0 && predictedLabel === 0) trueNegatives++;
+        else if (dataPoint.label === 0 && predictedLabel === 1) falsePositives++;
+        else falseNegatives++;
+      }
+
+      const accuracy = (truePositives + trueNegatives) / trainingData.length;
+      const precision = truePositives / (truePositives + falsePositives) || 0;
+      const recall = truePositives / (truePositives + falseNegatives) || 0;
+      const f1 = 2 * (precision * recall) / (precision + recall) || 0;
+
+      const confusionMatrix: ConfusionMatrix = {
+        true_positives: truePositives,
+        true_negatives: trueNegatives,
+        false_positives: falsePositives,
+        false_negatives: falseNegatives,
+      };
+
+      const metrics: ModelAccuracyMetrics = {
+        accuracy: Math.round(accuracy * 1000) / 1000,
+        precision: Math.round(precision * 1000) / 1000,
+        recall: Math.round(recall * 1000) / 1000,
+        f1_score: Math.round(f1 * 1000) / 1000,
+        auc_roc: 0, // Would need ROC curve calculation
+        samples_trained: trainingData.length,
+        samples_validated: 0,
+        confusion_matrix: confusionMatrix,
+      };
+
+      // Save model metadata to database
+      await supabase.from("ml_models").insert({
+        model_type: "conversion_probability",
+        model_version: newModel.version,
+        training_date: newModel.trained_at,
+        accuracy_metrics: metrics,
+        feature_importance: Object.entries(newModel.weights).map(([name, weight]) => ({
+          feature_name: name,
+          importance: Math.abs(weight),
+          direction: weight >= 0 ? "positive" : "negative",
+        })),
+        training_config: {
+          learning_rate: 0.01,
+          regularization: 0.1,
+          max_iterations: 1000,
+          convergence_threshold: 0.0001,
+          feature_scaling: true,
+          cross_validation_folds: 0,
+        },
+        is_active: true,
+      });
+
+      return NextResponse.json({
+        success: true,
+        model_version: newModel.version,
+        trained_at: newModel.trained_at,
+        samples_trained: trainingData.length,
+        positive_samples: positiveCount,
+        negative_samples: negativeCount,
+        accuracy_metrics: metrics,
+        feature_weights: newModel.weights,
+      });
     }
 
     // Predict for provided profile data
