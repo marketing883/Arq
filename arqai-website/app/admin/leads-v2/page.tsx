@@ -460,7 +460,7 @@ export default function LeadsV2Page() {
                     {/* Lead Info */}
                     <div className="mb-3">
                       <h3 className="text-sm font-medium text-slate-900 truncate">
-                        {lead.canonical_email || `Session: ${lead.id.slice(0, 8)}...`}
+                        {lead.canonical_email || `Session: ${lead.id?.slice(0, 8) || "unknown"}...`}
                       </h3>
                       {lead.first_name && (
                         <p className="text-xs text-slate-600">
