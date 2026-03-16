@@ -238,7 +238,7 @@ export default function AnalyticsDashboard() {
 
         {/* Real-Time Stats Banner */}
         {realTime && realTime.active_visitors > 0 && (
-          <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+          <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded">
             <div className="flex items-center gap-3">
               <span className="relative flex h-3 w-3">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
@@ -259,117 +259,117 @@ export default function AnalyticsDashboard() {
         {/* Key Metrics Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {/* Page Views */}
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          <div className="bg-white rounded border border-slate-200 p-5">
             <div className="flex justify-between items-start">
               <div>
-                <p className="text-sm text-gray-500 font-medium">Page Views</p>
-                <p className="text-3xl font-bold text-gray-900 mt-2">
+                <p className="text-xs text-slate-500 font-medium">Page Views</p>
+                <p className="text-2xl font-semibold text-slate-900 mt-1">
                   {metrics?.total_page_views.toLocaleString() ?? 0}
                 </p>
               </div>
-              <div className="p-3 bg-blue-50 rounded-lg">
-                <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+              <div className="p-2 bg-blue-50 rounded">
+                <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                 </svg>
               </div>
             </div>
             {changes && (
-              <p className="text-sm mt-3">
-                vs previous period: {formatChange(changes.page_views)}
+              <p className="text-[10px] text-slate-400 mt-2">
+                vs previous: {formatChange(changes.page_views)}
               </p>
             )}
           </div>
 
           {/* Unique Visitors */}
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          <div className="bg-white rounded border border-slate-200 p-5">
             <div className="flex justify-between items-start">
               <div>
-                <p className="text-sm text-gray-500 font-medium">Unique Visitors</p>
-                <p className="text-3xl font-bold text-gray-900 mt-2">
+                <p className="text-xs text-slate-500 font-medium">Unique Visitors</p>
+                <p className="text-2xl font-semibold text-slate-900 mt-1">
                   {metrics?.unique_visitors.toLocaleString() ?? 0}
                 </p>
               </div>
-              <div className="p-3 bg-green-50 rounded-lg">
-                <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+              <div className="p-2 bg-green-50 rounded">
+                <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
               </div>
             </div>
             {changes && (
-              <p className="text-sm mt-3">
-                vs previous period: {formatChange(changes.visitors)}
+              <p className="text-[10px] text-slate-400 mt-2">
+                vs previous: {formatChange(changes.visitors)}
               </p>
             )}
           </div>
 
           {/* Avg Session Duration */}
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          <div className="bg-white rounded border border-slate-200 p-5">
             <div className="flex justify-between items-start">
               <div>
-                <p className="text-sm text-gray-500 font-medium">Avg Session Duration</p>
-                <p className="text-3xl font-bold text-gray-900 mt-2">
+                <p className="text-xs text-slate-500 font-medium">Avg Session Duration</p>
+                <p className="text-2xl font-semibold text-slate-900 mt-1">
                   {formatDuration(metrics?.avg_session_duration_seconds ?? 0)}
                 </p>
               </div>
-              <div className="p-3 bg-purple-50 rounded-lg">
-                <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              <div className="p-2 bg-purple-50 rounded">
+                <svg className="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
             </div>
-            <p className="text-sm text-gray-500 mt-3">
+            <p className="text-[10px] text-slate-400 mt-2">
               {(metrics?.avg_pages_per_session ?? 0).toFixed(1)} pages/session
             </p>
           </div>
 
           {/* Bounce Rate */}
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          <div className="bg-white rounded border border-slate-200 p-5">
             <div className="flex justify-between items-start">
               <div>
-                <p className="text-sm text-gray-500 font-medium">Bounce Rate</p>
-                <p className="text-3xl font-bold text-gray-900 mt-2">
+                <p className="text-xs text-slate-500 font-medium">Bounce Rate</p>
+                <p className="text-2xl font-semibold text-slate-900 mt-1">
                   {formatPercent(metrics?.bounce_rate ?? 0)}
                 </p>
               </div>
-              <div className="p-3 bg-amber-50 rounded-lg">
-                <svg className="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+              <div className="p-2 bg-amber-50 rounded">
+                <svg className="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                 </svg>
               </div>
             </div>
             {changes && (
-              <p className="text-sm mt-3">
-                vs previous period: {formatChange(changes.bounce_rate * -1)}
+              <p className="text-[10px] text-slate-400 mt-2">
+                vs previous: {formatChange(changes.bounce_rate * -1)}
               </p>
             )}
           </div>
         </div>
 
         {/* Two Column Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-5">
           {/* Top Pages */}
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200">
-            <div className="p-6 border-b border-gray-200">
-              <h2 className="text-lg font-semibold text-gray-900">Top Pages</h2>
+          <div className="bg-white rounded border border-slate-200">
+            <div className="p-4 border-b border-slate-100">
+              <h2 className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Top Pages</h2>
             </div>
-            <div className="p-6">
+            <div className="p-4">
               {topPages.length === 0 ? (
-                <p className="text-gray-500 text-center py-8">No page data available</p>
+                <p className="text-slate-400 text-center py-6 text-xs">No page data available</p>
               ) : (
-                <div className="space-y-4">
+                <div className="space-y-3">
                   {topPages.slice(0, 10).map((page, index) => (
-                    <div key={page.page_path} className="flex items-center gap-4">
-                      <span className="text-sm text-gray-400 w-6">{index + 1}</span>
+                    <div key={page.page_path} className="flex items-center gap-3">
+                      <span className="text-[10px] text-slate-400 w-4">{index + 1}</span>
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-gray-900 truncate">
+                        <p className="text-xs font-medium text-slate-900 truncate">
                           {page.page_title ?? page.page_path}
                         </p>
-                        <p className="text-xs text-gray-500 truncate">{page.page_path}</p>
+                        <p className="text-[10px] text-slate-400 truncate">{page.page_path}</p>
                       </div>
                       <div className="text-right">
-                        <p className="text-sm font-medium text-gray-900">{page.views.toLocaleString()}</p>
-                        <p className="text-xs text-gray-500">{page.unique_visitors} unique</p>
+                        <p className="text-xs font-medium text-slate-900">{page.views.toLocaleString()}</p>
+                        <p className="text-[10px] text-slate-400">{page.unique_visitors} unique</p>
                       </div>
                     </div>
                   ))}
@@ -379,39 +379,39 @@ export default function AnalyticsDashboard() {
           </div>
 
           {/* Traffic Sources */}
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200">
-            <div className="p-6 border-b border-gray-200">
-              <h2 className="text-lg font-semibold text-gray-900">Traffic Sources</h2>
+          <div className="bg-white rounded border border-slate-200">
+            <div className="p-4 border-b border-slate-100">
+              <h2 className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Traffic Sources</h2>
             </div>
-            <div className="p-6">
+            <div className="p-4">
               {trafficSources.length === 0 ? (
-                <p className="text-gray-500 text-center py-8">No traffic data available</p>
+                <p className="text-slate-400 text-center py-6 text-xs">No traffic data available</p>
               ) : (
-                <div className="space-y-4">
+                <div className="space-y-3">
                   {trafficSources.slice(0, 10).map((source, index) => {
                     const total = trafficSources.reduce((sum, s) => sum + s.visits, 0);
                     const percentage = total > 0 ? (source.visits / total) * 100 : 0;
 
                     return (
-                      <div key={`${source.source}-${source.medium}`} className="space-y-2">
+                      <div key={`${source.source}-${source.medium}`} className="space-y-1.5">
                         <div className="flex justify-between items-center">
                           <div>
-                            <span className="text-sm font-medium text-gray-900">
+                            <span className="text-xs font-medium text-slate-900">
                               {source.source === "direct" ? "Direct" : source.source}
                             </span>
                             {source.medium !== "none" && (
-                              <span className="text-xs text-gray-500 ml-2">
+                              <span className="text-[10px] text-slate-400 ml-2">
                                 / {source.medium}
                               </span>
                             )}
                           </div>
-                          <span className="text-sm text-gray-600">
+                          <span className="text-xs text-slate-500">
                             {source.visits.toLocaleString()} ({percentage.toFixed(1)}%)
                           </span>
                         </div>
-                        <div className="w-full bg-gray-100 rounded-full h-2">
+                        <div className="w-full bg-slate-100 rounded h-1.5">
                           <div
-                            className="bg-blue-600 h-2 rounded-full transition-all"
+                            className="bg-slate-600 h-1.5 rounded transition-all"
                             style={{ width: `${percentage}%` }}
                           />
                         </div>
@@ -425,19 +425,19 @@ export default function AnalyticsDashboard() {
         </div>
 
         {/* Geographic Distribution */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200">
-          <div className="p-6 border-b border-gray-200">
-            <h2 className="text-lg font-semibold text-gray-900">Geographic Distribution</h2>
+        <div className="bg-white rounded border border-slate-200">
+          <div className="p-4 border-b border-slate-100">
+            <h2 className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Geographic Distribution</h2>
           </div>
-          <div className="p-6">
+          <div className="p-4">
             {geoData.length === 0 ? (
-              <p className="text-gray-500 text-center py-8">No geographic data available</p>
+              <p className="text-slate-400 text-center py-6 text-xs">No geographic data available</p>
             ) : (
-              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
                 {geoData.slice(0, 12).map((geo) => (
-                  <div key={geo.country} className="text-center p-4 bg-gray-50 rounded-lg">
-                    <p className="text-2xl font-bold text-gray-900">{geo.visitors}</p>
-                    <p className="text-sm text-gray-500 mt-1">{geo.country}</p>
+                  <div key={geo.country} className="text-center p-3 bg-slate-50 rounded">
+                    <p className="text-lg font-semibold text-slate-900">{geo.visitors}</p>
+                    <p className="text-[10px] text-slate-500 mt-0.5">{geo.country}</p>
                   </div>
                 ))}
               </div>
