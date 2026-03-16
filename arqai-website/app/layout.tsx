@@ -5,6 +5,7 @@ import { ContentMorpher } from "@/components/morph/ContentMorpher";
 import { MorphProvider } from "@/contexts/MorphContext";
 import { LocaleProvider } from "@/contexts/LocaleContext";
 import { CookieConsent } from "@/components/compliance/CookieConsent";
+import { Tracker } from "@/components/analytics/Tracker";
 // Temporarily disabled for GTM debugging
 // import { GoogleTagManager as GTMConsentHandler } from "@/components/analytics/GoogleTagManager";
 
@@ -128,6 +129,7 @@ export default function RootLayout({
             <ContentMorpher />
             <ChatWidget />
             <CookieConsent />
+            <Tracker />
           </MorphProvider>
         </LocaleProvider>
       </body>
