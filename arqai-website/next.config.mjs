@@ -96,9 +96,45 @@ const nextConfig = {
     ];
   },
 
-  // Redirect HTTP to HTTPS in production
+  // Redirects for deprecated pages
   async redirects() {
-    return [];
+    return [
+      {
+        source: "/solutions/arqrelease",
+        destination: "/products",
+        permanent: true,
+      },
+      {
+        source: "/solutions/arqoptimize",
+        destination: "/products",
+        permanent: true,
+      },
+      {
+        source: "/solutions/arqfwa",
+        destination: "/products/arqfwa",
+        permanent: true,
+      },
+      {
+        source: "/solutions/arqintel",
+        destination: "/products",
+        permanent: true,
+      },
+      {
+        source: "/platform",
+        destination: "/how-it-works",
+        permanent: true,
+      },
+      {
+        source: "/agents",
+        destination: "/products",
+        permanent: true,
+      },
+      {
+        source: "/agents/blueprints",
+        destination: "/products",
+        permanent: true,
+      },
+    ];
   },
 };
 

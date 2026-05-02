@@ -1,240 +1,217 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { Button } from "@/components/ui/Button";
-import { Card } from "@/components/ui/Card";
-import { Section, SectionHeader, LogoAccent } from "@/components/ui/Section";
-import { CheckIcon, ArrowRightIcon } from "@/components/ui/Icons";
-import { industries as industriesData, type IndustryKey } from "@/lib/data/industries";
 
-// Use the centralized industries data, filtering to active industries for tabs
-const industries = {
-  financial: industriesData.financial,
-  insurance: industriesData.insurance,
-  healthcare: industriesData.healthcare,
-  telecom: industriesData.telecom,
-  retail: industriesData.retail,
-  realEstate: industriesData.realEstate,
-};
+function StarIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 20 20"
+      fill="currentColor"
+      className={className}
+    >
+      <path d="M19.6,9.6h-3.9c-.4,0-1.8-.2-1.8-.2-.6,0-1.1-.2-1.6-.6-.5-.3-.9-.8-1.2-1.2-.3-.4-.4-.9-.5-1.4,0,0,0-1.1-.2-1.5V.4c0-.2-.2-.4-.4-.4s-.4.2-.4.4v4.4c0,.4-.2,1.5-.2,1.5,0,.5-.2,1-.5,1.4-.3.5-.7.9-1.2,1.2s-1,.5-1.6.6c0,0-1.2,0-1.7.2H.4c-.2,0-.4.2-.4.4s.2.4.4.4h4.1c.4,0,1.7.2,1.7.2.6,0,1.1.2,1.6.6.4.3.8.7,1.1,1.1.3.5.5,1,.6,1.6,0,0,0,1.3.2,1.7v4.1c0,.2.2.4.4.4s.4-.2.4-.4v-4.1c0-.4.2-1.7.2-1.7,0-.6.2-1.1.6-1.6.3-.4.7-.8,1.1-1.1.5-.3,1-.5,1.6-.6,0,0,1.3,0,1.8-.2h3.9c.2,0,.4-.2.4-.4s-.2-.4-.4-.4h0Z" />
+    </svg>
+  );
+}
 
-type Industry = keyof typeof industries;
+const solutions = [
+  {
+    title: "Healthcare payers",
+    description:
+      "AI agents for healthcare payer operations. ArqFWA for fraud, waste, and abuse detection. More on the roadmap.",
+    audiences: [
+      "BCBS regional plans",
+      "Medicaid managed care organisations",
+      "Medicare Advantage plans",
+      "Commercial health plans",
+    ],
+    availableProducts: ["ArqFWA"],
+    href: "/solutions/healthcare-payers",
+  },
+  {
+    title: "P&C insurance carriers",
+    description:
+      "AI agents for property and casualty carrier operations. ArqFWA live. ArqClaims in build.",
+    audiences: [
+      "Personal lines carriers",
+      "Commercial and specialty lines",
+      "Regional carriers",
+    ],
+    availableProducts: ["ArqFWA", "ArqClaims"],
+    href: "/solutions/insurance-carriers",
+  },
+  {
+    title: "Banks and financial institutions",
+    description:
+      "AI agents for regional and mid-tier banks. ArqBanker for AML, KYC, and financial crime coming soon.",
+    audiences: [
+      "Regional banks ($10B-$100B assets)",
+      "Mid-tier community banks",
+      "Credit unions and thrifts",
+    ],
+    availableProducts: ["ArqBanker"],
+    href: "/solutions/banking",
+  },
+];
 
 export default function SolutionsPage() {
-  const [activeIndustry, setActiveIndustry] = useState<Industry>("financial");
-  const industry = industries[activeIndustry];
-
   return (
     <>
       <Header />
-      <main>
+
+      <main className="bg-base">
         {/* Hero Section */}
-        <section className="relative pt-32 pb-12 overflow-hidden">
-          <LogoAccent position="top-right" type="lime" size="lg" />
+        <section className="pt-32 md:pt-40 pb-16">
+          <div className="container mx-auto px-4 md:px-6 lg:px-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="max-w-4xl"
+            >
+              <p className="flex items-center gap-2 text-body-sm text-accent mb-6 uppercase tracking-wider font-medium">
+                <StarIcon className="w-4 h-4" />
+                Solutions
+              </p>
 
-          <div className="container relative z-10">
-            <div className="max-w-3xl mx-auto text-center">
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="text-sm text-[var(--arq-blue)] font-medium mb-4"
-              >
-                Governance-First AI Agents
-              </motion.p>
+              <h1 className="text-display-xl md:text-[clamp(3rem,5vw,4.5rem)] font-display leading-[1.1] text-text-bright mb-6">
+                Vertical AI agents for the industries we know.
+              </h1>
 
-              <motion.h1
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                className="text-4xl md:text-5xl font-bold text-[var(--arq-black)] mb-6 leading-tight"
-              >
-                AI Agents for the World&apos;s{" "}
-                <span className="text-[var(--arq-blue)]">Most Demanding Industries</span>
-              </motion.h1>
+              <p className="text-body-lg md:text-xl text-text-medium max-w-3xl leading-relaxed">
+                ArqAI Labs builds vertical AI agents for high-stakes operational workflows. We go deep in healthcare, insurance, and banking. Each solution is built for the operational reality of the industry.
+              </p>
+            </motion.div>
+          </div>
+        </section>
 
-              <motion.p
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.1 }}
-                className="text-xl text-[var(--arq-gray-600)] mb-6"
-              >
-                Pre-built adaptive AI agents with governance built in. Solve compliance, security, and
-                operational challenges in regulated verticals.
-              </motion.p>
-
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-              >
-                <Link
-                  href="/agents"
-                  className="inline-flex items-center gap-2 text-[var(--arq-blue)] font-medium hover:underline"
+        {/* Solutions Grid */}
+        <section className="py-section bg-base-tint">
+          <div className="container mx-auto px-4 md:px-6 lg:px-8">
+            <div className="grid gap-8">
+              {solutions.map((solution, index) => (
+                <motion.div
+                  key={solution.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className="card p-8 md:p-10 group hover:border-accent transition-all"
                 >
-                  Explore all AI agents and blueprints
-                  <ArrowRightIcon size={16} />
-                </Link>
-              </motion.div>
+                  <div className="grid lg:grid-cols-3 gap-8">
+                    <div className="lg:col-span-2">
+                      <h2 className="text-3xl font-display font-semibold text-text-bright mb-4 group-hover:text-accent transition-colors">
+                        {solution.title}
+                      </h2>
+                      <p className="text-body-lg text-text-muted mb-6">
+                        {solution.description}
+                      </p>
+
+                      <div className="mb-6">
+                        <h4 className="text-body-sm font-semibold text-text-bright uppercase tracking-wider mb-3">
+                          Built for
+                        </h4>
+                        <div className="flex flex-wrap gap-2">
+                          {solution.audiences.map((audience) => (
+                            <span
+                              key={audience}
+                              className="px-3 py-1.5 rounded-full bg-base text-body-sm text-text-muted border border-stroke-muted"
+                            >
+                              {audience}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div>
+                        <h4 className="text-body-sm font-semibold text-text-bright uppercase tracking-wider mb-3">
+                          Products
+                        </h4>
+                        <div className="flex flex-wrap gap-2">
+                          {solution.availableProducts.map((product) => (
+                            <span
+                              key={product}
+                              className="px-3 py-1.5 rounded-full bg-accent/10 text-body-sm text-accent font-medium"
+                            >
+                              {product}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-end justify-start lg:justify-end">
+                      <Link
+                        href={solution.href}
+                        className="btn bg-accent text-white hover:bg-accent/90"
+                      >
+                        Learn more
+                        <svg
+                          className="w-4 h-4"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M17 8l4 4m0 0l-4 4m4-4H3"
+                          />
+                        </svg>
+                      </Link>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
             </div>
           </div>
         </section>
 
-        {/* Industry Tabs */}
-        <Section>
-          {/* Tab Buttons */}
-          <div className="flex flex-wrap justify-center gap-4 mb-12">
-            {(Object.keys(industries) as Industry[]).map((key) => (
-              <button
-                key={key}
-                onClick={() => setActiveIndustry(key)}
-                className={`px-6 py-3 rounded-lg font-semibold transition-all ${
-                  activeIndustry === key
-                    ? "bg-[var(--arq-blue)] text-white shadow-lg"
-                    : "bg-[var(--arq-gray-100)] text-[var(--arq-gray-600)] hover:bg-[var(--arq-gray-200)]"
-                }`}
-              >
-                {industries[key].title}
-              </button>
-            ))}
-          </div>
-
-          {/* Tab Content */}
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeIndustry}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.3 }}
-            >
-              <div className="grid lg:grid-cols-2 gap-12 items-start">
-                {/* Content */}
-                <div>
-                  <span className="inline-block px-3 py-1 rounded-full bg-[var(--arq-blue)]/10 text-[var(--arq-blue)] text-sm font-semibold mb-4">
-                    {industry.title}
-                  </span>
-                  <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                    {industry.headline}
-                  </h2>
-                  <p className="text-lg text-[var(--arq-gray-600)] mb-8">
-                    {industry.description}
-                  </p>
-
-                  <h3 className="font-semibold mb-4">Key Use Cases</h3>
-                  <div className="space-y-3 mb-8">
-                    {industry.useCases.map((useCase, index) => (
-                      <div key={index} className="flex items-start gap-3">
-                        <CheckIcon
-                          size={20}
-                          className="text-[var(--arq-lime)] flex-shrink-0 mt-0.5"
-                        />
-                        <span className="text-[var(--arq-gray-700)]">{useCase}</span>
-                      </div>
-                    ))}
-                  </div>
-
-                  <Button
-                    href="/demo"
-                    rightIcon={<ArrowRightIcon size={18} />}
-                  >
-                    See {industry.title} Demo
-                  </Button>
-                </div>
-
-                {/* Regulations Card */}
-                <div className="glass-card p-8">
-                  <h3 className="font-semibold mb-6">Compliance Frameworks Supported</h3>
-                  <div className="grid grid-cols-2 gap-4">
-                    {industry.regulations.map((reg) => (
-                      <div
-                        key={reg}
-                        className="flex items-center gap-2 p-3 bg-white rounded-lg border border-[var(--arq-gray-200)]"
-                      >
-                        <CheckIcon size={16} className="text-[var(--arq-blue)]" />
-                        <span className="text-sm font-medium">{reg}</span>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="mt-8 pt-6 border-t border-[var(--arq-gray-200)]">
-                    <h4 className="font-semibold mb-3">Industry-Specific Features</h4>
-                    <ul className="space-y-2 text-sm text-[var(--arq-gray-600)]">
-                      <li>• Pre-built policy templates for {industry.title.toLowerCase()}</li>
-                      <li>• Industry-specific audit report formats</li>
-                      <li>• Integration with common {industry.title.toLowerCase()} systems</li>
-                      <li>• Expert implementation support</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </AnimatePresence>
-        </Section>
-
-        {/* Cross-Industry Benefits */}
-        <Section background="muted">
-          <SectionHeader
-            eyebrow="Universal Benefits"
-            title="Enterprise-Grade Governance for Every Industry"
-            description="Regardless of your vertical, ArqAI provides the foundational capabilities needed for trusted AI at scale."
-          />
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                title: "Cryptographic Audit Trails",
-                description:
-                  "Every AI action is recorded with cryptographic proof, providing court-admissible evidence of compliance.",
-              },
-              {
-                title: "Policy Enforcement at Scale",
-                description:
-                  "Define once, enforce everywhere. Your compliance policies automatically apply to all agents.",
-              },
-              {
-                title: "Real-Time Observability",
-                description:
-                  "Monitor your entire AI workforce from a single dashboard with confidence scoring and alerts.",
-              },
-            ].map((benefit, index) => (
-              <Card key={index} glass>
-                <div className="text-center">
-                  <div className="w-12 h-12 rounded-full bg-[var(--arq-lime)] flex items-center justify-center mx-auto mb-4">
-                    <CheckIcon size={24} className="text-[var(--arq-black)]" />
-                  </div>
-                  <h3 className="text-lg font-semibold mb-2">{benefit.title}</h3>
-                  <p className="text-[var(--arq-gray-600)]">{benefit.description}</p>
-                </div>
-              </Card>
-            ))}
-          </div>
-        </Section>
-
         {/* CTA Section */}
-        <Section background="dark" className="relative overflow-hidden">
-          <LogoAccent position="top-right" type="lime" size="lg" />
-
-          <div className="text-center max-w-3xl mx-auto relative z-10">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-              Ready to see ArqAI in your industry?
-            </h2>
-            <p className="text-lg text-[var(--arq-gray-300)] mb-8">
-              Schedule a demo tailored to your specific regulatory and operational requirements.
-            </p>
-            <Button
-              href="/demo"
-              variant="accent"
-              size="lg"
-              rightIcon={<ArrowRightIcon size={20} />}
+        <section className="py-section bg-base">
+          <div className="container mx-auto px-4 md:px-6 lg:px-8 text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="max-w-3xl mx-auto"
             >
-              Request Industry Demo
-            </Button>
+              <h2 className="text-display-lg font-display text-text-bright mb-6">
+                Different industry?
+              </h2>
+              <p className="text-body-lg text-text-muted mb-8">
+                If you have a workflow in a different industry, talk to our services team. We build custom AI agents with the same engineering standard as our products.
+              </p>
+              <Link
+                href="/services"
+                className="btn bg-accent text-white hover:bg-accent/90"
+              >
+                Talk to services
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M17 8l4 4m0 0l-4 4m4-4H3"
+                  />
+                </svg>
+              </Link>
+            </motion.div>
           </div>
-        </Section>
+        </section>
       </main>
+
       <Footer />
     </>
   );
