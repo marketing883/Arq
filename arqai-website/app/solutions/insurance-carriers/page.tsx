@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Header } from "@/components/layout/Header";
@@ -50,48 +51,53 @@ export default function InsuranceCarriersPage() {
       <Header />
 
       <main className="bg-base">
-        {/* Hero Section */}
-        <section className="pt-32 md:pt-40 pb-16">
+        {/* Hero Section with imagery */}
+        <section className="pt-32 md:pt-40 pb-16 relative overflow-hidden">
           <div className="container mx-auto px-4 md:px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="max-w-4xl"
-            >
-              <p className="flex items-center gap-2 text-body-sm text-accent mb-6 uppercase tracking-wider font-medium">
-                <StarIcon className="w-4 h-4" />
-                Solutions
-              </p>
-
-              <h1 className="text-display-xl md:text-[clamp(2.5rem,5vw,4rem)] font-display leading-[1.1] text-text-bright mb-6">
-                AI agents for the carriers that take operations seriously.
-              </h1>
-
-              <p className="text-body-lg md:text-xl text-text-medium max-w-3xl mb-10 leading-relaxed">
-                ArqAI Labs builds vertical AI agents for property and casualty insurance carrier operations. Live today: ArqFWA. In build: ArqClaims. Both engineered for production from day one.
-              </p>
-
-              <Link
-                href="/demo"
-                className="btn bg-accent text-white hover:bg-accent/90"
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
               >
-                Book a demo with our insurance team
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M7 17L17 7M17 7H7M17 7v10"
-                  />
-                </svg>
-              </Link>
-            </motion.div>
+                <p className="flex items-center gap-2 text-body-sm text-accent mb-6 uppercase tracking-wider font-medium">
+                  <StarIcon className="w-4 h-4" />
+                  Solutions / P&C Insurance
+                </p>
+
+                <h1 className="text-display-xl md:text-[clamp(2.5rem,5vw,4rem)] font-display leading-[1.1] text-text-bright mb-6">
+                  AI agents for the carriers that take operations seriously.
+                </h1>
+
+                <p className="text-body-lg md:text-xl text-text-medium mb-10 leading-relaxed">
+                  ArqAI Labs builds vertical AI agents for property and casualty insurance carrier operations. Live today: ArqFWA. In build: ArqClaims. Both engineered for production from day one.
+                </p>
+
+                <Link href="/demo" className="btn bg-accent text-white hover:bg-accent/90">
+                  Book a demo with our insurance team
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
+                  </svg>
+                </Link>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="relative rounded-2xl overflow-hidden aspect-[4/3] shadow-2xl shadow-accent/15"
+              >
+                <Image
+                  src="/img/services/Manufacturing-Autonomous-Maintenance-With-Scoped-Agent-Control.jpg"
+                  alt="P&C insurance operations"
+                  fill
+                  priority
+                  sizes="(min-width:1024px) 50vw, 100vw"
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-base-opp/40 to-transparent" />
+              </motion.div>
+            </div>
           </div>
         </section>
 

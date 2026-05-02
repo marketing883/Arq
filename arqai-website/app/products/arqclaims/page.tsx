@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Header } from "@/components/layout/Header";
@@ -46,55 +47,65 @@ export default function ArqClaimsPage() {
         {/* Hero Section */}
         <section className="pt-32 md:pt-40 pb-16">
           <div className="container mx-auto px-4 md:px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="max-w-4xl"
-            >
-              <div className="flex items-center gap-4 mb-6">
-                <p className="flex items-center gap-2 text-body-sm text-accent uppercase tracking-wider font-medium">
-                  <StarIcon className="w-4 h-4" />
-                  Product
+            <div className="grid lg:grid-cols-12 gap-10 items-center">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                className="lg:col-span-7"
+              >
+                <div className="flex items-center gap-4 mb-6">
+                  <p className="flex items-center gap-2 text-body-sm text-accent uppercase tracking-wider font-medium">
+                    <StarIcon className="w-4 h-4" />
+                    Product
+                  </p>
+                  <span className="inline-block text-xs font-semibold px-3 py-1.5 rounded-full text-white bg-amber-500">
+                    IN BUILD
+                  </span>
+                </div>
+
+                <h1 className="text-display-xl md:text-[clamp(2.5rem,5vw,4rem)] font-display leading-[1.1] text-text-bright mb-6">
+                  The AI agent for claims triage. Built for the workflow, not a kit to build one.
+                </h1>
+
+                <p className="text-body-lg md:text-xl text-text-medium mb-10 leading-relaxed">
+                  ArqClaims is the AI agent for claims triage and processing at mid-market P&C insurance carriers. It triages incoming claims, surfaces the right ones to the right adjuster, and handles the routing and reserve logic your operation runs on. In build with design partners now.
                 </p>
-                <span className="inline-block text-xs font-semibold px-3 py-1.5 rounded-full text-white bg-amber-500">
-                  IN BUILD
-                </span>
-              </div>
 
-              <h1 className="text-display-xl md:text-[clamp(2.5rem,5vw,4rem)] font-display leading-[1.1] text-text-bright mb-6">
-                The AI agent for claims triage. Built for the workflow, not a kit to build one.
-              </h1>
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <Link href="/contact" className="btn bg-accent text-white hover:bg-accent/90">
+                    Apply to the design partner program
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
+                    </svg>
+                  </Link>
+                  <Link href="/demo" className="btn btn-outline">
+                    Get notified at launch
+                  </Link>
+                </div>
+              </motion.div>
 
-              <p className="text-body-lg md:text-xl text-text-medium max-w-3xl mb-10 leading-relaxed">
-                ArqClaims is the AI agent for claims triage and processing at mid-market P&C insurance carriers. It triages incoming claims, surfaces the right ones to the right adjuster, and handles the routing and reserve logic your operation runs on. In build with design partners now.
-              </p>
-
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Link
-                  href="/contact"
-                  className="btn bg-accent text-white hover:bg-accent/90"
-                >
-                  Apply to the design partner program
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M7 17L17 7M17 7H7M17 7v10"
-                    />
-                  </svg>
-                </Link>
-                <Link href="/demo" className="btn btn-outline">
-                  Get notified at launch
-                </Link>
-              </div>
-            </motion.div>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="lg:col-span-5 relative"
+              >
+                <div className="relative rounded-xl overflow-hidden shadow-2xl shadow-accent/15 border border-stroke-muted bg-base-tint">
+                  <Image
+                    src="/img/Policy-Hub-Interface.png"
+                    alt="ArqClaims interface preview"
+                    width={900}
+                    height={600}
+                    className="w-full h-auto"
+                  />
+                </div>
+                <div className="mt-6 p-5 rounded-xl bg-base-tint border border-stroke-muted">
+                  <p className="text-body-xs text-amber-500 uppercase tracking-wider mb-2">Design partner build</p>
+                  <p className="text-body-sm text-text-muted">Concept screens. Live deployment in pilot Q3 2026.</p>
+                </div>
+              </motion.div>
+            </div>
           </div>
         </section>
 

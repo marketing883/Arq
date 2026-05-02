@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Header } from "@/components/layout/Header";
@@ -57,27 +58,45 @@ export default function RoadmapPage() {
 
       <main className="bg-base">
         {/* Hero Section */}
-        <section className="pt-32 md:pt-40 pb-16">
+        <section className="pt-32 md:pt-40 pb-16 relative overflow-hidden">
           <div className="container mx-auto px-4 md:px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="max-w-4xl"
-            >
-              <p className="flex items-center gap-2 text-body-sm text-accent mb-6 uppercase tracking-wider font-medium">
-                <StarIcon className="w-4 h-4" />
-                Roadmap
-              </p>
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+              >
+                <p className="flex items-center gap-2 text-body-sm text-accent mb-6 uppercase tracking-wider font-medium">
+                  <StarIcon className="w-4 h-4" />
+                  Roadmap
+                </p>
 
-              <h1 className="text-display-xl md:text-[clamp(3rem,5vw,4.5rem)] font-display leading-[1.1] text-text-bright mb-6">
-                What we are building.
-              </h1>
+                <h1 className="text-display-xl md:text-[clamp(3rem,5vw,4.5rem)] font-display leading-[1.1] text-text-bright mb-6">
+                  What we are building.
+                </h1>
 
-              <p className="text-body-lg md:text-xl text-text-medium max-w-3xl leading-relaxed">
-                Each new ArqAI Labs product targets an operational workflow where the customer&apos;s pain is acute and the AI alternatives all stop short. Here is where we are.
-              </p>
-            </motion.div>
+                <p className="text-body-lg md:text-xl text-text-medium leading-relaxed">
+                  Each new ArqAI Labs product targets an operational workflow where the customer&apos;s pain is acute and the AI alternatives all stop short. Here is where we are.
+                </p>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="relative"
+              >
+                <div className="rounded-2xl overflow-hidden border border-stroke-muted">
+                  <Image
+                    src="/img/hero/arq-products.png"
+                    alt="ArqAI product roadmap"
+                    width={900}
+                    height={700}
+                    className="w-full h-auto"
+                  />
+                </div>
+              </motion.div>
+            </div>
           </div>
         </section>
 

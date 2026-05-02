@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Header } from "@/components/layout/Header";
@@ -98,27 +99,79 @@ export default function DemoPage() {
 
       <main className="bg-base">
         {/* Hero Section */}
-        <section className="pt-32 md:pt-40 pb-16">
+        <section className="pt-32 md:pt-40 pb-16 relative overflow-hidden">
           <div className="container mx-auto px-4 md:px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="max-w-3xl mx-auto text-center"
-            >
-              <p className="flex items-center justify-center gap-2 text-body-sm text-accent mb-6 uppercase tracking-wider font-medium">
-                <StarIcon className="w-4 h-4" />
-                Book a Demo
-              </p>
+            <div className="grid lg:grid-cols-5 gap-10 items-center">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                className="lg:col-span-3"
+              >
+                <p className="flex items-center gap-2 text-body-sm text-accent mb-6 uppercase tracking-wider font-medium">
+                  <StarIcon className="w-4 h-4" />
+                  Book a Demo
+                </p>
 
-              <h1 className="text-display-xl md:text-[clamp(2.5rem,5vw,4rem)] font-display leading-[1.1] text-text-bright mb-6">
-                See it in your environment, with your data.
-              </h1>
+                <h1 className="text-display-xl md:text-[clamp(2.5rem,5vw,4rem)] font-display leading-[1.1] text-text-bright mb-6">
+                  See it in your environment, with your data.
+                </h1>
 
-              <p className="text-body-lg md:text-xl text-text-medium leading-relaxed">
-                Book a 30-minute walkthrough with our team. No deck. No abstractions. Tell us your workflow and we will show you what changes when ArqAI Labs is in it.
-              </p>
-            </motion.div>
+                <p className="text-body-lg text-text-medium leading-relaxed mb-8">
+                  Book a 30-minute walkthrough with our team. No deck. No abstractions. Tell us your workflow and we will show you what changes when ArqAI Labs is in it.
+                </p>
+
+                <ul className="space-y-3 text-body-md text-text-medium">
+                  {[
+                    "Live walkthrough of an agent in production",
+                    "Honest read on whether your workflow fits",
+                    "Implementation plan with realistic timelines",
+                  ].map((item) => (
+                    <li key={item} className="flex items-start gap-3">
+                      <span className="mt-1 w-5 h-5 rounded-full bg-accent/15 flex items-center justify-center shrink-0">
+                        <svg className="w-3 h-3 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                        </svg>
+                      </span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="lg:col-span-2 relative"
+              >
+                <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-accent/10 bg-base-opp/5 p-1">
+                  <div className="rounded-xl overflow-hidden bg-base-opp">
+                    <video
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      preload="metadata"
+                      className="w-full h-auto"
+                      poster="/img/demo/arqai-foundry-v2-poster.webp"
+                    >
+                      <source src="/video/ArqAI-foundry-v2.webm" type="video/webm" />
+                      <source src="/video/ArqAI-foundry-v2.mp4" type="video/mp4" />
+                    </video>
+                  </div>
+                </div>
+                <div className="absolute -bottom-6 -left-6 hidden md:block w-24 h-24 lg:w-28 lg:h-28 animate-rotate-slow opacity-90">
+                  <Image
+                    src="/img/hero/03_hero-img.webp"
+                    alt=""
+                    width={120}
+                    height={120}
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+              </motion.div>
+            </div>
           </div>
         </section>
 

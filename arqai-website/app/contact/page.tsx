@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Header } from "@/components/layout/Header";
@@ -72,24 +73,46 @@ export default function ContactPage() {
       <Header />
 
       <main className="bg-base">
-        {/* Hero Section */}
-        <section className="pt-32 md:pt-40 pb-16">
+        {/* Hero Section with imagery */}
+        <section className="pt-32 md:pt-40 pb-16 relative overflow-hidden">
           <div className="container mx-auto px-4 md:px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="max-w-3xl mx-auto text-center"
-            >
-              <p className="flex items-center justify-center gap-2 text-body-sm text-accent mb-6 uppercase tracking-wider font-medium">
-                <StarIcon className="w-4 h-4" />
-                Contact
-              </p>
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+              >
+                <p className="flex items-center gap-2 text-body-sm text-accent mb-6 uppercase tracking-wider font-medium">
+                  <StarIcon className="w-4 h-4" />
+                  Contact
+                </p>
 
-              <h1 className="text-display-xl md:text-[clamp(3rem,5vw,4.5rem)] font-display leading-[1.1] text-text-bright mb-6">
-                Talk to us.
-              </h1>
-            </motion.div>
+                <h1 className="text-display-xl md:text-[clamp(3rem,5vw,4.5rem)] font-display leading-[1.1] text-text-bright mb-6">
+                  Talk to us.
+                </h1>
+
+                <p className="text-body-lg text-text-medium leading-relaxed">
+                  Tell us your workflow. We will tell you what is honestly possible. No deck, no sales theatre &mdash; just a 30-minute conversation with a senior on our team.
+                </p>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="relative rounded-2xl overflow-hidden aspect-[4/3] shadow-2xl shadow-accent/10"
+              >
+                <Image
+                  src="/img/cta/cta-img-02.webp"
+                  alt=""
+                  fill
+                  priority
+                  sizes="(min-width:1024px) 50vw, 100vw"
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-tr from-accent/20 via-transparent to-transparent" />
+              </motion.div>
+            </div>
           </div>
         </section>
 

@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -71,49 +72,87 @@ export default function ArqFWAPage() {
         {/* Hero Section */}
         <section className="pb-16 md:pb-24">
           <div className="container mx-auto px-4 md:px-6 lg:px-8">
-            <div className="max-w-4xl">
-              <div className="flex items-center gap-3 mb-6">
-                <span className="text-body-sm text-text-muted uppercase tracking-wider">
-                  Product
-                </span>
-                <span className="text-text-muted">•</span>
-                <span className="inline-block text-xs font-semibold px-2.5 py-1 rounded-full text-white bg-green-500">
-                  LIVE
-                </span>
+            <div className="grid lg:grid-cols-12 gap-10 items-center">
+              <div className="lg:col-span-7">
+                <div className="flex items-center gap-3 mb-6">
+                  <span className="text-body-sm text-text-muted uppercase tracking-wider">
+                    Product
+                  </span>
+                  <span className="text-text-muted">•</span>
+                  <span className="inline-block text-xs font-semibold px-2.5 py-1 rounded-full text-white bg-green-500">
+                    LIVE
+                  </span>
+                </div>
+
+                <h1 className="text-display-xl md:text-[clamp(2.5rem,5vw,4rem)] font-display leading-[1.1] text-text-bright mb-6">
+                  The AI agent for fraud, waste, and abuse detection.{" "}
+                  <span className="text-text-muted">Built for the workflow.</span>
+                </h1>
+
+                <p className="text-body-lg md:text-xl text-text-medium mb-10 leading-relaxed">
+                  ArqFWA is purpose-built for fraud, waste, and abuse detection in healthcare payer and P&C insurance operations. It reviews high volumes of claims and transactions, prioritises the cases your team should focus on, and explains its reasoning so a human can act on it. Engineered for production from day one. Deployed end-to-end by our team.
+                </p>
+
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <Link
+                    href="/demo"
+                    className="btn bg-accent text-white hover:bg-accent/90"
+                  >
+                    Book an ArqFWA demo
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
+                    </svg>
+                  </Link>
+                  <Link href="/how-it-works" className="btn btn-outline">
+                    See how ArqFWA is built
+                  </Link>
+                </div>
               </div>
 
-              <h1 className="text-display-xl md:text-[clamp(2.5rem,5vw,4rem)] font-display leading-[1.1] text-text-bright mb-6">
-                The AI agent for fraud, waste, and abuse detection.{" "}
-                <span className="text-text-muted">Built for the workflow.</span>
-              </h1>
+              <div className="lg:col-span-5 relative">
+                <div className="relative rounded-xl overflow-hidden shadow-2xl shadow-accent/15 border border-stroke-muted bg-base-tint">
+                  <Image
+                    src="/img/Operations-center.png"
+                    alt="ArqFWA Operations Center interface"
+                    width={900}
+                    height={600}
+                    className="w-full h-auto"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
-              <p className="text-body-lg md:text-xl text-text-medium max-w-3xl mb-10 leading-relaxed">
-                ArqFWA is purpose-built for fraud, waste, and abuse detection in healthcare payer and P&C insurance operations. It reviews high volumes of claims and transactions, prioritises the cases your team should focus on, and explains its reasoning so a human can act on it. Engineered for production from day one. Deployed end-to-end by our team.
-              </p>
-
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Link
-                  href="/demo"
-                  className="btn bg-accent text-white hover:bg-accent/90"
-                >
-                  Book an ArqFWA demo
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M7 17L17 7M17 7H7M17 7v10"
-                    />
-                  </svg>
-                </Link>
-                <Link href="/how-it-works" className="btn btn-outline">
-                  See how ArqFWA is built
-                </Link>
+        {/* Product imagery strip */}
+        <section className="pb-section">
+          <div className="container mx-auto px-4 md:px-6 lg:px-8">
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="relative rounded-xl overflow-hidden border border-stroke-muted bg-base-tint">
+                <Image
+                  src="/img/Audit-logs.png"
+                  alt="ArqFWA audit logs view"
+                  width={900}
+                  height={600}
+                  className="w-full h-auto"
+                />
+                <div className="p-5 border-t border-stroke-muted">
+                  <p className="text-body-xs text-accent uppercase tracking-wider mb-1">Audit logs</p>
+                  <p className="text-body-sm text-text-muted">Every agent action is identified, signed, and traceable.</p>
+                </div>
+              </div>
+              <div className="relative rounded-xl overflow-hidden border border-stroke-muted bg-base-tint">
+                <Image
+                  src="/img/Policy-Hub-Interface.png"
+                  alt="ArqFWA policy hub interface"
+                  width={900}
+                  height={600}
+                  className="w-full h-auto"
+                />
+                <div className="p-5 border-t border-stroke-muted">
+                  <p className="text-body-xs text-accent uppercase tracking-wider mb-1">Policy hub</p>
+                  <p className="text-body-sm text-text-muted">Compliance constraints enforced at runtime, not assumed.</p>
+                </div>
               </div>
             </div>
           </div>

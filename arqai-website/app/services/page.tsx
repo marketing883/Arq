@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Header } from "@/components/layout/Header";
@@ -69,47 +70,75 @@ export default function ServicesPage() {
 
       <main className="bg-base">
         {/* Hero Section */}
-        <section className="pt-32 md:pt-40 pb-16">
+        <section className="pt-32 md:pt-40 pb-16 relative overflow-hidden">
           <div className="container mx-auto px-4 md:px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="max-w-4xl"
-            >
-              <p className="flex items-center gap-2 text-body-sm text-accent mb-6 uppercase tracking-wider font-medium">
-                <StarIcon className="w-4 h-4" />
-                Services
-              </p>
-
-              <h1 className="text-display-xl md:text-[clamp(2.5rem,5vw,4rem)] font-display leading-[1.1] text-text-bright mb-6">
-                When the productised agent is not the fit, we build the one you need.
-              </h1>
-
-              <p className="text-body-lg md:text-xl text-text-medium max-w-3xl mb-10 leading-relaxed">
-                ArqAI Labs Services is our delivery arm. Senior engineers and domain leads who have shipped Fortune 500 programs in regulated industries for over a decade. We build custom AI agents into your environment, on the cloud you already use, integrated with the systems your team already runs. Same architectural foundation as our products. Same end-to-end ownership.
-              </p>
-
-              <Link
-                href="/contact"
-                className="btn bg-accent text-white hover:bg-accent/90"
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
               >
-                Talk to delivery
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M7 17L17 7M17 7H7M17 7v10"
-                  />
-                </svg>
-              </Link>
-            </motion.div>
+                <p className="flex items-center gap-2 text-body-sm text-accent mb-6 uppercase tracking-wider font-medium">
+                  <StarIcon className="w-4 h-4" />
+                  Services
+                </p>
+
+                <h1 className="text-display-xl md:text-[clamp(2.5rem,5vw,4rem)] font-display leading-[1.1] text-text-bright mb-6">
+                  When the productised agent is not the fit, we build the one you need.
+                </h1>
+
+                <p className="text-body-lg md:text-xl text-text-medium mb-10 leading-relaxed">
+                  ArqAI Labs Services is our delivery arm. Senior engineers and domain leads who have shipped Fortune 500 programs in regulated industries for over a decade. We build custom AI agents into your environment, on the cloud you already use, integrated with the systems your team already runs.
+                </p>
+
+                <Link href="/contact" className="btn bg-accent text-white hover:bg-accent/90">
+                  Talk to delivery
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
+                  </svg>
+                </Link>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="relative"
+              >
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-4">
+                    <div className="relative aspect-[4/5] rounded-xl overflow-hidden border border-stroke-muted">
+                      <Image
+                        src="/img/illustrations/service-image-03.webp"
+                        alt=""
+                        fill
+                        sizes="(min-width:1024px) 25vw, 50vw"
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="p-6 rounded-xl bg-base-tint border border-stroke-muted">
+                      <div className="text-3xl font-display font-bold text-accent mb-2">F500</div>
+                      <p className="text-sm text-text-muted">Enterprise delivery experience</p>
+                    </div>
+                  </div>
+                  <div className="space-y-4 mt-8">
+                    <div className="p-6 rounded-xl bg-base-tint border border-stroke-muted">
+                      <div className="text-3xl font-display font-bold text-accent mb-2">10+</div>
+                      <p className="text-sm text-text-muted">Years in regulated industries</p>
+                    </div>
+                    <div className="relative aspect-[4/5] rounded-xl overflow-hidden border border-stroke-muted">
+                      <Image
+                        src="/img/illustrations/service-image-04.webp"
+                        alt=""
+                        fill
+                        sizes="(min-width:1024px) 25vw, 50vw"
+                        className="object-cover"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
           </div>
         </section>
 

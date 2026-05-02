@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Header } from "@/components/layout/Header";
@@ -32,6 +33,7 @@ const solutions = [
     ],
     availableProducts: ["ArqFWA"],
     href: "/solutions/healthcare-payers",
+    image: "/img/services/Healthcare-Real-Time-Risk-Stratification-With-Built-In-Compliance.jpg",
   },
   {
     title: "P&C insurance carriers",
@@ -44,6 +46,7 @@ const solutions = [
     ],
     availableProducts: ["ArqFWA", "ArqClaims"],
     href: "/solutions/insurance-carriers",
+    image: "/img/services/Retail-40-percent-Faster-Pricing-Ops-Without-Manual-Review.jpg",
   },
   {
     title: "Banks and financial institutions",
@@ -56,6 +59,7 @@ const solutions = [
     ],
     availableProducts: ["ArqBanker"],
     href: "/solutions/banking",
+    image: "/img/services/Banking-Customer-Service-That-Resolves-50-percent-of-Tickets-Automatically.jpg",
   },
 ];
 
@@ -101,10 +105,10 @@ export default function SolutionsPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className="card p-8 md:p-10 group hover:border-accent transition-all"
+                  className="card p-0 overflow-hidden group hover:border-accent transition-all"
                 >
-                  <div className="grid lg:grid-cols-3 gap-8">
-                    <div className="lg:col-span-2">
+                  <div className={`grid lg:grid-cols-12 gap-0 items-stretch ${index % 2 === 1 ? "lg:[&>div:first-child]:order-2" : ""}`}>
+                    <div className="lg:col-span-7 p-8 md:p-10">
                       <h2 className="text-3xl font-display font-semibold text-text-bright mb-4 group-hover:text-accent transition-colors">
                         {solution.title}
                       </h2>
@@ -128,7 +132,7 @@ export default function SolutionsPage() {
                         </div>
                       </div>
 
-                      <div>
+                      <div className="mb-8">
                         <h4 className="text-body-sm font-semibold text-text-bright uppercase tracking-wider mb-3">
                           Products
                         </h4>
@@ -143,28 +147,27 @@ export default function SolutionsPage() {
                           ))}
                         </div>
                       </div>
-                    </div>
 
-                    <div className="flex items-end justify-start lg:justify-end">
                       <Link
                         href={solution.href}
-                        className="btn bg-accent text-white hover:bg-accent/90"
+                        className="btn bg-accent text-white hover:bg-accent/90 inline-flex items-center gap-2"
                       >
                         Learn more
-                        <svg
-                          className="w-4 h-4"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M17 8l4 4m0 0l-4 4m4-4H3"
-                          />
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                         </svg>
                       </Link>
+                    </div>
+
+                    <div className="lg:col-span-5 relative bg-base-tint min-h-[260px] lg:min-h-full">
+                      <Image
+                        src={solution.image}
+                        alt={solution.title}
+                        fill
+                        sizes="(min-width:1024px) 40vw, 100vw"
+                        className="object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-tr from-base-opp/30 via-transparent to-transparent" />
                     </div>
                   </div>
                 </motion.div>

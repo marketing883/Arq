@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Header } from "@/components/layout/Header";
@@ -60,55 +61,66 @@ export default function ArqBankerPage() {
         {/* Hero Section */}
         <section className="pt-32 md:pt-40 pb-16">
           <div className="container mx-auto px-4 md:px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="max-w-4xl"
-            >
-              <div className="flex items-center gap-4 mb-6">
-                <p className="flex items-center gap-2 text-body-sm text-accent uppercase tracking-wider font-medium">
-                  <StarIcon className="w-4 h-4" />
-                  Product
+            <div className="grid lg:grid-cols-12 gap-10 items-center">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                className="lg:col-span-7"
+              >
+                <div className="flex items-center gap-4 mb-6">
+                  <p className="flex items-center gap-2 text-body-sm text-accent uppercase tracking-wider font-medium">
+                    <StarIcon className="w-4 h-4" />
+                    Product
+                  </p>
+                  <span className="inline-block text-xs font-semibold px-3 py-1.5 rounded-full text-white bg-blue-500">
+                    COMING
+                  </span>
+                </div>
+
+                <h1 className="text-display-xl md:text-[clamp(2.5rem,5vw,4rem)] font-display leading-[1.1] text-text-bright mb-6">
+                  The AI agent for AML, KYC, and financial crime. Built for the operation you actually run.
+                </h1>
+
+                <p className="text-body-lg md:text-xl text-text-medium mb-10 leading-relaxed">
+                  ArqBanker is the AI agent for financial crimes operations at regional and mid-tier banks. It is built for the operational reality of running an AML, KYC, and financial-crime program on a lean team, with the integration depth and architectural reliability that production deployment requires.
                 </p>
-                <span className="inline-block text-xs font-semibold px-3 py-1.5 rounded-full text-white bg-blue-500">
-                  COMING
-                </span>
-              </div>
 
-              <h1 className="text-display-xl md:text-[clamp(2.5rem,5vw,4rem)] font-display leading-[1.1] text-text-bright mb-6">
-                The AI agent for AML, KYC, and financial crime. Built for the operation you actually run.
-              </h1>
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <Link href="/demo" className="btn bg-accent text-white hover:bg-accent/90">
+                    Get notified when ArqBanker launches
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
+                    </svg>
+                  </Link>
+                  <Link href="/contact" className="btn btn-outline">
+                    Talk to product
+                  </Link>
+                </div>
+              </motion.div>
 
-              <p className="text-body-lg md:text-xl text-text-medium max-w-3xl mb-10 leading-relaxed">
-                ArqBanker is the AI agent for financial crimes operations at regional and mid-tier banks. It is built for the operational reality of running an AML, KYC, and financial-crime program on a lean team, with the integration depth and architectural reliability that production deployment requires.
-              </p>
-
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Link
-                  href="/demo"
-                  className="btn bg-accent text-white hover:bg-accent/90"
-                >
-                  Get notified when ArqBanker launches
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M7 17L17 7M17 7H7M17 7v10"
-                    />
-                  </svg>
-                </Link>
-                <Link href="/contact" className="btn btn-outline">
-                  Talk to product
-                </Link>
-              </div>
-            </motion.div>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="lg:col-span-5"
+              >
+                <div className="relative rounded-xl overflow-hidden shadow-2xl shadow-accent/15 border border-stroke-muted bg-base-tint">
+                  <Image
+                    src="/img/Audit-logs.png"
+                    alt="ArqBanker audit logs preview"
+                    width={900}
+                    height={600}
+                    className="w-full h-auto"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-base-opp/30 to-transparent" />
+                </div>
+                <div className="mt-6 p-5 rounded-xl bg-base-tint border border-stroke-muted">
+                  <p className="text-body-xs text-blue-500 uppercase tracking-wider mb-2">Coming 2026</p>
+                  <p className="text-body-sm text-text-muted">In design with regional bank partners. Join the launch list.</p>
+                </div>
+              </motion.div>
+            </div>
           </div>
         </section>
 

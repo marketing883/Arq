@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -22,6 +23,7 @@ const products = [
       "For healthcare payer and P&C carrier operations leaders, fraud and special-investigations teams, and the technology and AI executives backing them.",
     cta: "See ArqFWA",
     href: "/products/arqfwa",
+    image: "/img/Operations-center.png",
   },
   {
     id: "arqclaims",
@@ -35,6 +37,7 @@ const products = [
       "For claims operations leaders at mid-market P&C carriers, plus the technology and AI executives evaluating claims-process modernisation.",
     cta: "Join the design partner program",
     href: "/products/arqclaims",
+    image: "/img/Policy-Hub-Interface.png",
   },
   {
     id: "arqbanker",
@@ -48,6 +51,7 @@ const products = [
       "For financial crimes leaders and BSA officers at regional and mid-tier banks, plus the CTOs and Heads of AI driving financial-crime modernisation.",
     cta: "Get notified at launch",
     href: "/products/arqbanker",
+    image: "/img/Audit-logs.png",
   },
 ];
 
@@ -87,13 +91,13 @@ export default function ProductsPage() {
         <section className="py-section bg-base-tint">
           <div className="container mx-auto px-4 md:px-6 lg:px-8">
             <div className="grid gap-8">
-              {products.map((product) => (
+              {products.map((product, idx) => (
                 <div
                   key={product.id}
-                  className="card p-8 md:p-10 hover:border-accent transition-all"
+                  className="card p-0 overflow-hidden hover:border-accent transition-all"
                 >
-                  <div className="grid lg:grid-cols-3 gap-8">
-                    <div className="lg:col-span-2">
+                  <div className={`grid lg:grid-cols-12 gap-0 items-stretch ${idx % 2 === 1 ? "lg:[&>div:first-child]:order-2" : ""}`}>
+                    <div className="lg:col-span-7 p-8 md:p-10">
                       <div className="flex items-center gap-3 mb-4">
                         <span
                           className={`inline-block text-xs font-semibold px-2.5 py-1 rounded-full text-white ${product.statusColor}`}
@@ -110,30 +114,27 @@ export default function ProductsPage() {
                       <p className="text-body-md text-text-muted mb-6">
                         {product.description}
                       </p>
-                      <p className="text-body-sm text-text-muted italic">
+                      <p className="text-body-sm text-text-muted italic mb-8">
                         {product.buyers}
                       </p>
-                    </div>
-                    <div className="flex items-center lg:justify-end">
                       <Link
                         href={product.href}
                         className="btn bg-accent text-white hover:bg-accent/90 inline-flex items-center gap-2"
                       >
                         {product.cta}
-                        <svg
-                          className="w-4 h-4"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M17 8l4 4m0 0l-4 4m4-4H3"
-                          />
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                         </svg>
                       </Link>
+                    </div>
+                    <div className="lg:col-span-5 relative bg-base-tint min-h-[280px] lg:min-h-full">
+                      <Image
+                        src={product.image}
+                        alt={`${product.name} interface`}
+                        fill
+                        sizes="(min-width:1024px) 40vw, 100vw"
+                        className="object-cover object-center"
+                      />
                     </div>
                   </div>
                 </div>
@@ -156,6 +157,15 @@ export default function ProductsPage() {
               <p className="text-body-lg text-text-muted mb-8">
                 Identity, policy enforcement, and observable retrieval are not features we add to each product separately. They are the foundation we build every product on. That is why our second product ships faster than our first. And why a customer deploying a second ArqAI Labs agent does not re-evaluate compliance and security from scratch.
               </p>
+              <div className="relative rounded-xl overflow-hidden mb-10 border border-stroke-muted">
+                <Image
+                  src="/img/hero/arq-wf.png"
+                  alt="ArqAI architecture diagram"
+                  width={1200}
+                  height={750}
+                  className="w-full h-auto"
+                />
+              </div>
               <Link
                 href="/how-it-works"
                 className="btn btn-outline inline-flex items-center gap-2"

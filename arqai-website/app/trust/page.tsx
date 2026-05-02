@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Header } from "@/components/layout/Header";
@@ -60,27 +61,51 @@ export default function TrustPage() {
 
       <main className="bg-base">
         {/* Hero Section */}
-        <section className="pt-32 md:pt-40 pb-16">
+        <section className="pt-32 md:pt-40 pb-16 relative overflow-hidden">
           <div className="container mx-auto px-4 md:px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="max-w-4xl"
-            >
-              <p className="flex items-center gap-2 text-body-sm text-accent mb-6 uppercase tracking-wider font-medium">
-                <StarIcon className="w-4 h-4" />
-                Trust
-              </p>
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+              >
+                <p className="flex items-center gap-2 text-body-sm text-accent mb-6 uppercase tracking-wider font-medium">
+                  <StarIcon className="w-4 h-4" />
+                  Trust
+                </p>
 
-              <h1 className="text-display-xl md:text-[clamp(2.5rem,5vw,4rem)] font-display leading-[1.1] text-text-bright mb-6">
-                Architectural controls first. Certifications next.
-              </h1>
+                <h1 className="text-display-xl md:text-[clamp(2.5rem,5vw,4rem)] font-display leading-[1.1] text-text-bright mb-6">
+                  Architectural controls first. Certifications next.
+                </h1>
 
-              <p className="text-body-lg md:text-xl text-text-medium max-w-3xl leading-relaxed">
-                ArqAI Labs is built for the controls that regulated environments require. We do not claim certifications we do not have. We do tell you exactly where we are on every framework you care about, and we share control documentation under NDA on request.
-              </p>
-            </motion.div>
+                <p className="text-body-lg md:text-xl text-text-medium leading-relaxed">
+                  ArqAI Labs is built for the controls that regulated environments require. We do not claim certifications we do not have. We do tell you exactly where we are on every framework you care about, and we share control documentation under NDA on request.
+                </p>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="grid grid-cols-2 gap-4"
+              >
+                {[
+                  { src: "/img/icons/Composable-Architecture.webp", label: "Composable architecture" },
+                  { src: "/img/icons/Governance-Built-In.webp", label: "Governance built in" },
+                  { src: "/img/icons/Orchestrated-Intelligence.webp", label: "Orchestrated intelligence" },
+                  { src: "/img/icons/Outcome-Driven-Stack.webp", label: "Outcome-driven stack" },
+                ].map((tile) => (
+                  <div key={tile.label} className="card p-6 flex flex-col items-start gap-4">
+                    <div className="w-14 h-14 relative">
+                      <Image src={tile.src} alt="" fill sizes="56px" className="object-contain" />
+                    </div>
+                    <p className="text-body-sm font-medium text-text-bright leading-snug">
+                      {tile.label}
+                    </p>
+                  </div>
+                ))}
+              </motion.div>
+            </div>
           </div>
         </section>
 

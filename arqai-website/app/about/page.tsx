@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Header } from "@/components/layout/Header";
@@ -41,10 +42,22 @@ const team = [
   {
     name: "Jagannadh Varma Kanumuri",
     role: "Founder & CEO",
+    image: "/img/team/jag-kanumuri-about-pic.webp",
   },
   {
     name: "Habib Mehmoodi",
     role: "VP, Strategy & Innovation",
+    image: "/img/team/habib-mehmoodi-about-pic.jpg",
+  },
+  {
+    name: "Amit Alshaikh",
+    role: "Head of AI Engineering",
+    image: "/img/team/amit-alshaikh-about-pic.webp",
+  },
+  {
+    name: "Naresh Naidu",
+    role: "Head of Delivery",
+    image: "/img/team/nn-about-pic.webp",
   },
 ];
 
@@ -54,29 +67,57 @@ export default function AboutPage() {
       <Header />
 
       <main className="bg-base">
-        {/* Hero Section */}
-        <section className="pt-32 md:pt-40 pb-16">
+        {/* Hero Section with imagery */}
+        <section className="pt-32 md:pt-40 pb-16 relative overflow-hidden">
           <div className="container mx-auto px-4 md:px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="max-w-4xl"
-            >
-              <p className="flex items-center gap-2 text-body-sm text-accent mb-6 uppercase tracking-wider font-medium">
-                <StarIcon className="w-4 h-4" />
-                About
-              </p>
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+              >
+                <p className="flex items-center gap-2 text-body-sm text-accent mb-6 uppercase tracking-wider font-medium">
+                  <StarIcon className="w-4 h-4" />
+                  About
+                </p>
 
-              <h1 className="text-display-xl md:text-[clamp(2.5rem,5vw,4rem)] font-display leading-[1.1] text-text-bright mb-6">
-                We build AI agents for the workflows that matter most.
-              </h1>
+                <h1 className="text-display-xl md:text-[clamp(2.5rem,5vw,4rem)] font-display leading-[1.1] text-text-bright mb-6">
+                  We build AI agents for the workflows that matter most.
+                </h1>
 
-              <p className="text-body-lg md:text-xl text-text-medium max-w-3xl leading-relaxed">
-                ArqAI Labs is the AI products and services arm of ACI Infotech. We build vertical AI agents for healthcare, insurance, and banking workflows where the cost of a wrong decision is measured in money, reputation, and operational time.
-              </p>
-            </motion.div>
+                <p className="text-body-lg text-text-medium leading-relaxed">
+                  ArqAI Labs is the AI products and services arm of ACI Infotech. We build vertical AI agents for healthcare, insurance, and banking workflows where the cost of a wrong decision is measured in money, reputation, and operational time.
+                </p>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="relative rounded-2xl overflow-hidden aspect-[4/3] shadow-2xl shadow-accent/10"
+              >
+                <Image
+                  src="/img/team/about-ArqAI-large-hero-min.webp"
+                  alt="ArqAI Labs team at work"
+                  fill
+                  className="object-cover"
+                  priority
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-base-opp/40 via-transparent to-transparent" />
+              </motion.div>
+            </div>
           </div>
+        </section>
+
+        {/* Wide divider image */}
+        <section className="relative h-48 md:h-64 lg:h-80 overflow-hidden">
+          <Image
+            src="/img/team/about-ArqAI-large-hero-divider-min.webp"
+            alt=""
+            fill
+            className="object-cover"
+            sizes="100vw"
+          />
         </section>
 
         {/* What We Believe */}
@@ -142,7 +183,7 @@ export default function AboutPage() {
                   ACI Infotech, our parent, has spent over a decade delivering Fortune 500 technology programmes in regulated industries. The team that builds and deploys ArqAI Labs products is the same team that has shipped at the standard our customers expect.
                 </p>
 
-                <div className="grid md:grid-cols-2 gap-6">
+                <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
                   {team.map((member, index) => (
                     <motion.div
                       key={member.name}
@@ -150,19 +191,49 @@ export default function AboutPage() {
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
                       transition={{ delay: index * 0.1 }}
-                      className="card p-6"
+                      className="card p-0 overflow-hidden group"
                     >
-                      <div className="w-16 h-16 rounded-full bg-accent/10 flex items-center justify-center mb-4">
-                        <span className="text-2xl font-display font-bold text-accent">
-                          {member.name.charAt(0)}
-                        </span>
+                      <div className="relative aspect-[4/5] overflow-hidden bg-base-tint">
+                        <Image
+                          src={member.image}
+                          alt={member.name}
+                          fill
+                          sizes="(min-width:1024px) 25vw, 50vw"
+                          className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+                        />
                       </div>
-                      <h3 className="text-xl font-display font-semibold text-text-bright">
-                        {member.name}
-                      </h3>
-                      <p className="text-body-md text-text-muted">{member.role}</p>
+                      <div className="p-5">
+                        <h3 className="text-lg font-display font-semibold text-text-bright leading-tight">
+                          {member.name}
+                        </h3>
+                        <p className="text-body-sm text-text-muted mt-1">{member.role}</p>
+                      </div>
                     </motion.div>
                   ))}
+                </div>
+
+                <div className="mt-12 relative rounded-2xl overflow-hidden">
+                  <Image
+                    src="/img/team/we-are-hiring-arq-ai-min.webp"
+                    alt="We are hiring at ArqAI"
+                    width={1200}
+                    height={500}
+                    className="w-full h-auto object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-r from-base-opp/80 via-base-opp/40 to-transparent flex items-center">
+                    <div className="px-8 md:px-12 max-w-md">
+                      <p className="text-body-sm text-additional uppercase tracking-wider mb-3">We are hiring</p>
+                      <h3 className="text-2xl md:text-3xl font-display font-semibold text-base mb-4">
+                        Senior engineers and domain leads.
+                      </h3>
+                      <Link href="/careers" className="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-accent font-semibold rounded-lg hover:shadow-lg transition-all">
+                        See open roles
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
+                      </Link>
+                    </div>
+                  </div>
                 </div>
               </motion.div>
             </div>
