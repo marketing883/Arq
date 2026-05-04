@@ -4,31 +4,30 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { trackNewsletterSignup } from "@/lib/analytics/gtm-events";
 
-const productsNav = [
-  { name: "ArqFWA", href: "/products/arqfwa" },
-  { name: "ArqClaims", href: "/products/arqclaims" },
-  { name: "ArqBanker", href: "/products/arqbanker" },
-  { name: "Roadmap", href: "/products/roadmap" },
-];
-
-const solutionsNav = [
-  { name: "Healthcare payers", href: "/solutions/healthcare-payers" },
-  { name: "P&C insurance", href: "/solutions/insurance-carriers" },
-  { name: "Banks and FIs", href: "/solutions/banking" },
+const workNav = [
+  { name: "What we work on", href: "/use-cases" },
+  { name: "How we work", href: "/how-we-work" },
+  { name: "Products", href: "/products" },
+  { name: "Industries", href: "/industries" },
 ];
 
 const companyNav = [
   { name: "About", href: "/about" },
-  { name: "Services", href: "/services" },
-  { name: "How it works", href: "/how-it-works" },
-  { name: "Trust", href: "/trust" },
+  { name: "Careers", href: "/careers" },
   { name: "Contact", href: "/contact" },
+];
+
+const trustNav = [
+  { name: "Trust", href: "/trust" },
+  { name: "Privacy", href: "/privacy" },
+  { name: "Terms", href: "/terms" },
+  { name: "Responsible AI", href: "/responsible-ai" },
 ];
 
 const resourceNav = [
   { name: "Blog", href: "/blog" },
+  { name: "Engineering blog", href: "/blog?tag=engineering" },
   { name: "Case Studies", href: "/case-studies" },
-  { name: "Whitepapers", href: "/resources/whitepapers" },
 ];
 
 const legalNav = [
@@ -92,32 +91,13 @@ export function Footer() {
       <div className="container mx-auto px-4 md:px-6 py-16 md:py-20">
         {/* Main Footer Grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 lg:gap-12 mb-16">
-          {/* Products */}
+          {/* Work */}
           <div>
             <h3 className="text-body-sm font-semibold text-text-bright uppercase tracking-wider mb-4">
-              Products
+              Work
             </h3>
             <ul className="space-y-3">
-              {productsNav.map((item) => (
-                <li key={item.name}>
-                  <Link
-                    href={item.href}
-                    className="text-body-sm text-text-muted hover:text-accent transition-colors"
-                  >
-                    {item.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Solutions */}
-          <div>
-            <h3 className="text-body-sm font-semibold text-text-bright uppercase tracking-wider mb-4">
-              Solutions
-            </h3>
-            <ul className="space-y-3">
-              {solutionsNav.map((item) => (
+              {workNav.map((item) => (
                 <li key={item.name}>
                   <Link
                     href={item.href}
@@ -137,6 +117,25 @@ export function Footer() {
             </h3>
             <ul className="space-y-3">
               {companyNav.map((item) => (
+                <li key={item.name}>
+                  <Link
+                    href={item.href}
+                    className="text-body-sm text-text-muted hover:text-accent transition-colors"
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Trust */}
+          <div>
+            <h3 className="text-body-sm font-semibold text-text-bright uppercase tracking-wider mb-4">
+              Trust
+            </h3>
+            <ul className="space-y-3">
+              {trustNav.map((item) => (
                 <li key={item.name}>
                   <Link
                     href={item.href}
@@ -242,17 +241,17 @@ export function Footer() {
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div>
               <h3 className="text-2xl md:text-3xl font-display font-semibold text-white mb-2">
-                Tell us your workflow.
+                Tell us what your operation needs.
               </h3>
               <p className="text-white/80">
-                We will tell you what is honestly possible.
+                We&apos;ll tell you what&apos;s honestly possible. In plain language. Without a deck.
               </p>
             </div>
             <Link
-              href="/demo"
+              href="/engage-us"
               className="inline-flex items-center gap-2 px-6 py-3 bg-white text-accent font-semibold rounded-lg hover:shadow-lg transition-all shrink-0"
             >
-              Book a demo
+              Engage us
               <svg
                 className="w-4 h-4"
                 fill="none"

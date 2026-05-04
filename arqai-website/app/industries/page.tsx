@@ -32,7 +32,7 @@ const solutions = [
       "Commercial health plans",
     ],
     availableProducts: ["ArqFWA"],
-    href: "/solutions/healthcare-payers",
+    href: "/industries/healthcare-payers",
     image: "/img/services/Healthcare-Real-Time-Risk-Stratification-With-Built-In-Compliance.jpg",
   },
   {
@@ -45,7 +45,7 @@ const solutions = [
       "Regional carriers",
     ],
     availableProducts: ["ArqFWA", "ArqClaims"],
-    href: "/solutions/insurance-carriers",
+    href: "/industries/insurance-carriers",
     image: "/img/services/Retail-40-percent-Faster-Pricing-Ops-Without-Manual-Review.jpg",
   },
   {
@@ -58,7 +58,7 @@ const solutions = [
       "Credit unions and thrifts",
     ],
     availableProducts: ["ArqBanker"],
-    href: "/solutions/banking",
+    href: "/industries/banking",
     image: "/img/services/Banking-Customer-Service-That-Resolves-50-percent-of-Tickets-Automatically.jpg",
   },
 ];
@@ -80,11 +80,11 @@ export default function SolutionsPage() {
             >
               <p className="flex items-center gap-2 text-body-sm text-accent mb-6 uppercase tracking-wider font-medium">
                 <StarIcon className="w-4 h-4" />
-                Solutions
+                Industries
               </p>
 
               <h1 className="text-display-xl md:text-[clamp(3rem,5vw,4.5rem)] font-display leading-[1.1] text-text-bright mb-6">
-                Vertical AI agents for the industries we know.
+                AI for the industries we go deep in.
               </h1>
 
               <p className="text-body-lg md:text-xl text-text-medium max-w-3xl leading-relaxed">
@@ -189,13 +189,13 @@ export default function SolutionsPage() {
                 Different industry?
               </h2>
               <p className="text-body-lg text-text-muted mb-8">
-                If you have a workflow in a different industry, talk to our services team. We build custom AI agents with the same engineering standard as our products.
+                We don&apos;t ship templates. Most of the engagements we run weren&apos;t on a public page when they started. Tell us what your operation needs and we&apos;ll tell you what&apos;s honestly possible.
               </p>
               <Link
-                href="/services"
+                href="/engage-us"
                 className="btn bg-accent text-white hover:bg-accent/90"
               >
-                Talk to services
+                Engage us
                 <svg
                   className="w-4 h-4"
                   fill="none"

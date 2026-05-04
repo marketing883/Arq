@@ -134,6 +134,36 @@ const nextConfig = {
         destination: "/products",
         permanent: true,
       },
+      // v3 IA: solutions -> industries
+      {
+        source: "/solutions",
+        destination: "/industries",
+        permanent: true,
+      },
+      {
+        source: "/solutions/healthcare-payers",
+        destination: "/industries/healthcare-payers",
+        permanent: true,
+      },
+      {
+        source: "/solutions/insurance-carriers",
+        destination: "/industries/insurance-carriers",
+        permanent: true,
+      },
+      {
+        source: "/solutions/banking",
+        destination: "/industries/banking",
+        permanent: true,
+      },
+      // v3 IA: services folded into how-we-work
+      {
+        source: "/services",
+        destination: "/how-we-work",
+        permanent: true,
+      },
+      // v3 IA: how-it-works renamed to how-we-work; the engineering deep-dive
+      // remains accessible at /how-it-works for product-page deep-links.
+      // No redirect on /how-it-works -- both are valid routes.
     ];
   },
 };

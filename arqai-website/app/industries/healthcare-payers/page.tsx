@@ -45,7 +45,7 @@ export default function HealthcarePayersPage() {
               >
                 <p className="flex items-center gap-2 text-body-sm text-accent mb-6 uppercase tracking-wider font-medium">
                   <StarIcon className="w-4 h-4" />
-                  Solutions / Healthcare payers
+                  Industries / Healthcare payers
                 </p>
 
                 <h1 className="text-display-xl md:text-[clamp(2.5rem,5vw,4rem)] font-display leading-[1.1] text-text-bright mb-6">
@@ -56,8 +56,8 @@ export default function HealthcarePayersPage() {
                   ArqAI Labs builds vertical AI agents for healthcare payer operations. Live today: ArqFWA, the AI agent for fraud, waste, and abuse detection. More products on the roadmap, each engineered for production and delivered end-to-end.
                 </p>
 
-                <Link href="/demo" className="btn bg-accent text-white hover:bg-accent/90">
-                  Book a demo with our healthcare team
+                <Link href="/engage-us" className="btn bg-accent text-white hover:bg-accent/90">
+                  Engage us
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
                   </svg>
@@ -207,10 +207,10 @@ export default function HealthcarePayersPage() {
                 See what ArqAI Labs can do for your payer operation.
               </h2>
               <Link
-                href="/demo"
+                href="/engage-us"
                 className="inline-flex items-center gap-2 px-6 py-3 bg-white text-accent font-semibold rounded-lg hover:shadow-lg transition-all"
               >
-                Book a demo with our healthcare team
+                Engage us
                 <svg
                   className="w-4 h-4"
                   fill="none"

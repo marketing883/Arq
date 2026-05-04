@@ -22,19 +22,19 @@ function StarIcon({ className = "" }: { className?: string }) {
 
 const beliefs = [
   {
-    title: "Vertical depth beats horizontal breadth.",
+    title: "Tuned beats templated.",
     description:
-      "AI agents that try to do everything end up doing nothing well. We pick one workflow at a time and we go deep.",
+      "Every operation has its own quirks. Off-the-shelf AI averages them away. We build to the quirks.",
   },
   {
-    title: "Reliability is engineered, not promised.",
+    title: "Production beats pilots.",
     description:
-      "Production-grade is a property of the architecture, not a marketing line. We build the substrate first, then the products on top.",
+      "Most enterprise AI never makes it past the sandbox. We engineer for production from day one. That is the only standard we ship at.",
   },
   {
-    title: "Delivery is the product.",
+    title: "Engineers, not consultants.",
     description:
-      "A licence and a quickstart guide is not enough. We deploy. We run. We support. The same standard for every customer.",
+      "We are a lean team of senior AI engineers. We would rather build than describe.",
   },
 ];
 
@@ -82,11 +82,11 @@ export default function AboutPage() {
                 </p>
 
                 <h1 className="text-display-xl md:text-[clamp(2.5rem,5vw,4rem)] font-display leading-[1.1] text-text-bright mb-6">
-                  We build AI agents for the workflows that matter most.
+                  We build AI for the way people actually work.
                 </h1>
 
                 <p className="text-body-lg text-text-medium leading-relaxed">
-                  ArqAI Labs is the AI products and services arm of ACI Infotech. We build vertical AI agents for healthcare, insurance, and banking workflows where the cost of a wrong decision is measured in money, reputation, and operational time.
+                  ArqAI Labs is an AI engineering studio. We design, build, deploy, and run production AI for operations that don&apos;t fit off-the-shelf.
                 </p>
               </motion.div>
 
@@ -254,7 +254,7 @@ export default function AboutPage() {
                 </h2>
                 <div className="card p-8 bg-base">
                   <p className="text-body-lg text-text-muted leading-relaxed">
-                    ArqAI Labs is part of ACI Infotech, a privately held technology services firm. ACI works with senior technology leaders across financial services, healthcare, insurance, telecommunications, and manufacturing.
+                    ArqAI Labs is the AI products and services arm of ACI Infotech, a privately held technology services firm. ACI works with senior technology leaders across financial services, healthcare, insurance, telecommunications, and manufacturing. The relationship gives ArqAI Labs the implementation playbooks, the delivery muscle, and the access to enterprise customers that most AI engineering studios don&apos;t have.
                   </p>
                 </div>
               </motion.div>
@@ -276,10 +276,10 @@ export default function AboutPage() {
                 </h2>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Link
-                    href="/demo"
+                    href="/engage-us"
                     className="btn bg-accent text-white hover:bg-accent/90"
                   >
-                    Book a demo
+                    Engage us
                   </Link>
                   <Link href="/careers" className="btn btn-outline">
                     See open roles

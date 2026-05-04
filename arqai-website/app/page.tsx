@@ -7,9 +7,6 @@ import { motion } from "framer-motion";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { HomeStructuredData } from "@/components/seo/StructuredData";
-import { BlogSectionStatic } from "@/components/sections/BlogSection";
-import { CaseStudiesSectionStatic } from "@/components/sections/CaseStudiesSection";
-import { WhitepaperSectionStatic } from "@/components/sections/WhitepaperSection";
 
 function ScrollAwareMarquee({ items }: { items: string[] }) {
   const [scrollDirection, setScrollDirection] = useState<"left" | "right">("left");
@@ -68,153 +65,256 @@ function StarIcon({ className = "" }: { className?: string }) {
   );
 }
 
-const proofPoints = [
-  {
-    label: "End-to-end delivered",
-    description:
-      "Every ArqAI Labs deployment includes senior delivery, integration, and post-deployment support. We do not ship licences and walk away.",
-  },
-  {
-    label: "Architectural reliability",
-    description:
-      "Every agent runs on the same substrate that handles identity, policy enforcement, and observable retrieval. Production-grade by design, not by patch.",
-  },
-  {
-    label: "10+ years F500 delivery",
-    description:
-      "Fortune 500 delivery in regulated industries. The team that ships our products has done this before.",
-  },
-];
+type UseCaseIconName =
+  | "loyalty"
+  | "patient"
+  | "claims"
+  | "erp"
+  | "hospitality"
+  | "facilities"
+  | "copilot"
+  | "dynamics"
+  | "aws";
 
-const marqueeItems = [
-  "Vertical AI agents",
-  "Engineered for production",
-  "End-to-end delivered",
-  "Built by ACI Infotech",
-  "Run on your stack",
-];
-
-type ProductIcon = "shield" | "clipboard" | "vault";
-
-function ProductIcon({ name, className = "" }: { name: ProductIcon; className?: string }) {
-  if (name === "shield") {
-    // Fraud / waste / abuse — shield with magnifier
-    return (
-      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" className={className}>
-        <path d="M24 6l14 5v11c0 9-6 16-14 20-8-4-14-11-14-20V11l14-5z" />
-        <circle cx="22" cy="22" r="5" />
-        <path d="M26 26l4 4" />
-      </svg>
-    );
+function UseCaseIcon({ name, className = "" }: { name: UseCaseIconName; className?: string }) {
+  const props = {
+    viewBox: "0 0 48 48",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: 1.6,
+    strokeLinecap: "round" as const,
+    strokeLinejoin: "round" as const,
+    className,
+  };
+  switch (name) {
+    case "loyalty":
+      return (
+        <svg {...props}>
+          <circle cx="16" cy="20" r="4" />
+          <circle cx="32" cy="20" r="4" />
+          <path d="M10 36c0-4 4-7 8-7M30 29c4 0 8 3 8 7" />
+          <path d="M24 8l2 4 4 .5-3 2.8.7 4-3.7-2-3.7 2 .7-4-3-2.8 4-.5z" />
+        </svg>
+      );
+    case "patient":
+      return (
+        <svg {...props}>
+          <rect x="8" y="10" width="32" height="28" rx="2" />
+          <path d="M8 18h32" />
+          <path d="M16 6v8M32 6v8" />
+          <circle cx="18" cy="28" r="2" fill="currentColor" />
+          <circle cx="26" cy="28" r="2" />
+          <path d="M34 28h2" />
+        </svg>
+      );
+    case "claims":
+      return (
+        <svg {...props}>
+          <rect x="8" y="10" width="14" height="10" rx="1" />
+          <rect x="8" y="22" width="14" height="10" rx="1" />
+          <path d="M26 14h12M26 18h8M26 28h12M26 32h8" />
+        </svg>
+      );
+    case "erp":
+      return (
+        <svg {...props}>
+          <rect x="6" y="10" width="36" height="22" rx="2" />
+          <path d="M12 26l4-6 4 4 4-8 4 4 4-2" />
+          <path d="M14 36h20M20 32v4M28 32v4" />
+        </svg>
+      );
+    case "hospitality":
+      return (
+        <svg {...props}>
+          <path d="M8 38V18l16-10 16 10v20z" />
+          <path d="M16 38V26h6v12M26 26h6v6h-6z" />
+        </svg>
+      );
+    case "facilities":
+      return (
+        <svg {...props}>
+          <rect x="8" y="14" width="14" height="20" rx="1" />
+          <path d="M14 18v3M14 25v3M14 32v0" />
+          <rect x="26" y="20" width="14" height="14" rx="1" />
+          <path d="M30 26h6M33 23v6" />
+        </svg>
+      );
+    case "copilot":
+      return (
+        <svg {...props}>
+          <path d="M10 14h22a4 4 0 014 4v8a4 4 0 01-4 4H22l-6 6v-6h-6a4 4 0 01-4-4v-8a4 4 0 014-4z" />
+          <path d="M16 22h12M16 26h8" />
+        </svg>
+      );
+    case "dynamics":
+      return (
+        <svg {...props}>
+          <path d="M10 38V14l14-6 14 6v24" />
+          <path d="M10 22h28" />
+          <path d="M24 8v32" />
+        </svg>
+      );
+    case "aws":
+      return (
+        <svg {...props}>
+          <rect x="8" y="14" width="10" height="10" rx="1" />
+          <rect x="20" y="14" width="10" height="10" rx="1" />
+          <rect x="32" y="14" width="8" height="10" rx="1" />
+          <path d="M13 28v6h22v-6" />
+          <circle cx="13" cy="19" r="1.4" fill="currentColor" />
+          <circle cx="25" cy="19" r="1.4" fill="currentColor" />
+        </svg>
+      );
   }
-  if (name === "clipboard") {
-    // Claims triage — clipboard with prioritised list
-    return (
-      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" className={className}>
-        <rect x="10" y="8" width="28" height="34" rx="2" />
-        <path d="M18 6h12v6H18z" />
-        <path d="M16 22h4M24 22h8M16 28h4M24 28h6M16 34h4M24 34h4" />
-      </svg>
-    );
-  }
-  // vault — AML / KYC / financial crime
-  return (
-    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" className={className}>
-      <rect x="6" y="10" width="36" height="28" rx="2" />
-      <circle cx="24" cy="24" r="7" />
-      <path d="M24 17v-3M24 34v-3M17 24h-3M34 24h-3" />
-      <circle cx="24" cy="24" r="2" fill="currentColor" />
-    </svg>
-  );
 }
 
-const products: {
-  id: string;
-  name: string;
-  status: string;
-  statusColor: string;
-  icon: ProductIcon;
-  tagline: string;
-  description: string;
-  features: string[];
-  cta: string;
-  href: string;
+const useCases: {
+  tag: string;
+  title: string;
+  body: string;
+  icon: UseCaseIconName;
 }[] = [
   {
-    id: "arqfwa",
+    tag: "Retail",
+    title: "Loyalty that learns what each customer values.",
+    body: "AI that replaces points-and-badges with offers tuned to actual buying behavior. Retention up. Spend on stale incentives down.",
+    icon: "loyalty",
+  },
+  {
+    tag: "Healthcare",
+    title: "Patient management that doesn't drop people in the gap.",
+    body: "AI that follows up, schedules, and surfaces the patients your team needs to call today. Less leakage between visits.",
+    icon: "patient",
+  },
+  {
+    tag: "Insurance / Healthcare",
+    title: "Claims triage in days, not weeks.",
+    body: "AI that routes incoming claims to the right person, prioritises the queue, and supports the decision your team makes.",
+    icon: "claims",
+  },
+  {
+    tag: "Manufacturing",
+    title: "ERP that finally answers the question.",
+    body: "AI on top of your ERP that turns the data into decisions. Fewer reports your team has to assemble by hand.",
+    icon: "erp",
+  },
+  {
+    tag: "Hospitality",
+    title: "Revenue management that doesn't miss a fill night.",
+    body: "AI that prices rooms, packages, and add-ons dynamically against demand, competitor pricing, and your own historical patterns.",
+    icon: "hospitality",
+  },
+  {
+    tag: "Facilities management",
+    title: "Maintenance that fixes things before they break.",
+    body: "AI that predicts failures across HVAC, elevators, lighting, and critical equipment from sensor data and service history.",
+    icon: "facilities",
+  },
+  {
+    tag: "Microsoft 365",
+    title: "Microsoft Copilot, tuned to your operation.",
+    body: "Copilot extended with your context, your workflows, and the security posture your IT requires. Out-of-the-box does not get you there. We do.",
+    icon: "copilot",
+  },
+  {
+    tag: "Microsoft Dynamics",
+    title: "Dynamics 365, AI-fied.",
+    body: "Your Dynamics with AI that learns from your sales motion and your service desk. Less manual entry. Better next-best actions.",
+    icon: "dynamics",
+  },
+  {
+    tag: "AWS ecosystem",
+    title: "AWS Quick, configured.",
+    body: "Quick Suite tuned for the agents your operation actually needs, integrated with the systems you already run.",
+    icon: "aws",
+  },
+];
+
+const processSteps = [
+  {
+    name: "Strategy",
+    description:
+      "We start with the workflow, the buyer, and the operational metric. Discovery is short, focused, and outputs a concrete deployment plan.",
+  },
+  {
+    name: "Build",
+    description:
+      "We design and engineer AI tuned to your environment. On the cloud you already run. Integrated with the systems your team already uses.",
+  },
+  {
+    name: "Deploy",
+    description:
+      "We push it into production. Not a sandbox. Not a pilot that lives in a slide deck. Real decisions on real data.",
+  },
+  {
+    name: "Run",
+    description:
+      "We operate it alongside your team. Named technical lead. Named relationship lead. Defined SLAs. We don't ship and walk away.",
+  },
+];
+
+const products = [
+  {
     name: "ArqFWA",
     status: "LIVE",
     statusColor: "bg-green-500",
-    icon: "shield",
-    tagline: "The AI agent for fraud, waste, and abuse detection.",
     description:
-      "Reviews high volumes of claims and transactions, flags suspicious patterns, and surfaces the work your team should focus on first. Built for healthcare payers and P&C insurance carriers.",
-    features: ["Pattern detection", "Adjuster routing"],
+      "The AI agent for fraud, waste, and abuse detection. Built for healthcare payers and P&C insurance carriers.",
     cta: "See ArqFWA",
     href: "/products/arqfwa",
   },
   {
-    id: "arqclaims",
     name: "ArqClaims",
     status: "IN BUILD",
     statusColor: "bg-amber-500",
-    icon: "clipboard",
-    tagline: "The AI agent for claims triage and processing.",
     description:
-      "Triages incoming claims and surfaces the right ones to the right adjuster, with the routing logic and reserve recommendations your operation actually uses. Built for mid-market P&C carriers.",
-    features: ["Triage", "Reserve recommendations"],
+      "The AI agent for claims triage and processing. In build with design partners.",
     cta: "Join the design partner program",
     href: "/products/arqclaims",
   },
   {
-    id: "arqbanker",
     name: "ArqBanker",
     status: "COMING",
     statusColor: "bg-blue-500",
-    icon: "vault",
-    tagline: "The AI agent for AML, KYC, and financial crime.",
     description:
-      "Built for the financial crimes operations at regional and mid-tier banks. Calibrated to the realities of running a financial crimes program on a lean team.",
-    features: ["AML monitoring", "KYC review"],
+      "The AI agent for AML, KYC, and financial crime. In development.",
     cta: "Get notified at launch",
     href: "/products/arqbanker",
   },
 ];
 
-const pillars = [
+const beliefs = [
   {
-    title: "Vertical-deep, not horizontal-thin",
+    title: "Lean engineering teams.",
     description:
-      "We do not sell a builder. ArqFWA does fraud, waste, and abuse. ArqClaims does claims triage. ArqBanker does financial crime. Each product is calibrated for one workflow, with the right interface for the actual user, integrated with the systems that workflow already lives in. Specialisation is the whole point.",
+      "We are an AI engineering team. Senior. Sharp. Fluent in the modern frontier stack. We'd rather build than describe.",
   },
   {
-    title: "Engineered for production from day one",
+    title: "Tuned, not templated.",
     description:
-      "Reliability in our products is a property of the architecture, not a marketing claim. Every ArqAI Labs agent runs on a shared substrate that handles cryptographic identity, runtime policy enforcement, and observable retrieval. Production-grade is the default. There is no \"production mode\" toggle.",
+      "No two operations get the same build. Every engagement starts with how your team actually works, not with what we've shipped before.",
   },
   {
-    title: "Delivered end-to-end. Not licensed.",
+    title: "Productised where it earns its place.",
     description:
-      "ArqAI Labs is the AI products and services arm of ACI Infotech, a technology services firm with over a decade of Fortune 500 delivery. The team that builds our products is the same team that deploys them in your environment. You do not get a software licence and a quickstart guide. You get a deployed agent and a senior team that knows your stack.",
+      "When a problem shows up enough times across customers, we turn it into a product. The product line grows from the work, not the other way around.",
   },
 ];
 
-const substratePillars = [
-  {
-    abbr: "TAO",
-    fullName: "Trust-Aware Orchestration",
-    description: "Cryptographic identity and non-repudiable audit trails for every agent action. Built into the runtime, not bolted on.",
-  },
-  {
-    abbr: "CAPC",
-    fullName: "Compliance-Aware Compiler",
-    description: "Business rules and compliance constraints baked directly into agent behavior. Policy enforced at runtime, not assumed.",
-  },
-  {
-    abbr: "ODA",
-    fullName: "Observability-Driven RAG",
-    description: "Real-time quality scoring and self-improving knowledge retrieval. The agent knows when it does not know.",
-  },
+const industries = [
+  { name: "Healthcare", href: "/industries/healthcare-payers" },
+  { name: "Insurance", href: "/industries/insurance-carriers" },
+  { name: "Banking", href: "/industries/banking" },
+  { name: "Retail", href: "/industries/retail" },
+  { name: "Manufacturing", href: "/industries/manufacturing" },
+];
+
+const marqueeItems = [
+  "Production-grade AI",
+  "Bespoke to your operation",
+  "Tuned, not templated",
+  "Engineers, not consultants",
+  "Plus a growing line of products",
 ];
 
 export default function HomePage() {
@@ -224,260 +324,243 @@ export default function HomePage() {
       <Header />
 
       <main className="bg-base">
-        {/* Hero Section */}
-        <section className="mxd-hero min-h-screen flex flex-col justify-between pt-40 md:pt-48 pb-16 relative overflow-hidden">
-          <div className="container mx-auto px-4 md:px-6 lg:px-8 flex-1 flex flex-col justify-center">
-            <div className="relative mb-16">
-              {/* Floating decorative image */}
-              <div className="absolute right-0 md:right-0 lg:right-[5%] top-4 md:top-0 w-16 h-16 md:w-24 md:h-24 lg:w-28 lg:h-28 animate-rotate-slow z-10">
-                <Image
-                  src="/img/hero/03_hero-img.webp"
-                  alt="Decorative element"
-                  width={120}
-                  height={120}
-                  className="w-full h-full object-contain"
-                />
-              </div>
-
-              <p className="flex items-center gap-2 text-body-sm text-accent mb-6 uppercase tracking-wider font-medium">
-                <StarIcon className="w-4 h-4" />
-                ArqAI Labs
-              </p>
-
-              <motion.h1
-                initial={{ opacity: 0, y: 40 }}
+        {/* Hero */}
+        <section className="min-h-[88vh] flex flex-col justify-center pt-32 md:pt-40 pb-16 relative overflow-hidden">
+          <div className="container mx-auto px-4 md:px-6 lg:px-8">
+            <div className="grid lg:grid-cols-12 gap-10 items-center">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
-                className="text-display-xl md:text-[clamp(2.75rem,6vw,5.5rem)] font-display leading-[1.05] text-text-bright max-w-[92%]"
+                className="lg:col-span-8"
               >
-                Vertical AI agents.{" "}
-                <span className="text-text-muted">Fraud. Claims. Financial crime.</span>
-              </motion.h1>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-12 items-end">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="space-y-6"
-              >
-                <div className="w-full h-px bg-stroke-muted" />
-                <p className="text-body-lg text-text-medium max-w-lg">
-                  Built for healthcare payers, P&amp;C carriers, and regional banks. Live in production today.
+                <p className="flex items-center gap-2 text-body-sm text-accent mb-6 uppercase tracking-wider font-medium">
+                  <StarIcon className="w-4 h-4" />
+                  ArqAI Labs
                 </p>
+
+                <h1 className="text-display-xl md:text-[clamp(2.75rem,6vw,5.5rem)] font-display leading-[1.05] text-text-bright mb-6">
+                  ArqAI Labs is an AI engineering studio.
+                </h1>
+
+                <p className="text-body-lg md:text-xl text-text-medium leading-relaxed mb-10 max-w-2xl">
+                  We ship production-grade AI, bespoke to your operation.
+                </p>
+
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <Link
-                    href="/demo"
-                    className="btn bg-accent text-white hover:bg-accent/90 group"
-                  >
-                    See it in your environment
+                  <Link href="/engage-us" className="btn bg-accent text-white hover:bg-accent/90 group">
+                    Engage us
                     <svg className="w-4 h-4 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
                     </svg>
                   </Link>
-                  <Link href="/how-it-works" className="btn btn-outline">
-                    Read about our approach
+                  <Link href="/use-cases" className="btn btn-outline">
+                    See what we work on
                   </Link>
                 </div>
-                <div className="flex flex-wrap items-center gap-x-6 gap-y-3 text-body-sm text-text-muted pt-2">
-                  <div className="flex items-center gap-2">
-                    <StarIcon className="w-4 h-4" />
-                    <span>End-to-end delivered</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <StarIcon className="w-4 h-4" />
-                    <span>Production-grade by design</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <StarIcon className="w-4 h-4" />
-                    <span>Run on your stack</span>
-                  </div>
-                </div>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                className="relative rounded-2xl overflow-hidden aspect-video max-w-xs md:max-w-sm ml-auto"
-              >
-                <video
-                  className="w-full h-full object-cover"
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                >
-                  <source src="/video/hero-video.webm" type="video/webm" />
-                  <source src="/video/1920x1080_video.mp4" type="video/mp4" />
-                </video>
-                <Link
-                  href="/demo"
-                  aria-label="Book a demo"
-                  className="absolute bottom-3 right-3 w-12 h-12 rounded-full bg-additional flex items-center justify-center hover:scale-110 transition-transform"
-                >
-                  <svg className="w-4 h-4 text-base-opp ml-0.5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M8 5v14l11-7z" />
-                  </svg>
-                </Link>
-              </motion.div>
-            </div>
-          </div>
-        </section>
-
-        {/* Problem / What We Do Section with Foundry video */}
-        <section className="py-section bg-base">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-              >
-                <p className="flex items-center gap-2 text-body-sm text-accent mb-4">
-                  <StarIcon className="w-4 h-4" />
-                  What we do
-                </p>
-                <h2 className="text-display-lg font-display mb-6">
-                  <span className="text-text-muted">Most enterprise AI ships as a kit.</span> <span className="text-text-bright">We ship the agent.</span>
-                </h2>
-                <div className="space-y-4 text-body-md text-text-muted leading-relaxed mb-8">
-                  <p>
-                    You have evaluated AI agent platforms. They asked your team to build, configure, train, and operate. Twelve months of internal engineering before the first production decision. An agent that works for the demo and stalls under real-world load.
-                  </p>
-                  <p>
-                    We do not hand you a builder. We hand you a deployed agent. Built for one workflow. Engineered for production from day one. Run by people who have shipped enterprise software in regulated industries for over a decade.
-                  </p>
-                </div>
-                <Link href="/how-it-works" className="btn group">
-                  See how it works
-                  <svg className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
-                  </svg>
-                </Link>
               </motion.div>
 
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.2 }}
-                className="relative"
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="lg:col-span-4 relative"
               >
-                <div className="relative rounded-md overflow-hidden bg-base-opp/5 p-1 shadow-2xl shadow-accent/10">
-                  <div className="rounded overflow-hidden bg-base-opp">
-                    <video
-                      autoPlay
-                      muted
-                      loop
-                      playsInline
-                      preload="metadata"
-                      className="w-full h-auto scale-110"
-                      poster="/img/demo/arqai-foundry-v2-poster.webp"
-                    >
-                      <source src="/video/ArqAI-foundry-v2.webm" type="video/webm" />
-                      <source src="/video/ArqAI-foundry-v2.mp4" type="video/mp4" />
-                    </video>
-                  </div>
+                <div className="relative rounded-2xl overflow-hidden aspect-square shadow-2xl shadow-accent/15">
+                  <video
+                    className="w-full h-full object-cover"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                  >
+                    <source src="/video/hero-video.webm" type="video/webm" />
+                    <source src="/video/1920x1080_video.mp4" type="video/mp4" />
+                  </video>
+                </div>
+                <div className="absolute -top-6 -right-6 hidden md:block w-24 h-24 lg:w-28 lg:h-28 animate-rotate-slow">
+                  <Image
+                    src="/img/hero/03_hero-img.webp"
+                    alt=""
+                    width={120}
+                    height={120}
+                    className="w-full h-full object-contain"
+                  />
                 </div>
               </motion.div>
             </div>
           </div>
         </section>
 
-        {/* Proof Strip */}
+        {/* What we work on */}
         <section className="py-section bg-base-tint">
-          <div className="container mx-auto px-4 md:px-6 lg:px-8">
-            <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
-              {proofPoints.map((point, index) => (
-                <motion.div
-                  key={point.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className="border-t-2 border-accent pt-6"
-                >
-                  <h3 className="text-xl md:text-2xl font-display font-semibold text-text-bright mb-3">
-                    {point.label}
-                  </h3>
-                  <p className="text-body-md text-text-muted leading-relaxed">
-                    {point.description}
-                  </p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Marquee Section */}
-        <section className="py-8 bg-accent overflow-hidden">
-          <ScrollAwareMarquee items={marqueeItems} />
-        </section>
-
-        {/* Products Showcase Section */}
-        <section className="py-section bg-base-tint overflow-hidden">
           <div className="container mx-auto px-4 md:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-center mb-16"
+              className="max-w-3xl mb-14"
             >
-              <p className="flex items-center justify-center gap-2 text-body-sm text-accent mb-4">
+              <p className="flex items-center gap-2 text-body-sm text-accent mb-4 uppercase tracking-wider font-medium">
                 <StarIcon className="w-4 h-4" />
-                Products
+                What we work on
               </p>
-              <h2 className="text-display-lg font-display text-text-bright mb-4">
-                Three vertical AI agents announced. More to follow.
+              <h2 className="text-display-lg font-display text-text-bright mb-6">
+                A few of the operations we&apos;ve engineered AI into.
               </h2>
-              <p className="text-body-lg text-text-muted max-w-2xl mx-auto">
-                Each product takes one operational workflow and makes the AI agent for it. Same architectural foundation. Same delivery standard. Different jobs.
+              <p className="text-body-lg text-text-muted">
+                The list grows. Yours might be next.
               </p>
             </motion.div>
 
-            <div className="grid md:grid-cols-3 gap-6 lg:gap-8 mb-10">
-              {products.map((product, index) => (
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
+              {useCases.map((uc, index) => (
+                <motion.article
+                  key={uc.title}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 100,
+                    damping: 20,
+                    delay: (index % 3) * 0.06,
+                  }}
+                  whileHover={{ y: -4 }}
+                  className="group card flex flex-col h-full hover:border-accent transition-colors"
+                >
+                  <div className="w-14 h-14 rounded-xl bg-accent/10 text-accent flex items-center justify-center mb-5 group-hover:bg-accent group-hover:text-white transition-colors">
+                    <UseCaseIcon name={uc.icon} className="w-8 h-8" />
+                  </div>
+                  <p className="text-body-xs text-accent uppercase tracking-wider mb-2">
+                    {uc.tag}
+                  </p>
+                  <h3 className="text-lg font-display font-semibold text-text-bright leading-snug mb-3 group-hover:text-accent transition-colors">
+                    {uc.title}
+                  </h3>
+                  <p className="text-body-sm text-text-muted leading-relaxed flex-1">
+                    {uc.body}
+                  </p>
+                </motion.article>
+              ))}
+            </div>
+
+            <div className="mt-12 text-center">
+              <Link
+                href="/use-cases"
+                className="inline-flex items-center gap-2 text-accent font-medium hover:gap-3 transition-all"
+              >
+                See more use cases
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* Marquee */}
+        <section className="py-8 bg-accent overflow-hidden">
+          <ScrollAwareMarquee items={marqueeItems} />
+        </section>
+
+        {/* How we work */}
+        <section className="py-section bg-base">
+          <div className="container mx-auto px-4 md:px-6 lg:px-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="max-w-3xl mb-14"
+            >
+              <p className="flex items-center gap-2 text-body-sm text-accent mb-4 uppercase tracking-wider font-medium">
+                <StarIcon className="w-4 h-4" />
+                How we work
+              </p>
+              <h2 className="text-display-lg font-display text-text-bright">
+                Four steps. End-to-end.
+              </h2>
+            </motion.div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {processSteps.map((step, index) => (
                 <motion.div
-                  key={product.id}
+                  key={step.name}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className="card group hover:border-accent transition-all flex flex-col h-full"
+                  transition={{ delay: index * 0.08 }}
+                  className="border-t-2 border-accent pt-6"
                 >
-                  <div className="flex items-start justify-between mb-5">
-                    <div className="w-14 h-14 rounded-xl bg-accent/10 text-accent flex items-center justify-center group-hover:bg-accent group-hover:text-white transition-colors">
-                      <ProductIcon name={product.icon} className="w-8 h-8" />
-                    </div>
-                    <span
-                      className={`inline-block text-xs font-semibold px-2.5 py-1 rounded-full text-white ${product.statusColor}`}
-                    >
+                  <p className="text-body-xs text-accent uppercase tracking-wider mb-2">
+                    Step 0{index + 1}
+                  </p>
+                  <h3 className="text-2xl font-display font-semibold text-text-bright mb-3">
+                    {step.name}
+                  </h3>
+                  <p className="text-body-sm text-text-muted leading-relaxed">
+                    {step.description}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
+
+            <div className="mt-10">
+              <Link
+                href="/how-we-work"
+                className="inline-flex items-center gap-2 text-accent font-medium hover:gap-3 transition-all"
+              >
+                See the full process
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* What we've productised */}
+        <section className="py-section bg-base-tint">
+          <div className="container mx-auto px-4 md:px-6 lg:px-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="max-w-3xl mb-14"
+            >
+              <p className="flex items-center gap-2 text-body-sm text-accent mb-4 uppercase tracking-wider font-medium">
+                <StarIcon className="w-4 h-4" />
+                Productised
+              </p>
+              <h2 className="text-display-lg font-display text-text-bright mb-6">
+                When the same problem shows up enough times, we productise it.
+              </h2>
+              <p className="text-body-lg text-text-muted">
+                A few of those problems showed up so often we built them out as products.
+              </p>
+            </motion.div>
+
+            <div className="grid md:grid-cols-3 gap-6">
+              {products.map((product, index) => (
+                <motion.div
+                  key={product.name}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.08 }}
+                  className="card group flex flex-col h-full hover:border-accent transition-colors"
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-2xl font-display font-semibold text-text-bright group-hover:text-accent transition-colors">
+                      {product.name}
+                    </h3>
+                    <span className={`inline-block text-xs font-semibold px-2.5 py-1 rounded-full text-white ${product.statusColor}`}>
                       {product.status}
                     </span>
                   </div>
-
-                  <h3 className="text-2xl font-display font-semibold text-text-bright mb-2 group-hover:text-accent transition-colors">
-                    {product.name}
-                  </h3>
-
-                  <p className="text-body-md text-text-bright mb-4">
-                    {product.tagline}
-                  </p>
-
                   <p className="text-body-sm text-text-muted mb-6 flex-1">
                     {product.description}
                   </p>
-
-                  <div className="flex flex-wrap gap-1.5 mb-6">
-                    {product.features.map((feature, i) => (
-                      <span key={i} className="px-2 py-0.5 rounded-full bg-accent/10 text-[10px] font-medium text-accent">
-                        {feature}
-                      </span>
-                    ))}
-                  </div>
-
                   <Link
                     href={product.href}
                     className="inline-flex items-center gap-2 text-accent font-medium hover:gap-3 transition-all"
@@ -490,140 +573,10 @@ export default function HomePage() {
                 </motion.div>
               ))}
             </div>
-
-            {/* More to follow strip */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16 p-5 rounded-xl bg-base border border-stroke-muted"
-            >
-              <div className="flex items-center gap-3">
-                <div className="flex -space-x-1">
-                  <span className="w-2 h-2 rounded-full bg-text-muted/40" />
-                  <span className="w-2 h-2 rounded-full bg-text-muted/60" />
-                  <span className="w-2 h-2 rounded-full bg-text-muted/80" />
-                </div>
-                <p className="text-body-sm text-text-medium">
-                  <span className="font-semibold text-text-bright">More vertical agents on the way.</span>{" "}
-                  Each one targets a workflow where the AI alternatives stop short.
-                </p>
-              </div>
-              <Link
-                href="/products/roadmap"
-                className="text-body-sm text-accent font-medium hover:underline whitespace-nowrap"
-              >
-                See the roadmap &rarr;
-              </Link>
-            </motion.div>
-
-            {/* Custom Build CTA - gradient panel */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-            >
-              <div className="relative bg-gradient-to-r from-accent via-accent to-accent/90 rounded-2xl p-8 md:p-10 overflow-hidden">
-                <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2" />
-                <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2" />
-
-                <div className="relative flex flex-col md:flex-row md:items-center justify-between gap-6">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-3">
-                      <StarIcon className="w-4 h-4 text-additional" />
-                      <span className="text-body-xs text-white/80 uppercase tracking-wider">Services</span>
-                    </div>
-                    <h3 className="text-display-sm font-display mb-3 text-white">
-                      When the productised agent is not the fit, we build the one you need.
-                    </h3>
-                    <p className="text-body-md text-white/80 max-w-xl">
-                      Senior engineers and domain leads who have shipped Fortune 500 programs for over a decade. Built into your environment, on the cloud you already use.
-                    </p>
-                  </div>
-                  <div className="shrink-0">
-                    <Link
-                      href="/services"
-                      className="inline-flex items-center gap-2 px-6 py-3 bg-white text-accent font-semibold rounded-lg hover:shadow-lg hover:shadow-black/20 transition-all group"
-                    >
-                      Talk to delivery
-                      <svg className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
-                      </svg>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
           </div>
         </section>
 
-        {/* Platform / Substrate Section */}
-        <section className="py-section bg-base">
-          <div className="container mx-auto px-4 md:px-6">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="section-header text-center"
-            >
-              <p className="flex items-center justify-center gap-2 text-body-sm text-accent mb-4">
-                <StarIcon className="w-4 h-4" />
-                The substrate
-              </p>
-              <h2 className="text-display-lg font-display text-text-bright mb-4">
-                The shared engine behind every ArqAI Labs agent.
-              </h2>
-              <p className="text-body-lg text-text-muted max-w-3xl mx-auto">
-                Every product runs on the same production substrate. Identity, policy, and retrieval are properties of the architecture, not a checklist your team has to add later.
-              </p>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="flex justify-center mb-16"
-            >
-              <video
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="w-full max-w-4xl rounded-lg"
-                poster="/img/hero/arq-wf.png"
-              >
-                <source src="/img/hero/workflow-ai.webm" type="video/webm" />
-              </video>
-            </motion.div>
-
-            <div className="grid md:grid-cols-3 gap-6">
-              {substratePillars.map((p, index) => (
-                <motion.div
-                  key={p.abbr}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className="card group hover:border-accent transition-all"
-                >
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-12 h-12 rounded bg-accent flex items-center justify-center shrink-0">
-                      <span className="text-sm font-bold text-white">{p.abbr}</span>
-                    </div>
-                    <h3 className="text-lg font-display font-semibold text-text-bright group-hover:text-accent transition-colors">
-                      {p.fullName}
-                    </h3>
-                  </div>
-                  <p className="text-body-sm text-text-muted leading-relaxed">
-                    {p.description}
-                  </p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Three Pillars Section - Dark */}
+        {/* Why ArqAI Labs - Dark */}
         <section className="py-section bg-base-opp">
           <div className="container mx-auto px-4 md:px-6 lg:px-8">
             <motion.div
@@ -632,9 +585,9 @@ export default function HomePage() {
               viewport={{ once: true }}
               className="text-center mb-16"
             >
-              <p className="flex items-center justify-center gap-2 text-body-sm text-additional mb-4">
+              <p className="flex items-center justify-center gap-2 text-body-sm text-additional mb-4 uppercase tracking-wider font-medium">
                 <StarIcon className="w-4 h-4" />
-                Our approach
+                Why ArqAI Labs
               </p>
               <h2 className="text-display-lg font-display text-base">
                 Three things we will<br />not compromise on.
@@ -642,9 +595,9 @@ export default function HomePage() {
             </motion.div>
 
             <div className="grid md:grid-cols-3 gap-8">
-              {pillars.map((pillar, index) => (
+              {beliefs.map((belief, index) => (
                 <motion.div
-                  key={pillar.title}
+                  key={belief.title}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -655,10 +608,10 @@ export default function HomePage() {
                     {String(index + 1).padStart(2, "0")}
                   </div>
                   <h3 className="text-xl font-display font-semibold text-base mb-4">
-                    {pillar.title}
+                    {belief.title}
                   </h3>
                   <p className="text-body-md text-base/70 leading-relaxed">
-                    {pillar.description}
+                    {belief.description}
                   </p>
                 </motion.div>
               ))}
@@ -666,16 +619,43 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Case Studies Section */}
-        <CaseStudiesSectionStatic />
+        {/* Industries */}
+        <section className="py-section bg-base">
+          <div className="container mx-auto px-4 md:px-6 lg:px-8 text-center">
+            <p className="flex items-center justify-center gap-2 text-body-sm text-accent mb-4 uppercase tracking-wider font-medium">
+              <StarIcon className="w-4 h-4" />
+              Industries we serve
+            </p>
+            <p className="text-display-md md:text-display-lg font-display text-text-bright leading-tight max-w-4xl mx-auto">
+              {industries.map((ind, i) => (
+                <span key={ind.name}>
+                  <Link
+                    href={ind.href}
+                    className="hover:text-accent transition-colors underline-offset-8 decoration-stroke-muted hover:decoration-accent decoration-2 underline"
+                  >
+                    {ind.name}
+                  </Link>
+                  {i < industries.length - 1 ? ". " : "."}
+                </span>
+              ))}{" "}
+              <span className="text-text-muted">And other operations whose complexity rewards specialist work.</span>
+            </p>
+          </div>
+        </section>
 
-        {/* Whitepaper Download Section */}
-        <WhitepaperSectionStatic />
+        {/* Trust strip */}
+        <section className="py-12 bg-base-tint border-y border-stroke-muted">
+          <div className="container mx-auto px-4 md:px-6 lg:px-8 text-center">
+            <p className="text-body-md text-text-muted">
+              Architectural controls first. Aligned with SOC 2, HIPAA, GDPR, and regional frameworks where engagements require them.{" "}
+              <Link href="/trust" className="text-accent font-medium hover:underline">
+                See trust posture &rarr;
+              </Link>
+            </p>
+          </div>
+        </section>
 
-        {/* Blog Section */}
-        <BlogSectionStatic />
-
-        {/* Closing CTA Section */}
+        {/* Closing CTA */}
         <section className="py-section bg-base">
           <div className="container mx-auto px-4 md:px-6 lg:px-8 text-center">
             <motion.div
@@ -685,13 +665,13 @@ export default function HomePage() {
               className="max-w-3xl mx-auto"
             >
               <h2 className="text-display-md font-display text-text-bright mb-6">
-                Tell us your workflow.<br />We will tell you what is honestly possible.
+                Tell us what your operation needs.
               </h2>
               <p className="text-body-lg text-text-muted mb-8">
-                The right way to evaluate ArqAI Labs is to bring your actual workflow into the conversation. We will tell you whether one of our products fits, whether services is the right path, and what realistic looks like.
+                We&apos;ll tell you what&apos;s honestly possible. In plain language. Without a deck.
               </p>
-              <Link href="/demo" className="btn bg-accent text-white">
-                Book a demo
+              <Link href="/engage-us" className="btn bg-accent text-white">
+                Engage us
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
                 </svg>

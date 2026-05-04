@@ -110,22 +110,22 @@ export default function DemoPage() {
               >
                 <p className="flex items-center gap-2 text-body-sm text-accent mb-6 uppercase tracking-wider font-medium">
                   <StarIcon className="w-4 h-4" />
-                  Book a Demo
+                  Engage us
                 </p>
 
                 <h1 className="text-display-xl md:text-[clamp(2.5rem,5vw,4rem)] font-display leading-[1.1] text-text-bright mb-6">
-                  See it in your environment, with your data.
+                  Tell us what your operation needs.
                 </h1>
 
                 <p className="text-body-lg text-text-medium leading-relaxed mb-8">
-                  Book a 30-minute walkthrough with our team. No deck. No abstractions. Tell us your workflow and we will show you what changes when ArqAI Labs is in it.
+                  We&apos;ll tell you what&apos;s honestly possible. In plain language. Without a deck. Bring a sample of your data and we&apos;ll show you what changes when ArqAI Labs is in your operation.
                 </p>
 
                 <ul className="space-y-3 text-body-md text-text-medium">
                   {[
-                    "Live walkthrough of an agent in production",
-                    "Honest read on whether your workflow fits",
-                    "Implementation plan with realistic timelines",
+                    "Plain-language read on whether your workflow fits",
+                    "Concrete deployment plan with a committed timeline",
+                    "Senior engineering team in the room from day one",
                   ].map((item) => (
                     <li key={item} className="flex items-start gap-3">
                       <span className="mt-1 w-5 h-5 rounded-full bg-accent/15 flex items-center justify-center shrink-0">
@@ -201,10 +201,10 @@ export default function DemoPage() {
                     </svg>
                   </div>
                   <h2 className="text-2xl font-display font-semibold text-text-bright mb-4">
-                    Thank you for your request.
+                    Thanks. We&apos;ll be in touch.
                   </h2>
                   <p className="text-body-md text-text-muted mb-6">
-                    We will be in touch within one business day to schedule your demo.
+                    A senior on our team will reach out within one business day.
                   </p>
                   <Link href="/" className="btn btn-outline">
                     Back to home
@@ -355,7 +355,7 @@ export default function DemoPage() {
                     disabled={isSubmitting}
                     className="mt-8 w-full btn bg-accent text-white hover:bg-accent/90 disabled:opacity-50"
                   >
-                    {isSubmitting ? "Submitting..." : "Request the demo"}
+                    {isSubmitting ? "Sending..." : "Send"}
                   </button>
 
                   <p className="mt-4 text-body-xs text-text-muted text-center">

@@ -13,6 +13,8 @@ interface NavItem {
 }
 
 const navigation: NavItem[] = [
+  { name: "What we work on", href: "/use-cases" },
+  { name: "How we work", href: "/how-we-work" },
   {
     name: "Products",
     href: "/products",
@@ -20,39 +22,21 @@ const navigation: NavItem[] = [
       { name: "ArqFWA", href: "/products/arqfwa", description: "Fraud, waste, and abuse detection" },
       { name: "ArqClaims", href: "/products/arqclaims", description: "Claims triage and processing" },
       { name: "ArqBanker", href: "/products/arqbanker", description: "AML, KYC, and financial crime" },
-      { name: "Roadmap", href: "/products/roadmap", description: "What we are building next" },
     ],
   },
   {
-    name: "Solutions",
-    href: "/solutions",
+    name: "Industries",
+    href: "/industries",
     children: [
-      { name: "Healthcare payers", href: "/solutions/healthcare-payers", description: "For payer operations teams" },
-      { name: "P&C insurance", href: "/solutions/insurance-carriers", description: "For carrier claims teams" },
-      { name: "Banks and FIs", href: "/solutions/banking", description: "For financial crimes teams" },
+      { name: "Healthcare payers", href: "/industries/healthcare-payers", description: "For payer operations teams" },
+      { name: "P&C insurance", href: "/industries/insurance-carriers", description: "For carrier claims teams" },
+      { name: "Banks and FIs", href: "/industries/banking", description: "For financial crimes teams" },
+      { name: "Retail", href: "/industries/retail", description: "Loyalty, inventory, store operations" },
+      { name: "Manufacturing", href: "/industries/manufacturing", description: "ERP, shop floor, quality control" },
     ],
   },
-  { name: "Services", href: "/services" },
-  { name: "How it works", href: "/how-it-works" },
   { name: "Trust", href: "/trust" },
-  {
-    name: "Resources",
-    href: "#",
-    children: [
-      { name: "Blog", href: "/blog", description: "Insights and updates" },
-      { name: "Case Studies", href: "/case-studies", description: "Client success stories" },
-      { name: "Whitepapers", href: "/resources/whitepapers", description: "In-depth research" },
-    ],
-  },
-  {
-    name: "Company",
-    href: "#",
-    children: [
-      { name: "About", href: "/about", description: "Our story and team" },
-      { name: "Careers", href: "/careers", description: "Join us" },
-      { name: "Contact", href: "/contact", description: "Get in touch" },
-    ],
-  },
+  { name: "About", href: "/about" },
 ];
 
 export function Header() {
@@ -178,11 +162,11 @@ export function Header() {
             </button>
 
             <Link
-              href="/demo"
+              href="/engage-us"
               className="btn bg-accent text-white hover:bg-accent/90 flex items-center gap-2"
             >
-              <span className="hidden sm:inline">Book a demo</span>
-              <span className="sm:hidden">Demo</span>
+              <span className="hidden sm:inline">Engage us</span>
+              <span className="sm:hidden">Engage</span>
               <svg
                 className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                 fill="none"
@@ -220,7 +204,7 @@ export function Header() {
                       transition={{ delay: 0.2 }}
                       className="text-body-lg text-text-muted max-w-md mb-8"
                     >
-                      ArqAI Labs builds vertical AI agents for high-stakes operational workflows. Purpose-built. End-to-end delivered. Engineered for production.
+                      ArqAI Labs is an AI engineering studio. We ship production-grade AI, bespoke to your operation.
                     </motion.p>
 
                     <motion.div
