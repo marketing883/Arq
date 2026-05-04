@@ -339,8 +339,8 @@ export default function HomePage() {
                   <StarIcon className="w-4 h-4" />
                   What we do
                 </p>
-                <h2 className="text-display-lg font-display text-text-bright mb-6">
-                  Most enterprise AI is a toolkit. You wanted a tool.
+                <h2 className="text-display-lg font-display mb-6">
+                  <span className="text-text-muted">Most enterprise AI ships as a kit.</span> <span className="text-text-bright">We ship the agent.</span>
                 </h2>
                 <div className="space-y-4 text-body-md text-text-muted leading-relaxed mb-8">
                   <p>
