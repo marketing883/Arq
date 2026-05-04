@@ -637,7 +637,7 @@ export default function HomePage() {
                 Our approach
               </p>
               <h2 className="text-display-lg font-display text-base">
-                Three things we will not compromise on.
+                Three things we will<br />not compromise on.
               </h2>
             </motion.div>
 
@@ -684,8 +684,8 @@ export default function HomePage() {
               viewport={{ once: true }}
               className="max-w-3xl mx-auto"
             >
-              <h2 className="text-display-lg md:text-display-xl font-display text-text-bright mb-6">
-                Tell us your workflow. We will tell you what is honestly possible.
+              <h2 className="text-display-md font-display text-text-bright mb-6">
+                Tell us your workflow.<br />We will tell you what is honestly possible.
               </h2>
               <p className="text-body-lg text-text-muted mb-8">
                 The right way to evaluate ArqAI Labs is to bring your actual workflow into the conversation. We will tell you whether one of our products fits, whether services is the right path, and what realistic looks like.
