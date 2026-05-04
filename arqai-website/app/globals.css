@@ -134,6 +134,35 @@
   --color-stroke-muted: var(--stroke-muted);
   --font-display: "Funnel Display", sans-serif;
   --font-sans: "Funnel Sans", sans-serif;
+
+  /* Display + body font sizes (replaces v3 theme.fontSize tokens) */
+  --text-display-xl: clamp(2.7rem, 7.2vw, 7.2rem);
+  --text-display-xl--line-height: 1;
+  --text-display-xl--letter-spacing: -0.02em;
+
+  --text-display-lg: clamp(2.25rem, 5.4vw, 5.4rem);
+  --text-display-lg--line-height: 1.05;
+  --text-display-lg--letter-spacing: -0.02em;
+
+  --text-display-md: clamp(1.8rem, 3.6vw, 3.6rem);
+  --text-display-md--line-height: 1.1;
+  --text-display-md--letter-spacing: -0.01em;
+
+  --text-display-sm: clamp(1.35rem, 2.7vw, 2.25rem);
+  --text-display-sm--line-height: 1.2;
+  --text-display-sm--letter-spacing: -0.01em;
+
+  --text-body-lg: 1.25rem;
+  --text-body-lg--line-height: 1.6;
+
+  --text-body-md: 1.125rem;
+  --text-body-md--line-height: 1.6;
+
+  --text-body-sm: 1rem;
+  --text-body-sm--line-height: 1.6;
+
+  --text-body-xs: 0.875rem;
+  --text-body-xs--line-height: 1.5;
 }
 
 /* Base Styles */
