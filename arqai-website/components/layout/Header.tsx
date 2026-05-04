@@ -118,21 +118,21 @@ export function Header() {
         }`}
       >
         <div className="container mx-auto px-4 md:px-6 py-4 md:py-6 flex items-center justify-between">
-          <Link href="/" className="flex items-center">
+          <Link href="/" className="flex items-center" aria-label="ArqAI">
             <Image
-              src="/img/ArqAI-logo-transparent-bg.png"
-              alt="ArqAI Labs"
-              width={160}
-              height={50}
-              className={`h-12 md:h-14 w-auto ${showDarkLogo ? "hidden" : "block"}`}
+              src="/img/ArqAI-logo.png"
+              alt="ArqAI"
+              width={720}
+              height={240}
+              className={`h-10 md:h-12 w-auto ${showDarkLogo ? "hidden" : "block"}`}
               priority
             />
             <Image
               src="/img/arq-ai-logo-white.svg"
-              alt="ArqAI Labs"
+              alt="ArqAI"
               width={180}
               height={60}
-              className={`h-10 md:h-14 w-auto ${showDarkLogo ? "block" : "hidden"}`}
+              className={`h-10 md:h-12 w-auto ${showDarkLogo ? "block" : "hidden"}`}
               priority
             />
           </Link>
