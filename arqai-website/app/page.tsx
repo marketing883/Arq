@@ -133,12 +133,58 @@ const marqueeItems = [
   "Run on your stack",
 ];
 
-const products = [
+type ProductIcon = "shield" | "clipboard" | "vault";
+
+function ProductIcon({ name, className = "" }: { name: ProductIcon; className?: string }) {
+  if (name === "shield") {
+    // Fraud / waste / abuse — shield with magnifier
+    return (
+      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" className={className}>
+        <path d="M24 6l14 5v11c0 9-6 16-14 20-8-4-14-11-14-20V11l14-5z" />
+        <circle cx="22" cy="22" r="5" />
+        <path d="M26 26l4 4" />
+      </svg>
+    );
+  }
+  if (name === "clipboard") {
+    // Claims triage — clipboard with prioritised list
+    return (
+      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" className={className}>
+        <rect x="10" y="8" width="28" height="34" rx="2" />
+        <path d="M18 6h12v6H18z" />
+        <path d="M16 22h4M24 22h8M16 28h4M24 28h6M16 34h4M24 34h4" />
+      </svg>
+    );
+  }
+  // vault — AML / KYC / financial crime
+  return (
+    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <rect x="6" y="10" width="36" height="28" rx="2" />
+      <circle cx="24" cy="24" r="7" />
+      <path d="M24 17v-3M24 34v-3M17 24h-3M34 24h-3" />
+      <circle cx="24" cy="24" r="2" fill="currentColor" />
+    </svg>
+  );
+}
+
+const products: {
+  id: string;
+  name: string;
+  status: string;
+  statusColor: string;
+  icon: ProductIcon;
+  tagline: string;
+  description: string;
+  features: string[];
+  cta: string;
+  href: string;
+}[] = [
   {
     id: "arqfwa",
     name: "ArqFWA",
     status: "LIVE",
     statusColor: "bg-green-500",
+    icon: "shield",
     tagline: "The AI agent for fraud, waste, and abuse detection.",
     description:
       "Reviews high volumes of claims and transactions, flags suspicious patterns, and surfaces the work your team should focus on first. Built for healthcare payers and P&C insurance carriers.",
@@ -151,6 +197,7 @@ const products = [
     name: "ArqClaims",
     status: "IN BUILD",
     statusColor: "bg-amber-500",
+    icon: "clipboard",
     tagline: "The AI agent for claims triage and processing.",
     description:
       "Triages incoming claims and surfaces the right ones to the right adjuster, with the routing logic and reserve recommendations your operation actually uses. Built for mid-market P&C carriers.",
@@ -163,6 +210,7 @@ const products = [
     name: "ArqBanker",
     status: "COMING",
     statusColor: "bg-blue-500",
+    icon: "vault",
     tagline: "The AI agent for AML, KYC, and financial crime.",
     description:
       "Built for the financial crimes operations at regional and mid-tier banks. Calibrated to the realities of running a financial crimes program on a lean team.",
@@ -241,8 +289,7 @@ export default function HomePage() {
                 transition={{ duration: 0.6 }}
                 className="text-display-xl md:text-[clamp(3rem,7vw,6rem)] font-display leading-[1.0] text-text-bright max-w-[90%] lg:max-w-[88%]"
               >
-                <span className="block">The AI agent for your workflow.</span>
-                <span className="block text-text-muted">Not a toolkit to build one.</span>
+                The AI agent for your workflow.
               </motion.h1>
             </div>
 
@@ -410,7 +457,148 @@ export default function HomePage() {
           <ScrollAwareMarquee items={marqueeItems} />
         </section>
 
-        {/* Platform Overview Section */}
+        {/* Products Showcase Section */}
+        <section className="py-section bg-base-tint overflow-hidden">
+          <div className="container mx-auto px-4 md:px-6 lg:px-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-16"
+            >
+              <p className="flex items-center justify-center gap-2 text-body-sm text-accent mb-4">
+                <StarIcon className="w-4 h-4" />
+                Products
+              </p>
+              <h2 className="text-display-lg font-display text-text-bright mb-4">
+                Three vertical AI agents announced. More to follow.
+              </h2>
+              <p className="text-body-lg text-text-muted max-w-2xl mx-auto">
+                Each product takes one operational workflow and makes the AI agent for it. Same architectural foundation. Same delivery standard. Different jobs.
+              </p>
+            </motion.div>
+
+            <div className="grid md:grid-cols-3 gap-6 lg:gap-8 mb-10">
+              {products.map((product, index) => (
+                <motion.div
+                  key={product.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className="card group hover:border-accent transition-all flex flex-col h-full"
+                >
+                  <div className="flex items-start justify-between mb-5">
+                    <div className="w-14 h-14 rounded-xl bg-accent/10 text-accent flex items-center justify-center group-hover:bg-accent group-hover:text-white transition-colors">
+                      <ProductIcon name={product.icon} className="w-8 h-8" />
+                    </div>
+                    <span
+                      className={`inline-block text-xs font-semibold px-2.5 py-1 rounded-full text-white ${product.statusColor}`}
+                    >
+                      {product.status}
+                    </span>
+                  </div>
+
+                  <h3 className="text-2xl font-display font-semibold text-text-bright mb-2 group-hover:text-accent transition-colors">
+                    {product.name}
+                  </h3>
+
+                  <p className="text-body-md text-text-bright mb-4">
+                    {product.tagline}
+                  </p>
+
+                  <p className="text-body-sm text-text-muted mb-6 flex-1">
+                    {product.description}
+                  </p>
+
+                  <div className="flex flex-wrap gap-1.5 mb-6">
+                    {product.features.map((feature, i) => (
+                      <span key={i} className="px-2 py-0.5 rounded-full bg-accent/10 text-[10px] font-medium text-accent">
+                        {feature}
+                      </span>
+                    ))}
+                  </div>
+
+                  <Link
+                    href={product.href}
+                    className="inline-flex items-center gap-2 text-accent font-medium hover:gap-3 transition-all"
+                  >
+                    {product.cta}
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* More to follow strip */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16 p-5 rounded-xl bg-base border border-stroke-muted"
+            >
+              <div className="flex items-center gap-3">
+                <div className="flex -space-x-1">
+                  <span className="w-2 h-2 rounded-full bg-text-muted/40" />
+                  <span className="w-2 h-2 rounded-full bg-text-muted/60" />
+                  <span className="w-2 h-2 rounded-full bg-text-muted/80" />
+                </div>
+                <p className="text-body-sm text-text-medium">
+                  <span className="font-semibold text-text-bright">More vertical agents on the way.</span>{" "}
+                  Each one targets a workflow where the AI alternatives stop short.
+                </p>
+              </div>
+              <Link
+                href="/products/roadmap"
+                className="text-body-sm text-accent font-medium hover:underline whitespace-nowrap"
+              >
+                See the roadmap &rarr;
+              </Link>
+            </motion.div>
+
+            {/* Custom Build CTA - gradient panel */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              <div className="relative bg-gradient-to-r from-accent via-accent to-accent/90 rounded-2xl p-8 md:p-10 overflow-hidden">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2" />
+                <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2" />
+
+                <div className="relative flex flex-col md:flex-row md:items-center justify-between gap-6">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-3">
+                      <StarIcon className="w-4 h-4 text-additional" />
+                      <span className="text-body-xs text-white/80 uppercase tracking-wider">Services</span>
+                    </div>
+                    <h3 className="text-display-sm font-display mb-3 text-white">
+                      When the productised agent is not the fit, we build the one you need.
+                    </h3>
+                    <p className="text-body-md text-white/80 max-w-xl">
+                      Senior engineers and domain leads who have shipped Fortune 500 programs for over a decade. Built into your environment, on the cloud you already use.
+                    </p>
+                  </div>
+                  <div className="shrink-0">
+                    <Link
+                      href="/services"
+                      className="inline-flex items-center gap-2 px-6 py-3 bg-white text-accent font-semibold rounded-lg hover:shadow-lg hover:shadow-black/20 transition-all group"
+                    >
+                      Talk to delivery
+                      <svg className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
+                      </svg>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Platform / Substrate Section */}
         <section className="py-section bg-base">
           <div className="container mx-auto px-4 md:px-6">
             <motion.div
@@ -473,118 +661,6 @@ export default function HomePage() {
                 </motion.div>
               ))}
             </div>
-          </div>
-        </section>
-
-        {/* Products Showcase Section */}
-        <section className="py-section bg-base-tint overflow-hidden">
-          <div className="container mx-auto px-4 md:px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center mb-16"
-            >
-              <p className="flex items-center justify-center gap-2 text-body-sm text-accent mb-4">
-                <StarIcon className="w-4 h-4" />
-                Products
-              </p>
-              <h2 className="text-display-lg font-display text-text-bright mb-4">
-                Vertical AI agents. Live and on the way.
-              </h2>
-              <p className="text-body-lg text-text-muted max-w-2xl mx-auto">
-                Three purpose-built products. One workflow each. Deployed end-to-end by our team.
-              </p>
-            </motion.div>
-
-            <div className="grid md:grid-cols-3 gap-6 lg:gap-8 mb-16">
-              {products.map((product, index) => (
-                <motion.div
-                  key={product.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className="card group hover:border-accent transition-all flex flex-col h-full"
-                >
-                  <div className="flex items-center justify-between mb-4">
-                    <span
-                      className={`inline-block text-xs font-semibold px-2.5 py-1 rounded-full text-white ${product.statusColor}`}
-                    >
-                      {product.status}
-                    </span>
-                  </div>
-
-                  <h3 className="text-2xl font-display font-semibold text-text-bright mb-2 group-hover:text-accent transition-colors">
-                    {product.name}
-                  </h3>
-
-                  <p className="text-body-md text-text-bright mb-4">
-                    {product.tagline}
-                  </p>
-
-                  <p className="text-body-sm text-text-muted mb-6 flex-1">
-                    {product.description}
-                  </p>
-
-                  <div className="flex flex-wrap gap-1.5 mb-6">
-                    {product.features.map((feature, i) => (
-                      <span key={i} className="px-2 py-0.5 rounded-full bg-accent/10 text-[10px] font-medium text-accent">
-                        {feature}
-                      </span>
-                    ))}
-                  </div>
-
-                  <Link
-                    href={product.href}
-                    className="inline-flex items-center gap-2 text-accent font-medium hover:gap-3 transition-all"
-                  >
-                    {product.cta}
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
-                  </Link>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Custom Build CTA - gradient panel */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-            >
-              <div className="relative bg-gradient-to-r from-accent via-accent to-accent/90 rounded-2xl p-8 md:p-10 overflow-hidden">
-                <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2" />
-                <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2" />
-
-                <div className="relative flex flex-col md:flex-row md:items-center justify-between gap-6">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-3">
-                      <StarIcon className="w-4 h-4 text-additional" />
-                      <span className="text-body-xs text-white/80 uppercase tracking-wider">Services</span>
-                    </div>
-                    <h3 className="text-display-sm font-display mb-3 text-white">
-                      When the productised agent is not the fit, we build the one you need.
-                    </h3>
-                    <p className="text-body-md text-white/80 max-w-xl">
-                      Senior engineers and domain leads who have shipped Fortune 500 programs for over a decade. Built into your environment, on the cloud you already use.
-                    </p>
-                  </div>
-                  <div className="shrink-0">
-                    <Link
-                      href="/services"
-                      className="inline-flex items-center gap-2 px-6 py-3 bg-white text-accent font-semibold rounded-lg hover:shadow-lg hover:shadow-black/20 transition-all group"
-                    >
-                      Talk to delivery
-                      <svg className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
-                      </svg>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
           </div>
         </section>
 
