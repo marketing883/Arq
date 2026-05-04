@@ -275,26 +275,34 @@ export default function ArqFWAPage() {
               <h2 className="text-display-md font-display text-base mb-6">
                 How we deploy
               </h2>
-              <p className="text-body-lg text-base/70 mb-8">
+              <p className="text-body-lg text-base/70 mb-0">
                 ArqFWA deploys into your environment, on the cloud you already use, with the systems your team already runs. A senior delivery team works alongside your operations, technology, security, and compliance leaders. The deployment timeline is scoped per engagement and committed in writing before work starts. We do not publish a generic timeline because every operation is different. We will tell you ours when we know yours.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Trust and compliance */}
+        <section className="py-section bg-base">
+          <div className="container mx-auto px-4 md:px-6 lg:px-8">
+            <div className="max-w-3xl mx-auto">
+              <p className="flex items-center gap-2 text-body-sm text-accent mb-4">
+                <StarIcon className="w-4 h-4" />
+                Trust and compliance
+              </p>
+              <h2 className="text-display-md font-display text-text-bright mb-6">
+                Architectural controls. Compliance posture. Both.
+              </h2>
+              <p className="text-body-lg text-text-muted leading-relaxed mb-6">
+                ArqFWA is built on architectural controls that align with the controls regulated environments require: cryptographic logging, runtime policy enforcement, decision provenance for every output. Aligned with SOC 2 Trust Services Criteria; Type II audit in progress. HIPAA-aligned controls and BAAs in place with healthcare customers.
               </p>
               <Link
                 href="/trust"
-                className="inline-flex items-center gap-2 text-additional font-medium hover:gap-3 transition-all"
+                className="inline-flex items-center gap-2 text-accent font-medium hover:gap-3 transition-all"
               >
-                Trust and compliance
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M17 8l4 4m0 0l-4 4m4-4H3"
-                  />
+                See full trust and compliance posture
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
               </Link>
             </div>

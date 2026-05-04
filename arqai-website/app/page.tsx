@@ -54,56 +54,6 @@ function ScrollAwareMarquee({ items }: { items: string[] }) {
   );
 }
 
-function AnimatedCounter({ value, suffix = "" }: { value: number; suffix?: string }) {
-  const [count, setCount] = useState(0);
-  const ref = useRef<HTMLDivElement>(null);
-  const hasAnimatedRef = useRef(false);
-
-  useEffect(() => {
-    const element = ref.current;
-    if (!element) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && !hasAnimatedRef.current) {
-          hasAnimatedRef.current = true;
-
-          const duration = 2000;
-          const steps = 60;
-          const stepTime = duration / steps;
-          const increment = value / steps;
-          let current = 0;
-          let step = 0;
-
-          const animate = () => {
-            step++;
-            current = Math.min(current + increment, value);
-            setCount(Math.floor(current));
-
-            if (step < steps && current < value) {
-              setTimeout(animate, stepTime);
-            } else {
-              setCount(value);
-            }
-          };
-
-          animate();
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    observer.observe(element);
-    return () => observer.disconnect();
-  }, [value]);
-
-  return (
-    <div ref={ref} className="inline-block">
-      <span className="tabular-nums">{count}</span>{suffix}
-    </div>
-  );
-}
-
 function StarIcon({ className = "" }: { className?: string }) {
   return (
     <svg
@@ -118,11 +68,22 @@ function StarIcon({ className = "" }: { className?: string }) {
   );
 }
 
-const stats = [
-  { numValue: 100, suffix: "%", label: "End-to-end delivered", description: "Senior delivery, integration, and post-deployment support on every engagement." },
-  { numValue: 10, suffix: "+", label: "Years F500 delivery", description: "Fortune 500 delivery in regulated industries by the same team that ships our products." },
-  { numValue: 3, suffix: "", label: "Vertical AI agents", description: "ArqFWA live. ArqClaims in build. ArqBanker on the way." },
-  { numValue: 0, suffix: "", label: "Builders to maintain", description: "Production-grade by architecture. No platform team, no DIY toolkit." },
+const proofPoints = [
+  {
+    label: "End-to-end delivered",
+    description:
+      "Every ArqAI Labs deployment includes senior delivery, integration, and post-deployment support. We do not ship licences and walk away.",
+  },
+  {
+    label: "Architectural reliability",
+    description:
+      "Every agent runs on the same substrate that handles identity, policy enforcement, and observable retrieval. Production-grade by design, not by patch.",
+  },
+  {
+    label: "10+ years F500 delivery",
+    description:
+      "Fortune 500 delivery in regulated industries. The team that ships our products has done this before.",
+  },
 ];
 
 const marqueeItems = [
@@ -287,9 +248,9 @@ export default function HomePage() {
                 initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
-                className="text-display-xl md:text-[clamp(3rem,7vw,6rem)] font-display leading-[1.0] text-text-bright max-w-[90%] lg:max-w-[88%]"
+                className="text-display-xl md:text-[clamp(2.75rem,6vw,5.5rem)] font-display leading-[1.05] text-text-bright max-w-[92%]"
               >
-                The AI agent for your workflow.
+                Detect more fraud. Resolve more claims. Stop more financial crime.
               </motion.h1>
             </div>
 
@@ -302,7 +263,7 @@ export default function HomePage() {
               >
                 <div className="w-full h-px bg-stroke-muted" />
                 <p className="text-body-lg text-text-medium max-w-lg">
-                  ArqAI Labs builds vertical AI agents for high-stakes operational workflows. Each one is purpose-built for a single job, deployed end-to-end by our team, and engineered to run reliably in production.
+                  Built for healthcare payers, P&amp;C carriers, and regional banks. Live in production today.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4">
                   <Link
@@ -424,28 +385,25 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Statistics Section */}
+        {/* Proof Strip */}
         <section className="py-section bg-base-tint">
           <div className="container mx-auto px-4 md:px-6 lg:px-8">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-              {stats.map((stat, index) => (
+            <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
+              {proofPoints.map((point, index) => (
                 <motion.div
-                  key={stat.label}
+                  key={point.label}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className="card text-center"
+                  className="border-t-2 border-accent pt-6"
                 >
-                  <div className="text-6xl md:text-7xl lg:text-8xl font-display font-bold text-accent mb-4 leading-none">
-                    <AnimatedCounter value={stat.numValue} suffix={stat.suffix} />
-                  </div>
-                  <div className="text-body-md font-medium text-text-bright mb-3">
-                    {stat.label}
-                  </div>
-                  <div className="text-body-sm text-text-muted leading-relaxed">
-                    {stat.description}
-                  </div>
+                  <h3 className="text-xl md:text-2xl font-display font-semibold text-text-bright mb-3">
+                    {point.label}
+                  </h3>
+                  <p className="text-body-md text-text-muted leading-relaxed">
+                    {point.description}
+                  </p>
                 </motion.div>
               ))}
             </div>
