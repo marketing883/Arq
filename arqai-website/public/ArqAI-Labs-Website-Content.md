@@ -1,30 +1,16 @@
 # ArqAI Labs : Website Content
 
-*Vertical agentic AI, productised. Vertical-depth differentiation, architectural reliability, multi-buyer voice. Compliance is table stakes, not the headline.*
+*Version 3. AI engineering studio voice. Use cases lead. Products demoted to proof. ACI on About only.*
 
 
 
 **Owner:** Habib Mehmoodi, VP, Strategy & Innovation  
 
-**Brand:** ArqAI Labs (company), products are Arq + workflow noun (ArqFWA, ArqClaims, ArqBanker, more on the way)  
+**Brand:** ArqAI Labs is an AI engineering studio.  
 
-**Status:** Living document. Version 2.0 (vertical-depth positioning, post-governance-headline).
+**Hero promise:** We ship production-grade AI, bespoke to your operation.  
 
-
-
-## What changed from V1
-
-- Headline differentiation moved from compliance/audit to vertical depth. "The agent for the workflow, not a toolkit to build one."
-
-- Reliability is now framed architecturally. "Engineered for production from day one," not "production tested." The substrate carries the claim.
-
-- No specific speed number on the website. Time-to-deploy is a per-engagement conversation.
-
-- Multi-buyer voice. Headlines work for the line-of-business owner AND the technology executive (CTO, CDO, Head of AI) AND the operations leader.
-
-- Compliance and audit-readiness language stays in the body and on the Trust page, but does not lead any product hero or pillar.
-
-- No regulator/investigator/auditor framing in headlines.
+**Status:** Living document. Version 3.0.
 
 
 
@@ -36,57 +22,61 @@
 
 - Company brand: **ArqAI Labs**.
 
-- Product convention: Arq + workflow noun. ArqFWA, ArqClaims, ArqBanker.
+- Category descriptor: AI engineering studio. In the hero. Reinforced deeper on the page.
 
-- Services arm: ArqAI Labs Services (formal) or Services (in context).
+- Product convention: Arq + workflow noun. ArqFWA, ArqClaims, ArqBanker. Demoted from lead role; framed as proof we ship the same workflow repeatedly.
 
-- First reference inside a page: "ArqFWA, the AI agent for fraud, waste, and abuse detection." Subsequent references can use the product name alone.
-
-
-
-## Voice and tone
-
-**Direct. Specific. Honest. Senior. Calm.**
-
-We say what we mean. We name the workflow, the buyer, the technology choice. We do not over-claim. We talk like people who have shipped enterprise software before, because we have. The category is loud. We are not.
+- ACI Infotech parent: only on About.
 
 
 
-## Positioning shorthand
+## Voice
 
-- We sell vertical AI agents, not horizontal AI toolkits. "The agent for the workflow," not "a platform to build agents."
+**Confident. Specialist. Accessible. A bit dry.**
 
-- We sell finished products. Customers don't build, configure, train, or operate. We deploy. We run.
-
-- Reliability is engineered, not promised. Our architecture (identity, policy enforcement, observable retrieval) makes the agent production-grade. We describe the architecture; we don't claim the SLA.
-
-- Compliance is built in, not the lead message. Trust page covers it in detail.
+We are an AI engineering studio. We design, build, deploy, and run AI for operations that don't fit off-the-shelf. We ship the work, we don't decorate the deck. Voice should read like a senior engineer explaining what they built, not a consultant pitching what they could build.
 
 
 
-## Words and phrases to use
+## Voice rules
 
-Production. Vertical. Workflow. Domain-specific. Engineered. Architectural. Substrate. Deployed. Integrated. Operational. Outcome. End-to-end. Day one. Senior delivery.
+- Active verbs: design, build, deploy, run, ship, tune, fit, integrate.
+
+- Outcome-led.
+
+- First-person plural. We, our.
+
+- Plain language for technical concepts. Specific names where they exist (Microsoft Copilot, AWS Quick, Dynamics 365).
+
+- 'Bespoke' allowed only when paired with engineering language so it lands as craft, not luxury.
 
 
 
-## Words and phrases to avoid
+## Words to use
 
-AI workforce. Command center. Foundry. Industry's first. Patent-pending. Revolutionary. Disrupting. Cutting-edge. Next-generation. Mission-critical (overused). AI-powered (vague). Democratise. Unlock the power of. Toolkit (only when contrasting against, not when describing us).
+Engineering studio. Production-grade. Bespoke to your operation. Tuned. Fit. Build, deploy, run. Ship. Lean. Senior. End-to-end. Plus a growing line of products from what works.
 
-*Headline-level avoid: regulator, investigator, auditor, audit cycle. These concepts live in the body where they belong, not in heroes or pillars.*
+
+
+## Words to avoid
+
+Services firm. World-class. Best-in-class. Premium. Exclusive. Boutique. Mission-critical. Cutting-edge. AI-powered. Trusted partner. Synergies. Transformative. Industry's first. Patent-pending. Leverage.
+
+*No headline-level use of:* regulator, investigator, auditor, audit cycle.
+
+*Strict no:* any framing that implies cheaper, more affordable, or alternative-to.
 
 
 
 ## Punctuation rules
 
-- No long em dashes anywhere. Periods, colons, semicolons, or split sentences instead.
+- No long em dashes anywhere.
 
-- En dashes only in numeric ranges ("6–12 weeks").
+- En dashes only in numeric ranges.
 
 - Sentence case for headlines.
 
-- Numerals from 10 up. Spell out one through nine. Always numerals when paired with units.
+- Numerals from 10 up. One through nine spelled.
 
 
 
@@ -96,65 +86,67 @@ AI workforce. Command center. Foundry. Industry's first. Patent-pending. Revolut
 
 ## Top navigation
 
-- Products  /  ArqFWA  /  ArqClaims  /  ArqBanker  /  Roadmap
+- What we work on  /  use cases page
 
-- Solutions  /  Healthcare payers  /  P&C insurance  /  Banks and financial institutions
+- How we work  /  the engineering process
 
-- Services
+- Products  /  ArqFWA, ArqClaims, ArqBanker
 
-- How it works
+- Industries  /  healthcare, insurance, banking, retail, manufacturing, more
 
 - Trust
 
-- Resources  /  Blog  /  Engineering blog
+- About
 
-- Company  /  About  /  Careers  /  Contact
-
-- Persistent CTA in nav: **"Book a demo"**
+- Persistent CTA in nav: **'Engage us'**
 
 
 
 ## Footer
 
-- Footer line: "ArqAI Labs is the AI products and services arm of ACI Infotech."
+- Company: About, Careers, Contact
 
-- Legal: Privacy notice, Terms of service, Cookie notice, Responsible AI policy.
+- Trust: Privacy, Terms, Security, Responsible AI
 
-- Single CTA in footer: Book a demo.
+- Resources: Blog, Engineering blog
+
+- Single CTA: Engage us
 
 
 
 ## Page inventory
 
-- `/` : Home
+- `/`  : Home
+
+- `/use-cases` : What we work on
+
+- `/how-we-work` : Engineering process
 
 - `/products` : Products overview
 
-- `/products/arqfwa` : ArqFWA product page
+- `/products/arqfwa`
 
-- `/products/arqclaims` : ArqClaims product page
+- `/products/arqclaims`
 
-- `/products/arqbanker` : ArqBanker product page
+- `/products/arqbanker`
 
-- `/products/roadmap` : Product roadmap
+- `/industries/healthcare-payers`
 
-- `/services` : Services
+- `/industries/insurance-carriers`
 
-- `/solutions/healthcare-payers` : Healthcare payers
+- `/industries/banking`
 
-- `/solutions/insurance-carriers` : P&C insurance carriers
+- `/industries/retail`
 
-- `/solutions/banking` : Banks and financial institutions
+- `/industries/manufacturing`
 
-- `/how-it-works` : How it works
+- `/trust`
 
-- `/trust` : Trust and compliance
+- `/about`
 
-- `/about` : About
+- `/contact`
 
-- `/contact` : Contact
-
-- `/demo` : Book a demo
+- `/engage-us`
 
 
 
@@ -168,9 +160,9 @@ AI workforce. Command center. Foundry. Industry's first. Patent-pending. Revolut
 
 
 
-**META TITLE:** ArqAI Labs  |  Vertical AI agents for high-stakes workflows
+**META TITLE:** ArqAI Labs : an AI engineering studio
 
-**META DESCRIPTION:** ArqAI Labs builds AI agents that ship to production. One workflow at a time. Engineered to run reliably from day one. Deployed end-to-end by our team.
+**META DESCRIPTION:** ArqAI Labs is an AI engineering studio. We ship production-grade AI, bespoke to your operation. Retail loyalty. Patient management. Claims triage. Manufacturing ERP. Plus a growing line of products from what we ship.
 
 
 
@@ -178,273 +170,527 @@ AI workforce. Command center. Foundry. Industry's first. Patent-pending. Revolut
 
 **EYEBROW:** ARQAI LABS
 
-**HEADLINE:** **The AI agent for your workflow. Not a toolkit to build one.**
+**HEADLINE:** **ArqAI Labs is an AI engineering studio.**
 
-**SUBHEAD:** ArqAI Labs builds vertical AI agents for high-stakes operational workflows. Each one is purpose-built for a single job, deployed end-to-end by our team, and engineered to run reliably in production. ArqFWA for fraud, waste, and abuse detection. ArqClaims for claims triage and processing. ArqBanker for AML, KYC, and financial crime. More on the way.
+**SUBHEAD:** **We ship production-grade AI, bespoke to your operation.**
 
-**PRIMARY CTA:** See it in your environment
+**PRIMARY CTA:** Engage us
 
-**SECONDARY CTA:** Read about our approach
-
-
-
-### Section 2: The problem
-
-**HEADLINE:** **Most enterprise AI is a toolkit. You wanted a tool.**
-
-You have evaluated AI agent platforms. They asked your team to build, configure, train, and operate. Twelve months of internal engineering before the first production decision. A roadmap that competes with everything else your team is supposed to be doing. And at the end, an agent that works for the demo and stalls under real-world load.
-
-We are a different kind of company. We do not hand you a builder. We hand you a deployed agent. Built for one workflow. Engineered for production from day one. Run by people who have shipped enterprise software in regulated industries for over a decade.
+**SECONDARY CTA:** See what we work on
 
 
 
-### Section 3: Products showcase (3-up)
+### Section 2: What we work on (use case grid)
 
-**SECTION HEADLINE:** **Vertical AI agents. Live and on the way.**
+**Section heading:** What we work on.
+
+**Section subhead:** A few of the operations we've engineered AI into. The list grows. Yours might be next.
 
 
 
-#### Card 1: ArqFWA
+#### Card 1 : RETAIL
 
-**Status:** LIVE
+**Title:** Loyalty that learns what each customer values.
 
-**Tagline:** The AI agent for fraud, waste, and abuse detection.
+**Body:** AI that replaces points-and-badges with offers tuned to actual buying behavior. Retention up. Spend on stale incentives down.
 
-**Body:** Reviews high volumes of claims and transactions, flags suspicious patterns, and surfaces the work your team should focus on first. Built for healthcare payers and P&C insurance carriers.
+
+
+#### Card 2 : HEALTHCARE
+
+**Title:** Patient management that doesn't drop people in the gap.
+
+**Body:** AI that follows up, schedules, and surfaces the patients your team needs to call today. Less leakage between visits.
+
+
+
+#### Card 3 : INSURANCE / HEALTHCARE
+
+**Title:** Claims triage in days, not weeks.
+
+**Body:** AI that routes incoming claims to the right person, prioritises the queue, and supports the decision your team makes.
+
+
+
+#### Card 4 : MANUFACTURING
+
+**Title:** ERP that finally answers the question.
+
+**Body:** AI on top of your ERP that turns the data into decisions. Fewer reports your team has to assemble by hand.
+
+
+
+#### Card 5 : HOSPITALITY
+
+**Title:** Revenue management that doesn't miss a fill night.
+
+**Body:** AI that prices rooms, packages, and add-ons dynamically against demand, competitor pricing, and your own historical patterns. More revenue per available unit. Fewer empty rooms.
+
+
+
+#### Card 6 : FACILITIES MANAGEMENT
+
+**Title:** Maintenance that fixes things before they break.
+
+**Body:** AI that predicts failures across HVAC, elevators, lighting, and critical equipment from sensor data and service history. Less downtime. Lower cost per repair.
+
+
+
+#### Card 7 : MICROSOFT 365
+
+**Title:** Microsoft Copilot, tuned to your operation.
+
+**Body:** Copilot extended with your context, your workflows, and the security posture your IT requires. Out-of-the-box does not get you there. We do.
+
+
+
+#### Card 8 : MICROSOFT DYNAMICS
+
+**Title:** Dynamics 365, AI-fied.
+
+**Body:** Your Dynamics with AI that learns from your sales motion and your service desk. Less manual entry. Better next-best actions.
+
+
+
+#### Card 9 : AWS ECOSYSTEM
+
+**Title:** AWS Quick, configured.
+
+**Body:** Quick Suite tuned for the agents your operation actually needs, integrated with the systems you already run.
+
+
+
+### Visual treatment specification (for design and engineering)
+
+*This section is internal: a brief for the team building the use-case section. The cards above carry the copy. The treatment below carries the experience.*
+
+
+
+#### Layout
+
+- Desktop: 3 columns x 3 rows. Equal-height cards. Generous whitespace between.
+
+- Tablet: 2 columns. The 9th card centered on the final row.
+
+- Mobile: single column, vertical stack with snap-scroll if it lands well.
+
+- Each card is a self-contained 'screen': rounded container, soft border, subtle shadow, internal padding around the animated scene and the text.
+
+
+
+#### Motion behavior
+
+- Spring transition on scroll into viewport (Framer Motion: stiffness ~100, damping ~20). Cards rise and settle, not flop in.
+
+- Parallax: visual elements inside each card move at slightly different speeds as the section scrolls past. Subtle, not theatrical.
+
+- Hover: card lifts (shadow deepens, transform translateY(-4px), scale 1.02). The scene inside becomes more active (numbers tick faster, an indicator pulses).
+
+- Idle ambience: every card has at least one element with low-amplitude continuous motion, so the grid feels alive even when the user isn't interacting.
+
+- Stagger: cards animate in with a small delay (50-100ms) per card so the grid populates as a sequence, not a wall.
+
+
+
+#### Per-card visual scene
+
+**Card 1 : RETAIL : Loyalty that learns.**  Customer profile chips floating up; a personalised offer card slides into view; a small retention number ticks upward; previous static-loyalty graphic dissolves out behind it. Live element: the offer changes mid-scene to imply real-time tuning.
+
+**Card 2 : HEALTHCARE : Patient management.**  A patient timeline with calendar dots; one missed appointment highlights amber; an AI flag rises on it; a follow-up appears on a future date. Live element: the flag pulses; a checkmark lands when the patient is rebooked.
+
+**Card 3 : INSURANCE / HEALTHCARE : Claims triage.**  A stack of claim tiles entering from the left; they sort into three columns labelled URGENT, STANDARD, REVIEW. The right adjuster avatar lights up next to each routed claim. Live element: claim tiles continuously route; queue counter ticks down.
+
+**Card 4 : MANUFACTURING : ERP that answers.**  A plain text question slides in ('Why did Q3 yields drop?'). A small dashboard composes itself in response: a chart, a callout, a recommendation. Live element: chart bars animate up; recommendation text types in.
+
+**Card 5 : HOSPITALITY : Revenue management.**  A hotel rate calendar grid; prices subtly change cell-by-cell as demand signals (small icons on the side: weather, event, competitor) tick. A revenue-per-available-room counter ticks up. Live element: prices update continuously.
+
+**Card 6 : FACILITIES MANAGEMENT : Predictive maintenance.**  A row of equipment cards (HVAC, elevator, lighting) with small status indicators. One indicator transitions from green to amber, then a callout appears: 'predicted failure in 14 days.' A work order auto-drafts below it. Live element: indicators breathe; one transitions on each loop.
+
+**Card 7 : MICROSOFT 365 : Copilot tuned.**  A Copilot chat pane with a tuned company-context prompt typed in. The response composes itself, citing internal sources. A small lock icon next to it indicates security context. Live element: typing animation; response materialises with subtle delay.
+
+**Card 8 : MICROSOFT DYNAMICS : Dynamics AI-fied.**  A Dynamics-style record card; an AI suggestion overlay appears with a next-best action. A small 'why this' reveal expands. Live element: suggestion fades in and out as the record updates; an indicator confirms the action was taken.
+
+**Card 9 : AWS : Quick configured.**  A row of agent tiles; one is being configured (toggles, selectors animating); it transitions to a green 'running' state. Live element: agents transition from grey to green over the loop; a small log line appears each time.
+
+
+
+#### Technology recommendations
+
+- React + Framer Motion for spring transitions, parallax, and stagger.
+
+- Lottie or inline SVG for per-card scenes (Lottie if the scene is rich; SVG with CSS or motion if geometric).
+
+- IntersectionObserver to trigger animations only when the section is in viewport.
+
+- GSAP as fallback if Framer Motion's parallax control feels insufficient for scene-by-scene motion.
+
+
+
+#### Performance and accessibility
+
+- Lazy-load each card's visual scene. Only the first row should be in initial bundle.
+
+- Each card's scene budget: under 50kb gzipped. Aim lower.
+
+- 60fps target on modern devices. Reduce motion complexity gracefully on low-end.
+
+- Respect prefers-reduced-motion. When set, drop parallax, drop hover scaling, swap idle motion for static state. Keep the springs as fades.
+
+- Tab focus must be visible on each card. Card content readable without any motion. Animated numbers must not be the only carrier of meaning (always pair with explicit text).
+
+- Screen readers: animations are decorative. Scene elements aria-hidden='true'. Title and body remain announced normally.
+
+
+
+#### Inspiration references for the design team
+
+- Stripe (stripe.com): dashboard scenes that animate as you scroll. Per-section choreography.
+
+- Linear (linear.app): card-based product pages with floating UI elements and spring transitions.
+
+- Vercel (vercel.com): infrastructure visualisation; nodes light up in sequence.
+
+- Apple iPhone product pages: per-feature animated scenes with parallax depth.
+
+- Resend (resend.com): clean, technical, modern motion register that matches the engineering-studio voice we want.
+
+
+
+#### What this section is not
+
+Not a generic 'illustrations and icons' grid. Not stock-photography. Not a static feature matrix. Each card is a small live scene. The section's job is to communicate that we ship working AI in working operations: motion is the proof.
+
+
+
+**Section CTA:** See more use cases → `/use-cases`
+
+
+
+### Section 3: How we work
+
+**Section heading:** Four steps. End-to-end.
+
+#### Strategy
+
+We start with the workflow, the buyer, and the operational metric. Discovery is short, focused, and outputs a concrete deployment plan.
+
+#### Build
+
+We design and engineer AI tuned to your environment. On the cloud you already run. Integrated with the systems your team already uses.
+
+#### Deploy
+
+We push it into production. Not a sandbox. Not a pilot that lives in a slide deck. Real decisions on real data.
+
+#### Run
+
+We operate it alongside your team. Named technical lead. Named relationship lead. Defined SLAs. We don't ship and walk away.
+
+
+
+### Section 4: What we've productised
+
+**Section heading:** When the same problem shows up enough times, we productise it.
+
+**Section subhead:** A few of those problems showed up so often we built them out as products.
+
+
+
+#### ArqFWA  ·  Live
+
+The AI agent for fraud, waste, and abuse detection. Built for healthcare payers and P&C insurance carriers.
 
 **CTA:** See ArqFWA
 
+#### ArqClaims  ·  In build
 
-
-#### Card 2: ArqClaims
-
-**Status:** IN BUILD
-
-**Tagline:** The AI agent for claims triage and processing.
-
-**Body:** Triages incoming claims and surfaces the right ones to the right adjuster, with the routing logic and reserve recommendations your operation actually uses. Built for mid-market P&C carriers.
+The AI agent for claims triage and processing. In build with design partners.
 
 **CTA:** Join the design partner program
 
+#### ArqBanker  ·  Coming
 
-
-#### Card 3: ArqBanker
-
-**Status:** COMING
-
-**Tagline:** The AI agent for AML, KYC, and financial crime.
-
-**Body:** Built for the financial crimes operations at regional and mid-tier banks. Calibrated to the realities of running a financial crimes program on a lean team.
+The AI agent for AML, KYC, and financial crime. In development.
 
 **CTA:** Get notified at launch
 
 
 
-### Section 4: Services
+### Section 5: Why ArqAI Labs
 
-**HEADLINE:** **When the productised agent is not the fit, we build the one you need.**
+**Section heading:** Three things we will not compromise on.
 
-ArqAI Labs Services is our delivery arm. Senior engineers and domain leads who have shipped Fortune 500 programs for over a decade. We build custom AI agents into your environment, on the cloud you already use, integrated with the systems your team already runs. Same engineering standard as our products. End-to-end ownership.
+#### Lean engineering teams.
 
-**CTA:** Talk to our delivery team
+We are an AI engineering team. Senior. Sharp. Fluent in the modern frontier stack. We'd rather build than describe.
 
+#### Tuned, not templated.
 
+No two operations get the same build. Every engagement starts with how your team actually works, not with what we've shipped before.
 
-### Section 5: Three pillars
+#### Productised where it earns its place.
 
-**HEADLINE:** **Three things we will not compromise on.**
-
-
-
-#### Pillar 1: Vertical-deep, not horizontal-thin
-
-We do not sell a builder. ArqFWA does fraud, waste, and abuse. ArqClaims does claims triage. ArqBanker does financial crime. Each product is calibrated for one workflow, with the right interface for the actual user, integrated with the systems that workflow already lives in. Specialisation is the whole point.
-
-#### Pillar 2: Engineered for production from day one
-
-Reliability in our products is a property of the architecture, not a marketing claim. Every ArqAI Labs agent runs on a shared substrate that handles cryptographic identity, runtime policy enforcement, and observable retrieval. Production-grade is the default. There is no "production mode" toggle.
-
-#### Pillar 3: Delivered end-to-end. Not licensed.
-
-ArqAI Labs is the AI products and services arm of ACI Infotech, a technology services firm with over a decade of Fortune 500 delivery. The team that builds our products is the same team that deploys them in your environment. You don't get a software licence and a quickstart guide. You get a deployed agent and a senior team that knows your stack.
+When a problem shows up enough times across customers, we turn it into a product. ArqFWA, ArqClaims, ArqBanker. The product line grows from the work, not the other way around.
 
 
 
-### Section 6: Proof strip
+### Section 6: Industries we serve
 
-- **End-to-end delivered:** 100% of ArqAI Labs deployments include senior delivery, integration, and post-deployment support. We do not ship licences and walk away.
+Healthcare. Insurance. Banking. Retail. Manufacturing. And other operations whose complexity rewards specialist work.
 
-- **Architectural reliability:** every agent runs on the same substrate that handles identity, policy enforcement, and observable retrieval. Production-grade by design, not by patch.
+*Each industry word links to /industries/[name].*
 
-- **10+ years** of Fortune 500 delivery in regulated industries. The team that ships our products has done this before.
+
+
+### Section 7: Trust
+
+Architectural controls first. Aligned with SOC 2, HIPAA, GDPR, and regional frameworks where engagements require them. → `/trust`
+
+
+
+### Section 8: Closing CTA
+
+**HEADLINE:** **Tell us what your operation needs.**
+
+**BODY:** We'll tell you what's honestly possible. In plain language. Without a deck.
+
+**CTA:** Engage us
+
+
+
+---
+
+## Page 02 : What we work on
+
+`/use-cases`
+
+
+
+**META TITLE:** What we work on : ArqAI Labs use cases
+
+**META DESCRIPTION:** Operations we've engineered AI into. Retail loyalty. Patient management. Claims triage. Manufacturing ERP. Microsoft Copilot tuning. AWS Quick configuration. And more.
+
+
+
+### Section 1: Hero
+
+**HEADLINE:** **Use cases we've built. Or are building. Or are ready to build.**
+
+**SUBHEAD:** Each one started the same way: a team with a complex operation and an AI alternative that didn't fit. We tuned it until it did.
+
+
+
+### Section 2: Use case grid (full listing)
+
+*Render all eight home-page cards plus expansions:*
+
+- **BANKING:** Customer onboarding that finishes itself. AI that gets KYC and CDD across the line without dropping the application.
+
+- **RETAIL:** Inventory that anticipates. AI that sees the shelf, the season, and the local trend at once.
+
+- **MANUFACTURING:** Quality control with eyes on every shift. Vision and language models that catch what the manual sample missed.
+
+- **CROSS-INDUSTRY:** SAP S/4HANA, AI-fied. Your S/4HANA with AI that turns master data into decisions.
+
+
+
+### Section 3: Don't see your use case?
+
+We don't ship templates. Most of the engagements we run weren't on a public page when they started. Tell us what your operation needs. We'll tell you what's honestly possible.
+
+**CTA:** Engage us
+
+
+
+---
+
+## Page 03 : How we work
+
+`/how-we-work`
+
+
+
+**META TITLE:** How we work : ArqAI Labs engineering process
+
+**META DESCRIPTION:** Strategy. Build. Deploy. Run. The four-step process behind every ArqAI Labs engagement.
+
+
+
+### Section 1: Hero
+
+**HEADLINE:** **Four steps. End-to-end. No handoffs to someone else's team.**
+
+**SUBHEAD:** Every ArqAI Labs engagement runs on the same four steps. We do all of them. Together. With your team in the room.
+
+
+
+### Section 2: Strategy
+
+We start with the workflow, the buyer, and the operational metric. We don't run a generic AI assessment. We run a discovery scoped to the outcome you want, the timeline you need, and the constraints your environment imposes. Output: a concrete deployment plan and a committed timeline.
+
+
+
+### Section 3: Build
+
+We engineer the AI tuned to your environment. On the cloud you already run. Integrated with the systems your team already uses. Built on the modern frontier stack: Anthropic, OpenAI, Azure OpenAI, AWS Bedrock. Stack-agnostic by design. The build standard is production from day one, not a benchmark or a demo.
+
+
+
+### Section 4: Deploy
+
+We push it into your production environment. Not a sandbox. Not a pilot that lives in a slide deck. The same security review, change-management posture, and operational handoff your team applies to anything else that runs in production.
+
+
+
+### Section 5: Run
+
+We operate the AI alongside your team. Named technical lead. Named relationship lead. Defined SLAs. Defined cadence. The AI keeps shipping, your team keeps the lead, and the engagement compounds over time.
+
+
+
+### Section 6: What we don't do
+
+- Pure AI strategy decks without a delivery commitment.
+
+- Engagements without a named workflow owner and a defined success metric.
+
+- AI that ships into a sandbox and never sees production.
+
+- Generic enterprise IT modernisation that happens to mention AI.
 
 
 
 ### Section 7: Closing CTA
 
-**HEADLINE:** **Tell us your workflow. We will tell you what is honestly possible.**
-
-The right way to evaluate ArqAI Labs is to bring your actual workflow into the conversation. Not a generic AI strategy. The specific operation you want better. We will tell you whether one of our products fits, whether services is the right path, and what realistic looks like.
-
-**CTA:** Book a demo
+**CTA:** Engage us
 
 
 
 ---
 
-## Page 02 : Products overview
+## Page 04 : Products overview
 
 `/products`
 
 
 
-**META TITLE:** Products  |  ArqAI Labs
+**META TITLE:** Products : ArqAI Labs
 
-**META DESCRIPTION:** Vertical AI agents for high-stakes workflows. ArqFWA. ArqClaims. ArqBanker. Each one purpose-built for a single job, engineered for production.
+**META DESCRIPTION:** When the same problem shows up enough times, we productise it. ArqFWA, live. ArqClaims, in build. ArqBanker, coming.
 
 
 
 ### Section 1: Hero
 
-**HEADLINE:** **One agent per workflow. Built for the job, not for the demo.**
+**HEADLINE:** **When a problem shows up enough times, we productise it.**
 
-**SUBHEAD:** Each ArqAI Labs product takes one operational workflow and makes the AI agent for it. Same architectural foundation. Same delivery standard. Different jobs.
-
-
-
-### Section 2: Product cards (3-up, larger than home)
-
-*Same status pills, names, taglines, and CTAs as the home product cards. Add one extra line of detail per card pointing to who the buyer is.*
-
-- **ArqFWA:** for healthcare payer and P&C carrier operations leaders, fraud and special-investigations teams, and the technology and AI executives backing them.
-
-- **ArqClaims:** for claims operations leaders at mid-market P&C carriers, plus the technology and AI executives evaluating claims-process modernisation.
-
-- **ArqBanker:** for financial crimes leaders and BSA officers at regional and mid-tier banks, plus the CTOs and Heads of AI driving financial-crime modernisation.
+**SUBHEAD:** Most of the work we do is bespoke. But every once in a while, the same operational problem shows up across enough customers that it earns its place as a product. These are those.
 
 
 
-### Section 3: One architecture, every product
+### Section 2: ArqFWA  ·  Live
 
-**HEADLINE:** **Every product is built on the same foundation.**
+The AI agent for fraud, waste, and abuse detection. Built for healthcare payers and P&C insurance carriers.
 
-Identity, policy enforcement, and observable retrieval are not features we add to each product separately. They are the foundation we build every product on. That is why our second product ships faster than our first. And why a customer deploying a second ArqAI Labs agent does not re-evaluate compliance and security from scratch.
-
-→  How it works
+→ See ArqFWA
 
 
 
-### Section 4: Roadmap
+### Section 3: ArqClaims  ·  In build
 
-Each new ArqAI Labs product targets an operational workflow where the customer's pain is acute and the AI alternatives all stop short. If you have a workflow you wish had a better answer, we want to hear from you.
+The AI agent for claims triage and processing. Built for mid-market P&C carriers. In build with design partners.
 
-**CTA:** Suggest a workflow
+→ Join the design partner program
+
+
+
+### Section 4: ArqBanker  ·  Coming
+
+The AI agent for AML, KYC, and financial crime. Built for regional and mid-tier banks. In development.
+
+→ Get notified at launch
+
+
+
+### Section 5: One foundation, every product
+
+Identity. Policy enforcement. Observable retrieval. Three layers every ArqAI Labs product is built on. Architecture once, products many. → How we engineer.
 
 
 
 ---
 
-## Page 03 : ArqFWA
+## Page 05 : ArqFWA
 
 `/products/arqfwa`
 
 
 
-**META TITLE:** ArqFWA  |  AI agent for fraud, waste, and abuse detection
+**META TITLE:** ArqFWA : the AI agent for fraud, waste, and abuse
 
-**META DESCRIPTION:** ArqFWA is the AI agent for fraud, waste, and abuse detection. Built for healthcare payers and P&C insurance carriers. Production-grade. End-to-end delivered.
+**META DESCRIPTION:** ArqFWA detects fraud, waste, and abuse in healthcare and insurance claims. Production-grade. Engineered end-to-end by ArqAI Labs.
 
 
 
 ### Section 1: Hero
 
-**EYEBROW:** PRODUCT  •  LIVE
+**EYEBROW:** PRODUCT  ·  LIVE
 
-**HEADLINE:** **The AI agent for fraud, waste, and abuse detection. Built for the workflow.**
+**HEADLINE:** **The AI agent for fraud, waste, and abuse detection.**
 
-**SUBHEAD:** ArqFWA is purpose-built for fraud, waste, and abuse detection in healthcare payer and P&C insurance operations. It reviews high volumes of claims and transactions, prioritises the cases your team should focus on, and explains its reasoning so a human can act on it. Engineered for production from day one. Deployed end-to-end by our team.
+**SUBHEAD:** ArqFWA reviews high volumes of claims and transactions, prioritises the cases your team should focus on, and explains its reasoning so a human can act on it. Built for healthcare payers and P&C insurance carriers. Production-grade from day one.
 
 **PRIMARY CTA:** Book an ArqFWA demo
 
-**SECONDARY CTA:** See how ArqFWA is built
+**SECONDARY CTA:** See how ArqFWA is engineered
 
 
 
-### Section 2: The problem
+### Section 2: How ArqFWA fits
 
-**HEADLINE:** **Your team is the bottleneck. The AI alternatives don't help.**
+#### Built for the workflow.
 
-Healthcare and insurance leak hundreds of billions of dollars to fraud, waste, and abuse every year. Most of it is caught manually. AI promised to fix this. But most of the AI options on the market either ask your team to build the agent themselves on a horizontal toolkit (twelve months of internal work, no guarantee of production), or arrive as a black box that your operations leaders cannot defend.
+ArqFWA is a finished product. It does fraud, waste, and abuse. It does not ship as a kit your team configures.
 
+#### Tuned to your operation.
 
+We deploy ArqFWA inside your environment, integrated with your existing claims and case management systems, calibrated to the way your team actually works.
 
-### Section 3: How ArqFWA is different
+#### Engineered for production.
 
-#### Built for the workflow, not configured into it
-
-ArqFWA is a finished product. It does fraud, waste, and abuse. It does not ship as a kit. Your team does not train models. Your engineering bench does not get pulled into AI ops.
-
-#### Engineered for production from day one
-
-ArqFWA runs on the same architectural foundation every ArqAI Labs product is built on. Cryptographic identity for the agent. Runtime policy enforcement before any action. Observable, governed retrieval for every data lookup. Production-grade is the default state.
-
-#### Deployed end-to-end
-
-We deploy ArqFWA into your environment, integrate it with your existing systems, and run it alongside your team. Your operation gets a working agent. Not a software licence and a long project plan.
+Cryptographic identity for the agent. Runtime policy enforcement before any action. Observable, governed retrieval for every data lookup. Production-grade is the default state.
 
 
 
-### Section 4: Who ArqFWA is for
+### Section 3: Who ArqFWA is for
 
-#### For the workflow owner
-
-Operations leaders, fraud and special-investigations teams, and program-integrity directors at healthcare payers and P&C carriers. The people who own the throughput, the recovery rate, and the operational economics of the workflow.
-
-#### For the technology and AI executives backing them
-
-CTOs, Chief Digital Officers, and Heads of AI evaluating the build-vs-deploy decision for fraud-detection AI. The case for ArqFWA is straightforward: deploy a finished agent, free your team to ship the things only you can ship.
+Operations leaders, fraud and special-investigations teams, and program-integrity directors at healthcare payers and P&C carriers. Plus the technology and AI executives backing them.
 
 
 
-### Section 5: What changes when ArqFWA is in production
+### Section 4: What changes with ArqFWA
 
-- More fraud, waste, and abuse detected, with the explanation needed for downstream action.
+- More fraud and waste flagged, with the explanation needed for the next step.
 
-- Less time per investigation. Your team focuses on the work most likely to recover money.
+- Less time per investigation. Your team focuses where it pays back.
 
 - Predictable operational performance. Production-grade reliability without internal AI engineering overhead.
 
-*Replace placeholders with real ArqFWA pilot numbers when available.*
+*Replace with real ArqFWA pilot numbers when available.*
 
 
 
-### Section 6: How we deploy
+### Section 5: Trust
 
-ArqFWA deploys into your environment, on the cloud you already use, with the systems your team already runs. A senior delivery team works alongside your operations, technology, security, and compliance leaders. The deployment timeline is scoped per engagement and committed in writing before work starts. We do not publish a generic timeline because every operation is different. We will tell you ours when we know yours.
-
-
-
-### Section 7: Trust and compliance
-
-ArqFWA is built on architectural controls that align with the controls regulated environments require: cryptographic logging, runtime policy enforcement, decision provenance for every output. Aligned with SOC 2 Trust Services Criteria; Type II audit in progress. HIPAA-aligned controls and BAAs in place with healthcare customers.
-
-→ `/trust`
+Architectural controls aligned with SOC 2 Trust Services Criteria. Type II audit in progress. HIPAA-aligned controls and BAAs in place with healthcare customers. → `/trust`
 
 
 
-### Section 8: FAQ
+### Section 6: FAQ
 
 #### Does ArqFWA replace our team?
 
-No. ArqFWA prioritises and explains. Your team makes the call on the case. Authority stays with your people.
-
-#### What does ArqFWA need to start?
-
-A scoped pilot data set, your security and compliance review, and a defined target workflow. We commit a deployment timeline once those three are in place.
-
-#### How is ArqFWA priced?
-
-Per engagement. We do not list pricing publicly. We work with each customer on the scope and pricing model that fits the deployment.
+No. ArqFWA prioritises and explains. Your team makes the call.
 
 #### Where does our data live?
 
@@ -452,13 +698,11 @@ In your environment. ArqFWA is deployed inside your cloud or your sovereign prov
 
 #### Which AI provider does ArqFWA use?
 
-ArqFWA is built to run on the AI provider your environment is already aligned with: Anthropic, OpenAI, Azure OpenAI, AWS Bedrock. Stack-agnostic by design.
+We build to the AI provider your environment is already aligned with: Anthropic, OpenAI, Azure OpenAI, AWS Bedrock. Stack-agnostic by design.
 
 
 
-### Section 9: Closing CTA
-
-**HEADLINE:** **Bring a sample of your data. We will show you what changes.**
+### Section 7: Closing CTA
 
 **CTA:** Book the demo
 
@@ -466,25 +710,25 @@ ArqFWA is built to run on the AI provider your environment is already aligned wi
 
 ---
 
-## Page 04 : ArqClaims
+## Page 06 : ArqClaims
 
 `/products/arqclaims`
 
 
 
-**META TITLE:** ArqClaims  |  AI agent for claims triage and processing
+**META TITLE:** ArqClaims : the AI agent for claims triage
 
-**META DESCRIPTION:** ArqClaims is the AI agent for claims triage and processing at mid-market P&C carriers. Built for the workflow. Engineered for production. In build with design partners.
+**META DESCRIPTION:** ArqClaims triages and processes claims for mid-market P&C carriers. Built for the workflow. In build with design partners.
 
 
 
 ### Section 1: Hero
 
-**EYEBROW:** PRODUCT  •  IN BUILD
+**EYEBROW:** PRODUCT  ·  IN BUILD
 
-**HEADLINE:** **The AI agent for claims triage. Built for the workflow, not a kit to build one.**
+**HEADLINE:** **The AI agent for claims triage and processing.**
 
-**SUBHEAD:** ArqClaims is the AI agent for claims triage and processing at mid-market P&C insurance carriers. It triages incoming claims, surfaces the right ones to the right adjuster, and handles the routing and reserve logic your operation runs on. In build with design partners now.
+**SUBHEAD:** ArqClaims triages incoming claims so your adjusters touch the right ones first. With routing logic, reserve recommendations, and decision support tuned to your operation. In build with design partners now.
 
 **PRIMARY CTA:** Apply to the design partner program
 
@@ -492,113 +736,81 @@ ArqFWA is built to run on the AI provider your environment is already aligned wi
 
 
 
-### Section 2: The problem
+### Section 2: Built for the operation
 
-**HEADLINE:** **Claims volume is up. Headcount is not. AI alternatives are not built for your operation.**
-
-Mid-market P&C carriers run claims operations under structural pressure. Volume rises. Adjuster bench expansion is slow and expensive. Cycle times stretch. Leakage compounds. Most of the AI options on offer either ship as horizontal toolkits that require an internal AI engineering bench you don't have, or solve a narrow slice of the workflow that disappears in handoff.
+Mid-market P&C carriers run claims under structural pressure. Volume up. Adjuster bench expansion slow. Cycle times stretched. Most of the AI alternatives either ship as toolkits your team has to configure, or solve a slice of the workflow that disappears in handoff. ArqClaims is built end-to-end, calibrated for the operational logic mid-market P&C carriers actually run.
 
 
 
-### Section 3: How ArqClaims is different
+### Section 3: Adjusters in control
 
-#### Built for the full triage and routing workflow
-
-ArqClaims is a product, not a kit. It is calibrated for the operational logic mid-market P&C carriers actually run. Triage, routing, reserve recommendations, escalation handling. End-to-end.
-
-#### Engineered for production at scale
-
-ArqClaims runs on the same architectural foundation as every other ArqAI Labs product. Production-grade reliability is the default, not a roadmap goal.
-
-#### Adjusters in control
-
-ArqClaims surfaces the right context, prioritises the queue, and supports the decision. Your adjusters keep authority on every claim. The agent assists, not overrides.
+ArqClaims surfaces the right context, prioritises the queue, and supports the decision. Your adjusters keep authority on every claim. The agent assists. It never overrides.
 
 
 
 ### Section 4: Who ArqClaims is for
 
-Built for VPs of Claims and claims operations directors at mid-market P&C carriers carrying $500M to $5B in direct written premium across personal auto, home, and commercial lines. Built for the technology and AI executives evaluating claims modernisation.
+VPs of Claims and claims operations directors at mid-market P&C carriers ($500M to $5B in DWP across personal auto, home, and commercial lines). Plus the technology and AI executives evaluating claims modernisation.
 
 
 
 ### Section 5: Design partner program
 
-**HEADLINE:** **We are taking a small number of carriers into the design partner program now.**
-
-Design partners shape the product. They get early access, a direct line to the engineering team, and pricing that reflects co-development. We are looking for two to three carriers.
+We are taking a small number of carriers into the design partner program now. Design partners shape the product. Early access. Direct line to the engineering team. Pricing that reflects co-development.
 
 **CTA:** Apply to the program
 
 
 
-### Section 6: Closing CTA
-
-**CTA:** Apply to the design partner program
-
-
-
 ---
 
-## Page 05 : ArqBanker
+## Page 07 : ArqBanker
 
 `/products/arqbanker`
 
 
 
-**META TITLE:** ArqBanker  |  AI agent for AML, KYC, and financial crime
+**META TITLE:** ArqBanker : the AI agent for AML, KYC, and financial crime
 
-**META DESCRIPTION:** ArqBanker is the AI agent for AML, KYC, and financial crime workflows at regional and mid-tier banks. Built for the operation. Engineered for production.
+**META DESCRIPTION:** ArqBanker is the AI agent for financial crimes operations at regional and mid-tier banks. In development.
 
 
 
 ### Section 1: Hero
 
-**EYEBROW:** PRODUCT  •  COMING
+**EYEBROW:** PRODUCT  ·  COMING
 
-**HEADLINE:** **The AI agent for AML, KYC, and financial crime. Built for the operation you actually run.**
+**HEADLINE:** **The AI agent for AML, KYC, and financial crime.**
 
-**SUBHEAD:** ArqBanker is the AI agent for financial crimes operations at regional and mid-tier banks. It is built for the operational reality of running an AML, KYC, and financial-crime program on a lean team, with the integration depth and architectural reliability that production deployment requires.
+**SUBHEAD:** Built for the financial crimes operations at regional and mid-tier banks. Calibrated for the operational reality of running an AML, KYC, and financial-crime program on a lean team.
 
-**PRIMARY CTA:** Get notified when ArqBanker launches
+**PRIMARY CTA:** Get notified at launch
 
 **SECONDARY CTA:** Talk to product
 
 
 
-### Section 2: The problem
+### Section 2: Built for the size of bank you actually are
 
-**HEADLINE:** **Mid-tier banks carry top-tier compliance pressure on lean teams.**
-
-Regional and mid-tier banks face the same operational expectations as the largest institutions, with smaller teams, leaner budgets, and AML stacks built before AI was a serious option. The result is alert fatigue, manual review queues that never empty, and a financial crimes program that runs on the heroics of a small team. The AI alternatives are mostly horizontal toolkits that ask your team to assemble the agent themselves, or vendors who serve top-tier institutions and don't understand the operational reality of a $5B to $50B asset bank.
+Regional banks ($10B to $100B in assets) and mid-tier community banks ($1B to $10B) face the same operational expectations as the largest institutions, with smaller teams, leaner budgets, and AML stacks built before AI was a serious option. ArqBanker is built for the operational reality of those institutions, not the top tier.
 
 
 
-### Section 3: How ArqBanker is different
+### Section 3: Calibrated for the workflows your team actually runs
 
-#### Built for the size of bank you actually are
-
-Designed for regional banks ($10B–$100B in assets) and mid-tier community banks ($1B–$10B in assets). Operational footprint sized for teams that do not have a dedicated AI engineering bench.
-
-#### Engineered for production, not for a benchmark
-
-Built on the same architectural foundation every ArqAI Labs product runs on. Production-grade by default. Integration depth is part of the product, not an integration project added on top.
-
-#### Calibrated for the workflows your team actually runs
-
-Sanctions screening. Customer due diligence. Transaction monitoring. SAR support. Each one calibrated to the operational logic financial crimes leaders at regional banks actually run.
+Sanctions screening. Customer due diligence. Transaction monitoring. SAR support. Each one calibrated to the operational logic financial-crimes leaders at regional banks actually run.
 
 
 
 ### Section 4: Who ArqBanker is for
 
-Built for BSA officers, financial crimes directors, AML programme leads, and compliance officers at regional and mid-tier US banks. And for the CTOs and Heads of AI evaluating financial-crime modernisation across the bank.
+BSA officers, financial crimes directors, AML programme leads, and compliance officers at regional and mid-tier US banks. Plus the CTOs and Heads of AI evaluating financial-crime modernisation.
 
 
 
 ### Section 5: Status and timing
 
-ArqBanker is in development. Pre-design-partner and pre-pilot. The earlier you are in the conversation, the more your operation shapes the product. We are looking for the kinds of teams we are building this for.
+ArqBanker is in development. Pre-design-partner and pre-pilot. The earlier you are in the conversation, the more your operation shapes the product.
 
 
 
@@ -610,307 +822,67 @@ ArqBanker is in development. Pre-design-partner and pre-pilot. The earlier you a
 
 ---
 
-## Page 06 : Services
+## Page 08 : Industries we serve
 
-`/services`
-
-
-
-**META TITLE:** Services  |  Custom AI agent delivery from ArqAI Labs
-
-**META DESCRIPTION:** ArqAI Labs Services builds custom AI agents into your environment. Senior delivery. Same engineering standard as our products. Decade-plus F500 track record.
+`/industries` (and per-industry pages)
 
 
 
-### Section 1: Hero
-
-**HEADLINE:** **When the productised agent is not the fit, we build the one you need.**
-
-**SUBHEAD:** ArqAI Labs Services is our delivery arm. Senior engineers and domain leads who have shipped Fortune 500 programs in regulated industries for over a decade. We build custom AI agents into your environment, on the cloud you already use, integrated with the systems your team already runs. Same architectural foundation as our products. Same end-to-end ownership.
-
-**PRIMARY CTA:** Talk to delivery
+*Per-industry pages follow the same short structure: hero + use cases relevant to the industry + closing CTA. Examples below.*
 
 
 
-### Section 2: When customers come to us
+### Healthcare payers : `/industries/healthcare-payers`
 
-#### When the workflow has no productised agent yet
+**HEADLINE:** **AI for the way healthcare payers actually operate.**
 
-Your team has a workflow we have not built a product for. We deploy a custom agent calibrated to your operation. Same engineering standard as our products.
-
-#### When the standard product needs more depth
-
-ArqFWA, ArqClaims, or ArqBanker is the right starting point, but your environment requires deeper integration or workflow customisation than the standard product configuration provides.
-
-#### When the AI agenda spans multiple workflows
-
-Your operation has a programme-level AI agenda. You need a senior partner who can deliver across multiple agents over multiple quarters at a single engineering standard.
+We build AI for operations leaders, program-integrity directors, claims and SIU teams at BCBS regionals, Medicaid MCOs, mid-tier MA plans, IPAs, and mid-market commercial health plans. Live today: ArqFWA. On the way: prior authorization, utilization management, claims operations.
 
 
 
-### Section 3: How we work
+### P&C insurance carriers : `/industries/insurance-carriers`
 
-#### Discovery, scoped to the outcome
+**HEADLINE:** **AI for the carriers that take operations seriously.**
 
-We start with the workflow, the buyer, and the operational metric. Discovery is short, focused, and outputs a concrete deployment plan and a committed timeline. We do not start engagements without one.
-
-#### Build, on your stack
-
-We deploy into your cloud, your data systems, your security perimeter. AWS. Azure. Sovereign provider. Whichever your team already runs. We do not ask you to migrate to deploy an agent.
-
-#### Operate, with named accountability
-
-Every engagement has a named technical lead and a named relationship lead. Post-deployment support cadence and SLAs are defined up front.
+We build AI for SIU and claims operations leadership at mid-market personal lines, commercial, and specialty carriers. Live today: ArqFWA. In build: ArqClaims.
 
 
 
-### Section 4: What we don't do
+### Banks and financial institutions : `/industries/banking`
 
-- Pure AI strategy decks without delivery commitment.
+**HEADLINE:** **AI built for the bank you are.**
 
-- Generic enterprise IT modernisation.
-
-- Workflow automation that is not AI-native.
-
-- Engagements without a named workflow owner and a defined success metric.
+Regional and mid-tier US banks. Financial crimes operations at the bank you actually run, not the bank Goldman Sachs runs. Coming: ArqBanker.
 
 
 
-### Section 5: Closing CTA
+### Retail : `/industries/retail`
 
-**CTA:** Talk to delivery
+**HEADLINE:** **AI for retail teams that compete on customer relationship.**
+
+We build AI for retail operators tired of static loyalty programs and inventory that lags the floor. Loyalty that learns. Inventory that anticipates. Bots that actually help your store associates.
+
+
+
+### Manufacturing : `/industries/manufacturing`
+
+**HEADLINE:** **AI for manufacturing operations that need their data to talk back.**
+
+We build AI on top of your ERP, your shop floor, and your quality-control workflow. Reports that don't take your team three days to assemble.
 
 
 
 ---
 
-## Page 07 : Solutions : Healthcare payers
-
-`/solutions/healthcare-payers`
-
-
-
-**META TITLE:** AI agents for healthcare payers  |  ArqAI Labs
-
-**META DESCRIPTION:** Vertical AI agents for healthcare payer operations. ArqFWA live today. Built for operations and program-integrity teams. End-to-end delivered.
-
-
-
-### Section 1: Hero
-
-**HEADLINE:** **AI agents for the way healthcare payers actually operate.**
-
-**SUBHEAD:** ArqAI Labs builds vertical AI agents for healthcare payer operations. Live today: ArqFWA, the AI agent for fraud, waste, and abuse detection. More products on the roadmap, each engineered for production and delivered end-to-end.
-
-
-
-### Section 2: Who we serve
-
-Built for operations leaders, program-integrity directors, claims and SIU teams, and the technology and AI executives backing them at:
-
-- BCBS regional plans
-
-- Medicaid managed care organisations
-
-- Mid-tier Medicare Advantage plans
-
-- Independent practice associations and provider-sponsored plans
-
-- Mid-market commercial health plans
-
-
-
-### Section 3: Available today
-
-#### ArqFWA
-
-Detects fraud, waste, and abuse in claims and transactions. Production-grade. Deployed end-to-end.
-
-→ See ArqFWA
-
-
-
-### Section 4: On the roadmap
-
-Additional products targeting prior authorization, utilization management, and claims operations are on the roadmap. Reach out if your operation has a workflow you want at the front of the queue.
-
-
-
-### Section 5: Closing CTA
-
-Book a demo with our healthcare team
-
-
-
----
-
-## Page 08 : Solutions : P&C insurance carriers
-
-`/solutions/insurance-carriers`
-
-
-
-**META TITLE:** AI agents for P&C insurance carriers  |  ArqAI Labs
-
-**META DESCRIPTION:** Vertical AI agents for P&C insurance operations. ArqFWA for fraud detection. ArqClaims for claims triage. Built for the workflow. Engineered for production.
-
-
-
-### Section 1: Hero
-
-**HEADLINE:** **AI agents for the carriers that take operations seriously.**
-
-**SUBHEAD:** ArqAI Labs builds vertical AI agents for property and casualty insurance carrier operations. Live today: ArqFWA. In build: ArqClaims. Both engineered for production from day one.
-
-
-
-### Section 2: Who we serve
-
-Built for SIU and special-investigations leaders, claims operations leadership, technology and AI executives at:
-
-- Mid-market personal lines carriers (auto, home)
-
-- Commercial and specialty lines carriers
-
-- Regional carriers writing $500M to $5B in direct written premium
-
-
-
-### Section 3: Available and in build
-
-#### ArqFWA: live
-
-Suspicious claim detection across personal and commercial lines.
-
-→ See ArqFWA
-
-#### ArqClaims: in build with design partners
-
-Claims triage and processing.
-
-→ Apply to the design partner program
-
-
-
-### Section 4: Closing CTA
-
-Book a demo with our insurance team
-
-
-
----
-
-## Page 09 : Solutions : Banks and financial institutions
-
-`/solutions/banking`
-
-
-
-**META TITLE:** AI agents for banks and financial institutions  |  ArqAI Labs
-
-**META DESCRIPTION:** Vertical AI agents for regional and mid-tier banks. AML, KYC, financial crime workflows. Built for the operational reality of mid-market financial crimes programs.
-
-
-
-### Section 1: Hero
-
-**HEADLINE:** **AI agents built for the bank you are, not for the one Goldman Sachs is.**
-
-**SUBHEAD:** ArqAI Labs builds vertical AI agents for regional and mid-tier US banks. Coming: ArqBanker, the AI agent for AML, KYC, and financial crime. Built for the operational reality of running a financial-crimes program on a lean team.
-
-
-
-### Section 2: Who we serve
-
-Built for BSA officers, financial crimes directors, AML programme leads, technology executives, and Heads of AI at:
-
-- Regional banks ($10B–$100B in assets)
-
-- Mid-tier community banks ($1B–$10B in assets)
-
-- Credit unions and thrifts with active financial-crimes programs
-
-
-
-### Section 3: On the way
-
-#### ArqBanker
-
-AML, KYC, and financial crime workflow agent. Pre-design-partner stage.
-
-→ See ArqBanker
-
-
-
-### Section 4: Closing CTA
-
-Get on the early-access list
-
-
-
----
-
-## Page 10 : How it works
-
-`/how-it-works`
-
-
-
-**META TITLE:** How ArqAI Labs agents are built  |  Architecture
-
-**META DESCRIPTION:** Three layers every ArqAI Labs product is built on: agent identity, runtime policy enforcement, observable retrieval. Engineered for production from day one.
-
-
-
-### Section 1: Hero
-
-**HEADLINE:** **Three layers. Every product. Production-grade by design.**
-
-**SUBHEAD:** Every ArqAI Labs agent is built on the same architectural foundation. We do not rebuild reliability for each product. We build it once, deeply, and apply it everywhere. That is why our second product ships faster than our first, and why our customers can deploy a second agent without re-evaluating the foundation from scratch.
-
-
-
-### Section 2 : Layer 1 : Agent identity
-
-**HEADLINE:** **Every agent has a cryptographic identity and a defined set of capabilities.**
-
-Before an agent acts, the runtime verifies who it is and what it is permitted to do. Capabilities are scoped to the workflow. Actions are logged with cryptographic provenance. Nothing happens off-policy.
-
-
-
-### Section 3 : Layer 2 : Runtime policy enforcement
-
-**HEADLINE:** **Policies live in the runtime, not in a filter applied after.**
-
-Internal policies and the rules that apply to the workflow are compiled into the agent's execution path before it runs. The agent cannot take an action that violates the policies it has been given. Reliability is enforced, not promised.
-
-
-
-### Section 4 : Layer 3 : Observable retrieval
-
-**HEADLINE:** **Every data lookup is logged, governed, and quality-monitored.**
-
-When the agent retrieves data, the lookup is logged, the data is policy-checked before access, and retrieval quality is monitored continuously. If quality drifts, the agent corrects.
-
-
-
-### Section 5: For engineers
-
-Each layer has technical depth that your principal architect should evaluate directly. Reach out under NDA for control documentation. Read the engineering blog for deep technical posts on each layer.
-
-
-
----
-
-## Page 11 : Trust
+## Page 09 : Trust
 
 `/trust`
 
 
 
-**META TITLE:** Trust  |  ArqAI Labs
+**META TITLE:** Trust : ArqAI Labs
 
-**META DESCRIPTION:** Architectural controls and compliance posture across every ArqAI Labs product. SOC 2 in progress. HIPAA-aligned. GDPR-aligned. Control documentation under NDA.
+**META DESCRIPTION:** Architectural controls and compliance posture across every ArqAI Labs engagement. SOC 2 in progress. HIPAA-aligned. GDPR-aligned. Control documentation under NDA.
 
 
 
@@ -918,19 +890,19 @@ Each layer has technical depth that your principal architect should evaluate dir
 
 **HEADLINE:** **Architectural controls first. Certifications next.**
 
-**SUBHEAD:** ArqAI Labs is built for the controls that regulated environments require. We do not claim certifications we do not have. We do tell you exactly where we are on every framework you care about, and we share control documentation under NDA on request.
+**SUBHEAD:** We don't claim certifications we don't have. We tell you exactly where we are on every framework you care about, and we share control documentation under NDA on request.
 
 
 
 ### Section 2: Architectural controls
 
-Independent of certification status, the architecture every ArqAI Labs product runs on includes:
+Independent of certification status, the architecture every ArqAI Labs engagement runs on includes:
 
 - Cryptographic logging of every agent action and every data access.
 
 - Policy enforcement before retrieval and before tool execution.
 
-- Decision provenance exposed in the audit log and in the user UI.
+- Decision provenance exposed in the operational log and the user UI.
 
 - Deployment options that respect data residency and tenancy requirements.
 
@@ -938,35 +910,35 @@ Independent of certification status, the architecture every ArqAI Labs product r
 
 ### Section 3: Compliance posture
 
-*Replace placeholders with real status confirmed by counsel and security leadership.*
+*Replace placeholders with real status.*
 
 #### SOC 2
 
-Aligned with SOC 2 Trust Services Criteria. Type II audit in progress with [auditor name]. Target completion: [date].
+Aligned with SOC 2 Trust Services Criteria. Type II audit in progress with [auditor name]. Target: [date].
 
 #### HIPAA
 
-HIPAA-aligned controls. BAAs executed with healthcare customers. Internal HIPAA security and privacy policies in place.
+HIPAA-aligned controls. BAAs executed with healthcare customers.
 
 #### GDPR
 
-GDPR-aligned data protection principles. EU customer engagements include the appropriate data processing addenda.
+GDPR-aligned data protection principles.
 
-#### MENA frameworks
+#### Regional frameworks
 
-Aligned with the SAMA Cybersecurity Framework, Saudi NCA Essential Cybersecurity Controls, KSA PDPL, UAE PDPL, and NHRA standards for engagements in the GCC and broader MENA region.
+Aligned with the SAMA Cybersecurity Framework, NCA Essential Cybersecurity Controls, KSA PDPL, UAE PDPL, and NHRA standards for engagements in MENA.
 
 
 
 ### Section 4: Data handling
 
-Customer data stays in customer environments. Agents are deployed inside customer cloud or sovereign cloud of choice. Customer data is not used to train shared models.
+Customer data stays in customer environments. Customer data is not used to train shared models.
 
 
 
 ### Section 5: Responsible AI
 
-Every ArqAI Labs agent is designed to assist a human professional, not replace one. The agent surfaces evidence and reasoning. The human makes the consequential decision. We do not deploy agents into autonomous decision paths in regulated workflows.
+Every ArqAI Labs engagement is designed to assist a human professional, not replace one. The AI surfaces evidence and reasoning. The human makes the consequential decision.
 
 
 
@@ -978,83 +950,83 @@ Every ArqAI Labs agent is designed to assist a human professional, not replace o
 
 ---
 
-## Page 12 : About
+## Page 10 : About
 
 `/about`
 
 
 
-**META TITLE:** About  |  ArqAI Labs
+**META TITLE:** About : ArqAI Labs
 
-**META DESCRIPTION:** ArqAI Labs builds vertical AI agents for high-stakes operational workflows. We are the AI products and services arm of ACI Infotech.
+**META DESCRIPTION:** ArqAI Labs is an AI engineering studio. The AI products and services arm of ACI Infotech.
 
 
 
 ### Section 1: Hero
 
-**HEADLINE:** **We build AI agents for the workflows that matter most.**
+**HEADLINE:** **We build AI for the way people actually work.**
 
-**SUBHEAD:** ArqAI Labs is the AI products and services arm of ACI Infotech. We build vertical AI agents for healthcare, insurance, and banking workflows where the cost of a wrong decision is measured in money, reputation, and operational time.
+**SUBHEAD:** ArqAI Labs is an AI engineering studio. We design, build, deploy, and run production AI for operations that don't fit off-the-shelf.
 
 
 
 ### Section 2: What we believe
 
-#### Vertical depth beats horizontal breadth.
+#### Tuned beats templated.
 
-AI agents that try to do everything end up doing nothing well. We pick one workflow at a time and we go deep.
+Every operation has its own quirks. Off-the-shelf AI averages them away. We build to the quirks.
 
-#### Reliability is engineered, not promised.
+#### Production beats pilots.
 
-Production-grade is a property of the architecture, not a marketing line. We build the substrate first, then the products on top.
+Most enterprise AI never makes it past the sandbox. We engineer for production from day one. That is the only standard we ship at.
 
-#### Delivery is the product.
+#### Engineers, not consultants.
 
-A licence and a quickstart guide is not enough. We deploy. We run. We support. The same standard for every customer.
+We're a lean team of senior AI engineers. We'd rather build than describe.
 
 
 
-### Section 3: The team
+### Section 3: Leadership
 
-ACI Infotech, our parent, has spent over a decade delivering Fortune 500 technology programmes in regulated industries. The team that builds and deploys ArqAI Labs products is the same team that has shipped at the standard our customers expect.
+**Founder & CEO:** Jagannadh Varma Kanumuri  
 
-**Founder & CEO:** Jagannadh Varma Kanumuri. **VP, Strategy & Innovation:** Habib Mehmoodi. More team details to follow.
+**VP, Strategy & Innovation:** Habib Mehmoodi  
+
+More team details to follow.
 
 
 
 ### Section 4: Our parent
 
-ArqAI Labs is part of ACI Infotech, a privately held technology services firm. ACI works with senior technology leaders across financial services, healthcare, insurance, telecommunications, and manufacturing.
+ArqAI Labs is the AI products and services arm of ACI Infotech, a privately held technology services firm. ACI works with senior technology leaders across financial services, healthcare, insurance, telecommunications, and manufacturing. The relationship gives ArqAI Labs the implementation playbooks, the delivery muscle, and the access to enterprise customers that most AI engineering studios don't have.
 
 
 
 ### Section 5: Closing CTA
 
-Want to work with us, build with us, or sell with us?
-
-Book a demo  •  See open roles  •  Become a partner
+Book a demo  ·  See open roles  ·  Become a partner
 
 
 
 ---
 
-## Page 13 : Demo / Contact
+## Page 11 : Engage us / Contact
 
-`/demo` and `/contact`
-
-
-
-**META TITLE:** Book a demo  |  ArqAI Labs
-
-**META DESCRIPTION:** Book a 30-minute walkthrough of ArqAI Labs products. See the demo, ask the questions, share a sample of your workflow.
+`/engage-us` and `/contact`
 
 
 
-### Demo page
+**META TITLE:** Engage us : ArqAI Labs
 
-**HEADLINE:** **See it in your environment, with your data.**
+**META DESCRIPTION:** Tell us what your operation needs. We'll tell you what's honestly possible.
 
-**SUBHEAD:** Book a 30-minute walkthrough with our team. No deck. No abstractions. Tell us your workflow and we will show you what changes when ArqAI Labs is in it.
+
+
+### Engage us page
+
+**HEADLINE:** **Tell us what your operation needs.**
+
+**SUBHEAD:** We'll tell you what's honestly possible. In plain language. Without a deck. Bring a sample of your data and we'll show you what changes when ArqAI Labs is in your operation.
 
 **Form fields:**
 
@@ -1066,31 +1038,29 @@ Book a demo  •  See open roles  •  Become a partner
 
 - Role
 
-- Industry (Healthcare payer / P&C insurance / Banking / Other)
+- Industry
 
-- Which product or workflow are you exploring?
+- What workflow or use case are you exploring? (free text)
 
-- Anything else you'd like us to know? (optional)
+- Anything else we should know? (optional)
 
-*Privacy line below form: We use this information only to follow up with you. See our privacy notice.*
+*Privacy line: We use this information only to follow up with you. See our privacy notice.*
 
-**SUBMIT BUTTON:** Request the demo
+**SUBMIT:** Send
 
 
 
 ### Contact page
 
-**HEADLINE:** **Talk to us.**
+#### Engagements and demos
 
-#### Demos and product evaluation
+→ `/engage-us`
 
-→ Book a demo
-
-#### Partnerships and design-partner program
+#### Partnerships and design partners
 
 partnerships@aciinfotech.net
 
-#### Press, analyst, and general inquiries
+#### Press and analyst
 
 marketing@aciinfotech.net
 
@@ -1106,35 +1076,35 @@ marketing@aciinfotech.net
 
 ## About paragraph (short)
 
-*ArqAI Labs is the AI products and services arm of ACI Infotech. We build vertical AI agents for high-stakes operational workflows in healthcare, insurance, and banking.*
+*ArqAI Labs is an AI engineering studio. We ship production-grade AI, bespoke to your operation.*
 
 
 
 ## About paragraph (medium)
 
-*ArqAI Labs is the AI products and services arm of ACI Infotech, a technology services firm with over a decade of Fortune 500 delivery experience. We build vertical AI agents that ship to production, end-to-end, one workflow at a time. Live today: ArqFWA. On the way: ArqClaims, ArqBanker, and more.*
+*ArqAI Labs is an AI engineering studio. We design, build, deploy, and run production AI for operations that don't fit off-the-shelf. Retail loyalty, patient management, claims triage, manufacturing ERP, Microsoft Copilot tuning, AWS Quick configuration, and more. Plus a growing line of products from what we ship repeatedly.*
 
 
 
 ## About paragraph (long, for press / analyst)
 
-*ArqAI Labs is the AI products and services arm of ACI Infotech. ArqAI Labs builds vertical AI agents for high-stakes operational workflows: fraud, claims, financial crime, and the operations functions that run them. The first product, ArqFWA, is live in production with healthcare and insurance customers. ArqClaims, the AI agent for claims triage and processing, is in build with design partners. ArqBanker, the AI agent for AML, KYC, and financial crime, is in development. ArqAI Labs Services, the company's delivery arm, builds custom AI agents into customer environments where a productised agent is not the fit.*
+*ArqAI Labs is an AI engineering studio. We design, build, deploy, and run production AI for operations that don't fit off-the-shelf, across healthcare, insurance, banking, retail, and manufacturing. Where the same workflow shows up across enough customers, we productise it. ArqFWA, the AI agent for fraud, waste, and abuse detection, is live in production. ArqClaims, the AI agent for claims triage, is in build with design partners. ArqBanker, the AI agent for AML, KYC, and financial crime, is in development. ArqAI Labs is the AI products and services arm of ACI Infotech.*
 
 
 
 ## Closing CTA block (reusable)
 
-**Headline:** Tell us your workflow. We will tell you what is honestly possible.
+**Headline:** Tell us what your operation needs.
 
-**Body:** The right way to evaluate ArqAI Labs is to bring your actual workflow into the conversation. Not a generic AI strategy. The specific operation you want better.
+**Body:** We'll tell you what's honestly possible. In plain language. Without a deck.
 
-**CTA:** Book the demo
+**CTA:** Engage us
 
 
 
 ## Compliance language (short)
 
-*Aligned with SOC 2 Trust Services Criteria. Type II audit in progress. HIPAA-aligned controls and BAAs in place with healthcare customers. GDPR-aligned. Control documentation under NDA.*
+*Architectural controls aligned with SOC 2 Trust Services Criteria. Type II audit in progress. HIPAA-aligned controls and BAAs in place with healthcare customers. GDPR-aligned. Control documentation under NDA.*
 
 
 
@@ -1144,18 +1114,18 @@ marketing@aciinfotech.net
 
 - Trademark status of ArqAI Labs and each product mark.
 
-- Real ROI numbers from ArqFWA pilots to replace placeholder language.
+- Real ROI numbers from ArqFWA pilots.
 
-- Named or anonymised customer reference for ArqFWA.
+- Named or anonymised customer references.
 
 - SOC 2 Type II auditor name and target completion date.
 
 - ArqClaims design-partner enrollments.
 
-- ArqBanker development stage. Confirm "in development" framing.
+- Use cases beyond the eight in the home grid: ready to demo today vs. roadmap?
 
-- Confirmed integrations to name. Only what is real today.
+- Confirmed integrations to name.
 
-- Office address and headquartered city for footer.
+- Office address for footer.
 
-- Domain and URL strategy. Stay on thearq.ai or move to arqailabs.com.
+- Domain strategy: thearq.ai or arqailabs.com?
