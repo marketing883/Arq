@@ -266,7 +266,7 @@ export function Header() {
                             <div>
                               <button
                                 onClick={() => toggleSection(item.name)}
-                                className={`flex items-center gap-3 text-display-md md:text-display-lg font-display transition-colors ${
+                                className={`flex items-center gap-3 text-3xl md:text-4xl lg:text-5xl font-display transition-colors ${
                                   expandedSection === item.name
                                     ? "text-accent"
                                     : "text-text-bright hover:text-accent"
@@ -329,7 +329,7 @@ export function Header() {
                           ) : (
                             <Link
                               href={item.href}
-                              className={`block text-display-md md:text-display-lg font-display transition-colors ${
+                              className={`block text-3xl md:text-4xl lg:text-5xl font-display transition-colors ${
                                 pathname === item.href
                                   ? "text-accent"
                                   : "text-text-bright hover:text-accent"
