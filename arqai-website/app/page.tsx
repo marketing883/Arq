@@ -250,7 +250,8 @@ export default function HomePage() {
                 transition={{ duration: 0.6 }}
                 className="text-display-xl md:text-[clamp(2.75rem,6vw,5.5rem)] font-display leading-[1.05] text-text-bright max-w-[92%]"
               >
-                Detect more fraud. Resolve more claims. Stop more financial crime.
+                Vertical AI agents.{" "}
+                <span className="text-text-muted">Fraud. Claims. Financial crime.</span>
               </motion.h1>
             </div>
 
