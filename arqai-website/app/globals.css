@@ -986,3 +986,44 @@
   font-weight: 600;
   color: var(--text-bright);
 }
+
+/* Hanging graphic ambient animations (used on home use-case cards) */
+@keyframes hanging-sway {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+@keyframes hanging-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes hanging-pulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+.hanging-sway {
+  animation: hanging-sway 5.5s ease-in-out infinite;
+  transform-origin: top center;
+}
+.hanging-spin {
+  animation: hanging-spin 14s linear infinite;
+}
+.hanging-spin-slow {
+  animation: hanging-spin 11s linear infinite;
+}
+.hanging-dot-1 { animation: hanging-pulse 1.4s ease-in-out infinite; }
+.hanging-dot-2 { animation: hanging-pulse 1.4s ease-in-out infinite; animation-delay: 0.2s; }
+.hanging-dot-3 { animation: hanging-pulse 1.4s ease-in-out infinite; animation-delay: 0.4s; }
+.hanging-spark { animation: hanging-pulse 2.2s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hanging-sway,
+  .hanging-spin,
+  .hanging-spin-slow,
+  .hanging-dot-1,
+  .hanging-dot-2,
+  .hanging-dot-3,
+  .hanging-spark {
+    animation: none;
+  }
+}

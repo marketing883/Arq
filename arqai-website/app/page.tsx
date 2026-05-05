@@ -81,166 +81,138 @@ function HangingGraphic({ kind }: { kind: UseCaseIconName }) {
     <motion.div
       aria-hidden="true"
       className="absolute top-0 right-4 sm:right-5 w-16 sm:w-[72px] h-24 origin-top pointer-events-none text-accent z-10"
-      initial={{ y: -130, opacity: 0 }}
-      whileInView={{ y: 0, opacity: 1 }}
-      viewport={{ once: true, margin: "-60px" }}
+      initial={{ y: -130 }}
+      whileInView={{ y: 0 }}
+      viewport={{ once: true, amount: 0.1 }}
       transition={{ type: "spring", stiffness: 70, damping: 8, mass: 0.8 }}
     >
-      <motion.svg
-        viewBox="0 0 60 96"
-        className="w-full h-full origin-top"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth={1.6}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        animate={{ rotate: [-3, 3, -3] }}
-        transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
-      >
-        {/* hanging string */}
-        <line x1="30" y1="0" x2="30" y2="26" strokeWidth={0.7} opacity={0.45} />
+      <div className="w-full h-full origin-top hanging-sway">
+        <svg
+          viewBox="0 0 60 96"
+          className="w-full h-full"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={1.8}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          {/* hanging string */}
+          <line x1="30" y1="0" x2="30" y2="26" strokeWidth={0.8} opacity={0.5} />
 
-        {kind === "loyalty" && (
-          // Shopping cart hanging by its handle
-          <g>
-            <path d="M30 26 L30 32" />
-            <path d="M14 36 L20 36 L24 56 L46 56 L48 40 L22 40" />
-            <circle cx="28" cy="62" r="2.5" />
-            <circle cx="42" cy="62" r="2.5" />
-            <circle cx="30" cy="32" r="1.6" fill="currentColor" />
-          </g>
-        )}
-
-        {kind === "patient" && (
-          // Stethoscope: ear-tubes converge into the string end, chest-piece dangles
-          <g>
-            <path d="M22 30 Q22 50 30 56 Q38 50 38 30" />
-            <circle cx="22" cy="28" r="2.2" />
-            <circle cx="38" cy="28" r="2.2" />
-            <path d="M30 56 L30 66" />
-            <circle cx="30" cy="72" r="6" />
-            <circle cx="30" cy="72" r="2.5" fill="currentColor" opacity={0.7} />
-          </g>
-        )}
-
-        {kind === "claims" && (
-          // Three fanned claim files hanging from a clip
-          <g>
-            <rect x="27" y="24" width="6" height="6" rx="1" />
-            <g transform="translate(30 32) rotate(-10)">
-              <rect x="-7" y="0" width="14" height="22" rx="1" />
-              <path d="M-4 6 L4 6 M-4 11 L4 11 M-4 16 L1 16" strokeWidth={0.8} opacity={0.7} />
+          {kind === "loyalty" && (
+            <g>
+              <path d="M30 26 L30 32" />
+              <path d="M14 36 L20 36 L24 56 L46 56 L48 40 L22 40" />
+              <circle cx="28" cy="62" r="2.5" />
+              <circle cx="42" cy="62" r="2.5" />
+              <circle cx="30" cy="32" r="1.8" fill="currentColor" />
             </g>
-            <g transform="translate(30 32)">
-              <rect x="-7" y="0" width="14" height="22" rx="1" fill="var(--base, #fff)" />
-              <rect x="-7" y="0" width="14" height="22" rx="1" />
-              <path d="M-4 6 L4 6 M-4 11 L4 11 M-4 16 L1 16" strokeWidth={0.8} opacity={0.7} />
-            </g>
-            <g transform="translate(30 32) rotate(10)">
-              <rect x="-7" y="0" width="14" height="22" rx="1" fill="var(--base, #fff)" />
-              <rect x="-7" y="0" width="14" height="22" rx="1" />
-              <path d="M-4 6 L4 6 M-4 11 L4 11 M-4 16 L1 16" strokeWidth={0.8} opacity={0.7} />
-            </g>
-          </g>
-        )}
+          )}
 
-        {kind === "erp" && (
-          // Gear hanging from string, with a slow rotation
-          <motion.g
-            transform="translate(30 56)"
-            animate={{ rotate: 360 }}
-            transition={{ duration: 14, repeat: Infinity, ease: "linear" }}
-            style={{ transformOrigin: "30px 56px" }}
-          >
-            <circle r="11" />
-            <circle r="4" />
-            {[0, 45, 90, 135, 180, 225, 270, 315].map((deg) => (
-              <rect
-                key={deg}
-                x="-1.6"
-                y="-15"
-                width="3.2"
-                height="4"
-                rx="0.6"
-                transform={`rotate(${deg})`}
+          {kind === "patient" && (
+            <g>
+              <path d="M22 30 Q22 50 30 56 Q38 50 38 30" />
+              <circle cx="22" cy="28" r="2.4" />
+              <circle cx="38" cy="28" r="2.4" />
+              <path d="M30 56 L30 66" />
+              <circle cx="30" cy="72" r="6" />
+              <circle cx="30" cy="72" r="2.5" fill="currentColor" opacity={0.7} />
+            </g>
+          )}
+
+          {kind === "claims" && (
+            <g>
+              <rect x="27" y="24" width="6" height="6" rx="1" />
+              <g transform="translate(30 32) rotate(-10)">
+                <rect x="-7" y="0" width="14" height="22" rx="1" fill="white" />
+                <rect x="-7" y="0" width="14" height="22" rx="1" />
+                <path d="M-4 6 L4 6 M-4 11 L4 11 M-4 16 L1 16" strokeWidth={0.9} opacity={0.7} />
+              </g>
+              <g transform="translate(30 32)">
+                <rect x="-7" y="0" width="14" height="22" rx="1" fill="white" />
+                <rect x="-7" y="0" width="14" height="22" rx="1" />
+                <path d="M-4 6 L4 6 M-4 11 L4 11 M-4 16 L1 16" strokeWidth={0.9} opacity={0.7} />
+              </g>
+              <g transform="translate(30 32) rotate(10)">
+                <rect x="-7" y="0" width="14" height="22" rx="1" fill="white" />
+                <rect x="-7" y="0" width="14" height="22" rx="1" />
+                <path d="M-4 6 L4 6 M-4 11 L4 11 M-4 16 L1 16" strokeWidth={0.9} opacity={0.7} />
+              </g>
+            </g>
+          )}
+
+          {kind === "erp" && (
+            <g className="hanging-spin" style={{ transformOrigin: "30px 56px" }}>
+              <g transform="translate(30 56)">
+                <circle r="11" />
+                <circle r="4" />
+                {[0, 45, 90, 135, 180, 225, 270, 315].map((deg) => (
+                  <rect
+                    key={deg}
+                    x="-1.8"
+                    y="-15"
+                    width="3.6"
+                    height="4"
+                    rx="0.7"
+                    transform={`rotate(${deg})`}
+                    fill="currentColor"
+                  />
+                ))}
+              </g>
+            </g>
+          )}
+
+          {kind === "hospitality" && (
+            <g>
+              <path d="M30 26 L30 32" />
+              <circle cx="30" cy="34" r="2.6" fill="currentColor" />
+              <path d="M14 60 Q14 38 30 38 Q46 38 46 60 Z" />
+              <line x1="10" y1="62" x2="50" y2="62" strokeWidth={2} />
+              <circle cx="30" cy="68" r="2.4" fill="currentColor" />
+            </g>
+          )}
+
+          {kind === "facilities" && (
+            <g transform="translate(30 30) rotate(20)">
+              <path d="M0 0 L0 4" />
+              <circle cx="0" cy="4" r="6" />
+              <circle cx="0" cy="4" r="2" fill="white" />
+              <path d="M-2 8 L-2 28 L-5 38 L5 38 L2 28 L2 8" />
+            </g>
+          )}
+
+          {kind === "copilot" && (
+            <g>
+              <path d="M14 32 L46 32 Q50 32 50 36 L50 52 Q50 56 46 56 L36 56 L30 64 L30 56 L14 56 Q10 56 10 52 L10 36 Q10 32 14 32 Z" />
+              <circle cx="22" cy="44" r="2" fill="currentColor" className="hanging-dot-1" />
+              <circle cx="30" cy="44" r="2" fill="currentColor" className="hanging-dot-2" />
+              <circle cx="38" cy="44" r="2" fill="currentColor" className="hanging-dot-3" />
+            </g>
+          )}
+
+          {kind === "dynamics" && (
+            <g className="hanging-spin-slow" style={{ transformOrigin: "30px 52px" }}>
+              <g transform="translate(30 52)">
+                <path d="M-12 0 A12 12 0 1 1 0 12" />
+                <polyline points="-3,7 0,12 -5,15" />
+                <path d="M12 0 A12 12 0 0 1 0 -12" opacity={0.4} />
+              </g>
+            </g>
+          )}
+
+          {kind === "aws" && (
+            <g>
+              <path d="M16 50 Q10 50 10 44 Q10 38 18 38 Q18 30 26 30 Q34 30 36 36 Q44 36 44 44 Q44 50 38 50 Z" />
+              <path
+                d="M28 56 L24 64 L30 64 L26 72"
+                className="hanging-spark"
                 fill="currentColor"
+                stroke="currentColor"
               />
-            ))}
-          </motion.g>
-        )}
-
-        {kind === "hospitality" && (
-          // Reception bell hanging from string
-          <g>
-            <path d="M30 26 L30 32" />
-            <circle cx="30" cy="34" r="2.4" fill="currentColor" />
-            <path d="M14 60 Q14 38 30 38 Q46 38 46 60 Z" />
-            <line x1="10" y1="62" x2="50" y2="62" />
-            <circle cx="30" cy="68" r="2.2" fill="currentColor" />
-          </g>
-        )}
-
-        {kind === "facilities" && (
-          // Wrench hanging from string
-          <g transform="translate(30 30) rotate(20)">
-            <path d="M0 0 L0 4" />
-            <circle cx="0" cy="4" r="6" />
-            <path d="M-2 8 L-2 28 L-5 38 L5 38 L2 28 L2 8" />
-            <circle cx="0" cy="4" r="2" fill="var(--base, #fff)" />
-          </g>
-        )}
-
-        {kind === "copilot" && (
-          // Chat bubble with typing dots
-          <g>
-            <path d="M14 32 L46 32 Q50 32 50 36 L50 52 Q50 56 46 56 L36 56 L30 64 L30 56 L14 56 Q10 56 10 52 L10 36 Q10 32 14 32 Z" />
-            <motion.g
-              animate={{ opacity: [0.3, 1, 0.3] }}
-              transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
-            >
-              <circle cx="22" cy="44" r="2" fill="currentColor" />
-            </motion.g>
-            <motion.g
-              animate={{ opacity: [0.3, 1, 0.3] }}
-              transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut", delay: 0.2 }}
-            >
-              <circle cx="30" cy="44" r="2" fill="currentColor" />
-            </motion.g>
-            <motion.g
-              animate={{ opacity: [0.3, 1, 0.3] }}
-              transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut", delay: 0.4 }}
-            >
-              <circle cx="38" cy="44" r="2" fill="currentColor" />
-            </motion.g>
-          </g>
-        )}
-
-        {kind === "dynamics" && (
-          // Refresh / loop arrows hanging, with slow spin
-          <motion.g
-            transform="translate(30 52)"
-            animate={{ rotate: 360 }}
-            transition={{ duration: 11, repeat: Infinity, ease: "linear" }}
-            style={{ transformOrigin: "30px 52px" }}
-          >
-            <path d="M-12 0 A12 12 0 1 1 0 12" />
-            <polyline points="-3,7 0,12 -5,15" />
-            <path d="M12 0 A12 12 0 0 1 0 -12" opacity={0.4} />
-          </motion.g>
-        )}
-
-        {kind === "aws" && (
-          // Cloud with a small spark/lightning underneath
-          <g>
-            <path d="M16 50 Q10 50 10 44 Q10 38 18 38 Q18 30 26 30 Q34 30 36 36 Q44 36 44 44 Q44 50 38 50 Z" />
-            <motion.path
-              d="M28 56 L24 64 L30 64 L26 72"
-              animate={{ opacity: [0.3, 1, 0.3] }}
-              transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
-            />
-          </g>
-        )}
-      </motion.svg>
+            </g>
+          )}
+        </svg>
+      </div>
     </motion.div>
   );
 }
