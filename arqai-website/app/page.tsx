@@ -521,7 +521,7 @@ export default function HomePage() {
                 How we work
               </p>
               <h2 className="text-display-lg font-display text-text-bright">
-                Four steps. End-to-end.
+                Four steps.<br />End-to-end.
               </h2>
             </motion.div>
 
