@@ -76,96 +76,173 @@ type UseCaseIconName =
   | "dynamics"
   | "aws";
 
-function UseCaseIcon({ name, className = "" }: { name: UseCaseIconName; className?: string }) {
-  const props = {
-    viewBox: "0 0 48 48",
-    fill: "none",
-    stroke: "currentColor",
-    strokeWidth: 1.6,
-    strokeLinecap: "round" as const,
-    strokeLinejoin: "round" as const,
-    className,
-  };
-  switch (name) {
-    case "loyalty":
-      return (
-        <svg {...props}>
-          <circle cx="16" cy="20" r="4" />
-          <circle cx="32" cy="20" r="4" />
-          <path d="M10 36c0-4 4-7 8-7M30 29c4 0 8 3 8 7" />
-          <path d="M24 8l2 4 4 .5-3 2.8.7 4-3.7-2-3.7 2 .7-4-3-2.8 4-.5z" />
-        </svg>
-      );
-    case "patient":
-      return (
-        <svg {...props}>
-          <rect x="8" y="10" width="32" height="28" rx="2" />
-          <path d="M8 18h32" />
-          <path d="M16 6v8M32 6v8" />
-          <circle cx="18" cy="28" r="2" fill="currentColor" />
-          <circle cx="26" cy="28" r="2" />
-          <path d="M34 28h2" />
-        </svg>
-      );
-    case "claims":
-      return (
-        <svg {...props}>
-          <rect x="8" y="10" width="14" height="10" rx="1" />
-          <rect x="8" y="22" width="14" height="10" rx="1" />
-          <path d="M26 14h12M26 18h8M26 28h12M26 32h8" />
-        </svg>
-      );
-    case "erp":
-      return (
-        <svg {...props}>
-          <rect x="6" y="10" width="36" height="22" rx="2" />
-          <path d="M12 26l4-6 4 4 4-8 4 4 4-2" />
-          <path d="M14 36h20M20 32v4M28 32v4" />
-        </svg>
-      );
-    case "hospitality":
-      return (
-        <svg {...props}>
-          <path d="M8 38V18l16-10 16 10v20z" />
-          <path d="M16 38V26h6v12M26 26h6v6h-6z" />
-        </svg>
-      );
-    case "facilities":
-      return (
-        <svg {...props}>
-          <rect x="8" y="14" width="14" height="20" rx="1" />
-          <path d="M14 18v3M14 25v3M14 32v0" />
-          <rect x="26" y="20" width="14" height="14" rx="1" />
-          <path d="M30 26h6M33 23v6" />
-        </svg>
-      );
-    case "copilot":
-      return (
-        <svg {...props}>
-          <path d="M10 14h22a4 4 0 014 4v8a4 4 0 01-4 4H22l-6 6v-6h-6a4 4 0 01-4-4v-8a4 4 0 014-4z" />
-          <path d="M16 22h12M16 26h8" />
-        </svg>
-      );
-    case "dynamics":
-      return (
-        <svg {...props}>
-          <path d="M10 38V14l14-6 14 6v24" />
-          <path d="M10 22h28" />
-          <path d="M24 8v32" />
-        </svg>
-      );
-    case "aws":
-      return (
-        <svg {...props}>
-          <rect x="8" y="14" width="10" height="10" rx="1" />
-          <rect x="20" y="14" width="10" height="10" rx="1" />
-          <rect x="32" y="14" width="8" height="10" rx="1" />
-          <path d="M13 28v6h22v-6" />
-          <circle cx="13" cy="19" r="1.4" fill="currentColor" />
-          <circle cx="25" cy="19" r="1.4" fill="currentColor" />
-        </svg>
-      );
-  }
+function HangingGraphic({ kind }: { kind: UseCaseIconName }) {
+  return (
+    <motion.div
+      aria-hidden="true"
+      className="absolute top-0 right-4 sm:right-5 w-16 sm:w-[72px] h-24 origin-top pointer-events-none text-accent z-10"
+      initial={{ y: -130, opacity: 0 }}
+      whileInView={{ y: 0, opacity: 1 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ type: "spring", stiffness: 70, damping: 8, mass: 0.8 }}
+    >
+      <motion.svg
+        viewBox="0 0 60 96"
+        className="w-full h-full origin-top"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth={1.6}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        animate={{ rotate: [-3, 3, -3] }}
+        transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
+      >
+        {/* hanging string */}
+        <line x1="30" y1="0" x2="30" y2="26" strokeWidth={0.7} opacity={0.45} />
+
+        {kind === "loyalty" && (
+          // Shopping cart hanging by its handle
+          <g>
+            <path d="M30 26 L30 32" />
+            <path d="M14 36 L20 36 L24 56 L46 56 L48 40 L22 40" />
+            <circle cx="28" cy="62" r="2.5" />
+            <circle cx="42" cy="62" r="2.5" />
+            <circle cx="30" cy="32" r="1.6" fill="currentColor" />
+          </g>
+        )}
+
+        {kind === "patient" && (
+          // Stethoscope: ear-tubes converge into the string end, chest-piece dangles
+          <g>
+            <path d="M22 30 Q22 50 30 56 Q38 50 38 30" />
+            <circle cx="22" cy="28" r="2.2" />
+            <circle cx="38" cy="28" r="2.2" />
+            <path d="M30 56 L30 66" />
+            <circle cx="30" cy="72" r="6" />
+            <circle cx="30" cy="72" r="2.5" fill="currentColor" opacity={0.7} />
+          </g>
+        )}
+
+        {kind === "claims" && (
+          // Three fanned claim files hanging from a clip
+          <g>
+            <rect x="27" y="24" width="6" height="6" rx="1" />
+            <g transform="translate(30 32) rotate(-10)">
+              <rect x="-7" y="0" width="14" height="22" rx="1" />
+              <path d="M-4 6 L4 6 M-4 11 L4 11 M-4 16 L1 16" strokeWidth={0.8} opacity={0.7} />
+            </g>
+            <g transform="translate(30 32)">
+              <rect x="-7" y="0" width="14" height="22" rx="1" fill="var(--base, #fff)" />
+              <rect x="-7" y="0" width="14" height="22" rx="1" />
+              <path d="M-4 6 L4 6 M-4 11 L4 11 M-4 16 L1 16" strokeWidth={0.8} opacity={0.7} />
+            </g>
+            <g transform="translate(30 32) rotate(10)">
+              <rect x="-7" y="0" width="14" height="22" rx="1" fill="var(--base, #fff)" />
+              <rect x="-7" y="0" width="14" height="22" rx="1" />
+              <path d="M-4 6 L4 6 M-4 11 L4 11 M-4 16 L1 16" strokeWidth={0.8} opacity={0.7} />
+            </g>
+          </g>
+        )}
+
+        {kind === "erp" && (
+          // Gear hanging from string, with a slow rotation
+          <motion.g
+            transform="translate(30 56)"
+            animate={{ rotate: 360 }}
+            transition={{ duration: 14, repeat: Infinity, ease: "linear" }}
+            style={{ transformOrigin: "30px 56px" }}
+          >
+            <circle r="11" />
+            <circle r="4" />
+            {[0, 45, 90, 135, 180, 225, 270, 315].map((deg) => (
+              <rect
+                key={deg}
+                x="-1.6"
+                y="-15"
+                width="3.2"
+                height="4"
+                rx="0.6"
+                transform={`rotate(${deg})`}
+                fill="currentColor"
+              />
+            ))}
+          </motion.g>
+        )}
+
+        {kind === "hospitality" && (
+          // Reception bell hanging from string
+          <g>
+            <path d="M30 26 L30 32" />
+            <circle cx="30" cy="34" r="2.4" fill="currentColor" />
+            <path d="M14 60 Q14 38 30 38 Q46 38 46 60 Z" />
+            <line x1="10" y1="62" x2="50" y2="62" />
+            <circle cx="30" cy="68" r="2.2" fill="currentColor" />
+          </g>
+        )}
+
+        {kind === "facilities" && (
+          // Wrench hanging from string
+          <g transform="translate(30 30) rotate(20)">
+            <path d="M0 0 L0 4" />
+            <circle cx="0" cy="4" r="6" />
+            <path d="M-2 8 L-2 28 L-5 38 L5 38 L2 28 L2 8" />
+            <circle cx="0" cy="4" r="2" fill="var(--base, #fff)" />
+          </g>
+        )}
+
+        {kind === "copilot" && (
+          // Chat bubble with typing dots
+          <g>
+            <path d="M14 32 L46 32 Q50 32 50 36 L50 52 Q50 56 46 56 L36 56 L30 64 L30 56 L14 56 Q10 56 10 52 L10 36 Q10 32 14 32 Z" />
+            <motion.g
+              animate={{ opacity: [0.3, 1, 0.3] }}
+              transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <circle cx="22" cy="44" r="2" fill="currentColor" />
+            </motion.g>
+            <motion.g
+              animate={{ opacity: [0.3, 1, 0.3] }}
+              transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut", delay: 0.2 }}
+            >
+              <circle cx="30" cy="44" r="2" fill="currentColor" />
+            </motion.g>
+            <motion.g
+              animate={{ opacity: [0.3, 1, 0.3] }}
+              transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut", delay: 0.4 }}
+            >
+              <circle cx="38" cy="44" r="2" fill="currentColor" />
+            </motion.g>
+          </g>
+        )}
+
+        {kind === "dynamics" && (
+          // Refresh / loop arrows hanging, with slow spin
+          <motion.g
+            transform="translate(30 52)"
+            animate={{ rotate: 360 }}
+            transition={{ duration: 11, repeat: Infinity, ease: "linear" }}
+            style={{ transformOrigin: "30px 52px" }}
+          >
+            <path d="M-12 0 A12 12 0 1 1 0 12" />
+            <polyline points="-3,7 0,12 -5,15" />
+            <path d="M12 0 A12 12 0 0 1 0 -12" opacity={0.4} />
+          </motion.g>
+        )}
+
+        {kind === "aws" && (
+          // Cloud with a small spark/lightning underneath
+          <g>
+            <path d="M16 50 Q10 50 10 44 Q10 38 18 38 Q18 30 26 30 Q34 30 36 36 Q44 36 44 44 Q44 50 38 50 Z" />
+            <motion.path
+              d="M28 56 L24 64 L30 64 L26 72"
+              animate={{ opacity: [0.3, 1, 0.3] }}
+              transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
+            />
+          </g>
+        )}
+      </motion.svg>
+    </motion.div>
+  );
 }
 
 const useCases: {
@@ -427,12 +504,10 @@ export default function HomePage() {
                     delay: (index % 3) * 0.06,
                   }}
                   whileHover={{ y: -4 }}
-                  className="group card flex flex-col h-full hover:border-accent transition-colors"
+                  className="group card flex flex-col h-full hover:border-accent transition-colors relative overflow-hidden"
                 >
-                  <div className="w-14 h-14 rounded-xl bg-accent/10 text-accent flex items-center justify-center mb-5 group-hover:bg-accent group-hover:text-white transition-colors">
-                    <UseCaseIcon name={uc.icon} className="w-8 h-8" />
-                  </div>
-                  <p className="text-body-xs text-accent uppercase tracking-wider mb-2">
+                  <HangingGraphic kind={uc.icon} />
+                  <p className="text-body-xs text-accent uppercase tracking-wider mb-3 mt-24 pr-20">
                     {uc.tag}
                   </p>
                   <h3 className="text-lg font-display font-semibold text-text-bright leading-snug mb-3 group-hover:text-accent transition-colors">
