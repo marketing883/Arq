@@ -336,15 +336,15 @@ export default function HomePage() {
               >
                 <p className="flex items-center gap-2 text-body-sm text-accent mb-6 uppercase tracking-wider font-medium">
                   <StarIcon className="w-4 h-4" />
-                  ArqAI Labs
+                  An AI engineering studio
                 </p>
 
                 <h1 className="text-display-xl md:text-[clamp(2.75rem,6vw,5.5rem)] font-display leading-[1.05] text-text-bright mb-6">
-                  ArqAI Labs is an AI engineering studio.
+                  Production AI, bespoke to your operation.
                 </h1>
 
                 <p className="text-body-lg md:text-xl text-text-medium leading-relaxed mb-10 max-w-2xl">
-                  We ship production-grade AI, bespoke to your operation.
+                  We design, build, deploy, and run AI for operations that don&apos;t fit off-the-shelf.
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-4">
