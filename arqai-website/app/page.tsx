@@ -78,18 +78,14 @@ type UseCaseIconName =
 
 function HangingGraphic({ kind }: { kind: UseCaseIconName }) {
   return (
-    <motion.div
+    <div
       aria-hidden="true"
-      className="absolute top-0 right-4 sm:right-5 w-16 sm:w-[72px] h-24 origin-top pointer-events-none text-accent z-10"
-      initial={{ y: -130 }}
-      whileInView={{ y: 0 }}
-      viewport={{ once: true, amount: 0.1 }}
-      transition={{ type: "spring", stiffness: 70, damping: 8, mass: 0.8 }}
+      className="absolute top-0 right-4 sm:right-5 w-16 sm:w-[72px] h-24 origin-top pointer-events-none text-accent z-10 hanging-drop"
     >
       <div className="w-full h-full origin-top hanging-sway">
         <svg
           viewBox="0 0 60 96"
-          className="w-full h-full"
+          className="w-full h-full block"
           fill="none"
           stroke="currentColor"
           strokeWidth={1.8}
@@ -213,7 +209,7 @@ function HangingGraphic({ kind }: { kind: UseCaseIconName }) {
           )}
         </svg>
       </div>
-    </motion.div>
+    </div>
   );
 }
 
@@ -476,7 +472,7 @@ export default function HomePage() {
                     delay: (index % 3) * 0.06,
                   }}
                   whileHover={{ y: -4 }}
-                  className="group card flex flex-col h-full hover:border-accent transition-colors relative overflow-hidden"
+                  className="group card flex flex-col h-full hover:border-accent transition-colors relative"
                 >
                   <HangingGraphic kind={uc.icon} />
                   <p className="text-body-xs text-accent uppercase tracking-wider mb-3 mt-24 pr-20">
