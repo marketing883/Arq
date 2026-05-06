@@ -328,30 +328,105 @@ const products = [
   },
 ];
 
-const beliefs = [
-  {
-    title: "Lean engineering teams.",
-    description:
-      "We are an AI engineering team. Senior. Sharp. Fluent in the modern frontier stack. We'd rather build than describe.",
-  },
-  {
-    title: "Tuned, not templated.",
-    description:
-      "No two operations get the same build. Every engagement starts with how your team actually works, not with what we've shipped before.",
-  },
-  {
-    title: "Productised where it earns its place.",
-    description:
-      "When a problem shows up enough times across customers, we turn it into a product. The product line grows from the work, not the other way around.",
-  },
-];
+type IndustryIconKind = "healthcare" | "insurance" | "banking" | "retail" | "manufacturing";
 
-const industries = [
-  { name: "Healthcare", href: "/industries/healthcare-payers" },
-  { name: "Insurance", href: "/industries/insurance-carriers" },
-  { name: "Banking", href: "/industries/banking" },
-  { name: "Retail", href: "/industries/retail" },
-  { name: "Manufacturing", href: "/industries/manufacturing" },
+function IndustryIcon({ kind, className = "" }: { kind: IndustryIconKind; className?: string }) {
+  const props = {
+    viewBox: "0 0 64 64",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: 1.6,
+    strokeLinecap: "round" as const,
+    strokeLinejoin: "round" as const,
+    className,
+  };
+  switch (kind) {
+    case "healthcare":
+      return (
+        <svg {...props}>
+          <path d="M32 56s-18-10-18-24a10 10 0 0118-6 10 10 0 0118 6c0 14-18 24-18 24z" />
+          <path d="M28 28h8M32 24v8" strokeWidth={2.4} />
+        </svg>
+      );
+    case "insurance":
+      return (
+        <svg {...props}>
+          <path d="M32 8l18 6v14c0 12-8 22-18 28-10-6-18-16-18-28V14z" />
+          <path d="M22 32l8 8 14-14" strokeWidth={2.4} />
+        </svg>
+      );
+    case "banking":
+      return (
+        <svg {...props}>
+          <path d="M8 24L32 10l24 14" />
+          <path d="M12 24v22M22 28v18M32 28v18M42 28v18M52 28v18M52 24v22" />
+          <path d="M8 50h48M8 54h48" />
+        </svg>
+      );
+    case "retail":
+      return (
+        <svg {...props}>
+          <path d="M14 22h36l-3 26a4 4 0 01-4 4H21a4 4 0 01-4-4z" />
+          <path d="M22 22a10 10 0 0120 0" />
+          <circle cx="24" cy="34" r="1.5" fill="currentColor" />
+          <circle cx="40" cy="34" r="1.5" fill="currentColor" />
+        </svg>
+      );
+    case "manufacturing":
+      return (
+        <svg {...props}>
+          <path d="M8 56V32l10 6V32l10 6V32l10 6v-8l8 6v18z" />
+          <path d="M8 56h48" />
+          <circle cx="22" cy="46" r="2" fill="currentColor" />
+          <circle cx="38" cy="46" r="2" fill="currentColor" />
+          <path d="M50 26v-8l-4-4h-4v-4" />
+        </svg>
+      );
+  }
+}
+
+const industries: {
+  name: string;
+  tagline: string;
+  href: string;
+  image: string;
+  icon: IndustryIconKind;
+}[] = [
+  {
+    name: "Healthcare",
+    tagline: "Patient management, claims, fraud, and compliance.",
+    href: "/industries/healthcare-payers",
+    image: "/img/services/Healthcare-Real-Time-Risk-Stratification-With-Built-In-Compliance.jpg",
+    icon: "healthcare",
+  },
+  {
+    name: "Insurance",
+    tagline: "Claims triage, underwriting, fraud, and operations at the carriers that take ops seriously.",
+    href: "/industries/insurance-carriers",
+    image: "/img/services/use-case-2.webp",
+    icon: "insurance",
+  },
+  {
+    name: "Banking",
+    tagline: "AML, KYC, financial crime, and customer onboarding for regional and mid-tier banks.",
+    href: "/industries/banking",
+    image: "/img/services/Banking-Customer-Service-That-Resolves-50-percent-of-Tickets-Automatically.jpg",
+    icon: "banking",
+  },
+  {
+    name: "Retail",
+    tagline: "Loyalty that learns, inventory that anticipates, store ops that move faster.",
+    href: "/industries/retail",
+    image: "/img/services/Retail-40-percent-Faster-Pricing-Ops-Without-Manual-Review.jpg",
+    icon: "retail",
+  },
+  {
+    name: "Manufacturing",
+    tagline: "ERP that answers, quality control that catches, maintenance that predicts.",
+    href: "/industries/manufacturing",
+    image: "/img/services/Manufacturing-Autonomous-Maintenance-With-Scoped-Agent-Control.jpg",
+    icon: "manufacturing",
+  },
 ];
 
 const marqueeItems = [
@@ -619,70 +694,78 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Why ArqAI Labs - Dark */}
-        <section className="py-section bg-base-opp">
-          <div className="container mx-auto px-4 md:px-6 lg:px-8">
+        {/* Industries we serve - Dark, full-width rows */}
+        <section className="bg-base-opp">
+          <div className="container mx-auto px-4 md:px-6 lg:px-8 pt-section pb-12 md:pb-16">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-center mb-16"
+              className="max-w-3xl"
             >
-              <p className="flex items-center justify-center gap-2 text-body-sm text-additional mb-4 uppercase tracking-wider font-medium">
+              <p className="flex items-center gap-2 text-body-sm text-additional mb-4 uppercase tracking-wider font-medium">
                 <StarIcon className="w-4 h-4" />
-                Why ArqAI Labs
+                Industries we serve
               </p>
               <h2 className="text-display-lg font-display text-base">
-                Three things we will<br />not compromise on.
+                Where we go deep.
               </h2>
+              <p className="text-body-lg text-base/60 mt-5">
+                Each industry has its own pace, its own data shape, and its own definition of done.
+                We work in five.
+              </p>
             </motion.div>
-
-            <div className="grid md:grid-cols-3 gap-8">
-              {beliefs.map((belief, index) => (
-                <motion.div
-                  key={belief.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className="p-6 md:p-8 rounded-lg border border-stroke-medium bg-base-opp/40"
-                >
-                  <div className="text-6xl font-display font-bold text-additional/30 mb-4">
-                    {String(index + 1).padStart(2, "0")}
-                  </div>
-                  <h3 className="text-xl font-display font-semibold text-base mb-4">
-                    {belief.title}
-                  </h3>
-                  <p className="text-body-md text-base/70 leading-relaxed">
-                    {belief.description}
-                  </p>
-                </motion.div>
-              ))}
-            </div>
           </div>
-        </section>
 
-        {/* Industries */}
-        <section className="py-section bg-base">
-          <div className="container mx-auto px-4 md:px-6 lg:px-8 text-center">
-            <p className="flex items-center justify-center gap-2 text-body-sm text-accent mb-4 uppercase tracking-wider font-medium">
-              <StarIcon className="w-4 h-4" />
-              Industries we serve
-            </p>
-            <p className="text-display-md md:text-display-lg font-display text-text-bright leading-tight max-w-4xl mx-auto">
-              {industries.map((ind, i) => (
-                <span key={ind.name}>
-                  <Link
-                    href={ind.href}
-                    className="hover:text-accent transition-colors underline-offset-8 decoration-stroke-muted hover:decoration-accent decoration-2 underline"
-                  >
-                    {ind.name}
-                  </Link>
-                  {i < industries.length - 1 ? ". " : "."}
-                </span>
-              ))}{" "}
-              <span className="text-text-muted">And other operations whose complexity rewards specialist work.</span>
-            </p>
+          <div className="border-t border-stroke-medium/40">
+            {industries.map((industry, idx) => (
+              <Link
+                key={industry.name}
+                href={industry.href}
+                className="industry-row group relative block border-b border-stroke-medium/40 overflow-hidden"
+              >
+                {/* background image */}
+                <div className="absolute inset-0">
+                  <Image
+                    src={industry.image}
+                    alt=""
+                    fill
+                    sizes="100vw"
+                    className="object-cover scale-105 grayscale brightness-[0.35] saturate-50 group-hover:grayscale-0 group-hover:brightness-[0.55] group-hover:saturate-100 group-hover:scale-100 transition-all duration-700 ease-out"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-r from-base-opp via-base-opp/80 to-base-opp/30 group-hover:from-base-opp/85 group-hover:via-base-opp/40 group-hover:to-transparent transition-all duration-700" />
+                </div>
+
+                {/* content */}
+                <div className="relative container mx-auto px-4 md:px-6 lg:px-8 py-10 md:py-14 lg:py-16 flex items-center justify-between gap-6">
+                  <div className="flex items-baseline gap-5 md:gap-8 min-w-0">
+                    <span className="text-body-xs md:text-body-sm text-additional font-mono shrink-0">
+                      {String(idx + 1).padStart(2, "0")}
+                    </span>
+                    <div className="min-w-0">
+                      <h3 className="text-display-sm md:text-display-md font-display text-base leading-tight transition-transform duration-500 ease-out group-hover:translate-x-2">
+                        {industry.name}
+                      </h3>
+                      <p className="text-body-sm md:text-body-md text-base/60 group-hover:text-base/85 mt-2 max-w-xl transition-colors duration-500">
+                        {industry.tagline}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* hover-revealed industry icon */}
+                  <div className="hidden md:flex items-center gap-4 shrink-0 text-additional opacity-0 -translate-x-6 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500 ease-out">
+                    <IndustryIcon kind={industry.icon} className="w-12 h-12 lg:w-14 lg:h-14" />
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+
+          <div className="container mx-auto px-4 md:px-6 lg:px-8 py-10 md:py-12 text-base/50 text-body-sm">
+            And other operations whose complexity rewards specialist work.
           </div>
         </section>
 
