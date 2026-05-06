@@ -696,7 +696,7 @@ export default function HomePage() {
 
         {/* Industries we serve - Dark, full-width rows */}
         <section className="bg-base-opp">
-          <div className="container mx-auto px-4 md:px-6 lg:px-8 pt-section pb-12 md:pb-16">
+          <div className="container mx-auto px-4 md:px-6 lg:px-8 pt-24 md:pt-36 lg:pt-44 pb-12 md:pb-16">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
