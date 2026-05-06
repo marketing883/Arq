@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -20,67 +21,71 @@ function StarIcon({ className = "" }: { className?: string }) {
   );
 }
 
-const contactOptions = [
-  {
-    title: "Engagements and demos",
-    description: "Bring your workflow. We will tell you what is honestly possible.",
-    cta: "Engage us",
-    href: "/engage-us",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
-        <path d="M3 7l9 6 9-6" />
-        <rect x="3" y="5" width="18" height="14" rx="2" />
-      </svg>
-    ),
-  },
-  {
-    title: "Partnerships and design-partner program",
-    description: "Co-develop a productised agent or join the ArqClaims design-partner program.",
-    cta: "partnerships@aciinfotech.net",
-    href: "mailto:partnerships@aciinfotech.net",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
-        <circle cx="9" cy="9" r="3" />
-        <circle cx="17" cy="11" r="2.5" />
-        <path d="M3 19c0-3 3-5 6-5s6 2 6 5" />
-        <path d="M14 19c0-2 1.5-3.5 3.5-3.5S21 17 21 19" />
-      </svg>
-    ),
-  },
-  {
-    title: "Press, analyst, and general inquiries",
-    description: "Media requests, analyst briefings, and general questions.",
-    cta: "marketing@aciinfotech.net",
-    href: "mailto:marketing@aciinfotech.net",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
-        <rect x="3" y="5" width="18" height="14" rx="2" />
-        <path d="M3 8l9 6 9-6" />
-      </svg>
-    ),
-  },
-  {
-    title: "Careers",
-    description: "Join the team shipping production AI for the operations that matter.",
-    cta: "See open roles",
-    href: "/careers",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
-        <rect x="3" y="7" width="18" height="13" rx="2" />
-        <path d="M9 7V5a2 2 0 012-2h2a2 2 0 012 2v2" />
-        <path d="M3 13h18" />
-      </svg>
-    ),
-  },
-];
-
 export default function ContactPage() {
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    company: "",
+    message: "",
+    website_url: "",
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+  const [formLoadedAt, setFormLoadedAt] = useState(0);
+
+  useEffect(() => {
+    setFormLoadedAt(Date.now());
+  }, []);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus("idle");
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.fullName,
+          email: formData.email,
+          company: formData.company,
+          message: formData.message,
+          inquiryType: "general",
+          website_url: formData.website_url,
+          _formLoadedAt: formLoadedAt,
+        }),
+      });
+
+      if (response.ok) {
+        setSubmitStatus("success");
+        setFormData({ fullName: "", email: "", company: "", message: "", website_url: "" });
+        setFormLoadedAt(Date.now());
+      } else {
+        setSubmitStatus("error");
+      }
+    } catch {
+      setSubmitStatus("error");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
   return (
     <>
       <Header />
 
       <main className="bg-base">
-        {/* Hero Section with imagery */}
+        {/* Hero */}
         <section className="pt-32 md:pt-40 pb-16 relative overflow-hidden">
           <div className="container mx-auto px-4 md:px-6 lg:px-8">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -123,74 +128,208 @@ export default function ContactPage() {
           </div>
         </section>
 
-        {/* Contact Options */}
+        {/* General inquiries + form */}
         <section className="py-section bg-base-tint">
           <div className="container mx-auto px-4 md:px-6 lg:px-8">
-            <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-              {contactOptions.map((option, index) => (
-                <motion.div
-                  key={option.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className="card p-8 group hover:border-accent transition-all"
-                >
-                  <div className="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center mb-6 text-accent">
-                    {option.icon}
-                  </div>
-                  <h3 className="text-xl font-display font-semibold text-text-bright mb-2">
-                    {option.title}
-                  </h3>
-                  <p className="text-body-md text-text-muted mb-6">
-                    {option.description}
-                  </p>
-                  <Link
-                    href={option.href}
-                    className="inline-flex items-center gap-2 text-accent font-medium hover:gap-3 transition-all"
-                  >
-                    {option.cta}
-                    <svg
-                      className="w-4 h-4"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M17 8l4 4m0 0l-4 4m4-4H3"
-                      />
-                    </svg>
-                  </Link>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* General Contact */}
-        <section className="py-section bg-base">
-          <div className="container mx-auto px-4 md:px-6 lg:px-8">
-            <div className="max-w-2xl mx-auto text-center">
+            <div className="grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+              {/* Left: General inquiries info */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
+                className="lg:col-span-5 lg:sticky lg:top-32"
               >
-                <h2 className="text-2xl font-display font-semibold text-text-bright mb-4">
+                <p className="flex items-center gap-2 text-body-sm text-accent mb-4 uppercase tracking-wider font-medium">
+                  <StarIcon className="w-4 h-4" />
                   General inquiries
-                </h2>
-                <p className="text-body-lg text-text-muted mb-6">
-                  For anything else, reach us at:
                 </p>
+                <h2 className="text-display-md font-display text-text-bright mb-6">
+                  For anything else, write to us.
+                </h2>
                 <a
                   href="mailto:hello@thearq.ai"
-                  className="inline-flex items-center gap-2 text-xl text-accent font-medium hover:underline"
+                  className="inline-flex items-center gap-2 text-xl md:text-2xl text-accent font-medium hover:underline mb-10"
                 >
                   hello@thearq.ai
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
                 </a>
+
+                <div className="space-y-5 pt-6 border-t border-stroke-muted">
+                  <div>
+                    <p className="text-body-xs text-accent uppercase tracking-wider mb-2">
+                      Engagements and demos
+                    </p>
+                    <Link
+                      href="/engage-us"
+                      className="text-body-md text-text-bright hover:text-accent transition-colors"
+                    >
+                      Bring your workflow &rarr;
+                    </Link>
+                  </div>
+                  <div>
+                    <p className="text-body-xs text-accent uppercase tracking-wider mb-2">
+                      Partnerships and design partners
+                    </p>
+                    <a
+                      href="mailto:partnerships@aciinfotech.net"
+                      className="text-body-md text-text-bright hover:text-accent transition-colors"
+                    >
+                      partnerships@aciinfotech.net
+                    </a>
+                  </div>
+                  <div>
+                    <p className="text-body-xs text-accent uppercase tracking-wider mb-2">
+                      Press and analyst
+                    </p>
+                    <a
+                      href="mailto:marketing@aciinfotech.net"
+                      className="text-body-md text-text-bright hover:text-accent transition-colors"
+                    >
+                      marketing@aciinfotech.net
+                    </a>
+                  </div>
+                  <div>
+                    <p className="text-body-xs text-accent uppercase tracking-wider mb-2">
+                      Careers
+                    </p>
+                    <Link
+                      href="/careers"
+                      className="text-body-md text-text-bright hover:text-accent transition-colors"
+                    >
+                      See open roles &rarr;
+                    </Link>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Right: Contact form */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.1 }}
+                className="lg:col-span-7"
+              >
+                {submitStatus === "success" ? (
+                  <div className="card p-8 md:p-12 text-center">
+                    <div className="w-14 h-14 rounded-full bg-green-100 dark:bg-green-900/20 flex items-center justify-center mx-auto mb-5">
+                      <svg className="w-7 h-7 text-green-500" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <h3 className="text-2xl font-display font-semibold text-text-bright mb-3">
+                      Thanks. We&apos;ll be in touch.
+                    </h3>
+                    <p className="text-body-md text-text-muted">
+                      A senior on our team will reach out within one business day.
+                    </p>
+                  </div>
+                ) : (
+                  <form onSubmit={handleSubmit} className="card p-6 md:p-10 relative">
+                    {/* Honeypot */}
+                    <div className="absolute left-[-9999px] opacity-0 pointer-events-none" aria-hidden="true" tabIndex={-1}>
+                      <input
+                        type="text"
+                        name="website_url"
+                        value={formData.website_url}
+                        onChange={handleChange}
+                        tabIndex={-1}
+                        autoComplete="off"
+                      />
+                    </div>
+
+                    <div className="grid sm:grid-cols-2 gap-5 mb-5">
+                      <div>
+                        <label htmlFor="fullName" className="block text-body-sm font-medium text-text-bright mb-2">
+                          Full name *
+                        </label>
+                        <input
+                          type="text"
+                          id="fullName"
+                          name="fullName"
+                          required
+                          value={formData.fullName}
+                          onChange={handleChange}
+                          className="w-full px-4 py-3 rounded-lg bg-base border border-stroke-muted text-text-bright placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-accent"
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="email" className="block text-body-sm font-medium text-text-bright mb-2">
+                          Work email *
+                        </label>
+                        <input
+                          type="email"
+                          id="email"
+                          name="email"
+                          required
+                          value={formData.email}
+                          onChange={handleChange}
+                          className="w-full px-4 py-3 rounded-lg bg-base border border-stroke-muted text-text-bright placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-accent"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="mb-5">
+                      <label htmlFor="company" className="block text-body-sm font-medium text-text-bright mb-2">
+                        Company
+                      </label>
+                      <input
+                        type="text"
+                        id="company"
+                        name="company"
+                        value={formData.company}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 rounded-lg bg-base border border-stroke-muted text-text-bright placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-accent"
+                      />
+                    </div>
+
+                    <div className="mb-6">
+                      <label htmlFor="message" className="block text-body-sm font-medium text-text-bright mb-2">
+                        Message *
+                      </label>
+                      <textarea
+                        id="message"
+                        name="message"
+                        rows={5}
+                        required
+                        placeholder="Tell us a little about what you&apos;re trying to do."
+                        value={formData.message}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 rounded-lg bg-base border border-stroke-muted text-text-bright placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-accent resize-none"
+                      />
+                    </div>
+
+                    {submitStatus === "error" && (
+                      <div className="mb-5 p-4 bg-red-100 dark:bg-red-900/20 rounded-lg">
+                        <p className="text-sm text-red-600 dark:text-red-400">
+                          Something went wrong. Please try again or email us at{" "}
+                          <a href="mailto:hello@thearq.ai" className="underline">
+                            hello@thearq.ai
+                          </a>
+                          .
+                        </p>
+                      </div>
+                    )}
+
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="w-full btn bg-accent text-white hover:bg-accent/90 disabled:opacity-50"
+                    >
+                      {isSubmitting ? "Sending..." : "Send"}
+                    </button>
+
+                    <p className="mt-4 text-body-xs text-text-muted text-center">
+                      We use this only to follow up. See our{" "}
+                      <Link href="/privacy" className="text-accent hover:underline">
+                        privacy notice
+                      </Link>
+                      .
+                    </p>
+                  </form>
+                )}
               </motion.div>
             </div>
           </div>
