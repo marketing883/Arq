@@ -518,14 +518,62 @@ function ProcessSection() {
 /* ---------- Section 5: Accelerators ---------- */
 function AcceleratorsSection() {
   const products = [
-    { name: "Veyra",  tag: "Payment integrity & fraud intelligence", desc: "Detect fraud, waste, abuse, billing anomalies, provider risk, and claims leakage across healthcare payer workflows.", built: "Healthcare payers · TPAs · PBMs" },
-    { name: "Luma",   tag: "Claims triage & decision support",       desc: "Prioritize, route, enrich, and resolve claims faster with AI-assisted intake, documentation checks, and reviewer support.", built: "Healthcare · Insurance · Benefits" },
-    { name: "Sentra", tag: "Financial crime & customer risk",         desc: "Automate AML, KYC, sanctions review, beneficial ownership checks, alert triage, and customer due diligence.",            built: "Banks · Fintechs · Financial institutions" },
-    { name: "Nuvia",  tag: "Loyalty & personalization automation",    desc: "Turn customer, transaction, and behavioral data into personalized offers, retention actions, and next-best engagement.", built: "Retail · QSR · Consumer brands" },
-    { name: "Kyra",   tag: "Network & service operations",            desc: "Accelerate incident detection, ticket enrichment, outage triage, escalation routing, and service restoration workflows.", built: "Telecom · Managed services · Operations" },
-    { name: "Orbis",  tag: "Supply chain & vendor risk",              desc: "Monitor supplier risk, procurement exposure, contract signals, shipment exceptions, and operational dependencies.",      built: "Energy · Manufacturing · Logistics" },
-    { name: "Astra",  tag: "Enterprise service workflow automation",  desc: "Classify, route, resolve, and govern service workflows across ITSM, internal operations, knowledge bases, and tools.", built: "Enterprise IT · Shared services · Ops" },
-    { name: "Vantaq", tag: "Security operations & incident intel",    desc: "Triage alerts, summarize incidents, enrich threat context, recommend response actions, and generate compliance evidence.", built: "Cybersecurity · SecOps · Risk teams" },
+    {
+      name: "Veyra",
+      tag: "Payment integrity & fraud intelligence",
+      desc: "Detect fraud, waste, abuse, billing anomalies, provider risk, and claims leakage across healthcare payer workflows.",
+      built: "Healthcare payers · TPAs · PBMs",
+      img: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1200&q=70",
+    },
+    {
+      name: "Luma",
+      tag: "Claims triage & decision support",
+      desc: "Prioritize, route, enrich, and resolve claims faster with AI-assisted intake, documentation checks, and reviewer support.",
+      built: "Healthcare · Insurance · Benefits",
+      img: "https://images.unsplash.com/photo-1666214280557-f1b5022eb634?auto=format&fit=crop&w=1200&q=70",
+    },
+    {
+      name: "Sentra",
+      tag: "Financial crime & customer risk",
+      desc: "Automate AML, KYC, sanctions review, beneficial ownership checks, alert triage, and customer due diligence.",
+      built: "Banks · Fintechs · Financial institutions",
+      img: "https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?auto=format&fit=crop&w=1200&q=70",
+    },
+    {
+      name: "Nuvia",
+      tag: "Loyalty & personalization automation",
+      desc: "Turn customer, transaction, and behavioral data into personalized offers, retention actions, and next-best engagement.",
+      built: "Retail · QSR · Consumer brands",
+      img: "https://images.unsplash.com/photo-1481437156560-3205f6a55735?auto=format&fit=crop&w=1200&q=70",
+    },
+    {
+      name: "Kyra",
+      tag: "Network & service operations",
+      desc: "Accelerate incident detection, ticket enrichment, outage triage, escalation routing, and service restoration workflows.",
+      built: "Telecom · Managed services · Operations",
+      img: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=70",
+    },
+    {
+      name: "Orbis",
+      tag: "Supply chain & vendor risk",
+      desc: "Monitor supplier risk, procurement exposure, contract signals, shipment exceptions, and operational dependencies.",
+      built: "Energy · Manufacturing · Logistics",
+      img: "https://images.unsplash.com/photo-1577416412292-747c6607f055?auto=format&fit=crop&w=1200&q=70",
+    },
+    {
+      name: "Astra",
+      tag: "Enterprise service workflow automation",
+      desc: "Classify, route, resolve, and govern service workflows across ITSM, internal operations, knowledge bases, and tools.",
+      built: "Enterprise IT · Shared services · Ops",
+      img: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=70",
+    },
+    {
+      name: "Vantaq",
+      tag: "Security operations & incident intel",
+      desc: "Triage alerts, summarize incidents, enrich threat context, recommend response actions, and generate compliance evidence.",
+      built: "Cybersecurity · SecOps · Risk teams",
+      img: "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?auto=format&fit=crop&w=1200&q=70",
+    },
   ];
 
   return (
@@ -548,17 +596,21 @@ function AcceleratorsSection() {
         <div className="acc-grid reveal">
           {products.map((p, i) => (
             <div className="acc-card" key={p.name}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-                <div className="name">
-                  {p.name}
-                  <sup>™</sup>
+              <div className="acc-bg" style={{ backgroundImage: `url(${p.img})` }} aria-hidden="true" />
+              <div className="acc-glass" aria-hidden="true" />
+              <div className="acc-content">
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+                  <div className="name">
+                    {p.name}
+                    <sup>™</sup>
+                  </div>
+                  <span className="a-tag">0{i + 1}</span>
                 </div>
-                <span className="a-tag">0{i + 1}</span>
-              </div>
-              <div className="tagline">{p.tag}</div>
-              <div className="desc">{p.desc}</div>
-              <div className="built">
-                Built for <b>{p.built}</b>
+                <div className="tagline">{p.tag}</div>
+                <div className="desc">{p.desc}</div>
+                <div className="built">
+                  Built for <b>{p.built}</b>
+                </div>
               </div>
             </div>
           ))}
@@ -797,47 +849,20 @@ function InsightsSection() {
 /* ---------- Section 8: Final CTA ---------- */
 function FinalCTA() {
   return (
-    <section className="a-section" id="cta" style={{ paddingTop: "clamp(80px, 12vh, 140px)" }}>
-      <div className="a-wrap">
+    <section className="a-section" id="cta" style={{ padding: 0 }}>
+      <div className="final-cta-band reveal">
         <div
-          className="cta-strip cta-strip--photo reveal"
-          style={{
-            position: "relative",
-            padding: 0,
-            border: "1px solid var(--aline-2)",
-            background: "transparent",
-            overflow: "hidden",
-          }}
-        >
-          {/* Background image */}
-          <div
-            aria-hidden="true"
-            style={{
-              position: "absolute",
-              inset: 0,
-              backgroundImage: "url('/img/cta/latest-bg.jpg')",
-              backgroundSize: "cover",
-              backgroundPosition: "center right",
-              filter: "brightness(0.78) saturate(1.05)",
-            }}
-          />
-          {/* Dark + ember tint overlay */}
-          <div
-            aria-hidden="true"
-            style={{
-              position: "absolute",
-              inset: 0,
-              background:
-                "linear-gradient(105deg, rgba(8,8,11,0.92) 0%, rgba(8,8,11,0.72) 38%, rgba(8,8,11,0.35) 65%, rgba(8,8,11,0.55) 100%), radial-gradient(60% 80% at 0% 0%, rgba(208,244,56,0.20), transparent 60%), radial-gradient(50% 60% at 100% 100%, rgba(125,211,252,0.10), transparent 60%)",
-            }}
-          />
+          className="final-cta-image"
+          style={{ backgroundImage: "url('/img/cta/latest-bg.jpg')" }}
+          aria-hidden="true"
+        />
+        <div className="final-cta-tint" aria-hidden="true" />
 
-          {/* Inner glass card */}
+        <div className="a-wrap">
           <div
             className="cta-glass"
             style={{
               position: "relative",
-              margin: "clamp(28px, 6vw, 64px)",
               padding: "clamp(40px, 6vw, 72px)",
               borderRadius: 24,
               border: "1px solid rgba(245,239,230,0.16)",
@@ -868,22 +893,6 @@ function FinalCTA() {
               </Link>
             </div>
           </div>
-
-          {/* Decorative ember bloom on top-right */}
-          <div
-            aria-hidden="true"
-            style={{
-              position: "absolute",
-              right: "-80px",
-              top: "-80px",
-              width: 320,
-              height: 320,
-              borderRadius: "50%",
-              background: "radial-gradient(circle, rgba(208,244,56,0.18), transparent 60%)",
-              filter: "blur(20px)",
-              pointerEvents: "none",
-            }}
-          />
         </div>
       </div>
     </section>
