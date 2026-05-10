@@ -1037,3 +1037,25 @@
     animation: none;
   }
 }
+
+/* Shared form input class (used by admin/JobForm + careers apply form) */
+.form-input {
+  width: 100%;
+  padding: 0.625rem 0.875rem;
+  border-radius: 0.5rem;
+  background: var(--base);
+  border: 1px solid var(--stroke-muted);
+  color: var(--text-bright);
+  font-family: inherit;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  transition: border-color var(--anim-fast) ease, box-shadow var(--anim-fast) ease;
+}
+.form-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.18);
+}
+.form-input::placeholder {
+  color: var(--text-muted);
+}

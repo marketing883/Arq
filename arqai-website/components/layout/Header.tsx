@@ -36,6 +36,7 @@ const navigation: NavItem[] = [
     ],
   },
   { name: "Trust", href: "/trust" },
+  { name: "Careers", href: "/careers" },
   { name: "About", href: "/about" },
 ];
 
