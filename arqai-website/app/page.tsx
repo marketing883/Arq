@@ -781,27 +781,77 @@ function FinalCTA() {
   return (
     <section className="a-section" id="cta" style={{ paddingTop: "clamp(80px, 12vh, 140px)" }}>
       <div className="a-wrap">
-        <div className="cta-strip reveal">
-          <div className="kicker" style={{ color: "var(--ember)" }}>Engage us</div>
-          <h2 className="h-section" style={{ marginTop: 16, maxWidth: "20ch" }}>
-            Start with one workflow.
-            <br />
-            Prove value <em>fast</em>.
-          </h2>
-          <p className="lede" style={{ marginTop: 24, maxWidth: "60ch" }}>
-            Bring us one high-value process where AI should be doing more than answering questions. We&apos;ll help map
-            the workflow, define the controls, identify the integrations, and show what a production-ready agentic
-            system could look like.
-          </p>
-          <div style={{ display: "flex", gap: 12, marginTop: 32, flexWrap: "wrap" }}>
-            <Link href="/engage-us" className="a-btn a-btn-primary">
-              Start with one workflow <Icon.Arrow className="arrow" />
-            </Link>
-            <Link href="/engage-us" className="a-btn a-btn-ghost">
-              Book a 30-min discovery
-            </Link>
+        <div
+          className="cta-strip cta-strip--photo reveal"
+          style={{
+            position: "relative",
+            padding: 0,
+            border: "1px solid var(--aline-2)",
+            background: "transparent",
+            overflow: "hidden",
+          }}
+        >
+          {/* Background image */}
+          <div
+            aria-hidden="true"
+            style={{
+              position: "absolute",
+              inset: 0,
+              backgroundImage: "url('/img/cta/latest-bg.jpg')",
+              backgroundSize: "cover",
+              backgroundPosition: "center right",
+              filter: "brightness(0.78) saturate(1.05)",
+            }}
+          />
+          {/* Dark + ember tint overlay */}
+          <div
+            aria-hidden="true"
+            style={{
+              position: "absolute",
+              inset: 0,
+              background:
+                "linear-gradient(105deg, rgba(8,8,11,0.92) 0%, rgba(8,8,11,0.72) 38%, rgba(8,8,11,0.35) 65%, rgba(8,8,11,0.55) 100%), radial-gradient(60% 80% at 0% 0%, rgba(208,244,56,0.20), transparent 60%), radial-gradient(50% 60% at 100% 100%, rgba(125,211,252,0.10), transparent 60%)",
+            }}
+          />
+
+          {/* Inner glass card */}
+          <div
+            className="cta-glass"
+            style={{
+              position: "relative",
+              margin: "clamp(28px, 6vw, 64px)",
+              padding: "clamp(40px, 6vw, 72px)",
+              borderRadius: 24,
+              border: "1px solid rgba(245,239,230,0.16)",
+              background: "linear-gradient(135deg, rgba(245,239,230,0.10) 0%, rgba(245,239,230,0.04) 100%)",
+              backdropFilter: "blur(22px) saturate(140%)",
+              WebkitBackdropFilter: "blur(22px) saturate(140%)",
+              boxShadow: "0 20px 60px -10px rgba(0,0,0,0.55), inset 0 1px 0 rgba(245,239,230,0.10)",
+              maxWidth: 760,
+            }}
+          >
+            <div className="kicker" style={{ color: "var(--ember)" }}>Engage us</div>
+            <h2 className="h-section" style={{ marginTop: 16, maxWidth: "20ch" }}>
+              Start with one workflow.
+              <br />
+              Prove value <em>fast</em>.
+            </h2>
+            <p className="lede" style={{ marginTop: 24, maxWidth: "60ch" }}>
+              Bring us one high-value process where AI should be doing more than answering questions. We&apos;ll help map
+              the workflow, define the controls, identify the integrations, and show what a production-ready agentic
+              system could look like.
+            </p>
+            <div style={{ display: "flex", gap: 12, marginTop: 32, flexWrap: "wrap" }}>
+              <Link href="/engage-us" className="a-btn a-btn-primary">
+                Start with one workflow <Icon.Arrow className="arrow" />
+              </Link>
+              <Link href="/engage-us" className="a-btn a-btn-ghost">
+                Book a 30-min discovery
+              </Link>
+            </div>
           </div>
 
+          {/* Decorative ember bloom on top-right */}
           <div
             aria-hidden="true"
             style={{
@@ -811,7 +861,7 @@ function FinalCTA() {
               width: 320,
               height: 320,
               borderRadius: "50%",
-              background: "radial-gradient(circle, rgba(208,244,56,0.25), transparent 60%)",
+              background: "radial-gradient(circle, rgba(208,244,56,0.18), transparent 60%)",
               filter: "blur(20px)",
               pointerEvents: "none",
             }}
