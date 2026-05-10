@@ -1,813 +1,924 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
 import { HomeStructuredData } from "@/components/seo/StructuredData";
 
-function ScrollAwareMarquee({ items }: { items: string[] }) {
-  const [scrollDirection, setScrollDirection] = useState<"left" | "right">("left");
-  const lastScrollY = useRef(0);
+/* ============================================================
+   ArqAI Labs homepage v4 — dark, agentic-OS positioning.
+   Tokens + utility classes live in app/globals.css under .arq-dark.
+   ============================================================ */
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      if (currentScrollY > lastScrollY.current) {
-        setScrollDirection("left");
-      } else if (currentScrollY < lastScrollY.current) {
-        setScrollDirection("right");
-      }
-      lastScrollY.current = currentScrollY;
-    };
+type IconProps = React.SVGProps<SVGSVGElement>;
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const tripleItems = [...items, ...items, ...items];
-
-  return (
-    <div className="overflow-hidden whitespace-nowrap">
-      <div
-        className={`inline-flex gap-12 ${
-          scrollDirection === "left" ? "animate-marquee" : "animate-marquee-reverse"
-        }`}
-        style={{ width: "max-content" }}
-      >
-        {tripleItems.map((item, index) => (
-          <span
-            key={index}
-            className="text-display-sm font-display text-base whitespace-nowrap inline-flex items-center gap-4"
-          >
-            {item}
-            <StarIcon className="w-6 h-6" />
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function StarIcon({ className = "" }: { className?: string }) {
-  return (
-    <svg
-      version="1.1"
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 20 20"
-      fill="currentColor"
-      className={className}
-    >
-      <path d="M19.6,9.6h-3.9c-.4,0-1.8-.2-1.8-.2-.6,0-1.1-.2-1.6-.6-.5-.3-.9-.8-1.2-1.2-.3-.4-.4-.9-.5-1.4,0,0,0-1.1-.2-1.5V.4c0-.2-.2-.4-.4-.4s-.4.2-.4.4v4.4c0,.4-.2,1.5-.2,1.5,0,.5-.2,1-.5,1.4-.3.5-.7.9-1.2,1.2s-1,.5-1.6.6c0,0-1.2,0-1.7.2H.4c-.2,0-.4.2-.4.4s.2.4.4.4h4.1c.4,0,1.7.2,1.7.2.6,0,1.1.2,1.6.6.4.3.8.7,1.1,1.1.3.5.5,1,.6,1.6,0,0,0,1.3.2,1.7v4.1c0,.2.2.4.4.4s.4-.2.4-.4v-4.1c0-.4.2-1.7.2-1.7,0-.6.2-1.1.6-1.6.3-.4.7-.8,1.1-1.1.5-.3,1-.5,1.6-.6,0,0,1.3,0,1.8-.2h3.9c.2,0,.4-.2.4-.4s-.2-.4-.4-.4h0Z" />
+const Icon = {
+  Arrow: (p: IconProps) => (
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" {...p}>
+      <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
+  ),
+  Cross: (p: IconProps) => (
+    <svg viewBox="0 0 16 16" fill="none" width="16" height="16" {...p}>
+      <path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+    </svg>
+  ),
+  Check: (p: IconProps) => (
+    <svg viewBox="0 0 16 16" fill="none" width="16" height="16" {...p}>
+      <path d="M3 8.5l3.5 3.5L13 4.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  ),
+  Workflow: (p: IconProps) => (
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" {...p}>
+      <rect x="2" y="2" width="6" height="6" rx="1" stroke="currentColor" strokeWidth="1.2" />
+      <rect x="12" y="2" width="6" height="6" rx="1" stroke="currentColor" strokeWidth="1.2" />
+      <rect x="7" y="12" width="6" height="6" rx="1" stroke="currentColor" strokeWidth="1.2" />
+      <path d="M5 8v2h5v2M15 8v2H10" stroke="currentColor" strokeWidth="1.2" />
+    </svg>
+  ),
+  Agent: (p: IconProps) => (
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" {...p}>
+      <circle cx="10" cy="10" r="3" stroke="currentColor" strokeWidth="1.2" />
+      <circle cx="10" cy="10" r="7" stroke="currentColor" strokeWidth="1.2" strokeDasharray="2 2" />
+      <circle cx="3" cy="10" r="1.4" fill="currentColor" />
+      <circle cx="17" cy="10" r="1.4" fill="currentColor" />
+      <circle cx="10" cy="3" r="1.4" fill="currentColor" />
+      <circle cx="10" cy="17" r="1.4" fill="currentColor" />
+    </svg>
+  ),
+  Plug: (p: IconProps) => (
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" {...p}>
+      <path d="M7 2v3M13 2v3M5 5h10v4a5 5 0 0 1-10 0V5zM10 14v4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+    </svg>
+  ),
+  Shield: (p: IconProps) => (
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" {...p}>
+      <path d="M10 2l7 3v5c0 4-3 7-7 8-4-1-7-4-7-8V5l7-3z" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" />
+      <path d="M7 10l2 2 4-4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  ),
+  Stack: (p: IconProps) => (
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" {...p}>
+      <path d="M10 2l7 4-7 4-7-4 7-4zM3 10l7 4 7-4M3 14l7 4 7-4" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" />
+    </svg>
+  ),
+  Pulse: (p: IconProps) => (
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" {...p}>
+      <path d="M2 10h3l2-5 3 10 2-7 2 4 4-2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  ),
+  Map: (p: IconProps) => (
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" {...p}>
+      <path d="M2 5l5-2 6 2 5-2v12l-5 2-6-2-5 2V5z" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" />
+      <path d="M7 3v14M13 5v14" stroke="currentColor" strokeWidth="1.2" />
+    </svg>
+  ),
+  Cube: (p: IconProps) => (
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" {...p}>
+      <path d="M10 2l7 4v8l-7 4-7-4V6l7-4zM3 6l7 4 7-4M10 10v8" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" />
+    </svg>
+  ),
+  Eye: (p: IconProps) => (
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" {...p}>
+      <path d="M1 10s3-6 9-6 9 6 9 6-3 6-9 6-9-6-9-6z" stroke="currentColor" strokeWidth="1.2" />
+      <circle cx="10" cy="10" r="2.5" stroke="currentColor" strokeWidth="1.2" />
+    </svg>
+  ),
+  Trail: (p: IconProps) => (
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" {...p}>
+      <path d="M3 4h14M3 8h10M3 12h14M3 16h8" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+      <circle cx="16" cy="8" r="1.5" fill="currentColor" />
+      <circle cx="13" cy="16" r="1.5" fill="currentColor" />
+    </svg>
+  ),
+  Build: (p: IconProps) => (
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" {...p}>
+      <path d="M10 2l7 4v8l-7 4-7-4V6l7-4z" stroke="currentColor" strokeWidth="1.2" />
+      <path d="M10 6v8M6.5 8l7 4M13.5 8l-7 4" stroke="currentColor" strokeWidth="1" />
+    </svg>
+  ),
+};
+
+/* ---------- Nav ---------- */
+function HomeNav() {
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  return (
+    <nav className={"a-nav" + (scrolled ? " scrolled" : "")}>
+      <Link href="/" className="a-logo">
+        <Image
+          src="/img/arq-ai-logo-white.svg"
+          alt="ArqAI Labs"
+          width={160}
+          height={36}
+          className="h-8 md:h-9 w-auto"
+          priority
+        />
+      </Link>
+      <div className="a-nav-links">
+        <a href="#services">Services</a>
+        <a href="#process">Process</a>
+        <a href="#accelerators">Accelerators</a>
+        <a href="#why">Why ArqAI</a>
+        <a href="#insights">Insights</a>
+        <Link href="/careers">Careers</Link>
+      </div>
+      <Link href="/engage-us" className="a-btn a-btn-ghost" style={{ padding: "10px 16px", fontSize: 13 }}>
+        Engage us <Icon.Arrow className="arrow" />
+      </Link>
+    </nav>
   );
 }
 
-type UseCaseIconName =
-  | "loyalty"
-  | "patient"
-  | "claims"
-  | "erp"
-  | "hospitality"
-  | "facilities"
-  | "copilot"
-  | "dynamics"
-  | "aws";
-
-function HangingGraphic({ kind }: { kind: UseCaseIconName }) {
+/* ---------- Hero orbital diagram ---------- */
+function Orbital() {
   return (
-    <div
-      aria-hidden="true"
-      className="absolute top-0 right-4 sm:right-5 w-16 sm:w-[72px] h-24 origin-top pointer-events-none text-accent z-10 hanging-drop"
-    >
-      <div className="w-full h-full origin-top hanging-sway">
-        <svg
-          viewBox="0 0 60 96"
-          className="w-full h-full block"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth={1.8}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          {/* hanging string */}
-          <line x1="30" y1="0" x2="30" y2="26" strokeWidth={0.8} opacity={0.5} />
+    <div className="orbital" aria-hidden="true">
+      <div className="orbital-ring" style={{ inset: "8%" }} />
+      <div className="orbital-ring" style={{ inset: "20%" }} />
+      <div className="orbital-ring" style={{ inset: "32%" }} />
+      <div className="orbital-ring" style={{ inset: "0%", borderStyle: "solid", borderColor: "rgba(245,239,230,0.05)" }} />
 
-          {kind === "loyalty" && (
-            <g>
-              <path d="M30 26 L30 32" />
-              <path d="M14 36 L20 36 L24 56 L46 56 L48 40 L22 40" />
-              <circle cx="28" cy="62" r="2.5" />
-              <circle cx="42" cy="62" r="2.5" />
-              <circle cx="30" cy="32" r="1.8" fill="currentColor" />
-            </g>
-          )}
+      <svg viewBox="-100 -100 200 200" style={{ position: "absolute", inset: 0, animation: "arq-spin 60s linear infinite", overflow: "visible" }}>
+        {[0, 60, 120, 180, 240, 300].map((a, i) => (
+          <g key={i} transform={`rotate(${a})`}>
+            <circle cx="0" cy="-92" r="2.6" fill="#F5EFE6" />
+          </g>
+        ))}
+      </svg>
+      <svg viewBox="-100 -100 200 200" style={{ position: "absolute", inset: "12%", animation: "arq-spin-rev 45s linear infinite", overflow: "visible" }}>
+        {[30, 110, 200, 290].map((a, i) => (
+          <g key={i} transform={`rotate(${a})`}>
+            <rect x="-3" y="-83" width="6" height="6" fill="none" stroke="#7DD3FC" strokeWidth="1" />
+          </g>
+        ))}
+      </svg>
+      <svg viewBox="-100 -100 200 200" style={{ position: "absolute", inset: "24%", animation: "arq-spin 30s linear infinite", overflow: "visible" }}>
+        {[0, 90, 180, 270].map((a, i) => (
+          <g key={i} transform={`rotate(${a})`}>
+            <circle cx="0" cy="-72" r="3" fill="#d0f438" />
+            <circle cx="0" cy="-72" r="6" fill="none" stroke="rgba(208,244,56,0.4)" />
+          </g>
+        ))}
+      </svg>
 
-          {kind === "patient" && (
-            <g>
-              <path d="M22 30 Q22 50 30 56 Q38 50 38 30" />
-              <circle cx="22" cy="28" r="2.4" />
-              <circle cx="38" cy="28" r="2.4" />
-              <path d="M30 56 L30 66" />
-              <circle cx="30" cy="72" r="6" />
-              <circle cx="30" cy="72" r="2.5" fill="currentColor" opacity={0.7} />
-            </g>
-          )}
+      <div style={{ position: "absolute", top: "2%", left: "50%", transform: "translateX(-50%)" }}>
+        <span className="kicker">DATA · POLICY</span>
+      </div>
+      <div style={{ position: "absolute", bottom: "2%", left: "50%", transform: "translateX(-50%)" }}>
+        <span className="kicker">AUDIT · APPROVAL</span>
+      </div>
+      <div style={{ position: "absolute", top: "50%", left: "-2%", transform: "translateY(-50%) rotate(-90deg)", transformOrigin: "center" }}>
+        <span className="kicker">AGENTS</span>
+      </div>
+      <div style={{ position: "absolute", top: "50%", right: "-2%", transform: "translateY(-50%) rotate(90deg)", transformOrigin: "center" }}>
+        <span className="kicker">SYSTEMS</span>
+      </div>
 
-          {kind === "claims" && (
-            <g>
-              <rect x="27" y="24" width="6" height="6" rx="1" />
-              <g transform="translate(30 32) rotate(-10)">
-                <rect x="-7" y="0" width="14" height="22" rx="1" fill="white" />
-                <rect x="-7" y="0" width="14" height="22" rx="1" />
-                <path d="M-4 6 L4 6 M-4 11 L4 11 M-4 16 L1 16" strokeWidth={0.9} opacity={0.7} />
-              </g>
-              <g transform="translate(30 32)">
-                <rect x="-7" y="0" width="14" height="22" rx="1" fill="white" />
-                <rect x="-7" y="0" width="14" height="22" rx="1" />
-                <path d="M-4 6 L4 6 M-4 11 L4 11 M-4 16 L1 16" strokeWidth={0.9} opacity={0.7} />
-              </g>
-              <g transform="translate(30 32) rotate(10)">
-                <rect x="-7" y="0" width="14" height="22" rx="1" fill="white" />
-                <rect x="-7" y="0" width="14" height="22" rx="1" />
-                <path d="M-4 6 L4 6 M-4 11 L4 11 M-4 16 L1 16" strokeWidth={0.9} opacity={0.7} />
-              </g>
-            </g>
-          )}
-
-          {kind === "erp" && (
-            <g className="hanging-spin" style={{ transformOrigin: "30px 56px" }}>
-              <g transform="translate(30 56)">
-                <circle r="11" />
-                <circle r="4" />
-                {[0, 45, 90, 135, 180, 225, 270, 315].map((deg) => (
-                  <rect
-                    key={deg}
-                    x="-1.8"
-                    y="-15"
-                    width="3.6"
-                    height="4"
-                    rx="0.7"
-                    transform={`rotate(${deg})`}
-                    fill="currentColor"
-                  />
-                ))}
-              </g>
-            </g>
-          )}
-
-          {kind === "hospitality" && (
-            <g>
-              <path d="M30 26 L30 32" />
-              <circle cx="30" cy="34" r="2.6" fill="currentColor" />
-              <path d="M14 60 Q14 38 30 38 Q46 38 46 60 Z" />
-              <line x1="10" y1="62" x2="50" y2="62" strokeWidth={2} />
-              <circle cx="30" cy="68" r="2.4" fill="currentColor" />
-            </g>
-          )}
-
-          {kind === "facilities" && (
-            <g transform="translate(30 30) rotate(20)">
-              <path d="M0 0 L0 4" />
-              <circle cx="0" cy="4" r="6" />
-              <circle cx="0" cy="4" r="2" fill="white" />
-              <path d="M-2 8 L-2 28 L-5 38 L5 38 L2 28 L2 8" />
-            </g>
-          )}
-
-          {kind === "copilot" && (
-            <g>
-              <path d="M14 32 L46 32 Q50 32 50 36 L50 52 Q50 56 46 56 L36 56 L30 64 L30 56 L14 56 Q10 56 10 52 L10 36 Q10 32 14 32 Z" />
-              <circle cx="22" cy="44" r="2" fill="currentColor" className="hanging-dot-1" />
-              <circle cx="30" cy="44" r="2" fill="currentColor" className="hanging-dot-2" />
-              <circle cx="38" cy="44" r="2" fill="currentColor" className="hanging-dot-3" />
-            </g>
-          )}
-
-          {kind === "dynamics" && (
-            <g className="hanging-spin-slow" style={{ transformOrigin: "30px 52px" }}>
-              <g transform="translate(30 52)">
-                <path d="M-12 0 A12 12 0 1 1 0 12" />
-                <polyline points="-3,7 0,12 -5,15" />
-                <path d="M12 0 A12 12 0 0 1 0 -12" opacity={0.4} />
-              </g>
-            </g>
-          )}
-
-          {kind === "aws" && (
-            <g>
-              <path d="M16 50 Q10 50 10 44 Q10 38 18 38 Q18 30 26 30 Q34 30 36 36 Q44 36 44 44 Q44 50 38 50 Z" />
-              <path
-                d="M28 56 L24 64 L30 64 L26 72"
-                className="hanging-spark"
-                fill="currentColor"
-                stroke="currentColor"
-              />
-            </g>
-          )}
-        </svg>
+      <div className="orbital-core" />
+      <div
+        style={{
+          position: "absolute",
+          left: "50%",
+          top: "50%",
+          transform: "translate(-50%, -50%)",
+          fontFamily: "var(--mono)",
+          fontSize: 10,
+          letterSpacing: ".14em",
+          color: "var(--ink)",
+          textTransform: "uppercase",
+          fontWeight: 600,
+          zIndex: 2,
+        }}
+      >
+        Workflow
       </div>
     </div>
   );
 }
 
-const useCases: {
-  tag: string;
+/* ---------- Hero ---------- */
+function Hero() {
+  return (
+    <section className="a-hero" id="top">
+      <div className="a-hero-grid" />
+      <div className="a-wrap" style={{ position: "relative" }}>
+        <div className="reveal in" style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 28 }}>
+          <span className="a-pill"><span className="dot" /> An AI engineering studio</span>
+        </div>
+
+        <h1 className="h-display reveal in" data-d="1" style={{ maxWidth: "14ch" }}>
+          We build <em>agentic</em>
+          <br />
+          operating systems
+          <br />
+          for <span className="accent">enterprise</span> workflows.
+        </h1>
+
+        <div className="hero-row" style={{ display: "grid", gridTemplateColumns: "1fr", gap: 56, marginTop: 64, alignItems: "center" }}>
+          <div className="reveal in" data-d="2">
+            <p className="lede" style={{ maxWidth: "52ch" }}>
+              Production-grade AI agents and workflow systems for complex enterprise environments. From fraud detection
+              and claims triage to AML, loyalty, network operations, and service workflows — we help enterprises turn
+              AI from scattered pilots into{" "}
+              <em style={{ fontFamily: "var(--serif)", fontStyle: "italic", color: "var(--ink-cream)" }}>governed business execution</em>.
+            </p>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginTop: 36 }}>
+              <Link href="/engage-us" className="a-btn a-btn-primary">
+                Start with one workflow <Icon.Arrow className="arrow" />
+              </Link>
+              <a href="#process" className="a-btn a-btn-ghost">See how we build</a>
+            </div>
+            <div style={{ display: "flex", gap: 28, marginTop: 56, color: "var(--ink-muted)", fontSize: 12, fontFamily: "var(--mono)", letterSpacing: ".1em", textTransform: "uppercase" }}>
+              <span>SOC 2 · HIPAA · GDPR aligned</span>
+            </div>
+          </div>
+
+          <div className="reveal in" data-d="3" style={{ display: "grid", placeItems: "center" }}>
+            <Orbital />
+          </div>
+        </div>
+      </div>
+      <style>{`
+        @media (min-width: 1000px) {
+          .arq-dark .hero-row { grid-template-columns: 1.05fr 0.95fr !important; }
+        }
+      `}</style>
+    </section>
+  );
+}
+
+/* ---------- Marquee ---------- */
+function Marquee() {
+  const items = [
+    "Production-grade AI",
+    "Bespoke to your operation",
+    "Tuned, not templated",
+    "Engineers, not consultants",
+    "Governed before it acts",
+    "Plus a growing line of accelerators",
+  ];
+  return (
+    <div className="a-marquee" aria-hidden="true">
+      {[0, 1].map((k) => (
+        <div className="a-marquee-track" key={k}>
+          {items.map((t, i) => (
+            <span key={i}>{t}</span>
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/* ---------- Section 2: The Gap ---------- */
+function GapSection() {
+  const fails = [
+    "Understand the workflow",
+    "Connect to the right systems",
+    "Handle messy data and exceptions",
+    "Follow compliance and approval rules",
+    "Act with the right level of human oversight",
+    "Earn enough trust to become daily operations",
+  ];
+  return (
+    <section className="a-section" id="gap">
+      <div className="a-wrap">
+        <div className="a-section-head reveal">
+          <div>
+            <span className="a-eyebrow">02 · The problem</span>
+            <h2 className="h-section" style={{ marginTop: 18 }}>
+              The gap between <em>AI demos</em>
+              <br />
+              and AI operations.
+            </h2>
+          </div>
+          <p className="lede" style={{ justifySelf: "end" }}>
+            Most enterprise AI pilots prove the model can work.
+            <br />
+            Very few prove it can{" "}
+            <em style={{ fontFamily: "var(--serif)", fontStyle: "italic", color: "var(--ink-cream)" }}>actually run the work</em>.
+          </p>
+        </div>
+
+        <div className="gap-split">
+          <div className="gap-col fail reveal" data-d="1">
+            <h4>Most pilots stop here</h4>
+            <div className="big" style={{ marginTop: 8 }}>
+              The model answers a question on staged data.
+            </div>
+            <ul style={{ marginTop: 18 }}>
+              {fails.map((f, i) => (
+                <li key={i}>
+                  <span className="mark" style={{ color: "var(--ink-muted-2)" }}>
+                    <Icon.Cross />
+                  </span>
+                  Cannot {f.toLowerCase()}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="gap-col win reveal" data-d="2">
+            <h4>Agentic workflows go further</h4>
+            <div className="big" style={{ marginTop: 8 }}>
+              Built around the way your business <em>actually runs</em>.
+            </div>
+            <ul style={{ marginTop: 18 }}>
+              {fails.map((f, i) => (
+                <li key={i}>
+                  <span className="mark" style={{ color: "var(--ember)" }}>
+                    <Icon.Check />
+                  </span>
+                  {f}
+                </li>
+              ))}
+            </ul>
+            <div style={{ marginTop: "auto", paddingTop: 24 }}>
+              <Link href="/engage-us" className="a-btn a-btn-ghost" style={{ borderColor: "rgba(208,244,56,0.35)" }}>
+                Start with one workflow <Icon.Arrow className="arrow" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- Section 3: Services ---------- */
+function ServicesSection() {
+  const services = [
+    {
+      icon: <Icon.Map />,
+      title: "Workflow Strategy",
+      desc: "Identify the right use cases, business impact, users, data, risks, and success metrics — before anything is built.",
+      img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=900&q=70",
+    },
+    {
+      icon: <Icon.Agent />,
+      title: "Agentic AI Buildout",
+      desc: "Design and deploy agents, copilots, automations, decision systems, and retrieval flows around your actual process.",
+      img: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=900&q=70",
+    },
+    {
+      icon: <Icon.Plug />,
+      title: "Enterprise Integration",
+      desc: "Connect AI into your CRM, ERP, ITSM, data platforms, cloud stack, knowledge bases, and operating tools.",
+      img: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=900&q=70",
+    },
+    {
+      icon: <Icon.Shield />,
+      title: "Governance by Design",
+      desc: "Build in permissions, approvals, policy checks, human review, audit trails, and exception handling from day one.",
+      img: "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?auto=format&fit=crop&w=900&q=70",
+    },
+    {
+      icon: <Icon.Cube />,
+      title: "Vertical Acceleration",
+      desc: "Use proven product lines for repeatable workflows: claims, fraud, AML, loyalty, network ops, supply chain risk.",
+      img: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&w=900&q=70",
+    },
+    {
+      icon: <Icon.Pulse />,
+      title: "Managed AI Operations",
+      desc: "Monitor, improve, and expand AI workflows after launch so they keep performing in real business conditions.",
+      img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=900&q=70",
+    },
+  ];
+  return (
+    <section className="a-section" id="services">
+      <div className="a-wrap">
+        <div className="a-section-head reveal">
+          <div>
+            <span className="a-eyebrow">03 · Services</span>
+            <h2 className="h-section" style={{ marginTop: 18 }}>
+              AI systems built around the
+              <br />
+              work that <em>matters</em>.
+            </h2>
+          </div>
+          <p className="lede" style={{ justifySelf: "end" }}>
+            ArqAI Labs designs, builds, and runs AI-enabled workflows for high-value enterprise processes — with the
+            controls needed to move from pilot to production.
+          </p>
+        </div>
+
+        <div className="svc-grid">
+          {services.map((s, i) => (
+            <div className="svc reveal" data-d={(i % 3) + 1} key={s.title}>
+              <div className="svc-media">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={s.img} alt="" loading="lazy" decoding="async" />
+                <div className="svc-media-shade" />
+                <div className="svc-media-icon">{s.icon}</div>
+              </div>
+              <h4>{s.title}</h4>
+              <p>{s.desc}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="reveal" style={{ marginTop: 56, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 24 }}>
+          <p style={{ color: "var(--ink-cream-d)", fontSize: 17, maxWidth: "60ch", margin: 0 }}>
+            <em style={{ fontFamily: "var(--serif)", fontStyle: "italic", color: "var(--ink-cream)" }}>Services-led</em> where the problem is
+            specific. <em style={{ fontFamily: "var(--serif)", fontStyle: "italic", color: "var(--ink-cream)" }}>Product-accelerated</em> where the pattern is
+            proven.
+          </p>
+          <Link href="/engage-us" className="a-btn a-btn-primary">
+            Start with one workflow <Icon.Arrow className="arrow" />
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- Section 4: Process ---------- */
+function ProcessSection() {
+  const steps = [
+    { num: "01", icon: <Icon.Map />, title: "Blueprint", desc: "Map the workflow, users, systems, risks, rules, and success metrics." },
+    { num: "02", icon: <Icon.Build />, title: "Build", desc: "Design the agents, automations, integrations, retrieval flows, and human review loops." },
+    { num: "03", icon: <Icon.Shield />, title: "Govern", desc: "Add policy checks, permissions, audit trails, exception handling, and approval paths before launch." },
+    { num: "04", icon: <Icon.Pulse />, title: "Scale", desc: "Turn the first working workflow into a repeatable AI pattern across teams, functions, and verticals." },
+  ];
+  return (
+    <section className="a-section" id="process">
+      <div className="a-wrap">
+        <div className="a-section-head reveal">
+          <div>
+            <span className="a-eyebrow">04 · Process</span>
+            <h2 className="h-section" style={{ marginTop: 18 }}>
+              From one workflow
+              <br />
+              to <em>production</em> AI.
+            </h2>
+          </div>
+          <p className="lede" style={{ justifySelf: "end" }}>
+            We start small enough to prove value fast, and build with enough structure to scale.
+          </p>
+        </div>
+
+        <div className="steps reveal">
+          {steps.map((s) => (
+            <div className="step" key={s.num}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+                <div className="icon" style={{ color: "var(--ember)" }}>{s.icon}</div>
+                <span className="num">STEP {s.num}</span>
+              </div>
+              <h3>{s.title}</h3>
+              <p>{s.desc}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="reveal" style={{ marginTop: 48, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 24 }}>
+          <p style={{ color: "var(--ink-cream-d)", fontSize: 17, maxWidth: "60ch", margin: 0 }}>
+            The goal is not another AI pilot. It is{" "}
+            <em style={{ fontFamily: "var(--serif)", fontStyle: "italic", color: "var(--ink-cream)" }}>one working system</em> your business can build on.
+          </p>
+          <Link href="/engage-us" className="a-btn a-btn-primary">
+            Start with one workflow <Icon.Arrow className="arrow" />
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- Section 5: Accelerators ---------- */
+function AcceleratorsSection() {
+  const products = [
+    { name: "Veyra",  tag: "Payment integrity & fraud intelligence", desc: "Detect fraud, waste, abuse, billing anomalies, provider risk, and claims leakage across healthcare payer workflows.", built: "Healthcare payers · TPAs · PBMs" },
+    { name: "Luma",   tag: "Claims triage & decision support",       desc: "Prioritize, route, enrich, and resolve claims faster with AI-assisted intake, documentation checks, and reviewer support.", built: "Healthcare · Insurance · Benefits" },
+    { name: "Sentra", tag: "Financial crime & customer risk",         desc: "Automate AML, KYC, sanctions review, beneficial ownership checks, alert triage, and customer due diligence.",            built: "Banks · Fintechs · Financial institutions" },
+    { name: "Nuvia",  tag: "Loyalty & personalization automation",    desc: "Turn customer, transaction, and behavioral data into personalized offers, retention actions, and next-best engagement.", built: "Retail · QSR · Consumer brands" },
+    { name: "Kyra",   tag: "Network & service operations",            desc: "Accelerate incident detection, ticket enrichment, outage triage, escalation routing, and service restoration workflows.", built: "Telecom · Managed services · Operations" },
+    { name: "Orbis",  tag: "Supply chain & vendor risk",              desc: "Monitor supplier risk, procurement exposure, contract signals, shipment exceptions, and operational dependencies.",      built: "Energy · Manufacturing · Logistics" },
+    { name: "Astra",  tag: "Enterprise service workflow automation",  desc: "Classify, route, resolve, and govern service workflows across ITSM, internal operations, knowledge bases, and tools.", built: "Enterprise IT · Shared services · Ops" },
+    { name: "Vantaq", tag: "Security operations & incident intel",    desc: "Triage alerts, summarize incidents, enrich threat context, recommend response actions, and generate compliance evidence.", built: "Cybersecurity · SecOps · Risk teams" },
+  ];
+
+  return (
+    <section className="a-section" id="accelerators" style={{ position: "relative" }}>
+      <div className="a-wrap">
+        <div className="a-section-head reveal">
+          <div>
+            <span className="a-eyebrow">05 · Accelerators</span>
+            <h2 className="h-section" style={{ marginTop: 18 }}>
+              Vertical AI <em>Accelerators</em>.
+            </h2>
+            <p className="kicker" style={{ marginTop: 12 }}>Productized intelligence systems for repeatable enterprise workflows</p>
+          </div>
+          <p className="lede" style={{ justifySelf: "end" }}>
+            Not off-the-shelf tools — reusable AI product lines built from recurring enterprise patterns, then adapted
+            to each client&apos;s data, systems, policies, and operating model.
+          </p>
+        </div>
+
+        <div className="acc-grid reveal">
+          {products.map((p, i) => (
+            <div className="acc-card" key={p.name}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+                <div className="name">
+                  {p.name}
+                  <sup>™</sup>
+                </div>
+                <span className="a-tag">0{i + 1}</span>
+              </div>
+              <div className="tagline">{p.tag}</div>
+              <div className="desc">{p.desc}</div>
+              <div className="built">
+                Built for <b>{p.built}</b>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="reveal" style={{ marginTop: 48, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 24 }}>
+          <p style={{ color: "var(--ink-cream-d)", fontSize: 17, maxWidth: "60ch", margin: 0 }}>
+            Start with the accelerator closest to your workflow. Customize it around your enterprise reality.{" "}
+            <em style={{ fontFamily: "var(--serif)", fontStyle: "italic", color: "var(--ink-cream)" }}>Scale from there.</em>
+          </p>
+          <Link href="/engage-us" className="a-btn a-btn-primary">
+            Explore accelerators <Icon.Arrow className="arrow" />
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- Section 6: Why ---------- */
+function WhySection() {
+  const proofs = [
+    { icon: <Icon.Stack />, title: "Built on your stack", desc: "Works across cloud, on-prem, enterprise apps, data platforms, knowledge bases, and operating tools — without forcing rip-and-replace.", img: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=900&q=70" },
+    { icon: <Icon.Shield />, title: "Governed before it acts", desc: "Policies, permissions, approvals, and risk checks are built into the workflow before AI takes any action.", img: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&w=900&q=70" },
+    { icon: <Icon.Eye />, title: "Human oversight where it matters", desc: "High-risk steps can be routed for review, escalation, sandboxing, or approval.", img: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=900&q=70" },
+    { icon: <Icon.Trail />, title: "Audit-ready by default", desc: "Workflow decisions, policy checks, approvals, and execution trails captured for compliance and review.", img: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=900&q=70" },
+    { icon: <Icon.Pulse />, title: "Improves after launch", desc: "AI workflows are monitored, tuned, and expanded as data, users, policies, and business conditions change.", img: "https://images.unsplash.com/photo-1543286386-713bdd548da4?auto=format&fit=crop&w=900&q=70" },
+    { icon: <Icon.Cube />, title: "Enterprise delivery depth", desc: "Built by teams that have spent years delivering complex systems across data, cloud, AI, cybersecurity, ERP, and managed services.", img: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=900&q=70" },
+  ];
+  return (
+    <section className="a-section" id="why">
+      <div className="a-wrap">
+        <div className="a-section-head reveal">
+          <div>
+            <span className="a-eyebrow">06 · Why ArqAI</span>
+            <h2 className="h-section" style={{ marginTop: 18 }}>
+              Built for the <em>realities</em>
+              <br />
+              of enterprise AI.
+            </h2>
+          </div>
+          <p className="lede" style={{ justifySelf: "end" }}>
+            ArqAI Labs combines enterprise delivery experience, governance-first engineering, and productized
+            accelerators to help AI workflows move safely from prototype to production.
+          </p>
+        </div>
+
+        <div className="svc-grid">
+          {proofs.map((p, i) => (
+            <div className="svc reveal" data-d={(i % 3) + 1} key={p.title}>
+              <div className="svc-media">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={p.img} alt="" loading="lazy" decoding="async" />
+                <div className="svc-media-shade" />
+                <div className="svc-media-icon">{p.icon}</div>
+              </div>
+              <h4>{p.title}</h4>
+              <p>{p.desc}</p>
+            </div>
+          ))}
+        </div>
+
+        <p className="reveal" style={{ marginTop: 56, color: "var(--ink-cream-d)", fontSize: 19, maxWidth: "64ch", textAlign: "center", marginInline: "auto", lineHeight: 1.45 }}>
+          Because enterprise AI does not just need to be intelligent. It needs to be{" "}
+          <em style={{ fontFamily: "var(--serif)", fontStyle: "italic", color: "var(--ink-cream)" }}>usable</em>,{" "}
+          <em style={{ fontFamily: "var(--serif)", fontStyle: "italic", color: "var(--ink-cream)" }}>governed</em>, and{" "}
+          <em style={{ fontFamily: "var(--serif)", fontStyle: "italic", color: "var(--ink-cream)" }}>trusted</em> in the flow of work.
+        </p>
+        <div className="reveal" style={{ display: "flex", justifyContent: "center", marginTop: 28 }}>
+          <Link href="/engage-us" className="a-btn a-btn-primary">
+            Start with one workflow <Icon.Arrow className="arrow" />
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- Section 7: Insights (live blog feed) ---------- */
+type BlogPost = {
+  id: string;
   title: string;
-  body: string;
-  icon: UseCaseIconName;
-}[] = [
-  {
-    tag: "Retail",
-    title: "Loyalty that learns what each customer values.",
-    body: "AI that replaces points-and-badges with offers tuned to actual buying behavior. Retention up. Spend on stale incentives down.",
-    icon: "loyalty",
-  },
-  {
-    tag: "Healthcare",
-    title: "Patient management that doesn't drop people in the gap.",
-    body: "AI that follows up, schedules, and surfaces the patients your team needs to call today. Less leakage between visits.",
-    icon: "patient",
-  },
-  {
-    tag: "Insurance / Healthcare",
-    title: "Claims triage in days, not weeks.",
-    body: "AI that routes incoming claims to the right person, prioritises the queue, and supports the decision your team makes.",
-    icon: "claims",
-  },
-  {
-    tag: "Manufacturing",
-    title: "ERP that finally answers the question.",
-    body: "AI on top of your ERP that turns the data into decisions. Fewer reports your team has to assemble by hand.",
-    icon: "erp",
-  },
-  {
-    tag: "Hospitality",
-    title: "Revenue management that doesn't miss a fill night.",
-    body: "AI that prices rooms, packages, and add-ons dynamically against demand, competitor pricing, and your own historical patterns.",
-    icon: "hospitality",
-  },
-  {
-    tag: "Facilities management",
-    title: "Maintenance that fixes things before they break.",
-    body: "AI that predicts failures across HVAC, elevators, lighting, and critical equipment from sensor data and service history.",
-    icon: "facilities",
-  },
-  {
-    tag: "Microsoft 365",
-    title: "Microsoft Copilot, tuned to your operation.",
-    body: "Copilot extended with your context, your workflows, and the security posture your IT requires. Out-of-the-box does not get you there. We do.",
-    icon: "copilot",
-  },
-  {
-    tag: "Microsoft Dynamics",
-    title: "Dynamics 365, AI-fied.",
-    body: "Your Dynamics with AI that learns from your sales motion and your service desk. Less manual entry. Better next-best actions.",
-    icon: "dynamics",
-  },
-  {
-    tag: "AWS ecosystem",
-    title: "AWS Quick, configured.",
-    body: "Quick Suite tuned for the agents your operation actually needs, integrated with the systems you already run.",
-    icon: "aws",
-  },
-];
+  slug: string;
+  excerpt: string | null;
+  category: string | null;
+  published_at: string | null;
+};
 
-const processSteps = [
-  {
-    name: "Strategy",
-    description:
-      "We start with the workflow, the buyer, and the operational metric. Discovery is short, focused, and outputs a concrete deployment plan.",
-  },
-  {
-    name: "Build",
-    description:
-      "We design and engineer AI tuned to your environment. On the cloud you already run. Integrated with the systems your team already uses.",
-  },
-  {
-    name: "Deploy",
-    description:
-      "We push it into production. Not a sandbox. Not a pilot that lives in a slide deck. Real decisions on real data.",
-  },
-  {
-    name: "Run",
-    description:
-      "We operate it alongside your team. Named technical lead. Named relationship lead. Defined SLAs. We don't ship and walk away.",
-  },
-];
+function readingTime(excerpt: string | null) {
+  // Rough estimate based on excerpt length when full content isn't available.
+  if (!excerpt) return "5 min";
+  const words = excerpt.trim().split(/\s+/).length;
+  const minutes = Math.max(4, Math.round((words * 6) / 240));
+  return `${minutes} min`;
+}
 
-const products = [
-  {
-    name: "ArqFWA",
-    status: "LIVE",
-    statusColor: "bg-green-500",
-    description:
-      "The AI agent for fraud, waste, and abuse detection. Built for healthcare payers and P&C insurance carriers.",
-    cta: "See ArqFWA",
-    href: "/products/arqfwa",
-  },
-  {
-    name: "ArqClaims",
-    status: "IN BUILD",
-    statusColor: "bg-amber-500",
-    description:
-      "The AI agent for claims triage and processing. In build with design partners.",
-    cta: "Join the design partner program",
-    href: "/products/arqclaims",
-  },
-  {
-    name: "ArqBanker",
-    status: "COMING",
-    statusColor: "bg-blue-500",
-    description:
-      "The AI agent for AML, KYC, and financial crime. In development.",
-    cta: "Get notified at launch",
-    href: "/products/arqbanker",
-  },
-];
-
-type IndustryIconKind = "healthcare" | "insurance" | "banking" | "retail" | "manufacturing";
-
-function IndustryIcon({ kind, className = "" }: { kind: IndustryIconKind; className?: string }) {
-  const props = {
-    viewBox: "0 0 64 64",
-    fill: "none",
-    stroke: "currentColor",
-    strokeWidth: 1.6,
-    strokeLinecap: "round" as const,
-    strokeLinejoin: "round" as const,
-    className,
-  };
-  switch (kind) {
-    case "healthcare":
-      return (
-        <svg {...props}>
-          <path d="M32 56s-18-10-18-24a10 10 0 0118-6 10 10 0 0118 6c0 14-18 24-18 24z" />
-          <path d="M28 28h8M32 24v8" strokeWidth={2.4} />
-        </svg>
-      );
-    case "insurance":
-      return (
-        <svg {...props}>
-          <path d="M32 8l18 6v14c0 12-8 22-18 28-10-6-18-16-18-28V14z" />
-          <path d="M22 32l8 8 14-14" strokeWidth={2.4} />
-        </svg>
-      );
-    case "banking":
-      return (
-        <svg {...props}>
-          <path d="M8 24L32 10l24 14" />
-          <path d="M12 24v22M22 28v18M32 28v18M42 28v18M52 28v18M52 24v22" />
-          <path d="M8 50h48M8 54h48" />
-        </svg>
-      );
-    case "retail":
-      return (
-        <svg {...props}>
-          <path d="M14 22h36l-3 26a4 4 0 01-4 4H21a4 4 0 01-4-4z" />
-          <path d="M22 22a10 10 0 0120 0" />
-          <circle cx="24" cy="34" r="1.5" fill="currentColor" />
-          <circle cx="40" cy="34" r="1.5" fill="currentColor" />
-        </svg>
-      );
-    case "manufacturing":
-      return (
-        <svg {...props}>
-          <path d="M8 56V32l10 6V32l10 6V32l10 6v-8l8 6v18z" />
-          <path d="M8 56h48" />
-          <circle cx="22" cy="46" r="2" fill="currentColor" />
-          <circle cx="38" cy="46" r="2" fill="currentColor" />
-          <path d="M50 26v-8l-4-4h-4v-4" />
-        </svg>
-      );
+function formatDate(s: string | null) {
+  if (!s) return "—";
+  try {
+    return new Date(s).toLocaleDateString("en-US", { month: "short", year: "numeric" });
+  } catch {
+    return "—";
   }
 }
 
-const industries: {
-  name: string;
-  tagline: string;
-  href: string;
-  image: string;
-  icon: IndustryIconKind;
-}[] = [
-  {
-    name: "Healthcare",
-    tagline: "Patient management, claims, fraud, and compliance.",
-    href: "/industries/healthcare-payers",
-    image: "/img/services/Healthcare-Real-Time-Risk-Stratification-With-Built-In-Compliance.jpg",
-    icon: "healthcare",
-  },
-  {
-    name: "Insurance",
-    tagline: "Claims triage, underwriting, fraud, and operations at the carriers that take ops seriously.",
-    href: "/industries/insurance-carriers",
-    image: "/img/services/use-case-2.webp",
-    icon: "insurance",
-  },
-  {
-    name: "Banking",
-    tagline: "AML, KYC, financial crime, and customer onboarding for regional and mid-tier banks.",
-    href: "/industries/banking",
-    image: "/img/services/Banking-Customer-Service-That-Resolves-50-percent-of-Tickets-Automatically.jpg",
-    icon: "banking",
-  },
-  {
-    name: "Retail",
-    tagline: "Loyalty that learns, inventory that anticipates, store ops that move faster.",
-    href: "/industries/retail",
-    image: "/img/services/Retail-40-percent-Faster-Pricing-Ops-Without-Manual-Review.jpg",
-    icon: "retail",
-  },
-  {
-    name: "Manufacturing",
-    tagline: "ERP that answers, quality control that catches, maintenance that predicts.",
-    href: "/industries/manufacturing",
-    image: "/img/services/Manufacturing-Autonomous-Maintenance-With-Scoped-Agent-Control.jpg",
-    icon: "manufacturing",
-  },
-];
+function InsightsSection() {
+  const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState(true);
 
-const marqueeItems = [
-  "Production-grade AI",
-  "Bespoke to your operation",
-  "Tuned, not templated",
-  "Engineers, not consultants",
-  "Plus a growing line of products",
-];
+  useEffect(() => {
+    let active = true;
+    fetch("/api/blog/published")
+      .then((r) => r.json())
+      .then((data) => {
+        if (!active) return;
+        setPosts((data?.posts ?? []).slice(0, 3));
+      })
+      .catch(() => undefined)
+      .finally(() => active && setLoading(false));
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  return (
+    <section className="a-section" id="insights">
+      <div className="a-wrap">
+        <div className="a-section-head reveal">
+          <div>
+            <span className="a-eyebrow">07 · Insights</span>
+            <h2 className="h-section" style={{ marginTop: 18 }}>
+              For leaders building AI that
+              <br />
+              <em>actually runs</em>.
+            </h2>
+          </div>
+          <p className="lede" style={{ justifySelf: "end" }}>
+            Practical thinking, field notes, and free resources for teams moving from AI pilots to governed enterprise
+            workflows.
+          </p>
+        </div>
+
+        <div className="insight-grid">
+          <div className="reveal" data-d="1">
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 18 }}>
+              <span className="kicker">Latest insights</span>
+              <Link href="/blog" style={{ color: "var(--ink-cream-d)", fontSize: 13, display: "inline-flex", alignItems: "center", gap: 8 }}>
+                Read all <Icon.Arrow />
+              </Link>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+              {loading && posts.length === 0 ? (
+                Array.from({ length: 3 }).map((_, i) => (
+                  <div className="insight-card" key={i} style={{ opacity: 0.4 }}>
+                    <div className="meta">Loading…</div>
+                    <h4 style={{ height: 22, background: "rgba(245,239,230,0.06)", borderRadius: 4 }} />
+                  </div>
+                ))
+              ) : posts.length === 0 ? (
+                <div className="insight-card">
+                  <div className="meta">
+                    <span style={{ color: "var(--ember)" }}>Coming soon</span>
+                  </div>
+                  <h4>The first insights are being prepared.</h4>
+                  <p>Check back shortly, or subscribe to be notified when we publish.</p>
+                  <Link href="/blog" style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "var(--ink-cream)", fontSize: 13 }}>
+                    Visit the blog <Icon.Arrow />
+                  </Link>
+                </div>
+              ) : (
+                posts.map((p) => (
+                  <Link href={`/blog/${p.slug}`} className="insight-card" key={p.id}>
+                    <div className="meta">
+                      {p.category ? <span style={{ color: "var(--ember)" }}>{p.category}</span> : null}
+                      {p.category ? <span style={{ color: "var(--ink-muted-2)" }}>·</span> : null}
+                      <span>{formatDate(p.published_at)}</span>
+                      <span style={{ color: "var(--ink-muted-2)" }}>·</span>
+                      <span>{readingTime(p.excerpt)} read</span>
+                    </div>
+                    <h4>{p.title}</h4>
+                    {p.excerpt ? <p>{p.excerpt}</p> : null}
+                    <span style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "var(--ink-cream)", fontSize: 13 }}>
+                      Read <Icon.Arrow />
+                    </span>
+                  </Link>
+                ))
+              )}
+            </div>
+          </div>
+
+          <div className="reveal" data-d="2">
+            <div className="blueprint">
+              <span className="a-pill"><span className="dot" /> Free download</span>
+              <h3 style={{ fontSize: 28, fontWeight: 500, letterSpacing: "-0.02em", margin: "8px 0 0", lineHeight: 1.15, color: "var(--ink-cream)" }}>
+                The AI Workflow{" "}
+                <em style={{ fontFamily: "var(--serif)", fontStyle: "italic" }}>Blueprint</em>.
+              </h3>
+              <p style={{ color: "var(--ink-cream-d)", fontSize: 15, lineHeight: 1.55, margin: 0 }}>
+                Find one enterprise workflow where AI can create measurable impact in 30 days. Identify the right
+                process, success metrics, risks, systems, data, and governance — before you build.
+              </p>
+              <div>
+                <span className="kicker">You&apos;ll get clarity on</span>
+                <ul style={{ listStyle: "none", padding: 0, marginTop: 12, display: "flex", flexDirection: "column", gap: 10 }}>
+                  {[
+                    "Which workflow is worth prioritizing",
+                    "Where AI can reduce manual effort or decision lag",
+                    "What data, systems, and approvals are involved",
+                    "What controls are needed before deployment",
+                    "What a practical first-phase build could look like",
+                  ].map((t) => (
+                    <li key={t} style={{ display: "flex", gap: 10, alignItems: "flex-start", fontSize: 14, color: "var(--ink-cream-d)" }}>
+                      <span style={{ color: "var(--ember)", flex: "0 0 auto", marginTop: 2 }}>
+                        <Icon.Check />
+                      </span>
+                      {t}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div style={{ display: "flex", gap: 12, marginTop: 8 }}>
+                <Link href="/engage-us" className="a-btn a-btn-primary">
+                  Get the free blueprint <Icon.Arrow className="arrow" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- Section 8: Final CTA ---------- */
+function FinalCTA() {
+  return (
+    <section className="a-section" id="cta" style={{ paddingTop: "clamp(80px, 12vh, 140px)" }}>
+      <div className="a-wrap">
+        <div className="cta-strip reveal">
+          <div className="kicker" style={{ color: "var(--ember)" }}>Engage us</div>
+          <h2 className="h-section" style={{ marginTop: 16, maxWidth: "20ch" }}>
+            Start with one workflow.
+            <br />
+            Prove value <em>fast</em>.
+          </h2>
+          <p className="lede" style={{ marginTop: 24, maxWidth: "60ch" }}>
+            Bring us one high-value process where AI should be doing more than answering questions. We&apos;ll help map
+            the workflow, define the controls, identify the integrations, and show what a production-ready agentic
+            system could look like.
+          </p>
+          <div style={{ display: "flex", gap: 12, marginTop: 32, flexWrap: "wrap" }}>
+            <Link href="/engage-us" className="a-btn a-btn-primary">
+              Start with one workflow <Icon.Arrow className="arrow" />
+            </Link>
+            <Link href="/engage-us" className="a-btn a-btn-ghost">
+              Book a 30-min discovery
+            </Link>
+          </div>
+
+          <div
+            aria-hidden="true"
+            style={{
+              position: "absolute",
+              right: "-80px",
+              top: "-80px",
+              width: 320,
+              height: 320,
+              borderRadius: "50%",
+              background: "radial-gradient(circle, rgba(208,244,56,0.25), transparent 60%)",
+              filter: "blur(20px)",
+              pointerEvents: "none",
+            }}
+          />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- Footer ---------- */
+function HomeFooter() {
+  return (
+    <footer className="a-footer">
+      <div className="a-footer-grid">
+        <div>
+          <Link href="/" className="a-logo">
+            <Image src="/img/arq-ai-logo-white.svg" alt="ArqAI Labs" width={140} height={32} className="h-7 w-auto" />
+          </Link>
+          <p style={{ color: "var(--ink-cream-d)", fontSize: 14, lineHeight: 1.55, marginTop: 16, maxWidth: 360 }}>
+            Agentic operating systems for enterprise workflows. The AI products and services arm of{" "}
+            <a href="https://aciinfotech.com" target="_blank" rel="noopener noreferrer" style={{ color: "var(--ink-cream)", borderBottom: "1px solid var(--aline-2)" }}>
+              ACI Infotech
+            </a>
+            .
+          </p>
+          <div style={{ display: "flex", gap: 12, marginTop: 24 }}>
+            <span className="a-tag">SOC 2</span>
+            <span className="a-tag">HIPAA</span>
+            <span className="a-tag">GDPR</span>
+          </div>
+        </div>
+        <div>
+          <h5>Work</h5>
+          <ul>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#process">How we work</a></li>
+            <li><a href="#accelerators">Accelerators</a></li>
+            <li><a href="#why">Why ArqAI</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5>Company</h5>
+          <ul>
+            <li><Link href="/about">About</Link></li>
+            <li><Link href="/careers">Careers</Link></li>
+            <li><Link href="/contact">Contact</Link></li>
+            <li><Link href="/trust">Trust</Link></li>
+          </ul>
+        </div>
+        <div>
+          <h5>Resources</h5>
+          <ul>
+            <li><Link href="/blog">Blog</Link></li>
+            <li><Link href="/case-studies">Case studies</Link></li>
+            <li><Link href="/whitepapers">Whitepapers</Link></li>
+            <li><Link href="/engage-us">Blueprint</Link></li>
+          </ul>
+        </div>
+      </div>
+      <div className="a-footer-bottom">
+        <span>© {new Date().getFullYear()} ArqAI Labs. All rights reserved.</span>
+        <span style={{ display: "flex", gap: 16 }}>
+          <Link href="/privacy">Privacy</Link>
+          <Link href="/terms">Terms</Link>
+          <Link href="/responsible-ai">Responsible AI</Link>
+        </span>
+      </div>
+    </footer>
+  );
+}
+
+/* ---------- Reveal-on-scroll ---------- */
+function useReveal() {
+  const ran = useRef(false);
+  useEffect(() => {
+    if (ran.current) return;
+    ran.current = true;
+    const els = document.querySelectorAll(".arq-dark .reveal:not(.in)");
+    if (!els.length) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add("in");
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
+    );
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, []);
+}
 
 export default function HomePage() {
+  useReveal();
   return (
     <>
       <HomeStructuredData />
-      <Header />
-
-      <main className="bg-base">
-        {/* Hero */}
-        <section className="min-h-[88vh] flex flex-col justify-center pt-32 md:pt-40 pb-16 relative overflow-hidden">
-          <div className="container mx-auto px-4 md:px-6 lg:px-8">
-            <div className="grid lg:grid-cols-12 gap-10 items-center">
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                className="lg:col-span-8"
-              >
-                <p className="flex items-center gap-2 text-body-sm text-accent mb-6 uppercase tracking-wider font-medium">
-                  <StarIcon className="w-4 h-4" />
-                  An AI engineering studio
-                </p>
-
-                <h1 className="text-display-xl md:text-[clamp(2.75rem,6vw,5.5rem)] font-display leading-[1.05] text-text-bright mb-6">
-                  Production AI, bespoke to your operation.
-                </h1>
-
-                <p className="text-body-lg md:text-xl text-text-medium leading-relaxed mb-10 max-w-2xl">
-                  We design, build, deploy, and run AI for operations that don&apos;t fit off-the-shelf.
-                </p>
-
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <Link href="/engage-us" className="btn bg-accent text-white hover:bg-accent/90 group">
-                    Engage us
-                    <svg className="w-4 h-4 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
-                    </svg>
-                  </Link>
-                  <Link href="/use-cases" className="btn btn-outline">
-                    See what we work on
-                  </Link>
-                </div>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="lg:col-span-4 relative"
-              >
-                <div className="relative rounded-2xl overflow-hidden aspect-square shadow-2xl shadow-accent/15">
-                  <video
-                    className="w-full h-full object-cover"
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                  >
-                    <source src="/video/hero-video.webm" type="video/webm" />
-                    <source src="/video/1920x1080_video.mp4" type="video/mp4" />
-                  </video>
-                </div>
-                <div className="absolute -top-6 -right-6 hidden md:block w-24 h-24 lg:w-28 lg:h-28 animate-rotate-slow">
-                  <Image
-                    src="/img/hero/03_hero-img.webp"
-                    alt=""
-                    width={120}
-                    height={120}
-                    className="w-full h-full object-contain"
-                  />
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        </section>
-
-        {/* What we work on */}
-        <section className="py-section bg-base-tint">
-          <div className="container mx-auto px-4 md:px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="max-w-3xl mb-14"
-            >
-              <p className="flex items-center gap-2 text-body-sm text-accent mb-4 uppercase tracking-wider font-medium">
-                <StarIcon className="w-4 h-4" />
-                What we work on
-              </p>
-              <h2 className="text-display-lg font-display text-text-bright mb-6">
-                A few of the operations we&apos;ve engineered AI into.
-              </h2>
-              <p className="text-body-lg text-text-muted">
-                The list grows. Yours might be next.
-              </p>
-            </motion.div>
-
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
-              {useCases.map((uc, index) => (
-                <motion.article
-                  key={uc.title}
-                  initial={{ opacity: 0, y: 24 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-50px" }}
-                  transition={{
-                    type: "spring",
-                    stiffness: 100,
-                    damping: 20,
-                    delay: (index % 3) * 0.06,
-                  }}
-                  whileHover={{ y: -4 }}
-                  className="group card flex flex-col h-full hover:border-accent transition-colors relative"
-                >
-                  <HangingGraphic kind={uc.icon} />
-                  <p className="text-body-xs text-accent uppercase tracking-wider mb-3 mt-24 pr-20">
-                    {uc.tag}
-                  </p>
-                  <h3 className="text-lg font-display font-semibold text-text-bright leading-snug mb-3 group-hover:text-accent transition-colors">
-                    {uc.title}
-                  </h3>
-                  <p className="text-body-sm text-text-muted leading-relaxed flex-1">
-                    {uc.body}
-                  </p>
-                </motion.article>
-              ))}
-            </div>
-
-            <div className="mt-12 text-center">
-              <Link
-                href="/use-cases"
-                className="inline-flex items-center gap-2 text-accent font-medium hover:gap-3 transition-all"
-              >
-                See more use cases
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        {/* Marquee */}
-        <section className="py-8 bg-accent overflow-hidden">
-          <ScrollAwareMarquee items={marqueeItems} />
-        </section>
-
-        {/* How we work */}
-        <section className="py-section bg-base">
-          <div className="container mx-auto px-4 md:px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="max-w-3xl mb-14"
-            >
-              <p className="flex items-center gap-2 text-body-sm text-accent mb-4 uppercase tracking-wider font-medium">
-                <StarIcon className="w-4 h-4" />
-                How we work
-              </p>
-              <h2 className="text-display-lg font-display text-text-bright">
-                Four steps.<br />End-to-end.
-              </h2>
-            </motion.div>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {processSteps.map((step, index) => (
-                <motion.div
-                  key={step.name}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.08 }}
-                  className="border-t-2 border-accent pt-6"
-                >
-                  <p className="text-body-xs text-accent uppercase tracking-wider mb-2">
-                    Step 0{index + 1}
-                  </p>
-                  <h3 className="text-2xl font-display font-semibold text-text-bright mb-3">
-                    {step.name}
-                  </h3>
-                  <p className="text-body-sm text-text-muted leading-relaxed">
-                    {step.description}
-                  </p>
-                </motion.div>
-              ))}
-            </div>
-
-            <div className="mt-10">
-              <Link
-                href="/how-we-work"
-                className="inline-flex items-center gap-2 text-accent font-medium hover:gap-3 transition-all"
-              >
-                See the full process
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        {/* What we've productised */}
-        <section className="py-section bg-base-tint">
-          <div className="container mx-auto px-4 md:px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="max-w-3xl mb-14"
-            >
-              <p className="flex items-center gap-2 text-body-sm text-accent mb-4 uppercase tracking-wider font-medium">
-                <StarIcon className="w-4 h-4" />
-                Productised
-              </p>
-              <h2 className="text-display-lg font-display text-text-bright mb-6">
-                When the same problem shows up enough times, we productise it.
-              </h2>
-              <p className="text-body-lg text-text-muted">
-                A few of those problems showed up so often we built them out as products.
-              </p>
-            </motion.div>
-
-            <div className="grid md:grid-cols-3 gap-6">
-              {products.map((product, index) => (
-                <motion.div
-                  key={product.name}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.08 }}
-                  className="card group flex flex-col h-full hover:border-accent transition-colors"
-                >
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-2xl font-display font-semibold text-text-bright group-hover:text-accent transition-colors">
-                      {product.name}
-                    </h3>
-                    <span className={`inline-block text-xs font-semibold px-2.5 py-1 rounded-full text-white ${product.statusColor}`}>
-                      {product.status}
-                    </span>
-                  </div>
-                  <p className="text-body-sm text-text-muted mb-6 flex-1">
-                    {product.description}
-                  </p>
-                  <Link
-                    href={product.href}
-                    className="inline-flex items-center gap-2 text-accent font-medium hover:gap-3 transition-all"
-                  >
-                    {product.cta}
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
-                  </Link>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Industries we serve - Dark, full-width rows */}
-        <section className="bg-base-opp">
-          <div className="container mx-auto px-4 md:px-6 lg:px-8 pt-24 md:pt-36 lg:pt-44 pb-12 md:pb-16">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="max-w-3xl"
-            >
-              <p className="flex items-center gap-2 text-body-sm text-additional mb-4 uppercase tracking-wider font-medium">
-                <StarIcon className="w-4 h-4" />
-                Industries we serve
-              </p>
-              <h2 className="text-display-lg font-display text-base">
-                Where we go deep.
-              </h2>
-              <p className="text-body-lg text-base/60 mt-5">
-                Each industry has its own pace, its own data shape, and its own definition of done.
-                We work in five.
-              </p>
-            </motion.div>
-          </div>
-
-          <div className="border-t border-stroke-medium/40">
-            {industries.map((industry, idx) => (
-              <Link
-                key={industry.name}
-                href={industry.href}
-                className="industry-row group relative block border-b border-stroke-medium/40 overflow-hidden"
-              >
-                {/* background image */}
-                <div className="absolute inset-0">
-                  <Image
-                    src={industry.image}
-                    alt=""
-                    fill
-                    sizes="100vw"
-                    className="object-cover scale-105 grayscale brightness-[0.35] saturate-50 group-hover:grayscale-0 group-hover:brightness-[0.55] group-hover:saturate-100 group-hover:scale-100 transition-all duration-700 ease-out"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-r from-base-opp via-base-opp/80 to-base-opp/30 group-hover:from-base-opp/85 group-hover:via-base-opp/40 group-hover:to-transparent transition-all duration-700" />
-                </div>
-
-                {/* content */}
-                <div className="relative container mx-auto px-4 md:px-6 lg:px-8 py-10 md:py-14 lg:py-16 flex items-center justify-between gap-6">
-                  <div className="flex items-baseline gap-5 md:gap-8 min-w-0">
-                    <span className="text-body-xs md:text-body-sm text-additional font-mono shrink-0">
-                      {String(idx + 1).padStart(2, "0")}
-                    </span>
-                    <div className="min-w-0">
-                      <h3 className="text-display-sm md:text-display-md font-display text-base leading-tight transition-transform duration-500 ease-out group-hover:translate-x-2">
-                        {industry.name}
-                      </h3>
-                      <p className="text-body-sm md:text-body-md text-base/60 group-hover:text-base/85 mt-2 max-w-xl transition-colors duration-500">
-                        {industry.tagline}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* hover-revealed industry icon */}
-                  <div className="hidden md:flex items-center gap-4 shrink-0 text-additional opacity-0 -translate-x-6 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500 ease-out">
-                    <IndustryIcon kind={industry.icon} className="w-12 h-12 lg:w-14 lg:h-14" />
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-
-          <div className="container mx-auto px-4 md:px-6 lg:px-8 py-10 md:py-12 text-base/50 text-body-sm">
-            And other operations whose complexity rewards specialist work.
-          </div>
-        </section>
-
-        {/* Trust strip */}
-        <section className="py-12 bg-base-tint border-y border-stroke-muted">
-          <div className="container mx-auto px-4 md:px-6 lg:px-8 text-center">
-            <p className="text-body-md text-text-muted">
-              Architectural controls first. Aligned with SOC 2, HIPAA, GDPR, and regional frameworks where engagements require them.{" "}
-              <Link href="/trust" className="text-accent font-medium hover:underline">
-                See trust posture &rarr;
-              </Link>
-            </p>
-          </div>
-        </section>
-
-        {/* Closing CTA */}
-        <section className="py-section bg-base">
-          <div className="container mx-auto px-4 md:px-6 lg:px-8 text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="max-w-3xl mx-auto"
-            >
-              <h2 className="text-display-md font-display text-text-bright mb-6">
-                Tell us what your operation needs.
-              </h2>
-              <p className="text-body-lg text-text-muted mb-8">
-                We&apos;ll tell you what&apos;s honestly possible. In plain language. Without a deck.
-              </p>
-              <Link href="/engage-us" className="btn bg-accent text-white">
-                Engage us
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
-                </svg>
-              </Link>
-            </motion.div>
-          </div>
-        </section>
-      </main>
-
-      <Footer />
+      <div className="arq-dark min-h-screen">
+        <HomeNav />
+        <main>
+          <Hero />
+          <Marquee />
+          <GapSection />
+          <ServicesSection />
+          <ProcessSection />
+          <AcceleratorsSection />
+          <WhySection />
+          <InsightsSection />
+          <FinalCTA />
+        </main>
+        <HomeFooter />
+      </div>
     </>
   );
 }
