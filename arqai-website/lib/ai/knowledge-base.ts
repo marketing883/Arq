@@ -24,15 +24,15 @@ We ship production-grade AI, bespoke to the customer's operation. The work is en
 
 ## What we work on (use cases)
 The list grows. The home page surfaces nine.
-1. **Retail / Loyalty** — Loyalty that learns what each customer values. Retention up, spend on stale incentives down.
-2. **Healthcare / Patient management** — AI that follows up, schedules, and surfaces the patients to call today. Less leakage between visits.
-3. **Insurance & healthcare / Claims triage** — AI that routes incoming claims to the right person, prioritises the queue, and supports the decision the team makes.
-4. **Manufacturing / ERP** — AI on top of the customer's ERP that turns data into decisions. Fewer manual reports.
-5. **Hospitality / Revenue management** — Dynamic pricing of rooms, packages, and add-ons against demand, competitor signals, and historical patterns.
-6. **Facilities / Predictive maintenance** — AI that predicts failures across HVAC, elevators, lighting, and critical equipment from sensor data.
-7. **Microsoft 365 / Copilot tuning** — Copilot extended with the customer's context, workflows, and security posture.
-8. **Microsoft Dynamics / AI-fied** — Dynamics 365 with AI that learns from the customer's sales motion and service desk.
-9. **AWS / Quick configuration** — AWS Quick Suite tuned for the agents the operation actually needs.
+1. **Retail / Loyalty**: Loyalty that learns what each customer values. Retention up, spend on stale incentives down.
+2. **Healthcare / Patient management**: AI that follows up, schedules, and surfaces the patients to call today. Less leakage between visits.
+3. **Insurance & healthcare / Claims triage**: AI that routes incoming claims to the right person, prioritises the queue, and supports the decision the team makes.
+4. **Manufacturing / ERP**: AI on top of the customer's ERP that turns data into decisions. Fewer manual reports.
+5. **Hospitality / Revenue management**: Dynamic pricing of rooms, packages, and add-ons against demand, competitor signals, and historical patterns.
+6. **Facilities / Predictive maintenance**: AI that predicts failures across HVAC, elevators, lighting, and critical equipment from sensor data.
+7. **Microsoft 365 / Copilot tuning**: Copilot extended with the customer's context, workflows, and security posture.
+8. **Microsoft Dynamics / AI-fied**: Dynamics 365 with AI that learns from the customer's sales motion and service desk.
+9. **AWS / Quick configuration**: AWS Quick Suite tuned for the agents the operation actually needs.
 
 Other live or ready use cases include banking customer onboarding, retail inventory anticipation, manufacturing vision QC, and SAP S/4HANA tuning. We do not ship templates. Most engagements are bespoke.
 
@@ -40,29 +40,29 @@ Other live or ready use cases include banking customer onboarding, retail invent
 Five core industries: Healthcare, Insurance, Banking, Retail, Manufacturing. And other operations whose complexity rewards specialist work.
 
 Each industry page is outcome-led and lists specific use cases:
-- **Healthcare payers** — FWA detection (ArqFWA), patient management, prior auth, utilization management.
-- **P&C insurance carriers** — Claims triage (ArqClaims), fraud detection (ArqFWA), underwriting AI, FNOL.
-- **Banks and FIs** — AML, KYC, sanctions screening, SAR support (ArqBanker is in development).
-- **Retail** — Loyalty, inventory, store-associate copilots, dynamic pricing.
-- **Manufacturing** — ERP AI, vision quality control, predictive maintenance, S&OP.
+- **Healthcare payers**: FWA detection (ArqFWA), patient management, prior auth, utilization management.
+- **P&C insurance carriers**: Claims triage (ArqClaims), fraud detection (ArqFWA), underwriting AI, FNOL.
+- **Banks and FIs**: AML, KYC, sanctions screening, SAR support (ArqBanker is in development).
+- **Retail**: Loyalty, inventory, store-associate copilots, dynamic pricing.
+- **Manufacturing**: ERP AI, vision quality control, predictive maintenance, S&OP.
 
 ## Productised agents
 When the same problem shows up enough times, we productise it. Three agents are announced; more to follow. They are proof points, not the headline.
 
-### ArqFWA — Live
+### ArqFWA: Live
 The AI agent for fraud, waste, and abuse detection. Built for healthcare payers and P&C insurance carriers. Reviews high volumes of claims and transactions, prioritises cases for the team, and explains its reasoning so a human can act.
 
-### ArqClaims — In build
+### ArqClaims: In build
 The AI agent for claims triage and processing at mid-market P&C carriers. Triages incoming claims, surfaces the right ones to the right adjuster, recommends routing and reserves. In build with design partners now.
 
-### ArqBanker — Coming
+### ArqBanker: Coming
 The AI agent for AML, KYC, and financial crime at regional and mid-tier banks. Calibrated to the operational reality of running a financial-crimes program on a lean team. In development.
 
 ## How we engineer
 Every ArqAI Labs build runs on a shared architectural foundation:
-1. **Agent identity** — Cryptographic identity for every agent. Capabilities scoped to the workflow. Actions logged with cryptographic provenance.
-2. **Runtime policy enforcement** — Internal policies and workflow rules compiled into the agent's execution path before it runs. Reliability is enforced, not promised.
-3. **Observable retrieval** — Every data lookup logged, policy-checked before access, retrieval quality monitored continuously.
+1. **Agent identity**: Cryptographic identity for every agent. Capabilities scoped to the workflow. Actions logged with cryptographic provenance.
+2. **Runtime policy enforcement**: Internal policies and workflow rules compiled into the agent's execution path before it runs. Reliability is enforced, not promised.
+3. **Observable retrieval**: Every data lookup logged, policy-checked before access, retrieval quality monitored continuously.
 
 This is why the second product ships faster than the first, and why a customer deploying a second agent does not re-evaluate compliance and security from scratch.
 
@@ -197,14 +197,14 @@ export const GREETING_MESSAGES: Record<string, string> = {
   "/": "Hi. ArqAI Labs is an AI engineering studio. What workflow are you trying to get better?",
   "/use-cases": "Hi. Anything in the grid match what your team is trying to do?",
   "/how-we-work": "Hi. Want me to walk you through how an engagement actually runs?",
-  "/products": "Hi. Looking at ArqFWA, ArqClaims, or ArqBanker — or do you have a workflow we should productise?",
+  "/products": "Hi. Looking at ArqFWA, ArqClaims, or ArqBanker: or do you have a workflow we should productise?",
   "/products/arqfwa": "Hi. Want to talk through ArqFWA in your environment?",
   "/products/arqclaims": "Hi. Interested in the ArqClaims design partner program?",
   "/products/arqbanker": "Hi. Want to be on the ArqBanker early-access list?",
   "/industries": "Hi. Which industry are you in?",
-  "/industries/healthcare-payers": "Hi. Which payer workflow is the priority — FWA, claims, prior auth, UM?",
+  "/industries/healthcare-payers": "Hi. Which payer workflow is the priority: FWA, claims, prior auth, UM?",
   "/industries/insurance-carriers": "Hi. Triage, fraud, underwriting, or FNOL?",
-  "/industries/banking": "Hi. AML, KYC, sanctions, SAR — what is the team most stuck on?",
+  "/industries/banking": "Hi. AML, KYC, sanctions, SAR: what is the team most stuck on?",
   "/industries/retail": "Hi. Loyalty, inventory, store ops, or pricing?",
   "/industries/manufacturing": "Hi. ERP, quality, maintenance, or S&OP?",
   "/trust": "Hi. Want me to share the trust posture or pull a control document under NDA?",

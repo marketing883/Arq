@@ -4,9 +4,23 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { HomeStructuredData } from "@/components/seo/StructuredData";
+import {
+  WorkflowMap,
+  AgentConstellation,
+  IntegrationBus,
+  Gates,
+  StackLift,
+  PulseMonitor,
+  StackTower,
+  RiskFunnel,
+  DecisionBranch,
+  AuditLog,
+  GrowthChart,
+  DepthRings,
+} from "@/components/home/SvcGraphics";
 
 /* ============================================================
-   ArqAI Labs homepage v4 — dark, agentic-OS positioning.
+   ArqAI Labs homepage v4. Dark, agentic-OS positioning.
    Tokens + utility classes live in app/globals.css under .arq-dark.
    ============================================================ */
 
@@ -226,7 +240,7 @@ function Hero() {
             <div className="reveal in" data-d="2" style={{ marginTop: 36 }}>
               <p className="lede" style={{ maxWidth: "52ch" }}>
                 Production-grade AI agents and workflow systems for complex enterprise environments. From fraud detection
-                and claims triage to AML, loyalty, network operations, and service workflows — we help enterprises turn
+                and claims triage to AML, loyalty, network operations, and service workflows, we help enterprises turn
                 AI from scattered pilots into{" "}
                 <em style={{ fontFamily: "var(--serif)", fontStyle: "italic", color: "var(--ink-cream)" }}>governed business execution</em>.
               </p>
@@ -365,38 +379,38 @@ function ServicesSection() {
     {
       icon: <Icon.Map />,
       title: "Workflow Strategy",
-      desc: "Identify the right use cases, business impact, users, data, risks, and success metrics — before anything is built.",
-      img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=900&q=70",
+      desc: "Identify the right use cases, business impact, users, data, risks, and success metrics before anything is built.",
+      Art: WorkflowMap,
     },
     {
       icon: <Icon.Agent />,
       title: "Agentic AI Buildout",
       desc: "Design and deploy agents, copilots, automations, decision systems, and retrieval flows around your actual process.",
-      img: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=900&q=70",
+      Art: AgentConstellation,
     },
     {
       icon: <Icon.Plug />,
       title: "Enterprise Integration",
       desc: "Connect AI into your CRM, ERP, ITSM, data platforms, cloud stack, knowledge bases, and operating tools.",
-      img: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=900&q=70",
+      Art: IntegrationBus,
     },
     {
       icon: <Icon.Shield />,
       title: "Governance by Design",
       desc: "Build in permissions, approvals, policy checks, human review, audit trails, and exception handling from day one.",
-      img: "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?auto=format&fit=crop&w=900&q=70",
+      Art: Gates,
     },
     {
       icon: <Icon.Cube />,
       title: "Vertical Acceleration",
       desc: "Use proven product lines for repeatable workflows: claims, fraud, AML, loyalty, network ops, supply chain risk.",
-      img: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&w=900&q=70",
+      Art: StackLift,
     },
     {
       icon: <Icon.Pulse />,
       title: "Managed AI Operations",
       desc: "Monitor, improve, and expand AI workflows after launch so they keep performing in real business conditions.",
-      img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=900&q=70",
+      Art: PulseMonitor,
     },
   ];
   return (
@@ -412,24 +426,26 @@ function ServicesSection() {
             </h2>
           </div>
           <p className="lede" style={{ justifySelf: "end" }}>
-            ArqAI Labs designs, builds, and runs AI-enabled workflows for high-value enterprise processes — with the
+            ArqAI Labs designs, builds, and runs AI-enabled workflows for high-value enterprise processes, with the
             controls needed to move from pilot to production.
           </p>
         </div>
 
         <div className="svc-grid">
-          {services.map((s, i) => (
-            <div className="svc reveal" data-d={(i % 3) + 1} key={s.title}>
-              <div className="svc-media">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={s.img} alt="" loading="lazy" decoding="async" />
-                <div className="svc-media-shade" />
-                <div className="svc-media-icon">{s.icon}</div>
+          {services.map((s, i) => {
+            const Art = s.Art;
+            return (
+              <div className="svc reveal" data-d={(i % 3) + 1} key={s.title}>
+                <div className="svc-media">
+                  <Art />
+                  <div className="svc-media-shade" />
+                  <div className="svc-media-icon">{s.icon}</div>
+                </div>
+                <h4>{s.title}</h4>
+                <p>{s.desc}</p>
               </div>
-              <h4>{s.title}</h4>
-              <p>{s.desc}</p>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         <div className="reveal" style={{ marginTop: 56, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 24 }}>
@@ -524,7 +540,7 @@ function AcceleratorsSection() {
             <p className="kicker" style={{ marginTop: 12 }}>Productized intelligence systems for repeatable enterprise workflows</p>
           </div>
           <p className="lede" style={{ justifySelf: "end" }}>
-            Not off-the-shelf tools — reusable AI product lines built from recurring enterprise patterns, then adapted
+            Not off-the-shelf tools. Reusable AI product lines built from recurring enterprise patterns, then adapted
             to each client&apos;s data, systems, policies, and operating model.
           </p>
         </div>
@@ -565,12 +581,12 @@ function AcceleratorsSection() {
 /* ---------- Section 6: Why ---------- */
 function WhySection() {
   const proofs = [
-    { icon: <Icon.Stack />, title: "Built on your stack", desc: "Works across cloud, on-prem, enterprise apps, data platforms, knowledge bases, and operating tools — without forcing rip-and-replace.", img: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=900&q=70" },
-    { icon: <Icon.Shield />, title: "Governed before it acts", desc: "Policies, permissions, approvals, and risk checks are built into the workflow before AI takes any action.", img: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&w=900&q=70" },
-    { icon: <Icon.Eye />, title: "Human oversight where it matters", desc: "High-risk steps can be routed for review, escalation, sandboxing, or approval.", img: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=900&q=70" },
-    { icon: <Icon.Trail />, title: "Audit-ready by default", desc: "Workflow decisions, policy checks, approvals, and execution trails captured for compliance and review.", img: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=900&q=70" },
-    { icon: <Icon.Pulse />, title: "Improves after launch", desc: "AI workflows are monitored, tuned, and expanded as data, users, policies, and business conditions change.", img: "https://images.unsplash.com/photo-1543286386-713bdd548da4?auto=format&fit=crop&w=900&q=70" },
-    { icon: <Icon.Cube />, title: "Enterprise delivery depth", desc: "Built by teams that have spent years delivering complex systems across data, cloud, AI, cybersecurity, ERP, and managed services.", img: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=900&q=70" },
+    { icon: <Icon.Stack />, title: "Built on your stack", desc: "Works across cloud, on-prem, enterprise apps, data platforms, knowledge bases, and operating tools, without forcing rip-and-replace.", Art: StackTower },
+    { icon: <Icon.Shield />, title: "Governed before it acts", desc: "Policies, permissions, approvals, and risk checks are built into the workflow before AI takes any action.", Art: RiskFunnel },
+    { icon: <Icon.Eye />, title: "Human oversight where it matters", desc: "High-risk steps can be routed for review, escalation, sandboxing, or approval.", Art: DecisionBranch },
+    { icon: <Icon.Trail />, title: "Audit-ready by default", desc: "Workflow decisions, policy checks, approvals, and execution trails captured for compliance and review.", Art: AuditLog },
+    { icon: <Icon.Pulse />, title: "Improves after launch", desc: "AI workflows are monitored, tuned, and expanded as data, users, policies, and business conditions change.", Art: GrowthChart },
+    { icon: <Icon.Cube />, title: "Enterprise delivery depth", desc: "Built by teams that have spent years delivering complex systems across data, cloud, AI, cybersecurity, ERP, and managed services.", Art: DepthRings },
   ];
   return (
     <section className="a-section" id="why">
@@ -591,18 +607,20 @@ function WhySection() {
         </div>
 
         <div className="svc-grid">
-          {proofs.map((p, i) => (
-            <div className="svc reveal" data-d={(i % 3) + 1} key={p.title}>
-              <div className="svc-media">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={p.img} alt="" loading="lazy" decoding="async" />
-                <div className="svc-media-shade" />
-                <div className="svc-media-icon">{p.icon}</div>
+          {proofs.map((p, i) => {
+            const Art = p.Art;
+            return (
+              <div className="svc reveal" data-d={(i % 3) + 1} key={p.title}>
+                <div className="svc-media">
+                  <Art />
+                  <div className="svc-media-shade" />
+                  <div className="svc-media-icon">{p.icon}</div>
+                </div>
+                <h4>{p.title}</h4>
+                <p>{p.desc}</p>
               </div>
-              <h4>{p.title}</h4>
-              <p>{p.desc}</p>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         <p className="reveal" style={{ marginTop: 56, color: "var(--ink-cream-d)", fontSize: 19, maxWidth: "64ch", textAlign: "center", marginInline: "auto", lineHeight: 1.45 }}>
@@ -640,11 +658,11 @@ function readingTime(excerpt: string | null) {
 }
 
 function formatDate(s: string | null) {
-  if (!s) return "—";
+  if (!s) return "·";
   try {
     return new Date(s).toLocaleDateString("en-US", { month: "short", year: "numeric" });
   } catch {
-    return "—";
+    return "·";
   }
 }
 
@@ -742,7 +760,7 @@ function InsightsSection() {
               </h3>
               <p style={{ color: "var(--ink-cream-d)", fontSize: 15, lineHeight: 1.55, margin: 0 }}>
                 Find one enterprise workflow where AI can create measurable impact in 30 days. Identify the right
-                process, success metrics, risks, systems, data, and governance — before you build.
+                process, success metrics, risks, systems, data, and governance before you build.
               </p>
               <div>
                 <span className="kicker">You&apos;ll get clarity on</span>

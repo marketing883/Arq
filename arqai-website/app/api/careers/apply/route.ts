@@ -170,7 +170,7 @@ export async function POST(request: NextRequest) {
     const apiKey = process.env.RESEND_API_KEY;
     if (apiKey) {
       const resend = new Resend(apiKey);
-      const subject = `New application: ${job.title} — ${data.fullName}`;
+      const subject = `New application: ${job.title} · ${data.fullName}`;
       const html = `
         <div style="font-family:Arial,Helvetica,sans-serif;color:#222;max-width:640px">
           <h2 style="margin:0 0 12px 0">New application</h2>

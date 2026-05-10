@@ -1,5 +1,5 @@
 -- =========================================================
--- ArqAI Labs — Careers schema
+-- ArqAI Labs Careers schema
 -- Run this in Supabase SQL editor.
 -- Storage bucket setup is documented at the bottom (UI steps).
 -- =========================================================
@@ -135,7 +135,7 @@ using (status = 'active');
 -- but the MIME-type and size-limit fields are best set via the UI.
 
 -- ---------------------------------------------------------
--- 5. SEED (optional) — one example role, status 'draft' so it's hidden
+-- 5. SEED (optional). One example role, status 'draft' so it's hidden
 --    from the public site until you flip it to 'active' in admin.
 -- ---------------------------------------------------------
 -- insert into public.job_postings (slug, title, department, location,

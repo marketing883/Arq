@@ -220,7 +220,7 @@ export default function AdminApplicationsPage() {
                       ) : null}
                     </td>
                     <td className="px-4 py-3 text-text-muted">
-                      {app.job_postings?.title ?? "—"}
+                      {app.job_postings?.title ?? "-"}
                       <div className="text-body-xs">
                         {app.job_postings?.department} · {app.job_postings?.location}
                       </div>
@@ -250,7 +250,7 @@ export default function AdminApplicationsPage() {
                       </select>
                     </td>
                     <td className="px-4 py-3 text-body-xs text-text-muted">
-                      {app.notified_at ? "✓" : "—"}
+                      {app.notified_at ? "✓" : "-"}
                     </td>
                     <td className="px-4 py-3 text-body-xs text-text-muted">
                       {new Date(app.created_at).toLocaleString()}

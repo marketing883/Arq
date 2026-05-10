@@ -44,7 +44,7 @@ const employmentTypes = [
   { value: "temporary", label: "Temporary" },
 ];
 const experienceLevels = [
-  { value: "", label: "—" },
+  { value: "", label: "Any" },
   { value: "entry", label: "Entry" },
   { value: "mid", label: "Mid" },
   { value: "senior", label: "Senior" },
