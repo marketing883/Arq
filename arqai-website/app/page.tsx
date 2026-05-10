@@ -979,7 +979,8 @@ export default function HomePage() {
           <ProcessSection />
           <AcceleratorsSection />
           <WhySection />
-          <InsightsSection />
+          {/* InsightsSection disabled per user request. Re-enable by uncommenting the line below. */}
+          {/* <InsightsSection /> */}
           <FinalCTA />
         </main>
         <HomeFooter />
