@@ -126,11 +126,11 @@ function HomeNav() {
     <nav className={"a-nav" + (scrolled ? " scrolled" : "")}>
       <Link href="/" className="a-logo">
         <Image
-          src="/img/arq-ai-logo-white.svg"
+          src="/img/ArqAI-Labs-Logo-light.png"
           alt="ArqAI Labs"
-          width={160}
-          height={36}
-          className="h-8 md:h-9 w-auto"
+          width={720}
+          height={240}
+          className="h-9 md:h-10 w-auto"
           priority
         />
       </Link>
@@ -885,7 +885,7 @@ function HomeFooter() {
       <div className="a-footer-grid">
         <div>
           <Link href="/" className="a-logo">
-            <Image src="/img/arq-ai-logo-white.svg" alt="ArqAI Labs" width={140} height={32} className="h-7 w-auto" />
+            <Image src="/img/ArqAI-Labs-Logo-light.png" alt="ArqAI Labs" width={720} height={240} className="h-8 w-auto" />
           </Link>
           <p style={{ color: "var(--ink-cream-d)", fontSize: 14, lineHeight: 1.55, marginTop: 16, maxWidth: 360 }}>
             Agentic operating systems for enterprise workflows. The AI products and services arm of{" "}
