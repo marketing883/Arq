@@ -697,12 +697,12 @@ type BlogPost = {
   title: string;
   slug: string;
   excerpt: string | null;
+  featured_image: string | null;
   category: string | null;
   published_at: string | null;
 };
 
 function readingTime(excerpt: string | null) {
-  // Rough estimate based on excerpt length when full content isn't available.
   if (!excerpt) return "5 min";
   const words = excerpt.trim().split(/\s+/).length;
   const minutes = Math.max(4, Math.round((words * 6) / 240));
@@ -728,7 +728,7 @@ function InsightsSection() {
       .then((r) => r.json())
       .then((data) => {
         if (!active) return;
-        setPosts((data?.posts ?? []).slice(0, 3));
+        setPosts((data?.posts ?? []).slice(0, 6));
       })
       .catch(() => undefined)
       .finally(() => active && setLoading(false));
@@ -755,92 +755,73 @@ function InsightsSection() {
           </p>
         </div>
 
-        <div className="insight-grid">
-          <div className="reveal" data-d="1">
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 18 }}>
-              <span className="kicker">Latest insights</span>
-              <Link href="/blog" style={{ color: "var(--ink-cream-d)", fontSize: 13, display: "inline-flex", alignItems: "center", gap: 8 }}>
-                Read all <Icon.Arrow />
-              </Link>
-            </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-              {loading && posts.length === 0 ? (
-                Array.from({ length: 3 }).map((_, i) => (
-                  <div className="insight-card" key={i} style={{ opacity: 0.4 }}>
-                    <div className="meta">Loading…</div>
-                    <h4 style={{ height: 22, background: "rgba(245,239,230,0.06)", borderRadius: 4 }} />
-                  </div>
-                ))
-              ) : posts.length === 0 ? (
-                <div className="insight-card">
-                  <div className="meta">
-                    <span style={{ color: "var(--ember)" }}>Coming soon</span>
-                  </div>
-                  <h4>The first insights are being prepared.</h4>
-                  <p>Check back shortly, or subscribe to be notified when we publish.</p>
-                  <Link href="/blog" style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "var(--ink-cream)", fontSize: 13 }}>
-                    Visit the blog <Icon.Arrow />
-                  </Link>
-                </div>
-              ) : (
-                posts.map((p) => (
-                  <Link href={`/blog/${p.slug}`} className="insight-card" key={p.id}>
-                    <div className="meta">
-                      {p.category ? <span style={{ color: "var(--ember)" }}>{p.category}</span> : null}
-                      {p.category ? <span style={{ color: "var(--ink-muted-2)" }}>·</span> : null}
-                      <span>{formatDate(p.published_at)}</span>
-                      <span style={{ color: "var(--ink-muted-2)" }}>·</span>
-                      <span>{readingTime(p.excerpt)} read</span>
-                    </div>
-                    <h4>{p.title}</h4>
-                    {p.excerpt ? <p>{p.excerpt}</p> : null}
-                    <span style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "var(--ink-cream)", fontSize: 13 }}>
-                      Read <Icon.Arrow />
-                    </span>
-                  </Link>
-                ))
-              )}
-            </div>
-          </div>
-
-          <div className="reveal" data-d="2">
-            <div className="blueprint">
-              <span className="a-pill"><span className="dot" /> Free download</span>
-              <h3 style={{ fontSize: 28, fontWeight: 500, letterSpacing: "-0.02em", margin: "8px 0 0", lineHeight: 1.15, color: "var(--ink-cream)" }}>
-                The AI Workflow{" "}
-                <em style={{ fontFamily: "var(--serif)", fontStyle: "italic" }}>Blueprint</em>.
-              </h3>
-              <p style={{ color: "var(--ink-cream-d)", fontSize: 15, lineHeight: 1.55, margin: 0 }}>
-                Find one enterprise workflow where AI can create measurable impact in 30 days. Identify the right
-                process, success metrics, risks, systems, data, and governance before you build.
-              </p>
-              <div>
-                <span className="kicker">You&apos;ll get clarity on</span>
-                <ul style={{ listStyle: "none", padding: 0, marginTop: 12, display: "flex", flexDirection: "column", gap: 10 }}>
-                  {[
-                    "Which workflow is worth prioritizing",
-                    "Where AI can reduce manual effort or decision lag",
-                    "What data, systems, and approvals are involved",
-                    "What controls are needed before deployment",
-                    "What a practical first-phase build could look like",
-                  ].map((t) => (
-                    <li key={t} style={{ display: "flex", gap: 10, alignItems: "flex-start", fontSize: 14, color: "var(--ink-cream-d)" }}>
-                      <span style={{ color: "var(--ember)", flex: "0 0 auto", marginTop: 2 }}>
-                        <Icon.Check />
-                      </span>
-                      {t}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div style={{ display: "flex", gap: 12, marginTop: 8 }}>
-                <Link href="/engage-us" className="a-btn a-btn-primary">
-                  Get the free blueprint <Icon.Arrow className="arrow" />
-                </Link>
-              </div>
-            </div>
-          </div>
+        <div className="reveal" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 22, gap: 16, flexWrap: "wrap" }}>
+          <span className="kicker">Latest insights</span>
+          <Link
+            href="/blog"
+            className="a-btn a-btn-ghost"
+            style={{ padding: "10px 18px", fontSize: 13 }}
+          >
+            Read all <Icon.Arrow className="arrow" />
+          </Link>
         </div>
+
+        {loading && posts.length === 0 ? (
+          <div className="insight-card-grid">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <div className="insight-card-grid__cell" key={i}>
+                <div className="insight-card-skel" />
+              </div>
+            ))}
+          </div>
+        ) : posts.length === 0 ? (
+          <div className="insight-card" style={{ padding: 40, textAlign: "center" }}>
+            <div className="meta" style={{ justifyContent: "center" }}>
+              <span style={{ color: "var(--ember)" }}>Coming soon</span>
+            </div>
+            <h4>The first insights are being prepared.</h4>
+            <p>Check back shortly, or visit the blog to be notified when we publish.</p>
+            <Link href="/blog" style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "var(--ink-cream)", fontSize: 13 }}>
+              Visit the blog <Icon.Arrow />
+            </Link>
+          </div>
+        ) : (
+          <div className="insight-card-grid reveal">
+            {posts.map((p, idx) => (
+              <Link
+                href={`/blog/${p.slug}`}
+                className={`insight-card-v2${idx === 0 ? " insight-card-v2--feature" : ""}`}
+                key={p.id}
+              >
+                <div className="insight-card-v2__media">
+                  {p.featured_image ? (
+                    /* eslint-disable-next-line @next/next/no-img-element */
+                    <img src={p.featured_image} alt="" loading="lazy" decoding="async" />
+                  ) : (
+                    <div className="insight-card-v2__placeholder" aria-hidden="true">
+                      <span>{(p.category || "Insight").slice(0, 2).toUpperCase()}</span>
+                    </div>
+                  )}
+                  <div className="insight-card-v2__shade" />
+                </div>
+                <div className="insight-card-v2__body">
+                  <div className="meta">
+                    {p.category ? <span style={{ color: "var(--ember)" }}>{p.category}</span> : null}
+                    {p.category ? <span style={{ color: "var(--ink-muted-2)" }}>·</span> : null}
+                    <span>{formatDate(p.published_at)}</span>
+                    <span style={{ color: "var(--ink-muted-2)" }}>·</span>
+                    <span>{readingTime(p.excerpt)} read</span>
+                  </div>
+                  <h4>{p.title}</h4>
+                  {p.excerpt ? <p className="insight-card-v2__excerpt">{p.excerpt}</p> : null}
+                  <span className="insight-card-v2__readmore">
+                    Read <Icon.Arrow className="arrow" />
+                  </span>
+                </div>
+              </Link>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
@@ -863,33 +844,31 @@ function FinalCTA() {
             className="cta-glass"
             style={{
               position: "relative",
-              padding: "clamp(40px, 6vw, 72px)",
+              padding: "clamp(32px, 5vw, 56px) clamp(32px, 5.5vw, 64px)",
               borderRadius: 24,
-              border: "1px solid rgba(245,239,230,0.16)",
-              background: "linear-gradient(135deg, rgba(245,239,230,0.10) 0%, rgba(245,239,230,0.04) 100%)",
-              backdropFilter: "blur(22px) saturate(140%)",
-              WebkitBackdropFilter: "blur(22px) saturate(140%)",
-              boxShadow: "0 20px 60px -10px rgba(0,0,0,0.55), inset 0 1px 0 rgba(245,239,230,0.10)",
-              maxWidth: 760,
+              border: "1px solid rgba(245,239,230,0.14)",
+              background: "linear-gradient(135deg, rgba(245,239,230,0.06) 0%, rgba(245,239,230,0.02) 100%)",
+              backdropFilter: "blur(14px) saturate(135%)",
+              WebkitBackdropFilter: "blur(14px) saturate(135%)",
+              boxShadow: "0 16px 48px -12px rgba(0,0,0,0.45), inset 0 1px 0 rgba(245,239,230,0.08)",
+              maxWidth: 880,
             }}
           >
             <div className="kicker" style={{ color: "var(--ember)" }}>Engage us</div>
-            <h2 className="h-section" style={{ marginTop: 16, maxWidth: "20ch" }}>
-              Start with one workflow.
-              <br />
-              Prove value <em>fast</em>.
+            <h2
+              className="h-section final-cta-h"
+              style={{ marginTop: 14, maxWidth: "26ch" }}
+            >
+              Start with one workflow. Prove value <em>fast</em>.
             </h2>
-            <p className="lede" style={{ marginTop: 24, maxWidth: "60ch" }}>
+            <p className="lede" style={{ marginTop: 18, maxWidth: "62ch" }}>
               Bring us one high-value process where AI should be doing more than answering questions. We&apos;ll help map
               the workflow, define the controls, identify the integrations, and show what a production-ready agentic
               system could look like.
             </p>
-            <div style={{ display: "flex", gap: 12, marginTop: 32, flexWrap: "wrap" }}>
+            <div style={{ display: "flex", gap: 12, marginTop: 26, flexWrap: "wrap" }}>
               <Link href="/engage-us" className="a-btn a-btn-primary">
                 Start with one workflow <Icon.Arrow className="arrow" />
-              </Link>
-              <Link href="/engage-us" className="a-btn a-btn-ghost">
-                Book a 30-min discovery
               </Link>
             </div>
           </div>
