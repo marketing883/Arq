@@ -208,45 +208,54 @@ function Hero() {
     <section className="a-hero" id="top">
       <div className="a-hero-grid" />
       <div className="a-wrap" style={{ position: "relative" }}>
-        <div className="reveal in" style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 28 }}>
-          <span className="a-pill"><span className="dot" /> An AI engineering studio</span>
-        </div>
-
-        <h1 className="h-display reveal in" data-d="1" style={{ maxWidth: "14ch" }}>
-          We build <em>agentic</em>
-          <br />
-          operating systems
-          <br />
-          for <span className="accent">enterprise</span> workflows.
-        </h1>
-
-        <div className="hero-row" style={{ display: "grid", gridTemplateColumns: "1fr", gap: 56, marginTop: 64, alignItems: "center" }}>
-          <div className="reveal in" data-d="2">
-            <p className="lede" style={{ maxWidth: "52ch" }}>
-              Production-grade AI agents and workflow systems for complex enterprise environments. From fraud detection
-              and claims triage to AML, loyalty, network operations, and service workflows — we help enterprises turn
-              AI from scattered pilots into{" "}
-              <em style={{ fontFamily: "var(--serif)", fontStyle: "italic", color: "var(--ink-cream)" }}>governed business execution</em>.
-            </p>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginTop: 36 }}>
-              <Link href="/engage-us" className="a-btn a-btn-primary">
-                Start with one workflow <Icon.Arrow className="arrow" />
-              </Link>
-              <a href="#process" className="a-btn a-btn-ghost">See how we build</a>
+        <div className="hero-row" style={{ display: "grid", gridTemplateColumns: "1fr", gap: 56, alignItems: "center" }}>
+          {/* Left column: pill + H1 + lede + CTAs */}
+          <div>
+            <div className="reveal in" style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 28 }}>
+              <span className="a-pill"><span className="dot" /> An AI engineering studio</span>
             </div>
-            <div style={{ display: "flex", gap: 28, marginTop: 56, color: "var(--ink-muted)", fontSize: 12, fontFamily: "var(--mono)", letterSpacing: ".1em", textTransform: "uppercase" }}>
-              <span>SOC 2 · HIPAA · GDPR aligned</span>
+
+            <h1 className="h-display hero-h1 reveal in" data-d="1" style={{ maxWidth: "16ch" }}>
+              We build <em>agentic</em>
+              <br />
+              operating systems
+              <br />
+              for <span className="accent">enterprise</span> workflows.
+            </h1>
+
+            <div className="reveal in" data-d="2" style={{ marginTop: 36 }}>
+              <p className="lede" style={{ maxWidth: "52ch" }}>
+                Production-grade AI agents and workflow systems for complex enterprise environments. From fraud detection
+                and claims triage to AML, loyalty, network operations, and service workflows — we help enterprises turn
+                AI from scattered pilots into{" "}
+                <em style={{ fontFamily: "var(--serif)", fontStyle: "italic", color: "var(--ink-cream)" }}>governed business execution</em>.
+              </p>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginTop: 28 }}>
+                <Link href="/engage-us" className="a-btn a-btn-primary">
+                  Start with one workflow <Icon.Arrow className="arrow" />
+                </Link>
+                <a href="#process" className="a-btn a-btn-ghost">See how we build</a>
+              </div>
+              <div style={{ display: "flex", gap: 28, marginTop: 40, color: "var(--ink-muted)", fontSize: 12, fontFamily: "var(--mono)", letterSpacing: ".1em", textTransform: "uppercase" }}>
+                <span>SOC 2 · HIPAA · GDPR aligned</span>
+              </div>
             </div>
           </div>
 
-          <div className="reveal in" data-d="3" style={{ display: "grid", placeItems: "center" }}>
+          {/* Right column: orbital */}
+          <div className="reveal in hero-orbital" data-d="3" style={{ display: "grid", placeItems: "center" }}>
             <Orbital />
           </div>
         </div>
       </div>
       <style>{`
         @media (min-width: 1000px) {
-          .arq-dark .hero-row { grid-template-columns: 1.05fr 0.95fr !important; }
+          .arq-dark .hero-row { grid-template-columns: 1.1fr 0.9fr !important; gap: 72px !important; }
+        }
+        .arq-dark .hero-h1 { font-size: clamp(40px, 5.4vw, 76px) !important; }
+        .arq-dark .hero-orbital .orbital { max-width: 460px !important; }
+        @media (min-width: 1280px) {
+          .arq-dark .hero-orbital .orbital { max-width: 500px !important; }
         }
       `}</style>
     </section>
