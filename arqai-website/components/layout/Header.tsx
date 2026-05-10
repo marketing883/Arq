@@ -105,7 +105,7 @@ export function Header() {
         <div className="container mx-auto px-4 md:px-6 py-4 md:py-6 flex items-center justify-between">
           <Link href="/" className="flex items-center" aria-label="ArqAI">
             <Image
-              src="/img/ArqAI-Logo-no-tagline.png"
+              src="/img/ArqAI-Labs-Logo.png"
               alt="ArqAI"
               width={720}
               height={240}

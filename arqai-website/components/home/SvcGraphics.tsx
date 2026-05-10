@@ -2,671 +2,686 @@
 "use client";
 
 /* Custom animated SVG graphics for the Services and Why ArqAI cards.
- * Each graphic conveys the card's concept; designed to feel like the
- * hero orbital. Ported from the Claude Design handoff. */
+ * Flat dark bg, lime-with-glow accents, smooth motion. No gradient
+ * overlays/backgrounds. Ported from the Claude Design handoff. */
 
 import React from "react";
 
 const VB = "0 0 320 180";
 const STY: React.CSSProperties = { width: "100%", height: "100%", display: "block" };
+const G_LIME = "#d0f438";
+const G_INK = "rgba(245,239,230,0.85)";
+const G_INK_DIM = "rgba(245,239,230,0.4)";
+const G_INK_FAINT = "rgba(245,239,230,0.16)";
+const G_BG = "#0a0a0d";
 
-function Bg({
-  grid = true,
-  vig = true,
-  idSeed = "a",
-}: {
-  grid?: boolean;
-  vig?: boolean;
-  idSeed?: string;
-}) {
+function Defs({ p }: { p: string }) {
   return (
-    <>
-      <defs>
-        <pattern id={`grd_${idSeed}`} x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
-          <path d="M20 0H0V20" fill="none" stroke="rgba(245,239,230,0.05)" strokeWidth="1" />
-        </pattern>
-        <radialGradient id={`vig_${idSeed}`} cx="60%" cy="0%" r="90%">
-          <stop offset="0%" stopColor="rgba(208,244,56,0.20)" />
-          <stop offset="70%" stopColor="rgba(208,244,56,0)" />
-        </radialGradient>
-      </defs>
-      {grid && <rect width="320" height="180" fill={`url(#grd_${idSeed})`} />}
-      {vig && <rect width="320" height="180" fill={`url(#vig_${idSeed})`} />}
-    </>
+    <defs>
+      <filter id={`${p}-glow`} x="-50%" y="-50%" width="200%" height="200%">
+        <feGaussianBlur stdDeviation="2.4" result="b" />
+        <feMerge>
+          <feMergeNode in="b" />
+          <feMergeNode in="SourceGraphic" />
+        </feMerge>
+      </filter>
+      <filter id={`${p}-glowS`} x="-50%" y="-50%" width="200%" height="200%">
+        <feGaussianBlur stdDeviation="1.4" result="b" />
+        <feMerge>
+          <feMergeNode in="b" />
+          <feMergeNode in="SourceGraphic" />
+        </feMerge>
+      </filter>
+    </defs>
   );
 }
 
-function Label({
-  x,
-  y,
-  textAnchor,
-  children,
-}: {
-  x: number;
-  y: number;
-  textAnchor?: "start" | "middle" | "end";
-  children: React.ReactNode;
-}) {
+function Bg() {
+  return <rect width="320" height="180" fill={G_BG} />;
+}
+
+type LabelProps = React.SVGTextElementAttributes<SVGTextElement> & {
+  size?: number;
+  lime?: boolean;
+  dim?: boolean;
+};
+
+function Label({ size, lime, dim, children, ...rest }: LabelProps) {
   return (
     <text
-      x={x}
-      y={y}
-      fontFamily="ui-monospace, monospace"
-      fontSize="8"
-      fill="rgba(245,239,230,0.55)"
-      letterSpacing="1.6"
-      textAnchor={textAnchor}
+      fontFamily="'Funnel Sans', sans-serif"
+      fontSize={size ?? 9}
+      fontWeight="600"
+      fill={lime ? G_LIME : dim ? G_INK_DIM : G_INK}
+      letterSpacing="1.5"
+      style={{ textTransform: "uppercase" }}
+      {...rest}
     >
       {children}
     </text>
   );
 }
 
-/* 1. Workflow Strategy. animated map with waypoints */
-export function WorkflowMap() {
-  const points: [number, number][] = [
-    [30, 140],
-    [95, 75],
-    [160, 95],
-    [225, 72],
-    [290, 50],
-  ];
+function NumLabel({ size, lime, children, ...rest }: LabelProps) {
   return (
-    <svg viewBox={VB} preserveAspectRatio="xMidYMid slice" style={STY}>
-      <Bg idSeed="wm" />
-      <path
-        d="M30 140 Q 90 30 160 95 T 290 50"
-        stroke="rgba(208,244,56,0.55)"
-        strokeWidth="1.4"
-        fill="none"
-        strokeDasharray="4 4"
-      >
-        <animate attributeName="stroke-dashoffset" values="200;0" dur="6s" repeatCount="indefinite" />
-      </path>
-      {points.map(([x, y], i) => (
-        <g key={i}>
-          <circle cx={x} cy={y} r="6" fill="none" stroke="rgba(208,244,56,0.5)">
-            <animate attributeName="r" values="6;16;6" dur="2.4s" begin={`${i * 0.3}s`} repeatCount="indefinite" />
-            <animate attributeName="opacity" values="1;0;1" dur="2.4s" begin={`${i * 0.3}s`} repeatCount="indefinite" />
-          </circle>
-          <circle cx={x} cy={y} r="3" fill="#d0f438" />
-        </g>
-      ))}
-      <Label x={20} y={24}>BLUEPRINT</Label>
-      <Label x={300} y={24} textAnchor="end">DEPLOY</Label>
-      <Label x={20} y={168}>5 WAYPOINTS · 1 OUTCOME</Label>
-    </svg>
+    <text
+      fontFamily="'Funnel Display', serif"
+      fontSize={size ?? 32}
+      fontWeight="300"
+      fill={lime ? G_LIME : G_INK}
+      letterSpacing="-0.02em"
+      {...rest}
+    >
+      {children}
+    </text>
   );
 }
 
-/* 2. Agentic AI Buildout. agent constellation orbiting a core */
-export function AgentConstellation() {
+/* 1. Workflow Strategy — phase scale w/ moving indicator */
+export function WorkflowMap() {
+  const p = "wm";
+  const phases = ["DISCOVER", "DEFINE", "BUILD", "DEPLOY", "OPERATE"];
+  const xs = phases.map((_, i) => 50 + i * 55);
+  const splines = "0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0 0 1 1;0 0 0 0";
+  const keyTimes = "0;0.16;0.32;0.48;0.64;0.86;1";
+  const cxValues = "50;105;160;215;270;270;50";
   return (
     <svg viewBox={VB} preserveAspectRatio="xMidYMid slice" style={STY}>
-      <Bg idSeed="ac" grid={false} />
-      <g transform="translate(160 90)">
-        {[40, 60, 80].map((r, i) => (
-          <circle
-            key={i}
-            cx="0"
-            cy="0"
-            r={r}
-            fill="none"
-            stroke="rgba(245,239,230,0.07)"
-            strokeDasharray={i === 1 ? "2 4" : ""}
-          />
-        ))}
-        {[
-          [-90, -30],
-          [80, -50],
-          [100, 40],
-          [-70, 55],
-          [10, -78],
-        ].map(([x, y], i) => (
-          <g key={i}>
-            <line x1="0" y1="0" x2={x} y2={y} stroke="rgba(208,244,56,0.35)" strokeWidth="0.8" strokeDasharray="2 3">
-              <animate
-                attributeName="stroke-dashoffset"
-                values="0;-25"
-                dur={`${3 + i * 0.5}s`}
-                repeatCount="indefinite"
-              />
-            </line>
-            <rect x={x - 7} y={y - 7} width="14" height="14" rx="2" fill="rgba(12,12,16,0.9)" stroke="rgba(208,244,56,0.6)" />
-            <circle cx={x} cy={y} r="1.6" fill="#d0f438">
-              <animate attributeName="opacity" values="1;0.2;1" dur="1.8s" begin={`${i * 0.3}s`} repeatCount="indefinite" />
-            </circle>
-          </g>
-        ))}
-        <polygon
-          points="0,-18 16,-9 16,9 0,18 -16,9 -16,-9"
-          fill="rgba(208,244,56,0.18)"
-          stroke="#d0f438"
-          strokeWidth="1.2"
+      <Defs p={p} />
+      <Bg />
+      <line x1="40" y1="100" x2="280" y2="100" stroke={G_INK_FAINT} strokeWidth="1" />
+      <line
+        x1="40"
+        y1="100"
+        x2="280"
+        y2="100"
+        stroke={G_LIME}
+        strokeWidth="2"
+        filter={`url(#${p}-glowS)`}
+        strokeDasharray="240"
+        strokeDashoffset="240"
+      >
+        <animate
+          attributeName="stroke-dashoffset"
+          values="240;0;0;240"
+          keyTimes="0;0.6;0.85;1"
+          dur="6s"
+          repeatCount="indefinite"
         />
-        <circle cx="0" cy="0" r="3" fill="#d0f438">
-          <animate attributeName="r" values="2.5;5;2.5" dur="1.8s" repeatCount="indefinite" />
+      </line>
+      {xs.map((x, i) => (
+        <g key={i}>
+          <line x1={x} y1="92" x2={x} y2="108" stroke={G_INK} strokeWidth="1" />
+          <Label x={x} y={78} textAnchor="middle" size={7.5}>
+            {phases[i]}
+          </Label>
+        </g>
+      ))}
+      <g filter={`url(#${p}-glow)`}>
+        <circle r="6" fill={G_BG} stroke={G_LIME} strokeWidth="2">
+          <animate
+            attributeName="cx"
+            values={cxValues}
+            keyTimes={keyTimes}
+            dur="6s"
+            repeatCount="indefinite"
+            calcMode="spline"
+            keySplines={splines}
+          />
+          <animate attributeName="cy" values="100" dur="6s" repeatCount="indefinite" />
+        </circle>
+        <circle r="2.5" fill={G_LIME}>
+          <animate
+            attributeName="cx"
+            values={cxValues}
+            keyTimes={keyTimes}
+            dur="6s"
+            repeatCount="indefinite"
+            calcMode="spline"
+            keySplines={splines}
+          />
+          <animate attributeName="cy" values="100" dur="6s" repeatCount="indefinite" />
         </circle>
       </g>
-      <Label x={20} y={24}>AGENTS · 5</Label>
-      <Label x={300} y={24} textAnchor="end">CORE.WORKFLOW</Label>
+      <NumLabel x={40} y={156} size={14} lime>
+        05
+      </NumLabel>
+      <Label x={64} y={155} size={8} dim>
+        PHASES
+      </Label>
     </svg>
   );
 }
 
-/* 3. Enterprise Integration. bus with system blocks plugging in */
-export function IntegrationBus() {
-  const blocks = [
-    { x: 40, y: 30, label: "CRM" },
-    { x: 110, y: 30, label: "ERP" },
-    { x: 180, y: 30, label: "ITSM" },
-    { x: 250, y: 30, label: "DATA" },
-    { x: 75, y: 130, label: "AUTH" },
-    { x: 145, y: 130, label: "KB" },
-    { x: 215, y: 130, label: "CLOUD" },
-  ];
+/* 2. Agentic AI Buildout — central core + orbiting agents */
+export function AgentConstellation() {
+  const p = "ac";
+  const N = 6;
+  const R = 52;
   return (
     <svg viewBox={VB} preserveAspectRatio="xMidYMid slice" style={STY}>
-      <Bg idSeed="ib" />
-      <line x1="20" y1="90" x2="300" y2="90" stroke="rgba(208,244,56,0.5)" strokeWidth="1.2" />
-      {[0, 1.4, 2.8].map((d, i) => (
-        <circle key={i} r="2.5" fill="#d0f438" cy="90">
-          <animate attributeName="cx" values="20;300" dur="4.2s" begin={`${d}s`} repeatCount="indefinite" />
-          <animate attributeName="opacity" values="0;1;1;0" dur="4.2s" begin={`${d}s`} repeatCount="indefinite" />
-        </circle>
-      ))}
-      {blocks.map((b, i) => (
-        <g key={i}>
-          <line
-            x1={b.x + 18}
-            y1={b.y < 90 ? b.y + 22 : b.y - 2}
-            x2={b.x + 18}
-            y2="90"
-            stroke="rgba(245,239,230,0.18)"
-            strokeWidth="0.8"
-            strokeDasharray="2 2"
+      <Defs p={p} />
+      <Bg />
+      <g transform="translate(160 92)">
+        <circle r={R} fill="none" stroke={G_INK_FAINT} strokeWidth="1" />
+        {Array.from({ length: N }, (_, i) => {
+          const a = (i / N) * Math.PI * 2 - Math.PI / 2;
+          const x = Math.cos(a) * R;
+          const y = Math.sin(a) * R;
+          return (
+            <g key={i}>
+              <line x1="0" y1="0" x2={x} y2={y} stroke={G_INK_FAINT} strokeWidth="1" />
+              <circle cx={x} cy={y} r="6" fill={G_BG} stroke={G_INK} strokeWidth="1" />
+              <circle cx={x} cy={y} r="3" fill={G_LIME} filter={`url(#${p}-glowS)`}>
+                <animate
+                  attributeName="opacity"
+                  values="0;1;1;0"
+                  keyTimes="0;0.1;0.5;0.6"
+                  dur={`${N * 0.85}s`}
+                  begin={`${i * 0.85}s`}
+                  repeatCount="indefinite"
+                />
+              </circle>
+            </g>
+          );
+        })}
+        <circle r="14" fill={G_LIME} filter={`url(#${p}-glow)`}>
+          <animate
+            attributeName="r"
+            values="13;15;13"
+            dur="2.6s"
+            repeatCount="indefinite"
+            calcMode="spline"
+            keySplines="0.4 0 0.6 1;0.4 0 0.6 1"
           />
-          <rect x={b.x} y={b.y} width="36" height="22" rx="2" fill="rgba(20,20,26,0.85)" stroke="rgba(245,239,230,0.18)" />
-          <text
-            x={b.x + 18}
-            y={b.y + 15}
-            fontFamily="ui-monospace, monospace"
-            fontSize="8"
-            fill="rgba(245,239,230,0.7)"
-            textAnchor="middle"
-            letterSpacing="1"
-          >
-            {b.label}
-          </text>
-          <circle cx={b.x + 18} cy="90" r="1.8" fill="#d0f438">
-            <animate attributeName="opacity" values="0.2;1;0.2" dur="2s" begin={`${i * 0.25}s`} repeatCount="indefinite" />
-          </circle>
-        </g>
-      ))}
-      <Label x={20} y={168}>BUS · 7 SYSTEMS</Label>
+        </circle>
+      </g>
+      <NumLabel x={20} y={156} size={14} lime>
+        0{N}
+      </NumLabel>
+      <Label x={44} y={155} size={8} dim>
+        AGENTS · 1 CORE
+      </Label>
     </svg>
   );
 }
 
-/* 4. Governance by Design. checkpoints stamping a request */
-export function Gates() {
-  const gates = [
-    { x: 70, label: "POLICY" },
-    { x: 138, label: "APPROVE" },
-    { x: 206, label: "AUDIT" },
-    { x: 274, label: "EXEC" },
-  ];
+/* 3. Enterprise Integration — system bus */
+export function IntegrationBus() {
+  const p = "ib";
+  const systems = ["CRM", "ERP", "ITSM", "DATA", "AUTH", "KB", "CLOUD", "API"];
   return (
     <svg viewBox={VB} preserveAspectRatio="xMidYMid slice" style={STY}>
-      <Bg idSeed="gv" />
-      <line x1="20" y1="100" x2="300" y2="100" stroke="rgba(245,239,230,0.18)" strokeWidth="1" strokeDasharray="2 4" />
-      {gates.map((g, i) => (
-        <g key={i}>
-          <line x1={g.x} y1="60" x2={g.x} y2="140" stroke="rgba(208,244,56,0.45)" strokeWidth="1" />
-          <g transform={`translate(${g.x} 78)`}>
-            <circle r="9" fill="rgba(20,20,26,0.95)" stroke="rgba(208,244,56,0.45)" strokeWidth="1" />
-            <circle r="9" fill="none" stroke="#d0f438" strokeWidth="1.4" strokeDasharray="56" strokeDashoffset="56">
-              <animate
-                attributeName="stroke-dashoffset"
-                values="56;0;0;56"
-                keyTimes="0;0.25;0.85;1"
-                dur="5s"
-                begin={`${i * 0.6}s`}
-                repeatCount="indefinite"
-              />
-            </circle>
-            <path
-              d="M-4 0 L -1 3 L 4 -3"
-              fill="none"
-              stroke="#d0f438"
-              strokeWidth="1.6"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              opacity="0"
-            >
+      <Defs p={p} />
+      <Bg />
+      <line x1="40" y1="92" x2="280" y2="92" stroke={G_LIME} strokeWidth="2" filter={`url(#${p}-glowS)`} />
+      {systems.map((s, i) => {
+        const col = i % 4;
+        const row = Math.floor(i / 4);
+        const x = 50 + col * 60;
+        const y = row === 0 ? 40 : 124;
+        return (
+          <g key={i}>
+            <rect x={x} y={y} width="46" height="20" fill="none" stroke={G_INK_DIM} strokeWidth="1" />
+            <Label x={x + 23} y={y + 13} textAnchor="middle" size={7.5}>
+              {s}
+            </Label>
+            <line
+              x1={x + 23}
+              y1={row === 0 ? y + 20 : y}
+              x2={x + 23}
+              y2="92"
+              stroke={G_INK_FAINT}
+              strokeWidth="1"
+            />
+            <circle cx={x + 23} cy="92" r="2" fill={G_LIME} filter={`url(#${p}-glowS)`}>
               <animate
                 attributeName="opacity"
-                values="0;0;1;1;0"
-                keyTimes="0;0.2;0.3;0.85;1"
-                dur="5s"
-                begin={`${i * 0.6}s`}
+                values="0.3;1;0.3"
+                dur="3s"
+                begin={`${i * 0.25}s`}
                 repeatCount="indefinite"
               />
-            </path>
+            </circle>
           </g>
-          <text
-            x={g.x}
-            y="50"
-            fontFamily="ui-monospace, monospace"
-            fontSize="7.5"
-            fill="rgba(245,239,230,0.7)"
-            textAnchor="middle"
-            letterSpacing="1.4"
-          >
-            {g.label}
-          </text>
-        </g>
-      ))}
-      <g>
-        <rect width="16" height="16" rx="2" y="122" fill="rgba(208,244,56,0.18)" stroke="#d0f438" strokeWidth="1.2">
-          <animate attributeName="x" values="4;284" dur="5s" repeatCount="indefinite" />
-        </rect>
-        <line y1="122" y2="100" stroke="#d0f438" strokeWidth="0.8" strokeDasharray="2 2" opacity="0.7">
-          <animate attributeName="x1" values="12;292" dur="5s" repeatCount="indefinite" />
-          <animate attributeName="x2" values="12;292" dur="5s" repeatCount="indefinite" />
-        </line>
-      </g>
-      <Label x={20} y={168}>4 CHECKPOINTS · BEFORE EXECUTION</Label>
-    </svg>
-  );
-}
-
-/* 5. Vertical Acceleration. compounding curve across verticals */
-export function StackLift() {
-  const labels = ["CLAIMS", "FRAUD", "AML", "LOYALTY", "OPS", "RISK"];
-  const pts: [number, number][] = labels.map((_, i) => {
-    const x = 36 + i * 46;
-    const y = 150 - Math.pow(i, 1.55) * 8;
-    return [x, y];
-  });
-  const pathD = `M ${pts.map((p) => p.join(" ")).join(" L ")}`;
-  return (
-    <svg viewBox={VB} preserveAspectRatio="xMidYMid slice" style={STY}>
-      <Bg idSeed="sl" />
-      <line x1="20" y1="150" x2="300" y2="150" stroke="rgba(245,239,230,0.15)" />
-      <path d={pathD} fill="none" stroke="#d0f438" strokeWidth="1.6" strokeLinecap="round" strokeDasharray="400">
-        <animate attributeName="stroke-dashoffset" values="400;0" dur="3s" repeatCount="indefinite" />
-      </path>
-      <path
-        d={`M ${pts[0][0]} 150 L ${pts.map((p) => p.join(" ")).join(" L ")} L ${pts[pts.length - 1][0]} 150 Z`}
-        fill="rgba(208,244,56,0.10)"
-      />
-      {pts.map(([x, y], i) => (
-        <g key={i}>
-          <line x1={x} y1="150" x2={x} y2={y} stroke="rgba(208,244,56,0.20)" strokeWidth="0.8" strokeDasharray="1 2" />
-          <circle cx={x} cy={y} r="3" fill="#d0f438" />
-          <circle cx={x} cy={y} r="3" fill="none" stroke="rgba(208,244,56,0.6)">
-            <animate attributeName="r" values="3;10;3" dur="2.4s" begin={`${i * 0.25}s`} repeatCount="indefinite" />
-            <animate attributeName="opacity" values="1;0;1" dur="2.4s" begin={`${i * 0.25}s`} repeatCount="indefinite" />
-          </circle>
-          <text
-            x={x}
-            y="164"
-            fontFamily="ui-monospace, monospace"
-            fontSize="7.5"
-            fill="rgba(245,239,230,0.55)"
-            textAnchor="middle"
-            letterSpacing="1"
-          >
-            {labels[i]}
-          </text>
-        </g>
-      ))}
-      <g transform="translate(286 30)" stroke="#d0f438" strokeWidth="1.4" fill="none">
-        <path d="M-12 8 L 0 -2 M-2 -2 L 0 -2 L 0 0" />
-      </g>
-      <Label x={20} y={24}>ONE PATTERN · MANY VERTICALS</Label>
-      <Label x={300} y={24} textAnchor="end">{"COMPOUND ↑"}</Label>
-    </svg>
-  );
-}
-
-/* 6. Managed AI Operations. running monitor with waveform + KPIs */
-export function PulseMonitor() {
-  const N = 90;
-  const pts: [number, number][] = Array.from({ length: N }, (_, i) => {
-    const t = i / (N - 1);
-    const x = t * 280 + 20;
-    const y = 100 + Math.sin(i * 0.32) * 10 + Math.sin(i * 0.11) * 8 + Math.sin(i * 0.06) * 5;
-    return [x, y];
-  });
-  const path = `M ${pts.map((p) => p.join(" ")).join(" L ")}`;
-  const fillPath = `${path} L 300 150 L 20 150 Z`;
-  return (
-    <svg viewBox={VB} preserveAspectRatio="xMidYMid slice" style={STY}>
-      <Bg idSeed="pm" />
-      <defs>
-        <linearGradient id="pmFill" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="rgba(208,244,56,0.35)" />
-          <stop offset="100%" stopColor="rgba(208,244,56,0)" />
-        </linearGradient>
-      </defs>
-      {[60, 100, 140].map((y, i) => (
-        <line key={i} x1="20" y1={y} x2="300" y2={y} stroke="rgba(245,239,230,0.07)" strokeDasharray="2 4" />
-      ))}
-      <path d={fillPath} fill="url(#pmFill)" opacity="0.6" />
-      <g>
-        <path
-          d={path}
-          fill="none"
-          stroke="#d0f438"
-          strokeWidth="1.6"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          style={{ filter: "drop-shadow(0 0 4px rgba(208,244,56,0.55))" }}
-        >
-          <animateTransform
-            attributeName="transform"
-            type="translate"
-            values="0 0; -60 0; 0 0"
-            dur="10s"
+        );
+      })}
+      {[0, 2].map((delay, i) => (
+        <circle key={i} r="3" fill={G_LIME} cy="92" filter={`url(#${p}-glowS)`}>
+          <animate
+            attributeName="cx"
+            values="40;280"
+            dur="4s"
+            begin={`${delay}s`}
             repeatCount="indefinite"
+            calcMode="spline"
+            keySplines="0.4 0 0.6 1"
           />
-        </path>
-      </g>
-      <circle r="3" fill="#d0f438">
-        <animateMotion dur="6s" repeatCount="indefinite" path={path} rotate="auto" />
-        <animate attributeName="opacity" values="0;1;1;0" dur="6s" repeatCount="indefinite" />
-      </circle>
-      <g>
-        <rect x="20" y="22" width="82" height="22" rx="3" fill="rgba(20,20,26,0.9)" stroke="rgba(245,239,230,0.18)" />
-        <text x="30" y="36" fontFamily="ui-monospace, monospace" fontSize="9" fill="#d0f438" letterSpacing="1">
-          P95
-        </text>
-        <text
-          x="94"
-          y="36"
-          fontFamily="ui-monospace, monospace"
-          fontSize="9"
-          fill="rgba(245,239,230,0.9)"
-          textAnchor="end"
-          letterSpacing="0.5"
-        >
-          240ms
-        </text>
-        <rect x="218" y="22" width="82" height="22" rx="3" fill="rgba(20,20,26,0.9)" stroke="rgba(245,239,230,0.18)" />
-        <text x="228" y="36" fontFamily="ui-monospace, monospace" fontSize="9" fill="#d0f438" letterSpacing="1">
-          ERR
-        </text>
-        <text
-          x="292"
-          y="36"
-          fontFamily="ui-monospace, monospace"
-          fontSize="9"
-          fill="rgba(245,239,230,0.9)"
-          textAnchor="end"
-          letterSpacing="0.5"
-        >
-          0.3%
-        </text>
-      </g>
-      <g transform="translate(160 36)">
-        <circle r="3" fill="#d0f438">
-          <animate attributeName="opacity" values="1;0.2;1" dur="1.2s" repeatCount="indefinite" />
-        </circle>
-        <text x="8" y="3" fontFamily="ui-monospace, monospace" fontSize="9" fill="rgba(245,239,230,0.9)" letterSpacing="1.4">
-          LIVE
-        </text>
-      </g>
-      <Label x={20} y={168}>MONITOR · TUNE · IMPROVE</Label>
-    </svg>
-  );
-}
-
-/* 7. Built on your stack. agentic plane spanning systems */
-export function StackTower() {
-  const systems = [
-    { x: 24, label: "CRM" },
-    { x: 88, label: "ERP" },
-    { x: 152, label: "DATA" },
-    { x: 216, label: "CLOUD" },
-    { x: 256, label: "KB" },
-  ];
-  return (
-    <svg viewBox={VB} preserveAspectRatio="xMidYMid slice" style={STY}>
-      <Bg idSeed="st" />
-      <defs>
-        <linearGradient id="aiBand" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stopColor="rgba(208,244,56,0)" />
-          <stop offset="50%" stopColor="rgba(208,244,56,0.45)" />
-          <stop offset="100%" stopColor="rgba(208,244,56,0)" />
-        </linearGradient>
-      </defs>
-      <g>
-        <rect x="16" y="40" width="288" height="22" rx="3" fill="rgba(208,244,56,0.10)" stroke="#d0f438" strokeWidth="1.2" />
-        <rect x="16" y="40" width="288" height="22" rx="3" fill="url(#aiBand)">
-          <animate attributeName="opacity" values="0.5;1;0.5" dur="3.4s" repeatCount="indefinite" />
-        </rect>
-        <text x="24" y="55" fontFamily="ui-monospace, monospace" fontSize="9" fill="#d0f438" letterSpacing="2">
-          ARQ · AGENTIC PLANE
-        </text>
-        <circle cx="294" cy="51" r="2.5" fill="#d0f438">
-          <animate attributeName="opacity" values="1;0.2;1" dur="1.2s" repeatCount="indefinite" />
-        </circle>
-      </g>
-      {systems.map((s, i) => (
-        <line
-          key={"l" + i}
-          x1={s.x + 24}
-          y1="62"
-          x2={s.x + 24}
-          y2="112"
-          stroke="rgba(208,244,56,0.35)"
-          strokeWidth="0.8"
-          strokeDasharray="2 3"
-        >
-          <animate attributeName="stroke-dashoffset" values="0;-20" dur={`${2.5 + i * 0.4}s`} repeatCount="indefinite" />
-        </line>
-      ))}
-      {systems.map((s, i) => (
-        <g key={"s" + i}>
-          <rect x={s.x} y="112" width="48" height="30" rx="3" fill="rgba(20,20,26,0.85)" stroke="rgba(245,239,230,0.20)" />
-          <g transform={`translate(${s.x + 8} 121)`} stroke="rgba(245,239,230,0.55)" fill="none" strokeWidth="1">
-            {i === 0 && (
-              <>
-                <circle cx="4" cy="4" r="2.5" />
-                <path d="M0 12 Q 4 8 8 12" />
-              </>
-            )}
-            {i === 1 && (
-              <>
-                <rect x="0" y="0" width="8" height="12" />
-                <path d="M0 4 H8 M0 8 H8" />
-              </>
-            )}
-            {i === 2 && (
-              <>
-                <ellipse cx="4" cy="2" rx="4" ry="1.5" />
-                <path d="M0 2 V10 Q 4 12 8 10 V2" />
-              </>
-            )}
-            {i === 3 && <path d="M2 8 Q 0 4 4 4 Q 4 0 8 2 Q 12 4 8 8 Z" />}
-            {i === 4 && (
-              <>
-                <rect x="0" y="1" width="8" height="10" />
-                <path d="M2 3 H6 M2 6 H6 M2 9 H4" />
-              </>
-            )}
-          </g>
-          <text
-            x={s.x + 24}
-            y="137"
-            fontFamily="ui-monospace, monospace"
-            fontSize="8"
-            fill="rgba(245,239,230,0.75)"
-            textAnchor="middle"
-            letterSpacing="1"
-          >
-            {s.label}
-          </text>
-          <circle cx={s.x + 24} cy="112" r="2" fill="#d0f438">
-            <animate attributeName="opacity" values="0.3;1;0.3" dur="2s" begin={`${i * 0.25}s`} repeatCount="indefinite" />
-          </circle>
-        </g>
-      ))}
-      <Label x={20} y={24}>ON YOUR STACK · UNTOUCHED</Label>
-      <Label x={300} y={168} textAnchor="end">NO RIP-AND-REPLACE</Label>
-    </svg>
-  );
-}
-
-/* 8. Governed before it acts. risk funnel */
-export function RiskFunnel() {
-  return (
-    <svg viewBox={VB} preserveAspectRatio="xMidYMid slice" style={STY}>
-      <Bg idSeed="rf" />
-      <path
-        d="M40 40 L 280 40 L 200 110 L 200 150 L 120 150 L 120 110 Z"
-        fill="rgba(208,244,56,0.05)"
-        stroke="rgba(208,244,56,0.45)"
-        strokeWidth="1"
-      />
-      {[60, 80, 100].map((y, i) => (
-        <line
-          key={i}
-          x1={50 + i * 20}
-          y1={y}
-          x2={270 - i * 20}
-          y2={y}
-          stroke="rgba(245,239,230,0.15)"
-          strokeDasharray="2 3"
-        />
-      ))}
-      {[60, 110, 160, 210, 260].map((x, i) => (
-        <rect key={i} x={x - 3} width="6" height="6" rx="1" fill="rgba(208,244,56,0.7)" y="20">
-          <animate attributeName="y" values="20;38" dur="2s" begin={`${i * 0.18}s`} repeatCount="indefinite" />
           <animate
             attributeName="opacity"
             values="0;1;1;0"
-            keyTimes="0;0.2;0.8;1"
-            dur="2s"
-            begin={`${i * 0.18}s`}
+            keyTimes="0;0.1;0.9;1"
+            dur="4s"
+            begin={`${delay}s`}
             repeatCount="indefinite"
           />
-        </rect>
+        </circle>
       ))}
-      <Label x={50} y={64}>POLICY</Label>
-      <Label x={70} y={84}>APPROVAL</Label>
-      <Label x={90} y={104}>RISK</Label>
-      <g>
-        <rect x="156" y="118" width="8" height="8" rx="1" fill="#d0f438">
-          <animate attributeName="y" values="118;160" dur="2s" repeatCount="indefinite" />
-          <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite" />
-        </rect>
-      </g>
-      <Label x={160} y={168} textAnchor="middle">ACT</Label>
+      <NumLabel x={20} y={156} size={14} lime>
+        08
+      </NumLabel>
+      <Label x={44} y={155} size={8} dim>
+        SYSTEMS
+      </Label>
     </svg>
   );
 }
 
-/* 9. Human oversight. decision branching */
-export function DecisionBranch() {
+/* 4. Governance — checkpoint stations */
+export function Gates() {
+  const p = "gt";
+  const steps = ["POLICY", "APPROVE", "AUDIT", "EXEC"];
   return (
     <svg viewBox={VB} preserveAspectRatio="xMidYMid slice" style={STY}>
-      <Bg idSeed="db" />
-      <line x1="20" y1="90" x2="120" y2="90" stroke="rgba(208,244,56,0.5)" strokeWidth="1.2" />
-      <circle r="3" fill="#d0f438" cy="90">
-        <animate attributeName="cx" values="20;120" dur="2.4s" repeatCount="indefinite" />
-      </circle>
-      <polygon points="120,75 145,90 120,105 95,90" fill="rgba(20,20,26,0.9)" stroke="#d0f438" strokeWidth="1.2" />
-      <text
-        x="120"
-        y="93"
-        fontFamily="ui-monospace, monospace"
-        fontSize="7"
-        fill="rgba(245,239,230,0.7)"
-        textAnchor="middle"
-        letterSpacing="0.5"
-      >
-        RISK?
-      </text>
-      <path
-        d="M145 90 L 200 130 L 290 130"
-        fill="none"
-        stroke="rgba(245,239,230,0.25)"
-        strokeWidth="1"
-        strokeDasharray="2 3"
-      />
-      <rect x="240" y="118" width="56" height="22" rx="2" fill="rgba(20,20,26,0.85)" stroke="rgba(245,239,230,0.25)" />
-      <text
-        x="268"
-        y="132"
-        fontFamily="ui-monospace, monospace"
-        fontSize="8"
-        fill="rgba(245,239,230,0.7)"
-        textAnchor="middle"
-        letterSpacing="1"
-      >
-        AUTO
-      </text>
-      <path d="M145 90 L 200 50 L 240 50" fill="none" stroke="#d0f438" strokeWidth="1.2" />
-      <g transform="translate(264 50)">
-        <rect x="-26" y="-12" width="52" height="24" rx="2" fill="rgba(208,244,56,0.15)" stroke="#d0f438" />
-        <circle cx="-14" cy="-3" r="3" fill="#d0f438" />
-        <path d="M-19 5 Q -14 0 -9 5" fill="none" stroke="#d0f438" strokeWidth="1.2" />
-        <text x="6" y="3" fontFamily="ui-monospace, monospace" fontSize="8" fill="#d0f438" textAnchor="middle" letterSpacing="1">
-          HUMAN
-        </text>
-      </g>
-      <circle r="2.5" fill="#d0f438" cy="50">
-        <animate attributeName="cx" values="145;238" dur="2s" begin="1s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;1;0" dur="2s" begin="1s" repeatCount="indefinite" />
-      </circle>
-      <Label x={20} y={168}>ROUTE BY RISK · NOT BY DEFAULT</Label>
+      <Defs p={p} />
+      <Bg />
+      <line x1="40" y1="100" x2="280" y2="100" stroke={G_INK_FAINT} strokeWidth="1" />
+      {steps.map((s, i) => {
+        const x = 56 + i * 70;
+        return (
+          <g key={i}>
+            <circle cx={x} cy="100" r="14" fill={G_BG} stroke={G_INK_DIM} strokeWidth="1" />
+            <circle
+              cx={x}
+              cy="100"
+              r="14"
+              fill="none"
+              stroke={G_LIME}
+              strokeWidth="2"
+              filter={`url(#${p}-glowS)`}
+              strokeDasharray="88"
+              strokeDashoffset="88"
+            >
+              <animate
+                attributeName="stroke-dashoffset"
+                values="88;0;0;88"
+                keyTimes="0;0.15;0.65;1"
+                dur="5s"
+                begin={`${i * 1}s`}
+                repeatCount="indefinite"
+              />
+            </circle>
+            <text
+              x={x}
+              y="104"
+              fontFamily="'Funnel Display', serif"
+              fontSize="13"
+              fontWeight="300"
+              fill={G_INK}
+              textAnchor="middle"
+              letterSpacing="-0.02em"
+            >
+              0{i + 1}
+            </text>
+            <Label x={x} y={76} textAnchor="middle" size={7.5}>
+              {s}
+            </Label>
+            {i < steps.length - 1 && (
+              <line x1={x + 14} y1="100" x2={x + 56} y2="100" stroke={G_INK_FAINT} strokeWidth="1" />
+            )}
+          </g>
+        );
+      })}
+      <NumLabel x={20} y={156} size={14} lime>
+        04
+      </NumLabel>
+      <Label x={44} y={155} size={8} dim>
+        CHECKPOINTS
+      </Label>
     </svg>
   );
 }
 
-/* 10. Audit-ready. scrolling log */
-export function AuditLog() {
-  const rows = [
-    "14:02:11  approve  policy.kyc",
-    "14:02:09  exec     claim.route",
-    "14:01:58  flag     anomaly.amt",
-    "14:01:42  audit    decision.id",
-    "14:01:33  approve  reviewer.h",
-    "14:01:21  exec     enrich.doc",
-    "14:01:08  approve  policy.kyc",
-    "14:00:56  flag     anomaly.geo",
-    "14:00:41  audit    decision.id",
+/* 5. Vertical Acceleration — ascending bars */
+export function StackLift() {
+  const p = "sl";
+  const verticals = ["CLAIMS", "FRAUD", "AML", "LOYAL", "OPS", "RISK"];
+  const heights = [28, 42, 50, 64, 80, 96];
+  return (
+    <svg viewBox={VB} preserveAspectRatio="xMidYMid slice" style={STY}>
+      <Defs p={p} />
+      <Bg />
+      <line x1="40" y1="142" x2="280" y2="142" stroke={G_INK} strokeWidth="1" />
+      {heights.map((h, i) => {
+        const x = 50 + i * 38;
+        const isLast = i === heights.length - 1;
+        return (
+          <g key={i}>
+            <rect
+              x={x}
+              y={142 - h}
+              width="22"
+              height={h}
+              fill={isLast ? G_LIME : G_INK_FAINT}
+              filter={isLast ? `url(#${p}-glowS)` : undefined}
+            >
+              <animate
+                attributeName="height"
+                values={`0;${h};${h}`}
+                keyTimes="0;0.55;1"
+                dur="4s"
+                begin={`${i * 0.18}s`}
+                repeatCount="indefinite"
+                calcMode="spline"
+                keySplines="0.4 0 0.2 1;0 0 1 1"
+              />
+              <animate
+                attributeName="y"
+                values={`142;${142 - h};${142 - h}`}
+                keyTimes="0;0.55;1"
+                dur="4s"
+                begin={`${i * 0.18}s`}
+                repeatCount="indefinite"
+                calcMode="spline"
+                keySplines="0.4 0 0.2 1;0 0 1 1"
+              />
+            </rect>
+            <Label x={x + 11} y={158} textAnchor="middle" size={7}>
+              {verticals[i]}
+            </Label>
+            <text
+              x={x + 11}
+              y={140 - h - 5}
+              fontFamily="'Funnel Sans', sans-serif"
+              fontSize="7"
+              fontWeight="600"
+              fill={G_INK_DIM}
+              textAnchor="middle"
+              letterSpacing="1"
+            >
+              0{i + 1}
+            </text>
+          </g>
+        );
+      })}
+      <NumLabel x={266} y={58} size={22} lime>
+        ↑
+      </NumLabel>
+    </svg>
+  );
+}
+
+/* 6. Managed AI Operations — clean waveform */
+export function PulseMonitor() {
+  const p = "pm";
+  const N = 80;
+  const pts: [number, number][] = Array.from({ length: N }, (_, i) => {
+    const x = 40 + (i / (N - 1)) * 240;
+    const y = 110 + Math.sin(i * 0.32) * 14 + Math.sin(i * 0.11) * 6;
+    return [x, y];
+  });
+  const path = `M ${pts.map((q) => q.join(" ")).join(" L ")}`;
+  return (
+    <svg viewBox={VB} preserveAspectRatio="xMidYMid slice" style={STY}>
+      <Defs p={p} />
+      <Bg />
+      <line x1="40" y1="110" x2="280" y2="110" stroke={G_INK_FAINT} strokeWidth="1" strokeDasharray="2 4" />
+      <path d={path} fill="none" stroke={G_LIME} strokeWidth="1.6" strokeLinecap="round" filter={`url(#${p}-glowS)`} />
+      <circle r="3.5" fill={G_LIME} filter={`url(#${p}-glow)`}>
+        <animateMotion dur="6s" repeatCount="indefinite" path={path} calcMode="spline" keySplines="0.4 0 0.6 1" />
+      </circle>
+      <Label x={40} y={44} size={7.5} dim>
+        P95
+      </Label>
+      <NumLabel x={40} y={68} size={20}>
+        240
+      </NumLabel>
+      <Label x={80} y={68} size={8} dim>
+        MS
+      </Label>
+      <Label x={200} y={44} size={7.5} dim>
+        ERR
+      </Label>
+      <NumLabel x={200} y={68} size={20} lime>
+        0.3
+      </NumLabel>
+      <Label x={240} y={68} size={8} dim>
+        %
+      </Label>
+      <Label x={280} y={158} textAnchor="end" size={7.5} dim>
+        LIVE · 24/7
+      </Label>
+    </svg>
+  );
+}
+
+/* 7. Built on your stack — ARQ band over systems */
+export function StackTower() {
+  const p = "st";
+  const systems = ["CRM", "ERP", "DATA", "CLOUD", "KB"];
+  return (
+    <svg viewBox={VB} preserveAspectRatio="xMidYMid slice" style={STY}>
+      <Defs p={p} />
+      <Bg />
+      <rect x="40" y="46" width="240" height="22" fill={G_LIME} filter={`url(#${p}-glow)`} />
+      <text
+        x="48"
+        y="62"
+        fontFamily="'Funnel Sans', sans-serif"
+        fontSize="10"
+        fontWeight="700"
+        fill={G_BG}
+        letterSpacing="2"
+      >
+        ARQ · ORCHESTRATION
+      </text>
+      {systems.map((s, i) => {
+        const x = 48 + i * 48;
+        return (
+          <g key={i}>
+            <line x1={x + 18} y1="68" x2={x + 18} y2="100" stroke={G_INK_FAINT} strokeWidth="1" />
+            <rect x={x} y="100" width="36" height="32" fill="none" stroke={G_INK_DIM} strokeWidth="1" />
+            <Label x={x + 18} y={120} textAnchor="middle" size={7.5}>
+              {s}
+            </Label>
+            <circle cx={x + 18} cy="100" r="2" fill={G_LIME} filter={`url(#${p}-glowS)`}>
+              <animate
+                attributeName="opacity"
+                values="0.3;1;0.3"
+                dur="2.6s"
+                begin={`${i * 0.32}s`}
+                repeatCount="indefinite"
+              />
+            </circle>
+          </g>
+        );
+      })}
+      <Label x={40} y={156} size={8} dim>
+        YOUR STACK · UNTOUCHED
+      </Label>
+    </svg>
+  );
+}
+
+/* 8. Governed before it acts — funnel filter */
+export function RiskFunnel() {
+  const p = "rf";
+  const stages = [
+    { y: 50, w: 200, label: "POLICY" },
+    { y: 80, w: 150, label: "APPROVAL" },
+    { y: 110, w: 100, label: "RISK" },
   ];
   return (
     <svg viewBox={VB} preserveAspectRatio="xMidYMid slice" style={STY}>
-      <Bg idSeed="al" />
+      <Defs p={p} />
+      <Bg />
+      {stages.map((s, i) => (
+        <g key={i}>
+          <rect x={160 - s.w / 2} y={s.y} width={s.w} height="14" fill="none" stroke={G_INK_DIM} strokeWidth="1" />
+          <Label x={160} y={s.y + 9} textAnchor="middle" size={7.5}>
+            {s.label}
+          </Label>
+          <rect
+            x={160 - s.w / 2}
+            y={s.y}
+            width="22"
+            height="14"
+            fill={G_LIME}
+            opacity="0.8"
+            filter={`url(#${p}-glowS)`}
+          >
+            <animate
+              attributeName="x"
+              values={`${160 - s.w / 2};${160 + s.w / 2 - 22};${160 - s.w / 2}`}
+              dur="3.6s"
+              begin={`${i * 0.4}s`}
+              repeatCount="indefinite"
+              calcMode="spline"
+              keySplines="0.4 0 0.6 1; 0.4 0 0.6 1"
+            />
+          </rect>
+        </g>
+      ))}
+      <line x1="160" y1="124" x2="160" y2="148" stroke={G_LIME} strokeWidth="2" filter={`url(#${p}-glowS)`} />
+      <path d="M154 142 L 160 148 L 166 142" fill="none" stroke={G_LIME} strokeWidth="2" filter={`url(#${p}-glowS)`} />
+      <Label x={180} y={148} size={8} lime>
+        ACT
+      </Label>
+      <Label x={40} y={40} size={8} dim>
+        REQUEST
+      </Label>
+    </svg>
+  );
+}
+
+/* 9. Human oversight — branching diagram */
+export function DecisionBranch() {
+  const p = "db";
+  return (
+    <svg viewBox={VB} preserveAspectRatio="xMidYMid slice" style={STY}>
+      <Defs p={p} />
+      <Bg />
+      <line x1="40" y1="92" x2="120" y2="92" stroke={G_INK} strokeWidth="1.5" />
+      <Label x={40} y={80} size={7.5} dim>
+        REQUEST
+      </Label>
+      <polygon points="120,72 144,92 120,112 96,92" fill="none" stroke={G_INK} strokeWidth="1.5" />
+      <Label x={120} y={95} textAnchor="middle" size={7.5}>
+        RISK
+      </Label>
+      <path d="M144 92 L 200 130 L 264 130" fill="none" stroke={G_INK_DIM} strokeWidth="1" />
+      <rect x="220" y="118" width="56" height="24" fill="none" stroke={G_INK_DIM} strokeWidth="1" />
+      <Label x={248} y={134} textAnchor="middle" size={8}>
+        AUTO
+      </Label>
+      <path d="M144 92 L 200 54 L 264 54" fill="none" stroke={G_LIME} strokeWidth="2" filter={`url(#${p}-glowS)`} />
+      <rect x="220" y="42" width="56" height="24" fill={G_LIME} filter={`url(#${p}-glow)`} />
+      <text
+        x="248"
+        y="58"
+        fontFamily="'Funnel Sans', sans-serif"
+        fontSize="9"
+        fontWeight="700"
+        fill={G_BG}
+        textAnchor="middle"
+        letterSpacing="2"
+      >
+        HUMAN
+      </text>
+      <circle r="3" fill={G_LIME} filter={`url(#${p}-glowS)`}>
+        <animate
+          attributeName="cx"
+          values="40;120;144;200;264;40"
+          keyTimes="0;0.22;0.32;0.55;0.78;1"
+          dur="4.5s"
+          repeatCount="indefinite"
+        />
+        <animate
+          attributeName="cy"
+          values="92;92;92;54;54;92"
+          keyTimes="0;0.22;0.32;0.55;0.78;1"
+          dur="4.5s"
+          repeatCount="indefinite"
+        />
+        <animate
+          attributeName="opacity"
+          values="1;1;1;1;0;0"
+          keyTimes="0;0.22;0.32;0.55;0.78;1"
+          dur="4.5s"
+          repeatCount="indefinite"
+        />
+      </circle>
+      <Label x={40} y={158} size={8} dim>
+        ROUTE BY RISK
+      </Label>
+    </svg>
+  );
+}
+
+/* 10. Audit-ready — scrolling log */
+export function AuditLog() {
+  const rows = [
+    ["14:02", "APPROVE", "POLICY.KYC"],
+    ["14:01", "EXEC", "CLAIM.ROUTE"],
+    ["13:58", "FLAG", "ANOMALY.AMT"],
+    ["13:42", "AUDIT", "DECISION.ID"],
+    ["13:33", "APPROVE", "REVIEWER.H"],
+    ["13:21", "EXEC", "ENRICH.DOC"],
+    ["13:08", "APPROVE", "POLICY.KYC"],
+    ["12:56", "FLAG", "ANOMALY.GEO"],
+  ];
+  const all = [...rows, ...rows];
+  return (
+    <svg viewBox={VB} preserveAspectRatio="xMidYMid slice" style={STY}>
+      <Bg />
       <defs>
-        <clipPath id="cliplog">
-          <rect x="20" y="34" width="280" height="120" />
+        <clipPath id="alclip2">
+          <rect x="40" y="36" width="240" height="118" />
         </clipPath>
-        <linearGradient id="logfade" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="rgba(8,8,11,1)" />
-          <stop offset="20%" stopColor="rgba(8,8,11,0)" />
-          <stop offset="80%" stopColor="rgba(8,8,11,0)" />
-          <stop offset="100%" stopColor="rgba(8,8,11,1)" />
+        <linearGradient id="alfade2" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor={G_BG} stopOpacity="1" />
+          <stop offset="20%" stopColor={G_BG} stopOpacity="0" />
+          <stop offset="80%" stopColor={G_BG} stopOpacity="0" />
+          <stop offset="100%" stopColor={G_BG} stopOpacity="1" />
         </linearGradient>
       </defs>
-      <g clipPath="url(#cliplog)">
+      <line x1="78" y1="36" x2="78" y2="154" stroke={G_INK_FAINT} strokeWidth="1" />
+      <line x1="148" y1="36" x2="148" y2="154" stroke={G_INK_FAINT} strokeWidth="1" />
+      <g clipPath="url(#alclip2)">
         <g>
-          {rows.concat(rows).map((r, i) => (
-            <g key={i} transform={`translate(28 ${50 + i * 16})`}>
-              <circle cx="-2" cy="-3" r="2" fill={i % 4 === 2 ? "#d0f438" : "rgba(208,244,56,0.4)"} />
+          {all.map((r, i) => (
+            <g key={i} transform={`translate(0 ${50 + i * 16})`}>
               <text
-                fontFamily="ui-monospace, monospace"
-                fontSize="9.5"
-                fill={i % 4 === 2 ? "rgba(245,239,230,0.95)" : "rgba(245,239,230,0.6)"}
-                letterSpacing="0.5"
-                x="8"
+                x="44"
+                fontFamily="'Funnel Sans', sans-serif"
+                fontSize="8.5"
+                fontWeight="500"
+                fill={G_INK_DIM}
+                letterSpacing="1"
               >
-                {r}
+                {r[0]}
+              </text>
+              <text
+                x="84"
+                fontFamily="'Funnel Sans', sans-serif"
+                fontSize="8.5"
+                fontWeight="600"
+                fill={i % 4 === 2 ? G_LIME : G_INK}
+                letterSpacing="1.5"
+                style={{ textTransform: "uppercase" }}
+              >
+                {r[1]}
+              </text>
+              <text
+                x="154"
+                fontFamily="'Funnel Sans', sans-serif"
+                fontSize="8.5"
+                fontWeight="500"
+                fill={G_INK}
+                letterSpacing="1"
+                style={{ textTransform: "uppercase" }}
+              >
+                {r[2]}
               </text>
             </g>
           ))}
@@ -679,155 +694,156 @@ export function AuditLog() {
           />
         </g>
       </g>
-      <rect x="0" y="0" width="320" height="180" fill="url(#logfade)" pointerEvents="none" />
-      <Label x={20} y={24}>AUDIT TRAIL · IMMUTABLE</Label>
-      <Label x={300} y={24} textAnchor="end">● LIVE</Label>
+      <rect x="0" y="0" width="320" height="180" fill="url(#alfade2)" pointerEvents="none" />
+      <Label x={44} y={32} size={7.5} dim>
+        TIME
+      </Label>
+      <Label x={84} y={32} size={7.5} dim>
+        EVENT
+      </Label>
+      <Label x={154} y={32} size={7.5} dim>
+        REF
+      </Label>
     </svg>
   );
 }
 
-/* 11. Improves after launch. growth chart */
+/* 11. Improves after launch — line chart */
 export function GrowthChart() {
-  const bars = [22, 30, 26, 38, 44, 42, 56, 62, 60, 78, 92, 110];
+  const p = "gc";
+  const vals = [22, 28, 26, 38, 44, 50, 60, 72, 80, 92, 108, 120];
+  const xs = vals.map((_, i) => 40 + i * 22);
+  const ys = vals.map((v) => 144 - v);
+  const path = xs.map((x, i) => `${i === 0 ? "M" : "L"} ${x} ${ys[i]}`).join(" ");
   return (
     <svg viewBox={VB} preserveAspectRatio="xMidYMid slice" style={STY}>
-      <Bg idSeed="gc" />
-      <line x1="20" y1="150" x2="300" y2="150" stroke="rgba(245,239,230,0.15)" />
-      {bars.map((h, i) => {
-        const x = 30 + i * 22;
-        return (
-          <g key={i}>
-            <rect
-              x={x}
-              width="14"
-              height={h}
-              rx="1.5"
-              fill={i >= bars.length - 3 ? "rgba(208,244,56,0.65)" : "rgba(245,239,230,0.18)"}
-              y={150 - h}
-            >
-              <animate
-                attributeName="height"
-                values={`0;${h};${h}`}
-                keyTimes="0;0.6;1"
-                dur="3s"
-                begin={`${i * 0.08}s`}
-                repeatCount="indefinite"
-              />
-              <animate
-                attributeName="y"
-                values={`150;${150 - h};${150 - h}`}
-                keyTimes="0;0.6;1"
-                dur="3s"
-                begin={`${i * 0.08}s`}
-                repeatCount="indefinite"
-              />
-            </rect>
-          </g>
-        );
-      })}
-      <polyline
-        points={bars.map((h, i) => `${30 + i * 22 + 7},${150 - h}`).join(" ")}
+      <Defs p={p} />
+      <Bg />
+      <line x1="40" y1="144" x2="280" y2="144" stroke={G_INK_FAINT} strokeWidth="1" />
+      <line x1="40" y1="40" x2="40" y2="144" stroke={G_INK_FAINT} strokeWidth="1" />
+      {[40, 80, 120].map((y, i) => (
+        <line
+          key={i}
+          x1="40"
+          y1={y}
+          x2="280"
+          y2={y}
+          stroke={G_INK_FAINT}
+          strokeWidth="1"
+          strokeDasharray="2 4"
+          opacity="0.5"
+        />
+      ))}
+      <path
+        d={path}
         fill="none"
-        stroke="#d0f438"
-        strokeWidth="1.4"
-        strokeLinecap="round"
-        opacity="0.85"
-      />
-      <g transform="translate(298 30)" stroke="#d0f438" strokeWidth="1.3" fill="none">
-        <path d="M-10 6 L 0 -2 L -2 8 M0 -2 L -8 -4" />
-      </g>
-      <Label x={20} y={24}>{"WK 1 → WK 12"}</Label>
-      <Label x={300} y={24} textAnchor="end">{"PERF · ↑ 4.2×"}</Label>
+        stroke={G_LIME}
+        strokeWidth="2"
+        filter={`url(#${p}-glowS)`}
+        strokeDasharray="500"
+        strokeDashoffset="500"
+      >
+        <animate
+          attributeName="stroke-dashoffset"
+          values="500;0;0;500"
+          keyTimes="0;0.5;0.85;1"
+          dur="5s"
+          repeatCount="indefinite"
+          calcMode="spline"
+          keySplines="0.4 0 0.2 1;0 0 1 1;0 0 1 1"
+        />
+      </path>
+      {xs.map((x, i) => (
+        <circle
+          key={i}
+          cx={x}
+          cy={ys[i]}
+          r={i === xs.length - 1 ? 3 : 2}
+          fill={i === xs.length - 1 ? G_LIME : G_BG}
+          stroke={G_LIME}
+          strokeWidth={i === xs.length - 1 ? 0 : 1}
+          filter={i === xs.length - 1 ? `url(#${p}-glow)` : undefined}
+        >
+          <animate
+            attributeName="opacity"
+            values="0;0;1"
+            keyTimes={`0;${0.04 * (i + 1)};${0.04 * (i + 1) + 0.01}`}
+            dur="5s"
+            repeatCount="indefinite"
+          />
+        </circle>
+      ))}
+      <Label x={280} y={58} textAnchor="end" size={7.5} dim>
+        DELTA
+      </Label>
+      <NumLabel x={280} y={36} textAnchor="end" size={22} lime>
+        4.2×
+      </NumLabel>
+      <Label x={40} y={158} size={7.5} dim>
+        WK 01
+      </Label>
+      <Label x={280} y={158} textAnchor="end" size={7.5} dim>
+        WK 12
+      </Label>
     </svg>
   );
 }
 
-/* 12. Enterprise delivery depth. geological strata */
+/* 12. Enterprise depth — concentric rings + radial labels */
 export function DepthRings() {
-  const strata = [
-    { y: 44, label: "AI · AGENTS", weight: 1 },
-    { y: 64, label: "DATA", weight: 0.85 },
-    { y: 84, label: "CLOUD", weight: 0.7 },
-    { y: 104, label: "CYBERSECURITY", weight: 0.55 },
-    { y: 124, label: "ERP", weight: 0.4 },
-    { y: 144, label: "MANAGED SVCS", weight: 0.3 },
-  ];
+  const p = "dr";
+  const disciplines = ["AI", "DATA", "CLOUD", "CYBER", "ERP", "OPS"];
   return (
     <svg viewBox={VB} preserveAspectRatio="xMidYMid slice" style={STY}>
-      <Bg idSeed="dr" grid={false} />
-      <defs>
-        <linearGradient id="strataGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="rgba(208,244,56,0.35)" />
-          <stop offset="100%" stopColor="rgba(208,244,56,0)" />
-        </linearGradient>
-      </defs>
-      <rect x="110" y="30" width="100" height="130" fill="rgba(208,244,56,0.04)" stroke="rgba(208,244,56,0.18)" />
-      {strata.map((s, i) => (
-        <g key={i}>
-          <line
-            x1="20"
-            y1={s.y}
-            x2="300"
-            y2={s.y}
-            stroke={i === 0 ? "#d0f438" : `rgba(245,239,230,${0.12 + s.weight * 0.18})`}
-            strokeWidth={i === 0 ? 1.4 : 1}
+      <Defs p={p} />
+      <Bg />
+      <g transform="translate(160 102)">
+        {[74, 60, 46, 32].map((r, i) => (
+          <circle key={i} r={r} fill="none" stroke={G_INK_DIM} strokeWidth="1" opacity={1 - i * 0.13} />
+        ))}
+        <circle r="18" fill={G_LIME} filter={`url(#${p}-glow)`}>
+          <animate
+            attributeName="r"
+            values="18;22;18"
+            dur="3.4s"
+            repeatCount="indefinite"
+            calcMode="spline"
+            keySplines="0.4 0 0.6 1; 0.4 0 0.6 1"
           />
-          <rect
-            x="110"
-            y={s.y}
-            width="100"
-            height="18"
-            fill={i === 0 ? "rgba(208,244,56,0.22)" : `rgba(208,244,56,${0.06 + s.weight * 0.05})`}
-          />
-          <line
-            x1="110"
-            y1={s.y + 9}
-            x2="24"
-            y2={s.y + 9}
-            stroke={`rgba(245,239,230,${0.15 + s.weight * 0.15})`}
-            strokeDasharray="2 3"
-          />
-          <line
-            x1="210"
-            y1={s.y + 9}
-            x2="296"
-            y2={s.y + 9}
-            stroke={`rgba(245,239,230,${0.15 + s.weight * 0.15})`}
-            strokeDasharray="2 3"
-          />
-          <text
-            x="24"
-            y={s.y + 12}
-            fontFamily="ui-monospace, monospace"
-            fontSize="8"
-            fill={i === 0 ? "#d0f438" : `rgba(245,239,230,${0.45 + s.weight * 0.4})`}
-            letterSpacing="1.4"
-          >
-            {s.label}
-          </text>
-          <text
-            x="296"
-            y={s.y + 12}
-            fontFamily="ui-monospace, monospace"
-            fontSize="8"
-            fill="rgba(245,239,230,0.4)"
-            textAnchor="end"
-            letterSpacing="1"
-          >
-            {`Y${i + 1}+`}
-          </text>
-          {i === 0 && (
-            <circle cx="160" cy={s.y + 9} r="3" fill="#d0f438">
-              <animate attributeName="opacity" values="1;0.3;1" dur="1.6s" repeatCount="indefinite" />
-            </circle>
-          )}
-        </g>
-      ))}
-      <line x1="160" y1="30" x2="160" y2="160" stroke="rgba(208,244,56,0.25)" strokeWidth="1" strokeDasharray="3 3">
-        <animate attributeName="stroke-dashoffset" values="0;-30" dur="3s" repeatCount="indefinite" />
-      </line>
-      <Label x={20} y={24}>DEPTH · YEARS OF DELIVERY</Label>
-      <Label x={300} y={24} textAnchor="end">6 DISCIPLINES</Label>
+        </circle>
+        {disciplines.map((d, i) => {
+          const a = (i / disciplines.length) * Math.PI * 2 - Math.PI / 2;
+          const tx = Math.cos(a) * 78;
+          const ty = Math.sin(a) * 78;
+          const lx = Math.cos(a) * 92;
+          const ly = Math.sin(a) * 92;
+          const anchor = Math.cos(a) > 0.3 ? "start" : Math.cos(a) < -0.3 ? "end" : "middle";
+          return (
+            <g key={i}>
+              <line x1={tx} y1={ty} x2={lx * 0.94} y2={ly * 0.94} stroke={G_INK_FAINT} strokeWidth="1" />
+              <text
+                x={lx}
+                y={ly + 3}
+                fontFamily="'Funnel Sans', sans-serif"
+                fontSize="8"
+                fontWeight="600"
+                fill={G_INK}
+                letterSpacing="1.5"
+                textAnchor={anchor}
+                style={{ textTransform: "uppercase" }}
+              >
+                {d}
+              </text>
+            </g>
+          );
+        })}
+      </g>
+      <NumLabel x={20} y={36} size={14} lime>
+        06
+      </NumLabel>
+      <Label x={44} y={34} size={8} dim>
+        DISCIPLINES
+      </Label>
     </svg>
   );
 }

@@ -265,7 +265,7 @@ export default function NewBlogPostPage() {
                 Back
               </Link>
               <div className="h-5 w-px bg-slate-200" />
-              <Image src="/img/ArqAI-logo.png" alt="ArqAI" width={100} height={32} className="h-6 w-auto" />
+              <Image src="/img/ArqAI-Labs-Logo.png" alt="ArqAI Labs" width={120} height={36} className="h-6 w-auto" />
               <span className="text-sm font-medium text-slate-500">New Blog Post</span>
             </div>
             <div className="flex items-center gap-2">

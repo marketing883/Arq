@@ -257,7 +257,7 @@ export async function sendUserConfirmation(
           <div style="padding: 20px;">
             <div class="container">
               <div class="header">
-                <img src="${siteUrl}/img/ArqAI-logo-transparent-bg.png" alt="ArqAI" class="logo" style="max-width: 160px; height: auto;">
+                <img src="${siteUrl}/img/ArqAI-Labs-Logo.png" alt="ArqAI Labs" class="logo" style="max-width: 180px; height: auto;">
               </div>
               <div class="content">
                 <p class="greeting">Hi ${firstName},</p>

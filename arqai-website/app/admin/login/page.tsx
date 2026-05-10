@@ -53,8 +53,8 @@ export default function AdminLoginPage() {
           {/* Logo */}
           <div className="flex justify-center mb-8">
             <Image
-              src="/img/ArqAI-logo.png"
-              alt="ArqAI - Intelligence, By Design"
+              src="/img/ArqAI-Labs-Logo.png"
+              alt="ArqAI Labs"
               width={180}
               height={60}
               className="h-14 w-auto"
