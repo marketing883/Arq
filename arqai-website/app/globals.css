@@ -1066,7 +1066,29 @@
    Keep these scoped to .arq-dark so other pages stay light
    ========================================================= */
 
-.arq-dark {
+.arq-dark,
+body.arq-dark-body,
+body:has(.a-nav) {
+  /* Legacy design-token bridge so older Tailwind pages inherit the new dark/lime palette. */
+  --base: #08080B;
+  --base-rgb: 8, 8, 11;
+  --base-tint: #0C0C10;
+  --base-shade: #050507;
+  --base-opp: #F5EFE6;
+  --base-opp-tint: #FFFFFF;
+  --accent: #d0f438;
+  --accent-rgb: 208, 244, 56;
+  --additional: #7DD3FC;
+  --additional-rgb: 125, 211, 252;
+  --text-bright: #F5EFE6;
+  --text-medium: #C9C3B8;
+  --text-muted: #8A857C;
+  --text-muted-extra: #5C5852;
+  --text-opp-bright: #08080B;
+  --stroke-bright: rgba(245,239,230,0.32);
+  --stroke-medium: rgba(245,239,230,0.18);
+  --stroke-muted: rgba(245,239,230,0.08);
+
   /* Surfaces */
   --ink:        #08080B;
   --ink-2:      #0C0C10;
@@ -1903,6 +1925,65 @@
 @keyframes arq-shimmer {
   0%   { background-position: 100% 0; }
   100% { background-position: -100% 0; }
+}
+
+
+
+/* Dark bridge for legacy Tailwind content pages that now mount SiteNav/Footer. */
+.arq-dark,
+body.arq-dark-body,
+body:has(.a-nav) {
+  background: var(--ink);
+  color: var(--ink-cream);
+}
+body.arq-dark-body main,
+body:has(.a-nav) main {
+  background: var(--ink);
+}
+body.arq-dark-body .prose,
+body:has(.a-nav) .prose {
+  color: var(--ink-cream-d);
+}
+body.arq-dark-body input,
+body.arq-dark-body textarea,
+body.arq-dark-body select,
+body:has(.a-nav) input,
+body:has(.a-nav) textarea,
+body:has(.a-nav) select,
+.arq-dark input,
+.arq-dark textarea,
+.arq-dark select {
+  background: rgba(245,239,230,0.04);
+  color: var(--ink-cream);
+  border-color: var(--aline-2);
+}
+body.arq-dark-body input::placeholder,
+body.arq-dark-body textarea::placeholder,
+body:has(.a-nav) input::placeholder,
+body:has(.a-nav) textarea::placeholder,
+.arq-dark input::placeholder,
+.arq-dark textarea::placeholder {
+  color: var(--ink-muted);
+}
+body.arq-dark-body .card,
+body:has(.a-nav) .card {
+  background: linear-gradient(180deg, rgba(245,239,230,0.04), rgba(245,239,230,0.015));
+  border: 1px solid var(--aline);
+  color: var(--ink-cream);
+}
+body.arq-dark-body .btn.bg-accent,
+body:has(.a-nav) .btn.bg-accent,
+body.arq-dark-body .btn-primary,
+body:has(.a-nav) .btn-primary {
+  color: var(--ink) !important;
+}
+body.arq-dark-body .bg-white,
+body:has(.a-nav) .bg-white {
+  background-color: var(--ink-2) !important;
+}
+body.arq-dark-body .text-white,
+body:has(.a-nav) .text-white {
+  color: var(--ink-cream) !important;
 }
 
 /* Mobile menu burger + overlay for SiteNav */

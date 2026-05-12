@@ -348,6 +348,7 @@ function ServicesSection() {
       href: "/services/workflow-strategy",
       desc: "Identify the right use cases, business impact, users, data, risks, and success metrics before anything is built.",
       Art: WorkflowMap,
+      href: "/services/workflow-intelligence",
     },
     {
       icon: <Icon.Agent />,
@@ -355,6 +356,7 @@ function ServicesSection() {
       href: "/services/agentic-ai-buildout",
       desc: "Design and deploy agents, copilots, automations, decision systems, and retrieval flows around your actual process.",
       Art: AgentConstellation,
+      href: "/services/agentic-os-design",
     },
     {
       icon: <Icon.Plug />,
@@ -362,6 +364,7 @@ function ServicesSection() {
       href: "/services/enterprise-integration",
       desc: "Connect AI into your CRM, ERP, ITSM, data platforms, cloud stack, knowledge bases, and operating tools.",
       Art: IntegrationBus,
+      href: "/services/enterprise-integration",
     },
     {
       icon: <Icon.Shield />,
@@ -369,6 +372,7 @@ function ServicesSection() {
       href: "/services/governance-by-design",
       desc: "Build in permissions, approvals, policy checks, human review, audit trails, and exception handling from day one.",
       Art: Gates,
+      href: "/services/governance-architecture",
     },
     {
       icon: <Icon.Cube />,
@@ -376,6 +380,7 @@ function ServicesSection() {
       href: "/services/vertical-acceleration",
       desc: "Use proven product lines for repeatable workflows: claims, fraud, AML, loyalty, network ops, supply chain risk.",
       Art: StackLift,
+      href: "/services/accelerator-adaptation",
     },
     {
       icon: <Icon.Pulse />,
@@ -383,6 +388,7 @@ function ServicesSection() {
       href: "/services/managed-ai-operations",
       desc: "Monitor, improve, and expand AI workflows after launch so they keep performing in real business conditions.",
       Art: PulseMonitor,
+      href: "/services/production-adoption",
     },
   ];
   return (
@@ -502,6 +508,7 @@ function AcceleratorsSection() {
       desc: "Detect fraud, waste, abuse, billing anomalies, provider risk, and claims leakage across healthcare payer workflows.",
       built: "Healthcare payers · TPAs · PBMs",
       img: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1200&q=70",
+      href: "/accelerators",
     },
     {
       name: "Luma",
@@ -509,6 +516,7 @@ function AcceleratorsSection() {
       desc: "Prioritize, route, enrich, and resolve claims faster with AI-assisted intake, documentation checks, and reviewer support.",
       built: "Healthcare · Insurance · Benefits",
       img: "https://images.unsplash.com/photo-1666214280557-f1b5022eb634?auto=format&fit=crop&w=1200&q=70",
+      href: "/accelerators",
     },
     {
       name: "Sentra",
@@ -516,6 +524,7 @@ function AcceleratorsSection() {
       desc: "Automate AML, KYC, sanctions review, beneficial ownership checks, alert triage, and customer due diligence.",
       built: "Banks · Fintechs · Financial institutions",
       img: "https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?auto=format&fit=crop&w=1200&q=70",
+      href: "/accelerators",
     },
     {
       name: "Nuvia",
@@ -523,6 +532,7 @@ function AcceleratorsSection() {
       desc: "Turn customer, transaction, and behavioral data into personalized offers, retention actions, and next-best engagement.",
       built: "Retail · QSR · Consumer brands",
       img: "https://images.unsplash.com/photo-1481437156560-3205f6a55735?auto=format&fit=crop&w=1200&q=70",
+      href: "/accelerators",
     },
     {
       name: "Kyra",
@@ -530,6 +540,7 @@ function AcceleratorsSection() {
       desc: "Accelerate incident detection, ticket enrichment, outage triage, escalation routing, and service restoration workflows.",
       built: "Telecom · Managed services · Operations",
       img: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=70",
+      href: "/accelerators",
     },
     {
       name: "Orbis",
@@ -537,6 +548,7 @@ function AcceleratorsSection() {
       desc: "Monitor supplier risk, procurement exposure, contract signals, shipment exceptions, and operational dependencies.",
       built: "Energy · Manufacturing · Logistics",
       img: "https://images.unsplash.com/photo-1577416412292-747c6607f055?auto=format&fit=crop&w=1200&q=70",
+      href: "/accelerators",
     },
     {
       name: "Astra",
@@ -544,6 +556,7 @@ function AcceleratorsSection() {
       desc: "Classify, route, resolve, and govern service workflows across ITSM, internal operations, knowledge bases, and tools.",
       built: "Enterprise IT · Shared services · Ops",
       img: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=70",
+      href: "/accelerators",
     },
     {
       name: "Vantaq",
@@ -551,6 +564,7 @@ function AcceleratorsSection() {
       desc: "Triage alerts, summarize incidents, enrich threat context, recommend response actions, and generate compliance evidence.",
       built: "Cybersecurity · SecOps · Risk teams",
       img: "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?auto=format&fit=crop&w=1200&q=70",
+      href: "/accelerators",
     },
   ];
 
