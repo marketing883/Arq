@@ -347,36 +347,42 @@ function ServicesSection() {
       title: "Workflow Strategy",
       desc: "Identify the right use cases, business impact, users, data, risks, and success metrics before anything is built.",
       Art: WorkflowMap,
+      href: "/services/workflow-intelligence",
     },
     {
       icon: <Icon.Agent />,
       title: "Agentic AI Buildout",
       desc: "Design and deploy agents, copilots, automations, decision systems, and retrieval flows around your actual process.",
       Art: AgentConstellation,
+      href: "/services/agentic-os-design",
     },
     {
       icon: <Icon.Plug />,
       title: "Enterprise Integration",
       desc: "Connect AI into your CRM, ERP, ITSM, data platforms, cloud stack, knowledge bases, and operating tools.",
       Art: IntegrationBus,
+      href: "/services/enterprise-integration",
     },
     {
       icon: <Icon.Shield />,
       title: "Governance by Design",
       desc: "Build in permissions, approvals, policy checks, human review, audit trails, and exception handling from day one.",
       Art: Gates,
+      href: "/services/governance-architecture",
     },
     {
       icon: <Icon.Cube />,
       title: "Vertical Acceleration",
       desc: "Use proven product lines for repeatable workflows: claims, fraud, AML, loyalty, network ops, supply chain risk.",
       Art: StackLift,
+      href: "/services/accelerator-adaptation",
     },
     {
       icon: <Icon.Pulse />,
       title: "Managed AI Operations",
       desc: "Monitor, improve, and expand AI workflows after launch so they keep performing in real business conditions.",
       Art: PulseMonitor,
+      href: "/services/production-adoption",
     },
   ];
   return (
@@ -401,7 +407,7 @@ function ServicesSection() {
           {services.map((s, i) => {
             const Art = s.Art;
             return (
-              <div className="svc reveal" data-d={(i % 3) + 1} key={s.title}>
+              <Link className="svc reveal" data-d={(i % 3) + 1} href={s.href} key={s.title}>
                 <div className="svc-media">
                   <Art />
                   <div className="svc-media-shade" />
@@ -409,7 +415,10 @@ function ServicesSection() {
                 </div>
                 <h4>{s.title}</h4>
                 <p>{s.desc}</p>
-              </div>
+                <span style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "var(--ember)", fontSize: 13, marginTop: 18 }}>
+                  Open service <Icon.Arrow className="arrow" />
+                </span>
+              </Link>
             );
           })}
         </div>
@@ -420,9 +429,14 @@ function ServicesSection() {
             specific. <em style={{ fontFamily: "var(--serif)", fontStyle: "italic", color: "var(--ink-cream)" }}>Product-accelerated</em> where the pattern is
             proven.
           </p>
-          <Link href="/engage-us" className="a-btn a-btn-primary">
-            Start with one workflow <Icon.Arrow className="arrow" />
-          </Link>
+          <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+            <Link href="/services" className="a-btn a-btn-primary">
+              Explore services <Icon.Arrow className="arrow" />
+            </Link>
+            <Link href="/industries" className="a-btn a-btn-ghost">
+              See industries <Icon.Arrow className="arrow" />
+            </Link>
+          </div>
         </div>
       </div>
     </section>
@@ -490,6 +504,7 @@ function AcceleratorsSection() {
       desc: "Detect fraud, waste, abuse, billing anomalies, provider risk, and claims leakage across healthcare payer workflows.",
       built: "Healthcare payers · TPAs · PBMs",
       img: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1200&q=70",
+      href: "/accelerators",
     },
     {
       name: "Luma",
@@ -497,6 +512,7 @@ function AcceleratorsSection() {
       desc: "Prioritize, route, enrich, and resolve claims faster with AI-assisted intake, documentation checks, and reviewer support.",
       built: "Healthcare · Insurance · Benefits",
       img: "https://images.unsplash.com/photo-1666214280557-f1b5022eb634?auto=format&fit=crop&w=1200&q=70",
+      href: "/accelerators",
     },
     {
       name: "Sentra",
@@ -504,6 +520,7 @@ function AcceleratorsSection() {
       desc: "Automate AML, KYC, sanctions review, beneficial ownership checks, alert triage, and customer due diligence.",
       built: "Banks · Fintechs · Financial institutions",
       img: "https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?auto=format&fit=crop&w=1200&q=70",
+      href: "/accelerators",
     },
     {
       name: "Nuvia",
@@ -511,6 +528,7 @@ function AcceleratorsSection() {
       desc: "Turn customer, transaction, and behavioral data into personalized offers, retention actions, and next-best engagement.",
       built: "Retail · QSR · Consumer brands",
       img: "https://images.unsplash.com/photo-1481437156560-3205f6a55735?auto=format&fit=crop&w=1200&q=70",
+      href: "/accelerators",
     },
     {
       name: "Kyra",
@@ -518,6 +536,7 @@ function AcceleratorsSection() {
       desc: "Accelerate incident detection, ticket enrichment, outage triage, escalation routing, and service restoration workflows.",
       built: "Telecom · Managed services · Operations",
       img: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=70",
+      href: "/accelerators",
     },
     {
       name: "Orbis",
@@ -525,6 +544,7 @@ function AcceleratorsSection() {
       desc: "Monitor supplier risk, procurement exposure, contract signals, shipment exceptions, and operational dependencies.",
       built: "Energy · Manufacturing · Logistics",
       img: "https://images.unsplash.com/photo-1577416412292-747c6607f055?auto=format&fit=crop&w=1200&q=70",
+      href: "/accelerators",
     },
     {
       name: "Astra",
@@ -532,6 +552,7 @@ function AcceleratorsSection() {
       desc: "Classify, route, resolve, and govern service workflows across ITSM, internal operations, knowledge bases, and tools.",
       built: "Enterprise IT · Shared services · Ops",
       img: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=70",
+      href: "/accelerators",
     },
     {
       name: "Vantaq",
@@ -539,6 +560,7 @@ function AcceleratorsSection() {
       desc: "Triage alerts, summarize incidents, enrich threat context, recommend response actions, and generate compliance evidence.",
       built: "Cybersecurity · SecOps · Risk teams",
       img: "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?auto=format&fit=crop&w=1200&q=70",
+      href: "/accelerators",
     },
   ];
 
@@ -561,7 +583,7 @@ function AcceleratorsSection() {
 
         <div className="acc-grid reveal">
           {products.map((p, i) => (
-            <div className="acc-card" key={p.name}>
+            <Link className="acc-card" href={p.href} key={p.name}>
               <div className="acc-bg" style={{ backgroundImage: `url(${p.img})` }} aria-hidden="true" />
               <div className="acc-glass" aria-hidden="true" />
               <div className="acc-content">
@@ -578,7 +600,7 @@ function AcceleratorsSection() {
                   Built for <b>{p.built}</b>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
 
@@ -587,7 +609,7 @@ function AcceleratorsSection() {
             Start with the accelerator closest to your workflow. Customize it around your enterprise reality.{" "}
             <em style={{ fontFamily: "var(--serif)", fontStyle: "italic", color: "var(--ink-cream)" }}>Scale from there.</em>
           </p>
-          <Link href="/engage-us" className="a-btn a-btn-primary">
+          <Link href="/accelerators" className="a-btn a-btn-primary">
             Explore accelerators <Icon.Arrow className="arrow" />
           </Link>
         </div>

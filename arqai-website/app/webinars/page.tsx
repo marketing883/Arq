@@ -1,6 +1,8 @@
 import { createClient } from "@supabase/supabase-js";
 import Link from "next/link";
 import { Metadata } from "next";
+import { SiteNav } from "@/components/site-dark/SiteNav";
+import { SiteFooter } from "@/components/site-dark/SiteFooter";
 
 export const metadata: Metadata = {
   title: "Webinars | ArqAI",
@@ -209,7 +211,8 @@ export default async function WebinarsPage() {
   const { upcoming, onDemand } = await getWebinars();
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
+    <div className="arq-dark min-h-screen">
+      <SiteNav />
       {/* Hero */}
       <section className="bg-gradient-to-br from-blue-600 via-purple-600 to-blue-700 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -302,6 +305,7 @@ export default async function WebinarsPage() {
           </Link>
         </div>
       </section>
+      <SiteFooter />
     </div>
   );
 }

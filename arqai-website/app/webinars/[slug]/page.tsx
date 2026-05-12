@@ -2,6 +2,8 @@ import { createClient } from "@supabase/supabase-js";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Metadata } from "next";
+import { SiteNav } from "@/components/site-dark/SiteNav";
+import { SiteFooter } from "@/components/site-dark/SiteFooter";
 
 function getSupabase() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -159,7 +161,8 @@ export default async function WebinarPage({ params }: { params: Promise<{ slug: 
   const actionText = isOnDemand ? "Watch Recording" : "Register Now";
 
   return (
-    <div className="min-h-screen bg-white dark:bg-slate-950">
+    <div className="arq-dark min-h-screen">
+      <SiteNav />
       {/* Hero Section */}
       <section className="relative">
         {/* Banner Image */}
@@ -368,6 +371,7 @@ export default async function WebinarPage({ params }: { params: Promise<{ slug: 
           </Link>
         </div>
       </section>
+      <SiteFooter />
     </div>
   );
 }
