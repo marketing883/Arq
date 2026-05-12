@@ -1931,59 +1931,145 @@ body:has(.a-nav) {
 
 /* Dark bridge for legacy Tailwind content pages that now mount SiteNav/Footer. */
 .arq-dark,
-body.arq-dark-body,
-body:has(.a-nav) {
+:where(body.arq-dark-body, body:has(.a-nav)) {
   background: var(--ink);
   color: var(--ink-cream);
 }
-body.arq-dark-body main,
-body:has(.a-nav) main {
-  background: var(--ink);
-}
-body.arq-dark-body .prose,
-body:has(.a-nav) .prose {
-  color: var(--ink-cream-d);
-}
-body.arq-dark-body input,
-body.arq-dark-body textarea,
-body.arq-dark-body select,
-body:has(.a-nav) input,
-body:has(.a-nav) textarea,
-body:has(.a-nav) select,
-.arq-dark input,
-.arq-dark textarea,
-.arq-dark select {
-  background: rgba(245,239,230,0.04);
-  color: var(--ink-cream);
-  border-color: var(--aline-2);
-}
-body.arq-dark-body input::placeholder,
-body.arq-dark-body textarea::placeholder,
-body:has(.a-nav) input::placeholder,
-body:has(.a-nav) textarea::placeholder,
-.arq-dark input::placeholder,
-.arq-dark textarea::placeholder {
-  color: var(--ink-muted);
-}
-body.arq-dark-body .card,
-body:has(.a-nav) .card {
-  background: linear-gradient(180deg, rgba(245,239,230,0.04), rgba(245,239,230,0.015));
-  border: 1px solid var(--aline);
+
+:where(body.arq-dark-body, body:has(.a-nav)) main {
+  background: var(--ink) !important;
   color: var(--ink-cream);
 }
-body.arq-dark-body .btn.bg-accent,
-body:has(.a-nav) .btn.bg-accent,
-body.arq-dark-body .btn-primary,
-body:has(.a-nav) .btn-primary {
-  color: var(--ink) !important;
+
+:where(body.arq-dark-body, body:has(.a-nav)) :is(.bg-base, .bg-base-opp, .bg-slate-950, .bg-slate-900, .bg-gray-950, .bg-gray-900) {
+  background-color: var(--ink) !important;
 }
-body.arq-dark-body .bg-white,
-body:has(.a-nav) .bg-white {
+
+:where(body.arq-dark-body, body:has(.a-nav)) :is(.bg-base-tint, .bg-white, .bg-slate-50, .bg-slate-100, .bg-gray-50, .bg-gray-100, .dark\:bg-slate-950, .dark\:bg-gray-900),
+:where(body.arq-dark-body, body:has(.a-nav)) [class~="bg-[var(--arq-gray-50)]"],
+:where(body.arq-dark-body, body:has(.a-nav)) [class~="bg-[var(--arq-gray-100)]"],
+:where(body.arq-dark-body, body:has(.a-nav)) [class~="dark:bg-[var(--arq-gray-800)]"],
+:where(body.arq-dark-body, body:has(.a-nav)) [class~="dark:bg-[var(--arq-gray-900)]"] {
   background-color: var(--ink-2) !important;
 }
-body.arq-dark-body .text-white,
-body:has(.a-nav) .text-white {
+
+:where(body.arq-dark-body, body:has(.a-nav)) :is(.bg-slate-200, .bg-slate-300, .bg-gray-200, .bg-gray-300, .hover\:bg-slate-200:hover, .hover\:bg-gray-200:hover) {
+  background-color: var(--ink-3) !important;
+}
+
+:where(body.arq-dark-body, body:has(.a-nav)) :is(.bg-accent, .btn-primary, .tag-accent, .bg-blue-500, .bg-blue-600, .bg-blue-700),
+:where(body.arq-dark-body, body:has(.a-nav)) [class~="bg-[var(--arq-blue)]"],
+:where(body.arq-dark-body, body:has(.a-nav)) [class~="bg-[var(--arq-blue-dark)]"],
+:where(body.arq-dark-body, body:has(.a-nav)) [class~="bg-[#0432a5]"] {
+  background-color: var(--ember) !important;
+  color: var(--ink) !important;
+}
+
+:where(body.arq-dark-body, body:has(.a-nav)) :is(.hover\:bg-accent\/90:hover, .hover\:bg-blue-700:hover),
+:where(body.arq-dark-body, body:has(.a-nav)) [class~="hover:bg-[var(--arq-blue-dark)]"]:hover,
+:where(body.arq-dark-body, body:has(.a-nav)) [class~="hover:bg-[#032080]"]:hover {
+  background-color: var(--ember-glow) !important;
+  color: var(--ink) !important;
+}
+
+:where(body.arq-dark-body, body:has(.a-nav)) :is(.text-text-bright, .text-base, .text-white, .text-slate-950, .text-slate-900, .text-gray-950, .text-gray-900, .dark\:text-white, .dark\:text-gray-100, .dark\:text-slate-100),
+:where(body.arq-dark-body, body:has(.a-nav)) [class~="text-[var(--arq-black)]"] {
   color: var(--ink-cream) !important;
+}
+
+:where(body.arq-dark-body, body:has(.a-nav)) :is(.text-text-medium, .text-base\/70, .text-slate-700, .text-slate-600, .text-gray-700, .text-gray-600, .dark\:text-gray-300, .dark\:text-slate-300),
+:where(body.arq-dark-body, body:has(.a-nav)) [class~="text-[var(--arq-gray-600)]"] {
+  color: var(--ink-cream-d) !important;
+}
+
+:where(body.arq-dark-body, body:has(.a-nav)) :is(.text-text-muted, .text-slate-500, .text-slate-400, .text-gray-500, .text-gray-400, .dark\:text-gray-400, .dark\:text-slate-400),
+:where(body.arq-dark-body, body:has(.a-nav)) [class~="text-[var(--arq-gray-500)]"],
+:where(body.arq-dark-body, body:has(.a-nav)) [class~="text-[var(--arq-gray-400)]"] {
+  color: var(--ink-muted) !important;
+}
+
+:where(body.arq-dark-body, body:has(.a-nav)) :is(.text-accent, .text-blue-500, .text-blue-600, .text-blue-700, .text-purple-500, .text-purple-600, .hover\:text-accent:hover, .hover\:text-blue-600:hover, .hover\:text-blue-700:hover),
+:where(body.arq-dark-body, body:has(.a-nav)) [class~="text-[var(--arq-blue)]"],
+:where(body.arq-dark-body, body:has(.a-nav)) [class~="hover:text-[var(--arq-blue)]"]:hover {
+  color: var(--ember) !important;
+}
+
+:where(body.arq-dark-body, body:has(.a-nav)) :is(.border-stroke-muted, .border-slate-200, .border-slate-300, .border-gray-200, .border-gray-300, .dark\:border-gray-700, .dark\:border-slate-700),
+:where(body.arq-dark-body, body:has(.a-nav)) [class~="border-[var(--arq-gray-200)]"],
+:where(body.arq-dark-body, body:has(.a-nav)) [class~="border-[var(--arq-gray-300)]"],
+:where(body.arq-dark-body, body:has(.a-nav)) [class~="dark:border-[var(--arq-gray-600)]"],
+:where(body.arq-dark-body, body:has(.a-nav)) [class~="dark:border-[var(--arq-gray-700)]"] {
+  border-color: var(--aline-2) !important;
+}
+
+:where(body.arq-dark-body, body:has(.a-nav)) :is(.prose, .prose p, .prose li, .prose blockquote) {
+  color: var(--ink-cream-d);
+}
+
+:where(body.arq-dark-body, body:has(.a-nav)) :is(.prose h1, .prose h2, .prose h3, .prose h4, .prose strong) {
+  color: var(--ink-cream);
+}
+
+:where(body.arq-dark-body, body:has(.a-nav)) :is(input, textarea, select),
+.arq-dark :is(input, textarea, select) {
+  background: rgba(245,239,230,0.04) !important;
+  color: var(--ink-cream) !important;
+  border-color: var(--aline-2) !important;
+}
+
+:where(body.arq-dark-body, body:has(.a-nav)) :is(input, textarea)::placeholder,
+.arq-dark :is(input, textarea)::placeholder {
+  color: var(--ink-muted);
+}
+
+:where(body.arq-dark-body, body:has(.a-nav)) .card {
+  background: linear-gradient(180deg, rgba(245,239,230,0.04), rgba(245,239,230,0.015)) !important;
+  border: 1px solid var(--aline);
+  color: var(--ink-cream);
+  box-shadow: none;
+}
+
+:where(body.arq-dark-body, body:has(.a-nav)) :is(.btn, .btn-primary, .btn-outline) {
+  border-color: var(--aline-2);
+}
+
+:where(body.arq-dark-body, body:has(.a-nav)) :is(.btn.bg-accent, .btn-primary, .tag-accent) {
+  color: var(--ink) !important;
+}
+
+:where(body.arq-dark-body, body:has(.a-nav)) :is(.bg-accent.rounded-xl, .bg-accent.rounded-2xl, .card-accent) {
+  background:
+    radial-gradient(700px 420px at 82% 8%, rgba(208,244,56,0.13), transparent 62%),
+    linear-gradient(180deg, rgba(245,239,230,0.05), rgba(245,239,230,0.015)) !important;
+  border: 1px solid var(--aline-2);
+  color: var(--ink-cream) !important;
+}
+
+:where(body.arq-dark-body, body:has(.a-nav)) :is(.bg-accent.rounded-xl, .bg-accent.rounded-2xl, .card-accent) :is(.bg-white, .btn) {
+  background-color: var(--ember) !important;
+  color: var(--ink) !important;
+}
+
+:where(body.arq-dark-body, body:has(.a-nav)) :is(.btn-outline, .btn-outline-opposite) {
+  color: var(--ink-cream) !important;
+  border-color: var(--aline-2) !important;
+}
+
+:where(body.arq-dark-body, body:has(.a-nav)) :is(.btn-outline:hover, .btn-outline-opposite:hover) {
+  background-color: var(--ink-3) !important;
+  color: var(--ink-cream) !important;
+}
+
+:where(body.arq-dark-body, body:has(.a-nav)) :is(.from-blue-400, .from-blue-500, .from-blue-600),
+:where(body.arq-dark-body, body:has(.a-nav)) [class~="from-[var(--arq-blue)]"] {
+  --tw-gradient-from: var(--ember) var(--tw-gradient-from-position) !important;
+  --tw-gradient-to: rgb(208 244 56 / 0) var(--tw-gradient-to-position) !important;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+}
+
+:where(body.arq-dark-body, body:has(.a-nav)) :is(.to-blue-600, .to-blue-700, .to-purple-500, .to-purple-600),
+:where(body.arq-dark-body, body:has(.a-nav)) [class~="to-[var(--arq-blue-dark)]"] {
+  --tw-gradient-to: var(--ion) var(--tw-gradient-to-position) !important;
 }
 
 /* Mobile menu burger + overlay for SiteNav */

@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { SiteNav } from "@/components/site-dark/SiteNav";
 
 /**
@@ -10,6 +11,14 @@ import { SiteNav } from "@/components/site-dark/SiteNav";
  * fixed nav and dark/lime token scope without rewriting every content page.
  */
 export function Header() {
+  useEffect(() => {
+    document.body.classList.add("arq-dark-body");
+
+    return () => {
+      document.body.classList.remove("arq-dark-body");
+    };
+  }, []);
+
   return (
     <div className="arq-dark arq-dark-compat">
       <SiteNav />
