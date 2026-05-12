@@ -39,7 +39,7 @@ export type IndustryPageData = {
   heroSubhead: string;
   heroImage: string;
   heroImageAlt: string;
-  primaryCta: { label: string; href: string };
+  primaryCta?: { label: string; href: string };
   secondaryCta?: { label: string; href: string };
   outcomes: { metric: string; label: string; description: string }[];
   useCasesHeading: string;
@@ -51,15 +51,18 @@ export type IndustryPageData = {
   audienceList: string[];
   productsHeading: string;
   productsBody: string;
-  products: { name: string; href: string; description: string; status?: string; statusColor?: string; cta?: string }[];
-  closingCta: { headline: string; body: string; ctaLabel?: string; ctaHref?: string };
-}
+  products: {
+    name: string;
+    status: string;
+    statusColor: string;
+    description: string;
+    cta: string;
+    href: string;
+  }[];
+  closingCta: { headline: string; body: string };
+};
 
-interface IndustryPageProps {
-  data: IndustryPageData;
-}
-
-function ArrowIcon({ className = "" }: { className?: string }) {
+export function IndustryPage({ data }: { data: IndustryPageData }) {
   return (
     <div className="arq-dark min-h-screen">
       <SiteNav />
@@ -103,7 +106,7 @@ function ArrowIcon({ className = "" }: { className?: string }) {
                   <div className="svc-media-shade" />
                 </div>
               </div>
-            </article>
+            </div>
           </div>
         </section>
 

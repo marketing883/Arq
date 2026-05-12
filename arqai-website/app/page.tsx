@@ -348,7 +348,6 @@ function ServicesSection() {
       href: "/services/workflow-strategy",
       desc: "Identify the right use cases, business impact, users, data, risks, and success metrics before anything is built.",
       Art: WorkflowMap,
-      href: "/services/workflow-intelligence",
     },
     {
       icon: <Icon.Agent />,
@@ -356,7 +355,6 @@ function ServicesSection() {
       href: "/services/agentic-ai-buildout",
       desc: "Design and deploy agents, copilots, automations, decision systems, and retrieval flows around your actual process.",
       Art: AgentConstellation,
-      href: "/services/agentic-os-design",
     },
     {
       icon: <Icon.Plug />,
@@ -364,7 +362,6 @@ function ServicesSection() {
       href: "/services/enterprise-integration",
       desc: "Connect AI into your CRM, ERP, ITSM, data platforms, cloud stack, knowledge bases, and operating tools.",
       Art: IntegrationBus,
-      href: "/services/enterprise-integration",
     },
     {
       icon: <Icon.Shield />,
@@ -372,7 +369,6 @@ function ServicesSection() {
       href: "/services/governance-by-design",
       desc: "Build in permissions, approvals, policy checks, human review, audit trails, and exception handling from day one.",
       Art: Gates,
-      href: "/services/governance-architecture",
     },
     {
       icon: <Icon.Cube />,
@@ -380,7 +376,6 @@ function ServicesSection() {
       href: "/services/vertical-acceleration",
       desc: "Use proven product lines for repeatable workflows: claims, fraud, AML, loyalty, network ops, supply chain risk.",
       Art: StackLift,
-      href: "/services/accelerator-adaptation",
     },
     {
       icon: <Icon.Pulse />,
@@ -388,7 +383,6 @@ function ServicesSection() {
       href: "/services/managed-ai-operations",
       desc: "Monitor, improve, and expand AI workflows after launch so they keep performing in real business conditions.",
       Art: PulseMonitor,
-      href: "/services/production-adoption",
     },
   ];
   return (
