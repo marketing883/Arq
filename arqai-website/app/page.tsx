@@ -345,36 +345,42 @@ function ServicesSection() {
     {
       icon: <Icon.Map />,
       title: "Workflow Strategy",
+      href: "/services/workflow-strategy",
       desc: "Identify the right use cases, business impact, users, data, risks, and success metrics before anything is built.",
       Art: WorkflowMap,
     },
     {
       icon: <Icon.Agent />,
       title: "Agentic AI Buildout",
+      href: "/services/agentic-ai-buildout",
       desc: "Design and deploy agents, copilots, automations, decision systems, and retrieval flows around your actual process.",
       Art: AgentConstellation,
     },
     {
       icon: <Icon.Plug />,
       title: "Enterprise Integration",
+      href: "/services/enterprise-integration",
       desc: "Connect AI into your CRM, ERP, ITSM, data platforms, cloud stack, knowledge bases, and operating tools.",
       Art: IntegrationBus,
     },
     {
       icon: <Icon.Shield />,
       title: "Governance by Design",
+      href: "/services/governance-by-design",
       desc: "Build in permissions, approvals, policy checks, human review, audit trails, and exception handling from day one.",
       Art: Gates,
     },
     {
       icon: <Icon.Cube />,
       title: "Vertical Acceleration",
+      href: "/services/vertical-acceleration",
       desc: "Use proven product lines for repeatable workflows: claims, fraud, AML, loyalty, network ops, supply chain risk.",
       Art: StackLift,
     },
     {
       icon: <Icon.Pulse />,
       title: "Managed AI Operations",
+      href: "/services/managed-ai-operations",
       desc: "Monitor, improve, and expand AI workflows after launch so they keep performing in real business conditions.",
       Art: PulseMonitor,
     },
@@ -401,7 +407,13 @@ function ServicesSection() {
           {services.map((s, i) => {
             const Art = s.Art;
             return (
-              <div className="svc reveal" data-d={(i % 3) + 1} key={s.title}>
+              <Link
+                href={s.href}
+                className="svc reveal"
+                data-d={(i % 3) + 1}
+                key={s.title}
+                style={{ color: "inherit", textDecoration: "none" }}
+              >
                 <div className="svc-media">
                   <Art />
                   <div className="svc-media-shade" />
@@ -409,7 +421,7 @@ function ServicesSection() {
                 </div>
                 <h4>{s.title}</h4>
                 <p>{s.desc}</p>
-              </div>
+              </Link>
             );
           })}
         </div>
@@ -420,7 +432,7 @@ function ServicesSection() {
             specific. <em style={{ fontFamily: "var(--serif)", fontStyle: "italic", color: "var(--ink-cream)" }}>Product-accelerated</em> where the pattern is
             proven.
           </p>
-          <Link href="/engage-us" className="a-btn a-btn-primary">
+          <Link href="/services" className="a-btn a-btn-primary">
             Start with one workflow <Icon.Arrow className="arrow" />
           </Link>
         </div>
@@ -561,7 +573,12 @@ function AcceleratorsSection() {
 
         <div className="acc-grid reveal">
           {products.map((p, i) => (
-            <div className="acc-card" key={p.name}>
+            <Link
+              href="/accelerators"
+              className="acc-card"
+              key={p.name}
+              style={{ color: "inherit", textDecoration: "none" }}
+            >
               <div className="acc-bg" style={{ backgroundImage: `url(${p.img})` }} aria-hidden="true" />
               <div className="acc-glass" aria-hidden="true" />
               <div className="acc-content">
@@ -578,7 +595,7 @@ function AcceleratorsSection() {
                   Built for <b>{p.built}</b>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
 
@@ -587,7 +604,7 @@ function AcceleratorsSection() {
             Start with the accelerator closest to your workflow. Customize it around your enterprise reality.{" "}
             <em style={{ fontFamily: "var(--serif)", fontStyle: "italic", color: "var(--ink-cream)" }}>Scale from there.</em>
           </p>
-          <Link href="/engage-us" className="a-btn a-btn-primary">
+          <Link href="/accelerators" className="a-btn a-btn-primary">
             Explore accelerators <Icon.Arrow className="arrow" />
           </Link>
         </div>

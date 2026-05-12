@@ -1944,3 +1944,48 @@
   text-decoration: none;
 }
 .arq-dark .a-nav-mobile li a:hover { color: var(--ember); }
+
+/* Compatibility wrappers for legacy Header/Footer imports. */
+.arq-dark.arq-dark-compat {
+  min-height: 0;
+  background: transparent;
+}
+.arq-dark.arq-dark-compat::before,
+.arq-dark.arq-dark-compat::after {
+  content: none;
+}
+
+/* Dark public-page layouts -------------------------------- */
+.arq-dark .detail-hero-grid {
+  grid-template-columns: 1fr;
+}
+@media (min-width: 1000px) {
+  .arq-dark .detail-hero-grid {
+    grid-template-columns: minmax(0, 1.05fr) minmax(360px, 0.95fr);
+  }
+}
+
+.arq-dark .detail-content-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 36px;
+}
+@media (min-width: 1000px) {
+  .arq-dark .detail-content-grid {
+    grid-template-columns: minmax(0, 1fr) 360px;
+    gap: 48px;
+  }
+}
+
+.arq-dark .industry-row {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 900px) {
+  .arq-dark .industry-row {
+    grid-template-columns: minmax(280px, 0.42fr) minmax(0, 0.58fr);
+  }
+  .arq-dark .industry-row:nth-child(even) > div:first-child {
+    order: 2;
+  }
+}

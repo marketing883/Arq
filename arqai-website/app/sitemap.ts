@@ -1,5 +1,7 @@
 import { MetadataRoute } from "next";
 import { createClient } from "@supabase/supabase-js";
+import { accelerators } from "@/lib/data/accelerators";
+import { services } from "@/lib/data/services";
 
 function getSupabase() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -11,6 +13,14 @@ function getSupabase() {
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://thearq.ai";
   const currentDate = new Date().toISOString();
+  const industryPaths = [
+    "/industries",
+    "/industries/healthcare-payers",
+    "/industries/insurance-carriers",
+    "/industries/banking",
+    "/industries/retail",
+    "/industries/manufacturing",
+  ];
 
   // Core pages with high priority
   const corePages: MetadataRoute.Sitemap = [
@@ -19,6 +29,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: currentDate,
       changeFrequency: "weekly",
       priority: 1,
+    },
+    {
+      url: `${baseUrl}/services`,
+      lastModified: currentDate,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/accelerators`,
+      lastModified: currentDate,
+      changeFrequency: "weekly",
+      priority: 0.9,
     },
     {
       url: `${baseUrl}/platform`,
@@ -75,6 +97,27 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.7,
     },
   ];
+
+  const servicePages: MetadataRoute.Sitemap = services.map((service) => ({
+    url: `${baseUrl}/services/${service.slug}`,
+    lastModified: currentDate,
+    changeFrequency: "monthly",
+    priority: 0.8,
+  }));
+
+  const acceleratorPages: MetadataRoute.Sitemap = accelerators.map((accelerator) => ({
+    url: `${baseUrl}/accelerators/${accelerator.id}`,
+    lastModified: currentDate,
+    changeFrequency: "monthly",
+    priority: 0.8,
+  }));
+
+  const industryPages: MetadataRoute.Sitemap = industryPaths.map((path) => ({
+    url: `${baseUrl}${path}`,
+    lastModified: currentDate,
+    changeFrequency: "monthly",
+    priority: path === "/industries" ? 0.8 : 0.7,
+  }));
 
   // Legal pages with lower priority
   const legalPages: MetadataRoute.Sitemap = [
@@ -170,5 +213,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   }
 
-  return [...corePages, ...legalPages, ...dynamicPages];
+  return [...corePages, ...servicePages, ...acceleratorPages, ...industryPages, ...legalPages, ...dynamicPages];
 }

@@ -1,10 +1,12 @@
 import { createClient } from "@supabase/supabase-js";
 import Link from "next/link";
 import { Metadata } from "next";
+import { ArrowIcon, DarkShell } from "@/components/site-dark/DarkShell";
 
 export const metadata: Metadata = {
-  title: "Webinars | ArqAI",
-  description: "Join our live webinars and watch on-demand sessions about AI-powered compliance, security, and enterprise solutions.",
+  title: "Webinars | ArqAI Labs",
+  description:
+    "Live and on-demand sessions for teams moving from AI pilots to governed enterprise workflows.",
 };
 
 function getSupabase() {
@@ -53,13 +55,13 @@ async function getWebinars(): Promise<{ upcoming: Webinar[]; onDemand: Webinar[]
   const now = new Date();
   const webinars = data as Webinar[];
 
-  const upcoming = webinars.filter(w => {
-    const date = new Date(w.webinar_date);
-    return (w.status === "upcoming" || w.status === "live") && date >= now;
+  const upcoming = webinars.filter((webinar) => {
+    const date = new Date(webinar.webinar_date);
+    return (webinar.status === "upcoming" || webinar.status === "live") && date >= now;
   });
 
-  const onDemand = webinars.filter(w => {
-    return w.status === "on-demand" || (w.recording_url && w.recording_url.trim());
+  const onDemand = webinars.filter((webinar) => {
+    return webinar.status === "on-demand" || Boolean(webinar.recording_url?.trim());
   });
 
   return { upcoming, onDemand };
@@ -90,218 +92,145 @@ function WebinarCard({ webinar, isOnDemand = false }: { webinar: Webinar; isOnDe
   const actionUrl = isOnDemand ? webinar.recording_url : webinar.registration_url;
 
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 hover:border-blue-300 dark:hover:border-blue-700 transition-all group">
-      {/* Banner */}
-      <div className="relative h-48 bg-gradient-to-br from-blue-600 to-purple-700">
-        {webinar.banner_image && (
-          <img
-            src={webinar.banner_image}
-            alt={webinar.title}
-            className="w-full h-full object-cover"
-          />
-        )}
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 to-transparent" />
-
-        {/* Status Badge */}
-        <div className="absolute top-4 left-4">
-          {webinar.status === "live" ? (
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-green-500 text-white">
-              <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-              Live
-            </span>
-          ) : isOnDemand ? (
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-purple-500 text-white">
-              On-Demand
-            </span>
-          ) : (
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-blue-500 text-white">
-              Upcoming
-            </span>
-          )}
+    <article className="a-card" style={{ padding: 0, overflow: "hidden" }}>
+      <Link href={`/webinars/${webinar.slug}`} style={{ color: "inherit", textDecoration: "none" }}>
+        <div style={{ position: "relative", aspectRatio: "16 / 9", background: "var(--ink-2)", overflow: "hidden" }}>
+          {webinar.banner_image ? (
+            <img
+              src={webinar.banner_image}
+              alt=""
+              loading="lazy"
+              decoding="async"
+              style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+            />
+          ) : null}
+          <div className="svc-media-shade" />
+          <div style={{ position: "absolute", left: 18, top: 18 }}>
+            <span className="a-tag">{webinar.status === "live" ? "Live" : isOnDemand ? "On-demand" : "Upcoming"}</span>
+          </div>
+          <div style={{ position: "absolute", right: 18, top: 18 }}>
+            <span className="a-tag">{formatDuration(webinar.duration)}</span>
+          </div>
         </div>
+      </Link>
 
-        {/* Duration */}
-        <div className="absolute top-4 right-4">
-          <span className="px-2 py-1 rounded bg-slate-900/60 text-white text-xs">
-            {formatDuration(webinar.duration)}
-          </span>
-        </div>
-      </div>
-
-      {/* Content */}
-      <div className="p-6">
-        <div className="mb-3 text-sm text-slate-500 dark:text-slate-400 flex items-center gap-2">
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-          </svg>
-          {formatDate(webinar.webinar_date, webinar.timezone)}
-        </div>
-
-        <Link href={`/webinars/${webinar.slug}`}>
-          <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2">
+      <div style={{ padding: 24 }}>
+        <div className="kicker">{formatDate(webinar.webinar_date, webinar.timezone)}</div>
+        <Link href={`/webinars/${webinar.slug}`} style={{ color: "inherit", textDecoration: "none" }}>
+          <h3 style={{ color: "var(--ink-cream)", fontFamily: "var(--display)", fontSize: 24, lineHeight: 1.2, marginTop: 14 }}>
             {webinar.title}
           </h3>
         </Link>
-
-        {webinar.description && (
-          <p className="text-slate-600 dark:text-slate-400 text-sm mb-4 line-clamp-2">
-            {webinar.description}
+        {webinar.description ? (
+          <p style={{ color: "var(--ink-cream-d)", lineHeight: 1.6, marginTop: 12 }}>{webinar.description}</p>
+        ) : null}
+        {webinar.presenters?.length ? (
+          <p className="kicker" style={{ marginTop: 18 }}>
+            {webinar.presenters.map((presenter) => presenter.name).join(", ")}
           </p>
-        )}
-
-        {/* Presenters */}
-        {webinar.presenters && webinar.presenters.length > 0 && (
-          <div className="flex items-center gap-2 mb-4">
-            <div className="flex -space-x-2">
-              {webinar.presenters.slice(0, 3).map((presenter, idx) => (
-                presenter.photo ? (
-                  <img
-                    key={idx}
-                    src={presenter.photo}
-                    alt={presenter.name}
-                    className="w-8 h-8 rounded-full border-2 border-white dark:border-slate-900 object-cover"
-                  />
-                ) : (
-                  <div
-                    key={idx}
-                    className="w-8 h-8 rounded-full border-2 border-white dark:border-slate-900 bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-xs font-bold"
-                  >
-                    {presenter.name.charAt(0)}
-                  </div>
-                )
-              ))}
-            </div>
-            <span className="text-sm text-slate-500 dark:text-slate-400">
-              {webinar.presenters.map(p => p.name).join(", ")}
-            </span>
-          </div>
-        )}
-
-        {/* Action */}
-        <div className="flex items-center justify-between">
-          <Link
-            href={`/webinars/${webinar.slug}`}
-            className="text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300"
-          >
-            View Details
+        ) : null}
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginTop: 22 }}>
+          <Link href={`/webinars/${webinar.slug}`} className="a-btn a-btn-ghost" style={{ padding: "10px 16px", fontSize: 13 }}>
+            View details <ArrowIcon className="arrow" />
           </Link>
-
-          {actionUrl && (
+          {actionUrl ? (
             <a
               href={actionUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors"
+              className="a-btn a-btn-primary"
+              style={{ padding: "10px 16px", fontSize: 13 }}
             >
-              {isOnDemand ? "Watch Now" : "Register"}
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-              </svg>
+              {isOnDemand ? "Watch" : "Register"} <ArrowIcon className="arrow" />
             </a>
-          )}
+          ) : null}
         </div>
       </div>
-    </div>
+    </article>
   );
 }
 
 export default async function WebinarsPage() {
   const { upcoming, onDemand } = await getWebinars();
+  const hasWebinars = upcoming.length > 0 || onDemand.length > 0;
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
-      {/* Hero */}
-      <section className="bg-gradient-to-br from-blue-600 via-purple-600 to-blue-700 py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            ArqAI Webinars
+    <DarkShell>
+      <section className="a-hero">
+        <div className="a-hero-grid" />
+        <div className="a-wrap" style={{ position: "relative", textAlign: "center" }}>
+          <span className="a-pill">
+            <span className="dot" /> Webinars
+          </span>
+          <h1 className="h-display" style={{ margin: "28px auto 0", maxWidth: "14ch" }}>
+            Field notes for production enterprise AI.
           </h1>
-          <p className="text-xl text-white/80 max-w-2xl mx-auto">
-            Join our expert-led sessions on AI compliance, security best practices, and enterprise solutions.
+          <p className="lede" style={{ margin: "28px auto 0", maxWidth: "66ch" }}>
+            Live and on-demand sessions for leaders turning AI from pilots into governed workflows.
           </p>
         </div>
       </section>
 
-      {/* Upcoming Webinars */}
-      {upcoming.length > 0 && (
-        <section className="py-16">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center gap-3 mb-8">
-              <div className="w-3 h-3 rounded-full bg-green-500 animate-pulse" />
-              <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Upcoming Webinars</h2>
+      {upcoming.length > 0 ? (
+        <section className="a-section">
+          <div className="a-wrap">
+            <div className="a-section-head">
+              <div>
+                <span className="a-eyebrow">Upcoming</span>
+                <h2 className="h-section" style={{ marginTop: 18 }}>
+                  Join the next session.
+                </h2>
+              </div>
+              <p className="lede">Practical conversations for teams moving AI into real operating environments.</p>
             </div>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {upcoming.map(webinar => (
+            <div className="svc-grid" style={{ marginTop: 44 }}>
+              {upcoming.map((webinar) => (
                 <WebinarCard key={webinar.id} webinar={webinar} />
               ))}
             </div>
           </div>
         </section>
-      )}
+      ) : null}
 
-      {/* On-Demand Webinars */}
-      {onDemand.length > 0 && (
-        <section className={`py-16 ${upcoming.length > 0 ? "bg-white dark:bg-slate-900" : ""}`}>
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center gap-3 mb-8">
-              <svg className="w-6 h-6 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              <h2 className="text-2xl font-bold text-slate-900 dark:text-white">On-Demand</h2>
+      {onDemand.length > 0 ? (
+        <section className="a-section">
+          <div className="a-wrap">
+            <div className="a-section-head">
+              <div>
+                <span className="a-eyebrow">On-demand</span>
+                <h2 className="h-section" style={{ marginTop: 18 }}>
+                  Watch when the workflow needs it.
+                </h2>
+              </div>
+              <p className="lede">Recorded sessions, product thinking, and implementation guidance.</p>
             </div>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {onDemand.map(webinar => (
+            <div className="svc-grid" style={{ marginTop: 44 }}>
+              {onDemand.map((webinar) => (
                 <WebinarCard key={webinar.id} webinar={webinar} isOnDemand />
               ))}
             </div>
           </div>
         </section>
-      )}
+      ) : null}
 
-      {/* Empty State */}
-      {upcoming.length === 0 && onDemand.length === 0 && (
-        <section className="py-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
-              <svg className="w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-              </svg>
+      {!hasWebinars ? (
+        <section className="a-section">
+          <div className="a-wrap">
+            <div className="a-card" style={{ padding: "clamp(32px, 6vw, 72px)", textAlign: "center" }}>
+              <span className="a-eyebrow" style={{ justifyContent: "center" }}>Coming soon</span>
+              <h2 className="h-section" style={{ marginTop: 18 }}>
+                The next sessions are being prepared.
+              </h2>
+              <p className="lede" style={{ margin: "18px auto 0", maxWidth: "58ch" }}>
+                Until then, bring us the workflow you want to modernize and we will tell you what is honestly possible.
+              </p>
+              <Link href="/engage-us" className="a-btn a-btn-primary" style={{ marginTop: 28 }}>
+                Engage us <ArrowIcon className="arrow" />
+              </Link>
             </div>
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">No Webinars Yet</h2>
-            <p className="text-slate-600 dark:text-slate-400 mb-8">
-              Check back soon for upcoming webinars and on-demand content.
-            </p>
-            <Link
-              href="/"
-              className="inline-flex items-center gap-2 px-6 py-3 text-white bg-blue-600 hover:bg-blue-700 rounded-lg font-medium transition-colors"
-            >
-              Back to Home
-            </Link>
           </div>
         </section>
-      )}
-
-      {/* CTA */}
-      <section className="py-16 bg-slate-900 dark:bg-slate-950">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold text-white mb-4">Want to Stay Updated?</h2>
-          <p className="text-slate-400 mb-8">
-            Get notified about upcoming webinars and new on-demand content.
-          </p>
-          <Link
-            href="/contact"
-            className="inline-flex items-center gap-2 px-8 py-4 text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 rounded-xl font-medium transition-all shadow-lg shadow-blue-500/25"
-          >
-            Subscribe to Updates
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </Link>
-        </div>
-      </section>
-    </div>
+      ) : null}
+    </DarkShell>
   );
 }
