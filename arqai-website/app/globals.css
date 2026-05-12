@@ -1904,3 +1904,43 @@
   0%   { background-position: 100% 0; }
   100% { background-position: -100% 0; }
 }
+
+/* Mobile menu burger + overlay for SiteNav */
+.arq-dark .a-nav-burger {
+  display: none;
+  width: 40px; height: 40px;
+  border-radius: 999px;
+  background: rgba(245,239,230,0.04);
+  border: 1px solid var(--aline-2);
+  color: var(--ink-cream);
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1px;
+  padding: 12px;
+  cursor: pointer;
+}
+@media (max-width: 900px) { .arq-dark .a-nav-burger { display: inline-flex; } }
+.arq-dark .a-nav-mobile {
+  position: fixed; inset: 0;
+  z-index: 60;
+  background: rgba(8,8,11,0.92);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px var(--gutter) 40px;
+}
+.arq-dark .a-nav-mobile ul {
+  list-style: none; margin: 0; padding: 0;
+  display: flex; flex-direction: column; gap: 18px;
+}
+.arq-dark .a-nav-mobile li a {
+  font-family: var(--display);
+  font-size: clamp(28px, 7vw, 42px);
+  letter-spacing: -0.02em;
+  color: var(--ink-cream);
+  text-decoration: none;
+}
+.arq-dark .a-nav-mobile li a:hover { color: var(--ember); }

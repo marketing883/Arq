@@ -1,300 +1,238 @@
-"use client";
-
-import Image from "next/image";
+import type { Metadata } from "next";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
+import { SiteNav } from "@/components/site-dark/SiteNav";
+import { SiteFooter } from "@/components/site-dark/SiteFooter";
 
-function StarIcon({ className = "" }: { className?: string }) {
-  return (
-    <svg
-      version="1.1"
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 20 20"
-      fill="currentColor"
-      className={className}
-    >
-      <path d="M19.6,9.6h-3.9c-.4,0-1.8-.2-1.8-.2-.6,0-1.1-.2-1.6-.6-.5-.3-.9-.8-1.2-1.2-.3-.4-.4-.9-.5-1.4,0,0,0-1.1-.2-1.5V.4c0-.2-.2-.4-.4-.4s-.4.2-.4.4v4.4c0,.4-.2,1.5-.2,1.5,0,.5-.2,1-.5,1.4-.3.5-.7.9-1.2,1.2s-1,.5-1.6.6c0,0-1.2,0-1.7.2H.4c-.2,0-.4.2-.4.4s.2.4.4.4h4.1c.4,0,1.7.2,1.7.2.6,0,1.1.2,1.6.6.4.3.8.7,1.1,1.1.3.5.5,1,.6,1.6,0,0,0,1.3.2,1.7v4.1c0,.2.2.4.4.4s.4-.2.4-.4v-4.1c0-.4.2-1.7.2-1.7,0-.6.2-1.1.6-1.6.3-.4.7-.8,1.1-1.1.5-.3,1-.5,1.6-.6,0,0,1.3,0,1.8-.2h3.9c.2,0,.4-.2.4-.4s-.2-.4-.4-.4h0Z" />
-    </svg>
-  );
-}
+export const metadata: Metadata = {
+  title: "About",
+  description:
+    "ArqAI Labs is an AI engineering studio. Production AI, bespoke to your operation. The AI products and services arm of ACI Infotech.",
+};
 
 const beliefs = [
   {
+    no: "01",
     title: "Tuned beats templated.",
-    description:
-      "Every operation has its own quirks. Off-the-shelf AI averages them away. We build to the quirks.",
+    body: "Every operation has its own quirks. Off-the-shelf AI averages them away. We build to the quirks.",
   },
   {
+    no: "02",
     title: "Production beats pilots.",
-    description:
-      "Most enterprise AI never makes it past the sandbox. We engineer for production from day one. That is the only standard we ship at.",
+    body: "Most enterprise AI never makes it past the sandbox. We engineer for production from day one. That is the only standard we ship at.",
   },
   {
+    no: "03",
     title: "Engineers, not consultants.",
-    description:
-      "We are a lean team of senior AI engineers. We would rather build than describe.",
+    body: "A lean team of senior AI engineers. We would rather build than describe.",
   },
 ];
 
 const team = [
-  {
-    name: "Jagannadh Varma Kanumuri",
-    role: "Founder & CEO",
-    image: "/img/team/jag-kanumuri-about-pic.webp",
-  },
-  {
-    name: "Habib Mehmoodi",
-    role: "VP, Strategy & Innovation",
-    image: "/img/team/habib-mehmoodi-about-pic.jpg",
-  },
-  {
-    name: "Amit Alshaikh",
-    role: "Head of AI Engineering",
-    image: "/img/team/amit-alshaikh-about-pic.webp",
-  },
-  {
-    name: "Naresh Naidu",
-    role: "Head of Delivery",
-    image: "/img/team/nn-about-pic.webp",
-  },
+  { name: "Jagannadh Varma Kanumuri", role: "Founder & CEO" },
+  { name: "Habib Mehmoodi", role: "VP, Strategy & Innovation" },
+  { name: "Amit Alshaikh", role: "Head of AI Engineering" },
+  { name: "Naresh Naidu", role: "Head of Delivery" },
 ];
 
 export default function AboutPage() {
   return (
-    <>
-      <Header />
+    <div className="arq-dark min-h-screen">
+      <SiteNav />
+      <main>
+        {/* Hero */}
+        <section className="a-section" style={{ paddingTop: "clamp(140px, 16vh, 200px)" }}>
+          <div className="a-wrap">
+            <span className="a-eyebrow">About</span>
+            <h1 className="h-display" style={{ marginTop: 18, maxWidth: "18ch" }}>
+              We build AI for the way people <em>actually</em> work.
+            </h1>
+            <p className="lede" style={{ marginTop: 28, maxWidth: "62ch" }}>
+              ArqAI Labs is an AI engineering studio. We design, build, deploy, and run production AI for operations
+              that don&apos;t fit off-the-shelf. We are an engineering team, not a consulting practice. We ship the
+              work; we do not decorate the deck.
+            </p>
+          </div>
+        </section>
 
-      <main className="bg-base">
-        {/* Hero Section with imagery */}
-        <section className="pt-32 md:pt-40 pb-16 relative overflow-hidden">
-          <div className="container mx-auto px-4 md:px-6 lg:px-8">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-              >
-                <p className="flex items-center gap-2 text-body-sm text-accent mb-6 uppercase tracking-wider font-medium">
-                  <StarIcon className="w-4 h-4" />
-                  About
-                </p>
-
-                <h1 className="text-display-xl md:text-[clamp(2.5rem,5vw,4rem)] font-display leading-[1.1] text-text-bright mb-6">
-                  We build AI for the way people actually work.
-                </h1>
-
-                <p className="text-body-lg text-text-medium leading-relaxed">
-                  ArqAI Labs is an AI engineering studio. We design, build, deploy, and run production AI for operations that don&apos;t fit off-the-shelf.
-                </p>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="relative rounded-2xl overflow-hidden aspect-[4/3] shadow-2xl shadow-accent/10"
-              >
-                <Image
-                  src="/img/team/about-ArqAI-large-hero-min.webp"
-                  alt="ArqAI Labs team at work"
-                  fill
-                  className="object-cover"
-                  priority
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-base-opp/40 via-transparent to-transparent" />
-              </motion.div>
+        {/* Beliefs */}
+        <section className="a-section" id="beliefs">
+          <div className="a-wrap">
+            <div className="a-section-head">
+              <div>
+                <span className="a-eyebrow">What we believe</span>
+                <h2 className="h-section" style={{ marginTop: 18 }}>
+                  Three things we will <em>not</em> compromise on.
+                </h2>
+              </div>
+              <p className="lede" style={{ justifySelf: "end" }}>
+                These are not aspirations. They are the rules of every engagement we run.
+              </p>
+            </div>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr",
+                gap: 1,
+                background: "var(--aline)",
+                border: "1px solid var(--aline)",
+                borderRadius: 20,
+                overflow: "hidden",
+              }}
+            >
+              <div className="about-beliefs-grid">
+                {beliefs.map((b) => (
+                  <div
+                    key={b.no}
+                    style={{
+                      background: "var(--ink-2)",
+                      padding: 32,
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: 18,
+                      minHeight: 260,
+                    }}
+                  >
+                    <span className="kicker" style={{ color: "var(--ember)" }}>
+                      {b.no}
+                    </span>
+                    <h3
+                      style={{
+                        fontFamily: "var(--display)",
+                        fontSize: 24,
+                        fontWeight: 500,
+                        letterSpacing: "-0.02em",
+                        margin: 0,
+                        color: "var(--ink-cream)",
+                      }}
+                    >
+                      {b.title}
+                    </h3>
+                    <p style={{ color: "var(--ink-cream-d)", fontSize: 14.5, lineHeight: 1.55, margin: 0 }}>{b.body}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </section>
 
-        {/* Wide divider image */}
-        <section className="relative h-48 md:h-64 lg:h-80 overflow-hidden">
-          <Image
-            src="/img/team/about-ArqAI-large-hero-divider-min.webp"
-            alt=""
-            fill
-            className="object-cover"
-            sizes="100vw"
-          />
-        </section>
-
-        {/* What We Believe */}
-        <section className="py-section bg-base-tint">
-          <div className="container mx-auto px-4 md:px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center mb-16"
-            >
-              <p className="flex items-center justify-center gap-2 text-body-sm text-accent mb-4">
-                <StarIcon className="w-4 h-4" />
-                Our Beliefs
+        {/* Leadership */}
+        <section className="a-section" id="leadership">
+          <div className="a-wrap">
+            <div className="a-section-head">
+              <div>
+                <span className="a-eyebrow">Leadership</span>
+                <h2 className="h-section" style={{ marginTop: 18 }}>
+                  The team building it.
+                </h2>
+              </div>
+              <p className="lede" style={{ justifySelf: "end" }}>
+                ACI Infotech, our parent, has spent over a decade delivering Fortune 500 technology programmes in
+                regulated industries. The team that builds and deploys ArqAI Labs work is that same team.
               </p>
-              <h2 className="text-display-lg font-display text-text-bright">
-                What we believe
-              </h2>
-            </motion.div>
-
-            <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-              {beliefs.map((belief, index) => (
-                <motion.div
-                  key={belief.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className="card p-8"
-                >
-                  <div className="text-4xl font-display font-bold text-accent/20 mb-4">
-                    {String(index + 1).padStart(2, "0")}
+            </div>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+                gap: 16,
+              }}
+            >
+              {team.map((m) => (
+                <div className="a-card" key={m.name} style={{ minHeight: 160 }}>
+                  <div
+                    style={{
+                      width: 56,
+                      height: 56,
+                      borderRadius: "50%",
+                      background: "rgba(208,244,56,0.10)",
+                      border: "1px solid rgba(208,244,56,0.25)",
+                      display: "grid",
+                      placeItems: "center",
+                      color: "var(--ember)",
+                      fontFamily: "var(--display)",
+                      fontSize: 22,
+                      fontWeight: 500,
+                      letterSpacing: "-0.02em",
+                      marginBottom: 16,
+                    }}
+                  >
+                    {m.name.charAt(0)}
                   </div>
-                  <h3 className="text-xl font-display font-semibold text-text-bright mb-4">
-                    {belief.title}
-                  </h3>
-                  <p className="text-body-md text-text-muted leading-relaxed">
-                    {belief.description}
-                  </p>
-                </motion.div>
+                  <h4 style={{ color: "var(--ink-cream)", fontSize: 16, fontWeight: 500, margin: "0 0 4px" }}>
+                    {m.name}
+                  </h4>
+                  <p style={{ color: "var(--ink-cream-d)", fontSize: 13, margin: 0 }}>{m.role}</p>
+                </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* The Team */}
-        <section className="py-section bg-base">
-          <div className="container mx-auto px-4 md:px-6 lg:px-8">
-            <div className="max-w-4xl mx-auto">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-              >
-                <p className="flex items-center gap-2 text-body-sm text-accent mb-4">
-                  <StarIcon className="w-4 h-4" />
-                  Leadership
-                </p>
-                <h2 className="text-display-lg font-display text-text-bright mb-6">
-                  The team
+        {/* ACI parent */}
+        <section className="a-section" id="parent">
+          <div className="a-wrap">
+            <div className="a-section-head">
+              <div>
+                <span className="a-eyebrow">Our parent</span>
+                <h2 className="h-section" style={{ marginTop: 18 }}>
+                  Backed by enterprise <em>delivery depth</em>.
                 </h2>
-                <p className="text-body-lg text-text-muted mb-10">
-                  ACI Infotech, our parent, has spent over a decade delivering Fortune 500 technology programmes in regulated industries. The team that builds and deploys ArqAI Labs products is the same team that has shipped at the standard our customers expect.
-                </p>
-
-                <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                  {team.map((member, index) => (
-                    <motion.div
-                      key={member.name}
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: index * 0.1 }}
-                      className="card p-0 overflow-hidden group"
-                    >
-                      <div className="relative aspect-[4/5] overflow-hidden bg-base-tint">
-                        <Image
-                          src={member.image}
-                          alt={member.name}
-                          fill
-                          sizes="(min-width:1024px) 25vw, 50vw"
-                          className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
-                        />
-                      </div>
-                      <div className="p-5">
-                        <h3 className="text-lg font-display font-semibold text-text-bright leading-tight">
-                          {member.name}
-                        </h3>
-                        <p className="text-body-sm text-text-muted mt-1">{member.role}</p>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-
-                <div className="mt-12 relative rounded-2xl overflow-hidden">
-                  <Image
-                    src="/img/team/we-are-hiring-arq-ai-min.webp"
-                    alt="We are hiring at ArqAI"
-                    width={1200}
-                    height={500}
-                    className="w-full h-auto object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-r from-base-opp/80 via-base-opp/40 to-transparent flex items-center">
-                    <div className="px-8 md:px-12 max-w-md">
-                      <p className="text-body-sm text-additional uppercase tracking-wider mb-3">We are hiring</p>
-                      <h3 className="text-2xl md:text-3xl font-display font-semibold text-base mb-4">
-                        Senior engineers and domain leads.
-                      </h3>
-                      <Link href="/careers" className="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-accent font-semibold rounded-lg hover:shadow-lg transition-all">
-                        See open roles
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                        </svg>
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
+              </div>
+              <p className="lede" style={{ justifySelf: "end" }}>
+                ArqAI Labs is the AI products and services arm of ACI Infotech, a privately held technology services
+                firm. ACI works with senior technology leaders across financial services, healthcare, insurance,
+                telecommunications, and manufacturing.
+              </p>
+            </div>
+            <div className="a-card" style={{ padding: "32px 36px" }}>
+              <p style={{ color: "var(--ink-cream-d)", fontSize: 16, lineHeight: 1.65, margin: 0, maxWidth: "70ch" }}>
+                The relationship gives ArqAI Labs the implementation playbooks, the delivery muscle, and the access to
+                enterprise customers that most AI engineering studios don&apos;t have. Same engineering standard.
+                Same end-to-end ownership. Same team, all the way from strategy to run.
+              </p>
             </div>
           </div>
         </section>
 
-        {/* Our Parent */}
-        <section className="py-section bg-base-tint">
-          <div className="container mx-auto px-4 md:px-6 lg:px-8">
-            <div className="max-w-4xl mx-auto">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-              >
-                <h2 className="text-display-lg font-display text-text-bright mb-6">
-                  Our parent
-                </h2>
-                <div className="card p-8 bg-base">
-                  <p className="text-body-lg text-text-muted leading-relaxed">
-                    ArqAI Labs is the AI products and services arm of ACI Infotech, a privately held technology services firm. ACI works with senior technology leaders across financial services, healthcare, insurance, telecommunications, and manufacturing. The relationship gives ArqAI Labs the implementation playbooks, the delivery muscle, and the access to enterprise customers that most AI engineering studios don&apos;t have.
-                  </p>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        </section>
-
-        {/* CTA Section */}
-        <section className="py-section bg-base">
-          <div className="container mx-auto px-4 md:px-6 lg:px-8">
-            <div className="max-w-4xl mx-auto text-center">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-              >
-                <h2 className="text-2xl md:text-3xl font-display font-semibold text-text-bright mb-8">
-                  Want to work with us, build with us, or sell with us?
-                </h2>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Link
-                    href="/engage-us"
-                    className="btn bg-accent text-white hover:bg-accent/90"
-                  >
-                    Engage us
-                  </Link>
-                  <Link href="/careers" className="btn btn-outline">
-                    See open roles
-                  </Link>
-                  <Link href="/contact" className="btn btn-outline">
-                    Become a partner
-                  </Link>
-                </div>
-              </motion.div>
+        {/* CTA */}
+        <section className="a-section">
+          <div className="a-wrap" style={{ textAlign: "center" }}>
+            <h2 className="h-section" style={{ maxWidth: "22ch", marginInline: "auto" }}>
+              Want to <em>work</em> with us, build with us, or sell with us?
+            </h2>
+            <div style={{ display: "flex", gap: 12, marginTop: 32, justifyContent: "center", flexWrap: "wrap" }}>
+              <Link href="/engage-us" className="a-btn a-btn-primary">
+                Engage us
+              </Link>
+              <Link href="/careers" className="a-btn a-btn-ghost">
+                See open roles
+              </Link>
+              <Link href="/contact" className="a-btn a-btn-ghost">
+                Become a partner
+              </Link>
             </div>
           </div>
         </section>
       </main>
-
-      <Footer />
-    </>
+      <SiteFooter />
+      <style>{`
+        @media (min-width: 800px) {
+          .arq-dark .about-beliefs-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background: var(--aline);
+          }
+        }
+        @media (max-width: 799px) {
+          .arq-dark .about-beliefs-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1px;
+            background: var(--aline);
+          }
+        }
+      `}</style>
+    </div>
   );
 }

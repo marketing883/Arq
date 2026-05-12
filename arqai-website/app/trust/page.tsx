@@ -1,290 +1,213 @@
-"use client";
-
-import Image from "next/image";
+import type { Metadata } from "next";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
+import { SiteNav } from "@/components/site-dark/SiteNav";
+import { SiteFooter } from "@/components/site-dark/SiteFooter";
 
-function StarIcon({ className = "" }: { className?: string }) {
-  return (
-    <svg
-      version="1.1"
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 20 20"
-      fill="currentColor"
-      className={className}
-    >
-      <path d="M19.6,9.6h-3.9c-.4,0-1.8-.2-1.8-.2-.6,0-1.1-.2-1.6-.6-.5-.3-.9-.8-1.2-1.2-.3-.4-.4-.9-.5-1.4,0,0,0-1.1-.2-1.5V.4c0-.2-.2-.4-.4-.4s-.4.2-.4.4v4.4c0,.4-.2,1.5-.2,1.5,0,.5-.2,1-.5,1.4-.3.5-.7.9-1.2,1.2s-1,.5-1.6.6c0,0-1.2,0-1.7.2H.4c-.2,0-.4.2-.4.4s.2.4.4.4h4.1c.4,0,1.7.2,1.7.2.6,0,1.1.2,1.6.6.4.3.8.7,1.1,1.1.3.5.5,1,.6,1.6,0,0,0,1.3.2,1.7v4.1c0,.2.2.4.4.4s.4-.2.4-.4v-4.1c0-.4.2-1.7.2-1.7,0-.6.2-1.1.6-1.6.3-.4.7-.8,1.1-1.1.5-.3,1-.5,1.6-.6,0,0,1.3,0,1.8-.2h3.9c.2,0,.4-.2.4-.4s-.2-.4-.4-.4h0Z" />
-    </svg>
-  );
-}
+export const metadata: Metadata = {
+  title: "Trust",
+  description:
+    "Architectural controls and compliance posture across every ArqAI Labs engagement. SOC 2 in progress. HIPAA-aligned. GDPR-aligned. Control documentation under NDA.",
+};
 
-const architecturalControls = [
+const controls = [
   "Cryptographic logging of every agent action and every data access.",
   "Policy enforcement before retrieval and before tool execution.",
-  "Decision provenance exposed in the audit log and in the user UI.",
+  "Decision provenance exposed in the operational log and the user UI.",
   "Deployment options that respect data residency and tenancy requirements.",
 ];
 
-const complianceFrameworks = [
+const frameworks = [
   {
     name: "SOC 2",
-    status: "In Progress",
-    description:
-      "Aligned with SOC 2 Trust Services Criteria. Type II audit in progress.",
+    status: "In progress",
+    body: "Aligned with SOC 2 Trust Services Criteria. Type II audit in progress.",
+    progress: true,
   },
   {
     name: "HIPAA",
     status: "Aligned",
-    description:
-      "HIPAA-aligned controls. BAAs executed with healthcare customers. Internal HIPAA security and privacy policies in place.",
+    body: "HIPAA-aligned controls. BAAs executed with healthcare customers. Internal HIPAA security and privacy policies in place.",
+    progress: false,
   },
   {
     name: "GDPR",
     status: "Aligned",
-    description:
-      "GDPR-aligned data protection principles. EU customer engagements include the appropriate data processing addenda.",
+    body: "GDPR-aligned data protection principles. EU customer engagements include the appropriate data processing addenda.",
+    progress: false,
   },
   {
-    name: "MENA Frameworks",
+    name: "Regional frameworks",
     status: "Aligned",
-    description:
-      "Aligned with the SAMA Cybersecurity Framework, Saudi NCA Essential Cybersecurity Controls, KSA PDPL, UAE PDPL, and NHRA standards for engagements in the GCC and broader MENA region.",
+    body: "SAMA Cybersecurity Framework, NCA Essential Cybersecurity Controls, KSA PDPL, UAE PDPL, and NHRA standards for engagements in MENA.",
+    progress: false,
   },
 ];
 
 export default function TrustPage() {
   return (
-    <>
-      <Header />
-
-      <main className="bg-base">
-        {/* Hero Section */}
-        <section className="pt-32 md:pt-40 pb-16 relative overflow-hidden">
-          <div className="container mx-auto px-4 md:px-6 lg:px-8">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-              >
-                <p className="flex items-center gap-2 text-body-sm text-accent mb-6 uppercase tracking-wider font-medium">
-                  <StarIcon className="w-4 h-4" />
-                  Trust
-                </p>
-
-                <h1 className="text-display-xl md:text-[clamp(2.5rem,5vw,4rem)] font-display leading-[1.1] text-text-bright mb-6">
-                  Architectural controls first. Certifications next.
-                </h1>
-
-                <p className="text-body-lg md:text-xl text-text-medium leading-relaxed">
-                  ArqAI Labs is built for the controls that regulated environments require. We do not claim certifications we do not have. We do tell you exactly where we are on every framework you care about, and we share control documentation under NDA on request.
-                </p>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="grid grid-cols-2 gap-4"
-              >
-                {[
-                  { src: "/img/icons/Composable-Architecture.webp", label: "Composable architecture" },
-                  { src: "/img/icons/Governance-Built-In.webp", label: "Governance built in" },
-                  { src: "/img/icons/Orchestrated-Intelligence.webp", label: "Orchestrated intelligence" },
-                  { src: "/img/icons/Outcome-Driven-Stack.webp", label: "Outcome-driven stack" },
-                ].map((tile) => (
-                  <div key={tile.label} className="card p-6 flex flex-col items-start gap-4">
-                    <div className="w-14 h-14 relative">
-                      <Image src={tile.src} alt="" fill sizes="56px" className="object-contain" />
-                    </div>
-                    <p className="text-body-sm font-medium text-text-bright leading-snug">
-                      {tile.label}
-                    </p>
-                  </div>
-                ))}
-              </motion.div>
-            </div>
+    <div className="arq-dark min-h-screen">
+      <SiteNav />
+      <main>
+        <section className="a-section" style={{ paddingTop: "clamp(140px, 16vh, 200px)" }}>
+          <div className="a-wrap">
+            <span className="a-eyebrow">Trust</span>
+            <h1 className="h-display" style={{ marginTop: 18, maxWidth: "18ch" }}>
+              Architectural controls first.<br />
+              <em>Certifications</em> next.
+            </h1>
+            <p className="lede" style={{ marginTop: 28, maxWidth: "62ch" }}>
+              We don&apos;t claim certifications we don&apos;t have. We tell you exactly where we are on every framework
+              you care about, and we share control documentation under NDA on request.
+            </p>
           </div>
         </section>
 
-        {/* Architectural Controls */}
-        <section className="py-section bg-base-tint">
-          <div className="container mx-auto px-4 md:px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="max-w-4xl mx-auto"
-            >
-              <h2 className="text-display-lg font-display text-text-bright mb-8">
-                Architectural controls
-              </h2>
-              <p className="text-body-lg text-text-muted mb-8">
-                Independent of certification status, the architecture every ArqAI Labs product runs on includes:
-              </p>
-              <div className="space-y-4">
-                {architecturalControls.map((control, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.1 }}
-                    className="flex items-start gap-4 p-5 bg-base rounded-lg border border-stroke-muted"
-                  >
-                    <div className="w-6 h-6 rounded-full bg-accent/10 flex items-center justify-center shrink-0 mt-0.5">
-                      <svg
-                        className="w-4 h-4 text-accent"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M5 13l4 4L19 7"
-                        />
-                      </svg>
-                    </div>
-                    <p className="text-body-md text-text-bright">{control}</p>
-                  </motion.div>
-                ))}
+        <section className="a-section" id="controls">
+          <div className="a-wrap">
+            <div className="a-section-head">
+              <div>
+                <span className="a-eyebrow">Architectural controls</span>
+                <h2 className="h-section" style={{ marginTop: 18 }}>
+                  Independent of <em>certification</em> status.
+                </h2>
               </div>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* Compliance Posture */}
-        <section className="py-section bg-base">
-          <div className="container mx-auto px-4 md:px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center mb-16"
-            >
-              <h2 className="text-display-lg font-display text-text-bright">
-                Compliance posture
-              </h2>
-            </motion.div>
-
-            <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-              {complianceFrameworks.map((framework, index) => (
-                <motion.div
-                  key={framework.name}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className="card p-6"
+              <p className="lede" style={{ justifySelf: "end" }}>
+                The architecture every ArqAI Labs engagement runs on includes:
+              </p>
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: 12, maxWidth: 880 }}>
+              {controls.map((c, i) => (
+                <div
+                  key={i}
+                  className="a-card"
+                  style={{ display: "flex", gap: 18, alignItems: "flex-start", padding: 24 }}
                 >
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-xl font-display font-semibold text-text-bright">
-                      {framework.name}
-                    </h3>
-                    <span
-                      className={`text-xs font-semibold px-3 py-1 rounded-full ${
-                        framework.status === "In Progress"
-                          ? "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400"
-                          : "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
-                      }`}
-                    >
-                      {framework.status}
-                    </span>
-                  </div>
-                  <p className="text-body-sm text-text-muted">
-                    {framework.description}
-                  </p>
-                </motion.div>
+                  <span
+                    style={{
+                      fontFamily: "var(--mono)",
+                      fontSize: 11,
+                      letterSpacing: ".14em",
+                      color: "var(--ember)",
+                      paddingTop: 4,
+                      minWidth: 28,
+                    }}
+                  >
+                    0{i + 1}
+                  </span>
+                  <p style={{ color: "var(--ink-cream)", fontSize: 16, lineHeight: 1.55, margin: 0 }}>{c}</p>
+                </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Data Handling */}
-        <section className="py-section bg-base-tint">
-          <div className="container mx-auto px-4 md:px-6 lg:px-8">
-            <div className="max-w-4xl mx-auto">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-              >
-                <h2 className="text-display-lg font-display text-text-bright mb-6">
-                  Data handling
+        <section className="a-section" id="compliance">
+          <div className="a-wrap">
+            <div className="a-section-head">
+              <div>
+                <span className="a-eyebrow">Compliance posture</span>
+                <h2 className="h-section" style={{ marginTop: 18 }}>
+                  Honest status. By framework.
                 </h2>
-                <div className="card p-8 bg-base">
-                  <p className="text-body-lg text-text-muted leading-relaxed">
-                    Customer data stays in customer environments. Agents are deployed inside customer cloud or sovereign cloud of choice. Customer data is not used to train shared models.
-                  </p>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        </section>
-
-        {/* Responsible AI */}
-        <section className="py-section bg-base">
-          <div className="container mx-auto px-4 md:px-6 lg:px-8">
-            <div className="max-w-4xl mx-auto">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-              >
-                <p className="flex items-center gap-2 text-body-sm text-accent mb-4">
-                  <StarIcon className="w-4 h-4" />
-                  Responsible AI
-                </p>
-                <h2 className="text-display-lg font-display text-text-bright mb-6">
-                  Human in the loop. Always.
-                </h2>
-                <p className="text-body-lg text-text-muted leading-relaxed">
-                  Every ArqAI Labs agent is designed to assist a human professional, not replace one. The agent surfaces evidence and reasoning. The human makes the consequential decision. We do not deploy agents into autonomous decision paths in regulated workflows.
-                </p>
-              </motion.div>
-            </div>
-          </div>
-        </section>
-
-        {/* CTA Section */}
-        <section className="py-section bg-base-tint">
-          <div className="container mx-auto px-4 md:px-6 lg:px-8">
-            <div className="bg-accent rounded-2xl p-8 md:p-12 text-center max-w-4xl mx-auto">
-              <h2 className="text-2xl md:text-3xl font-display font-semibold text-white mb-6">
-                Request control documentation
-              </h2>
-              <p className="text-white/80 text-lg mb-8 max-w-2xl mx-auto">
-                We share detailed control documentation under NDA. Reach out to request it.
+              </div>
+              <p className="lede" style={{ justifySelf: "end" }}>
+                Each row is the current honest read on alignment, audit, and customer-facing artefacts.
               </p>
-              <Link
-                href="/contact"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-white text-accent font-semibold rounded-lg hover:shadow-lg transition-all"
-              >
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: 14 }}>
+              {frameworks.map((f) => (
+                <div key={f.name} className="a-card" style={{ padding: 28 }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      flexWrap: "wrap",
+                      gap: 12,
+                      marginBottom: 12,
+                    }}
+                  >
+                    <h3
+                      style={{
+                        fontFamily: "var(--display)",
+                        fontSize: 22,
+                        fontWeight: 500,
+                        letterSpacing: "-0.02em",
+                        margin: 0,
+                        color: "var(--ink-cream)",
+                      }}
+                    >
+                      {f.name}
+                    </h3>
+                    <span
+                      className="a-pill"
+                      style={{
+                        color: f.progress ? "var(--ember)" : "var(--ink-cream)",
+                        borderColor: f.progress ? "rgba(208,244,56,0.4)" : "var(--aline-2)",
+                      }}
+                    >
+                      <span className="dot" />
+                      {f.status}
+                    </span>
+                  </div>
+                  <p style={{ color: "var(--ink-cream-d)", fontSize: 15, lineHeight: 1.6, margin: 0 }}>{f.body}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="a-section" id="data">
+          <div className="a-wrap">
+            <div className="a-section-head">
+              <div>
+                <span className="a-eyebrow">Data handling</span>
+                <h2 className="h-section" style={{ marginTop: 18 }}>
+                  Your data stays <em>your</em> data.
+                </h2>
+              </div>
+              <p className="lede" style={{ justifySelf: "end" }}>
+                We don&apos;t move data outside customer environments to make our product work. Customer data is not
+                used to train shared models.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section className="a-section" id="responsible-ai">
+          <div className="a-wrap">
+            <div className="a-section-head">
+              <div>
+                <span className="a-eyebrow">Responsible AI</span>
+                <h2 className="h-section" style={{ marginTop: 18 }}>
+                  Assist, don&apos;t <em>replace</em>.
+                </h2>
+              </div>
+              <p className="lede" style={{ justifySelf: "end" }}>
+                Every ArqAI Labs engagement is designed to assist a human professional. The AI surfaces evidence and
+                reasoning. The human makes the consequential decision.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section className="a-section">
+          <div className="a-wrap" style={{ textAlign: "center" }}>
+            <h2 className="h-section" style={{ maxWidth: "20ch", marginInline: "auto" }}>
+              Request control <em>documentation</em>.
+            </h2>
+            <p className="lede" style={{ marginTop: 20, marginInline: "auto" }}>
+              Detailed control documentation is shared under NDA.
+            </p>
+            <div style={{ display: "flex", gap: 12, marginTop: 32, justifyContent: "center", flexWrap: "wrap" }}>
+              <Link href="/contact" className="a-btn a-btn-primary">
                 Request documentation
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M17 8l4 4m0 0l-4 4m4-4H3"
-                  />
-                </svg>
               </Link>
             </div>
           </div>
         </section>
       </main>
-
-      <Footer />
-    </>
+      <SiteFooter />
+    </div>
   );
 }

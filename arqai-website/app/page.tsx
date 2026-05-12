@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { HomeStructuredData } from "@/components/seo/StructuredData";
+import { SiteNav } from "@/components/site-dark/SiteNav";
+import { SiteFooter } from "@/components/site-dark/SiteFooter";
 import {
   WorkflowMap,
   AgentConstellation,
@@ -112,42 +114,6 @@ const Icon = {
     </svg>
   ),
 };
-
-/* ---------- Nav ---------- */
-function HomeNav() {
-  const [scrolled, setScrolled] = useState(false);
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-  return (
-    <nav className={"a-nav" + (scrolled ? " scrolled" : "")}>
-      <Link href="/" className="a-logo">
-        <Image
-          src="/img/ArqAI-Labs-Logo-light.png"
-          alt="ArqAI Labs"
-          width={720}
-          height={240}
-          className="h-9 md:h-10 w-auto"
-          priority
-        />
-      </Link>
-      <div className="a-nav-links">
-        <a href="#services">Services</a>
-        <a href="#process">Process</a>
-        <a href="#accelerators">Accelerators</a>
-        <a href="#why">Why ArqAI</a>
-        <a href="#insights">Insights</a>
-        <Link href="/careers">Careers</Link>
-      </div>
-      <Link href="/engage-us" className="a-btn a-btn-ghost" style={{ padding: "10px 16px", fontSize: 13 }}>
-        Engage us <Icon.Arrow className="arrow" />
-      </Link>
-    </nav>
-  );
-}
 
 /* ---------- Hero orbital diagram ---------- */
 function Orbital() {
@@ -878,68 +844,6 @@ function FinalCTA() {
   );
 }
 
-/* ---------- Footer ---------- */
-function HomeFooter() {
-  return (
-    <footer className="a-footer">
-      <div className="a-footer-grid">
-        <div>
-          <Link href="/" className="a-logo">
-            <Image src="/img/ArqAI-Labs-Logo-light.png" alt="ArqAI Labs" width={720} height={240} className="h-8 w-auto" />
-          </Link>
-          <p style={{ color: "var(--ink-cream-d)", fontSize: 14, lineHeight: 1.55, marginTop: 16, maxWidth: 360 }}>
-            Agentic operating systems for enterprise workflows. The AI products and services arm of{" "}
-            <a href="https://aciinfotech.com" target="_blank" rel="noopener noreferrer" style={{ color: "var(--ink-cream)", borderBottom: "1px solid var(--aline-2)" }}>
-              ACI Infotech
-            </a>
-            .
-          </p>
-          <div style={{ display: "flex", gap: 12, marginTop: 24 }}>
-            <span className="a-tag">SOC 2</span>
-            <span className="a-tag">HIPAA</span>
-            <span className="a-tag">GDPR</span>
-          </div>
-        </div>
-        <div>
-          <h5>Work</h5>
-          <ul>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#process">How we work</a></li>
-            <li><a href="#accelerators">Accelerators</a></li>
-            <li><a href="#why">Why ArqAI</a></li>
-          </ul>
-        </div>
-        <div>
-          <h5>Company</h5>
-          <ul>
-            <li><Link href="/about">About</Link></li>
-            <li><Link href="/careers">Careers</Link></li>
-            <li><Link href="/contact">Contact</Link></li>
-            <li><Link href="/trust">Trust</Link></li>
-          </ul>
-        </div>
-        <div>
-          <h5>Resources</h5>
-          <ul>
-            <li><Link href="/blog">Blog</Link></li>
-            <li><Link href="/case-studies">Case studies</Link></li>
-            <li><Link href="/whitepapers">Whitepapers</Link></li>
-            <li><Link href="/engage-us">Blueprint</Link></li>
-          </ul>
-        </div>
-      </div>
-      <div className="a-footer-bottom">
-        <span>© {new Date().getFullYear()} ArqAI Labs. All rights reserved.</span>
-        <span style={{ display: "flex", gap: 16 }}>
-          <Link href="/privacy">Privacy</Link>
-          <Link href="/terms">Terms</Link>
-          <Link href="/responsible-ai">Responsible AI</Link>
-        </span>
-      </div>
-    </footer>
-  );
-}
-
 /* ---------- Reveal-on-scroll ---------- */
 function useReveal() {
   const ran = useRef(false);
@@ -970,7 +874,7 @@ export default function HomePage() {
     <>
       <HomeStructuredData />
       <div className="arq-dark min-h-screen">
-        <HomeNav />
+        <SiteNav />
         <main>
           <Hero />
           <Marquee />
@@ -983,7 +887,7 @@ export default function HomePage() {
           {/* <InsightsSection /> */}
           <FinalCTA />
         </main>
-        <HomeFooter />
+        <SiteFooter />
       </div>
     </>
   );
