@@ -501,64 +501,64 @@ function AcceleratorsSection() {
       tag: "Payment integrity & fraud intelligence",
       desc: "Detect fraud, waste, abuse, billing anomalies, provider risk, and claims leakage across healthcare payer workflows.",
       built: "Healthcare payers · TPAs · PBMs",
-      img: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1200&q=70",
-      href: "/accelerators",
+      img: "/img/services/Healthcare-Real-Time-Risk-Stratification-With-Built-In-Compliance.jpg",
+      href: "/accelerators/veyra",
     },
     {
       name: "Luma",
       tag: "Claims triage & decision support",
       desc: "Prioritize, route, enrich, and resolve claims faster with AI-assisted intake, documentation checks, and reviewer support.",
       built: "Healthcare · Insurance · Benefits",
-      img: "https://images.unsplash.com/photo-1666214280557-f1b5022eb634?auto=format&fit=crop&w=1200&q=70",
-      href: "/accelerators",
+      img: "/img/services/use-case-2.webp",
+      href: "/accelerators/luma",
     },
     {
       name: "Sentra",
       tag: "Financial crime & customer risk",
       desc: "Automate AML, KYC, sanctions review, beneficial ownership checks, alert triage, and customer due diligence.",
       built: "Banks · Fintechs · Financial institutions",
-      img: "https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?auto=format&fit=crop&w=1200&q=70",
-      href: "/accelerators",
+      img: "/img/services/Banking-Customer-Service-That-Resolves-50-percent-of-Tickets-Automatically.jpg",
+      href: "/accelerators/sentra",
     },
     {
       name: "Nuvia",
       tag: "Loyalty & personalization automation",
       desc: "Turn customer, transaction, and behavioral data into personalized offers, retention actions, and next-best engagement.",
       built: "Retail · QSR · Consumer brands",
-      img: "https://images.unsplash.com/photo-1481437156560-3205f6a55735?auto=format&fit=crop&w=1200&q=70",
-      href: "/accelerators",
+      img: "/img/services/Retail-40-percent-Faster-Pricing-Ops-Without-Manual-Review.jpg",
+      href: "/accelerators/nuvia",
     },
     {
       name: "Kyra",
       tag: "Network & service operations",
       desc: "Accelerate incident detection, ticket enrichment, outage triage, escalation routing, and service restoration workflows.",
       built: "Telecom · Managed services · Operations",
-      img: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=70",
-      href: "/accelerators",
+      img: "/img/services/use-case-4.webp",
+      href: "/accelerators/kyra",
     },
     {
       name: "Orbis",
       tag: "Supply chain & vendor risk",
       desc: "Monitor supplier risk, procurement exposure, contract signals, shipment exceptions, and operational dependencies.",
       built: "Energy · Manufacturing · Logistics",
-      img: "https://images.unsplash.com/photo-1577416412292-747c6607f055?auto=format&fit=crop&w=1200&q=70",
-      href: "/accelerators",
+      img: "/img/services/Manufacturing-Autonomous-Maintenance-With-Scoped-Agent-Control.jpg",
+      href: "/accelerators/orbis",
     },
     {
       name: "Astra",
       tag: "Enterprise service workflow automation",
       desc: "Classify, route, resolve, and govern service workflows across ITSM, internal operations, knowledge bases, and tools.",
       built: "Enterprise IT · Shared services · Ops",
-      img: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=70",
-      href: "/accelerators",
+      img: "/img/services/use-case-1.webp",
+      href: "/accelerators/astra",
     },
     {
       name: "Vantaq",
       tag: "Security operations & incident intel",
       desc: "Triage alerts, summarize incidents, enrich threat context, recommend response actions, and generate compliance evidence.",
       built: "Cybersecurity · SecOps · Risk teams",
-      img: "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?auto=format&fit=crop&w=1200&q=70",
-      href: "/accelerators",
+      img: "/img/services/use-case-5.webp",
+      href: "/accelerators/vantaq",
     },
   ];
 
@@ -582,7 +582,7 @@ function AcceleratorsSection() {
         <div className="acc-grid reveal">
           {products.map((p, i) => (
             <Link
-              href="/accelerators"
+              href={p.href}
               className="acc-card"
               key={p.name}
               style={{ color: "inherit", textDecoration: "none" }}

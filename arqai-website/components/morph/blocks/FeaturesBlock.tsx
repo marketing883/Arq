@@ -326,7 +326,7 @@ export function FeaturesBlock({ customizations }: FeaturesBlockProps) {
                   className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700"
                 >
                   <a
-                    href="/platform"
+                    href="/how-it-works"
                     className="inline-flex items-center gap-2 text-sm font-medium transition-colors hover:opacity-80"
                     style={{ color: activeCategory.color }}
                   >

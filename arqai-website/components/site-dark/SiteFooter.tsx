@@ -92,7 +92,7 @@ export function SiteFooter() {
         <span style={{ display: "flex", gap: 16 }}>
           <Link href="/privacy">Privacy</Link>
           <Link href="/terms">Terms</Link>
-          <Link href="/responsible-ai">Responsible AI</Link>
+          <Link href="/trust#responsible-ai">Responsible AI</Link>
         </span>
       </div>
     </footer>
