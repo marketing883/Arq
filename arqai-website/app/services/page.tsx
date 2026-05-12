@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
 import { ArrowIcon, DarkShell } from "@/components/site-dark/DarkShell";
+import { SignalStrip } from "@/components/site-dark/InternalVisuals";
 import { services } from "@/lib/data/services";
 
 export const metadata: Metadata = {
@@ -32,7 +33,7 @@ export default function ServicesPage() {
               </p>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginTop: 28 }}>
                 <Link href="/engage-us" className="a-btn a-btn-primary">
-                  Start with one workflow <ArrowIcon className="arrow" />
+                  Get Started <ArrowIcon className="arrow" />
                 </Link>
                 <Link href="/accelerators" className="a-btn a-btn-ghost">
                   Explore accelerators
@@ -45,7 +46,19 @@ export default function ServicesPage() {
 
       <section className="a-section">
         <div className="a-wrap">
-          <div className="svc-grid">
+          <SignalStrip
+            label="Service map"
+            title="Pick the constraint, then build the system around it."
+            body="Strategy, buildout, integration, governance, acceleration, and managed operations are not separate boxes. They are the connected path from one workflow problem to a running AI system."
+            variant="flow"
+            points={["Map", "Build", "Govern", "Operate"]}
+          />
+        </div>
+      </section>
+
+      <section className="a-section">
+        <div className="a-wrap">
+          <div className="svc-grid relief-grid">
             {services.map((service, index) => (
               <Link
                 key={service.slug}
@@ -89,7 +102,7 @@ export default function ServicesPage() {
                   strategy, build, integration, governance, and operations into one production path.
                 </p>
                 <Link href="/engage-us" className="a-btn a-btn-primary" style={{ marginTop: 28 }}>
-                  Talk to a senior builder <ArrowIcon className="arrow" />
+                  Get Started <ArrowIcon className="arrow" />
                 </Link>
               </div>
             </div>

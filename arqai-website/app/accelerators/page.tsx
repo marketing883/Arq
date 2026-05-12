@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Metadata } from "next";
 import { ArrowIcon, DarkShell } from "@/components/site-dark/DarkShell";
+import { SignalStrip } from "@/components/site-dark/InternalVisuals";
 import { accelerators } from "@/lib/data/accelerators";
 
 export const metadata: Metadata = {
@@ -31,7 +32,7 @@ export default function AcceleratorsPage() {
               </p>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginTop: 28 }}>
                 <Link href="/engage-us" className="a-btn a-btn-primary">
-                  Find the right accelerator <ArrowIcon className="arrow" />
+                  Get Started <ArrowIcon className="arrow" />
                 </Link>
                 <Link href="/services/vertical-acceleration" className="a-btn a-btn-ghost">
                   How acceleration works
@@ -39,6 +40,18 @@ export default function AcceleratorsPage() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="a-section">
+        <div className="a-wrap">
+          <SignalStrip
+            label="Pattern library"
+            title="Each accelerator begins as a reusable workflow spine."
+            body="The speed comes from not restarting the same operating architecture each time. The value comes from tuning that spine to the policies, systems, data quality, and reviewers in front of us."
+            variant="orbit"
+            points={["Reusable core", "Vertical context", "Controls", "Fit check"]}
+          />
         </div>
       </section>
 
@@ -87,7 +100,7 @@ export default function AcceleratorsPage() {
                   your data quality, policies, systems, approval paths, and operating metric.
                 </p>
                 <Link href="/engage-us" className="a-btn a-btn-primary" style={{ marginTop: 28 }}>
-                  Start with fit assessment <ArrowIcon className="arrow" />
+                  Get Started <ArrowIcon className="arrow" />
                 </Link>
               </div>
             </div>

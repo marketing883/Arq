@@ -90,7 +90,7 @@ Services firm. World-class. Best-in-class. Premium. Exclusive. Boutique. Mission
 Strict no on any framing that implies cheaper, more affordable, or alternative-to.
 
 ## CTAs and routing
-Primary CTA across the site is "Engage us" → /engage-us.
+Primary CTA across the site is "Get Started" → /engage-us.
 - Demo / product evaluation → /engage-us
 - Design partner program (ArqClaims) → /engage-us
 - Trust / control documentation → /trust (request under NDA)
@@ -158,7 +158,7 @@ ${ARQAI_KNOWLEDGE_BASE}
 1. Be concise. Senior buyers do not have time.
 2. Reference their specific workflow, not a generic pitch.
 3. Ask qualifying questions to understand the operation.
-4. Guide toward Engage us naturally when the conversation has earned it.
+4. Guide toward Get Started naturally when the conversation has earned it.
 5. Never make up information. If unsure, offer to connect with the team.
 
 ## Response examples
@@ -185,10 +185,10 @@ export const PAGE_CONTEXT_PROMPTS: Record<string, string> = {
   "/industries/manufacturing": "Manufacturing page. Outcomes: less reporting time, lower defect-escape, less downtime. Custom builds.",
   "/trust": "The user is on Trust. Architectural controls first, certifications next. SOC 2 in progress, HIPAA-aligned, GDPR-aligned, MENA frameworks. Be precise; do not over-claim.",
   "/about": "The user is on About. ArqAI Labs is the AI products and services arm of ACI Infotech. Studio voice. Beliefs: tuned beats templated, production beats pilots, engineers not consultants.",
-  "/engage-us": "The user is on the Engage us form. They are ready to act. Help them complete it. A senior on the team will follow up within one business day.",
+  "/engage-us": "The user is on the Get Started form. They are ready to act. Help them complete it. A senior on the team will follow up within one business day.",
   "/contact": "The user is on Contact. Route them: engagements/demos -> engage-us, partnerships -> partnerships@aciinfotech.net, press -> marketing@aciinfotech.net, careers -> open roles.",
   // Legacy paths (still served via redirects, but if any direct hit lands here):
-  "/demo": "The user is on the legacy demo route which is now Engage us. Help them complete the form.",
+  "/demo": "The user is on the legacy demo route which now points to the Get Started flow. Help them complete the form.",
   "/solutions": "Legacy path that now redirects to /industries. If the user lands here, treat as /industries.",
   "/services": "Legacy path that now redirects to /how-we-work. Studio voice; we do not call ourselves a services firm.",
 };

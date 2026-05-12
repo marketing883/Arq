@@ -98,7 +98,7 @@ export default function ArqFWAPage() {
                     href="/demo"
                     className="btn bg-accent text-white hover:bg-accent/90"
                   >
-                    Book an ArqFWA demo
+                    Get Started
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
                     </svg>
@@ -341,7 +341,7 @@ export default function ArqFWAPage() {
                 href="/demo"
                 className="btn bg-accent text-white hover:bg-accent/90"
               >
-                Engage us
+                Get Started
                 <svg
                   className="w-4 h-4"
                   fill="none"

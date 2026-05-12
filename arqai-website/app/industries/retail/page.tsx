@@ -13,7 +13,7 @@ export default function RetailPage() {
         heroImage:
           "/img/services/Retail-40-percent-Faster-Pricing-Ops-Without-Manual-Review.jpg",
         heroImageAlt: "Retail operations",
-        primaryCta: { label: "Engage us", href: "/engage-us" },
+        primaryCta: { label: "Get Started", href: "/engage-us" },
         secondaryCta: { label: "See use cases", href: "/use-cases" },
         outcomes: [
           {

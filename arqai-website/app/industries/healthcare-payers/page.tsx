@@ -13,8 +13,8 @@ export default function HealthcarePayersPage() {
         heroImage:
           "/img/services/Healthcare-Real-Time-Risk-Stratification-With-Built-In-Compliance.jpg",
         heroImageAlt: "Healthcare payer operations",
-        primaryCta: { label: "Engage us", href: "/engage-us" },
-        secondaryCta: { label: "See ArqFWA", href: "/products/arqfwa" },
+        primaryCta: { label: "Get Started", href: "/engage-us" },
+        secondaryCta: { label: "Get Started", href: "/products/arqfwa" },
         outcomes: [
           {
             metric: "30%+",
@@ -83,7 +83,7 @@ export default function HealthcarePayersPage() {
             statusColor: "bg-green-500",
             description:
               "The AI agent for fraud, waste, and abuse detection. Built for healthcare payers and P&C insurance carriers.",
-            cta: "See ArqFWA",
+            cta: "Get Started",
             href: "/products/arqfwa",
           },
         ],

@@ -71,7 +71,7 @@ export function SiteNav() {
             className="a-btn a-btn-ghost"
             style={{ padding: "10px 16px", fontSize: 13 }}
           >
-            Engage us <ArrowIcon className="arrow" />
+            Get Started <ArrowIcon className="arrow" />
           </Link>
           <button
             type="button"
@@ -135,7 +135,7 @@ export function SiteNav() {
               className="a-btn a-btn-primary"
               style={{ marginTop: 24 }}
             >
-              Engage us <ArrowIcon className="arrow" />
+              Get Started <ArrowIcon className="arrow" />
             </Link>
           </div>
         </div>

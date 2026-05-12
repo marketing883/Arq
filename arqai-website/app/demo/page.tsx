@@ -71,7 +71,7 @@ export default function EngageUsPage() {
           <div className="a-wrap">
             <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: 56, alignItems: "start" }} className="engage-grid">
               <div>
-                <span className="a-eyebrow">Engage us</span>
+                <span className="a-eyebrow">Get Started</span>
                 <h1 className="h-display" style={{ marginTop: 18, maxWidth: "16ch", fontSize: "clamp(40px, 5.4vw, 76px)" }}>
                   Tell us what your operation <em>needs</em>.
                 </h1>

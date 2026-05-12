@@ -2072,6 +2072,63 @@ body:has(.a-nav) {
   --tw-gradient-to: var(--ion) var(--tw-gradient-to-position) !important;
 }
 
+/* Broad visual relief for legacy public pages now sharing the dark shell. */
+:where(body.arq-dark-body, body:has(.a-nav)) main > section {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+:where(body.arq-dark-body, body:has(.a-nav)) main > section > :is(.container, .a-wrap) {
+  position: relative;
+  z-index: 1;
+}
+
+:where(body.arq-dark-body, body:has(.a-nav)) main > section:nth-of-type(2n)::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(720px 420px at 8% 8%, rgba(208,244,56,0.075), transparent 64%),
+    radial-gradient(640px 360px at 94% 88%, rgba(125,211,252,0.065), transparent 68%),
+    linear-gradient(90deg, transparent, rgba(245,239,230,0.025), transparent);
+}
+
+:where(body.arq-dark-body, body:has(.a-nav)) main > section:nth-of-type(3n)::after {
+  content: "";
+  position: absolute;
+  inset: 8% 0 auto;
+  z-index: 0;
+  height: 1px;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(208,244,56,0.34), transparent);
+  opacity: .5;
+}
+
+:where(body.arq-dark-body, body:has(.a-nav)) main :is(.card, .a-card) {
+  position: relative;
+  overflow: hidden;
+}
+
+:where(body.arq-dark-body, body:has(.a-nav)) main :is(.card, .a-card)::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(360px 220px at 12% 0%, rgba(208,244,56,0.08), transparent 62%),
+    linear-gradient(145deg, rgba(245,239,230,0.04), transparent 48%);
+  opacity: .72;
+}
+
+:where(body.arq-dark-body, body:has(.a-nav)) main :is(.card, .a-card) > * {
+  position: relative;
+  z-index: 1;
+}
+
 /* Mobile menu burger + overlay for SiteNav */
 .arq-dark .a-nav-burger {
   display: none;
@@ -2123,6 +2180,324 @@ body:has(.a-nav) {
 }
 
 /* Dark public-page layouts -------------------------------- */
+.arq-dark .internal-hero-panel {
+  position: relative;
+  min-height: clamp(420px, 52vw, 620px);
+  border-radius: 28px;
+  overflow: hidden;
+  border: 1px solid var(--aline-2);
+  background: var(--ink-2);
+  margin: 0;
+  box-shadow: 0 28px 90px -60px rgba(208,244,56,0.9);
+}
+
+.arq-dark .internal-hero-panel::before {
+  content: "";
+  position: absolute;
+  inset: 14px;
+  z-index: 3;
+  pointer-events: none;
+  border: 1px solid rgba(245,239,230,0.08);
+  border-radius: 20px;
+}
+
+.arq-dark .internal-hero-media {
+  position: absolute;
+  inset: 0;
+}
+
+.arq-dark .internal-hero-media img {
+  filter: grayscale(0.32) brightness(0.78) contrast(1.08) saturate(0.9);
+  transform: scale(1.015);
+}
+
+.arq-dark .internal-hero-media-shade {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(520px 420px at 72% 24%, rgba(208,244,56,0.2), transparent 58%),
+    linear-gradient(180deg, rgba(8,8,11,0.05), rgba(8,8,11,0.46) 42%, rgba(8,8,11,0.86));
+}
+
+.arq-dark .internal-hero-overlay {
+  position: relative;
+  z-index: 4;
+  min-height: inherit;
+  display: grid;
+  align-content: end;
+  gap: 24px;
+  padding: clamp(24px, 4vw, 38px);
+}
+
+.arq-dark .internal-hero-overlay figcaption {
+  margin-top: 14px;
+  max-width: 13ch;
+  font-family: var(--display);
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  color: var(--ink-cream);
+}
+
+.arq-dark .internal-hero-overlay .internal-glyph {
+  width: min(100%, 460px);
+  justify-self: end;
+  margin-bottom: -10px;
+}
+
+.arq-dark .internal-glyph {
+  position: relative;
+  aspect-ratio: 360 / 260;
+  border-radius: 24px;
+  border: 1px solid var(--aline);
+  background:
+    radial-gradient(360px 220px at 22% 12%, rgba(208,244,56,0.13), transparent 62%),
+    linear-gradient(180deg, rgba(245,239,230,0.06), rgba(245,239,230,0.015));
+  overflow: hidden;
+}
+
+.arq-dark .internal-glyph svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
+
+.arq-dark .glyph-grid,
+.arq-dark .glyph-link,
+.arq-dark .glyph-orbit,
+.arq-dark .glyph-doc rect,
+.arq-dark .glyph-doc path {
+  fill: none;
+  stroke: rgba(245,239,230,0.16);
+  stroke-width: 1.2;
+}
+
+.arq-dark .glyph-flow {
+  fill: none;
+  stroke: var(--ember);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 380;
+  stroke-dashoffset: 380;
+  animation: glyph-draw 5.5s cubic-bezier(.2,.7,.2,1) infinite;
+  filter: drop-shadow(0 0 12px rgba(208,244,56,0.48));
+}
+
+.arq-dark .glyph-flow-ghost {
+  stroke: var(--ion);
+  stroke-width: 1.8;
+  animation-delay: 1.2s;
+  opacity: .66;
+}
+
+.arq-dark .glyph-node {
+  fill: var(--ember);
+  stroke: rgba(8,8,11,0.72);
+  stroke-width: 4;
+  filter: drop-shadow(0 0 14px rgba(208,244,56,0.5));
+}
+
+.arq-dark .glyph-pulse {
+  fill: none;
+  stroke: rgba(208,244,56,0.52);
+  stroke-width: 1.4;
+  transform-origin: center;
+  animation: glyph-pulse 2.8s ease-out infinite;
+}
+
+.arq-dark .glyph-orbit {
+  stroke-dasharray: 9 10;
+  transform-origin: 180px 130px;
+  animation: glyph-spin 22s linear infinite;
+}
+
+.arq-dark .glyph-orbit-b {
+  animation-direction: reverse;
+  animation-duration: 16s;
+  stroke: rgba(208,244,56,0.34);
+}
+
+.arq-dark .glyph-orbit-c {
+  animation-duration: 28s;
+  stroke: rgba(125,211,252,0.28);
+}
+
+.arq-dark .glyph-core {
+  fill: var(--ember);
+  filter: drop-shadow(0 0 28px rgba(208,244,56,0.72));
+}
+
+.arq-dark .glyph-doc rect {
+  fill: rgba(8,8,11,0.52);
+}
+
+.arq-dark .glyph-doc path {
+  stroke: rgba(245,239,230,0.24);
+}
+
+.arq-dark .glyph-doc-2 {
+  opacity: .82;
+}
+
+.arq-dark .glyph-doc-3 {
+  opacity: .68;
+}
+
+.arq-dark .glyph-scan {
+  fill: none;
+  stroke: var(--ember);
+  stroke-width: 2;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 12px rgba(208,244,56,0.5));
+  animation: glyph-scan 3.5s ease-in-out infinite;
+}
+
+.arq-dark .glyph-check {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.arq-dark .glyph-link {
+  stroke: rgba(245,239,230,0.18);
+  stroke-dasharray: 8 8;
+  animation: glyph-flow-dash 16s linear infinite;
+}
+
+.arq-dark .internal-signal-strip {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 28px;
+  align-items: center;
+  padding: clamp(32px, 6vw, 64px);
+  border-radius: 30px;
+  border: 1px solid var(--aline);
+  background:
+    linear-gradient(90deg, rgba(245,239,230,0.055), rgba(245,239,230,0.012)),
+    radial-gradient(520px 320px at 96% 8%, rgba(125,211,252,0.11), transparent 62%);
+}
+
+@media (min-width: 950px) {
+  .arq-dark .internal-signal-strip {
+    grid-template-columns: minmax(0, 0.95fr) minmax(360px, 0.7fr);
+  }
+}
+
+.arq-dark .internal-signal-copy {
+  max-width: 720px;
+}
+
+.arq-dark .internal-signal-copy .h-section {
+  margin-top: 18px;
+  max-width: 15ch;
+}
+
+.arq-dark .internal-signal-copy .lede {
+  margin-top: 18px;
+}
+
+.arq-dark .internal-signal-points {
+  list-style: none;
+  padding: 0;
+  margin: 28px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.arq-dark .internal-signal-points li {
+  border: 1px solid var(--aline);
+  border-radius: 999px;
+  padding: 9px 12px;
+  color: var(--ink-cream-d);
+  font-size: 13px;
+  background: rgba(245,239,230,0.035);
+}
+
+.arq-dark .steps.steps-relief {
+  gap: 18px;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  overflow: visible;
+}
+
+.arq-dark .steps.steps-relief .step {
+  border: 1px solid var(--aline);
+  border-radius: 22px;
+  background:
+    radial-gradient(280px 160px at 20% 0%, rgba(208,244,56,0.09), transparent 68%),
+    linear-gradient(180deg, rgba(245,239,230,0.045), rgba(245,239,230,0.012));
+  overflow: hidden;
+}
+
+.arq-dark .steps.steps-relief .step::after {
+  content: "";
+  position: absolute;
+  inset: auto 28px 24px 28px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--ember), transparent);
+  opacity: .42;
+}
+
+.arq-dark .relief-grid {
+  gap: 22px;
+}
+
+.arq-dark .relief-grid .a-card,
+.arq-dark .relief-grid .svc,
+.arq-dark .relief-grid > a {
+  border-radius: 24px;
+}
+
+.arq-dark .internal-story {
+  gap: clamp(22px, 4vw, 54px);
+  align-items: stretch;
+}
+
+.arq-dark .internal-story > * {
+  min-height: 300px;
+}
+
+@keyframes glyph-draw {
+  0% { stroke-dashoffset: 380; opacity: .35; }
+  35%, 70% { stroke-dashoffset: 0; opacity: 1; }
+  100% { stroke-dashoffset: -380; opacity: .35; }
+}
+
+@keyframes glyph-pulse {
+  0% { transform: scale(.74); opacity: .75; }
+  100% { transform: scale(1.35); opacity: 0; }
+}
+
+@keyframes glyph-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes glyph-scan {
+  0%, 100% { transform: translateY(-42px); opacity: 0; }
+  18%, 78% { opacity: 1; }
+  50% { transform: translateY(86px); }
+}
+
+@keyframes glyph-flow-dash {
+  to { stroke-dashoffset: -160; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arq-dark .glyph-flow,
+  .arq-dark .glyph-orbit,
+  .arq-dark .glyph-pulse,
+  .arq-dark .glyph-scan,
+  .arq-dark .glyph-link {
+    animation: none !important;
+  }
+}
+
 .arq-dark .detail-hero-grid {
   grid-template-columns: 1fr;
 }

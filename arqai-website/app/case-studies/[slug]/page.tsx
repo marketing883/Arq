@@ -316,7 +316,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
                 href="/contact"
                 className="btn btn-primary"
               >
-                Schedule a Demo
+                Get Started
               </Link>
               <Link
                 href="/case-studies"

@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { SignalStrip } from "@/components/site-dark/InternalVisuals";
 
 export const metadata: Metadata = {
   title: "Products | ArqAI Labs",
@@ -21,7 +22,7 @@ const products = [
       "Reviews high volumes of claims and transactions, flags suspicious patterns, and surfaces the work your team should focus on first. Built for healthcare payers and P&C insurance carriers.",
     buyers:
       "For healthcare payer and P&C carrier operations leaders, fraud and special-investigations teams, and the technology and AI executives backing them.",
-    cta: "See ArqFWA",
+    cta: "Get Started",
     href: "/products/arqfwa",
     image: "/img/Operations-center.png",
   },
@@ -35,7 +36,7 @@ const products = [
       "Triages incoming claims and surfaces the right ones to the right adjuster, with the routing logic and reserve recommendations your operation actually uses. Built for mid-market P&C carriers.",
     buyers:
       "For claims operations leaders at mid-market P&C carriers, plus the technology and AI executives evaluating claims-process modernisation.",
-    cta: "Join the design partner program",
+    cta: "Get Started",
     href: "/products/arqclaims",
     image: "/img/Policy-Hub-Interface.png",
   },
@@ -49,7 +50,7 @@ const products = [
       "Built for the financial crimes operations at regional and mid-tier banks. Calibrated to the realities of running a financial crimes program on a lean team.",
     buyers:
       "For financial crimes leaders and BSA officers at regional and mid-tier banks, plus the CTOs and Heads of AI driving financial-crime modernisation.",
-    cta: "Get notified at launch",
+    cta: "Get Started",
     href: "/products/arqbanker",
     image: "/img/Audit-logs.png",
   },
@@ -83,6 +84,21 @@ export default function ProductsPage() {
               <p className="text-body-lg md:text-xl text-text-medium max-w-3xl leading-relaxed">
                 Each ArqAI Labs product takes one operational workflow and makes the AI agent for it. Same architectural foundation. Same delivery standard. Different jobs.
               </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Product signal strip */}
+        <section className="pb-10 md:pb-16">
+          <div className="container mx-auto px-4 md:px-6 lg:px-8">
+            <div className="arq-dark arq-dark-compat">
+              <SignalStrip
+                label="Product spine"
+                title="Each product starts with a workflow you can name."
+                body="We add visual, operational texture around the product pages so buyers can see the workflow shape: what the agent reads, what it routes, where people stay in control, and how the result becomes measurable."
+                variant="evidence"
+                points={["Inputs", "Review", "Action", "Evidence"]}
+              />
             </div>
           </div>
         </section>
@@ -203,7 +219,7 @@ export default function ProductsPage() {
                 href="/contact"
                 className="btn bg-accent text-white hover:bg-accent/90 inline-flex items-center gap-2"
               >
-                Suggest a workflow
+                Get Started
                 <svg
                   className="w-4 h-4"
                   fill="none"

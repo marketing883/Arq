@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { SignalStrip } from "@/components/site-dark/InternalVisuals";
 
 function StarIcon({ className = "" }: { className?: string }) {
   return (
@@ -74,6 +75,21 @@ export default function HowWeWorkPage() {
           </div>
         </section>
 
+        {/* Operating rhythm */}
+        <section className="pb-10 md:pb-16">
+          <div className="container mx-auto px-4 md:px-6 lg:px-8">
+            <div className="arq-dark arq-dark-compat">
+              <SignalStrip
+                label="Operating rhythm"
+                title="The work moves from messy signal to governed system."
+                body="Internal pages now get more breathing room through animated diagrams, alternating surfaces, and visual proof points that show the delivery model instead of repeating it in stacked text blocks."
+                variant="flow"
+                points={["Scope", "Build", "Deploy", "Run"]}
+              />
+            </div>
+          </div>
+        </section>
+
         {/* Steps */}
         <section className="py-section bg-base-tint">
           <div className="container mx-auto px-4 md:px-6 lg:px-8">
@@ -136,7 +152,7 @@ export default function HowWeWorkPage() {
               We&apos;ll tell you what&apos;s honestly possible. In plain language. Without a deck.
             </p>
             <Link href="/engage-us" className="btn bg-accent text-white">
-              Engage us
+              Get Started
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
               </svg>

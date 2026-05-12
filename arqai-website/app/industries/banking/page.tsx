@@ -13,8 +13,8 @@ export default function BankingPage() {
         heroImage:
           "/img/services/Banking-Customer-Service-That-Resolves-50-percent-of-Tickets-Automatically.jpg",
         heroImageAlt: "Banking operations",
-        primaryCta: { label: "Engage us", href: "/engage-us" },
-        secondaryCta: { label: "See ArqBanker", href: "/products/arqbanker" },
+        primaryCta: { label: "Get Started", href: "/engage-us" },
+        secondaryCta: { label: "Get Started", href: "/products/arqbanker" },
         outcomes: [
           {
             metric: "60%",
@@ -83,7 +83,7 @@ export default function BankingPage() {
             statusColor: "bg-blue-500",
             description:
               "The AI agent for AML, KYC, and financial crime at regional and mid-tier banks. In development.",
-            cta: "Get notified at launch",
+            cta: "Get Started",
             href: "/products/arqbanker",
           },
         ],

@@ -74,13 +74,13 @@ export default function ArqClaimsPage() {
 
                 <div className="flex flex-col sm:flex-row gap-4">
                   <Link href="/contact" className="btn bg-accent text-white hover:bg-accent/90">
-                    Apply to the design partner program
+                    Get Started
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
                     </svg>
                   </Link>
                   <Link href="/demo" className="btn btn-outline">
-                    Get notified at launch
+                    Get Started
                   </Link>
                 </div>
               </motion.div>
@@ -211,7 +211,7 @@ export default function ArqClaimsPage() {
                   href="/contact"
                   className="inline-flex items-center gap-2 px-6 py-3 bg-white text-accent font-semibold rounded-lg hover:shadow-lg transition-all"
                 >
-                  Apply to the program
+                  Get Started
                   <svg
                     className="w-4 h-4"
                     fill="none"
@@ -250,7 +250,7 @@ export default function ArqClaimsPage() {
                 href="/contact"
                 className="btn bg-accent text-white hover:bg-accent/90"
               >
-                Apply to the design partner program
+                Get Started
                 <svg
                   className="w-4 h-4"
                   fill="none"

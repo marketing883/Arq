@@ -13,7 +13,7 @@ export default function ManufacturingPage() {
         heroImage:
           "/img/services/Manufacturing-Autonomous-Maintenance-With-Scoped-Agent-Control.jpg",
         heroImageAlt: "Manufacturing operations",
-        primaryCta: { label: "Engage us", href: "/engage-us" },
+        primaryCta: { label: "Get Started", href: "/engage-us" },
         secondaryCta: { label: "See use cases", href: "/use-cases" },
         outcomes: [
           {

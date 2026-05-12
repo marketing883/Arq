@@ -187,13 +187,13 @@ export default function HowItWorksPage() {
                 See the architecture in action.
               </h2>
               <p className="text-body-lg text-text-muted mb-8">
-                Engage us to see how our products run on this foundation in your environment.
+                We can show how our products run on this foundation in your environment.
               </p>
               <Link
                 href="/engage-us"
                 className="btn bg-accent text-white hover:bg-accent/90"
               >
-                Engage us
+                Get Started
                 <svg
                   className="w-4 h-4"
                   fill="none"

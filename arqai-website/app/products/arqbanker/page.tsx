@@ -88,7 +88,7 @@ export default function ArqBankerPage() {
 
                 <div className="flex flex-col sm:flex-row gap-4">
                   <Link href="/demo" className="btn bg-accent text-white hover:bg-accent/90">
-                    Get notified when ArqBanker launches
+                    Get Started
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
                     </svg>
@@ -270,7 +270,7 @@ export default function ArqBankerPage() {
                 href="/demo"
                 className="inline-flex items-center gap-2 px-6 py-3 bg-white text-accent font-semibold rounded-lg hover:shadow-lg transition-all"
               >
-                Get on the early-access list
+                Get Started
                 <svg
                   className="w-4 h-4"
                   fill="none"

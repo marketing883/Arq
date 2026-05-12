@@ -1,8 +1,8 @@
-import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ArrowIcon, CheckIcon, DarkShell } from "@/components/site-dark/DarkShell";
+import { HeroImagePanel, SignalStrip } from "@/components/site-dark/InternalVisuals";
 import { getService, services } from "@/lib/data/services";
 
 type ServicePageProps = {
@@ -55,7 +55,7 @@ export default function ServiceDetailPage({ params }: ServicePageProps) {
               </p>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginTop: 30 }}>
                 <Link href="/engage-us" className="a-btn a-btn-primary">
-                  Start this workflow <ArrowIcon className="arrow" />
+                  Get Started <ArrowIcon className="arrow" />
                 </Link>
                 <Link href="/services" className="a-btn a-btn-ghost">
                   All services
@@ -63,33 +63,21 @@ export default function ServiceDetailPage({ params }: ServicePageProps) {
               </div>
             </div>
 
-            <div className="a-card" style={{ padding: 0, overflow: "hidden" }}>
-              <div style={{ position: "relative", aspectRatio: "4 / 3" }}>
-                <Image
-                  src={service.image}
-                  alt=""
-                  fill
-                  priority
-                  sizes="(min-width: 1000px) 42vw, 100vw"
-                  style={{ objectFit: "cover" }}
-                />
-                <div
-                  style={{
-                    position: "absolute",
-                    inset: 0,
-                    background:
-                      "linear-gradient(180deg, rgba(8,8,11,0.05), rgba(8,8,11,0.72)), radial-gradient(circle at 20% 10%, rgba(208,244,56,0.22), transparent 34%)",
-                  }}
-                />
-              </div>
-            </div>
+            <HeroImagePanel
+              image={service.image}
+              alt=""
+              label={service.shortTitle}
+              title="Workflow signal map"
+              variant="flow"
+              priority
+            />
           </div>
         </div>
       </section>
 
       <section className="a-section">
         <div className="a-wrap">
-          <div className="gap-split">
+          <div className="gap-split internal-story">
             <article className="gap-col fail">
               <h4>The problem</h4>
               <div className="big" style={{ marginTop: 8 }}>
@@ -114,6 +102,18 @@ export default function ServiceDetailPage({ params }: ServicePageProps) {
 
       <section className="a-section">
         <div className="a-wrap">
+          <SignalStrip
+            label="Operating path"
+            title="A useful AI system needs more than a model."
+            body="The work moves through data, policy, exception handling, reviewer judgment, and system updates. We design the service around that path so the first release can be used in production."
+            variant="network"
+            points={["Data", "Policy", "Review", "Action"]}
+          />
+        </div>
+      </section>
+
+      <section className="a-section">
+        <div className="a-wrap">
           <div className="a-section-head">
             <div>
               <span className="a-eyebrow">Measurable outcomes</span>
@@ -127,7 +127,7 @@ export default function ServiceDetailPage({ params }: ServicePageProps) {
             </p>
           </div>
 
-          <div className="steps" style={{ marginTop: 44 }}>
+          <div className="steps steps-relief" style={{ marginTop: 44 }}>
             {service.outcomes.map((outcome) => (
               <div className="step" key={outcome.label}>
                 <span className="num">{outcome.value}</span>
@@ -153,7 +153,7 @@ export default function ServiceDetailPage({ params }: ServicePageProps) {
             </p>
           </div>
 
-          <div className="svc-grid" style={{ marginTop: 44 }}>
+          <div className="svc-grid relief-grid" style={{ marginTop: 44 }}>
             {service.deliverables.map((deliverable) => (
               <div className="a-card" key={deliverable} style={{ padding: 24 }}>
                 <div style={{ color: "var(--ember)", marginBottom: 16 }}>
@@ -170,7 +170,7 @@ export default function ServiceDetailPage({ params }: ServicePageProps) {
 
       <section className="a-section">
         <div className="a-wrap">
-          <div className="gap-split">
+          <div className="gap-split internal-story">
             <article className="a-card" style={{ padding: 32 }}>
               <span className="a-eyebrow">Signals</span>
               <h2 className="h-section" style={{ fontSize: "clamp(28px, 3.2vw, 44px)", marginTop: 18 }}>
@@ -210,15 +210,14 @@ export default function ServiceDetailPage({ params }: ServicePageProps) {
       <section className="a-section">
         <div className="a-wrap">
           <div className="cta-strip">
-            <span className="a-eyebrow">CTA</span>
-            <h2 className="h-section" style={{ marginTop: 18, maxWidth: "18ch" }}>
+            <h2 className="h-section" style={{ marginTop: 0, maxWidth: "18ch" }}>
               {service.cta.heading}
             </h2>
             <p className="lede" style={{ marginTop: 18, maxWidth: "62ch" }}>
               {service.cta.body}
             </p>
             <Link href="/engage-us" className="a-btn a-btn-primary" style={{ marginTop: 28 }}>
-              Engage us <ArrowIcon className="arrow" />
+              Get Started <ArrowIcon className="arrow" />
             </Link>
           </div>
         </div>

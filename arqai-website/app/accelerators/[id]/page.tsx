@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ArrowIcon, CheckIcon, DarkShell } from "@/components/site-dark/DarkShell";
+import { HeroImagePanel, SignalStrip } from "@/components/site-dark/InternalVisuals";
 import { accelerators, getAccelerator } from "@/lib/data/accelerators";
 
 type AcceleratorPageProps = {
@@ -54,7 +55,7 @@ export default function AcceleratorDetailPage({ params }: AcceleratorPageProps) 
               </p>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginTop: 30 }}>
                 <Link href="/engage-us" className="a-btn a-btn-primary">
-                  Explore fit <ArrowIcon className="arrow" />
+                  Get Started <ArrowIcon className="arrow" />
                 </Link>
                 <Link href="/accelerators" className="a-btn a-btn-ghost">
                   All accelerators
@@ -62,25 +63,21 @@ export default function AcceleratorDetailPage({ params }: AcceleratorPageProps) 
               </div>
             </div>
 
-            <div className="acc-card" style={{ minHeight: 440 }}>
-              <div className="acc-bg" style={{ backgroundImage: `url(${accelerator.image})` }} aria-hidden="true" />
-              <div className="acc-glass" aria-hidden="true" />
-              <div className="acc-content">
-                <span className="a-tag">{accelerator.category}</span>
-                <div className="name" style={{ marginTop: "auto" }}>{accelerator.name}</div>
-                <div className="tagline">{accelerator.summary}</div>
-                <div className="built">
-                  Built for <b>{accelerator.builtFor}</b>
-                </div>
-              </div>
-            </div>
+            <HeroImagePanel
+              image={accelerator.image}
+              alt=""
+              label={accelerator.category}
+              title={accelerator.summary}
+              variant="orbit"
+              priority
+            />
           </div>
         </div>
       </section>
 
       <section className="a-section">
         <div className="a-wrap">
-          <div className="gap-split">
+          <div className="gap-split internal-story">
             <article className="gap-col fail">
               <h4>Pain</h4>
               <div className="big" style={{ marginTop: 8 }}>
@@ -115,7 +112,7 @@ export default function AcceleratorDetailPage({ params }: AcceleratorPageProps) 
             <p className="lede">{accelerator.proof}</p>
           </div>
 
-          <div className="steps" style={{ marginTop: 44 }}>
+          <div className="steps steps-relief" style={{ marginTop: 44 }}>
             {accelerator.metrics.map((metric) => (
               <div className="step" key={metric.label}>
                 <span className="num">{metric.value}</span>
@@ -124,6 +121,18 @@ export default function AcceleratorDetailPage({ params }: AcceleratorPageProps) 
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section className="a-section">
+        <div className="a-wrap">
+          <SignalStrip
+            label="Acceleration pattern"
+            title="Reusable core, tuned around your operating reality."
+            body="Each accelerator ships with a proven workflow spine, then bends around the data sources, controls, reviewers, and edge cases that make your environment different."
+            variant="flow"
+            points={["Core workflow", "Local data", "Controls", "Rollout"]}
+          />
         </div>
       </section>
 
@@ -142,7 +151,7 @@ export default function AcceleratorDetailPage({ params }: AcceleratorPageProps) 
             </p>
           </div>
 
-          <div className="steps" style={{ marginTop: 44 }}>
+          <div className="steps steps-relief" style={{ marginTop: 44 }}>
             {accelerator.rollout.map((step, index) => (
               <div className="step" key={step}>
                 <span className="num">STEP {String(index + 1).padStart(2, "0")}</span>
@@ -181,8 +190,7 @@ export default function AcceleratorDetailPage({ params }: AcceleratorPageProps) 
       <section className="a-section">
         <div className="a-wrap">
           <div className="cta-strip">
-            <span className="a-eyebrow">CTA</span>
-            <h2 className="h-section" style={{ marginTop: 18, maxWidth: "18ch" }}>
+            <h2 className="h-section" style={{ marginTop: 0, maxWidth: "18ch" }}>
               Start with accelerator fit, not a generic demo.
             </h2>
             <p className="lede" style={{ marginTop: 18, maxWidth: "62ch" }}>
@@ -190,7 +198,7 @@ export default function AcceleratorDetailPage({ params }: AcceleratorPageProps) 
               helps, what must be customized, and what should stay human-led.
             </p>
             <Link href="/engage-us" className="a-btn a-btn-primary" style={{ marginTop: 28 }}>
-              Engage us <ArrowIcon className="arrow" />
+              Get Started <ArrowIcon className="arrow" />
             </Link>
           </div>
         </div>

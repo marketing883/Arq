@@ -240,7 +240,7 @@ export function CaseStudyBlock({ customizations }: CaseStudyBlockProps) {
           href="/demo"
           className="inline-flex items-center gap-2 px-6 py-3 bg-[#0432a5] text-white rounded-lg font-semibold hover:opacity-90 transition-colors"
         >
-          Request a Demo
+          Get Started
           <ArrowRightIcon size={18} />
         </a>
       </motion.div>

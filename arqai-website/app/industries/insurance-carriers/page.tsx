@@ -12,8 +12,8 @@ export default function InsuranceCarriersPage() {
           "Triage faster. Underwrite smarter. Catch more fraud. Close more claims with the people you already have. Built for mid-market personal, commercial, and specialty lines.",
         heroImage: "/img/services/use-case-2.webp",
         heroImageAlt: "P&C insurance operations",
-        primaryCta: { label: "Engage us", href: "/engage-us" },
-        secondaryCta: { label: "Apply to ArqClaims design partner program", href: "/products/arqclaims" },
+        primaryCta: { label: "Get Started", href: "/engage-us" },
+        secondaryCta: { label: "Get Started", href: "/products/arqclaims" },
         outcomes: [
           {
             metric: "40%",
@@ -82,7 +82,7 @@ export default function InsuranceCarriersPage() {
             statusColor: "bg-green-500",
             description:
               "The AI agent for fraud, waste, and abuse detection across personal and commercial lines.",
-            cta: "See ArqFWA",
+            cta: "Get Started",
             href: "/products/arqfwa",
           },
           {
@@ -91,7 +91,7 @@ export default function InsuranceCarriersPage() {
             statusColor: "bg-amber-500",
             description:
               "The AI agent for claims triage and processing at mid-market P&C carriers. Design partner program open.",
-            cta: "Join the design partner program",
+            cta: "Get Started",
             href: "/products/arqclaims",
           },
         ],

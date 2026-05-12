@@ -23,7 +23,7 @@ export const accelerators: Accelerator[] = [
     summary:
       "Detect billing anomalies, provider risk, claims leakage, and program-integrity signals with explainable AI built for healthcare payer workflows.",
     builtFor: "Healthcare payers, TPAs, PBMs, and program-integrity teams",
-    image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1200&q=70",
+    image: "/img/services/Healthcare-Real-Time-Risk-Stratification-With-Built-In-Compliance.jpg",
     pain:
       "Payment integrity teams are buried in claim volume, brittle rules, and cases that arrive too late to protect margin. The highest-risk patterns often sit across claims, providers, policy, and member context.",
     promise:
@@ -56,7 +56,7 @@ export const accelerators: Accelerator[] = [
     summary:
       "Prioritize, route, enrich, and resolve claims faster with decision support that respects policy, evidence, and human authority.",
     builtFor: "Healthcare, insurance, benefits, and claims operations",
-    image: "https://images.unsplash.com/photo-1666214280557-f1b5022eb634?auto=format&fit=crop&w=1200&q=70",
+    image: "/img/services/use-case-2.webp",
     pain:
       "Claims teams lose time on incomplete files, manual routing, repetitive documentation checks, and reviews that should have been escalated earlier.",
     promise:
@@ -89,7 +89,7 @@ export const accelerators: Accelerator[] = [
     summary:
       "Automate financial-crime workflows with explainable triage, customer risk context, and analyst-ready evidence.",
     builtFor: "Banks, fintechs, credit unions, and financial institutions",
-    image: "https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?auto=format&fit=crop&w=1200&q=70",
+    image: "/img/services/Banking-Customer-Service-That-Resolves-50-percent-of-Tickets-Automatically.jpg",
     pain:
       "Financial-crime teams face rising alert volume, examiner pressure, thin analyst capacity, and onboarding flows that frustrate good customers.",
     promise:
@@ -122,7 +122,7 @@ export const accelerators: Accelerator[] = [
     summary:
       "Turn customer, transaction, and behavioral data into personalized offers and retention actions with operational guardrails.",
     builtFor: "Retail, QSR, consumer brands, and loyalty teams",
-    image: "https://images.unsplash.com/photo-1481437156560-3205f6a55735?auto=format&fit=crop&w=1200&q=70",
+    image: "/img/services/Retail-40-percent-Faster-Pricing-Ops-Without-Manual-Review.jpg",
     pain:
       "Loyalty programs often become static discount engines. Teams know they have useful customer signals, but campaign operations cannot react fast enough.",
     promise:
@@ -155,7 +155,7 @@ export const accelerators: Accelerator[] = [
     summary:
       "Accelerate network and service operations by turning telemetry, tickets, runbooks, and history into governed recommendations.",
     builtFor: "Telecom, managed services, enterprise IT, and operations teams",
-    image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=70",
+    image: "/img/services/use-case-4.webp",
     pain:
       "Operations teams lose time correlating alerts, rewriting tickets, searching runbooks, and escalating incidents without enough context.",
     promise:
@@ -188,7 +188,7 @@ export const accelerators: Accelerator[] = [
     summary:
       "Monitor supplier, procurement, logistics, and operational dependency signals so teams can act before disruption becomes a business event.",
     builtFor: "Energy, manufacturing, logistics, and procurement teams",
-    image: "https://images.unsplash.com/photo-1577416412292-747c6607f055?auto=format&fit=crop&w=1200&q=70",
+    image: "/img/services/Manufacturing-Autonomous-Maintenance-With-Scoped-Agent-Control.jpg",
     pain:
       "Supplier and shipment risks appear across contracts, ERP records, emails, news, quality data, and logistics tools long before they show up in a monthly report.",
     promise:
@@ -221,7 +221,7 @@ export const accelerators: Accelerator[] = [
     summary:
       "Automate service workflows across ITSM, shared services, knowledge bases, and operating tools while preserving approvals and auditability.",
     builtFor: "Enterprise IT, shared services, HR ops, finance ops, and support teams",
-    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=70",
+    image: "/img/services/use-case-1.webp",
     pain:
       "Internal service teams are buried in repetitive requests, inconsistent routing, stale knowledge, and handoffs that slow employees down.",
     promise:
@@ -254,7 +254,7 @@ export const accelerators: Accelerator[] = [
     summary:
       "Help SecOps teams triage alerts, summarize incidents, enrich threat context, recommend response actions, and generate evidence.",
     builtFor: "Cybersecurity, SecOps, GRC, and risk teams",
-    image: "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?auto=format&fit=crop&w=1200&q=70",
+    image: "/img/services/use-case-5.webp",
     pain:
       "Security teams face alert overload, fragmented tooling, and reporting demands that pull analysts away from investigation and response.",
     promise:

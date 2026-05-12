@@ -202,7 +202,7 @@ export default function AboutPage() {
             </h2>
             <div style={{ display: "flex", gap: 12, marginTop: 32, justifyContent: "center", flexWrap: "wrap" }}>
               <Link href="/engage-us" className="a-btn a-btn-primary">
-                Engage us
+                Get Started
               </Link>
               <Link href="/careers" className="a-btn a-btn-ghost">
                 See open roles

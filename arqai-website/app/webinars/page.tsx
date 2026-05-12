@@ -225,7 +225,7 @@ export default async function WebinarsPage() {
                 Until then, bring us the workflow you want to modernize and we will tell you what is honestly possible.
               </p>
               <Link href="/engage-us" className="a-btn a-btn-primary" style={{ marginTop: 28 }}>
-                Engage us <ArrowIcon className="arrow" />
+                Get Started <ArrowIcon className="arrow" />
               </Link>
             </div>
           </div>

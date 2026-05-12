@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
 import { ArrowIcon, DarkShell } from "@/components/site-dark/DarkShell";
+import { SignalStrip } from "@/components/site-dark/InternalVisuals";
 
 export const metadata: Metadata = {
   title: "Industries | ArqAI Labs",
@@ -74,7 +75,7 @@ export default function IndustriesPage() {
               </p>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginTop: 28 }}>
                 <Link href="/engage-us" className="a-btn a-btn-primary">
-                  Discuss your industry <ArrowIcon className="arrow" />
+                  Get Started <ArrowIcon className="arrow" />
                 </Link>
                 <Link href="/accelerators" className="a-btn a-btn-ghost">
                   View accelerators
@@ -82,6 +83,18 @@ export default function IndustriesPage() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="a-section">
+        <div className="a-wrap">
+          <SignalStrip
+            label="Industry depth"
+            title="Visualize the operating terrain before we build."
+            body="Every industry page now creates room for the things that make the work specific: systems, exceptions, reviewers, risk boundaries, and measurable outcomes."
+            variant="network"
+            points={["Systems", "Exceptions", "Risk", "Outcomes"]}
+          />
         </div>
       </section>
 

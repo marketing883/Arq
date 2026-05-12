@@ -21,7 +21,7 @@ const resources = [
   { name: "Blog", href: "/blog" },
   { name: "Case studies", href: "/case-studies" },
   { name: "Whitepapers", href: "/whitepapers" },
-  { name: "Engage us", href: "/engage-us" },
+  { name: "Get Started", href: "/engage-us" },
 ];
 
 export function SiteFooter() {

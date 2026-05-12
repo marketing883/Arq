@@ -157,7 +157,7 @@ export default function UseCasesPage() {
                 We don&apos;t ship templates. Most of the engagements we run weren&apos;t on a public page when they started. Tell us what your operation needs. We&apos;ll tell you what&apos;s honestly possible.
               </p>
               <Link href="/engage-us" className="btn bg-accent text-white">
-                Engage us
+                Get Started
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
                 </svg>

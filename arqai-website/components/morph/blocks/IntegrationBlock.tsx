@@ -201,7 +201,7 @@ export function IntegrationBlock({ customizations }: IntegrationBlockProps) {
           href="/demo"
           className="inline-flex items-center gap-2 px-6 py-3 bg-[#0432a5] text-white rounded-lg font-semibold hover:opacity-90 transition-colors"
         >
-          Discuss Your Requirements
+          Get Started
           <ArrowRightIcon size={18} />
         </a>
       </motion.div>

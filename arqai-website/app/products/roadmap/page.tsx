@@ -178,7 +178,7 @@ export default function RoadmapPage() {
                   href="/contact"
                   className="inline-flex items-center gap-2 px-6 py-3 bg-white text-accent font-semibold rounded-lg hover:shadow-lg transition-all"
                 >
-                  Suggest a workflow
+                  Get Started
                   <svg
                     className="w-4 h-4"
                     fill="none"

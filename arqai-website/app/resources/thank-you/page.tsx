@@ -130,7 +130,7 @@ function ThankYouContent() {
                     </svg>
                   </div>
                   <div>
-                    <h4 className="font-medium text-gray-900">Schedule a Demo</h4>
+                    <h4 className="font-medium text-gray-900">Get Started</h4>
                     <p className="text-sm text-gray-500">See ArqAI in action</p>
                   </div>
                 </Link>

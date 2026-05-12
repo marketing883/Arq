@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { SiteFooter } from "@/components/site-dark/SiteFooter";
 import { SiteNav } from "@/components/site-dark/SiteNav";
+import { HeroImagePanel, SignalStrip } from "@/components/site-dark/InternalVisuals";
 
 function ArrowIcon({ className = "" }: { className?: string }) {
   return (
@@ -83,7 +83,7 @@ export function IndustryPage({ data }: { data: IndustryPageData }) {
                 </p>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginTop: 30 }}>
                   <Link href={data.primaryCta?.href ?? "/engage-us"} className="a-btn a-btn-primary">
-                    {data.primaryCta?.label ?? "Engage us"} <ArrowIcon className="arrow" />
+                    {data.primaryCta?.label ?? "Get Started"} <ArrowIcon className="arrow" />
                   </Link>
                   {data.secondaryCta ? (
                     <Link href={data.secondaryCta.href} className="a-btn a-btn-ghost">
@@ -93,19 +93,14 @@ export function IndustryPage({ data }: { data: IndustryPageData }) {
                 </div>
               </div>
 
-              <div className="a-card" style={{ padding: 0, overflow: "hidden" }}>
-                <div style={{ position: "relative", aspectRatio: "4 / 3" }}>
-                  <Image
-                    src={data.heroImage}
-                    alt={data.heroImageAlt}
-                    fill
-                    priority
-                    sizes="(min-width: 1000px) 42vw, 100vw"
-                    style={{ objectFit: "cover" }}
-                  />
-                  <div className="svc-media-shade" />
-                </div>
-              </div>
+              <HeroImagePanel
+                image={data.heroImage}
+                alt={data.heroImageAlt}
+                label="Industry signal"
+                title="Workflow terrain"
+                variant="network"
+                priority
+              />
             </div>
           </div>
         </section>
@@ -124,7 +119,7 @@ export function IndustryPage({ data }: { data: IndustryPageData }) {
                 evidence, and workflows people can trust.
               </p>
             </div>
-            <div className="steps" style={{ marginTop: 44 }}>
+            <div className="steps steps-relief" style={{ marginTop: 44 }}>
               {data.outcomes.map((outcome) => (
                 <div className="step" key={outcome.label}>
                   <span className="num">{outcome.metric}</span>
@@ -133,6 +128,18 @@ export function IndustryPage({ data }: { data: IndustryPageData }) {
                 </div>
               ))}
             </div>
+          </div>
+        </section>
+
+        <section className="a-section">
+          <div className="a-wrap">
+            <SignalStrip
+              label="Where AI fits"
+              title="The useful surface is the workflow, not the category."
+              body="Each industry has its own data shape, exception model, compliance pressure, and review culture. We design the page around those realities so the use cases feel specific instead of generic."
+              variant="network"
+              points={["Data shape", "Exceptions", "Review", "Controls"]}
+            />
           </div>
         </section>
 
@@ -151,7 +158,7 @@ export function IndustryPage({ data }: { data: IndustryPageData }) {
               </p>
             </div>
 
-            <div className="svc-grid" style={{ marginTop: 44 }}>
+            <div className="svc-grid relief-grid" style={{ marginTop: 44 }}>
               {data.useCases.map((useCase) => (
                 <article className="a-card" key={useCase.title} style={{ padding: 28 }}>
                   <span className="a-tag">{useCase.tag}</span>
@@ -176,7 +183,7 @@ export function IndustryPage({ data }: { data: IndustryPageData }) {
                 {data.midCtaBody}
               </p>
               <Link href="/engage-us" className="a-btn a-btn-primary" style={{ marginTop: 28 }}>
-                Engage us <ArrowIcon className="arrow" />
+                Get Started <ArrowIcon className="arrow" />
               </Link>
             </div>
           </div>
@@ -184,7 +191,7 @@ export function IndustryPage({ data }: { data: IndustryPageData }) {
 
         <section className="a-section">
           <div className="a-wrap">
-            <div className="gap-split">
+            <div className="gap-split internal-story">
               <article className="a-card" style={{ padding: 32 }}>
                 <span className="a-eyebrow">Audience</span>
                 <h2 className="h-section" style={{ fontSize: "clamp(28px, 3.2vw, 44px)", marginTop: 18 }}>
@@ -223,7 +230,7 @@ export function IndustryPage({ data }: { data: IndustryPageData }) {
             </div>
 
             {data.products.length > 0 ? (
-              <div className="svc-grid" style={{ marginTop: 44 }}>
+              <div className="svc-grid relief-grid" style={{ marginTop: 44 }}>
                 {data.products.map((product) => (
                   <Link
                     href={product.href}
@@ -251,15 +258,14 @@ export function IndustryPage({ data }: { data: IndustryPageData }) {
         <section className="a-section">
           <div className="a-wrap">
             <div className="cta-strip">
-              <span className="a-eyebrow">CTA</span>
-              <h2 className="h-section" style={{ marginTop: 18, maxWidth: "18ch" }}>
+              <h2 className="h-section" style={{ marginTop: 0, maxWidth: "18ch" }}>
                 {data.closingCta.headline}
               </h2>
               <p className="lede" style={{ marginTop: 18, maxWidth: "62ch" }}>
                 {data.closingCta.body}
               </p>
               <Link href="/engage-us" className="a-btn a-btn-primary" style={{ marginTop: 28 }}>
-                Engage us <ArrowIcon className="arrow" />
+                Get Started <ArrowIcon className="arrow" />
               </Link>
             </div>
           </div>

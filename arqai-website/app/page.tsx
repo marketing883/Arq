@@ -212,7 +212,7 @@ function Hero() {
               </p>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginTop: 28 }}>
                 <Link href="/engage-us" className="a-btn a-btn-primary">
-                  Start with one workflow <Icon.Arrow className="arrow" />
+                  Get Started <Icon.Arrow className="arrow" />
                 </Link>
                 <a href="#process" className="a-btn a-btn-ghost">See how we build</a>
               </div>
@@ -329,7 +329,7 @@ function GapSection() {
             </ul>
             <div style={{ marginTop: "auto", paddingTop: 24 }}>
               <Link href="/engage-us" className="a-btn a-btn-ghost" style={{ borderColor: "rgba(208,244,56,0.35)" }}>
-                Start with one workflow <Icon.Arrow className="arrow" />
+                Get Started <Icon.Arrow className="arrow" />
               </Link>
             </div>
           </div>
@@ -433,7 +433,7 @@ function ServicesSection() {
             proven.
           </p>
           <Link href="/services" className="a-btn a-btn-primary">
-            Start with one workflow <Icon.Arrow className="arrow" />
+            Get Started <Icon.Arrow className="arrow" />
           </Link>
         </div>
       </div>
@@ -485,7 +485,7 @@ function ProcessSection() {
             <em style={{ fontFamily: "var(--serif)", fontStyle: "italic", color: "var(--ink-cream)" }}>one working system</em> your business can build on.
           </p>
           <Link href="/engage-us" className="a-btn a-btn-primary">
-            Start with one workflow <Icon.Arrow className="arrow" />
+            Get Started <Icon.Arrow className="arrow" />
           </Link>
         </div>
       </div>
@@ -674,7 +674,7 @@ function WhySection() {
         </p>
         <div className="reveal" style={{ display: "flex", justifyContent: "center", marginTop: 28 }}>
           <Link href="/engage-us" className="a-btn a-btn-primary">
-            Start with one workflow <Icon.Arrow className="arrow" />
+            Get Started <Icon.Arrow className="arrow" />
           </Link>
         </div>
       </div>
@@ -845,10 +845,9 @@ function FinalCTA() {
               maxWidth: 880,
             }}
           >
-            <div className="kicker" style={{ color: "var(--ember)" }}>Engage us</div>
             <h2
               className="h-section final-cta-h"
-              style={{ marginTop: 14, maxWidth: "26ch" }}
+              style={{ marginTop: 0, maxWidth: "26ch" }}
             >
               Start with one workflow. Prove value <em>fast</em>.
             </h2>
@@ -859,7 +858,7 @@ function FinalCTA() {
             </p>
             <div style={{ display: "flex", gap: 12, marginTop: 26, flexWrap: "wrap" }}>
               <Link href="/engage-us" className="a-btn a-btn-primary">
-                Start with one workflow <Icon.Arrow className="arrow" />
+                Get Started <Icon.Arrow className="arrow" />
               </Link>
             </div>
           </div>

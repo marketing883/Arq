@@ -301,7 +301,7 @@ export function ROICalculatorBlock({ customizations }: ROICalculatorBlockProps) 
           href="/demo"
           className="inline-flex items-center gap-2 px-6 py-3 bg-[#0432a5] text-white rounded-lg font-semibold hover:opacity-90 transition-colors"
         >
-          Get Your Custom Analysis
+          Get Started
         </a>
       </motion.div>
     </div>
