@@ -65,11 +65,11 @@ export default function HowItWorksPage() {
               </p>
 
               <h1 className="text-display-xl md:text-[clamp(2.5rem,5vw,4rem)] font-display leading-[1.1] text-text-bright mb-6">
-                Three layers. Every product. Production-grade by design.
+                Three layers. Every workflow. Production-grade by design.
               </h1>
 
               <p className="text-body-lg md:text-xl text-text-medium max-w-3xl leading-relaxed">
-                Every ArqAI Labs agent is built on the same architectural foundation. We do not rebuild reliability for each product. We build it once, deeply, and apply it everywhere. That is why our second product ships faster than our first, and why our customers can deploy a second agent without re-evaluating the foundation from scratch.
+                Every ArqAI Labs agent is built on the same architectural foundation. We do not rebuild reliability for each workflow. We build it once, deeply, and apply it everywhere. That is why repeat workflows move faster, and why customers can deploy another agent without re-evaluating the foundation from scratch.
               </p>
             </motion.div>
           </div>
@@ -187,7 +187,7 @@ export default function HowItWorksPage() {
                 See the architecture in action.
               </h2>
               <p className="text-body-lg text-text-muted mb-8">
-                We can show how our products run on this foundation in your environment.
+                We can show how your workflow would run on this foundation in your environment.
               </p>
               <Link
                 href="/engage-us"

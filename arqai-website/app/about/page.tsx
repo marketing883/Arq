@@ -6,7 +6,7 @@ import { SiteFooter } from "@/components/site-dark/SiteFooter";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "ArqAI Labs is an AI engineering studio. Production AI, bespoke to your operation. The AI products and services arm of ACI Infotech.",
+    "ArqAI Labs is an AI engineering studio. Production AI, bespoke to your operation. Backed by ACI Infotech.",
 };
 
 const beliefs = [
@@ -179,7 +179,7 @@ export default function AboutPage() {
                 </h2>
               </div>
               <p className="lede" style={{ justifySelf: "end" }}>
-                ArqAI Labs is the AI products and services arm of ACI Infotech, a privately held technology services
+                ArqAI Labs is an AI engineering studio backed by ACI Infotech, a privately held technology services
                 firm. ACI works with senior technology leaders across financial services, healthcare, insurance,
                 telecommunications, and manufacturing.
               </p>

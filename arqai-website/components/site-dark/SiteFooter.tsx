@@ -39,7 +39,7 @@ export function SiteFooter() {
             />
           </Link>
           <p style={{ color: "var(--ink-cream-d)", fontSize: 14, lineHeight: 1.55, marginTop: 16, maxWidth: 360 }}>
-            Agentic operating systems for enterprise workflows. The AI products and services arm of{" "}
+            Agentic operating systems for enterprise workflows. An AI engineering studio backed by{" "}
             <a
               href="https://aciinfotech.com"
               target="_blank"

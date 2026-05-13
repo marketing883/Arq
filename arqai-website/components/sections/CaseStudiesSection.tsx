@@ -180,8 +180,8 @@ export function CaseStudiesSection({ caseStudies }: CaseStudiesSectionProps) {
 const placeholderStudies: CaseStudy[] = [
   {
     id: "1",
-    slug: "arqrelease-devsecops",
-    title: "ArqRelease™",
+    slug: "release-operations-devsecops",
+    title: "Release Operations Blueprint",
     client_name: "DevSecOps Team",
     industry: "DevSecOps",
     image: "/img/services/use-case-1.webp",
@@ -191,7 +191,7 @@ const placeholderStudies: CaseStudy[] = [
       "Complete Audit Trail",
       "CI/CD Integration"
     ],
-    challenge_summary: "Automated documentation agent for technical teams. ArqRelease continuously monitors your CI/CD pipeline for significant changes, drafts relevant JIRA tickets, and keeps your documentation up-to-date.",
+    challenge_summary: "Automated documentation support for technical teams. The workflow monitors CI/CD pipelines for significant changes, drafts relevant JIRA tickets, and keeps documentation up to date.",
     results_summary: "40% faster releases with zero compliance violations.",
     key_metrics: [
       { label: "Faster Releases", value: "40%" },
@@ -200,8 +200,8 @@ const placeholderStudies: CaseStudy[] = [
   },
   {
     id: "2",
-    slug: "arqoptimize-finsecops",
-    title: "ArqOptimize™",
+    slug: "cloud-cost-operations-finsecops",
+    title: "Cloud Cost Operations Blueprint",
     client_name: "FinOps Team",
     industry: "FinSecOps",
     image: "/img/services/use-case-2.webp",
@@ -211,7 +211,7 @@ const placeholderStudies: CaseStudy[] = [
       "400%+ ROI Over 2 Years",
       "Zero \"Zombie Resources\" Left Running"
     ],
-    challenge_summary: "Enterprises waste up to 30-40% of cloud spend on idle resources. ArqOptimize connects your project tools (Jira, Asana, Trello, Monday) with cloud platforms (AWS, Azure, GCP) to detect and eliminate orphaned assets automatically turning project closure into instant savings.",
+    challenge_summary: "Enterprises waste up to 30-40% of cloud spend on idle resources. This workflow connects project tools with cloud platforms to detect and eliminate orphaned assets automatically, turning project closure into faster savings.",
     results_summary: "25-40% cost reduction with 60-day payback.",
     key_metrics: [
       { label: "Cost Reduction", value: "25-40%" },
@@ -220,8 +220,8 @@ const placeholderStudies: CaseStudy[] = [
   },
   {
     id: "3",
-    slug: "arqintel-investment",
-    title: "ArqIntel™",
+    slug: "investment-intelligence",
+    title: "Investment Intelligence Blueprint",
     client_name: "Investment Team",
     industry: "Investment Due Diligence",
     image: "/img/services/use-case-4.webp",
@@ -231,7 +231,7 @@ const placeholderStudies: CaseStudy[] = [
       "Complete Audit Trails",
       "Multi-jurisdiction Compliance"
     ],
-    challenge_summary: "Investment teams conduct thorough, repeatable due diligence without sacrificing speed. ArqIntel ingests documents from any source, applies consistent analysis frameworks, scores risks within your criteria, and produces audit-ready reports all with governance enforced at every step.",
+    challenge_summary: "Investment teams conduct thorough, repeatable due diligence without sacrificing speed. The workflow ingests documents from approved sources, applies consistent analysis frameworks, scores risks within your criteria, and produces audit-ready reports with governance enforced at every step.",
     results_summary: "70% faster screening with consistent scoring.",
     key_metrics: [
       { label: "Faster Screening", value: "70%" },

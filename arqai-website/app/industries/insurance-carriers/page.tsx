@@ -13,7 +13,7 @@ export default function InsuranceCarriersPage() {
         heroImage: "/img/industries/insurance-claims-vehicle.jpg",
         heroImageAlt: "P&C insurance operations",
         primaryCta: { label: "Get Started", href: "/engage-us" },
-        secondaryCta: { label: "Get Started", href: "/products/arqclaims" },
+        secondaryCta: { label: "Explore accelerators", href: "/accelerators" },
         outcomes: [
           {
             metric: "40%",
@@ -60,7 +60,7 @@ export default function InsuranceCarriersPage() {
         midCtaHeadline:
           "Bring us the claim workflow slowing the operation down.",
         midCtaBody:
-          "We will map the decision path, the data required, and the human-review points, then show where ArqClaims, ArqFWA, or a custom build fits.",
+          "We will map the decision path, the data required, and the human-review points, then show where an accelerator or custom build fits.",
         operatingContextHeading: "Useful where claim decisions need speed and defensible evidence.",
         operatingContextBody:
           "Carrier workflows benefit most when the work is high-volume, evidence-heavy, and too important to hand to an opaque model.",
@@ -74,26 +74,8 @@ export default function InsuranceCarriersPage() {
         ],
         productsHeading: "Start from the workflow pattern that already fits.",
         productsBody:
-          "ArqFWA is live for suspicious-claim review. ArqClaims, Luma, and Veyra cover adjacent claims, triage, and investigation patterns from the same governed foundation.",
+          "Luma and Veyra cover claims intake, triage, investigation, and leakage-review patterns from the same governed foundation.",
         products: [
-          {
-            name: "ArqFWA",
-            status: "LIVE",
-            statusColor: "bg-green-500",
-            description:
-              "The AI agent for fraud, waste, and abuse detection across personal and commercial lines.",
-            cta: "Get Started",
-            href: "/products/arqfwa",
-          },
-          {
-            name: "ArqClaims",
-            status: "IN BUILD",
-            statusColor: "bg-amber-500",
-            description:
-              "The AI agent for claims triage and processing across P&C carrier operations.",
-            cta: "Get Started",
-            href: "/products/arqclaims",
-          },
           {
             name: "Luma",
             status: "ACCELERATOR",

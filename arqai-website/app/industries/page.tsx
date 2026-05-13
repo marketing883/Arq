@@ -17,7 +17,7 @@ const industries = [
       "Payment integrity, prior authorization, utilization management, and member operations where claims, policy, and clinical context have to line up.",
     href: "/industries/healthcare-payers",
     image: "/img/services/Healthcare-Real-Time-Risk-Stratification-With-Built-In-Compliance.jpg",
-    products: ["Veyra", "Luma", "ArqFWA"],
+    products: ["Veyra", "Luma"],
   },
   {
     title: "P&C insurance carriers",
@@ -25,7 +25,7 @@ const industries = [
       "Claims intake, coverage review, SIU routing, reserve analysis, and adjuster support for carriers that need speed without losing judgment.",
     href: "/industries/insurance-carriers",
     image: "/img/industries/insurance-claims-vehicle.jpg",
-    products: ["Luma", "ArqClaims", "Veyra"],
+    products: ["Luma", "Veyra"],
   },
   {
     title: "Banks and financial institutions",
@@ -33,7 +33,7 @@ const industries = [
       "AML, KYC, sanctions, alert triage, customer due diligence, and SAR support for teams that need cleaner evidence and fewer false positives.",
     href: "/industries/banking",
     image: "/img/services/Banking-Customer-Service-That-Resolves-50-percent-of-Tickets-Automatically.jpg",
-    products: ["Sentra", "ArqBanker"],
+    products: ["Sentra"],
   },
   {
     title: "Retail and QSR",

@@ -31,7 +31,7 @@ const layers = [
   {
     id: "blueprints",
     label: "Pre-Built Agent Blueprints",
-    sublabel: "ArqRelease, ArqOptimize, ArqFWA, ArqIntel & more",
+    sublabel: "Reusable workflow blueprints for repeatable operating patterns",
     color: "bg-accent/70",
     textColor: "text-base-opp",
   },

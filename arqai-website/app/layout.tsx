@@ -13,24 +13,21 @@ const GTM_ID = "GTM-PR74FLRQ";
 
 export const metadata: Metadata = {
   title: {
-    default: "ArqAI Labs | AI agents for fraud, claims, and financial crime",
+    default: "ArqAI Labs | Production AI for enterprise operations",
     template: "%s | ArqAI Labs",
   },
   description:
-    "Detect more fraud. Resolve more claims. Stop more financial crime. Vertical AI agents built for healthcare payers, P&C carriers, and regional banks. Live in production today.",
+    "ArqAI Labs designs, builds, deploys, and runs production AI workflows for enterprise operations.",
   keywords: [
-    "vertical AI agents",
+    "production AI",
+    "enterprise AI workflows",
     "AI for healthcare payers",
     "AI for insurance",
     "AI for banking",
-    "fraud waste abuse detection",
-    "claims triage AI",
-    "AML KYC AI",
-    "financial crime AI",
-    "ArqFWA",
-    "ArqClaims",
-    "ArqBanker",
-    "production AI agents",
+    "AI workflow automation",
+    "AI governance",
+    "agentic AI",
+    "AI accelerators",
     "ACI Infotech",
   ],
   authors: [{ name: "ArqAI Labs" }],
@@ -52,9 +49,9 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://thearq.ai",
     siteName: "ArqAI Labs",
-    title: "ArqAI Labs | AI agents for fraud, claims, and financial crime",
+    title: "ArqAI Labs | Production AI for enterprise operations",
     description:
-      "Vertical AI agents for healthcare payers, P&C carriers, and regional banks. Live in production today.",
+      "Production AI workflows for healthcare, insurance, banking, retail, manufacturing, and complex enterprise operations.",
     images: [
       {
         url: "/og-image.png",
@@ -66,9 +63,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "ArqAI Labs | AI agents for fraud, claims, and financial crime",
+    title: "ArqAI Labs | Production AI for enterprise operations",
     description:
-      "Vertical AI agents for healthcare payers, P&C carriers, and regional banks. Live in production today.",
+      "Production AI workflows for healthcare, insurance, banking, retail, manufacturing, and complex enterprise operations.",
     images: ["/og-image.png"],
     creator: "@arqai",
   },

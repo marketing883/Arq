@@ -111,12 +111,9 @@ arqai-website/
 │   ├── platform/                 # Platform page
 │   ├── privacy/                  # Privacy policy
 │   ├── resources/                # Resources hub
-│   ├── solutions/                # Solutions pages
-│   │   ├── page.tsx              # Solutions overview
-│   │   ├── arqfwa/               # ArqFWA solution
-│   │   ├── arqintel/             # ArqIntel solution
-│   │   ├── arqoptimize/          # ArqOptimize solution
-│   │   └── arqrelease/           # ArqRelease solution
+│   ├── services/                 # Service pages
+│   ├── accelerators/             # Accelerator pages
+│   ├── industries/               # Industry pages
 │   ├── terms/                    # Terms of service
 │   ├── webinars/                 # Webinars
 │   └── whitepapers/              # Whitepapers
@@ -211,12 +208,11 @@ npx bcryptjs hash "your-secure-password"
 |-------|------|-------------|
 | `/` | `app/page.tsx` | Homepage |
 | `/about` | `app/about/page.tsx` | About page |
-| `/platform` | `app/platform/page.tsx` | Platform overview |
-| `/solutions` | `app/solutions/page.tsx` | Solutions overview |
-| `/solutions/arqfwa` | `app/solutions/arqfwa/page.tsx` | ArqFWA solution |
-| `/solutions/arqintel` | `app/solutions/arqintel/page.tsx` | ArqIntel solution |
-| `/solutions/arqoptimize` | `app/solutions/arqoptimize/page.tsx` | ArqOptimize solution |
-| `/solutions/arqrelease` | `app/solutions/arqrelease/page.tsx` | ArqRelease solution |
+| `/services` | `app/services/page.tsx` | Services overview |
+| `/services/[slug]` | `app/services/[slug]/page.tsx` | Service detail |
+| `/accelerators` | `app/accelerators/page.tsx` | Accelerators overview |
+| `/accelerators/[id]` | `app/accelerators/[id]/page.tsx` | Accelerator detail |
+| `/industries` | `app/industries/page.tsx` | Industries overview |
 | `/case-studies` | `app/case-studies/page.tsx` | Case studies listing |
 | `/case-studies/[slug]` | `app/case-studies/[slug]/page.tsx` | Individual case study |
 | `/blog` | `app/blog/page.tsx` | Blog listing |

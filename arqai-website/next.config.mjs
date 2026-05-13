@@ -100,38 +100,18 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        source: "/solutions/arqrelease",
-        destination: "/products",
-        permanent: true,
-      },
-      {
-        source: "/solutions/arqoptimize",
-        destination: "/products",
-        permanent: true,
-      },
-      {
-        source: "/solutions/arqfwa",
-        destination: "/products/arqfwa",
-        permanent: true,
-      },
-      {
-        source: "/solutions/arqintel",
-        destination: "/products",
-        permanent: true,
-      },
-      {
         source: "/platform",
         destination: "/how-it-works",
         permanent: true,
       },
       {
         source: "/agents",
-        destination: "/products",
+        destination: "/accelerators",
         permanent: true,
       },
       {
         source: "/agents/blueprints",
-        destination: "/products",
+        destination: "/accelerators",
         permanent: true,
       },
       // v3 IA: solutions -> industries

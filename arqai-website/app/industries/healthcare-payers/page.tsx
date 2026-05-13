@@ -14,7 +14,7 @@ export default function HealthcarePayersPage() {
           "/img/services/Healthcare-Real-Time-Risk-Stratification-With-Built-In-Compliance.jpg",
         heroImageAlt: "Healthcare payer operations",
         primaryCta: { label: "Get Started", href: "/engage-us" },
-        secondaryCta: { label: "Get Started", href: "/products/arqfwa" },
+        secondaryCta: { label: "Explore accelerators", href: "/accelerators" },
         outcomes: [
           {
             metric: "30%+",
@@ -75,17 +75,8 @@ export default function HealthcarePayersPage() {
         ],
         productsHeading: "Start from the workflow pattern that already fits.",
         productsBody:
-          "ArqFWA is live for payment integrity and claims review. Veyra and Luma accelerate adjacent payer workflows from the same governed foundation.",
+          "Veyra and Luma accelerate payer review, evidence assembly, intake, and routing patterns from the same governed foundation.",
         products: [
-          {
-            name: "ArqFWA",
-            status: "LIVE",
-            statusColor: "bg-green-500",
-            description:
-              "The AI agent for fraud, waste, and abuse detection. Built for healthcare payers and P&C insurance carriers.",
-            cta: "Get Started",
-            href: "/products/arqfwa",
-          },
           {
             name: "Veyra",
             status: "ACCELERATOR",

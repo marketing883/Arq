@@ -14,8 +14,8 @@ export interface Blueprint {
 
 export const blueprints: Blueprint[] = [
   {
-    id: "arqrelease",
-    name: "ArqRelease",
+    id: "release-operations",
+    name: "Release Operations Blueprint",
     category: "IT Infrastructure",
     headline: "Autonomous DevSecOps documentation that never falls behind",
     description:
@@ -34,11 +34,11 @@ export const blueprints: Blueprint[] = [
     status: "available",
     workflowContexts: ["Release documentation", "Change tracking", "Audit preparation"],
     industries: ["telecom", "financial", "healthcare"],
-    link: "/solutions/arqrelease",
+    link: "/services/agentic-ai-buildout",
   },
   {
-    id: "arqoptimize",
-    name: "ArqOptimize",
+    id: "cloud-cost-operations",
+    name: "Cloud Cost Operations Blueprint",
     category: "FinOps",
     headline: "Autonomous cloud cost optimization across your entire stack",
     description:
@@ -57,11 +57,11 @@ export const blueprints: Blueprint[] = [
     status: "available",
     workflowContexts: ["Cloud spend review", "Waste identification", "Project-to-cost visibility"],
     industries: ["telecom", "financial", "retail"],
-    link: "/solutions/arqoptimize",
+    link: "/services/enterprise-integration",
   },
   {
-    id: "arqfwa",
-    name: "ArqFWA",
+    id: "insurance-workflow",
+    name: "Insurance Workflow Blueprint",
     category: "Insurance Workflows",
     headline: "Intelligent insurance workflow automation with compliance built-in",
     description:
@@ -80,13 +80,13 @@ export const blueprints: Blueprint[] = [
     status: "available",
     workflowContexts: ["Claims review", "Underwriting support", "Fraud detection"],
     industries: ["insurance"],
-    link: "/solutions/arqfwa",
+    link: "/industries/insurance-carriers",
   },
   {
-    id: "arqintel",
-    name: "ArqIntel",
+    id: "investment-intelligence",
+    name: "Investment Intelligence Blueprint",
     category: "Investment Intelligence",
-    headline: "AI-powered investment due diligence at scale",
+    headline: "Investment due diligence support at scale",
     description:
       "Accelerates deal review with intelligent company analysis, competitive-context evaluation, and automated risk scoring for investment decisions.",
     features: [
@@ -103,7 +103,7 @@ export const blueprints: Blueprint[] = [
     status: "available",
     workflowContexts: ["Deal screening", "Company analysis", "Risk scoring"],
     industries: ["financial"],
-    link: "/solutions/arqintel",
+    link: "/services/workflow-strategy",
   },
   {
     id: "revenue-ops",

@@ -374,7 +374,7 @@ function ServicesSection() {
       icon: <Icon.Cube />,
       title: "Vertical Acceleration",
       href: "/services/vertical-acceleration",
-      desc: "Use proven product lines for repeatable workflows: claims, fraud, AML, loyalty, network ops, supply chain risk.",
+      desc: "Use proven accelerator patterns for repeatable workflows: claims, fraud, AML, loyalty, network ops, supply chain risk.",
       Art: StackLift,
     },
     {
@@ -429,7 +429,7 @@ function ServicesSection() {
         <div className="reveal" style={{ marginTop: 56, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 24 }}>
           <p style={{ color: "var(--ink-cream-d)", fontSize: 17, maxWidth: "60ch", margin: 0 }}>
             <em style={{ fontFamily: "var(--serif)", fontStyle: "italic", color: "var(--ink-cream)" }}>Services-led</em> where the problem is
-            specific. <em style={{ fontFamily: "var(--serif)", fontStyle: "italic", color: "var(--ink-cream)" }}>Product-accelerated</em> where the pattern is
+            specific. <em style={{ fontFamily: "var(--serif)", fontStyle: "italic", color: "var(--ink-cream)" }}>Accelerator-backed</em> where the pattern is
             proven.
           </p>
           <Link href="/services" className="a-btn a-btn-primary">
@@ -495,7 +495,7 @@ function ProcessSection() {
 
 /* ---------- Section 5: Accelerators ---------- */
 function AcceleratorsSection() {
-  const products = [
+  const accelerators = [
     {
       name: "Veyra",
       tag: "Payment integrity & fraud intelligence",
@@ -574,13 +574,13 @@ function AcceleratorsSection() {
             <p className="kicker" style={{ marginTop: 12 }}>Reusable intelligence systems for repeatable enterprise workflows</p>
           </div>
           <p className="lede" style={{ justifySelf: "end" }}>
-            Not off-the-shelf tools. Reusable AI product lines built from recurring enterprise patterns, then adapted
+            Not off-the-shelf tools. Reusable AI accelerator patterns built from recurring enterprise workflows, then adapted
             to each client&apos;s data, systems, policies, and operating model.
           </p>
         </div>
 
         <div className="acc-grid reveal">
-          {products.map((p, i) => (
+          {accelerators.map((p, i) => (
             <Link
               href={p.href}
               className="acc-card"

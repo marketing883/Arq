@@ -246,8 +246,8 @@ export const services: Service[] = [
     shortTitle: "Acceleration",
     eyebrow: "Services / Vertical acceleration",
     summary:
-      "Use proven product lines for repeatable workflows like claims, fraud, AML, loyalty, network operations, service workflow, and supply chain risk.",
-    image: "/img/hero/arq-products.png",
+      "Use proven accelerator patterns for repeatable workflows like claims, fraud, AML, loyalty, network operations, service workflow, and supply chain risk.",
+    image: "/img/hero/arq-accelerators.png",
     problem:
       "Some enterprise AI workflows repeat across companies, but off-the-shelf products rarely match the data, policy, and operating reality of the work.",
     promise:

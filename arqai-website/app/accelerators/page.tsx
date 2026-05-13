@@ -27,7 +27,7 @@ export default function AcceleratorsPage() {
             </div>
             <div>
               <p className="lede">
-                Not off-the-shelf tools. Reusable AI product lines built from recurring operating patterns, then adapted
+                Not off-the-shelf tools. Reusable AI accelerator patterns built from recurring operating patterns, then adapted
                 to each client's data, systems, policies, and review model.
               </p>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginTop: 28 }}>

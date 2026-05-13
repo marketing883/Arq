@@ -14,7 +14,7 @@ export default function BankingPage() {
           "/img/services/Banking-Customer-Service-That-Resolves-50-percent-of-Tickets-Automatically.jpg",
         heroImageAlt: "Banking operations",
         primaryCta: { label: "Get Started", href: "/engage-us" },
-        secondaryCta: { label: "Get Started", href: "/products/arqbanker" },
+        secondaryCta: { label: "Explore Sentra", href: "/accelerators/sentra" },
         outcomes: [
           {
             metric: "60%",
@@ -61,7 +61,7 @@ export default function BankingPage() {
         midCtaHeadline:
           "Bring us the financial-crime workflow creating the most friction.",
         midCtaBody:
-          "We will map the alert sources, evidence needs, review steps, and risk boundaries, then show whether ArqBanker, Sentra, or a custom build is the right path.",
+          "We will map the alert sources, evidence needs, review steps, and risk boundaries, then show whether Sentra or a custom build is the right path.",
         operatingContextHeading: "Useful where compliance work depends on judgment, evidence, and timing.",
         operatingContextBody:
           "Financial-crime workflows benefit when AI narrows the queue, assembles the evidence, and keeps the rationale clear enough for review.",
@@ -75,7 +75,7 @@ export default function BankingPage() {
         ],
         productsHeading: "Start from the workflow pattern that already fits.",
         productsBody:
-          "ArqBanker is in development for AML, KYC, and financial-crime operations. Sentra accelerates alert triage and customer-risk workflows where the pattern fits.",
+          "Sentra accelerates alert triage, ownership review, sanctions context, and customer-risk workflows where the pattern fits.",
         products: [
           {
             name: "Sentra",
@@ -85,15 +85,6 @@ export default function BankingPage() {
               "Financial-crime and customer-risk acceleration for AML, KYC, sanctions, ownership, and alert-triage workflows.",
             cta: "Get Started",
             href: "/accelerators/sentra",
-          },
-          {
-            name: "ArqBanker",
-            status: "COMING",
-            statusColor: "bg-blue-500",
-            description:
-              "The AI agent for AML, KYC, and financial crime at regional and mid-tier banks. In development.",
-            cta: "Get Started",
-            href: "/products/arqbanker",
           },
         ],
         closingCta: {

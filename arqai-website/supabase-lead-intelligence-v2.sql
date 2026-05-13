@@ -572,7 +572,7 @@ VALUES
      ARRAY['challenge', 'problem', 'issue', 'struggle', 'difficult', 'pain point', 'frustrated', 'manual process', 'can''t scale'],
      false, 'Described pain point or challenge'),
 
-    -- Arq-Specific Technology Interest
+    -- Technology Interest
     ('tao_interest', 'product', 30, 14,
      ARRAY['trust-aware', 'agent orchestration', 'cryptographic identity', 'capability token', 'audit trail', 'non-repudiable'],
      false, 'Interest in TAO technology'),
@@ -585,18 +585,18 @@ VALUES
      ARRAY['observability', 'adaptive rag', 'quality scoring', 'confidence measurement', 'hallucination'],
      false, 'Interest in ODA-RAG technology'),
 
-    -- Solution-Specific Interest
-    ('arqrelease_interest', 'product', 25, 14,
-     ARRAY['devsecops', 'release faster', '40% faster', 'ci/cd', 'arqrelease'],
-     false, 'Interest in ArqRelease solution'),
+    -- Workflow-Specific Interest
+    ('release_operations_interest', 'workflow', 25, 14,
+     ARRAY['devsecops', 'release faster', '40% faster', 'ci/cd', 'release operations'],
+     false, 'Interest in release operations workflow'),
 
-    ('arqoptimize_interest', 'product', 25, 14,
-     ARRAY['finsecops', 'cost reduction', '25-40%', 'cloud cost', 'arqoptimize'],
-     false, 'Interest in ArqOptimize solution'),
+    ('cloud_cost_operations_interest', 'workflow', 25, 14,
+     ARRAY['finsecops', 'cost reduction', '25-40%', 'cloud cost', 'cloud cost operations'],
+     false, 'Interest in cloud cost operations workflow'),
 
-    ('arqintel_interest', 'product', 25, 14,
-     ARRAY['due diligence', 'investment screening', '70% faster', 'arqintel'],
-     false, 'Interest in ArqIntel solution'),
+    ('investment_intelligence_interest', 'workflow', 25, 14,
+     ARRAY['due diligence', 'investment screening', '70% faster', 'investment intelligence'],
+     false, 'Interest in investment intelligence workflow'),
 
     -- Engagement Signals (Lower Weight)
     ('return_visit', 'engagement', 15, 7,
