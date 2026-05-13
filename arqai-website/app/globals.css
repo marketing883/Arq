@@ -1648,6 +1648,7 @@ body:has(.a-nav) {
 .arq-dark .a-nav-links a { color: var(--ink-cream-d); transition: color .25s; text-decoration: none; }
 .arq-dark .a-nav-links a:hover { color: var(--ink-cream); }
 @media (max-width: 900px) { .arq-dark .a-nav-links { display: none; } }
+@media (max-width: 520px) { .arq-dark .a-nav-cta { display: none; } }
 .arq-dark .a-logo {
   display: inline-flex; align-items: center; gap: 10px;
   text-decoration: none;

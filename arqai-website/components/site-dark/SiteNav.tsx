@@ -68,7 +68,7 @@ export function SiteNav() {
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
           <Link
             href="/engage-us"
-            className="a-btn a-btn-ghost"
+            className="a-btn a-btn-ghost a-nav-cta"
             style={{ padding: "10px 16px", fontSize: 13 }}
           >
             Get Started <ArrowIcon className="arrow" />
