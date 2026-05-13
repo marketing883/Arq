@@ -15,10 +15,20 @@ interface PartnerEnquiry {
   company_size: string | null;
   message: string | null;
   website: string | null;
+  partner_region: string | null;
+  customer_base: string | null;
+  solution_areas: string | null;
+  typical_deal_size: string | null;
+  timeline: string | null;
+  existing_relationship: string | null;
+  proposed_opportunity: string | null;
   status: string;
   priority: string;
   notes: string | null;
   assigned_to: string | null;
+  ai_detected_intent: string | null;
+  ai_urgency: string | null;
+  ai_summary: string | null;
   last_contact_at: string | null;
   created_at: string;
 }
@@ -161,9 +171,12 @@ export default function PartnersAdminPage() {
     const badges: Record<string, { bg: string; text: string }> = {
       technology: { bg: "bg-indigo-100 text-indigo-700", text: "Technology" },
       reseller: { bg: "bg-green-100 text-green-700", text: "Reseller" },
+      implementation: { bg: "bg-blue-100 text-blue-700", text: "Implementation" },
       integration: { bg: "bg-orange-100 text-orange-700", text: "Integration" },
+      design_partner: { bg: "bg-lime-100 text-lime-800", text: "Design Partner" },
       strategic: { bg: "bg-red-100 text-red-700", text: "Strategic" },
       general: { bg: "bg-gray-100 text-gray-700", text: "General" },
+      other: { bg: "bg-gray-100 text-gray-700", text: "Other" },
     };
     return badges[type] || badges.general;
   }
@@ -295,8 +308,10 @@ export default function PartnersAdminPage() {
               >
                 <option value="">All Types</option>
                 <option value="technology">Technology</option>
+                <option value="implementation">Implementation</option>
                 <option value="reseller">Reseller</option>
                 <option value="integration">Integration</option>
+                <option value="design_partner">Design Partner</option>
                 <option value="strategic">Strategic</option>
                 <option value="general">General</option>
               </select>
@@ -499,6 +514,18 @@ export default function PartnersAdminPage() {
                   <p className="font-medium capitalize">{selectedEnquiry.company_size || "-"}</p>
                 </div>
                 <div>
+                  <p className="text-sm text-gray-500">Region / Markets</p>
+                  <p className="font-medium">{selectedEnquiry.partner_region || "-"}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">Typical Deal Size</p>
+                  <p className="font-medium">{selectedEnquiry.typical_deal_size || "-"}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">Timeline</p>
+                  <p className="font-medium">{selectedEnquiry.timeline || "-"}</p>
+                </div>
+                <div>
                   <p className="text-sm text-gray-500">Submitted</p>
                   <p className="font-medium">{formatDate(selectedEnquiry.created_at)}</p>
                 </div>
@@ -511,11 +538,61 @@ export default function PartnersAdminPage() {
               </div>
 
               {/* Message */}
+              {selectedEnquiry.customer_base && (
+                <div>
+                  <p className="text-sm text-gray-500 mb-2">Customer Base</p>
+                  <div className="bg-gray-50 rounded-lg p-4">
+                    <p className="text-gray-700 whitespace-pre-wrap">{selectedEnquiry.customer_base}</p>
+                  </div>
+                </div>
+              )}
+
+              {selectedEnquiry.solution_areas && (
+                <div>
+                  <p className="text-sm text-gray-500 mb-2">Solution Areas</p>
+                  <div className="bg-gray-50 rounded-lg p-4">
+                    <p className="text-gray-700 whitespace-pre-wrap">{selectedEnquiry.solution_areas}</p>
+                  </div>
+                </div>
+              )}
+
+              {selectedEnquiry.existing_relationship && (
+                <div>
+                  <p className="text-sm text-gray-500 mb-2">Existing Relationship / Opportunity</p>
+                  <div className="bg-gray-50 rounded-lg p-4">
+                    <p className="text-gray-700 whitespace-pre-wrap">{selectedEnquiry.existing_relationship}</p>
+                  </div>
+                </div>
+              )}
+
+              {selectedEnquiry.proposed_opportunity && (
+                <div>
+                  <p className="text-sm text-gray-500 mb-2">Proposed Opportunity</p>
+                  <div className="bg-gray-50 rounded-lg p-4">
+                    <p className="text-gray-700 whitespace-pre-wrap">{selectedEnquiry.proposed_opportunity}</p>
+                  </div>
+                </div>
+              )}
+
               {selectedEnquiry.message && (
                 <div>
                   <p className="text-sm text-gray-500 mb-2">Message / Use Case</p>
                   <div className="bg-gray-50 rounded-lg p-4">
                     <p className="text-gray-700 whitespace-pre-wrap">{selectedEnquiry.message}</p>
+                  </div>
+                </div>
+              )}
+
+              {(selectedEnquiry.ai_summary || selectedEnquiry.ai_detected_intent || selectedEnquiry.ai_urgency) && (
+                <div>
+                  <p className="text-sm text-gray-500 mb-2">Lead Intelligence</p>
+                  <div className="bg-indigo-50 rounded-lg p-4 space-y-2">
+                    <p className="text-sm text-indigo-900">
+                      Intent: {selectedEnquiry.ai_detected_intent || "-"} | Urgency: {selectedEnquiry.ai_urgency || "-"}
+                    </p>
+                    {selectedEnquiry.ai_summary && (
+                      <p className="text-sm text-indigo-800 whitespace-pre-wrap">{selectedEnquiry.ai_summary}</p>
+                    )}
                   </div>
                 </div>
               )}

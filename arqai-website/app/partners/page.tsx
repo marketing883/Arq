@@ -1,246 +1,49 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
-import { Button } from "@/components/ui/Button";
-import { Card } from "@/components/ui/Card";
-import { Section, SectionHeader, LogoAccent } from "@/components/ui/Section";
-import {
-  CheckIcon,
-  ArrowRightIcon,
-  SecurityIcon,
-  CertificateIcon,
-} from "@/components/ui/Icons";
-import { getIntegrationLogo } from "@/components/ui/IntegrationLogos";
+import { SiteNav } from "@/components/site-dark/SiteNav";
+import { SiteFooter } from "@/components/site-dark/SiteFooter";
 
-// Strategic Technology Partners
-const strategicPartners = [
+const partnerModels = [
   {
-    name: "AWS",
-    tier: "Advanced Consulting Partner",
-    description: "Enterprise cloud infrastructure & AI/ML services",
+    title: "Technology alliances",
+    body: "Model, cloud, data, security, and workflow platforms that want governed AI deployments in real operating environments.",
   },
   {
-    name: "Azure",
-    tier: "Gold Partner",
-    description: "Hybrid cloud & enterprise integration",
+    title: "Implementation partners",
+    body: "Specialist services teams with customer relationships, delivery depth, and a need for AI workflow engineering capacity.",
   },
   {
-    name: "Google Cloud",
-    tier: "Premier Partner",
-    description: "Data analytics & AI platform services",
-  },
-  {
-    name: "Anthropic",
-    tier: "Enterprise Partner",
-    description: "Safe, beneficial AI deployment",
-  },
-  {
-    name: "OpenAI",
-    tier: "Technology Partner",
-    description: "GPT model integration & fine-tuning",
-  },
-  {
-    name: "Salesforce",
-    tier: "AppExchange Partner",
-    description: "CRM integration & automation",
+    title: "Design partners",
+    body: "Enterprise operators ready to shape a repeatable workflow accelerator with a real production problem.",
   },
 ];
 
-// Integration & Platform Partners
-const integrationPartners = [
-  {
-    name: "ServiceNow",
-    description: "IT workflow automation",
-  },
-  {
-    name: "Snowflake",
-    description: "Data cloud & analytics",
-  },
-  {
-    name: "Databricks",
-    description: "Unified analytics platform",
-  },
-  {
-    name: "Cohere",
-    description: "Enterprise NLP solutions",
-  },
-  {
-    name: "Slack",
-    description: "Workplace communication",
-  },
-  {
-    name: "Microsoft Teams",
-    description: "Collaboration & productivity",
-  },
+const partnershipTypes = [
+  { value: "technology", label: "Technology alliance" },
+  { value: "implementation", label: "Implementation partner" },
+  { value: "reseller", label: "Reseller / channel" },
+  { value: "design_partner", label: "Design partner" },
+  { value: "strategic", label: "Strategic alliance" },
+  { value: "other", label: "Other" },
 ];
 
-// Partnership Stats
-const partnerStats = [
-  { value: "50+", label: "Technology Partners" },
-  { value: "200+", label: "Enterprise Certifications" },
-  { value: "35%", label: "Faster Deployment" },
-  { value: "15+", label: "Countries Covered" },
+const companySizes = [
+  { value: "startup", label: "1-50" },
+  { value: "small", label: "51-200" },
+  { value: "mid-market", label: "201-1,000" },
+  { value: "enterprise", label: "1,000+" },
 ];
 
-// Partnership Models
-const partnershipModels = [
-  {
-    title: "Technology Alliance",
-    icon: (
-      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
-      </svg>
-    ),
-    forWho: "Software/platform vendors, cloud providers",
-    benefits: [
-      "Co-marketing & joint solutions",
-      "Technical integration support",
-      "Executive sponsorship",
-      "Joint launch programs",
-    ],
-    requirements: "Complementary technology, enterprise focus",
-  },
-  {
-    title: "Implementation Partner",
-    icon: (
-      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-      </svg>
-    ),
-    forWho: "Regional specialists, boutique consultancies",
-    benefits: [
-      "Deal registration & protection",
-      "Technical training & certification",
-      "Co-delivery opportunities",
-      "Evaluation support",
-    ],
-    requirements: "Technical certification, proven delivery track record",
-  },
-  {
-    title: "Reseller Partner",
-    icon: (
-      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-      </svg>
-    ),
-    forWho: "VARs, MSPs, system integrators",
-    benefits: [
-      "Competitive margin structure",
-      "Deal support & enablement",
-      "Demo environments",
-      "Marketing development funds",
-    ],
-    requirements: "Sales capacity, customer support capability",
-  },
-  {
-    title: "Strategic Alliance",
-    icon: (
-      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-      </svg>
-    ),
-    forWho: "Market leaders, complementary service providers",
-    benefits: [
-      "Executive sponsorship",
-      "Co-innovation programs",
-      "Joint IP development",
-      "Strategic account alignment",
-    ],
-    requirements: "Strategic fit, enterprise relationships",
-  },
+const timelines = [
+  { value: "now", label: "Now / active opportunity" },
+  { value: "quarter", label: "This quarter" },
+  { value: "half_year", label: "Next 3-6 months" },
+  { value: "exploring", label: "Exploring partnership fit" },
 ];
 
-// Partner Benefits
-const partnerBenefits = [
-  {
-    icon: (
-      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-      </svg>
-    ),
-    title: "Training & Certification",
-    description: "Access ArqAI methodology, technical training, and certification programs",
-  },
-  {
-    icon: (
-      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
-      </svg>
-    ),
-    title: "Partner Enablement",
-    description: "Demo environments, evaluation support, and RFP assistance",
-  },
-  {
-    icon: (
-      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
-      </svg>
-    ),
-    title: "Marketing Support",
-    description: "Co-branded materials, event participation, and PR opportunities",
-  },
-  {
-    icon: (
-      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-      </svg>
-    ),
-    title: "Technical Resources",
-    description: "API documentation, sandbox environments, and integration support",
-  },
-  {
-    icon: (
-      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
-      </svg>
-    ),
-    title: "Deal Support",
-    description: "Deal registration, solution architecting, and joint pursuit teams",
-  },
-  {
-    icon: (
-      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" />
-      </svg>
-    ),
-    title: "Partner Portal",
-    description: "Resource library, certification tracking, and opportunity management",
-  },
-];
-
-// Partner Testimonials
-const testimonials = [
-  {
-    quote: "ArqAI doesn't just implement our platform, they extend it. Their deep technical expertise and customer-first approach make them our go-to partner for complex enterprise deployments.",
-    author: "VP Strategic Partnerships",
-    company: "Major Cloud Provider",
-  },
-  {
-    quote: "The level of integration and co-innovation we've achieved with ArqAI has transformed how our mutual customers approach AI governance. They truly understand enterprise requirements.",
-    author: "Director of Alliances",
-    company: "Enterprise Software Vendor",
-  },
-  {
-    quote: "Working with ArqAI has accelerated our time-to-market for AI solutions by 40%. Their compliance-first approach aligns perfectly with our regulated industry customers.",
-    author: "Head of Partner Ecosystem",
-    company: "Global Systems Integrator",
-  },
-];
-
-// Certifications
-const certifications = [
-  { provider: "AWS", certs: ["Advanced Consulting Partner", "Well-Architected", "AI/ML Competency"] },
-  { provider: "Azure", certs: ["Gold Partner", "AI & Machine Learning", "Security"] },
-  { provider: "Google Cloud", certs: ["Premier Partner", "Machine Learning", "Data Analytics"] },
-  { provider: "Salesforce", certs: ["Summit Partner", "AI Associate", "Platform Developer"] },
-];
-
-interface FormData {
+type PartnerFormData = {
   name: string;
   email: string;
   company: string;
@@ -248,38 +51,51 @@ interface FormData {
   jobTitle: string;
   partnershipType: string;
   companySize: string;
-  message: string;
   website: string;
-  website_url: string; // honeypot
-}
+  partnerRegion: string;
+  customerBase: string;
+  solutionAreas: string;
+  typicalDealSize: string;
+  timeline: string;
+  existingRelationship: string;
+  proposedOpportunity: string;
+  message: string;
+  website_url: string;
+};
+
+const emptyForm: PartnerFormData = {
+  name: "",
+  email: "",
+  company: "",
+  phone: "",
+  jobTitle: "",
+  partnershipType: "technology",
+  companySize: "",
+  website: "",
+  partnerRegion: "",
+  customerBase: "",
+  solutionAreas: "",
+  typicalDealSize: "",
+  timeline: "",
+  existingRelationship: "",
+  proposedOpportunity: "",
+  message: "",
+  website_url: "",
+};
 
 export default function PartnersPage() {
-  const [activeModel, setActiveModel] = useState<number | null>(null);
-  const [showAllCerts, setShowAllCerts] = useState(false);
-  const [showForm, setShowForm] = useState(false);
   const [formSubmitting, setFormSubmitting] = useState(false);
   const [formSuccess, setFormSuccess] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
-  const [formData, setFormData] = useState<FormData>({
-    name: "",
-    email: "",
-    company: "",
-    phone: "",
-    jobTitle: "",
-    partnershipType: "",
-    companySize: "",
-    message: "",
-    website: "",
-    website_url: "",
-  });
   const [formLoadedAt, setFormLoadedAt] = useState(0);
+  const [formData, setFormData] = useState<PartnerFormData>(emptyForm);
 
   useEffect(() => {
     setFormLoadedAt(Date.now());
   }, []);
 
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleFormSubmit = async (e: React.FormEvent) => {
@@ -296,22 +112,11 @@ export default function PartnersPage() {
 
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.error || "Failed to submit enquiry");
+        throw new Error(data.error || "Failed to submit partner enquiry");
       }
 
       setFormSuccess(true);
-      setFormData({
-        name: "",
-        email: "",
-        company: "",
-        phone: "",
-        jobTitle: "",
-        partnershipType: "",
-        companySize: "",
-        message: "",
-        website: "",
-        website_url: "",
-      });
+      setFormData(emptyForm);
       setFormLoadedAt(Date.now());
     } catch (err) {
       setFormError(err instanceof Error ? err.message : "An error occurred");
@@ -320,718 +125,388 @@ export default function PartnersPage() {
     }
   };
 
-  const openForm = () => {
-    setShowForm(true);
-    setFormSuccess(false);
-    setFormError(null);
-  };
-
   return (
-    <>
-      <Header />
+    <div className="arq-dark min-h-screen">
+      <SiteNav />
       <main>
-        {/* Hero Section */}
-        <section className="relative pt-32 pb-20 overflow-hidden">
-          <LogoAccent position="top-right" type="lime" size="lg" />
-
-          <div className="container relative z-10">
-            <div className="max-w-4xl mx-auto text-center">
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-              >
-                <span className="inline-block px-4 py-2 rounded-full bg-[var(--arq-blue)]/10 text-[var(--arq-blue)] text-sm font-semibold mb-6">
-                  Partner Ecosystem
-                </span>
-              </motion.div>
-
-              <motion.h1
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.1 }}
-                className="text-4xl md:text-5xl lg:text-6xl font-bold text-[var(--arq-black)] mb-6 leading-tight"
-              >
-                Building Tomorrow&apos;s Enterprise Solutions,{" "}
-                <span className="text-[var(--arq-blue)]">Together</span>
-              </motion.h1>
-
-              <motion.p
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="text-xl text-[var(--arq-gray-600)] mb-8 max-w-3xl mx-auto"
-              >
-                At ArqAI, we don&apos;t just work with technology leaders. We build integrated
-                solutions that deliver measurable enterprise outcomes. Our partnerships extend
-                your capabilities and amplify your impact.
-              </motion.p>
-
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-                className="flex justify-center"
-              >
-                <Button
-                  href="#become-partner"
-                  variant="primary"
-                  size="lg"
-                  rightIcon={<ArrowRightIcon size={20} />}
-                >
-                  Become a Partner
-                </Button>
-              </motion.div>
+        <section className="a-section" style={{ paddingTop: "clamp(140px, 16vh, 200px)" }}>
+          <div className="a-wrap">
+            <span className="a-eyebrow">Partners</span>
+            <div className="partner-hero">
+              <div>
+                <h1 className="h-display" style={{ marginTop: 18, maxWidth: "13ch" }}>
+                  Build the next AI workflow with <em>us</em>.
+                </h1>
+              </div>
+              <p className="lede">
+                We partner where there is a real operating problem, a clear path to customers, and a reason to build
+                something governed enough for enterprise deployment.
+              </p>
             </div>
           </div>
         </section>
 
-        {/* Partnership Philosophy Section */}
-        <Section background="muted">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-            >
-              <span className="inline-block text-sm font-semibold text-[var(--arq-blue)] uppercase tracking-wider mb-4">
-                Our Philosophy
-              </span>
-              <h2 className="text-3xl md:text-4xl font-bold text-[var(--arq-black)] mb-6">
-                True Collaboration, Not Vendor Relationships
-              </h2>
-              <p className="text-lg text-[var(--arq-gray-600)] mb-6">
-                We believe the best enterprise solutions emerge from true collaboration,
-                not transactional vendor relationships. Our partners aren&apos;t logos on a
-                page. They&apos;re co-creators in delivering business transformation for
-                Fortune 500 clients.
-              </p>
-              <p className="text-[var(--arq-gray-600)] mb-8">
-                Every partnership is built on shared success metrics, deep technical
-                integration, and a co-innovation approach that ensures we&apos;re always
-                pushing the boundaries of what&apos;s possible in enterprise AI governance.
-              </p>
-              <div className="space-y-4">
-                {[
-                  "Deep technical integration vs. superficial partnerships",
-                  "Shared success metrics tied to customer outcomes",
-                  "Co-innovation approach to product development",
-                  "Enterprise-grade implementation expertise",
-                ].map((item, index) => (
-                  <div key={index} className="flex items-center gap-3">
-                    <CheckIcon size={20} className="text-[var(--arq-lime)] flex-shrink-0" />
-                    <span className="text-[var(--arq-gray-700)]">{item}</span>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="grid grid-cols-2 gap-4"
-            >
-              {partnerStats.map((stat, index) => (
-                <Card
-                  key={index}
-                  className="p-6 text-center bg-white border border-[var(--arq-gray-200)] !rounded-lg"
-                >
-                  <div className="text-4xl md:text-5xl font-bold text-[var(--arq-blue)] mb-2">
-                    {stat.value}
-                  </div>
-                  <div className="text-sm text-[var(--arq-gray-600)]">{stat.label}</div>
-                </Card>
+        <section className="a-section">
+          <div className="a-wrap">
+            <div className="partner-models">
+              {partnerModels.map((model, index) => (
+                <article className="a-card partner-model" key={model.title}>
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <h2>{model.title}</h2>
+                  <p>{model.body}</p>
+                </article>
               ))}
-            </motion.div>
-          </div>
-        </Section>
-
-        {/* Partner Ecosystem Section */}
-        <Section id="partner-ecosystem">
-          <SectionHeader
-            eyebrow="Partner Ecosystem"
-            title="World-Class Technology Partners"
-            description="We've built strategic alliances with the world's leading technology providers to deliver comprehensive, integrated solutions."
-          />
-
-          {/* Strategic Partners */}
-          <div className="mb-16">
-            <h3 className="text-xl font-semibold text-[var(--arq-black)] mb-6 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-[var(--arq-blue)]" />
-              Strategic Technology Partners
-            </h3>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {strategicPartners.map((partner, index) => {
-                const LogoComponent = getIntegrationLogo(partner.name);
-                return (
-                  <motion.div
-                    key={partner.name}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.05 }}
-                  >
-                    <Card className="p-6 bg-white border border-[var(--arq-gray-200)] hover:border-[var(--arq-blue)] hover:shadow-lg transition-all group !rounded-lg">
-                      <div className="flex items-start gap-4">
-                        <div className="w-14 h-14 rounded-lg bg-[var(--arq-gray-50)] flex items-center justify-center group-hover:bg-[var(--arq-blue)]/10 transition-colors">
-                          {LogoComponent && (
-                            <LogoComponent
-                              size={32}
-                              className="text-[var(--arq-black)]"
-                            />
-                          )}
-                        </div>
-                        <div className="flex-1">
-                          <div className="flex items-center gap-2 mb-1">
-                            <h4 className="font-semibold text-[var(--arq-black)]">
-                              {partner.name}
-                            </h4>
-                            <span className="px-2 py-0.5 text-xs font-medium bg-[var(--arq-lime)]/20 text-[var(--arq-black)] rounded-full">
-                              Strategic
-                            </span>
-                          </div>
-                          <p className="text-xs text-[var(--arq-blue)] font-medium mb-2">
-                            {partner.tier}
-                          </p>
-                          <p className="text-sm text-[var(--arq-gray-600)]">
-                            {partner.description}
-                          </p>
-                        </div>
-                      </div>
-                    </Card>
-                  </motion.div>
-                );
-              })}
             </div>
           </div>
+        </section>
 
-          {/* Integration Partners */}
-          <div>
-            <h3 className="text-xl font-semibold text-[var(--arq-black)] mb-6 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-[var(--arq-lime)]" />
-              Integration & Platform Partners
-            </h3>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-              {integrationPartners.map((partner, index) => {
-                const LogoComponent = getIntegrationLogo(partner.name);
-                return (
-                  <motion.div
-                    key={partner.name}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.05 }}
-                  >
-                    <Card className="p-4 bg-white border border-[var(--arq-gray-200)] hover:border-[var(--arq-lime)] transition-colors group text-center !rounded-lg">
-                      {LogoComponent && (
-                        <LogoComponent
-                          size={40}
-                          className="text-[var(--arq-black)] mx-auto mb-3 group-hover:text-[var(--arq-gray-800)] transition-colors"
-                        />
-                      )}
-                      <h4 className="font-medium text-sm text-[var(--arq-black)] mb-1">
-                        {partner.name}
-                      </h4>
-                      <p className="text-xs text-[var(--arq-gray-500)]">
-                        {partner.description}
-                      </p>
-                    </Card>
-                  </motion.div>
-                );
-              })}
-            </div>
-          </div>
-        </Section>
-
-        {/* Partnership Models Section */}
-        <Section background="muted">
-          <SectionHeader
-            eyebrow="Partnership Models"
-            title="Choose Your Partnership Path"
-            description="We offer flexible partnership models designed to maximize mutual value and drive customer success."
-          />
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {partnershipModels.map((model, index) => (
-              <motion.div
-                key={model.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-              >
-                <Card
-                  className={`p-6 h-full bg-white border transition-all cursor-pointer !rounded-lg ${
-                    activeModel === index
-                      ? "border-[var(--arq-blue)] shadow-lg"
-                      : "border-[var(--arq-gray-200)] hover:border-[var(--arq-gray-300)]"
-                  }`}
-                  onClick={() => setActiveModel(activeModel === index ? null : index)}
-                >
-                  <div className="w-14 h-14 rounded-lg bg-[var(--arq-blue)]/10 flex items-center justify-center text-[var(--arq-blue)] mb-4">
-                    {model.icon}
-                  </div>
-                  <h3 className="text-lg font-semibold text-[var(--arq-black)] mb-2">
-                    {model.title}
-                  </h3>
-                  <p className="text-sm text-[var(--arq-gray-600)] mb-4">
-                    <span className="font-medium">For:</span> {model.forWho}
-                  </p>
-
-                  <motion.div
-                    initial={false}
-                    animate={{ height: activeModel === index ? "auto" : 0 }}
-                    className="overflow-hidden"
-                  >
-                    <div className="pt-4 border-t border-[var(--arq-gray-100)]">
-                      <p className="text-sm font-medium text-[var(--arq-black)] mb-3">Benefits:</p>
-                      <ul className="space-y-2 mb-4">
-                        {model.benefits.map((benefit, i) => (
-                          <li key={i} className="flex items-start gap-2 text-sm text-[var(--arq-gray-600)]">
-                            <CheckIcon size={16} className="text-[var(--arq-lime)] flex-shrink-0 mt-0.5" />
-                            {benefit}
-                          </li>
-                        ))}
-                      </ul>
-                      <p className="text-xs text-[var(--arq-gray-500)]">
-                        <span className="font-medium">Requirements:</span> {model.requirements}
-                      </p>
-                    </div>
-                  </motion.div>
-
-                  <div className="mt-4 flex items-center gap-1 text-sm text-[var(--arq-blue)]">
-                    {activeModel === index ? "Less details" : "View details"}
-                    <svg
-                      className={`w-4 h-4 transition-transform ${activeModel === index ? "rotate-180" : ""}`}
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </div>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-        </Section>
-
-        {/* Partner Benefits Section */}
-        <Section>
-          <SectionHeader
-            eyebrow="Partner Benefits"
-            title="Everything You Need to Succeed"
-            description="Our partners receive comprehensive support to drive mutual success and deliver exceptional value to customers."
-          />
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {partnerBenefits.map((benefit, index) => (
-              <motion.div
-                key={benefit.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.05 }}
-              >
-                <Card className="p-6 bg-white border border-[var(--arq-gray-200)] hover:shadow-md transition-shadow h-full !rounded-lg">
-                  <div className="w-12 h-12 rounded-lg bg-[var(--arq-lime)]/20 flex items-center justify-center text-[var(--arq-black)] mb-4">
-                    {benefit.icon}
-                  </div>
-                  <h3 className="text-lg font-semibold text-[var(--arq-black)] mb-2">
-                    {benefit.title}
-                  </h3>
-                  <p className="text-sm text-[var(--arq-gray-600)]">
-                    {benefit.description}
-                  </p>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-        </Section>
-
-        {/* Testimonials Section */}
-        <Section>
-          <SectionHeader
-            eyebrow="Partner Testimonials"
-            title="What Our Partners Say"
-            description="Hear directly from our partners about the value of working with ArqAI."
-          />
-
-          <div className="grid lg:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-              >
-                <Card className="p-6 bg-[var(--arq-gray-50)] border-0 h-full flex flex-col !rounded-lg">
-                  <div className="mb-4">
-                    <svg className="w-10 h-10 text-[var(--arq-blue)]/20" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-                    </svg>
-                  </div>
-                  <blockquote className="text-[var(--arq-gray-700)] mb-6 flex-1">
-                    &ldquo;{testimonial.quote}&rdquo;
-                  </blockquote>
-                  <div className="pt-4 border-t border-[var(--arq-gray-200)]">
-                    <p className="font-semibold text-[var(--arq-black)]">{testimonial.author}</p>
-                    <p className="text-sm text-[var(--arq-gray-500)]">{testimonial.company}</p>
-                  </div>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-        </Section>
-
-        {/* Certifications Section */}
-        <Section background="muted">
-          <SectionHeader
-            eyebrow="Certifications"
-            title="Verified Expertise Across Platforms"
-            description="Our team maintains the highest level of certifications across our partner ecosystem."
-          />
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {certifications.map((cert, index) => {
-              const LogoComponent = getIntegrationLogo(cert.provider);
-              return (
-                <motion.div
-                  key={cert.provider}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.05 }}
-                >
-                  <Card className="p-6 bg-white border border-[var(--arq-gray-200)] text-center !rounded-lg">
-                    <div className="w-16 h-16 mx-auto rounded-lg bg-[var(--arq-gray-50)] flex items-center justify-center mb-4">
-                      {LogoComponent && (
-                        <LogoComponent size={36} className="text-[var(--arq-black)]" />
-                      )}
-                    </div>
-                    <h4 className="font-semibold text-[var(--arq-black)] mb-3">{cert.provider}</h4>
-                    <ul className="space-y-2">
-                      {cert.certs.map((c, i) => (
-                        <li key={i} className="flex items-center justify-center gap-2 text-sm text-[var(--arq-gray-600)]">
-                          <CertificateIcon size={14} className="text-[var(--arq-lime)]" />
-                          {c}
-                        </li>
-                      ))}
-                    </ul>
-                  </Card>
-                </motion.div>
-              );
-            })}
-          </div>
-        </Section>
-
-        {/* Become a Partner CTA Section */}
-        <Section id="become-partner" background="dark" className="relative overflow-hidden">
-          <LogoAccent position="top-right" type="lime" size="lg" />
-          <LogoAccent position="bottom-left" type="blue" size="md" />
-
-          <div className="max-w-4xl mx-auto text-center relative z-10">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-            >
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
-                Let&apos;s Build Something Great Together
-              </h2>
-              <p className="text-lg text-[var(--arq-gray-300)] mb-8 max-w-2xl mx-auto">
-                We&apos;re always looking for like-minded innovators who share our passion for
-                transforming enterprise AI. If you believe in collaboration over competition,
-                we&apos;d love to hear from you.
-              </p>
-
-              {/* Process Steps */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
-                {[
-                  { step: "1", label: "Start a Conversation" },
-                  { step: "2", label: "Explore the Fit" },
-                  { step: "3", label: "Align on Goals" },
-                  { step: "4", label: "Launch Together" },
-                ].map((item, index) => (
-                  <div key={item.step} className="text-center">
-                    <div className="w-10 h-10 rounded-full bg-[var(--arq-lime)] text-[var(--arq-black)] font-bold flex items-center justify-center mx-auto mb-2">
-                      {item.step}
-                    </div>
-                    <p className="text-sm text-[var(--arq-gray-300)]">{item.label}</p>
-                    {index < 3 && (
-                      <div className="hidden md:block absolute h-0.5 w-12 bg-[var(--arq-gray-700)] top-5 -right-8" />
-                    )}
-                  </div>
-                ))}
-              </div>
-
-              <div className="flex justify-center">
-                <button
-                  onClick={openForm}
-                  className="inline-flex items-center gap-2 px-8 py-4 bg-[var(--arq-lime)] text-[var(--arq-black)] font-semibold rounded-lg hover:bg-[var(--arq-lime-dark)] transition-colors text-lg"
-                >
-                  Start the Conversation
-                  <ArrowRightIcon size={20} />
-                </button>
-              </div>
-
-              <p className="mt-6 text-sm text-[var(--arq-gray-400)]">
-                Questions? Email us at{" "}
-                <a href="mailto:partners@thearq.ai" className="text-[var(--arq-lime)] hover:underline">
-                  partners@thearq.ai
-                </a>
-              </p>
-            </motion.div>
-          </div>
-        </Section>
-      </main>
-      <Footer />
-
-      {/* Partner Enquiry Form Modal */}
-      {showForm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          {/* Backdrop */}
-          <div
-            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-            onClick={() => setShowForm(false)}
-          />
-
-          {/* Modal */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            className="relative bg-white rounded-lg shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto"
-          >
-            {/* Close Button */}
-            <button
-              onClick={() => setShowForm(false)}
-              className="absolute top-4 right-4 p-2 text-[var(--arq-gray-400)] hover:text-[var(--arq-gray-600)] transition-colors z-10"
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-
-            {formSuccess ? (
-              /* Success State */
-              <div className="p-8 text-center">
-                <div className="w-16 h-16 bg-[var(--arq-lime)]/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <CheckIcon size={32} className="text-[var(--arq-lime)]" />
-                </div>
-                <h3 className="text-2xl font-bold text-[var(--arq-black)] mb-2">
-                  Thanks for reaching out!
-                </h3>
-                <p className="text-[var(--arq-gray-600)] mb-6">
-                  We&apos;ve received your partnership enquiry and will be in touch within 1-2 business days.
+        <section className="a-section" id="partner-intake">
+          <div className="a-wrap">
+            <div className="partner-form-grid">
+              <div>
+                <span className="a-eyebrow">Partner intake</span>
+                <h2 className="h-section" style={{ marginTop: 18 }}>
+                  Give us enough context to evaluate the fit.
+                </h2>
+                <p className="lede" style={{ marginTop: 20 }}>
+                  Tell us where you fit, what customers you serve, and what opportunity we should evaluate together.
                 </p>
-                <button
-                  onClick={() => setShowForm(false)}
-                  className="px-6 py-3 bg-[var(--arq-blue)] text-white font-semibold rounded-lg hover:bg-[var(--arq-blue-dark)] transition-colors"
-                >
-                  Close
-                </button>
+                <div className="partner-notes">
+                  <p>Best fits usually have:</p>
+                  <ul>
+                    <li>Enterprise or regulated-market access</li>
+                    <li>A concrete workflow, customer segment, or platform gap</li>
+                    <li>A shared path to implementation, not only referral volume</li>
+                  </ul>
+                </div>
               </div>
-            ) : (
-              /* Form */
-              <form onSubmit={handleFormSubmit} className="p-8">
-                <div className="mb-6">
-                  <h3 className="text-2xl font-bold text-[var(--arq-black)] mb-2">
-                    Start the Conversation
-                  </h3>
-                  <p className="text-[var(--arq-gray-600)]">
-                    Tell us about your organization and how you&apos;d like to partner with ArqAI.
-                  </p>
-                </div>
 
-                {formError && (
-                  <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
-                    {formError}
+              {formSuccess ? (
+                <div className="a-card form-success">
+                  <div className="success-mark">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--ember)" strokeWidth={2.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
                   </div>
-                )}
+                  <h3>Thanks. We will review the fit.</h3>
+                  <p>We will review the fit and follow up with the right owner.</p>
+                  <button type="button" className="a-btn a-btn-ghost" onClick={() => setFormSuccess(false)}>
+                    Send another enquiry
+                  </button>
+                </div>
+              ) : (
+                <form onSubmit={handleFormSubmit} className="a-card intake-form">
+                  <div className="d-honeypot" aria-hidden="true">
+                    <input type="text" name="website_url" value={formData.website_url} onChange={handleFormChange} tabIndex={-1} autoComplete="off" />
+                  </div>
 
-                <div className="grid md:grid-cols-2 gap-4 mb-4">
-                  <div>
-                    <label className="block text-sm font-medium text-[var(--arq-gray-700)] mb-1">
-                      Name <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      name="name"
-                      value={formData.name}
+                  <div className="form-grid two">
+                    <DarkField label="Name" required>
+                      <input type="text" name="name" value={formData.name} onChange={handleFormChange} required className="d-input" />
+                    </DarkField>
+                    <DarkField label="Work email" required>
+                      <input type="email" name="email" value={formData.email} onChange={handleFormChange} required className="d-input" />
+                    </DarkField>
+                  </div>
+
+                  <div className="form-grid two">
+                    <DarkField label="Company" required>
+                      <input type="text" name="company" value={formData.company} onChange={handleFormChange} required className="d-input" />
+                    </DarkField>
+                    <DarkField label="Role" required>
+                      <input type="text" name="jobTitle" value={formData.jobTitle} onChange={handleFormChange} required className="d-input" />
+                    </DarkField>
+                  </div>
+
+                  <div className="form-grid two">
+                    <DarkField label="Phone">
+                      <input type="tel" name="phone" value={formData.phone} onChange={handleFormChange} className="d-input" />
+                    </DarkField>
+                    <DarkField label="Website">
+                      <input type="url" name="website" value={formData.website} onChange={handleFormChange} className="d-input" placeholder="https://example.com" />
+                    </DarkField>
+                  </div>
+
+                  <div className="form-grid three">
+                    <DarkField label="Partnership type" required>
+                      <select name="partnershipType" value={formData.partnershipType} onChange={handleFormChange} required className="d-input">
+                        {partnershipTypes.map((item) => (
+                          <option key={item.value} value={item.value}>
+                            {item.label}
+                          </option>
+                        ))}
+                      </select>
+                    </DarkField>
+                    <DarkField label="Company size">
+                      <select name="companySize" value={formData.companySize} onChange={handleFormChange} className="d-input">
+                        <option value="">Select</option>
+                        {companySizes.map((item) => (
+                          <option key={item.value} value={item.value}>
+                            {item.label}
+                          </option>
+                        ))}
+                      </select>
+                    </DarkField>
+                    <DarkField label="Timeline">
+                      <select name="timeline" value={formData.timeline} onChange={handleFormChange} className="d-input">
+                        <option value="">Select</option>
+                        {timelines.map((item) => (
+                          <option key={item.value} value={item.value}>
+                            {item.label}
+                          </option>
+                        ))}
+                      </select>
+                    </DarkField>
+                  </div>
+
+                  <div className="form-grid two">
+                    <DarkField label="Region / markets served">
+                      <input type="text" name="partnerRegion" value={formData.partnerRegion} onChange={handleFormChange} className="d-input" placeholder="North America, GCC, India, EU..." />
+                    </DarkField>
+                    <DarkField label="Typical deal size">
+                      <input type="text" name="typicalDealSize" value={formData.typicalDealSize} onChange={handleFormChange} className="d-input" placeholder="$100K-$500K, enterprise license, services..." />
+                    </DarkField>
+                  </div>
+
+                  <DarkField label="Customer base">
+                    <textarea
+                      name="customerBase"
+                      value={formData.customerBase}
                       onChange={handleFormChange}
+                      rows={3}
+                      className="d-input"
+                      placeholder="Who do you serve? Industries, buyer roles, account size, geography."
+                    />
+                  </DarkField>
+
+                  <DarkField label="Solution areas">
+                    <textarea
+                      name="solutionAreas"
+                      value={formData.solutionAreas}
+                      onChange={handleFormChange}
+                      rows={3}
+                      className="d-input"
+                      placeholder="Platforms, services, data, cloud, security, workflow, or AI areas you bring."
+                    />
+                  </DarkField>
+
+                  <DarkField label="Existing relationship or opportunity">
+                    <textarea
+                      name="existingRelationship"
+                      value={formData.existingRelationship}
+                      onChange={handleFormChange}
+                      rows={3}
+                      className="d-input"
+                      placeholder="Named customer, active opportunity, platform integration, or market thesis."
+                    />
+                  </DarkField>
+
+                  <DarkField label="What should we explore together?" required>
+                    <textarea
+                      name="proposedOpportunity"
+                      value={formData.proposedOpportunity}
+                      onChange={handleFormChange}
+                      rows={4}
                       required
-                      className="w-full px-4 py-3 border border-[var(--arq-gray-300)] rounded-lg focus:ring-2 focus:ring-[var(--arq-blue)] focus:border-transparent outline-none transition-all"
-                      placeholder="Your name"
+                      className="d-input"
+                      placeholder="Describe the partnership idea, workflow opportunity, or customer problem."
                     />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-[var(--arq-gray-700)] mb-1">
-                      Email <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                      type="email"
-                      name="email"
-                      value={formData.email}
+                  </DarkField>
+
+                  <DarkField label="Anything else">
+                    <textarea
+                      name="message"
+                      value={formData.message}
                       onChange={handleFormChange}
-                      required
-                      className="w-full px-4 py-3 border border-[var(--arq-gray-300)] rounded-lg focus:ring-2 focus:ring-[var(--arq-blue)] focus:border-transparent outline-none transition-all"
-                      placeholder="you@company.com"
+                      rows={3}
+                      className="d-input"
+                      placeholder="Add context, constraints, links, or next steps."
                     />
-                  </div>
-                </div>
+                  </DarkField>
 
-                <div className="grid md:grid-cols-2 gap-4 mb-4">
-                  <div>
-                    <label className="block text-sm font-medium text-[var(--arq-gray-700)] mb-1">
-                      Company
-                    </label>
-                    <input
-                      type="text"
-                      name="company"
-                      value={formData.company}
-                      onChange={handleFormChange}
-                      className="w-full px-4 py-3 border border-[var(--arq-gray-300)] rounded-lg focus:ring-2 focus:ring-[var(--arq-blue)] focus:border-transparent outline-none transition-all"
-                      placeholder="Company name"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-[var(--arq-gray-700)] mb-1">
-                      Job Title
-                    </label>
-                    <input
-                      type="text"
-                      name="jobTitle"
-                      value={formData.jobTitle}
-                      onChange={handleFormChange}
-                      className="w-full px-4 py-3 border border-[var(--arq-gray-300)] rounded-lg focus:ring-2 focus:ring-[var(--arq-blue)] focus:border-transparent outline-none transition-all"
-                      placeholder="Your role"
-                    />
-                  </div>
-                </div>
+                  {formError && <div className="form-error">{formError}</div>}
 
-                <div className="grid md:grid-cols-2 gap-4 mb-4">
-                  <div>
-                    <label className="block text-sm font-medium text-[var(--arq-gray-700)] mb-1">
-                      Partnership Type
-                    </label>
-                    <select
-                      name="partnershipType"
-                      value={formData.partnershipType}
-                      onChange={handleFormChange}
-                      className="w-full px-4 py-3 border border-[var(--arq-gray-300)] rounded-lg focus:ring-2 focus:ring-[var(--arq-blue)] focus:border-transparent outline-none transition-all bg-white"
-                    >
-                      <option value="">Select type...</option>
-                      <option value="technology">Technology Alliance</option>
-                      <option value="implementation">Implementation Partner</option>
-                      <option value="reseller">Reseller Partner</option>
-                      <option value="strategic">Strategic Alliance</option>
-                      <option value="other">Other</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-[var(--arq-gray-700)] mb-1">
-                      Company Size
-                    </label>
-                    <select
-                      name="companySize"
-                      value={formData.companySize}
-                      onChange={handleFormChange}
-                      className="w-full px-4 py-3 border border-[var(--arq-gray-300)] rounded-lg focus:ring-2 focus:ring-[var(--arq-blue)] focus:border-transparent outline-none transition-all bg-white"
-                    >
-                      <option value="">Select size...</option>
-                      <option value="startup">Startup (1-50)</option>
-                      <option value="small">Small (51-200)</option>
-                      <option value="mid-market">Mid-Market (201-1000)</option>
-                      <option value="enterprise">Enterprise (1000+)</option>
-                    </select>
-                  </div>
-                </div>
+                  <button type="submit" disabled={formSubmitting} className="a-btn a-btn-primary form-submit">
+                    {formSubmitting ? "Submitting..." : "Get Started"}
+                  </button>
+                </form>
+              )}
+            </div>
+          </div>
+        </section>
+      </main>
+      <SiteFooter />
+      <style>{`
+        .arq-dark .partner-hero {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 28px;
+          align-items: end;
+        }
+        @media (min-width: 940px) {
+          .arq-dark .partner-hero { grid-template-columns: 7fr 5fr; }
+          .arq-dark .partner-form-grid { grid-template-columns: 4fr 8fr !important; gap: 64px !important; }
+        }
+        @media (max-width: 760px) {
+          .arq-dark .form-grid.two,
+          .arq-dark .form-grid.three,
+          .arq-dark .partner-models { grid-template-columns: 1fr !important; }
+        }
+        .arq-dark .partner-models {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 16px;
+        }
+        .arq-dark .partner-model {
+          min-height: 250px;
+          display: flex;
+          flex-direction: column;
+          gap: 18px;
+        }
+        .arq-dark .partner-model span {
+          font-family: var(--mono);
+          color: var(--ember);
+          font-size: 12px;
+          letter-spacing: .12em;
+        }
+        .arq-dark .partner-model h2 {
+          color: var(--ink-cream);
+          font-family: var(--display);
+          font-size: 26px;
+          font-weight: 500;
+          letter-spacing: -0.02em;
+          margin: 0;
+        }
+        .arq-dark .partner-model p,
+        .arq-dark .partner-notes {
+          color: var(--ink-cream-d);
+          line-height: 1.6;
+          margin: 0;
+        }
+        .arq-dark .partner-form-grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 40px;
+          align-items: start;
+        }
+        .arq-dark .partner-notes {
+          margin-top: 28px;
+          border-top: 1px solid var(--aline);
+          padding-top: 24px;
+          font-size: 14px;
+        }
+        .arq-dark .partner-notes ul {
+          margin: 12px 0 0;
+          padding-left: 18px;
+        }
+        .arq-dark .partner-notes li + li { margin-top: 8px; }
+        .arq-dark .intake-form {
+          padding: clamp(24px, 4vw, 36px);
+          position: relative;
+        }
+        .arq-dark .form-grid {
+          display: grid;
+          gap: 16px;
+        }
+        .arq-dark .form-grid.two { grid-template-columns: repeat(2, 1fr); }
+        .arq-dark .form-grid.three { grid-template-columns: repeat(3, 1fr); }
+        .arq-dark .d-input {
+          width: 100%;
+          padding: 12px 14px;
+          border-radius: 10px;
+          background: rgba(245,239,230,0.04);
+          border: 1px solid var(--aline-2);
+          color: var(--ink-cream);
+          font-family: inherit;
+          font-size: 14.5px;
+          line-height: 1.5;
+          transition: border-color .2s, background .2s;
+        }
+        .arq-dark select.d-input { color-scheme: dark; }
+        .arq-dark .d-input:focus {
+          outline: none;
+          border-color: var(--ember);
+          background: rgba(245,239,230,0.06);
+        }
+        .arq-dark .d-input::placeholder { color: var(--ink-muted); }
+        .arq-dark .d-honeypot {
+          position: absolute;
+          left: -9999px;
+          opacity: 0;
+          pointer-events: none;
+        }
+        .arq-dark .form-error {
+          margin-top: 12px;
+          padding: 12px;
+          background: rgba(255, 90, 90, 0.08);
+          border: 1px solid rgba(255, 90, 90, 0.3);
+          border-radius: 8px;
+          color: rgba(255,200,200,0.95);
+          font-size: 13px;
+        }
+        .arq-dark .form-submit {
+          width: 100%;
+          justify-content: center;
+          margin-top: 20px;
+        }
+        .arq-dark .form-success {
+          padding: clamp(28px, 5vw, 48px);
+          text-align: center;
+        }
+        .arq-dark .form-success h3 {
+          font-family: var(--display);
+          color: var(--ink-cream);
+          font-size: 28px;
+          font-weight: 500;
+          letter-spacing: -0.02em;
+          margin: 0 0 12px;
+        }
+        .arq-dark .form-success p {
+          color: var(--ink-cream-d);
+          margin: 0 auto 24px;
+          max-width: 42ch;
+        }
+        .arq-dark .success-mark {
+          width: 56px;
+          height: 56px;
+          border-radius: 999px;
+          background: rgba(208,244,56,0.10);
+          border: 1px solid rgba(208,244,56,0.35);
+          display: grid;
+          place-items: center;
+          margin: 0 auto 20px;
+        }
+      `}</style>
+    </div>
+  );
+}
 
-                <div className="grid md:grid-cols-2 gap-4 mb-4">
-                  <div>
-                    <label className="block text-sm font-medium text-[var(--arq-gray-700)] mb-1">
-                      Phone
-                    </label>
-                    <input
-                      type="tel"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleFormChange}
-                      className="w-full px-4 py-3 border border-[var(--arq-gray-300)] rounded-lg focus:ring-2 focus:ring-[var(--arq-blue)] focus:border-transparent outline-none transition-all"
-                      placeholder="+1 (555) 000-0000"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-[var(--arq-gray-700)] mb-1">
-                      Website
-                    </label>
-                    <input
-                      type="url"
-                      name="website"
-                      value={formData.website}
-                      onChange={handleFormChange}
-                      className="w-full px-4 py-3 border border-[var(--arq-gray-300)] rounded-lg focus:ring-2 focus:ring-[var(--arq-blue)] focus:border-transparent outline-none transition-all"
-                      placeholder="https://yourcompany.com"
-                    />
-                  </div>
-                </div>
-
-                <div className="mb-6">
-                  <label className="block text-sm font-medium text-[var(--arq-gray-700)] mb-1">
-                    Tell us about your partnership interests
-                  </label>
-                  <textarea
-                    name="message"
-                    value={formData.message}
-                    onChange={handleFormChange}
-                    rows={4}
-                    className="w-full px-4 py-3 border border-[var(--arq-gray-300)] rounded-lg focus:ring-2 focus:ring-[var(--arq-blue)] focus:border-transparent outline-none transition-all resize-none"
-                    placeholder="What kind of partnership are you looking for? What problems would you like to solve together?"
-                  />
-                </div>
-
-                {/* Honeypot field - hidden from real users */}
-                <div className="absolute left-[-9999px] opacity-0 pointer-events-none" aria-hidden="true" tabIndex={-1}>
-                  <label htmlFor="website_url">Website URL</label>
-                  <input
-                    type="text"
-                    id="website_url"
-                    name="website_url"
-                    value={formData.website_url}
-                    onChange={handleFormChange}
-                    tabIndex={-1}
-                    autoComplete="off"
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={formSubmitting}
-                  className="w-full px-6 py-4 bg-[var(--arq-blue)] text-white font-semibold rounded-lg hover:bg-[var(--arq-blue-dark)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                >
-                  {formSubmitting ? (
-                    <>
-                      <svg className="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                      </svg>
-                      Submitting...
-                    </>
-                  ) : (
-                    <>
-                      Submit Partnership Enquiry
-                      <ArrowRightIcon size={20} />
-                    </>
-                  )}
-                </button>
-              </form>
-            )}
-          </motion.div>
-        </div>
-      )}
-    </>
+function DarkField({
+  label,
+  required,
+  children,
+}: {
+  label: string;
+  required?: boolean;
+  children: React.ReactNode;
+}) {
+  return (
+    <label style={{ display: "block", marginBottom: 16 }}>
+      <span className="form-label">
+        {label} {required && <span style={{ color: "var(--ember)" }}>*</span>}
+      </span>
+      {children}
+      <style>{`
+        .arq-dark .form-label {
+          display: block;
+          font-family: var(--mono);
+          font-size: 11px;
+          letter-spacing: .1em;
+          text-transform: uppercase;
+          color: var(--ink-cream-d);
+          margin-bottom: 8px;
+        }
+      `}</style>
+    </label>
   );
 }

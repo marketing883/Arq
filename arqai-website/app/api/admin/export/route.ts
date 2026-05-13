@@ -60,9 +60,9 @@ export async function GET(request: NextRequest) {
 
       if (contacts && contacts.length > 0) {
         if (type === "all") sections.push("=== CONTACT SUBMISSIONS ===\n");
-        csvContent += "Name,Email,Company,Job Title,Inquiry Type,Message,Status,Date\n";
+        csvContent += "Name,Email,Company,Job Title,Phone,Inquiry Type,Company Size,Industry,Workflow Area,Timeline,Budget Range,Current Systems,Message,Status,AI Intent,AI Urgency,Date\n";
         contacts.forEach((c) => {
-          csvContent += `${escapeCSV(c.name)},${escapeCSV(c.email)},${escapeCSV(c.company)},${escapeCSV(c.job_title)},${escapeCSV(c.inquiry_type)},${escapeCSV(c.message)},${escapeCSV(c.status)},${escapeCSV(formatDate(c.created_at))}\n`;
+          csvContent += `${escapeCSV(c.name)},${escapeCSV(c.email)},${escapeCSV(c.company)},${escapeCSV(c.job_title)},${escapeCSV(c.phone)},${escapeCSV(c.inquiry_type)},${escapeCSV(c.company_size)},${escapeCSV(c.industry)},${escapeCSV(c.workflow_area)},${escapeCSV(c.timeline)},${escapeCSV(c.budget_range)},${escapeCSV(c.current_systems)},${escapeCSV(c.message)},${escapeCSV(c.status)},${escapeCSV(c.ai_detected_intent)},${escapeCSV(c.ai_urgency)},${escapeCSV(formatDate(c.created_at))}\n`;
         });
         if (type === "all") csvContent += "\n\n";
       }
@@ -117,9 +117,9 @@ export async function GET(request: NextRequest) {
         if (type === "all") {
           csvContent += "=== PARTNER ENQUIRIES ===\n";
         }
-        csvContent += "Name,Email,Company,Phone,Job Title,Partnership Type,Company Size,Status,Priority,Message,Website,Assigned To,Last Contact,Date\n";
+        csvContent += "Name,Email,Company,Phone,Job Title,Partnership Type,Company Size,Region,Customer Base,Solution Areas,Typical Deal Size,Timeline,Existing Relationship,Proposed Opportunity,Status,Priority,Message,Website,AI Intent,AI Urgency,Assigned To,Last Contact,Date\n";
         partners.forEach((p) => {
-          csvContent += `${escapeCSV(p.name)},${escapeCSV(p.email)},${escapeCSV(p.company)},${escapeCSV(p.phone)},${escapeCSV(p.job_title)},${escapeCSV(p.partnership_type)},${escapeCSV(p.company_size)},${escapeCSV(p.status)},${escapeCSV(p.priority)},${escapeCSV(p.message)},${escapeCSV(p.website)},${escapeCSV(p.assigned_to)},${escapeCSV(formatDate(p.last_contact_at))},${escapeCSV(formatDate(p.created_at))}\n`;
+          csvContent += `${escapeCSV(p.name)},${escapeCSV(p.email)},${escapeCSV(p.company)},${escapeCSV(p.phone)},${escapeCSV(p.job_title)},${escapeCSV(p.partnership_type)},${escapeCSV(p.company_size)},${escapeCSV(p.partner_region)},${escapeCSV(p.customer_base)},${escapeCSV(p.solution_areas)},${escapeCSV(p.typical_deal_size)},${escapeCSV(p.timeline)},${escapeCSV(p.existing_relationship)},${escapeCSV(p.proposed_opportunity)},${escapeCSV(p.status)},${escapeCSV(p.priority)},${escapeCSV(p.message)},${escapeCSV(p.website)},${escapeCSV(p.ai_detected_intent)},${escapeCSV(p.ai_urgency)},${escapeCSV(p.assigned_to)},${escapeCSV(formatDate(p.last_contact_at))},${escapeCSV(formatDate(p.created_at))}\n`;
         });
       }
     }

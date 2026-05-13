@@ -5,14 +5,74 @@ import Link from "next/link";
 import { SiteNav } from "@/components/site-dark/SiteNav";
 import { SiteFooter } from "@/components/site-dark/SiteFooter";
 
+const inquiryTypes = [
+  { value: "workflow", label: "Workflow modernization" },
+  { value: "demo", label: "Demo or build conversation" },
+  { value: "governance", label: "Governance and risk" },
+  { value: "integration", label: "Enterprise integration" },
+  { value: "managed_ops", label: "Managed AI operations" },
+  { value: "press", label: "Press or analyst" },
+  { value: "general", label: "General inquiry" },
+];
+
+const companySizes = [
+  { value: "startup", label: "1-50" },
+  { value: "small", label: "51-200" },
+  { value: "mid-market", label: "201-1,000" },
+  { value: "enterprise", label: "1,000+" },
+];
+
+const timelines = [
+  { value: "now", label: "Now / urgent" },
+  { value: "quarter", label: "This quarter" },
+  { value: "half_year", label: "Next 3-6 months" },
+  { value: "exploring", label: "Exploring" },
+];
+
+const budgetRanges = [
+  { value: "not_set", label: "Not set yet" },
+  { value: "under_100k", label: "Under $100K" },
+  { value: "100k_250k", label: "$100K-$250K" },
+  { value: "250k_500k", label: "$250K-$500K" },
+  { value: "500k_plus", label: "$500K+" },
+];
+
+type ContactFormData = {
+  fullName: string;
+  email: string;
+  company: string;
+  jobTitle: string;
+  phone: string;
+  inquiryType: string;
+  companySize: string;
+  industry: string;
+  workflowArea: string;
+  timeline: string;
+  budgetRange: string;
+  currentSystems: string;
+  message: string;
+  website_url: string;
+};
+
+const emptyForm: ContactFormData = {
+  fullName: "",
+  email: "",
+  company: "",
+  jobTitle: "",
+  phone: "",
+  inquiryType: "workflow",
+  companySize: "",
+  industry: "",
+  workflowArea: "",
+  timeline: "",
+  budgetRange: "",
+  currentSystems: "",
+  message: "",
+  website_url: "",
+};
+
 export default function ContactPage() {
-  const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    company: "",
-    message: "",
-    website_url: "",
-  });
+  const [formData, setFormData] = useState<ContactFormData>(emptyForm);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
   const [formLoadedAt, setFormLoadedAt] = useState(0);
@@ -25,6 +85,7 @@ export default function ContactPage() {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus("idle");
+
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
@@ -33,15 +94,24 @@ export default function ContactPage() {
           name: formData.fullName,
           email: formData.email,
           company: formData.company,
+          jobTitle: formData.jobTitle,
+          phone: formData.phone,
+          inquiryType: formData.inquiryType,
+          companySize: formData.companySize,
+          industry: formData.industry,
+          workflowArea: formData.workflowArea,
+          timeline: formData.timeline,
+          budgetRange: formData.budgetRange,
+          currentSystems: formData.currentSystems,
           message: formData.message,
-          inquiryType: "general",
           website_url: formData.website_url,
           _formLoadedAt: formLoadedAt,
         }),
       });
+
       if (response.ok) {
         setSubmitStatus("success");
-        setFormData({ fullName: "", email: "", company: "", message: "", website_url: "" });
+        setFormData(emptyForm);
         setFormLoadedAt(Date.now());
       } else {
         setSubmitStatus("error");
@@ -53,7 +123,7 @@ export default function ContactPage() {
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
@@ -64,83 +134,54 @@ export default function ContactPage() {
         <section className="a-section" style={{ paddingTop: "clamp(140px, 16vh, 200px)" }}>
           <div className="a-wrap">
             <span className="a-eyebrow">Contact</span>
-            <h1 className="h-display" style={{ marginTop: 18, maxWidth: "18ch" }}>
-              Talk to <em>us</em>.
+            <h1 className="h-display" style={{ marginTop: 18, maxWidth: "17ch" }}>
+              Tell us what needs to <em>change</em>.
             </h1>
             <p className="lede" style={{ marginTop: 28, maxWidth: "62ch" }}>
-              Tell us what your operation needs. We&apos;ll tell you what&apos;s honestly possible. In plain language.
-              Without a deck.
+              Share the workflow, constraint, or opportunity. We will route it to the right senior owner and come back
+              with a practical next step.
             </p>
           </div>
         </section>
 
         <section className="a-section">
           <div className="a-wrap">
-            <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: 40, alignItems: "start" }} className="contact-grid">
-              {/* Info */}
-              <div>
-                <span className="a-eyebrow">General inquiries</span>
+            <div className="contact-grid" style={{ display: "grid", gridTemplateColumns: "1fr", gap: 40, alignItems: "start" }}>
+              <aside>
+                <span className="a-eyebrow">Start here</span>
                 <h2 className="h-section" style={{ marginTop: 18, fontSize: "clamp(28px, 3.4vw, 44px)" }}>
-                  For anything else,<br />
-                  write to us.
+                  A sharper form means a sharper first conversation.
                 </h2>
-                <a
-                  href="mailto:hello@thearq.ai"
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: 8,
-                    color: "var(--ember)",
-                    fontSize: 22,
-                    fontWeight: 500,
-                    marginTop: 24,
-                    marginBottom: 32,
-                  }}
-                >
-                  hello@thearq.ai
-                </a>
+                <p className="lede" style={{ marginTop: 20 }}>
+                  A few details help us understand the operating context, the systems involved, and what a useful first
+                  conversation should cover.
+                </p>
 
-                <div style={{ borderTop: "1px solid var(--aline)", paddingTop: 24, display: "flex", flexDirection: "column", gap: 20 }}>
+                <div className="contact-routes">
                   <RouteRow label="Engagements and demos" value="Bring your workflow" href="/engage-us" />
-                  <RouteRow label="Partnerships and design partners" value="partnerships@aciinfotech.net" href="mailto:partnerships@aciinfotech.net" />
-                  <RouteRow label="Press and analyst" value="marketing@aciinfotech.net" href="mailto:marketing@aciinfotech.net" />
+                  <RouteRow label="Partnerships and design partners" value="Use the partner intake" href="/partners" />
                   <RouteRow label="Careers" value="See open roles" href="/careers" />
                 </div>
-              </div>
+              </aside>
 
-              {/* Form */}
               <div>
                 {submitStatus === "success" ? (
                   <div className="a-card" style={{ padding: 40, textAlign: "center" }}>
-                    <div
-                      style={{
-                        width: 56,
-                        height: 56,
-                        borderRadius: 999,
-                        background: "rgba(208,244,56,0.10)",
-                        border: "1px solid rgba(208,244,56,0.35)",
-                        display: "grid",
-                        placeItems: "center",
-                        margin: "0 auto 20px",
-                      }}
-                    >
+                    <div className="success-mark">
                       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--ember)" strokeWidth={2.5}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                       </svg>
                     </div>
-                    <h3 style={{ fontFamily: "var(--display)", fontSize: 24, fontWeight: 500, letterSpacing: "-0.02em", color: "var(--ink-cream)", margin: "0 0 12px" }}>
-                      Thanks. We&apos;ll be in touch.
-                    </h3>
-                    <p style={{ color: "var(--ink-cream-d)", fontSize: 15, margin: 0 }}>
-                      A senior on our team will reach out within one business day.
-                    </p>
+                    <h3 className="form-success-title">Thanks. We have what we need.</h3>
+                    <p className="form-success-copy">A senior on our team will reach out within one business day.</p>
                   </div>
                 ) : (
-                  <form onSubmit={handleSubmit} className="a-card" style={{ padding: 32, position: "relative" }}>
+                  <form onSubmit={handleSubmit} className="a-card intake-form">
                     <div className="d-honeypot" aria-hidden="true">
                       <input type="text" name="website_url" value={formData.website_url} onChange={handleChange} tabIndex={-1} autoComplete="off" />
                     </div>
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 16 }} className="contact-fields">
+
+                    <div className="form-grid two">
                       <DarkField label="Full name" required>
                         <input type="text" name="fullName" required value={formData.fullName} onChange={handleChange} className="d-input" />
                       </DarkField>
@@ -148,52 +189,113 @@ export default function ContactPage() {
                         <input type="email" name="email" required value={formData.email} onChange={handleChange} className="d-input" />
                       </DarkField>
                     </div>
-                    <DarkField label="Company">
-                      <input type="text" name="company" value={formData.company} onChange={handleChange} className="d-input" />
+
+                    <div className="form-grid two">
+                      <DarkField label="Company" required>
+                        <input type="text" name="company" required value={formData.company} onChange={handleChange} className="d-input" />
+                      </DarkField>
+                      <DarkField label="Role" required>
+                        <input type="text" name="jobTitle" required value={formData.jobTitle} onChange={handleChange} className="d-input" />
+                      </DarkField>
+                    </div>
+
+                    <div className="form-grid two">
+                      <DarkField label="Phone">
+                        <input type="tel" name="phone" value={formData.phone} onChange={handleChange} className="d-input" />
+                      </DarkField>
+                      <DarkField label="Inquiry type">
+                        <select name="inquiryType" value={formData.inquiryType} onChange={handleChange} className="d-input">
+                          {inquiryTypes.map((item) => (
+                            <option key={item.value} value={item.value}>
+                              {item.label}
+                            </option>
+                          ))}
+                        </select>
+                      </DarkField>
+                    </div>
+
+                    <div className="form-grid three">
+                      <DarkField label="Company size">
+                        <select name="companySize" value={formData.companySize} onChange={handleChange} className="d-input">
+                          <option value="">Select</option>
+                          {companySizes.map((item) => (
+                            <option key={item.value} value={item.value}>
+                              {item.label}
+                            </option>
+                          ))}
+                        </select>
+                      </DarkField>
+                      <DarkField label="Industry">
+                        <input type="text" name="industry" value={formData.industry} onChange={handleChange} className="d-input" placeholder="Insurance, banking, healthcare..." />
+                      </DarkField>
+                      <DarkField label="Timeline">
+                        <select name="timeline" value={formData.timeline} onChange={handleChange} className="d-input">
+                          <option value="">Select</option>
+                          {timelines.map((item) => (
+                            <option key={item.value} value={item.value}>
+                              {item.label}
+                            </option>
+                          ))}
+                        </select>
+                      </DarkField>
+                    </div>
+
+                    <div className="form-grid two">
+                      <DarkField label="Workflow area" required>
+                        <input
+                          type="text"
+                          name="workflowArea"
+                          required
+                          value={formData.workflowArea}
+                          onChange={handleChange}
+                          className="d-input"
+                          placeholder="Claims, onboarding, service desk, compliance review..."
+                        />
+                      </DarkField>
+                      <DarkField label="Budget range">
+                        <select name="budgetRange" value={formData.budgetRange} onChange={handleChange} className="d-input">
+                          <option value="">Select</option>
+                          {budgetRanges.map((item) => (
+                            <option key={item.value} value={item.value}>
+                              {item.label}
+                            </option>
+                          ))}
+                        </select>
+                      </DarkField>
+                    </div>
+
+                    <DarkField label="Systems involved">
+                      <textarea
+                        name="currentSystems"
+                        rows={3}
+                        value={formData.currentSystems}
+                        onChange={handleChange}
+                        placeholder="CRM, ERP, data warehouse, ticketing, policy systems, documents, spreadsheets..."
+                        className="d-input"
+                      />
                     </DarkField>
-                    <DarkField label="Message" required>
+
+                    <DarkField label="What should change first?" required>
                       <textarea
                         name="message"
                         rows={5}
                         required
                         value={formData.message}
                         onChange={handleChange}
-                        placeholder="Tell us a little about what you're trying to do."
+                        placeholder="Describe the bottleneck, desired outcome, constraints, and what success would look like."
                         className="d-input"
-                        style={{ resize: "vertical" }}
                       />
                     </DarkField>
 
                     {submitStatus === "error" && (
-                      <div
-                        style={{
-                          marginTop: 12,
-                          padding: 12,
-                          background: "rgba(255, 90, 90, 0.08)",
-                          border: "1px solid rgba(255, 90, 90, 0.3)",
-                          borderRadius: 8,
-                          color: "rgba(255,200,200,0.95)",
-                          fontSize: 13,
-                        }}
-                      >
-                        Something went wrong. Please try again or email us at{" "}
-                        <a href="mailto:hello@thearq.ai" style={{ color: "var(--ember)", textDecoration: "underline" }}>
-                          hello@thearq.ai
-                        </a>
-                        .
-                      </div>
+                      <div className="form-error">Something went wrong. Please try again.</div>
                     )}
 
-                    <button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="a-btn a-btn-primary"
-                      style={{ width: "100%", justifyContent: "center", marginTop: 20 }}
-                    >
-                      {isSubmitting ? "Sending..." : "Send"}
+                    <button type="submit" disabled={isSubmitting} className="a-btn a-btn-primary form-submit">
+                      {isSubmitting ? "Sending..." : "Get Started"}
                     </button>
 
-                    <p style={{ marginTop: 16, fontSize: 12, color: "var(--ink-muted)", textAlign: "center" }}>
+                    <p className="form-privacy">
                       We use this only to follow up.{" "}
                       <Link href="/privacy" style={{ color: "var(--ember)" }}>
                         Privacy notice
@@ -209,12 +311,31 @@ export default function ContactPage() {
       </main>
       <SiteFooter />
       <style>{`
-        @media (min-width: 900px) {
-          .arq-dark .contact-grid { grid-template-columns: 5fr 7fr !important; gap: 64px !important; }
+        @media (min-width: 980px) {
+          .arq-dark .contact-grid { grid-template-columns: 4fr 8fr !important; gap: 64px !important; }
         }
-        @media (max-width: 600px) {
-          .arq-dark .contact-fields { grid-template-columns: 1fr !important; }
+        @media (max-width: 760px) {
+          .arq-dark .form-grid.two,
+          .arq-dark .form-grid.three { grid-template-columns: 1fr !important; }
         }
+        .arq-dark .contact-routes {
+          border-top: 1px solid var(--aline);
+          margin-top: 28px;
+          padding-top: 24px;
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+        }
+        .arq-dark .intake-form {
+          padding: clamp(24px, 4vw, 36px);
+          position: relative;
+        }
+        .arq-dark .form-grid {
+          display: grid;
+          gap: 16px;
+        }
+        .arq-dark .form-grid.two { grid-template-columns: repeat(2, 1fr); }
+        .arq-dark .form-grid.three { grid-template-columns: repeat(3, 1fr); }
         .arq-dark .d-input {
           width: 100%;
           padding: 12px 14px;
@@ -227,6 +348,9 @@ export default function ContactPage() {
           line-height: 1.5;
           transition: border-color .2s, background .2s;
         }
+        .arq-dark select.d-input {
+          color-scheme: dark;
+        }
         .arq-dark .d-input:focus {
           outline: none;
           border-color: var(--ember);
@@ -234,7 +358,53 @@ export default function ContactPage() {
         }
         .arq-dark .d-input::placeholder { color: var(--ink-muted); }
         .arq-dark .d-honeypot {
-          position: absolute; left: -9999px; opacity: 0; pointer-events: none;
+          position: absolute;
+          left: -9999px;
+          opacity: 0;
+          pointer-events: none;
+        }
+        .arq-dark .success-mark {
+          width: 56px;
+          height: 56px;
+          border-radius: 999px;
+          background: rgba(208,244,56,0.10);
+          border: 1px solid rgba(208,244,56,0.35);
+          display: grid;
+          place-items: center;
+          margin: 0 auto 20px;
+        }
+        .arq-dark .form-success-title {
+          font-family: var(--display);
+          font-size: 24px;
+          font-weight: 500;
+          letter-spacing: -0.02em;
+          color: var(--ink-cream);
+          margin: 0 0 12px;
+        }
+        .arq-dark .form-success-copy {
+          color: var(--ink-cream-d);
+          font-size: 15px;
+          margin: 0;
+        }
+        .arq-dark .form-error {
+          margin-top: 12px;
+          padding: 12px;
+          background: rgba(255, 90, 90, 0.08);
+          border: 1px solid rgba(255, 90, 90, 0.3);
+          border-radius: 8px;
+          color: rgba(255,200,200,0.95);
+          font-size: 13px;
+        }
+        .arq-dark .form-submit {
+          width: 100%;
+          justify-content: center;
+          margin-top: 20px;
+        }
+        .arq-dark .form-privacy {
+          margin-top: 16px;
+          font-size: 12px;
+          color: var(--ink-muted);
+          text-align: center;
         }
       `}</style>
     </div>
@@ -252,20 +422,21 @@ function DarkField({
 }) {
   return (
     <label style={{ display: "block", marginBottom: 16 }}>
-      <span
-        style={{
-          display: "block",
-          fontFamily: "var(--mono)",
-          fontSize: 11,
-          letterSpacing: ".1em",
-          textTransform: "uppercase",
-          color: "var(--ink-cream-d)",
-          marginBottom: 8,
-        }}
-      >
+      <span className="form-label">
         {label} {required && <span style={{ color: "var(--ember)" }}>*</span>}
       </span>
       {children}
+      <style>{`
+        .arq-dark .form-label {
+          display: block;
+          font-family: var(--mono);
+          font-size: 11px;
+          letter-spacing: .1em;
+          text-transform: uppercase;
+          color: var(--ink-cream-d);
+          margin-bottom: 8px;
+        }
+      `}</style>
     </label>
   );
 }
@@ -276,15 +447,9 @@ function RouteRow({ label, value, href }: { label: string; value: string; href: 
       <p style={{ fontFamily: "var(--mono)", fontSize: 10.5, letterSpacing: ".14em", textTransform: "uppercase", color: "var(--ink-muted)", margin: "0 0 6px" }}>
         {label}
       </p>
-      {href.startsWith("/") ? (
-        <Link href={href} style={{ color: "var(--ink-cream)", fontSize: 15 }}>
-          {value} <span style={{ color: "var(--ember)" }}>→</span>
-        </Link>
-      ) : (
-        <a href={href} style={{ color: "var(--ink-cream)", fontSize: 15 }}>
-          {value}
-        </a>
-      )}
+      <Link href={href} style={{ color: "var(--ink-cream)", fontSize: 15 }}>
+        {value} <span style={{ color: "var(--ember)" }}>-&gt;</span>
+      </Link>
     </div>
   );
 }

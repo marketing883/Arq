@@ -12,6 +12,7 @@ const work = [
 
 const company = [
   { name: "About", href: "/about" },
+  { name: "Partners", href: "/partners" },
   { name: "Careers", href: "/careers" },
   { name: "Contact", href: "/contact" },
   { name: "Trust", href: "/trust" },

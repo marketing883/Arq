@@ -93,8 +93,8 @@ Primary CTA across the site is "Get Started" → /engage-us.
 - Evaluation or workflow scoping → /engage-us
 - Trust / control documentation → /trust (request under NDA)
 - Careers → /careers
-- Partnerships → partnerships@aciinfotech.net
-- Press / analyst → marketing@aciinfotech.net
+- Partnerships → /partners
+- Press / analyst → /contact
 
 ## IMPORTANT CONSTRAINTS (Agent must follow)
 1. NEVER promise a deployment timeline. Every engagement is scoped per operation; commit timeline is set in writing once Strategy is complete.
@@ -181,7 +181,8 @@ export const PAGE_CONTEXT_PROMPTS: Record<string, string> = {
   "/trust": "The user is on Trust. Architectural controls first, certifications next. SOC 2 in progress, HIPAA-aligned, GDPR-aligned, MENA frameworks. Be precise; do not over-claim.",
   "/about": "The user is on About. ArqAI Labs is an AI engineering studio backed by ACI Infotech. Studio voice. Beliefs: tuned beats templated, production beats pilots, engineers not consultants.",
   "/engage-us": "The user is on the Get Started form. They are ready to act. Help them complete it. A senior on the team will follow up within one business day.",
-  "/contact": "The user is on Contact. Route them: engagements/demos -> engage-us, partnerships -> partnerships@aciinfotech.net, press -> marketing@aciinfotech.net, careers -> open roles.",
+  "/contact": "The user is on Contact. Route them: engagements/demos -> /engage-us, partnerships -> /partners, press and analyst inquiries -> the contact form, careers -> /careers.",
+  "/partners": "The user is on Partners. Help technology alliances, implementation partners, and design partners explain the customer problem and partnership fit before sending the partner intake.",
   // Legacy paths (still served via redirects, but if any direct hit lands here):
   "/demo": "The user is on the legacy demo route which now points to the Get Started flow. Help them complete the form.",
   "/solutions": "Legacy path that now redirects to /industries. If the user lands here, treat as /industries.",

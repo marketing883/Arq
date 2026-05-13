@@ -35,12 +35,28 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { name, email, company, jobTitle, message, inquiryType, website_url, _formLoadedAt } = body;
+    const {
+      name,
+      email,
+      company,
+      jobTitle,
+      phone,
+      message,
+      inquiryType,
+      companySize,
+      industry,
+      workflowArea,
+      timeline,
+      budgetRange,
+      currentSystems,
+      website_url,
+      _formLoadedAt,
+    } = body;
 
     // Validate required fields
-    if (!name || !email || !company || !jobTitle || !message) {
+    if (!name || !email || !company || !jobTitle || !workflowArea || !message) {
       return NextResponse.json(
-        { error: "Name, email, company, job title, and message are required" },
+        { error: "Name, email, company, job title, workflow area, and message are required" },
         { status: 400 }
       );
     }
@@ -63,6 +79,19 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: spamCheck.error }, { status: 400 });
     }
 
+    const intakeDetails = [
+      inquiryType ? `Inquiry type: ${inquiryType}` : null,
+      companySize ? `Company size: ${companySize}` : null,
+      industry ? `Industry: ${industry}` : null,
+      workflowArea ? `Workflow area: ${workflowArea}` : null,
+      timeline ? `Timeline: ${timeline}` : null,
+      budgetRange ? `Budget range: ${budgetRange}` : null,
+      currentSystems ? `Systems involved: ${currentSystems}` : null,
+    ].filter(Boolean);
+    const enrichedMessage = intakeDetails.length > 0
+      ? `${message}\n\nIntake context:\n${intakeDetails.join("\n")}`
+      : message;
+
     // Run AI analysis on the lead (non-blocking if it fails)
     let aiIntel = null;
     try {
@@ -71,7 +100,7 @@ export async function POST(request: NextRequest) {
         email,
         company,
         jobTitle,
-        message,
+        message: enrichedMessage,
         inquiryType: inquiryType || "general",
       });
       console.log("AI Intel analysis completed:", aiIntel?.detectedIntent, aiIntel?.urgency);
@@ -89,8 +118,15 @@ export async function POST(request: NextRequest) {
           email,
           company,
           job_title: jobTitle,
+          phone: phone || null,
           message,
           inquiry_type: inquiryType || "general",
+          company_size: companySize || null,
+          industry: industry || null,
+          workflow_area: workflowArea || null,
+          timeline: timeline || null,
+          budget_range: budgetRange || null,
+          current_systems: currentSystems || null,
           status: "new",
           // AI Intel fields
           ai_detected_intent: aiIntel?.detectedIntent || null,
@@ -125,12 +161,19 @@ export async function POST(request: NextRequest) {
               name,
               company,
               job_title: jobTitle,
+              phone,
               inquiry_type: inquiryType || "general",
+              company_size: companySize,
+              industry,
+              workflow_area: workflowArea,
+              timeline,
+              budget_range: budgetRange,
+              current_systems: currentSystems,
               ai_detected_intent: aiIntel?.detectedIntent,
               ai_urgency: aiIntel?.urgency,
               ai_company_size: aiIntel?.companyIntel?.estimatedSize,
             },
-            message // Content for signal detection
+            enrichedMessage // Content for signal detection
           );
           console.log(`[LEAD V2] Contact form recorded for ${email}, profile: ${profile.id}`);
         }
@@ -149,7 +192,7 @@ export async function POST(request: NextRequest) {
       email,
       company,
       jobTitle,
-      message,
+      message: enrichedMessage,
       inquiryType: inquiryType || "general",
       // Pass AI intel to team notification
       aiIntel: aiIntel ? {

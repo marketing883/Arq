@@ -10,9 +10,19 @@ interface ContactSubmission {
   email: string;
   company: string | null;
   job_title: string | null;
+  phone: string | null;
+  company_size: string | null;
+  industry: string | null;
+  workflow_area: string | null;
+  timeline: string | null;
+  budget_range: string | null;
+  current_systems: string | null;
   message: string;
   inquiry_type: string;
   status: string;
+  ai_detected_intent: string | null;
+  ai_urgency: string | null;
+  ai_summary: string | null;
   created_at: string;
 }
 
@@ -131,6 +141,11 @@ export default function ContactsPage() {
       partnership: "Partnership",
       pricing: "Pricing",
       support: "Support",
+      workflow: "Workflow",
+      governance: "Governance",
+      integration: "Integration",
+      managed_ops: "Managed Ops",
+      press: "Press",
     };
     return types[type] || type;
   }
@@ -235,7 +250,7 @@ export default function ContactsPage() {
                   <tr>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Contact</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Company</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Type</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Workflow</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
@@ -257,7 +272,8 @@ export default function ContactsPage() {
                           <p className="text-sm text-gray-500">{contact.job_title || "-"}</p>
                         </td>
                         <td className="px-6 py-4">
-                          <span className="text-sm text-gray-700">{getInquiryBadge(contact.inquiry_type)}</span>
+                          <p className="text-sm text-gray-900">{contact.workflow_area || getInquiryBadge(contact.inquiry_type)}</p>
+                          <p className="text-sm text-gray-500">{getInquiryBadge(contact.inquiry_type)}</p>
                         </td>
                         <td className="px-6 py-4">
                           <span className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${statusBadge.bg}`}>
@@ -354,21 +370,68 @@ export default function ContactsPage() {
                   <p className="text-sm text-gray-500">Job Title</p>
                   <p className="font-medium">{selectedContact.job_title || "-"}</p>
                 </div>
+                {selectedContact.phone && (
+                  <div>
+                    <p className="text-sm text-gray-500">Phone</p>
+                    <p className="font-medium">{selectedContact.phone}</p>
+                  </div>
+                )}
                 <div>
                   <p className="text-sm text-gray-500">Inquiry Type</p>
                   <p className="font-medium">{getInquiryBadge(selectedContact.inquiry_type)}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">Workflow Area</p>
+                  <p className="font-medium">{selectedContact.workflow_area || "-"}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">Industry</p>
+                  <p className="font-medium">{selectedContact.industry || "-"}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">Company Size</p>
+                  <p className="font-medium">{selectedContact.company_size || "-"}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">Timeline</p>
+                  <p className="font-medium">{selectedContact.timeline || "-"}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">Budget Range</p>
+                  <p className="font-medium">{selectedContact.budget_range || "-"}</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Submitted</p>
                   <p className="font-medium">{formatDate(selectedContact.created_at)}</p>
                 </div>
               </div>
+              {selectedContact.current_systems && (
+                <div>
+                  <p className="text-sm text-gray-500 mb-2">Systems Involved</p>
+                  <div className="bg-gray-50 rounded-lg p-4">
+                    <p className="text-gray-700 whitespace-pre-wrap">{selectedContact.current_systems}</p>
+                  </div>
+                </div>
+              )}
               <div>
                 <p className="text-sm text-gray-500 mb-2">Message</p>
                 <div className="bg-gray-50 rounded-lg p-4">
                   <p className="text-gray-700 whitespace-pre-wrap">{selectedContact.message}</p>
                 </div>
               </div>
+              {(selectedContact.ai_summary || selectedContact.ai_detected_intent || selectedContact.ai_urgency) && (
+                <div>
+                  <p className="text-sm text-gray-500 mb-2">Lead Intelligence</p>
+                  <div className="bg-blue-50 rounded-lg p-4 space-y-2">
+                    <p className="text-sm text-blue-900">
+                      Intent: {selectedContact.ai_detected_intent || "-"} | Urgency: {selectedContact.ai_urgency || "-"}
+                    </p>
+                    {selectedContact.ai_summary && (
+                      <p className="text-sm text-blue-800 whitespace-pre-wrap">{selectedContact.ai_summary}</p>
+                    )}
+                  </div>
+                </div>
+              )}
               <div>
                 <p className="text-sm text-gray-500 mb-2">Update Status</p>
                 <div className="flex gap-2">

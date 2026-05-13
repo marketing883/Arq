@@ -30,9 +30,16 @@ CREATE TABLE IF NOT EXISTS public.contact_submissions (
     email TEXT NOT NULL,
     company TEXT,
     job_title TEXT,
+    phone TEXT,
     message TEXT,
     inquiry_type TEXT DEFAULT 'general',
-    status TEXT DEFAULT 'new' CHECK (status IN ('new', 'contacted', 'qualified', 'closed')),
+    company_size TEXT,
+    industry TEXT,
+    workflow_area TEXT,
+    timeline TEXT,
+    budget_range TEXT,
+    current_systems TEXT,
+    status TEXT DEFAULT 'new' CHECK (status IN ('new', 'contacted', 'qualified', 'closed', 'in_progress', 'resolved')),
     -- AI Intel fields
     ai_detected_intent TEXT,
     ai_urgency TEXT,
@@ -50,6 +57,8 @@ CREATE TABLE IF NOT EXISTS public.contact_submissions (
 -- Create indexes if they don't exist
 CREATE INDEX IF NOT EXISTS idx_contact_submissions_email ON public.contact_submissions(email);
 CREATE INDEX IF NOT EXISTS idx_contact_submissions_status ON public.contact_submissions(status);
+CREATE INDEX IF NOT EXISTS idx_contact_submissions_inquiry_type ON public.contact_submissions(inquiry_type);
+CREATE INDEX IF NOT EXISTS idx_contact_submissions_workflow_area ON public.contact_submissions(workflow_area);
 CREATE INDEX IF NOT EXISTS idx_contact_submissions_created_at ON public.contact_submissions(created_at DESC);
 
 -- ============================================

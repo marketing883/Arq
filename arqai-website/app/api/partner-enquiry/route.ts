@@ -3,6 +3,8 @@ import { createClient, SupabaseClient } from "@supabase/supabase-js";
 import { sendPartnerEnquiryNotification } from "@/lib/email/resend";
 import { applyRateLimit } from "@/lib/security/rate-limiter";
 import { validateAntiSpam } from "@/lib/security/anti-spam";
+import { analyzeLeadIntel } from "@/lib/ai/lead-intel";
+import { getOrCreateLeadProfile, recordTouchpointEvent } from "@/lib/lead/lead-profile-service";
 
 // Lazy initialize Supabase client
 let supabase: SupabaseClient | null = null;
@@ -43,14 +45,21 @@ export async function POST(request: NextRequest) {
       companySize,
       message,
       website,
+      partnerRegion,
+      customerBase,
+      solutionAreas,
+      typicalDealSize,
+      timeline,
+      existingRelationship,
+      proposedOpportunity,
       website_url,
       _formLoadedAt,
     } = body;
 
     // Validate required fields
-    if (!name || !email) {
+    if (!name || !email || !company || !jobTitle || !partnershipType || !proposedOpportunity) {
       return NextResponse.json(
-        { error: "Name and email are required" },
+        { error: "Name, email, company, role, partnership type, and opportunity are required" },
         { status: 400 }
       );
     }
@@ -73,11 +82,43 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: spamCheck.error }, { status: 400 });
     }
 
+    const intakeDetails = [
+      partnershipType ? `Partnership type: ${partnershipType}` : null,
+      companySize ? `Company size: ${companySize}` : null,
+      partnerRegion ? `Markets served: ${partnerRegion}` : null,
+      customerBase ? `Customer base: ${customerBase}` : null,
+      solutionAreas ? `Solution areas: ${solutionAreas}` : null,
+      typicalDealSize ? `Typical deal size: ${typicalDealSize}` : null,
+      timeline ? `Timeline: ${timeline}` : null,
+      existingRelationship ? `Existing relationship or opportunity: ${existingRelationship}` : null,
+      message ? `Additional context: ${message}` : null,
+    ].filter(Boolean);
+    const enrichedMessage = `${proposedOpportunity}\n\nPartner intake context:\n${intakeDetails.join("\n")}`;
+
+    let aiIntel = null;
+    try {
+      aiIntel = await analyzeLeadIntel({
+        name,
+        email,
+        company,
+        jobTitle,
+        message: enrichedMessage,
+        inquiryType: "partnership",
+      });
+    } catch (error) {
+      console.error("Partner AI Intel analysis failed (continuing without it):", error);
+    }
+
     // Determine priority based on partnership type and company size
     let priority = "medium";
-    if (partnershipType === "strategic" || companySize === "enterprise") {
+    if (
+      partnershipType === "strategic" ||
+      partnershipType === "design_partner" ||
+      companySize === "enterprise" ||
+      timeline === "now"
+    ) {
       priority = "high";
-    } else if (partnershipType === "technology" || companySize === "mid-market") {
+    } else if (partnershipType === "technology" || partnershipType === "implementation" || companySize === "mid-market") {
       priority = "medium";
     }
 
@@ -94,11 +135,22 @@ export async function POST(request: NextRequest) {
           job_title: jobTitle || null,
           partnership_type: partnershipType || "general",
           company_size: companySize || null,
-          message: message || null,
+          message: proposedOpportunity || message || null,
           website: website || null,
+          partner_region: partnerRegion || null,
+          customer_base: customerBase || null,
+          solution_areas: solutionAreas || null,
+          typical_deal_size: typicalDealSize || null,
+          timeline: timeline || null,
+          existing_relationship: existingRelationship || null,
+          proposed_opportunity: proposedOpportunity || null,
           status: "new",
           priority,
           source: "website",
+          ai_detected_intent: aiIntel?.detectedIntent || null,
+          ai_urgency: aiIntel?.urgency || null,
+          ai_summary: aiIntel?.summary || null,
+          ai_intel_json: aiIntel ? JSON.stringify(aiIntel) : null,
         });
 
       if (dbError) {
@@ -109,6 +161,41 @@ export async function POST(request: NextRequest) {
       console.log("Supabase not configured - skipping database storage");
     }
 
+    getOrCreateLeadProfile(email, undefined, undefined)
+      .then(async (profile) => {
+        if (profile) {
+          await recordTouchpointEvent(
+            profile.id,
+            "contact_form",
+            "partnership_inquiry",
+            {
+              name,
+              company,
+              job_title: jobTitle,
+              phone,
+              partnership_type: partnershipType || "general",
+              company_size: companySize,
+              website,
+              partner_region: partnerRegion,
+              customer_base: customerBase,
+              solution_areas: solutionAreas,
+              typical_deal_size: typicalDealSize,
+              timeline,
+              existing_relationship: existingRelationship,
+              proposed_opportunity: proposedOpportunity,
+              ai_detected_intent: aiIntel?.detectedIntent,
+              ai_urgency: aiIntel?.urgency,
+            },
+            enrichedMessage,
+            "/partners"
+          );
+          console.log(`[LEAD V2] Partner enquiry recorded for ${email}, profile: ${profile.id}`);
+        }
+      })
+      .catch((error) => {
+        console.error("Lead V2 partner enquiry error:", error instanceof Error ? error.message : "Unknown");
+      });
+
     // Send email notification to team
     await sendPartnerEnquiryNotification({
       name,
@@ -118,7 +205,7 @@ export async function POST(request: NextRequest) {
       jobTitle: jobTitle || undefined,
       partnershipType: partnershipType || "general",
       companySize: companySize || undefined,
-      message: message || undefined,
+      message: enrichedMessage,
       website: website || undefined,
       priority,
     });
