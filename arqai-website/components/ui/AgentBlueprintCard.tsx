@@ -153,10 +153,10 @@ export function AgentBlueprintCard({
         ))}
       </div>
 
-      {/* Target Buyers */}
+      {/* Workflow Context */}
       <div className="mt-4 pt-4 border-t border-stroke-muted">
         <p className="text-[10px] text-text-muted">
-          <span className="font-medium">For:</span> {blueprint.targetBuyers.join(", ")}
+          <span className="font-medium">Workflow:</span> {blueprint.workflowContexts.join(", ")}
         </p>
       </div>
 

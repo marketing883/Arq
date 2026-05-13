@@ -62,18 +62,18 @@ export default function BankingPage() {
           "Bring us the financial-crime workflow creating the most friction.",
         midCtaBody:
           "We will map the alert sources, evidence needs, review steps, and risk boundaries, then show whether ArqBanker, Sentra, or a custom build is the right path.",
-        audienceHeading: "Built for teams accountable to customers and examiners.",
-        audienceBody:
-          "BSA officers, financial-crimes directors, AML program leads, compliance officers, and technology leaders modernizing financial-crime operations at:",
-        audienceList: [
-          "Regional banks ($10B-$100B in assets)",
-          "Mid-tier community banks ($1B-$10B in assets)",
-          "Credit unions and thrifts with active financial-crimes programs",
-          "Trust banks and private wealth platforms",
-          "Specialty lenders and digital banks",
-          "Cross-border and correspondent operations",
+        operatingContextHeading: "Useful where compliance work depends on judgment, evidence, and timing.",
+        operatingContextBody:
+          "Financial-crime workflows benefit when AI narrows the queue, assembles the evidence, and keeps the rationale clear enough for review.",
+        operatingContextList: [
+          "AML alert triage with too many low-value cases",
+          "KYC refreshes that require faster evidence collection",
+          "Sanctions screening where context changes the next action",
+          "Beneficial-ownership reviews with fragmented records",
+          "SAR narrative preparation that needs consistency and traceability",
+          "Customer-risk monitoring where reviewers need the why, not just a score",
         ],
-        productsHeading: "Productized where it earns its place.",
+        productsHeading: "Start from the workflow pattern that already fits.",
         productsBody:
           "ArqBanker is in development for AML, KYC, and financial-crime operations. Sentra accelerates alert triage and customer-risk workflows where the pattern fits.",
         products: [

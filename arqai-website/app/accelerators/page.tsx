@@ -89,7 +89,7 @@ export default function AcceleratorsPage() {
           <div className="a-card" style={{ padding: "clamp(28px, 5vw, 56px)" }}>
             <div className="a-section-head" style={{ alignItems: "center" }}>
               <div>
-                <span className="a-eyebrow">Productized, then tuned</span>
+                <span className="a-eyebrow">Reusable, then tailored</span>
                 <h2 className="h-section" style={{ marginTop: 18 }}>
                   Faster does not mean generic.
                 </h2>

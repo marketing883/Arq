@@ -24,7 +24,7 @@ const differentiators = [
   {
     title: "Built for the full triage and routing workflow",
     description:
-      "ArqClaims is a product, not a kit. It is calibrated for the operational logic mid-market P&C carriers actually run. Triage, routing, reserve recommendations, escalation handling. End-to-end.",
+      "ArqClaims is a product, not a kit. It is calibrated for real claims operating logic: triage, routing, reserve recommendations, escalation handling, and review control.",
   },
   {
     title: "Engineered for production at scale",
@@ -69,7 +69,7 @@ export default function ArqClaimsPage() {
                 </h1>
 
                 <p className="text-body-lg md:text-xl text-text-medium mb-10 leading-relaxed">
-                  ArqClaims is the AI agent for claims triage and processing at mid-market P&C insurance carriers. It triages incoming claims, surfaces the right ones to the right adjuster, and handles the routing and reserve logic your operation runs on. In build with design partners now.
+                  ArqClaims is the AI agent for claims triage and processing. It triages incoming claims, surfaces the right ones to the right adjuster, and handles the routing and reserve logic your operation runs on.
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-4">
@@ -101,8 +101,8 @@ export default function ArqClaimsPage() {
                   />
                 </div>
                 <div className="mt-6 p-5 rounded-xl bg-base-tint border border-stroke-muted">
-                  <p className="text-body-xs text-amber-500 uppercase tracking-wider mb-2">Design partner build</p>
-                  <p className="text-body-sm text-text-muted">Concept screens. Live deployment in pilot Q3 2026.</p>
+                  <p className="text-body-xs text-amber-500 uppercase tracking-wider mb-2">Early product build</p>
+                  <p className="text-body-sm text-text-muted">Concept screens. Pilot deployments being scoped.</p>
                 </div>
               </motion.div>
             </div>
@@ -122,7 +122,7 @@ export default function ArqClaimsPage() {
                   Claims volume is up. Headcount is not. AI alternatives are not built for your operation.
                 </h2>
                 <p className="text-body-lg text-text-medium leading-relaxed">
-                  Mid-market P&C carriers run claims operations under structural pressure. Volume rises. Adjuster bench expansion is slow and expensive. Cycle times stretch. Leakage compounds. Most of the AI options on offer either ship as horizontal toolkits that require an internal AI engineering bench you do not have, or solve a narrow slice of the workflow that disappears in handoff.
+                  Claims operations run under structural pressure. Volume rises. Adjuster bench expansion is slow and expensive. Cycle times stretch. Leakage compounds. Most AI options either ship as horizontal toolkits that require a dedicated AI engineering bench, or solve a narrow slice of the workflow that disappears in handoff.
                 </p>
               </motion.div>
             </div>
@@ -172,7 +172,7 @@ export default function ArqClaimsPage() {
           </div>
         </section>
 
-        {/* Who It's For Section */}
+        {/* Where It Helps Section */}
         <section className="py-section bg-base-tint">
           <div className="container mx-auto px-4 md:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto">
@@ -183,29 +183,29 @@ export default function ArqClaimsPage() {
                 className="card p-8 md:p-12"
               >
                 <h2 className="text-2xl font-display font-semibold text-text-bright mb-6">
-                  Who ArqClaims is for
+                  Where ArqClaims helps
                 </h2>
                 <p className="text-body-lg text-text-muted leading-relaxed">
-                  Built for VPs of Claims and claims operations directors at mid-market P&C carriers carrying $500M to $5B in direct written premium across personal auto, home, and commercial lines. Built for the technology and AI executives evaluating claims modernisation.
+                  ArqClaims helps when intake volume, routing complexity, reserve judgment, and escalation handling all need to move faster without weakening adjuster control.
                 </p>
               </motion.div>
             </div>
           </div>
         </section>
 
-        {/* Design Partner Section */}
+        {/* Early Access Section */}
         <section className="py-section bg-base">
           <div className="container mx-auto px-4 md:px-6 lg:px-8">
             <div className="bg-accent rounded-2xl p-8 md:p-12">
               <div className="max-w-3xl">
                 <p className="text-white/60 text-sm uppercase tracking-wider mb-4">
-                  Design Partner Program
+                  Early access
                 </p>
                 <h2 className="text-2xl md:text-3xl font-display font-semibold text-white mb-6">
-                  We are taking a small number of carriers into the design partner program now.
+                  Bring the claims workflow that needs better triage.
                 </h2>
                 <p className="text-white/80 text-lg mb-8">
-                  Design partners shape the product. They get early access, a direct line to the engineering team, and pricing that reflects co-development. We are looking for two to three carriers.
+                  We are scoping early deployments with carriers that want cleaner intake, stronger routing logic, and clearer evidence in the adjuster workflow.
                 </p>
                 <Link
                   href="/contact"
@@ -241,10 +241,10 @@ export default function ArqClaimsPage() {
               className="max-w-3xl mx-auto"
             >
               <h2 className="text-display-lg font-display text-text-bright mb-6">
-                Shape what ArqClaims becomes.
+                Improve claims triage without adding another disconnected tool.
               </h2>
               <p className="text-body-lg text-text-muted mb-8">
-                The earlier you are in the conversation, the more your operation shapes the product.
+                Show us the claim path that slows the team down. We will show where ArqClaims can support it.
               </p>
               <Link
                 href="/contact"

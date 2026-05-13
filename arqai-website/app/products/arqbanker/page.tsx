@@ -22,9 +22,9 @@ function StarIcon({ className = "" }: { className?: string }) {
 
 const differentiators = [
   {
-    title: "Built for the size of bank you actually are",
+    title: "Built for lean financial-crime operations",
     description:
-      "Designed for regional banks ($10B-$100B in assets) and mid-tier community banks ($1B-$10B in assets). Operational footprint sized for teams that do not have a dedicated AI engineering bench.",
+      "Designed for institutions that carry serious compliance obligations without unlimited headcount, budget, or AI engineering capacity.",
   },
   {
     title: "Engineered for production, not for a benchmark",
@@ -34,22 +34,22 @@ const differentiators = [
   {
     title: "Calibrated for the workflows your team actually runs",
     description:
-      "Sanctions screening. Customer due diligence. Transaction monitoring. SAR support. Each one calibrated to the operational logic financial crimes leaders at regional banks actually run.",
+      "Sanctions screening. Customer due diligence. Transaction monitoring. SAR support. Each one calibrated to the operational logic of real financial-crime work.",
   },
 ];
 
-const audiences = [
-  "BSA officers",
-  "Financial crimes directors",
-  "AML programme leads",
-  "Compliance officers",
-  "CTOs and Heads of AI",
+const workflowContexts = [
+  "AML alert triage",
+  "KYC and customer-risk refresh",
+  "Sanctions screening review",
+  "Beneficial-ownership evidence assembly",
+  "SAR narrative support",
 ];
 
-const bankTypes = [
-  "Regional banks ($10B-$100B in assets)",
-  "Mid-tier community banks ($1B-$10B in assets)",
-  "Credit unions and thrifts with active financial-crimes programs",
+const operatingEnvironments = [
+  "Regional institutions with lean financial-crime teams",
+  "Community banking operations with growing review volume",
+  "Credit unions and thrifts with active compliance programs",
 ];
 
 export default function ArqBankerPage() {
@@ -117,7 +117,7 @@ export default function ArqBankerPage() {
                 </div>
                 <div className="mt-6 p-5 rounded-xl bg-base-tint border border-stroke-muted">
                   <p className="text-body-xs text-blue-500 uppercase tracking-wider mb-2">Coming 2026</p>
-                  <p className="text-body-sm text-text-muted">In design with regional bank partners. Join the launch list.</p>
+                  <p className="text-body-sm text-text-muted">In design around real alert, review, and evidence workflows.</p>
                 </div>
               </motion.div>
             </div>
@@ -137,7 +137,7 @@ export default function ArqBankerPage() {
                   Mid-tier banks carry top-tier compliance pressure on lean teams.
                 </h2>
                 <p className="text-body-lg text-text-medium leading-relaxed">
-                  Regional and mid-tier banks face the same operational expectations as the largest institutions, with smaller teams, leaner budgets, and AML stacks built before AI was a serious option. The result is alert fatigue, manual review queues that never empty, and a financial crimes program that runs on the heroics of a small team. The AI alternatives are mostly horizontal toolkits that ask your team to assemble the agent themselves, or vendors who serve top-tier institutions and do not understand the operational reality of a $5B to $50B asset bank.
+                  Regional and mid-tier banks face the same operational expectations as the largest institutions, with smaller teams, leaner budgets, and AML stacks built before AI was a serious option. The result is alert fatigue, manual review queues that never empty, and a financial crimes program that runs on the heroics of a small team. The AI alternatives are mostly horizontal toolkits that ask your team to assemble the agent themselves, or vendors optimized for the largest institutions rather than lean financial-crime operations.
                 </p>
               </motion.div>
             </div>
@@ -187,7 +187,7 @@ export default function ArqBankerPage() {
           </div>
         </section>
 
-        {/* Who It's For Section */}
+        {/* Where It Helps Section */}
         <section className="py-section bg-base-tint">
           <div className="container mx-auto px-4 md:px-6 lg:px-8">
             <div className="grid lg:grid-cols-2 gap-12">
@@ -198,10 +198,10 @@ export default function ArqBankerPage() {
                 className="card p-8"
               >
                 <h3 className="text-2xl font-display font-semibold text-text-bright mb-6">
-                  Who ArqBanker is for
+                  Where ArqBanker helps
                 </h3>
                 <ul className="space-y-3">
-                  {audiences.map((item, index) => (
+                  {workflowContexts.map((item, index) => (
                     <li key={index} className="flex items-center gap-3">
                       <div className="w-2 h-2 rounded-full bg-accent"></div>
                       <span className="text-body-md text-text-muted">{item}</span>
@@ -217,10 +217,10 @@ export default function ArqBankerPage() {
                 className="card p-8"
               >
                 <h3 className="text-2xl font-display font-semibold text-text-bright mb-6">
-                  At institutions like
+                  Operating environments
                 </h3>
                 <ul className="space-y-3">
-                  {bankTypes.map((item, index) => (
+                  {operatingEnvironments.map((item, index) => (
                     <li key={index} className="flex items-center gap-3">
                       <div className="w-2 h-2 rounded-full bg-accent"></div>
                       <span className="text-body-md text-text-muted">{item}</span>
@@ -249,7 +249,7 @@ export default function ArqBankerPage() {
                   Status and timing
                 </h2>
                 <p className="text-body-lg text-text-muted leading-relaxed">
-                  ArqBanker is in development. Pre-design-partner and pre-pilot. The earlier you are in the conversation, the more your operation shapes the product. We are looking for the kinds of teams we are building this for.
+                  ArqBanker is in development. We are shaping it around real alert triage, evidence assembly, KYC refresh, sanctions review, and SAR-support workflows.
                 </p>
               </motion.div>
             </div>
@@ -261,10 +261,10 @@ export default function ArqBankerPage() {
           <div className="container mx-auto px-4 md:px-6 lg:px-8">
             <div className="bg-accent rounded-2xl p-8 md:p-12 text-center">
               <h2 className="text-2xl md:text-3xl font-display font-semibold text-white mb-6">
-                Shape what ArqBanker becomes.
+                Bring the financial-crime workflow that needs clearer signal.
               </h2>
               <p className="text-white/80 text-lg mb-8 max-w-2xl mx-auto">
-                The earlier you are in the conversation, the more your operation shapes the product.
+                We will show where governed AI can reduce review noise, assemble evidence faster, and keep the rationale clear.
               </p>
               <Link
                 href="/demo"

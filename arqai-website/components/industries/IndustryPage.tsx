@@ -46,9 +46,9 @@ export type IndustryPageData = {
   useCases: { tag: string; title: string; body: string }[];
   midCtaHeadline: string;
   midCtaBody: string;
-  audienceHeading: string;
-  audienceBody: string;
-  audienceList: string[];
+  operatingContextHeading: string;
+  operatingContextBody: string;
+  operatingContextList: string[];
   productsHeading: string;
   productsBody: string;
   products: {
@@ -193,22 +193,22 @@ export function IndustryPage({ data }: { data: IndustryPageData }) {
           <div className="a-wrap">
             <div className="gap-split internal-story">
               <article className="a-card" style={{ padding: 32 }}>
-                <span className="a-eyebrow">Audience</span>
+                <span className="a-eyebrow">Where this helps</span>
                 <h2 className="h-section" style={{ fontSize: "clamp(28px, 3.2vw, 44px)", marginTop: 18 }}>
-                  {data.audienceHeading}
+                  {data.operatingContextHeading}
                 </h2>
                 <p className="lede" style={{ marginTop: 18 }}>
-                  {data.audienceBody}
+                  {data.operatingContextBody}
                 </p>
               </article>
               <article className="a-card" style={{ padding: 32 }}>
                 <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "grid", gap: 14 }}>
-                  {data.audienceList.map((audience) => (
-                    <li key={audience} style={{ display: "flex", gap: 12, color: "var(--ink-cream-d)", lineHeight: 1.5 }}>
+                  {data.operatingContextList.map((context) => (
+                    <li key={context} style={{ display: "flex", gap: 12, color: "var(--ink-cream-d)", lineHeight: 1.5 }}>
                       <span style={{ color: "var(--ember)", marginTop: 2 }}>
                         <CheckIcon />
                       </span>
-                      {audience}
+                      {context}
                     </li>
                   ))}
                 </ul>
@@ -221,7 +221,7 @@ export function IndustryPage({ data }: { data: IndustryPageData }) {
           <div className="a-wrap">
             <div className="a-section-head">
               <div>
-                <span className="a-eyebrow">Productized where it fits</span>
+                <span className="a-eyebrow">Proven starting points</span>
                 <h2 className="h-section" style={{ marginTop: 18 }}>
                   {data.productsHeading}
                 </h2>

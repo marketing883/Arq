@@ -62,18 +62,18 @@ export default function ManufacturingPage() {
           "Bring us the production workflow where delays are most expensive.",
         midCtaBody:
           "We will map the systems, signals, handoffs, and decision owners, then show whether Orbis, Kyra, or a custom build is the right starting point.",
-        audienceHeading: "Built for leaders accountable for throughput and reliability.",
-        audienceBody:
-          "VPs of operations, plant managers, quality directors, maintenance leads, supply-chain directors, plus the CIOs and Heads of AI driving manufacturing modernization at:",
-        audienceList: [
-          "Mid-market industrial manufacturers",
-          "Process and chemical operators",
-          "Automotive suppliers and Tier 1/2 plants",
-          "Discrete manufacturing across electronics and machinery",
-          "Food, beverage, and CPG manufacturers",
-          "Operators running aged ERP and MES stacks",
+        operatingContextHeading: "Useful where plant decisions depend on signals spread across systems.",
+        operatingContextBody:
+          "Manufacturing AI creates value when it connects production reality, quality evidence, maintenance risk, supply constraints, and the people responsible for the next decision.",
+        operatingContextList: [
+          "ERP and MES workflows that do not answer operational questions fast enough",
+          "Quality reviews where visual, inspection, and process context must line up",
+          "Maintenance planning that needs telemetry, service history, and parts context",
+          "Supplier-risk decisions affected by delays, substitutions, and dependencies",
+          "Shift handoffs where exceptions need continuity",
+          "S&OP work where demand, capacity, inventory, and margin tradeoffs collide",
         ],
-        productsHeading: "Custom builds where productized does not fit.",
+        productsHeading: "Start from the workflow pattern that already fits.",
         productsBody:
           "Orbis accelerates supplier and dependency-risk workflows. Kyra supports service and incident operations. Plant-specific use cases are built around your stack and operating model.",
         products: [

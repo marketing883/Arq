@@ -7,7 +7,7 @@ export interface Blueprint {
   features: string[];
   metrics: { value: string; label: string }[];
   status: "available" | "blueprint" | "pilot" | "roadmap";
-  targetBuyers: string[];
+  workflowContexts: string[];
   industries: string[];
   link?: string;
 }
@@ -32,7 +32,7 @@ export const blueprints: Blueprint[] = [
       { value: "100%", label: "Audit coverage" },
     ],
     status: "available",
-    targetBuyers: ["Enterprise Tech Teams", "DevOps Leaders", "CIOs"],
+    workflowContexts: ["Release documentation", "Change tracking", "Audit preparation"],
     industries: ["telecom", "financial", "healthcare"],
     link: "/solutions/arqrelease",
   },
@@ -55,7 +55,7 @@ export const blueprints: Blueprint[] = [
       { value: "Multi-cloud", label: "Support" },
     ],
     status: "available",
-    targetBuyers: ["FinOps Teams", "Platform Teams", "CFOs"],
+    workflowContexts: ["Cloud spend review", "Waste identification", "Project-to-cost visibility"],
     industries: ["telecom", "financial", "retail"],
     link: "/solutions/arqoptimize",
   },
@@ -78,7 +78,7 @@ export const blueprints: Blueprint[] = [
       { value: "Full", label: "Audit trails" },
     ],
     status: "available",
-    targetBuyers: ["TPAs", "Insurance Carriers", "Claims Directors"],
+    workflowContexts: ["Claims review", "Underwriting support", "Fraud detection"],
     industries: ["insurance"],
     link: "/solutions/arqfwa",
   },
@@ -88,7 +88,7 @@ export const blueprints: Blueprint[] = [
     category: "Investment Intelligence",
     headline: "AI-powered investment due diligence at scale",
     description:
-      "Accelerates deal flow with intelligent company analysis, market positioning evaluation, and automated risk scoring for investment decisions.",
+      "Accelerates deal review with intelligent company analysis, competitive-context evaluation, and automated risk scoring for investment decisions.",
     features: [
       "Deal Flow Acceleration",
       "Company Analysis",
@@ -101,7 +101,7 @@ export const blueprints: Blueprint[] = [
       { value: "Automated", label: "Risk scoring" },
     ],
     status: "available",
-    targetBuyers: ["VCs", "Private Equity", "Investment Analysts"],
+    workflowContexts: ["Deal screening", "Company analysis", "Risk scoring"],
     industries: ["financial"],
     link: "/solutions/arqintel",
   },
@@ -124,7 +124,7 @@ export const blueprints: Blueprint[] = [
       { value: "Governed", label: "Data access" },
     ],
     status: "blueprint",
-    targetBuyers: ["Revenue Leaders", "Sales Ops", "CROs"],
+    workflowContexts: ["Pipeline monitoring", "Deal-risk scoring", "Forecast support"],
     industries: ["retail", "financial", "telecom"],
   },
   {
@@ -146,7 +146,7 @@ export const blueprints: Blueprint[] = [
       { value: "Complete", label: "Audit trails" },
     ],
     status: "blueprint",
-    targetBuyers: ["Customer Success Teams", "Account Managers", "CCOs"],
+    workflowContexts: ["Health scoring", "Churn risk", "Customer intervention"],
     industries: ["retail", "telecom", "financial"],
   },
   {
@@ -168,7 +168,7 @@ export const blueprints: Blueprint[] = [
       { value: "Full", label: "Attribution" },
     ],
     status: "blueprint",
-    targetBuyers: ["Marketing Teams", "Demand Gen Leaders", "CMOs"],
+    workflowContexts: ["Lead scoring", "Campaign optimization", "Consent-aware outreach"],
     industries: ["retail", "financial", "healthcare"],
   },
   {
@@ -190,7 +190,7 @@ export const blueprints: Blueprint[] = [
       { value: "Zero", label: "PHI violations" },
     ],
     status: "available",
-    targetBuyers: ["Healthcare Administrators", "Clinical Ops", "CIOs"],
+    workflowContexts: ["Clinical documentation", "Administrative workflow", "Prior authorization"],
     industries: ["healthcare"],
   },
   {
@@ -212,7 +212,7 @@ export const blueprints: Blueprint[] = [
       { value: "Full", label: "Transparency" },
     ],
     status: "pilot",
-    targetBuyers: ["Real Estate Firms", "Property Managers", "Investment Teams"],
+    workflowContexts: ["Property valuation", "Due diligence", "Transaction workflow"],
     industries: ["realEstate"],
   },
 ];

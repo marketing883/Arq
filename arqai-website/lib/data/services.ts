@@ -16,7 +16,7 @@ export type Service = {
   outcomes: ServiceOutcome[];
   deliverables: string[];
   signals: string[];
-  bestFit: string[];
+  workflowContexts: string[];
   cta: {
     heading: string;
     body: string;
@@ -67,11 +67,11 @@ export const services: Service[] = [
       "Process owners disagree on what should be automated",
       "Compliance and technology teams need to approve the path early",
     ],
-    bestFit: [
-      "COOs and transformation leaders",
-      "Heads of AI building the first production workflow",
-      "CIOs and CTOs modernizing a specific operating process",
-      "Business unit leaders with measurable workflow pain",
+    workflowContexts: [
+      "A specific process needs an AI path before funding or build decisions",
+      "The workflow spans business, technology, and risk ownership",
+      "Teams need a concrete production plan instead of another assessment",
+      "The first release must be measurable, governable, and worth operating",
     ],
     cta: {
       heading: "Bring us one workflow that should not be manual anymore.",
@@ -121,11 +121,11 @@ export const services: Service[] = [
       "Manual triage, routing, summarization, or evidence gathering is slowing teams down",
       "A working prototype needs production architecture",
     ],
-    bestFit: [
-      "Enterprise operations teams",
-      "Claims, service, risk, compliance, and support leaders",
-      "AI product owners with a validated workflow",
-      "Technology leaders who need governed execution",
+    workflowContexts: [
+      "The work requires action across multiple systems, not just answers",
+      "Manual triage, routing, summarization, or evidence gathering slows the team down",
+      "High-risk steps need human approval before execution",
+      "A useful prototype needs production architecture before it can launch",
     ],
     cta: {
       heading: "Ship the workflow, not the demo.",
@@ -175,11 +175,11 @@ export const services: Service[] = [
       "Security needs clear permission and audit boundaries",
       "Existing SaaS, ERP, CRM, or ITSM systems must stay in place",
     ],
-    bestFit: [
-      "CIO and enterprise architecture teams",
-      "Platform and integration leaders",
-      "Operations teams modernizing tool-heavy processes",
-      "Security leaders approving agent access",
+    workflowContexts: [
+      "The AI experience needs live data from systems already in use",
+      "The workflow crosses CRM, ERP, ITSM, cloud, data, or knowledge tools",
+      "Permission boundaries and audit trails need to match enterprise controls",
+      "Teams need fewer swivel-chair handoffs without replacing the stack",
     ],
     cta: {
       heading: "Keep your stack. Make the workflow smarter.",
@@ -229,11 +229,11 @@ export const services: Service[] = [
       "Users need explainability before trusting recommendations",
       "Automated actions require strong boundaries",
     ],
-    bestFit: [
-      "Compliance, risk, and security leaders",
-      "AI governance committees",
-      "Regulated operations teams",
-      "Product leaders building trusted enterprise AI",
+    workflowContexts: [
+      "The workflow touches regulated, sensitive, or policy-bound decisions",
+      "Users need to understand why a recommendation was made",
+      "Automated actions require approvals, exceptions, and clear boundaries",
+      "Production approval depends on evidence, logging, and reviewability",
     ],
     cta: {
       heading: "Governance should not be a launch blocker.",
@@ -249,7 +249,7 @@ export const services: Service[] = [
       "Use proven product lines for repeatable workflows like claims, fraud, AML, loyalty, network operations, service workflow, and supply chain risk.",
     image: "/img/hero/arq-products.png",
     problem:
-      "Some enterprise AI workflows repeat across companies, but off-the-shelf products rarely match the data, policy, and operating reality of a specific buyer.",
+      "Some enterprise AI workflows repeat across companies, but off-the-shelf products rarely match the data, policy, and operating reality of the work.",
     promise:
       "We start from reusable accelerator patterns, then adapt the workflow to your systems, policies, users, and success metrics so speed does not come at the expense of fit.",
     outcomes: [
@@ -281,13 +281,13 @@ export const services: Service[] = [
       "Your workflow maps to a known ArqAI accelerator",
       "Speed matters, but the operating context is still specific",
       "The team wants reusable architecture rather than a one-off build",
-      "The buyer needs a productized starting point with services depth",
+      "The workflow needs a reusable starting point with services depth",
     ],
-    bestFit: [
-      "Healthcare payers and insurance carriers",
-      "Banks and financial institutions",
-      "Retail, telecom, manufacturing, and security operations",
-      "Transformation teams scaling from one workflow to a portfolio",
+    workflowContexts: [
+      "The workflow resembles a proven ArqAI accelerator pattern",
+      "Speed matters, but the operating context still needs careful fit",
+      "Reusable architecture can reduce blank-page build time",
+      "One successful workflow needs to become a repeatable portfolio pattern",
     ],
     cta: {
       heading: "Start closer to production.",
@@ -335,13 +335,13 @@ export const services: Service[] = [
       "The AI workflow is business-critical enough to need ownership",
       "Users need post-launch tuning, training, and support",
       "Leadership wants the first workflow to become a repeatable pattern",
-      "Internal teams need a partner while capability is built in-house",
+      "The team needs an operating partner while internal capability matures",
     ],
-    bestFit: [
-      "Operations leaders launching production AI",
-      "AI teams moving from pilot to managed service",
-      "CIOs who need named ownership after launch",
-      "Business units expanding a proven workflow",
+    workflowContexts: [
+      "The AI workflow is important enough to need ongoing ownership",
+      "Users need post-launch tuning, training, and support",
+      "Production learning should improve prompts, policies, retrieval, and UX",
+      "A first workflow is ready to expand without losing governance",
     ],
     cta: {
       heading: "Launch is the beginning of the operating system.",

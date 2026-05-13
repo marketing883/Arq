@@ -32,7 +32,7 @@ const roadmapItems = [
     name: "ArqClaims",
     status: "IN BUILD",
     statusColor: "bg-amber-500",
-    description: "Claims triage and processing for mid-market P&C carriers. Design partner program open.",
+    description: "Claims triage and processing for P&C carrier operations.",
     href: "/products/arqclaims",
   },
   {
@@ -76,7 +76,7 @@ export default function RoadmapPage() {
                 </h1>
 
                 <p className="text-body-lg md:text-xl text-text-medium leading-relaxed">
-                  Each new ArqAI Labs product targets an operational workflow where the customer&apos;s pain is acute and the AI alternatives all stop short. Here is where we are.
+                  Each new ArqAI Labs product begins with an operational workflow where the pain is acute and the AI alternatives all stop short. Here is where we are.
                 </p>
               </motion.div>
 
@@ -172,7 +172,7 @@ export default function RoadmapPage() {
                   Have a workflow you wish had a better answer?
                 </h2>
                 <p className="text-white/80 text-lg mb-6">
-                  Each new ArqAI Labs product targets an operational workflow where the customer&apos;s pain is acute and the AI alternatives all stop short. If you have a workflow you wish had a better answer, we want to hear from you.
+                  Each new ArqAI Labs product begins with an operational workflow where the pain is acute and the AI alternatives all stop short. If you have a workflow you wish had a better answer, we want to hear from you.
                 </p>
                 <Link
                   href="/contact"

@@ -62,18 +62,18 @@ export default function RetailPage() {
           "Bring us the retail workflow where better timing would change the outcome.",
         midCtaBody:
           "We will map the signals, decisions, and guardrails, then show whether Nuvia, a custom workflow, or a services-led build is the right starting point.",
-        audienceHeading: "Built for operators accountable for margin and loyalty.",
-        audienceBody:
-          "Heads of CRM and loyalty, VPs of e-commerce, store-operations leadership, supply-chain directors, plus the technology and AI executives backing them at:",
-        audienceList: [
-          "Multi-store specialty retailers",
-          "Digitally-native vertical brands",
-          "Mid-market grocers and convenience chains",
-          "Apparel and home retailers",
-          "Health, beauty, and wellness retailers",
-          "QSR and food-service operators",
+        operatingContextHeading: "Useful where customer, inventory, and service signals need to become action.",
+        operatingContextBody:
+          "Retail AI works best when it can connect demand, behavior, margin, store execution, and service context without burying teams in another dashboard.",
+        operatingContextList: [
+          "Loyalty programs that need more relevant next-best actions",
+          "Promotion workflows where margin and stock constraints matter",
+          "Store operations where exceptions need faster routing",
+          "Customer-service queues that need order, policy, and history context",
+          "Demand and replenishment decisions with too many disconnected signals",
+          "E-commerce journeys where support, offers, and fulfillment need to stay aligned",
         ],
-        productsHeading: "Custom builds where productized does not fit.",
+        productsHeading: "Start from the workflow pattern that already fits.",
         productsBody:
           "Nuvia accelerates loyalty and personalization patterns. Other retail workflows are built around the systems, stores, and constraints already in place.",
         products: [

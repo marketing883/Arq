@@ -571,7 +571,7 @@ function AcceleratorsSection() {
             <h2 className="h-section" style={{ marginTop: 18 }}>
               Vertical AI <em>Accelerators</em>.
             </h2>
-            <p className="kicker" style={{ marginTop: 12 }}>Productized intelligence systems for repeatable enterprise workflows</p>
+            <p className="kicker" style={{ marginTop: 12 }}>Reusable intelligence systems for repeatable enterprise workflows</p>
           </div>
           <p className="lede" style={{ justifySelf: "end" }}>
             Not off-the-shelf tools. Reusable AI product lines built from recurring enterprise patterns, then adapted
@@ -644,7 +644,7 @@ function WhySection() {
             </h2>
           </div>
           <p className="lede" style={{ justifySelf: "end" }}>
-            ArqAI Labs combines enterprise delivery experience, governance-first engineering, and productized
+            ArqAI Labs combines enterprise delivery experience, governance-first engineering, and reusable
             accelerators to help AI workflows move safely from prototype to production.
           </p>
         </div>

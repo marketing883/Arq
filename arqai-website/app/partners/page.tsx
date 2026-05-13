@@ -100,7 +100,7 @@ const partnershipModels = [
       "Co-marketing & joint solutions",
       "Technical integration support",
       "Executive sponsorship",
-      "Joint go-to-market programs",
+      "Joint launch programs",
     ],
     requirements: "Complementary technology, enterprise focus",
   },
@@ -116,7 +116,7 @@ const partnershipModels = [
       "Deal registration & protection",
       "Technical training & certification",
       "Co-delivery opportunities",
-      "Pre-sales support",
+      "Evaluation support",
     ],
     requirements: "Technical certification, proven delivery track record",
   },
@@ -172,8 +172,8 @@ const partnerBenefits = [
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
       </svg>
     ),
-    title: "Sales Enablement",
-    description: "Demo environments, pre-sales support, and RFP assistance",
+    title: "Partner Enablement",
+    description: "Demo environments, evaluation support, and RFP assistance",
   },
   {
     icon: (
@@ -209,7 +209,7 @@ const partnerBenefits = [
       </svg>
     ),
     title: "Partner Portal",
-    description: "Resource library, certification tracking, and deal pipeline management",
+    description: "Resource library, certification tracking, and opportunity management",
   },
 ];
 

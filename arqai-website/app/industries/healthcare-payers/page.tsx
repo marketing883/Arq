@@ -61,19 +61,19 @@ export default function HealthcarePayersPage() {
         midCtaHeadline:
           "Bring us the payer workflow creating the most drag.",
         midCtaBody:
-          "We will review the process, the data sources, and the decision points, then show whether a productized agent, accelerator, or custom build is the right path.",
-        audienceHeading: "Built for leaders accountable for payer performance.",
-        audienceBody:
-          "Operations leaders, program-integrity directors, claims teams, medical-management leaders, and the technology executives backing them at:",
-        audienceList: [
-          "BCBS regional plans",
-          "Medicaid managed care organisations",
-          "Mid-tier Medicare Advantage plans",
-          "Independent practice associations and provider-sponsored plans",
-          "Mid-market commercial health plans",
-          "Specialty and ancillary plans",
+          "We will review the process, the data sources, and the decision points, then show the cleanest path from current workflow to production-ready support.",
+        operatingContextHeading: "Useful where review queues are heavy and evidence is scattered.",
+        operatingContextBody:
+          "The strongest payer use cases share the same pattern: high-volume decisions, regulated review, fragmented systems, and measurable consequences when the wrong case waits too long.",
+        operatingContextList: [
+          "Payment-integrity queues with too many low-signal cases",
+          "Prior authorization reviews that need faster evidence assembly",
+          "Utilization-management decisions that require clear rationale",
+          "Care-management workflows split across notes, claims, and member context",
+          "Appeals and grievance work that needs consistent documentation",
+          "Audit preparation where every decision needs a defensible trail",
         ],
-        productsHeading: "Productized where it earns its place.",
+        productsHeading: "Start from the workflow pattern that already fits.",
         productsBody:
           "ArqFWA is live for payment integrity and claims review. Veyra and Luma accelerate adjacent payer workflows from the same governed foundation.",
         products: [

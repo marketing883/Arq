@@ -61,18 +61,18 @@ export default function InsuranceCarriersPage() {
           "Bring us the claim workflow slowing the operation down.",
         midCtaBody:
           "We will map the decision path, the data required, and the human-review points, then show where ArqClaims, ArqFWA, or a custom build fits.",
-        audienceHeading: "Built for leaders accountable for claim quality and loss outcomes.",
-        audienceBody:
-          "Claims executives, claims operations leaders, SIU teams, underwriting leaders, and the technology executives modernizing carrier operations across:",
-        audienceList: [
-          "Mid-market personal lines carriers (auto, home)",
-          "Commercial and specialty lines carriers",
-          "Regional carriers writing $500M to $5B in DWP",
-          "Reinsurers and MGAs",
-          "Carriers running aged claims platforms",
-          "Carriers expanding into new lines",
+        operatingContextHeading: "Useful where claim decisions need speed and defensible evidence.",
+        operatingContextBody:
+          "Carrier workflows benefit most when the work is high-volume, evidence-heavy, and too important to hand to an opaque model.",
+        operatingContextList: [
+          "FNOL intake that needs complete capture from the first touch",
+          "Claim routing where severity, coverage, and complexity matter",
+          "SIU referral workflows that need stronger signal before review",
+          "Reserve recommendations that require context and traceability",
+          "Underwriting reviews with exceptions that cannot be missed",
+          "Policyholder service workflows where status and next action need clarity",
         ],
-        productsHeading: "Productized where it earns its place.",
+        productsHeading: "Start from the workflow pattern that already fits.",
         productsBody:
           "ArqFWA is live for suspicious-claim review. ArqClaims, Luma, and Veyra cover adjacent claims, triage, and investigation patterns from the same governed foundation.",
         products: [
@@ -90,7 +90,7 @@ export default function InsuranceCarriersPage() {
             status: "IN BUILD",
             statusColor: "bg-amber-500",
             description:
-              "The AI agent for claims triage and processing at mid-market P&C carriers. Design partner program open.",
+              "The AI agent for claims triage and processing across P&C carrier operations.",
             cta: "Get Started",
             href: "/products/arqclaims",
           },

@@ -18,7 +18,7 @@ const steps = [
   {
     name: "Strategy",
     description:
-      "We start with the workflow, the buyer, and the operational metric. We don't run a generic AI assessment. We run a discovery scoped to the outcome you want, the timeline you need, and the constraints your environment imposes. Output: a concrete deployment plan and a committed timeline.",
+      "We start with the workflow, the owner, and the operating metric. We don't run a generic AI assessment. We run discovery around the outcome you want, the timeline you need, and the constraints your environment imposes. Output: a concrete deployment plan and a committed timeline.",
   },
   {
     name: "Build",
@@ -41,7 +41,7 @@ const dontDo = [
   "Pure AI strategy decks without a delivery commitment.",
   "Engagements without a named workflow owner and a defined success metric.",
   "AI that ships into a sandbox and never sees production.",
-  "Generic enterprise IT modernisation that happens to mention AI.",
+  "Generic enterprise IT modernization that happens to mention AI.",
 ];
 
 export default function HowWeWorkPage() {
@@ -82,7 +82,7 @@ export default function HowWeWorkPage() {
               <SignalStrip
                 label="Operating rhythm"
                 title="The work moves from messy signal to governed system."
-                body="Internal pages now get more breathing room through animated diagrams, alternating surfaces, and visual proof points that show the delivery model instead of repeating it in stacked text blocks."
+                body="We move from a real workflow problem to a governed production system, keeping scope, build, deployment, and ongoing operations connected the whole way."
                 variant="flow"
                 points={["Scope", "Build", "Deploy", "Run"]}
               />

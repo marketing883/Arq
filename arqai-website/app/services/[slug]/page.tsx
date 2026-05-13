@@ -188,17 +188,17 @@ export default function ServiceDetailPage({ params }: ServicePageProps) {
               </ul>
             </article>
             <article className="a-card" style={{ padding: 32 }}>
-              <span className="a-eyebrow">Best-fit buyers</span>
+              <span className="a-eyebrow">Where this helps</span>
               <h2 className="h-section" style={{ fontSize: "clamp(28px, 3.2vw, 44px)", marginTop: 18 }}>
-                Who usually owns it.
+                What the work usually involves.
               </h2>
               <ul style={{ listStyle: "none", padding: 0, margin: "28px 0 0", display: "grid", gap: 14 }}>
-                {service.bestFit.map((buyer) => (
-                  <li key={buyer} style={{ display: "flex", gap: 12, color: "var(--ink-cream-d)", lineHeight: 1.5 }}>
+                {service.workflowContexts.map((context) => (
+                  <li key={context} style={{ display: "flex", gap: 12, color: "var(--ink-cream-d)", lineHeight: 1.5 }}>
                     <span style={{ color: "var(--ember)", marginTop: 2 }}>
                       <CheckIcon />
                     </span>
-                    {buyer}
+                    {context}
                   </li>
                 ))}
               </ul>

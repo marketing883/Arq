@@ -20,8 +20,8 @@ const products = [
     tagline: "The AI agent for fraud, waste, and abuse detection.",
     description:
       "Reviews high volumes of claims and transactions, flags suspicious patterns, and surfaces the work your team should focus on first. Built for healthcare payers and P&C insurance carriers.",
-    buyers:
-      "For healthcare payer and P&C carrier operations leaders, fraud and special-investigations teams, and the technology and AI executives backing them.",
+    workflowFit:
+      "Best used where review queues are large, suspicious patterns hide across systems, and every next action needs evidence.",
     cta: "Get Started",
     href: "/products/arqfwa",
     image: "/img/Operations-center.png",
@@ -33,9 +33,9 @@ const products = [
     statusColor: "bg-amber-500",
     tagline: "The AI agent for claims triage and processing.",
     description:
-      "Triages incoming claims and surfaces the right ones to the right adjuster, with the routing logic and reserve recommendations your operation actually uses. Built for mid-market P&C carriers.",
-    buyers:
-      "For claims operations leaders at mid-market P&C carriers, plus the technology and AI executives evaluating claims-process modernisation.",
+      "Triages incoming claims and surfaces the right ones to the right adjuster, with the routing logic and reserve recommendations your operation actually uses.",
+    workflowFit:
+      "Best used where intake volume, severity signals, coverage questions, and routing decisions all need to move faster together.",
     cta: "Get Started",
     href: "/products/arqclaims",
     image: "/img/Policy-Hub-Interface.png",
@@ -47,9 +47,9 @@ const products = [
     statusColor: "bg-blue-500",
     tagline: "The AI agent for AML, KYC, and financial crime.",
     description:
-      "Built for the financial crimes operations at regional and mid-tier banks. Calibrated to the realities of running a financial crimes program on a lean team.",
-    buyers:
-      "For financial crimes leaders and BSA officers at regional and mid-tier banks, plus the CTOs and Heads of AI driving financial-crime modernisation.",
+      "Calibrated to the realities of financial-crime operations where alert fatigue, evidence assembly, and exam-ready rationale all matter.",
+    workflowFit:
+      "Best used where AML, KYC, sanctions, and customer-risk workflows need clearer signal without weakening review control.",
     cta: "Get Started",
     href: "/products/arqbanker",
     image: "/img/Audit-logs.png",
@@ -95,7 +95,7 @@ export default function ProductsPage() {
               <SignalStrip
                 label="Product spine"
                 title="Each product starts with a workflow you can name."
-                body="We add visual, operational texture around the product pages so buyers can see the workflow shape: what the agent reads, what it routes, where people stay in control, and how the result becomes measurable."
+                body="Each product page shows the shape of the work: what the agent reads, what it routes, where people stay in control, and how the result becomes measurable."
                 variant="evidence"
                 points={["Inputs", "Review", "Action", "Evidence"]}
               />
@@ -131,7 +131,7 @@ export default function ProductsPage() {
                         {product.description}
                       </p>
                       <p className="text-body-sm text-text-muted italic mb-8">
-                        {product.buyers}
+                        {product.workflowFit}
                       </p>
                       <Link
                         href={product.href}
@@ -213,7 +213,7 @@ export default function ProductsPage() {
                 Have a workflow that needs a better answer?
               </h2>
               <p className="text-body-lg text-text-muted mb-8">
-                Each new ArqAI Labs product targets an operational workflow where the customer&apos;s pain is acute and the AI alternatives all stop short. If you have a workflow you wish had a better answer, we want to hear from you.
+                Each new ArqAI Labs product begins with an operational workflow where the pain is acute and the AI alternatives all stop short. If you have a workflow you wish had a better answer, we want to hear from you.
               </p>
               <Link
                 href="/contact"

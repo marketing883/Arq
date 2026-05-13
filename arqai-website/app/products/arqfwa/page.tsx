@@ -37,7 +37,7 @@ const faqs = [
   {
     question: "What does ArqFWA need to start?",
     answer:
-      "A scoped pilot data set, your security and compliance review, and a defined target workflow. We commit a deployment timeline once those three are in place.",
+      "A scoped pilot data set, your security and compliance review, and a defined starting workflow. We commit a deployment timeline once those three are in place.",
   },
   {
     question: "How is ArqFWA priced?",
@@ -166,7 +166,7 @@ export default function ArqFWAPage() {
                 Your team is the bottleneck. The AI alternatives do not help.
               </h2>
               <p className="text-body-lg text-text-muted leading-relaxed">
-                Healthcare and insurance leak hundreds of billions of dollars to fraud, waste, and abuse every year. Most of it is caught manually. AI promised to fix this. But most of the AI options on the market either ask your team to build the agent themselves on a horizontal toolkit (twelve months of internal work, no guarantee of production), or arrive as a black box that your operations leaders cannot defend.
+                Healthcare and insurance leak hundreds of billions of dollars to fraud, waste, and abuse every year. Most of it is caught manually. AI promised to fix this. But most of the AI options on the market either ask your team to build the agent themselves on a horizontal toolkit, or arrive as a black box that your operations leaders cannot defend.
               </p>
             </div>
           </div>
@@ -203,34 +203,34 @@ export default function ArqFWAPage() {
           </div>
         </section>
 
-        {/* Who ArqFWA is For */}
+        {/* Where ArqFWA Helps */}
         <section className="py-section bg-base-tint">
           <div className="container mx-auto px-4 md:px-6 lg:px-8">
             <div className="mb-12">
               <p className="flex items-center gap-2 text-body-sm text-accent mb-4">
                 <StarIcon className="w-4 h-4" />
-                Audience
+                Where this helps
               </p>
               <h2 className="text-display-lg font-display text-text-bright">
-                Who ArqFWA is for
+                Where ArqFWA creates leverage
               </h2>
             </div>
 
             <div className="grid md:grid-cols-2 gap-8">
               <div className="card p-8">
                 <h3 className="text-xl font-display font-semibold text-text-bright mb-4">
-                  For the workflow owner
+                  High-volume review queues
                 </h3>
                 <p className="text-body-md text-text-muted">
-                  Operations leaders, fraud and special-investigations teams, and program-integrity directors at healthcare payers and P&C carriers. The people who own the throughput, the recovery rate, and the operational economics of the workflow.
+                  ArqFWA helps when suspicious activity is buried inside large claim or transaction queues and reviewers need the right cases surfaced first.
                 </p>
               </div>
               <div className="card p-8">
                 <h3 className="text-xl font-display font-semibold text-text-bright mb-4">
-                  For the technology and AI executives backing them
+                  Defensible decisions
                 </h3>
                 <p className="text-body-md text-text-muted">
-                  CTOs, Chief Digital Officers, and Heads of AI evaluating the build-vs-deploy decision for fraud-detection AI. The case for ArqFWA is straightforward: deploy a finished agent, free your team to ship the things only you can ship.
+                  Every recommendation needs context, evidence, and an audit trail so the team can act with confidence and explain the decision afterward.
                 </p>
               </div>
             </div>
@@ -260,7 +260,7 @@ export default function ArqFWAPage() {
                 <div className="flex items-start gap-4 p-6 rounded-lg bg-base-tint">
                   <div className="w-2 h-2 rounded-full bg-accent mt-2 shrink-0" />
                   <p className="text-body-md text-text-bright">
-                    Predictable operational performance. Production-grade reliability without internal AI engineering overhead.
+                    Predictable operational performance. Production-grade reliability without requiring a dedicated AI engineering team.
                   </p>
                 </div>
               </div>
