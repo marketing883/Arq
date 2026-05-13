@@ -7,63 +7,63 @@ export default function InsuranceCarriersPage() {
     <IndustryPage
       data={{
         eyebrow: "Industries / P&C insurance",
-        heroHeadline: "AI for the carriers that take operations seriously.",
+        heroHeadline: "AI for carriers that need faster claims without weaker judgment.",
         heroSubhead:
-          "Triage faster. Underwrite smarter. Catch more fraud. Close more claims with the people you already have. Built for mid-market personal, commercial, and specialty lines.",
-        heroImage: "/img/services/use-case-2.webp",
+          "From FNOL to SIU referral, carriers need speed, evidence, and adjuster confidence in the same workflow. We build AI around the decisions your teams already own.",
+        heroImage: "/img/industries/insurance-claims-vehicle.jpg",
         heroImageAlt: "P&C insurance operations",
         primaryCta: { label: "Get Started", href: "/engage-us" },
         secondaryCta: { label: "Get Started", href: "/products/arqclaims" },
         outcomes: [
           {
             metric: "40%",
-            label: "Faster claims cycle",
+            label: "Faster claims movement",
             description:
-              "Triage incoming claims, surface the right ones to the right adjuster, and support the decision your team makes.",
+              "Route claims, summarize evidence, flag missing details, and help adjusters move files without losing context.",
           },
           {
             metric: "25%+",
-            label: "More suspicious claims caught",
+            label: "More suspicious claims surfaced",
             description:
-              "ArqFWA reviews high volumes of claims and transactions and explains every flag, with the evidence chain SIU needs.",
+              "Patterns across claimant history, provider activity, loss details, and policy context surface earlier for SIU review.",
           },
           {
             metric: "Zero",
-            label: "Adjuster authority lost",
+            label: "Authority taken from adjusters",
             description:
-              "ArqClaims surfaces context, prioritises queues, supports the call. Your adjusters keep authority on every claim.",
+              "AI supports triage, documentation, and recommendations while human ownership stays clear on every claim decision.",
           },
         ],
-        useCasesHeading: "Where we work in P&C carrier operations.",
+        useCasesHeading: "Where AI can create leverage inside carrier operations.",
         useCases: [
           {
             tag: "Claims triage",
-            title: "ArqClaims, tuned to your routing logic.",
-            body: "Triages incoming claims, prioritises the queue, and recommends reserves and routing using the rules your operation actually runs.",
+            title: "Claims triage tuned to your operating rules.",
+            body: "Classify intake, enrich the file, recommend routing, and surface the coverage and severity signals adjusters need first.",
           },
           {
             tag: "Fraud detection",
-            title: "ArqFWA, calibrated to your lines of business.",
-            body: "Suspicious claim patterns flagged across personal auto, home, commercial, and specialty lines, with explanations that hold up in SIU.",
+            title: "Fraud detection that gives SIU a head start.",
+            body: "Flag suspicious patterns across personal, commercial, and specialty lines with the evidence chain needed for investigation.",
           },
           {
             tag: "Underwriting",
-            title: "Underwriting AI that earns the underwriter's trust.",
-            body: "Surfaces external data, applies your guidelines, and explains its risk scoring. The underwriter still owns the decision.",
+            title: "Underwriting support with a clear rationale.",
+            body: "Surface external data, apply guidelines, highlight exceptions, and explain why a risk deserves attention.",
           },
           {
             tag: "Customer service",
-            title: "First-notice-of-loss that doesn't drop the ball.",
-            body: "Captures the right details on the first call, routes to the right adjuster, and gives policyholders status they can trust.",
+            title: "FNOL that captures the details that matter.",
+            body: "Guide intake, identify missing evidence, route the claim correctly, and keep policyholders informed from the first touch.",
           },
         ],
         midCtaHeadline:
-          "Bring a slice of your loss data. We'll show you what shifts.",
+          "Bring us the claim workflow slowing the operation down.",
         midCtaBody:
-          "30 minutes with a senior on our team. Plain language. No deck. We'll tell you whether ArqFWA, ArqClaims, or a custom build is the right path for your operation.",
-        audienceHeading: "Built for the leaders who own the loss ratio.",
+          "We will map the decision path, the data required, and the human-review points, then show where ArqClaims, ArqFWA, or a custom build fits.",
+        audienceHeading: "Built for leaders accountable for claim quality and loss outcomes.",
         audienceBody:
-          "VPs of Claims, claims operations directors, SIU and special-investigations leaders, plus the technology and AI executives evaluating modernisation across:",
+          "Claims executives, claims operations leaders, SIU teams, underwriting leaders, and the technology executives modernizing carrier operations across:",
         audienceList: [
           "Mid-market personal lines carriers (auto, home)",
           "Commercial and specialty lines carriers",
@@ -72,9 +72,9 @@ export default function InsuranceCarriersPage() {
           "Carriers running aged claims platforms",
           "Carriers expanding into new lines",
         ],
-        productsHeading: "Productised where it earns its place.",
+        productsHeading: "Productized where it earns its place.",
         productsBody:
-          "Live today: ArqFWA. In build with design partners: ArqClaims. Both built on the same architectural foundation.",
+          "ArqFWA is live for suspicious-claim review. ArqClaims, Luma, and Veyra cover adjacent claims, triage, and investigation patterns from the same governed foundation.",
         products: [
           {
             name: "ArqFWA",
@@ -94,10 +94,28 @@ export default function InsuranceCarriersPage() {
             cta: "Get Started",
             href: "/products/arqclaims",
           },
+          {
+            name: "Luma",
+            status: "ACCELERATOR",
+            statusColor: "bg-lime-500",
+            description:
+              "Claims intake, enrichment, routing, and reviewer support for teams moving high-volume claim queues.",
+            cta: "Get Started",
+            href: "/accelerators/luma",
+          },
+          {
+            name: "Veyra",
+            status: "ACCELERATOR",
+            statusColor: "bg-lime-500",
+            description:
+              "Suspicious-claim and leakage intelligence that gives SIU teams a cleaner path to the right cases.",
+            cta: "Get Started",
+            href: "/accelerators/veyra",
+          },
         ],
         closingCta: {
-          headline: "Tell us what your operation needs.",
-          body: "We'll tell you what's honestly possible. In plain language. Without a deck.",
+          headline: "Show us the carrier workflow. We will show you the production path.",
+          body: "We will help you separate high-value AI from tooling that adds one more screen to an already busy claims desk.",
         },
       }}
     />

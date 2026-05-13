@@ -7,9 +7,9 @@ export default function RetailPage() {
     <IndustryPage
       data={{
         eyebrow: "Industries / Retail",
-        heroHeadline: "AI for retail teams that compete on customer relationship.",
+        heroHeadline: "AI for retailers turning customer signals into better decisions.",
         heroSubhead:
-          "Loyalty that learns. Inventory that anticipates. Store associate copilots that actually help. Built for retailers tired of static loyalty programs and inventory that lags the floor.",
+          "Retail teams have signals everywhere: transactions, loyalty, inventory, store activity, pricing, and service conversations. We help turn those signals into actions that protect margin and deepen the customer relationship.",
         heroImage:
           "/img/services/Retail-40-percent-Faster-Pricing-Ops-Without-Manual-Review.jpg",
         heroImageAlt: "Retail operations",
@@ -18,51 +18,51 @@ export default function RetailPage() {
         outcomes: [
           {
             metric: "20%+",
-            label: "Lift in repeat-customer revenue",
+            label: "Repeat-customer revenue lift",
             description:
-              "Loyalty that replaces points-and-badges with offers tuned to actual buying behavior. Retention up. Spend on stale incentives down.",
+              "Personalized offers and retention actions tied to behavior, not broad segments or stale campaign calendars.",
           },
           {
             metric: "30%",
-            label: "Lower stock-out rate",
+            label: "Lower stock-out pressure",
             description:
-              "AI that sees the shelf, the season, and the local trend at once. Fewer stock-outs, fewer markdowns, less working capital tied up.",
+              "Inventory, demand, and local signals come together so teams can act before the shelf or promotion misses the moment.",
           },
           {
             metric: "2x",
-            label: "Faster store-associate answers",
+            label: "Faster associate answers",
             description:
-              "Copilots that give associates the right answer for the customer in front of them, drawn from your catalog, your policies, and your store ops.",
+              "Associates get current product, policy, and inventory context for the customer standing in front of them.",
           },
         ],
-        useCasesHeading: "Where we work in retail operations.",
+        useCasesHeading: "Where AI can create leverage inside retail operations.",
         useCases: [
           {
             tag: "Loyalty",
-            title: "Loyalty that learns what each customer values.",
-            body: "Replaces points-and-badges with offers tuned to actual buying behavior. Retention up. Spend on stale incentives down.",
+            title: "Loyalty that learns what customers actually value.",
+            body: "Recommend offers, replenishment nudges, and retention actions tied to behavior, margin, inventory, and consent.",
           },
           {
             tag: "Inventory",
-            title: "Inventory that anticipates.",
-            body: "AI that sees the shelf, the season, and the local trend at once. Stock-outs down. Markdowns down.",
+            title: "Inventory decisions that see demand earlier.",
+            body: "Connect store, e-commerce, seasonality, and product signals to reduce stock-outs, markdowns, and avoidable working capital.",
           },
           {
             tag: "Store ops",
-            title: "Store associate copilots that actually help.",
-            body: "Right answer for the customer in front of them, drawn from your catalog, your policies, and your store ops.",
+            title: "Store associate copilots grounded in your operation.",
+            body: "Give associates product, policy, inventory, and customer context without forcing them to hunt across systems.",
           },
           {
             tag: "Pricing",
-            title: "Pricing ops without the manual review queue.",
-            body: "Dynamic pricing tuned to demand, competitor signals, and your margin guardrails. Auditable, defensible, fast.",
+            title: "Pricing operations with guardrails.",
+            body: "Use demand, competitor, inventory, and margin signals while keeping approval rules and auditability intact.",
           },
         ],
         midCtaHeadline:
-          "Bring your customer data, your inventory data, your shelf data. We'll show you what shifts.",
+          "Bring us the retail workflow where better timing would change the outcome.",
         midCtaBody:
-          "30 minutes with a senior on our team. Plain language. No deck. We'll tell you whether a custom build is the right path or whether one of our productised agents fits.",
-        audienceHeading: "Built for the operators who own the customer.",
+          "We will map the signals, decisions, and guardrails, then show whether Nuvia, a custom workflow, or a services-led build is the right starting point.",
+        audienceHeading: "Built for operators accountable for margin and loyalty.",
         audienceBody:
           "Heads of CRM and loyalty, VPs of e-commerce, store-operations leadership, supply-chain directors, plus the technology and AI executives backing them at:",
         audienceList: [
@@ -73,13 +73,23 @@ export default function RetailPage() {
           "Health, beauty, and wellness retailers",
           "QSR and food-service operators",
         ],
-        productsHeading: "Custom builds, where productised doesn't fit.",
+        productsHeading: "Custom builds where productized does not fit.",
         productsBody:
-          "We don't have a productised retail agent yet. Most retail engagements are bespoke. When the same workflow shows up across enough customers, that changes.",
-        products: [],
+          "Nuvia accelerates loyalty and personalization patterns. Other retail workflows are built around the systems, stores, and constraints already in place.",
+        products: [
+          {
+            name: "Nuvia",
+            status: "ACCELERATOR",
+            statusColor: "bg-lime-500",
+            description:
+              "Loyalty and personalization automation for next-best offers, retention actions, and customer engagement workflows.",
+            cta: "Get Started",
+            href: "/accelerators/nuvia",
+          },
+        ],
         closingCta: {
-          headline: "Tell us what your operation needs.",
-          body: "We'll tell you what's honestly possible. In plain language. Without a deck.",
+          headline: "Show us the signal you are not using well enough.",
+          body: "We will help turn it into a governed workflow your merchandising, store, loyalty, and technology teams can trust.",
         },
       }}
     />

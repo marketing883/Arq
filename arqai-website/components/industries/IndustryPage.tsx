@@ -96,8 +96,8 @@ export function IndustryPage({ data }: { data: IndustryPageData }) {
               <HeroImagePanel
                 image={data.heroImage}
                 alt={data.heroImageAlt}
-                label="Industry signal"
-                title="Workflow terrain"
+                label="Operating signal"
+                title="Workflow intelligence"
                 variant="network"
                 priority
               />
@@ -115,8 +115,8 @@ export function IndustryPage({ data }: { data: IndustryPageData }) {
                 </h2>
               </div>
               <p className="lede">
-                Each industry page starts with the operating result: better prioritization, faster resolution, cleaner
-                evidence, and workflows people can trust.
+                We anchor every engagement to the metrics operating leaders can defend: faster resolution, sharper
+                prioritization, cleaner evidence, and decisions people can trust.
               </p>
             </div>
             <div className="steps steps-relief" style={{ marginTop: 44 }}>
@@ -135,10 +135,10 @@ export function IndustryPage({ data }: { data: IndustryPageData }) {
           <div className="a-wrap">
             <SignalStrip
               label="Where AI fits"
-              title="The useful surface is the workflow, not the category."
-              body="Each industry has its own data shape, exception model, compliance pressure, and review culture. We design the page around those realities so the use cases feel specific instead of generic."
+              title="The useful surface is the workflow under pressure."
+              body="Industry expertise matters because the same model behaves differently inside claims, compliance, store operations, and plant maintenance. We design around the data, policy, exception paths, and review culture that already shape the work."
               variant="network"
-              points={["Data shape", "Exceptions", "Review", "Controls"]}
+              points={["Data", "Policy", "Exceptions", "Review"]}
             />
           </div>
         </section>
@@ -153,8 +153,8 @@ export function IndustryPage({ data }: { data: IndustryPageData }) {
                 </h2>
               </div>
               <p className="lede">
-                We build around the process, the exception path, the data reality, and the review model that already
-                exists inside the business.
+                Each use case is scoped around the owner of the work, the systems they rely on, the decisions they make,
+                and the audit trail the business needs afterward.
               </p>
             </div>
 

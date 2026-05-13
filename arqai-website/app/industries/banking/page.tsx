@@ -7,9 +7,9 @@ export default function BankingPage() {
     <IndustryPage
       data={{
         eyebrow: "Industries / Banking",
-        heroHeadline: "AI built for the bank you actually are.",
+        heroHeadline: "AI for financial-crime teams that need fewer false positives and cleaner evidence.",
         heroSubhead:
-          "AML, KYC, transaction monitoring, customer onboarding. Built for regional and mid-tier banks running financial-crime programs on lean teams. Production-grade by architecture, not by patch.",
+          "Regional and mid-tier banks need automation that respects examiner scrutiny, analyst judgment, and thin operational capacity. We build around that reality from day one.",
         heroImage:
           "/img/services/Banking-Customer-Service-That-Resolves-50-percent-of-Tickets-Automatically.jpg",
         heroImageAlt: "Banking operations",
@@ -18,53 +18,53 @@ export default function BankingPage() {
         outcomes: [
           {
             metric: "60%",
-            label: "Less alert fatigue",
+            label: "Less alert noise",
             description:
-              "Smarter triage and explainable scoring at scale. Your investigators work the alerts that matter, not the ones the legacy system can't dismiss.",
+              "Prioritize alerts with customer context, typology signals, and explainable rationale so analysts work what actually matters.",
           },
           {
             metric: "3x",
-            label: "Faster KYC onboarding",
+            label: "Faster CDD assembly",
             description:
-              "Customer due diligence that completes itself, with a clean audit trail. Fewer abandoned applications. Faster time to active customer.",
+              "Collect ownership, risk, sanctions, and document context faster while preserving the review trail compliance needs.",
           },
           {
             metric: "100%",
-            label: "Defensible decisions",
+            label: "Examiner-ready decisions",
             description:
-              "Every flag, every clearance, every SAR draft carries decision provenance your BSA officer and examiners can audit on demand.",
+              "Every escalation, clearance, and SAR-support output keeps the supporting evidence close to the decision.",
           },
         ],
-        useCasesHeading: "Where we work in regional and mid-tier bank operations.",
+        useCasesHeading: "Where AI can create leverage inside financial-crime operations.",
         useCases: [
           {
             tag: "AML monitoring",
-            title: "Transaction monitoring that explains every alert.",
-            body: "Suppresses noise, raises the right alerts, and ties each one to the typology, the customer profile, and the data that prompted it.",
+            title: "Transaction monitoring that explains the alert.",
+            body: "Reduce noise, escalate real risk earlier, and connect each alert to the customer profile, typology, and evidence behind it.",
           },
           {
             tag: "KYC / CDD",
-            title: "Customer due diligence that finishes itself.",
-            body: "AI gets KYC and CDD across the line without dropping the application. Fewer abandoned applications. Faster time-to-active customer.",
+            title: "Customer due diligence that moves without losing control.",
+            body: "Assemble CDD context, flag gaps, and route exceptions while analysts retain authority over risk decisions.",
           },
           {
             tag: "Sanctions screening",
-            title: "Sanctions screening calibrated to your risk appetite.",
-            body: "Screens against the lists that matter to your book of business, with explainable matching that holds up in audit.",
+            title: "Sanctions screening with explainable matching.",
+            body: "Surface likely matches, suppress weak noise, and show why a result should be cleared, escalated, or reviewed.",
           },
           {
             tag: "SAR support",
-            title: "SAR drafting that respects the analyst.",
-            body: "Drafts the narrative, surfaces the supporting evidence, and lets the analyst keep authority on every filing.",
+            title: "SAR support that respects the analyst.",
+            body: "Draft narratives, assemble supporting evidence, and keep final filing authority with the people accountable for it.",
           },
         ],
         midCtaHeadline:
-          "Bring a sample of your alert data. We'll show you what changes.",
+          "Bring us the financial-crime workflow creating the most friction.",
         midCtaBody:
-          "30 minutes with a senior on our team. Plain language. No deck. We'll tell you whether ArqBanker, a custom build, or services is the right path for your operation.",
-        audienceHeading: "Built for the people running the financial-crime program.",
+          "We will map the alert sources, evidence needs, review steps, and risk boundaries, then show whether ArqBanker, Sentra, or a custom build is the right path.",
+        audienceHeading: "Built for teams accountable to customers and examiners.",
         audienceBody:
-          "BSA officers, financial crimes directors, AML programme leads, compliance officers, plus the CTOs and Heads of AI evaluating financial-crime modernisation at:",
+          "BSA officers, financial-crimes directors, AML program leads, compliance officers, and technology leaders modernizing financial-crime operations at:",
         audienceList: [
           "Regional banks ($10B-$100B in assets)",
           "Mid-tier community banks ($1B-$10B in assets)",
@@ -73,10 +73,19 @@ export default function BankingPage() {
           "Specialty lenders and digital banks",
           "Cross-border and correspondent operations",
         ],
-        productsHeading: "Productised where it earns its place.",
+        productsHeading: "Productized where it earns its place.",
         productsBody:
-          "Coming: ArqBanker. The earlier you are in the conversation, the more your operation shapes the product.",
+          "ArqBanker is in development for AML, KYC, and financial-crime operations. Sentra accelerates alert triage and customer-risk workflows where the pattern fits.",
         products: [
+          {
+            name: "Sentra",
+            status: "ACCELERATOR",
+            statusColor: "bg-lime-500",
+            description:
+              "Financial-crime and customer-risk acceleration for AML, KYC, sanctions, ownership, and alert-triage workflows.",
+            cta: "Get Started",
+            href: "/accelerators/sentra",
+          },
           {
             name: "ArqBanker",
             status: "COMING",
@@ -88,8 +97,8 @@ export default function BankingPage() {
           },
         ],
         closingCta: {
-          headline: "Tell us what your operation needs.",
-          body: "We'll tell you what's honestly possible. In plain language. Without a deck.",
+          headline: "Show us the control point. We will show you the AI path around it.",
+          body: "The goal is not more automation for its own sake. It is faster work your risk, compliance, and technology leaders can defend.",
         },
       }}
     />

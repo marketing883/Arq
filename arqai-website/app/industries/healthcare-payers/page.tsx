@@ -7,9 +7,9 @@ export default function HealthcarePayersPage() {
     <IndustryPage
       data={{
         eyebrow: "Industries / Healthcare payers",
-        heroHeadline: "AI for the way payers actually operate.",
+        heroHeadline: "AI for payer workflows where every decision needs evidence.",
         heroSubhead:
-          "Catch more fraud and waste. Resolve claims faster. Close the gap between visits. Every model engineered for production from day one and tuned to your data.",
+          "Payment integrity, prior authorization, utilization management, and care operations all depend on the same thing: the right context, in the right workflow, before the decision is made.",
         heroImage:
           "/img/services/Healthcare-Real-Time-Risk-Stratification-With-Built-In-Compliance.jpg",
         heroImageAlt: "Healthcare payer operations",
@@ -18,53 +18,53 @@ export default function HealthcarePayersPage() {
         outcomes: [
           {
             metric: "30%+",
-            label: "More fraud, waste, and abuse caught",
+            label: "More high-value risk surfaced",
             description:
-              "ArqFWA reviews high volumes of claims and surfaces patterns manual review misses, with the explanation needed for downstream action.",
+              "Claims, provider history, policy rules, and member context come together so review teams can focus on cases worth action.",
           },
           {
             metric: "2x",
-            label: "Faster claim cycle times",
+            label: "Faster clinical and claims review",
             description:
-              "Triage, routing, and reserve recommendations tuned to your operation, not a generic claim flow.",
+              "Routine reviews move faster while edge cases route to the people who need to make the call.",
           },
           {
             metric: "100%",
-            label: "Auditable decisions",
+            label: "Evidence-ready decisions",
             description:
-              "Every output carries decision provenance. Your compliance, SIU, and audit teams get evidence on demand.",
+              "Recommendations carry the rationale, source context, and policy trail your compliance and program-integrity teams need.",
           },
         ],
-        useCasesHeading: "Where we work in healthcare payer operations.",
+        useCasesHeading: "Where AI can create leverage inside payer operations.",
         useCases: [
           {
             tag: "Fraud, waste, abuse",
-            title: "ArqFWA, calibrated to your claims data.",
-            body: "Reviews high volumes of claims and transactions, prioritises the cases your team should focus on, and explains its reasoning so a human can act on it.",
+            title: "Payment integrity that sees across the claim.",
+            body: "Spot billing anomalies, provider risk, claims leakage, and policy conflicts with explanations a reviewer can defend.",
           },
           {
             tag: "Patient management",
-            title: "Patient management that doesn't drop people in the gap.",
-            body: "AI that follows up, schedules, and surfaces the patients your care team needs to call today. Less leakage between visits.",
+            title: "Member outreach that does not lose the thread.",
+            body: "Prioritize the members who need follow-up, surface the right next action, and keep care teams working from current context.",
           },
           {
             tag: "Prior auth",
-            title: "Prior authorization that doesn't stall.",
-            body: "Auto-routes routine prior auths and surfaces the ones that need a human, with reasoning the medical director can defend.",
+            title: "Prior authorization that moves with policy.",
+            body: "Route routine requests, flag incomplete evidence, and escalate the decisions that need clinical review.",
           },
           {
             tag: "Utilization management",
-            title: "Utilization management with the data your team relies on.",
-            body: "Surfaces high-cost, high-risk patterns earlier, ties recommendations to plan-specific guidelines, and keeps a clean audit trail.",
+            title: "Utilization management with defensible context.",
+            body: "Tie recommendations to plan-specific guidelines, utilization history, and the evidence reviewers need at decision time.",
           },
         ],
         midCtaHeadline:
-          "Bring a sample of your claims data. We'll show you what changes.",
+          "Bring us the payer workflow creating the most drag.",
         midCtaBody:
-          "30 minutes with a senior on our team. Plain language. No deck. We'll tell you whether one of our products fits, whether a custom build is the right path, and what realistic looks like.",
-        audienceHeading: "Built for the people who own the workflow.",
+          "We will review the process, the data sources, and the decision points, then show whether a productized agent, accelerator, or custom build is the right path.",
+        audienceHeading: "Built for leaders accountable for payer performance.",
         audienceBody:
-          "Operations leaders, program-integrity directors, claims and SIU teams, and the technology and AI executives backing them at:",
+          "Operations leaders, program-integrity directors, claims teams, medical-management leaders, and the technology executives backing them at:",
         audienceList: [
           "BCBS regional plans",
           "Medicaid managed care organisations",
@@ -73,9 +73,9 @@ export default function HealthcarePayersPage() {
           "Mid-market commercial health plans",
           "Specialty and ancillary plans",
         ],
-        productsHeading: "Productised where it earns its place.",
+        productsHeading: "Productized where it earns its place.",
         productsBody:
-          "Live today: ArqFWA. More on the roadmap, each engineered for production and delivered end-to-end.",
+          "ArqFWA is live for payment integrity and claims review. Veyra and Luma accelerate adjacent payer workflows from the same governed foundation.",
         products: [
           {
             name: "ArqFWA",
@@ -86,10 +86,28 @@ export default function HealthcarePayersPage() {
             cta: "Get Started",
             href: "/products/arqfwa",
           },
+          {
+            name: "Veyra",
+            status: "ACCELERATOR",
+            statusColor: "bg-lime-500",
+            description:
+              "Payment-integrity and fraud intelligence for payer teams that need better prioritization and cleaner evidence.",
+            cta: "Get Started",
+            href: "/accelerators/veyra",
+          },
+          {
+            name: "Luma",
+            status: "ACCELERATOR",
+            statusColor: "bg-lime-500",
+            description:
+              "Claims triage and decision support for intake, routing, evidence review, and reviewer handoff.",
+            cta: "Get Started",
+            href: "/accelerators/luma",
+          },
         ],
         closingCta: {
-          headline: "Tell us what your operation needs.",
-          body: "We'll tell you what's honestly possible. In plain language. Without a deck.",
+          headline: "Show us the workflow. We will show you the production path.",
+          body: "We will help you separate useful AI leverage from another pilot that never reaches the operating team.",
         },
       }}
     />

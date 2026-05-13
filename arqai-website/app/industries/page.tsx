@@ -7,14 +7,14 @@ import { SignalStrip } from "@/components/site-dark/InternalVisuals";
 export const metadata: Metadata = {
   title: "Industries | ArqAI Labs",
   description:
-    "AI operating systems and agentic workflows for healthcare payers, insurance carriers, banking, retail, and manufacturing teams.",
+    "AI workflow systems for healthcare payers, insurance carriers, banking, retail, and manufacturing teams operating in high-stakes, data-rich environments.",
 };
 
 const industries = [
   {
     title: "Healthcare payers",
     description:
-      "Fraud, waste, abuse, utilization management, prior authorization, and patient-management workflows built for payer operating reality.",
+      "Payment integrity, prior authorization, utilization management, and member operations where claims, policy, and clinical context have to line up.",
     href: "/industries/healthcare-payers",
     image: "/img/services/Healthcare-Real-Time-Risk-Stratification-With-Built-In-Compliance.jpg",
     products: ["Veyra", "Luma", "ArqFWA"],
@@ -22,15 +22,15 @@ const industries = [
   {
     title: "P&C insurance carriers",
     description:
-      "Claims triage, investigation support, reserve recommendations, documentation review, and auditable decision support for carrier teams.",
+      "Claims intake, coverage review, SIU routing, reserve analysis, and adjuster support for carriers that need speed without losing judgment.",
     href: "/industries/insurance-carriers",
-    image: "/img/services/Retail-40-percent-Faster-Pricing-Ops-Without-Manual-Review.jpg",
+    image: "/img/industries/insurance-claims-vehicle.jpg",
     products: ["Luma", "ArqClaims", "Veyra"],
   },
   {
     title: "Banks and financial institutions",
     description:
-      "AML, KYC, sanctions, customer due diligence, alert triage, and SAR support for regional and mid-tier financial institutions.",
+      "AML, KYC, sanctions, alert triage, customer due diligence, and SAR support for teams that need cleaner evidence and fewer false positives.",
     href: "/industries/banking",
     image: "/img/services/Banking-Customer-Service-That-Resolves-50-percent-of-Tickets-Automatically.jpg",
     products: ["Sentra", "ArqBanker"],
@@ -38,7 +38,7 @@ const industries = [
   {
     title: "Retail and QSR",
     description:
-      "Loyalty, personalization, inventory, pricing, store operations, and customer-service workflows built around margin and repeat behavior.",
+      "Loyalty, pricing, inventory, store operations, and customer-service workflows where every signal should improve margin or repeat behavior.",
     href: "/industries/retail",
     image: "/img/services/Retail-40-percent-Faster-Pricing-Ops-Without-Manual-Review.jpg",
     products: ["Nuvia"],
@@ -46,7 +46,7 @@ const industries = [
   {
     title: "Manufacturing and supply chain",
     description:
-      "Vendor risk, procurement exposure, production exceptions, quality signals, and operational dependency workflows for industrial teams.",
+      "Quality, maintenance, supplier risk, procurement exposure, and production exceptions across plants, ERP, MES, and supply-chain systems.",
     href: "/industries/manufacturing",
     image: "/img/services/Manufacturing-Autonomous-Maintenance-With-Scoped-Agent-Control.jpg",
     products: ["Orbis", "Kyra"],
@@ -65,13 +65,13 @@ export default function IndustriesPage() {
           <div className="a-section-head" style={{ marginTop: 28, alignItems: "start" }}>
             <div>
               <h1 className="h-display" style={{ maxWidth: "13ch" }}>
-                AI for the industries where we go deep.
+                AI for industries where the work is complex and the stakes are real.
               </h1>
             </div>
             <div>
               <p className="lede">
-                ArqAI Labs builds agentic workflows for high-stakes operational environments where data, policy,
-                exceptions, and human review all matter.
+                ArqAI Labs builds governed AI workflows for sectors where decisions depend on messy data, changing
+                policy, exception handling, and human accountability.
               </p>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginTop: 28 }}>
                 <Link href="/engage-us" className="a-btn a-btn-primary">
@@ -89,11 +89,11 @@ export default function IndustriesPage() {
       <section className="a-section">
         <div className="a-wrap">
           <SignalStrip
-            label="Industry depth"
-            title="Visualize the operating terrain before we build."
-            body="Every industry page now creates room for the things that make the work specific: systems, exceptions, reviewers, risk boundaries, and measurable outcomes."
+            label="Industry focus"
+            title="Built around the workflows where generic AI falls short."
+            body="Every industry we enter has fragmented systems, high exception volume, and teams that are accountable for the final call. We turn that complexity into AI workflows that can be governed, measured, and expanded."
             variant="network"
-            points={["Systems", "Exceptions", "Risk", "Outcomes"]}
+            points={["Policy", "Evidence", "Exceptions", "Human judgment"]}
           />
         </div>
       </section>
@@ -111,7 +111,7 @@ export default function IndustriesPage() {
                 <div style={{ position: "relative", minHeight: 260 }}>
                   <Image
                     src={industry.image}
-                    alt=""
+                    alt={`${industry.title} operations`}
                     fill
                     sizes="(min-width: 1000px) 38vw, 100vw"
                     style={{ objectFit: "cover" }}
