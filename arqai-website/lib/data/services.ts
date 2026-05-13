@@ -23,6 +23,9 @@ export type Service = {
   };
 };
 
+const unsplashServiceImage = (photoId: string) =>
+  `https://images.unsplash.com/${photoId}?auto=format&fit=crop&w=1400&q=80`;
+
 export const services: Service[] = [
   {
     slug: "workflow-strategy",
@@ -31,7 +34,7 @@ export const services: Service[] = [
     eyebrow: "Services / Workflow strategy",
     summary:
       "Find the workflow where AI should create measurable operating leverage, then define the users, data, risks, controls, integrations, and success metrics before anything is built.",
-    image: "/img/hero/workflow.png",
+    image: unsplashServiceImage("photo-1747409020046-c7137dc46ef6"),
     problem:
       "Most AI programs begin with a model choice instead of an operating problem. Teams spend months on demos that never meet the workflow owner, the compliance owner, or the production metric.",
     promise:
@@ -85,7 +88,7 @@ export const services: Service[] = [
     eyebrow: "Services / Agentic AI buildout",
     summary:
       "Design and deploy agents, copilots, automations, decision systems, retrieval flows, and human review loops around the way your operation actually runs.",
-    image: "/img/demo/arqai-foundry-v2-poster.webp",
+    image: unsplashServiceImage("photo-1776053517196-19a14579d82b"),
     problem:
       "Enterprise teams can prompt a model, but they struggle to make it do useful work across approvals, exceptions, handoffs, and production data without creating new operational risk.",
     promise:
@@ -139,7 +142,7 @@ export const services: Service[] = [
     eyebrow: "Services / Enterprise integration",
     summary:
       "Connect AI into CRM, ERP, ITSM, data platforms, cloud stacks, knowledge bases, and operating tools without forcing rip-and-replace.",
-    image: "/img/hero/arq-layer.png",
+    image: unsplashServiceImage("photo-1644088379091-d574269d422f"),
     problem:
       "AI stalls when it cannot reach the systems where work happens. Teams end up with a smart interface on top of disconnected data, stale context, and manual handoffs.",
     promise:
@@ -193,7 +196,7 @@ export const services: Service[] = [
     eyebrow: "Services / Governance by design",
     summary:
       "Build permissions, approvals, policy checks, human review, audit trails, and exception handling into the workflow before AI takes action.",
-    image: "/img/Policy-Hub-Interface.png",
+    image: unsplashServiceImage("photo-1739054730073-f62ecb33ff18"),
     problem:
       "AI initiatives often add governance after the prototype works. By then, risk teams see an uncontrolled system, users lose confidence, and production approval slows down.",
     promise:
@@ -247,7 +250,7 @@ export const services: Service[] = [
     eyebrow: "Services / Vertical acceleration",
     summary:
       "Use proven accelerator patterns for repeatable workflows like claims, fraud, AML, loyalty, network operations, service workflow, and supply chain risk.",
-    image: "/img/hero/arq-accelerators.png",
+    image: unsplashServiceImage("photo-1747409020043-41d140928662"),
     problem:
       "Some enterprise AI workflows repeat across companies, but off-the-shelf products rarely match the data, policy, and operating reality of the work.",
     promise:
@@ -301,7 +304,7 @@ export const services: Service[] = [
     eyebrow: "Services / Managed AI operations",
     summary:
       "Monitor, improve, and expand AI workflows after launch so they keep performing in real business conditions.",
-    image: "/img/Operations-center.png",
+    image: unsplashServiceImage("photo-1768224656445-33d078c250b7"),
     problem:
       "AI workflows drift after launch. Data changes, policies shift, users discover edge cases, and the original pilot team moves on before the system becomes operational muscle.",
     promise:
