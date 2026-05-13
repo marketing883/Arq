@@ -34,6 +34,9 @@ const team = [
   { name: "Naresh Naidu", role: "Head of Delivery" },
 ];
 
+// Kept dormant while the public team section is redesigned.
+const showLeadershipSection = false;
+
 export default function AboutPage() {
   return (
     <div className="arq-dark min-h-screen">
@@ -115,58 +118,59 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Leadership */}
-        <section className="a-section" id="leadership">
-          <div className="a-wrap">
-            <div className="a-section-head">
-              <div>
-                <span className="a-eyebrow">Leadership</span>
-                <h2 className="h-section" style={{ marginTop: 18 }}>
-                  The team building it.
-                </h2>
-              </div>
-              <p className="lede" style={{ justifySelf: "end" }}>
-                ACI Infotech, our parent, has spent over a decade delivering Fortune 500 technology programmes in
-                regulated industries. The team that builds and deploys ArqAI Labs work is that same team.
-              </p>
-            </div>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-                gap: 16,
-              }}
-            >
-              {team.map((m) => (
-                <div className="a-card" key={m.name} style={{ minHeight: 160 }}>
-                  <div
-                    style={{
-                      width: 56,
-                      height: 56,
-                      borderRadius: "50%",
-                      background: "rgba(208,244,56,0.10)",
-                      border: "1px solid rgba(208,244,56,0.25)",
-                      display: "grid",
-                      placeItems: "center",
-                      color: "var(--ember)",
-                      fontFamily: "var(--display)",
-                      fontSize: 22,
-                      fontWeight: 500,
-                      letterSpacing: "-0.02em",
-                      marginBottom: 16,
-                    }}
-                  >
-                    {m.name.charAt(0)}
-                  </div>
-                  <h4 style={{ color: "var(--ink-cream)", fontSize: 16, fontWeight: 500, margin: "0 0 4px" }}>
-                    {m.name}
-                  </h4>
-                  <p style={{ color: "var(--ink-cream-d)", fontSize: 13, margin: 0 }}>{m.role}</p>
+        {showLeadershipSection ? (
+          <section className="a-section" id="leadership">
+            <div className="a-wrap">
+              <div className="a-section-head">
+                <div>
+                  <span className="a-eyebrow">Leadership</span>
+                  <h2 className="h-section" style={{ marginTop: 18 }}>
+                    The team building it.
+                  </h2>
                 </div>
-              ))}
+                <p className="lede" style={{ justifySelf: "end" }}>
+                  ACI Infotech, our parent, has spent over a decade delivering Fortune 500 technology programmes in
+                  regulated industries. The team that builds and deploys ArqAI Labs work is that same team.
+                </p>
+              </div>
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+                  gap: 16,
+                }}
+              >
+                {team.map((m) => (
+                  <div className="a-card" key={m.name} style={{ minHeight: 160 }}>
+                    <div
+                      style={{
+                        width: 56,
+                        height: 56,
+                        borderRadius: "50%",
+                        background: "rgba(208,244,56,0.10)",
+                        border: "1px solid rgba(208,244,56,0.25)",
+                        display: "grid",
+                        placeItems: "center",
+                        color: "var(--ember)",
+                        fontFamily: "var(--display)",
+                        fontSize: 22,
+                        fontWeight: 500,
+                        letterSpacing: "-0.02em",
+                        marginBottom: 16,
+                      }}
+                    >
+                      {m.name.charAt(0)}
+                    </div>
+                    <h4 style={{ color: "var(--ink-cream)", fontSize: 16, fontWeight: 500, margin: "0 0 4px" }}>
+                      {m.name}
+                    </h4>
+                    <p style={{ color: "var(--ink-cream-d)", fontSize: 13, margin: 0 }}>{m.role}</p>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        ) : null}
 
         {/* ACI parent */}
         <section className="a-section" id="parent">
