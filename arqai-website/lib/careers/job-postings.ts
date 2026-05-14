@@ -37,6 +37,15 @@ export function getMissingSchemaColumn(error: SupabaseErrorLike | null | undefin
   return match?.[1] ?? null;
 }
 
+export function getCheckConstraint(error: SupabaseErrorLike | null | undefined) {
+  if (!error || error.code !== "23514") return null;
+
+  const text = [error.message, error.details, error.hint].filter(Boolean).join(" ");
+  const match = text.match(/violates check constraint "([^"]+)"/i);
+
+  return match?.[1] ?? null;
+}
+
 export function isOptionalJobPostingColumn(column: string | null) {
   return !!column && OPTIONAL_JOB_POSTING_COLUMN_SET.has(column);
 }
@@ -47,6 +56,14 @@ export function jobPostingSchemaDriftMessage(column: string | null) {
   }
 
   return `Careers database is missing the '${column}' column. Run supabase-careers-existing-table-migration.sql in Supabase, then retry.`;
+}
+
+export function jobPostingConstraintMessage(constraint: string | null) {
+  if (constraint === "job_postings_status_check") {
+    return "Careers database still has a legacy job status constraint. Run the latest supabase-careers-existing-table-migration.sql in Supabase, then retry.";
+  }
+
+  return null;
 }
 
 export async function executeJobPostingMutationWithSchemaFallback<T>(

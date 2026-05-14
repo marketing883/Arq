@@ -23,6 +23,31 @@ alter table public.job_postings
   add column if not exists created_at timestamptz not null default now(),
   add column if not exists updated_at timestamptz not null default now();
 
+-- Older installs may already have a check constraint named
+-- job_postings_status_check with a different vocabulary, such as
+-- published/unpublished. Replace it with the status values used by the admin UI.
+alter table public.job_postings
+  drop constraint if exists job_postings_status_check;
+
+update public.job_postings
+set status = case
+  when status is null then 'draft'
+  when lower(status) in ('active', 'published', 'open', 'live') then 'active'
+  when lower(status) in ('closed', 'archived', 'filled') then 'closed'
+  else 'draft'
+end;
+
+alter table public.job_postings
+  alter column status set default 'draft',
+  alter column status set not null,
+  add constraint job_postings_status_check
+  check (status in ('draft', 'active', 'closed'));
+
+update public.job_postings
+set published_at = coalesce(published_at, created_at, now())
+where status = 'active'
+  and published_at is null;
+
 do $$
 begin
   if not exists (
@@ -60,17 +85,6 @@ begin
       not valid;
   end if;
 
-  if not exists (
-    select 1
-    from pg_constraint
-    where conrelid = 'public.job_postings'::regclass
-      and conname = 'job_postings_status_check'
-  ) then
-    alter table public.job_postings
-      add constraint job_postings_status_check
-      check (status in ('draft', 'active', 'closed'))
-      not valid;
-  end if;
 end $$;
 
 create index if not exists job_postings_status_idx on public.job_postings(status);

@@ -4,7 +4,9 @@ import { z } from "zod";
 import { getAdminSession } from "@/lib/auth/admin-auth";
 import {
   executeJobPostingMutationWithSchemaFallback,
+  getCheckConstraint,
   getMissingSchemaColumn,
+  jobPostingConstraintMessage,
   jobPostingSchemaDriftMessage,
   pruneEmptyOptionalJobPostingFields,
 } from "@/lib/careers/job-postings";
@@ -94,10 +96,14 @@ export async function POST(request: NextRequest) {
   if (error) {
     console.error("[admin/jobs] insert error", error);
     const missingColumn = getMissingSchemaColumn(error);
+    const constraint = getCheckConstraint(error);
+    const constraintMessage = jobPostingConstraintMessage(constraint);
     return NextResponse.json(
       {
         error: missingColumn
           ? jobPostingSchemaDriftMessage(missingColumn)
+          : constraintMessage
+            ? constraintMessage
           : error.message || "Could not create job posting",
       },
       { status: 500 }

@@ -43,9 +43,9 @@ create index if not exists job_postings_location_idx on public.job_postings(loca
 create index if not exists job_postings_published_at_idx on public.job_postings(published_at desc);
 
 -- If this table was created by an older schema, `create table if not exists`
--- will not add newer columns such as `experience_level`. Run
--- supabase-careers-existing-table-migration.sql to upgrade an existing table
--- and reload Supabase/PostgREST's schema cache.
+-- will not add newer columns or replace legacy check constraints. Run
+-- supabase-careers-existing-table-migration.sql to upgrade an existing table,
+-- normalize job status values, and reload Supabase/PostgREST's schema cache.
 
 -- updated_at trigger
 create or replace function public.set_updated_at()

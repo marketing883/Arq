@@ -4,7 +4,9 @@ import { z } from "zod";
 import { getAdminSession } from "@/lib/auth/admin-auth";
 import {
   executeJobPostingMutationWithSchemaFallback,
+  getCheckConstraint,
   getMissingSchemaColumn,
+  jobPostingConstraintMessage,
   jobPostingSchemaDriftMessage,
 } from "@/lib/careers/job-postings";
 
@@ -107,10 +109,14 @@ export async function PATCH(
   if (error) {
     console.error("[admin/jobs/:id] update error", error);
     const missingColumn = getMissingSchemaColumn(error);
+    const constraint = getCheckConstraint(error);
+    const constraintMessage = jobPostingConstraintMessage(constraint);
     return NextResponse.json(
       {
         error: missingColumn
           ? jobPostingSchemaDriftMessage(missingColumn)
+          : constraintMessage
+            ? constraintMessage
           : error.message || "Could not update job posting",
       },
       { status: 500 }
