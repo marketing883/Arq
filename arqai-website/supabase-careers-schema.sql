@@ -69,8 +69,14 @@ create table if not exists public.job_applications (
   job_id uuid not null references public.job_postings(id) on delete cascade,
   full_name text not null,
   email text not null,
-  phone text,
+  phone text,                          -- required by the application API
   linkedin_url text,
+  total_experience text,
+  skills text,
+  achievements text,
+  current_ctc text,                    -- optional; salary-history rules vary by jurisdiction
+  expected_ctc text,
+  notice_period text,
   cover_letter text,
   resume_path text not null,           -- storage path within `resumes` bucket
   resume_filename text not null,

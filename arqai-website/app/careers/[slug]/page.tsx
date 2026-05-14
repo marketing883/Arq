@@ -51,14 +51,14 @@ function renderBlock(text: string) {
     .split(/\r?\n/)
     .map((l) => l.trim())
     .filter((l) => l.length > 0);
-  const isList = lines.every((l) => /^[-*•]/.test(l));
+  const isList = lines.every((l) => /^[-*]/.test(l));
   if (isList) {
     return (
       <ul className="space-y-3">
         {lines.map((line, i) => (
           <li key={i} className="flex items-start gap-3 text-body-md text-text-muted leading-relaxed">
             <span className="mt-2 w-1.5 h-1.5 rounded-full bg-accent shrink-0" />
-            <span>{line.replace(/^[-*•]\s*/, "")}</span>
+            <span>{line.replace(/^[-*]\s*/, "")}</span>
           </li>
         ))}
       </ul>
@@ -87,6 +87,12 @@ export default function JobDetailPage({ params }: { params: { slug: string } }) 
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [linkedin, setLinkedin] = useState("");
+  const [totalExperience, setTotalExperience] = useState("");
+  const [skills, setSkills] = useState("");
+  const [achievements, setAchievements] = useState("");
+  const [currentCtc, setCurrentCtc] = useState("");
+  const [expectedCtc, setExpectedCtc] = useState("");
+  const [noticePeriod, setNoticePeriod] = useState("");
   const [coverLetter, setCoverLetter] = useState("");
   const [resume, setResume] = useState<File | null>(null);
   const [resumeError, setResumeError] = useState<string | null>(null);
@@ -94,6 +100,7 @@ export default function JobDetailPage({ params }: { params: { slug: string } }) 
   const [submitting, setSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
   const [serverError, setServerError] = useState<string | null>(null);
+  const [formError, setFormError] = useState<string | null>(null);
 
   useEffect(() => {
     let active = true;
@@ -137,6 +144,20 @@ export default function JobDetailPage({ params }: { params: { slug: string } }) 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!job) return;
+    const requiredFields = [
+      fullName,
+      email,
+      phone,
+      totalExperience,
+      skills,
+      achievements,
+      expectedCtc,
+      noticePeriod,
+    ];
+    if (requiredFields.some((value) => value.trim().length === 0)) {
+      setFormError("Please complete all required fields.");
+      return;
+    }
     const err = validateResume(resume);
     if (err) {
       setResumeError(err);
@@ -145,13 +166,20 @@ export default function JobDetailPage({ params }: { params: { slug: string } }) 
 
     setSubmitting(true);
     setServerError(null);
+    setFormError(null);
 
     const fd = new FormData();
     fd.append("jobId", job.id);
     fd.append("fullName", fullName);
     fd.append("email", email);
-    if (phone) fd.append("phone", phone);
+    fd.append("phone", phone);
     if (linkedin) fd.append("linkedin", linkedin);
+    fd.append("totalExperience", totalExperience);
+    fd.append("skills", skills);
+    fd.append("achievements", achievements);
+    if (currentCtc) fd.append("currentCtc", currentCtc);
+    fd.append("expectedCtc", expectedCtc);
+    fd.append("noticePeriod", noticePeriod);
     if (coverLetter) fd.append("coverLetter", coverLetter);
     if (resume) fd.append("resume", resume);
     fd.append("website_url", website);
@@ -164,9 +192,16 @@ export default function JobDetailPage({ params }: { params: { slug: string } }) 
         setEmail("");
         setPhone("");
         setLinkedin("");
+        setTotalExperience("");
+        setSkills("");
+        setAchievements("");
+        setCurrentCtc("");
+        setExpectedCtc("");
+        setNoticePeriod("");
         setCoverLetter("");
         setResume(null);
         setResumeError(null);
+        setFormError(null);
       } else {
         const body = await res.json().catch(() => null);
         setSubmitStatus("error");
@@ -354,7 +389,7 @@ export default function JobDetailPage({ params }: { params: { slug: string } }) 
         {/* Application form */}
         <section className="py-section bg-base" ref={formRef}>
           <div className="container mx-auto px-4 md:px-6 lg:px-8">
-            <div className="max-w-2xl mx-auto">
+            <div className="max-w-3xl mx-auto">
               <p className="flex items-center gap-2 text-body-sm text-accent mb-3 uppercase tracking-wider font-medium">
                 <StarIcon className="w-4 h-4" />
                 Apply
@@ -419,9 +454,10 @@ export default function JobDetailPage({ params }: { params: { slug: string } }) 
                     </Field>
                   </div>
                   <div className="grid sm:grid-cols-2 gap-5 mb-5">
-                    <Field label="Phone">
+                    <Field label="Phone" required>
                       <input
                         type="tel"
+                        required
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
                         className="form-input"
@@ -437,6 +473,73 @@ export default function JobDetailPage({ params }: { params: { slug: string } }) 
                       />
                     </Field>
                   </div>
+
+                  <div className="grid sm:grid-cols-2 gap-5 mb-5">
+                    <Field label="Total experience" required>
+                      <input
+                        type="text"
+                        required
+                        placeholder="e.g. 6 years, 3 years in AI systems"
+                        value={totalExperience}
+                        onChange={(e) => setTotalExperience(e.target.value)}
+                        className="form-input"
+                      />
+                    </Field>
+                    <Field label="Notice period" required>
+                      <input
+                        type="text"
+                        required
+                        placeholder="e.g. Immediate, 30 days, 60 days"
+                        value={noticePeriod}
+                        onChange={(e) => setNoticePeriod(e.target.value)}
+                        className="form-input"
+                      />
+                    </Field>
+                  </div>
+
+                  <div className="grid sm:grid-cols-2 gap-5 mb-5">
+                    <Field label="Current CTC" hint="Optional. Include currency if applicable.">
+                      <input
+                        type="text"
+                        value={currentCtc}
+                        onChange={(e) => setCurrentCtc(e.target.value)}
+                        placeholder="e.g. INR 24 LPA"
+                        className="form-input"
+                      />
+                    </Field>
+                    <Field label="Expected CTC" required hint="Include currency and annual amount.">
+                      <input
+                        type="text"
+                        required
+                        value={expectedCtc}
+                        onChange={(e) => setExpectedCtc(e.target.value)}
+                        placeholder="e.g. INR 32 LPA"
+                        className="form-input"
+                      />
+                    </Field>
+                  </div>
+
+                  <Field label="Primary skills" required>
+                    <textarea
+                      rows={4}
+                      required
+                      value={skills}
+                      onChange={(e) => setSkills(e.target.value)}
+                      placeholder="List the tools, frameworks, domains, and workflows you are strongest in."
+                      className="form-input resize-y"
+                    />
+                  </Field>
+
+                  <Field label="Relevant achievements" required>
+                    <textarea
+                      rows={5}
+                      required
+                      value={achievements}
+                      onChange={(e) => setAchievements(e.target.value)}
+                      placeholder="Share 2-3 shipped projects, measurable outcomes, or production systems you have owned."
+                      className="form-input resize-y"
+                    />
+                  </Field>
 
                   <Field label="Resume" required>
                     <input
@@ -464,6 +567,12 @@ export default function JobDetailPage({ params }: { params: { slug: string } }) 
                       className="form-input resize-none"
                     />
                   </Field>
+
+                  {formError && (
+                    <div className="mb-5 p-4 bg-amber-100 dark:bg-amber-900/20 rounded-lg">
+                      <p className="text-sm text-amber-700 dark:text-amber-300">{formError}</p>
+                    </div>
+                  )}
 
                   {submitStatus === "error" && (
                     <div className="mb-5 p-4 bg-red-100 dark:bg-red-900/20 rounded-lg">
@@ -502,10 +611,12 @@ export default function JobDetailPage({ params }: { params: { slug: string } }) 
 
 function Field({
   label,
+  hint,
   required,
   children,
 }: {
   label: string;
+  hint?: string;
   required?: boolean;
   children: React.ReactNode;
 }) {
@@ -515,6 +626,7 @@ function Field({
         {label} {required && <span className="text-accent">*</span>}
       </span>
       {children}
+      {hint && <span className="block mt-1 text-body-xs text-text-muted">{hint}</span>}
     </label>
   );
 }

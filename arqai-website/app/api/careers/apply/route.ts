@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
 import { Resend } from "resend";
 import { z } from "zod";
-import { isPublicJobStatus } from "@/lib/careers/job-postings";
+import { getMissingSchemaColumn, isPublicJobStatus } from "@/lib/careers/job-postings";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -18,6 +18,14 @@ const ALLOWED_EXT = /\.(pdf|doc|docx)$/i;
 
 const NOTIFY_TO = process.env.CAREERS_NOTIFY_TO || "rmg.india@aciinfotech.com";
 const NOTIFY_FROM = process.env.CAREERS_NOTIFY_FROM || "ArqAI Careers <no-reply@thearq.ai>";
+const SCREENING_COLUMNS = new Set([
+  "total_experience",
+  "skills",
+  "achievements",
+  "current_ctc",
+  "expected_ctc",
+  "notice_period",
+]);
 
 let supabase: SupabaseClient | null = null;
 function getClient() {
@@ -33,8 +41,14 @@ const applicationSchema = z.object({
   jobId: z.string().uuid(),
   fullName: z.string().min(2).max(120),
   email: z.string().email().max(200),
-  phone: z.string().max(40).optional().nullable(),
+  phone: z.string().min(5).max(40),
   linkedin: z.string().max(300).optional().nullable(),
+  totalExperience: z.string().min(1).max(120),
+  skills: z.string().min(10).max(5000),
+  achievements: z.string().min(10).max(5000),
+  currentCtc: z.string().max(200).optional().nullable(),
+  expectedCtc: z.string().min(1).max(200),
+  noticePeriod: z.string().min(1).max(120),
   coverLetter: z.string().max(5000).optional().nullable(),
 });
 
@@ -74,8 +88,14 @@ export async function POST(request: NextRequest) {
     jobId: formData.get("jobId"),
     fullName: formData.get("fullName"),
     email: formData.get("email"),
-    phone: formData.get("phone") || null,
+    phone: formData.get("phone"),
     linkedin: formData.get("linkedin") || null,
+    totalExperience: formData.get("totalExperience"),
+    skills: formData.get("skills"),
+    achievements: formData.get("achievements"),
+    currentCtc: formData.get("currentCtc") || null,
+    expectedCtc: formData.get("expectedCtc"),
+    noticePeriod: formData.get("noticePeriod"),
     coverLetter: formData.get("coverLetter") || null,
   });
   if (!parsed.success) {
@@ -147,8 +167,14 @@ export async function POST(request: NextRequest) {
       job_id: job.id,
       full_name: data.fullName,
       email: data.email,
-      phone: data.phone || null,
+      phone: data.phone,
       linkedin_url: data.linkedin || null,
+      total_experience: data.totalExperience,
+      skills: data.skills,
+      achievements: data.achievements,
+      current_ctc: data.currentCtc || null,
+      expected_ctc: data.expectedCtc,
+      notice_period: data.noticePeriod,
       cover_letter: data.coverLetter || null,
       resume_path: path,
       resume_filename: filename,
@@ -163,8 +189,14 @@ export async function POST(request: NextRequest) {
     console.error("[careers/apply] insert failed", insertErr);
     // Best-effort cleanup of the uploaded file
     await client.storage.from(RESUME_BUCKET).remove([path]).catch(() => undefined);
+    const missingColumn = getMissingSchemaColumn(insertErr);
     return NextResponse.json(
-      { error: "Could not save application. Please try again." },
+      {
+        error:
+          missingColumn && SCREENING_COLUMNS.has(missingColumn)
+            ? `Careers applications database is missing the '${missingColumn}' column. Run supabase-careers-existing-table-migration.sql in Supabase, then retry.`
+            : "Could not save application. Please try again.",
+      },
       { status: 500 }
     );
   }
@@ -174,7 +206,7 @@ export async function POST(request: NextRequest) {
     const apiKey = process.env.RESEND_API_KEY;
     if (apiKey) {
       const resend = new Resend(apiKey);
-      const subject = `New application: ${job.title} · ${data.fullName}`;
+      const subject = `New application: ${job.title} - ${data.fullName}`;
       const html = `
         <div style="font-family:Arial,Helvetica,sans-serif;color:#222;max-width:640px">
           <h2 style="margin:0 0 12px 0">New application</h2>
@@ -187,9 +219,17 @@ export async function POST(request: NextRequest) {
             <tr><td colspan="2"><hr style="border:none;border-top:1px solid #eee"/></td></tr>
             <tr><td style="color:#777">Candidate</td><td><strong>${escapeHtml(data.fullName)}</strong></td></tr>
             <tr><td style="color:#777">Email</td><td><a href="mailto:${escapeHtml(data.email)}">${escapeHtml(data.email)}</a></td></tr>
-            ${data.phone ? `<tr><td style="color:#777">Phone</td><td>${escapeHtml(data.phone)}</td></tr>` : ""}
+            <tr><td style="color:#777">Phone</td><td>${escapeHtml(data.phone)}</td></tr>
             ${data.linkedin ? `<tr><td style="color:#777">LinkedIn</td><td><a href="${escapeHtml(data.linkedin)}">${escapeHtml(data.linkedin)}</a></td></tr>` : ""}
+            <tr><td style="color:#777">Experience</td><td>${escapeHtml(data.totalExperience)}</td></tr>
+            <tr><td style="color:#777">Notice period</td><td>${escapeHtml(data.noticePeriod)}</td></tr>
+            <tr><td style="color:#777">Current CTC</td><td>${escapeHtml(data.currentCtc || "Not shared")}</td></tr>
+            <tr><td style="color:#777">Expected CTC</td><td>${escapeHtml(data.expectedCtc)}</td></tr>
           </table>
+          <h3 style="margin:24px 0 8px 0">Primary skills</h3>
+          <pre style="white-space:pre-wrap;background:#f7f7f7;padding:12px;border-radius:6px;font-family:inherit;font-size:14px;line-height:1.5">${escapeHtml(data.skills)}</pre>
+          <h3 style="margin:24px 0 8px 0">Relevant achievements</h3>
+          <pre style="white-space:pre-wrap;background:#f7f7f7;padding:12px;border-radius:6px;font-family:inherit;font-size:14px;line-height:1.5">${escapeHtml(data.achievements)}</pre>
           ${
             data.coverLetter
               ? `<h3 style="margin:24px 0 8px 0">Cover note</h3><pre style="white-space:pre-wrap;background:#f7f7f7;padding:12px;border-radius:6px;font-family:inherit;font-size:14px;line-height:1.5">${escapeHtml(data.coverLetter)}</pre>`
@@ -206,8 +246,18 @@ export async function POST(request: NextRequest) {
         ``,
         `Candidate: ${data.fullName}`,
         `Email: ${data.email}`,
-        data.phone ? `Phone: ${data.phone}` : null,
+        `Phone: ${data.phone}`,
         data.linkedin ? `LinkedIn: ${data.linkedin}` : null,
+        `Experience: ${data.totalExperience}`,
+        `Notice period: ${data.noticePeriod}`,
+        `Current CTC: ${data.currentCtc || "Not shared"}`,
+        `Expected CTC: ${data.expectedCtc}`,
+        ``,
+        `Primary skills:`,
+        data.skills,
+        ``,
+        `Relevant achievements:`,
+        data.achievements,
         data.coverLetter ? `\nCover note:\n${data.coverLetter}` : null,
         ``,
         `Resume is attached. View in admin: /admin/jobs/applications.`,

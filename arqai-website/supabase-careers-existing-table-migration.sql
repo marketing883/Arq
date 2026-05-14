@@ -105,6 +105,22 @@ create trigger job_postings_set_updated_at
 before update on public.job_postings
 for each row execute function public.set_updated_at();
 
+-- Add richer candidate screening fields used by the public application form.
+-- These are nullable at the database layer so older applications remain valid;
+-- the public application API enforces required fields for new submissions.
+do $$
+begin
+  if to_regclass('public.job_applications') is not null then
+    alter table public.job_applications
+      add column if not exists total_experience text,
+      add column if not exists skills text,
+      add column if not exists achievements text,
+      add column if not exists current_ctc text,
+      add column if not exists expected_ctc text,
+      add column if not exists notice_period text;
+  end if;
+end $$;
+
 commit;
 
 notify pgrst, 'reload schema';
