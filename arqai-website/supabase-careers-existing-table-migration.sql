@@ -115,9 +115,43 @@ begin
       add column if not exists total_experience text,
       add column if not exists skills text,
       add column if not exists achievements text,
+      add column if not exists compensation_currency text,
+      add column if not exists compensation_basis text,
+      add column if not exists current_compensation text,
+      add column if not exists expected_compensation text,
+      add column if not exists compensation_negotiable boolean not null default false,
       add column if not exists current_ctc text,
       add column if not exists expected_ctc text,
       add column if not exists notice_period text;
+  end if;
+end $$;
+
+do $$
+begin
+  if exists (
+    select 1
+    from information_schema.columns
+    where table_schema = 'public'
+      and table_name = 'job_applications'
+      and column_name = 'current_ctc'
+  ) then
+    update public.job_applications
+    set current_compensation = coalesce(current_compensation, current_ctc)
+    where current_compensation is null
+      and current_ctc is not null;
+  end if;
+
+  if exists (
+    select 1
+    from information_schema.columns
+    where table_schema = 'public'
+      and table_name = 'job_applications'
+      and column_name = 'expected_ctc'
+  ) then
+    update public.job_applications
+    set expected_compensation = coalesce(expected_compensation, expected_ctc)
+    where expected_compensation is null
+      and expected_ctc is not null;
   end if;
 end $$;
 

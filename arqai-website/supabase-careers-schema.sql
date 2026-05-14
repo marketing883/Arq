@@ -74,8 +74,13 @@ create table if not exists public.job_applications (
   total_experience text,
   skills text,
   achievements text,
-  current_ctc text,                    -- optional; salary-history rules vary by jurisdiction
-  expected_ctc text,
+  compensation_currency text,
+  compensation_basis text,
+  current_compensation text,           -- optional; salary-history rules vary by jurisdiction
+  expected_compensation text,
+  compensation_negotiable boolean not null default false,
+  current_ctc text,                    -- legacy field retained for older records
+  expected_ctc text,                   -- legacy field retained for older records
   notice_period text,
   cover_letter text,
   resume_path text not null,           -- storage path within `resumes` bucket

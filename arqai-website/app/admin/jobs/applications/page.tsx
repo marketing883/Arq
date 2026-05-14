@@ -28,8 +28,13 @@ type ApplicationDetail = Application & {
   total_experience: string | null;
   skills: string | null;
   achievements: string | null;
-  current_ctc: string | null;
-  expected_ctc: string | null;
+  compensation_currency: string | null;
+  compensation_basis: string | null;
+  current_compensation: string | null;
+  expected_compensation: string | null;
+  compensation_negotiable: boolean | null;
+  current_ctc?: string | null;
+  expected_ctc?: string | null;
   notice_period: string | null;
   notes: string | null;
   ip: string | null;
@@ -65,10 +70,40 @@ const STATUS_OPTIONS = [
   "withdrawn",
 ];
 
+const compensationCurrencyLabels: Record<string, string> = {
+  INR: "INR",
+  USD: "USD",
+  EUR: "EUR",
+  GBP: "GBP",
+  AED: "AED",
+  SGD: "SGD",
+  AUD: "AUD",
+  CAD: "CAD",
+  other: "Other / discuss",
+};
+
+const compensationBasisLabels: Record<string, string> = {
+  annual: "Annual",
+  monthly: "Monthly",
+  hourly: "Hourly",
+  daily: "Daily",
+  project: "Project / milestone",
+  stipend: "Stipend",
+  other: "Other / discuss",
+};
+
 function formatBytes(bytes: number) {
   if (!Number.isFinite(bytes)) return "-";
   if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(0)} KB`;
   return `${(bytes / 1024 / 1024).toFixed(2)} MB`;
+}
+
+function formatOption(
+  value: string | null | undefined,
+  labels: Record<string, string>
+) {
+  if (!value) return "-";
+  return labels[value] || value;
 }
 
 export default function AdminApplicationsPage() {
@@ -481,8 +516,25 @@ function ApplicationDetailsDrawer({
               </InfoItem>
               <InfoItem label="Experience">{application.total_experience || "-"}</InfoItem>
               <InfoItem label="Notice period">{application.notice_period || "-"}</InfoItem>
-              <InfoItem label="Current CTC">{application.current_ctc || "Not shared"}</InfoItem>
-              <InfoItem label="Expected CTC">{application.expected_ctc || "-"}</InfoItem>
+              <InfoItem label="Compensation currency">
+                {formatOption(application.compensation_currency, compensationCurrencyLabels)}
+              </InfoItem>
+              <InfoItem label="Pay basis">
+                {formatOption(application.compensation_basis, compensationBasisLabels)}
+              </InfoItem>
+              <InfoItem label="Current compensation">
+                {application.current_compensation || application.current_ctc || "Not shared"}
+              </InfoItem>
+              <InfoItem label="Expected compensation / range">
+                {application.expected_compensation || application.expected_ctc || "-"}
+              </InfoItem>
+              <InfoItem label="Open to compensation discussion">
+                {application.compensation_negotiable == null
+                  ? "-"
+                  : application.compensation_negotiable
+                    ? "Yes"
+                    : "No"}
+              </InfoItem>
             </div>
           </section>
 

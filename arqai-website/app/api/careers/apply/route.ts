@@ -22,10 +22,35 @@ const SCREENING_COLUMNS = new Set([
   "total_experience",
   "skills",
   "achievements",
-  "current_ctc",
-  "expected_ctc",
+  "compensation_currency",
+  "compensation_basis",
+  "current_compensation",
+  "expected_compensation",
+  "compensation_negotiable",
   "notice_period",
 ]);
+
+const compensationCurrencyLabels: Record<string, string> = {
+  INR: "INR",
+  USD: "USD",
+  EUR: "EUR",
+  GBP: "GBP",
+  AED: "AED",
+  SGD: "SGD",
+  AUD: "AUD",
+  CAD: "CAD",
+  other: "Other / discuss",
+};
+
+const compensationBasisLabels: Record<string, string> = {
+  annual: "Annual",
+  monthly: "Monthly",
+  hourly: "Hourly",
+  daily: "Daily",
+  project: "Project / milestone",
+  stipend: "Stipend",
+  other: "Other / discuss",
+};
 
 let supabase: SupabaseClient | null = null;
 function getClient() {
@@ -46,8 +71,29 @@ const applicationSchema = z.object({
   totalExperience: z.string().min(1).max(120),
   skills: z.string().min(10).max(5000),
   achievements: z.string().min(10).max(5000),
-  currentCtc: z.string().max(200).optional().nullable(),
-  expectedCtc: z.string().min(1).max(200),
+  compensationCurrency: z.enum([
+    "INR",
+    "USD",
+    "EUR",
+    "GBP",
+    "AED",
+    "SGD",
+    "AUD",
+    "CAD",
+    "other",
+  ]),
+  compensationBasis: z.enum([
+    "annual",
+    "monthly",
+    "hourly",
+    "daily",
+    "project",
+    "stipend",
+    "other",
+  ]),
+  currentCompensation: z.string().max(200).optional().nullable(),
+  expectedCompensation: z.string().min(1).max(200),
+  compensationNegotiable: z.boolean(),
   noticePeriod: z.string().min(1).max(120),
   coverLetter: z.string().max(5000).optional().nullable(),
 });
@@ -63,6 +109,10 @@ function escapeHtml(s: string) {
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#39;");
+}
+
+function formBoolean(value: FormDataEntryValue | null) {
+  return value === "true" || value === "on" || value === "1";
 }
 
 export async function POST(request: NextRequest) {
@@ -93,8 +143,11 @@ export async function POST(request: NextRequest) {
     totalExperience: formData.get("totalExperience"),
     skills: formData.get("skills"),
     achievements: formData.get("achievements"),
-    currentCtc: formData.get("currentCtc") || null,
-    expectedCtc: formData.get("expectedCtc"),
+    compensationCurrency: formData.get("compensationCurrency"),
+    compensationBasis: formData.get("compensationBasis"),
+    currentCompensation: formData.get("currentCompensation") || null,
+    expectedCompensation: formData.get("expectedCompensation"),
+    compensationNegotiable: formBoolean(formData.get("compensationNegotiable")),
     noticePeriod: formData.get("noticePeriod"),
     coverLetter: formData.get("coverLetter") || null,
   });
@@ -172,8 +225,11 @@ export async function POST(request: NextRequest) {
       total_experience: data.totalExperience,
       skills: data.skills,
       achievements: data.achievements,
-      current_ctc: data.currentCtc || null,
-      expected_ctc: data.expectedCtc,
+      compensation_currency: data.compensationCurrency,
+      compensation_basis: data.compensationBasis,
+      current_compensation: data.currentCompensation || null,
+      expected_compensation: data.expectedCompensation,
+      compensation_negotiable: data.compensationNegotiable,
       notice_period: data.noticePeriod,
       cover_letter: data.coverLetter || null,
       resume_path: path,
@@ -194,7 +250,7 @@ export async function POST(request: NextRequest) {
       {
         error:
           missingColumn && SCREENING_COLUMNS.has(missingColumn)
-            ? `Careers applications database is missing the '${missingColumn}' column. Run supabase-careers-existing-table-migration.sql in Supabase, then retry.`
+            ? `Careers applications database is missing the '${missingColumn}' column. Run supabase-careers-compensation-migration.sql in Supabase, then retry.`
             : "Could not save application. Please try again.",
       },
       { status: 500 }
@@ -223,8 +279,11 @@ export async function POST(request: NextRequest) {
             ${data.linkedin ? `<tr><td style="color:#777">LinkedIn</td><td><a href="${escapeHtml(data.linkedin)}">${escapeHtml(data.linkedin)}</a></td></tr>` : ""}
             <tr><td style="color:#777">Experience</td><td>${escapeHtml(data.totalExperience)}</td></tr>
             <tr><td style="color:#777">Notice period</td><td>${escapeHtml(data.noticePeriod)}</td></tr>
-            <tr><td style="color:#777">Current CTC</td><td>${escapeHtml(data.currentCtc || "Not shared")}</td></tr>
-            <tr><td style="color:#777">Expected CTC</td><td>${escapeHtml(data.expectedCtc)}</td></tr>
+            <tr><td style="color:#777">Compensation currency</td><td>${escapeHtml(compensationCurrencyLabels[data.compensationCurrency])}</td></tr>
+            <tr><td style="color:#777">Pay basis</td><td>${escapeHtml(compensationBasisLabels[data.compensationBasis])}</td></tr>
+            <tr><td style="color:#777">Current compensation</td><td>${escapeHtml(data.currentCompensation || "Not shared")}</td></tr>
+            <tr><td style="color:#777">Expected compensation / range</td><td>${escapeHtml(data.expectedCompensation)}</td></tr>
+            <tr><td style="color:#777">Open to market-aligned discussion</td><td>${data.compensationNegotiable ? "Yes" : "No"}</td></tr>
           </table>
           <h3 style="margin:24px 0 8px 0">Primary skills</h3>
           <pre style="white-space:pre-wrap;background:#f7f7f7;padding:12px;border-radius:6px;font-family:inherit;font-size:14px;line-height:1.5">${escapeHtml(data.skills)}</pre>
@@ -250,8 +309,11 @@ export async function POST(request: NextRequest) {
         data.linkedin ? `LinkedIn: ${data.linkedin}` : null,
         `Experience: ${data.totalExperience}`,
         `Notice period: ${data.noticePeriod}`,
-        `Current CTC: ${data.currentCtc || "Not shared"}`,
-        `Expected CTC: ${data.expectedCtc}`,
+        `Compensation currency: ${compensationCurrencyLabels[data.compensationCurrency]}`,
+        `Pay basis: ${compensationBasisLabels[data.compensationBasis]}`,
+        `Current compensation: ${data.currentCompensation || "Not shared"}`,
+        `Expected compensation / range: ${data.expectedCompensation}`,
+        `Open to market-aligned discussion: ${data.compensationNegotiable ? "Yes" : "No"}`,
         ``,
         `Primary skills:`,
         data.skills,

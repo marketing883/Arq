@@ -30,6 +30,30 @@ const employmentTypeLabel: Record<string, string> = {
   temporary: "Temporary",
 };
 
+const compensationCurrencies = [
+  { value: "", label: "Select currency" },
+  { value: "INR", label: "INR" },
+  { value: "USD", label: "USD" },
+  { value: "EUR", label: "EUR" },
+  { value: "GBP", label: "GBP" },
+  { value: "AED", label: "AED" },
+  { value: "SGD", label: "SGD" },
+  { value: "AUD", label: "AUD" },
+  { value: "CAD", label: "CAD" },
+  { value: "other", label: "Other / discuss" },
+];
+
+const compensationBasisOptions = [
+  { value: "", label: "Select pay basis" },
+  { value: "annual", label: "Annual" },
+  { value: "monthly", label: "Monthly" },
+  { value: "hourly", label: "Hourly" },
+  { value: "daily", label: "Daily" },
+  { value: "project", label: "Project / milestone" },
+  { value: "stipend", label: "Stipend" },
+  { value: "other", label: "Other / discuss" },
+];
+
 function toDisplayText(value: unknown): string {
   if (typeof value === "string") return value;
   if (value === null || value === undefined) return "";
@@ -90,8 +114,11 @@ export default function JobDetailPage({ params }: { params: { slug: string } }) 
   const [totalExperience, setTotalExperience] = useState("");
   const [skills, setSkills] = useState("");
   const [achievements, setAchievements] = useState("");
-  const [currentCtc, setCurrentCtc] = useState("");
-  const [expectedCtc, setExpectedCtc] = useState("");
+  const [compensationCurrency, setCompensationCurrency] = useState("");
+  const [compensationBasis, setCompensationBasis] = useState("");
+  const [currentCompensation, setCurrentCompensation] = useState("");
+  const [expectedCompensation, setExpectedCompensation] = useState("");
+  const [compensationNegotiable, setCompensationNegotiable] = useState(false);
   const [noticePeriod, setNoticePeriod] = useState("");
   const [coverLetter, setCoverLetter] = useState("");
   const [resume, setResume] = useState<File | null>(null);
@@ -151,7 +178,9 @@ export default function JobDetailPage({ params }: { params: { slug: string } }) 
       totalExperience,
       skills,
       achievements,
-      expectedCtc,
+      compensationCurrency,
+      compensationBasis,
+      expectedCompensation,
       noticePeriod,
     ];
     if (requiredFields.some((value) => value.trim().length === 0)) {
@@ -177,8 +206,11 @@ export default function JobDetailPage({ params }: { params: { slug: string } }) 
     fd.append("totalExperience", totalExperience);
     fd.append("skills", skills);
     fd.append("achievements", achievements);
-    if (currentCtc) fd.append("currentCtc", currentCtc);
-    fd.append("expectedCtc", expectedCtc);
+    fd.append("compensationCurrency", compensationCurrency);
+    fd.append("compensationBasis", compensationBasis);
+    if (currentCompensation) fd.append("currentCompensation", currentCompensation);
+    fd.append("expectedCompensation", expectedCompensation);
+    fd.append("compensationNegotiable", compensationNegotiable ? "true" : "false");
     fd.append("noticePeriod", noticePeriod);
     if (coverLetter) fd.append("coverLetter", coverLetter);
     if (resume) fd.append("resume", resume);
@@ -195,8 +227,11 @@ export default function JobDetailPage({ params }: { params: { slug: string } }) 
         setTotalExperience("");
         setSkills("");
         setAchievements("");
-        setCurrentCtc("");
-        setExpectedCtc("");
+        setCompensationCurrency("");
+        setCompensationBasis("");
+        setCurrentCompensation("");
+        setExpectedCompensation("");
+        setCompensationNegotiable(false);
         setNoticePeriod("");
         setCoverLetter("");
         setResume(null);
@@ -498,26 +533,86 @@ export default function JobDetailPage({ params }: { params: { slug: string } }) 
                   </div>
 
                   <div className="grid sm:grid-cols-2 gap-5 mb-5">
-                    <Field label="Current CTC" hint="Optional. Include currency if applicable.">
+                    <Field
+                      label="Compensation currency"
+                      required
+                      hint="Choose the currency most relevant to your location or engagement."
+                    >
+                      <select
+                        required
+                        value={compensationCurrency}
+                        onChange={(e) => setCompensationCurrency(e.target.value)}
+                        className="form-input"
+                      >
+                        {compensationCurrencies.map((option) => (
+                          <option key={option.value || "empty"} value={option.value}>
+                            {option.label}
+                          </option>
+                        ))}
+                      </select>
+                    </Field>
+                    <Field label="Pay basis" required>
+                      <select
+                        required
+                        value={compensationBasis}
+                        onChange={(e) => setCompensationBasis(e.target.value)}
+                        className="form-input"
+                      >
+                        {compensationBasisOptions.map((option) => (
+                          <option key={option.value || "empty"} value={option.value}>
+                            {option.label}
+                          </option>
+                        ))}
+                      </select>
+                    </Field>
+                  </div>
+
+                  <div className="grid sm:grid-cols-2 gap-5 mb-5">
+                    <Field
+                      label="Current compensation"
+                      hint="Optional. Use the currency and pay basis that applies to you."
+                    >
                       <input
                         type="text"
-                        value={currentCtc}
-                        onChange={(e) => setCurrentCtc(e.target.value)}
-                        placeholder="e.g. INR 24 LPA"
+                        value={currentCompensation}
+                        onChange={(e) => setCurrentCompensation(e.target.value)}
+                        placeholder="e.g. USD 120k/year, INR 24 LPA, EUR 70/hour"
                         className="form-input"
                       />
                     </Field>
-                    <Field label="Expected CTC" required hint="Include currency and annual amount.">
+                    <Field
+                      label="Expected compensation / range"
+                      required
+                      hint="A range or 'open to market range' is fine."
+                    >
                       <input
                         type="text"
                         required
-                        value={expectedCtc}
-                        onChange={(e) => setExpectedCtc(e.target.value)}
-                        placeholder="e.g. INR 32 LPA"
+                        value={expectedCompensation}
+                        onChange={(e) => setExpectedCompensation(e.target.value)}
+                        placeholder="e.g. USD 140k/year, INR 32 LPA, open to market range"
                         className="form-input"
                       />
                     </Field>
                   </div>
+
+                  <label className="mb-5 flex items-start gap-3 rounded-lg border border-stroke-muted bg-base-tint px-4 py-3">
+                    <input
+                      type="checkbox"
+                      checked={compensationNegotiable}
+                      onChange={(e) => setCompensationNegotiable(e.target.checked)}
+                      className="mt-1 h-4 w-4 rounded border-stroke-muted accent-accent"
+                    />
+                    <span>
+                      <span className="block text-body-sm text-text-bright">
+                        I am open to discussing market-aligned compensation.
+                      </span>
+                      <span className="block mt-1 text-body-xs text-text-muted">
+                        This helps us evaluate applications across full-time, contract, hourly,
+                        stipend, and project-based roles.
+                      </span>
+                    </span>
+                  </label>
 
                   <Field label="Primary skills" required>
                     <textarea
