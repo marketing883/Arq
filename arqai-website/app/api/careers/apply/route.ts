@@ -2,6 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
 import { Resend } from "resend";
 import { z } from "zod";
+import { isPublicJobStatus } from "@/lib/careers/job-postings";
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 const RESUME_BUCKET = "resumes";
 const MAX_BYTES = 5 * 1024 * 1024; // 5 MB
@@ -108,7 +112,7 @@ export async function POST(request: NextRequest) {
     .select("id, slug, title, department, location, employment_type, status")
     .eq("id", data.jobId)
     .maybeSingle();
-  if (jobErr || !job || job.status !== "active") {
+  if (jobErr || !job || !isPublicJobStatus(job.status)) {
     return NextResponse.json({ error: "Job posting not found" }, { status: 404 });
   }
 

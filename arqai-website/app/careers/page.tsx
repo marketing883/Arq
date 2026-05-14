@@ -49,7 +49,7 @@ export default function CareersPage() {
   useEffect(() => {
     let active = true;
     setLoading(true);
-    fetch("/api/careers")
+    fetch("/api/careers", { cache: "no-store" })
       .then((r) => r.json())
       .then((data) => {
         if (!active) return;

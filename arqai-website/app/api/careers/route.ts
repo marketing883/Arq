@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
-import { getMissingSchemaColumn } from "@/lib/careers/job-postings";
+import { getMissingSchemaColumn, PUBLIC_JOB_STATUSES } from "@/lib/careers/job-postings";
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 let supabase: SupabaseClient | null = null;
 
@@ -16,7 +19,7 @@ function getClient() {
 export async function GET(request: NextRequest) {
   const client = getClient();
   if (!client) {
-    return NextResponse.json({ jobs: [] });
+    return NextResponse.json({ jobs: [] }, { headers: { "Cache-Control": "no-store" } });
   }
 
   const url = new URL(request.url);
@@ -30,7 +33,7 @@ export async function GET(request: NextRequest) {
     .select(
       "id, slug, title, department, location, employment_type, short_description, experience_level, remote, published_at, created_at"
     )
-    .eq("status", "active")
+    .in("status", PUBLIC_JOB_STATUSES)
     .order("published_at", { ascending: false, nullsFirst: false })
     .order("created_at", { ascending: false });
 
@@ -48,7 +51,7 @@ export async function GET(request: NextRequest) {
         .select(
           "id, slug, title, department, location, employment_type, short_description, remote, published_at, created_at"
         )
-        .eq("status", "active")
+        .in("status", PUBLIC_JOB_STATUSES)
         .order("published_at", { ascending: false, nullsFirst: false })
         .order("created_at", { ascending: false });
 
@@ -61,11 +64,11 @@ export async function GET(request: NextRequest) {
       if (!fallbackError) {
         return NextResponse.json({
           jobs: (fallbackData ?? []).map((job) => ({ ...job, experience_level: null })),
-        });
+        }, { headers: { "Cache-Control": "no-store" } });
       }
     }
     console.error("[careers] list error", error);
-    return NextResponse.json({ jobs: [] });
+    return NextResponse.json({ jobs: [] }, { headers: { "Cache-Control": "no-store" } });
   }
-  return NextResponse.json({ jobs: data ?? [] });
+  return NextResponse.json({ jobs: data ?? [] }, { headers: { "Cache-Control": "no-store" } });
 }

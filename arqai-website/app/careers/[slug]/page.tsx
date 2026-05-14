@@ -97,7 +97,7 @@ export default function JobDetailPage({ params }: { params: { slug: string } }) 
 
   useEffect(() => {
     let active = true;
-    fetch(`/api/careers/${slug}`)
+    fetch(`/api/careers/${slug}`, { cache: "no-store" })
       .then(async (r) => {
         if (r.status === 404) {
           if (active) setMissing(true);

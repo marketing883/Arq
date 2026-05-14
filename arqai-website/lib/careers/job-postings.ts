@@ -14,7 +14,14 @@ export const OPTIONAL_JOB_POSTING_COLUMNS = [
   "experience_level",
 ] as const;
 
+export const PUBLIC_JOB_STATUSES = ["active", "published"] as const;
+
 const OPTIONAL_JOB_POSTING_COLUMN_SET = new Set<string>(OPTIONAL_JOB_POSTING_COLUMNS);
+const PUBLIC_JOB_STATUS_SET = new Set<string>(PUBLIC_JOB_STATUSES);
+
+export function isPublicJobStatus(status: unknown) {
+  return typeof status === "string" && PUBLIC_JOB_STATUS_SET.has(status);
+}
 
 export function pruneEmptyOptionalJobPostingFields(payload: Record<string, unknown>) {
   const next = { ...payload };
