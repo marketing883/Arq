@@ -137,10 +137,45 @@ export async function DELETE(_req: Request, { params }: { params: Promise<{ id: 
   }
   const client = getClient();
   if (!client) return NextResponse.json({ error: "Server not configured" }, { status: 500 });
+
+  const { data: applications, error: applicationsFetchError } = await client
+    .from("job_applications")
+    .select("id, resume_path")
+    .eq("job_id", id);
+  if (applicationsFetchError && applicationsFetchError.code !== "42P01") {
+    console.error("[admin/jobs/:id] applications fetch error", applicationsFetchError);
+    return NextResponse.json(
+      { error: "Could not inspect applications for this job opening" },
+      { status: 500 }
+    );
+  }
+
+  if (applications?.length) {
+    const { error: applicationsDeleteError } = await client
+      .from("job_applications")
+      .delete()
+      .eq("job_id", id);
+    if (applicationsDeleteError) {
+      console.error("[admin/jobs/:id] applications delete error", applicationsDeleteError);
+      return NextResponse.json(
+        { error: "Could not delete applications for this job opening" },
+        { status: 500 }
+      );
+    }
+  }
+
   const { error } = await client.from("job_postings").delete().eq("id", id);
   if (error) {
     console.error("[admin/jobs/:id] delete error", error);
     return NextResponse.json({ error: "Could not delete" }, { status: 500 });
   }
+
+  const resumePaths = (applications ?? [])
+    .map((application) => application.resume_path)
+    .filter((path): path is string => typeof path === "string" && path.length > 0);
+  if (resumePaths.length > 0) {
+    await client.storage.from("resumes").remove(resumePaths).catch(() => undefined);
+  }
+
   return NextResponse.json({ ok: true });
 }

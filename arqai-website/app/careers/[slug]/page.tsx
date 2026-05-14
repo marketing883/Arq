@@ -1,9 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import { use } from "react";
 import Link from "next/link";
-import { notFound } from "next/navigation";
 import { motion } from "framer-motion";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -31,6 +29,13 @@ const employmentTypeLabel: Record<string, string> = {
   internship: "Internship",
   temporary: "Temporary",
 };
+
+function toDisplayText(value: unknown): string {
+  if (typeof value === "string") return value;
+  if (value === null || value === undefined) return "";
+  if (Array.isArray(value)) return value.map(toDisplayText).filter(Boolean).join("\n");
+  return String(value);
+}
 
 function StarIcon({ className = "" }: { className?: string }) {
   return (
@@ -70,8 +75,8 @@ function renderBlock(text: string) {
   );
 }
 
-export default function JobDetailPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = use(params);
+export default function JobDetailPage({ params }: { params: { slug: string } }) {
+  const { slug } = params;
   const [job, setJob] = useState<Job | null>(null);
   const [loading, setLoading] = useState(true);
   const [missing, setMissing] = useState(false);
@@ -109,8 +114,6 @@ export default function JobDetailPage({ params }: { params: Promise<{ slug: stri
       active = false;
     };
   }, [slug]);
-
-  if (missing) notFound();
 
   const validateResume = (file: File | null): string | null => {
     if (!file) return "Resume is required.";
@@ -183,14 +186,46 @@ export default function JobDetailPage({ params }: { params: Promise<{ slug: stri
         <Header />
         <main className="bg-base pt-32 md:pt-40 pb-20">
           <div className="container mx-auto px-4 md:px-6 lg:px-8">
-            <p className="text-body-md text-text-muted">Loading role…</p>
+            <p className="text-body-md text-text-muted">Loading role...</p>
           </div>
         </main>
         <Footer />
       </>
     );
   }
+
+  if (missing) {
+    return (
+      <>
+        <Header />
+        <main className="bg-base pt-32 md:pt-40 pb-20">
+          <div className="container mx-auto px-4 md:px-6 lg:px-8">
+            <div className="card max-w-2xl p-8">
+              <h1 className="text-display-sm font-display text-text-bright mb-3">
+                Role not found.
+              </h1>
+              <p className="text-body-md text-text-muted mb-6">
+                This opening may have closed or moved.
+              </p>
+              <Link href="/careers" className="btn btn-outline">
+                Back to all roles
+              </Link>
+            </div>
+          </div>
+        </main>
+        <Footer />
+      </>
+    );
+  }
+
   if (!job) return null;
+
+  const shortDescription = toDisplayText(job.short_description);
+  const description = toDisplayText(job.description);
+  const responsibilities = toDisplayText(job.responsibilities);
+  const requirements = toDisplayText(job.requirements);
+  const salaryRange = toDisplayText(job.salary_range);
+  const experienceLevel = toDisplayText(job.experience_level);
 
   return (
     <>
@@ -229,9 +264,9 @@ export default function JobDetailPage({ params }: { params: Promise<{ slug: stri
                 <span className="px-3 py-1 rounded-full bg-base-tint border border-stroke-muted text-text-bright">
                   {employmentTypeLabel[job.employment_type] ?? job.employment_type}
                 </span>
-                {job.experience_level && (
+                {experienceLevel && (
                   <span className="px-3 py-1 rounded-full bg-base-tint border border-stroke-muted text-text-bright">
-                    {job.experience_level} level
+                    {experienceLevel} level
                   </span>
                 )}
                 {job.remote && (
@@ -239,9 +274,9 @@ export default function JobDetailPage({ params }: { params: Promise<{ slug: stri
                     Remote-friendly
                   </span>
                 )}
-                {job.salary_range && (
+                {salaryRange && (
                   <span className="px-3 py-1 rounded-full bg-base-tint border border-stroke-muted text-text-bright">
-                    {job.salary_range}
+                    {salaryRange}
                   </span>
                 )}
               </div>
@@ -262,33 +297,33 @@ export default function JobDetailPage({ params }: { params: Promise<{ slug: stri
           <div className="container mx-auto px-4 md:px-6 lg:px-8">
             <div className="grid lg:grid-cols-12 gap-10 lg:gap-16">
               <div className="lg:col-span-8 space-y-12">
-                {job.short_description && (
+                {shortDescription && (
                   <p className="text-body-lg text-text-bright leading-relaxed">
-                    {job.short_description}
+                    {shortDescription}
                   </p>
                 )}
-                {job.description && (
+                {description && (
                   <div>
                     <h2 className="text-display-sm font-display text-text-bright mb-4">
                       About the role
                     </h2>
-                    {renderBlock(job.description)}
+                    {renderBlock(description)}
                   </div>
                 )}
-                {job.responsibilities && (
+                {responsibilities && (
                   <div>
                     <h2 className="text-display-sm font-display text-text-bright mb-4">
                       What you&apos;ll do
                     </h2>
-                    {renderBlock(job.responsibilities)}
+                    {renderBlock(responsibilities)}
                   </div>
                 )}
-                {job.requirements && (
+                {requirements && (
                   <div>
                     <h2 className="text-display-sm font-display text-text-bright mb-4">
                       What we&apos;re looking for
                     </h2>
-                    {renderBlock(job.requirements)}
+                    {renderBlock(requirements)}
                   </div>
                 )}
               </div>
@@ -412,7 +447,7 @@ export default function JobDetailPage({ params }: { params: Promise<{ slug: stri
                     />
                     {resume && !resumeError && (
                       <p className="mt-2 text-body-xs text-text-muted">
-                        {resume.name} · {(resume.size / 1024 / 1024).toFixed(2)} MB
+                        {resume.name} - {(resume.size / 1024 / 1024).toFixed(2)} MB
                       </p>
                     )}
                     {resumeError && (
@@ -444,7 +479,7 @@ export default function JobDetailPage({ params }: { params: Promise<{ slug: stri
                     disabled={submitting || !!resumeError}
                     className="w-full btn bg-accent text-white hover:bg-accent/90 disabled:opacity-50"
                   >
-                    {submitting ? "Submitting…" : "Submit application"}
+                    {submitting ? "Submitting..." : "Submit application"}
                   </button>
 
                   <p className="mt-4 text-body-xs text-text-muted text-center">

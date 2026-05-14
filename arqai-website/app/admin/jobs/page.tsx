@@ -26,6 +26,7 @@ export default function AdminJobsPage() {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
 
   useEffect(() => {
     let active = true;
@@ -48,6 +49,29 @@ export default function AdminJobsPage() {
       active = false;
     };
   }, []);
+
+  const deleteJob = async (job: Job) => {
+    const label = job.status === "active" ? "published job opening" : "job opening";
+    if (!confirm(`Delete this ${label}? Existing applications for this role will also be removed.`)) {
+      return;
+    }
+
+    setDeletingId(job.id);
+    setError(null);
+    try {
+      const res = await fetch(`/api/admin/jobs/${job.id}`, { method: "DELETE" });
+      const body = await res.json().catch(() => null);
+      if (!res.ok) {
+        setError(body?.error || "Could not delete job opening");
+        return;
+      }
+      setJobs((current) => current.filter((item) => item.id !== job.id));
+    } catch {
+      setError("Could not delete job opening");
+    } finally {
+      setDeletingId(null);
+    }
+  };
 
   return (
     <div className="p-6 md:p-10">
@@ -124,19 +148,29 @@ export default function AdminJobsPage() {
                       {new Date(job.created_at).toLocaleDateString()}
                     </td>
                     <td className="px-4 py-3 text-right">
-                      <Link
-                        href={`/admin/jobs/${job.id}/edit`}
-                        className="text-accent hover:underline mr-4"
-                      >
-                        Edit
-                      </Link>
-                      <Link
-                        href={`/careers/${job.slug}`}
-                        target="_blank"
-                        className="text-text-muted hover:text-accent"
-                      >
-                        View
-                      </Link>
+                      <div className="flex items-center justify-end gap-4">
+                        <Link
+                          href={`/admin/jobs/${job.id}/edit`}
+                          className="text-accent hover:underline"
+                        >
+                          Edit
+                        </Link>
+                        <Link
+                          href={`/careers/${job.slug}`}
+                          target="_blank"
+                          className="text-text-muted hover:text-accent"
+                        >
+                          View
+                        </Link>
+                        <button
+                          type="button"
+                          onClick={() => deleteJob(job)}
+                          disabled={deletingId === job.id}
+                          className="text-red-600 hover:underline disabled:opacity-50"
+                        >
+                          {deletingId === job.id ? "Deleting..." : "Delete"}
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))}

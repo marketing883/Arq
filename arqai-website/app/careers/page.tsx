@@ -213,7 +213,7 @@ export default function CareersPage() {
               {/* Results */}
               <div className="lg:col-span-8">
                 {loading ? (
-                  <p className="text-body-md text-text-muted">Loading roles…</p>
+                  <p className="text-body-md text-text-muted">Loading roles...</p>
                 ) : error ? (
                   <p className="text-body-md text-text-muted">{error}</p>
                 ) : filtered.length === 0 ? (
@@ -250,17 +250,17 @@ export default function CareersPage() {
                         >
                           <div className="flex flex-wrap items-center gap-2 mb-3 text-body-xs text-accent uppercase tracking-wider">
                             <span>{job.department}</span>
-                            <span className="text-text-muted">·</span>
+                            <span className="text-text-muted">/</span>
                             <span>{employmentTypeLabel[job.employment_type] ?? job.employment_type}</span>
                             {job.experience_level && (
                               <>
-                                <span className="text-text-muted">·</span>
+                                <span className="text-text-muted">/</span>
                                 <span>{job.experience_level}</span>
                               </>
                             )}
                             {job.remote && (
                               <>
-                                <span className="text-text-muted">·</span>
+                                <span className="text-text-muted">/</span>
                                 <span>Remote-friendly</span>
                               </>
                             )}

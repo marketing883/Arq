@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { use } from "react";
 import Link from "next/link";
 import { JobForm } from "@/components/admin/JobForm";
 
@@ -22,8 +21,8 @@ type Job = {
   status: string;
 };
 
-export default function AdminJobEditPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = use(params);
+export default function AdminJobEditPage({ params }: { params: { id: string } }) {
+  const { id } = params;
   const [job, setJob] = useState<Job | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -61,7 +60,7 @@ export default function AdminJobEditPage({ params }: { params: Promise<{ id: str
         Edit job posting
       </h1>
       {loading ? (
-        <p className="text-body-md text-text-muted">Loading…</p>
+        <p className="text-body-md text-text-muted">Loading...</p>
       ) : error ? (
         <p className="text-body-md text-red-600">{error}</p>
       ) : job ? (
