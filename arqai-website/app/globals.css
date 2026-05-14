@@ -1060,6 +1060,16 @@
   color: var(--text-muted);
 }
 
+.form-input option,
+.form-input optgroup {
+  background-color: #ffffff;
+  color: #111111;
+}
+
+.form-input option:disabled {
+  color: #6b7280;
+}
+
 /* =========================================================
    ArqAI Labs Homepage v4 design system (dark)
    Tokens, utilities, components consumed by app/page.tsx
