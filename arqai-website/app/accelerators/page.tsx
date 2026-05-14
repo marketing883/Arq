@@ -7,7 +7,7 @@ import { accelerators } from "@/lib/data/accelerators";
 export const metadata: Metadata = {
   title: "AI Accelerators | ArqAI Labs",
   description:
-    "Vertical AI accelerators for payer operations, claims, financial crime, loyalty, network operations, service workflows, supply chain, and security operations.",
+    "Productized AI accelerator patterns for payer operations, claims, financial crime, loyalty, network operations, service workflows, supply chain, and security operations.",
 };
 
 export default function AcceleratorsPage() {
@@ -22,13 +22,13 @@ export default function AcceleratorsPage() {
           <div className="a-section-head" style={{ marginTop: 28, alignItems: "start" }}>
             <div>
               <h1 className="h-display" style={{ maxWidth: "13ch" }}>
-                Vertical AI accelerators for repeatable enterprise workflows.
+                Productized AI patterns, tailored to how your operation works.
               </h1>
             </div>
             <div>
               <p className="lede">
-                Not off-the-shelf tools. Reusable AI accelerator patterns built from recurring operating patterns, then adapted
-                to each client's data, systems, policies, and review model.
+                Accelerators are reusable workflow spines for recurring enterprise problems. They shorten discovery and
+                build time, then adapt around your data, systems, policies, approval paths, and operating metric.
               </p>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginTop: 28 }}>
                 <Link href="/engage-us" className="a-btn a-btn-primary">
@@ -47,16 +47,64 @@ export default function AcceleratorsPage() {
         <div className="a-wrap">
           <SignalStrip
             label="Pattern library"
-            title="Each accelerator begins as a reusable workflow spine."
-            body="The speed comes from not restarting the same operating architecture each time. The value comes from tuning that spine to the policies, systems, data quality, and reviewers in front of us."
+            title="Speed from the reusable core. Value from the enterprise fit."
+            body="Each accelerator begins with a proven workflow architecture, then bends around the systems, policies, data quality, and reviewers in front of us."
             variant="orbit"
-            points={["Reusable core", "Vertical context", "Controls", "Fit check"]}
+            points={["Reusable core", "Vertical context", "Controls", "Enterprise fit"]}
           />
         </div>
       </section>
 
       <section className="a-section">
         <div className="a-wrap">
+          <div className="pathway-list">
+            {[
+              {
+                title: "Fit check before build.",
+                body:
+                  "We compare your workflow, data sources, review steps, and operating metric against the accelerator spine before recommending a rollout.",
+                href: "/services/vertical-acceleration",
+              },
+              {
+                title: "Configure the control model.",
+                body:
+                  "Permissions, policy checks, escalation rules, evidence capture, and reviewer authority are tuned before the accelerator takes on live work.",
+                href: "/services/governance-by-design",
+              },
+              {
+                title: "Expand only after the first queue proves value.",
+                body:
+                  "The first release stays narrow enough to measure, then expands into adjacent teams, queues, and use cases with the operating loop intact.",
+                href: "/services/managed-ai-operations",
+              },
+            ].map((path, index) => (
+              <Link href={path.href} className="pathway-row" key={path.href}>
+                <span className="num">{String(index + 1).padStart(2, "0")}</span>
+                <div>
+                  <h3>{path.title}</h3>
+                  <p>{path.body}</p>
+                </div>
+                <ArrowIcon className="arrow" />
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="a-section">
+        <div className="a-wrap">
+          <div className="a-section-head">
+            <div>
+              <span className="a-eyebrow">Accelerator lines</span>
+              <h2 className="h-section" style={{ marginTop: 18 }}>
+                Start from the workflow spine closest to the problem.
+              </h2>
+            </div>
+            <p className="lede">
+              These are not generic apps. Each line is a reusable starting point for a recurring operating pattern,
+              shaped into a production system through services and the ArqAI operating fabric.
+            </p>
+          </div>
           <div className="acc-grid reveal in">
             {accelerators.map((accelerator, index) => (
               <Link
@@ -86,24 +134,17 @@ export default function AcceleratorsPage() {
 
       <section className="a-section">
         <div className="a-wrap">
-          <div className="a-card" style={{ padding: "clamp(28px, 5vw, 56px)" }}>
-            <div className="a-section-head" style={{ alignItems: "center" }}>
-              <div>
-                <span className="a-eyebrow">Reusable, then tailored</span>
-                <h2 className="h-section" style={{ marginTop: 18 }}>
-                  Faster does not mean generic.
-                </h2>
-              </div>
-              <div>
-                <p className="lede">
-                  Each accelerator starts with a proven workflow architecture, but the value comes from adapting it to
-                  your data quality, policies, systems, approval paths, and operating metric.
-                </p>
-                <Link href="/engage-us" className="a-btn a-btn-primary" style={{ marginTop: 28 }}>
-                  Get Started <ArrowIcon className="arrow" />
-                </Link>
-              </div>
-            </div>
+          <div className="cta-strip">
+            <h2 className="h-section" style={{ marginTop: 0, maxWidth: "18ch" }}>
+              Faster should still feel built for your business.
+            </h2>
+            <p className="lede" style={{ marginTop: 18, maxWidth: "62ch" }}>
+              Bring us the queue, case type, signal source, or review workflow. We will show which accelerator is
+              closest, what must be customized, and where bespoke engineering is the better answer.
+            </p>
+            <Link href="/engage-us" className="a-btn a-btn-primary" style={{ marginTop: 28 }}>
+              Get Started <ArrowIcon className="arrow" />
+            </Link>
           </div>
         </div>
       </section>

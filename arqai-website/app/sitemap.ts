@@ -2,6 +2,7 @@ import { MetadataRoute } from "next";
 import { createClient } from "@supabase/supabase-js";
 import { accelerators } from "@/lib/data/accelerators";
 import { services } from "@/lib/data/services";
+import { coreStaticPaths, industryLinks } from "@/lib/data/site-navigation";
 
 function getSupabase() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -13,145 +14,22 @@ function getSupabase() {
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://thearq.ai";
   const currentDate = new Date().toISOString();
-  const industryPaths = [
-    "/industries",
-    "/industries/healthcare-payers",
-    "/industries/insurance-carriers",
-    "/industries/banking",
-    "/industries/retail",
-    "/industries/manufacturing",
-  ];
+  const industryPaths = ["/industries", ...industryLinks.map((industry) => industry.href)];
+
+  const corePriority = (path: string) => {
+    if (path === "/") return 1;
+    if (["/platform", "/services", "/accelerators", "/industries"].includes(path)) return 0.9;
+    if (["/resources", "/case-studies", "/blog", "/about"].includes(path)) return 0.8;
+    return 0.7;
+  };
 
   // Core pages with high priority
-  const corePages: MetadataRoute.Sitemap = [
-    {
-      url: baseUrl,
-      lastModified: currentDate,
-      changeFrequency: "weekly",
-      priority: 1,
-    },
-    {
-      url: `${baseUrl}/services`,
-      lastModified: currentDate,
-      changeFrequency: "weekly",
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/accelerators`,
-      lastModified: currentDate,
-      changeFrequency: "weekly",
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/platform`,
-      lastModified: currentDate,
-      changeFrequency: "weekly",
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/solutions`,
-      lastModified: currentDate,
-      changeFrequency: "weekly",
-      priority: 0.9,
-    },
-
-    {
-      url: `${baseUrl}/services`,
-      lastModified: currentDate,
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/accelerators`,
-      lastModified: currentDate,
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/industries`,
-      lastModified: currentDate,
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/industries/healthcare-payers`,
-      lastModified: currentDate,
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/industries/insurance-carriers`,
-      lastModified: currentDate,
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/industries/banking`,
-      lastModified: currentDate,
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/industries/retail`,
-      lastModified: currentDate,
-      changeFrequency: "monthly",
-      priority: 0.6,
-    },
-    {
-      url: `${baseUrl}/industries/manufacturing`,
-      lastModified: currentDate,
-      changeFrequency: "monthly",
-      priority: 0.6,
-    },
-    {
-      url: `${baseUrl}/about`,
-      lastModified: currentDate,
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/demo`,
-      lastModified: currentDate,
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/contact`,
-      lastModified: currentDate,
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/partners`,
-      lastModified: currentDate,
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/blog`,
-      lastModified: currentDate,
-      changeFrequency: "daily",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/case-studies`,
-      lastModified: currentDate,
-      changeFrequency: "weekly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/resources/whitepapers`,
-      lastModified: currentDate,
-      changeFrequency: "weekly",
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/webinars`,
-      lastModified: currentDate,
-      changeFrequency: "weekly",
-      priority: 0.7,
-    },
-  ];
+  const corePages: MetadataRoute.Sitemap = coreStaticPaths.map((path) => ({
+    url: path === "/" ? baseUrl : `${baseUrl}${path}`,
+    lastModified: currentDate,
+    changeFrequency: path === "/blog" ? "daily" : "weekly",
+    priority: corePriority(path),
+  }));
 
   const servicePages: MetadataRoute.Sitemap = services.map((service) => ({
     url: `${baseUrl}/services/${service.slug}`,
@@ -167,12 +45,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }));
 
-  const industryPages: MetadataRoute.Sitemap = industryPaths.map((path) => ({
-    url: `${baseUrl}${path}`,
-    lastModified: currentDate,
-    changeFrequency: "monthly",
-    priority: path === "/industries" ? 0.8 : 0.7,
-  }));
+  const industryPages: MetadataRoute.Sitemap = industryPaths
+    .filter((path) => !coreStaticPaths.includes(path))
+    .map((path) => ({
+      url: `${baseUrl}${path}`,
+      lastModified: currentDate,
+      changeFrequency: "monthly",
+      priority: path === "/industries" ? 0.8 : 0.7,
+    }));
 
   // Legal pages with lower priority
   const legalPages: MetadataRoute.Sitemap = [

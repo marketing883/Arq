@@ -218,7 +218,7 @@ export async function sendUserConfirmation(
     const firstName = data.name.split(" ")[0];
     const subject = data.customSubject || `Thanks for connecting with ArqAI, ${firstName}!`;
     const heading = data.customHeading || "Message Received";
-    const message = data.personalizedMessage || "Thank you for your interest in ArqAI. Our team will review your inquiry and reach out within 24 hours to discuss how we can help you build, run, and govern your AI workforce.";
+    const message = data.personalizedMessage || "Thank you for your interest in ArqAI. Our team will review your inquiry and follow up to discuss how we can help you build, govern, and operate the workflow you have in mind.";
     const ctaText = data.ctaText || "Explore ArqAI";
     const ctaUrl = data.ctaUrl || "https://thearq.ai/platform";
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://thearq.ai";
@@ -267,9 +267,9 @@ export async function sendUserConfirmation(
                 <div class="resources">
                   <h4>While you wait, explore:</h4>
                   <ul>
-                    <li><a href="${siteUrl}/platform">Our Platform</a> - See how ArqAI works</li>
-                    <li><a href="${siteUrl}/solutions">Solutions</a> - Industry-specific AI governance</li>
-                    <li><a href="${siteUrl}/case-studies">Case Studies</a> - Real customer success stories</li>
+                    <li><a href="${siteUrl}/platform">Platform</a> - See the operating fabric behind production AI workflows</li>
+                    <li><a href="${siteUrl}/industries">Industries</a> - Explore industry-specific workflow systems</li>
+                    <li><a href="${siteUrl}/case-studies">Case Studies</a> - Review implementation stories and outcomes</li>
                   </ul>
                 </div>
 

@@ -73,7 +73,7 @@ export default function HealthcarePayersPage() {
           "Appeals and grievance work that needs consistent documentation",
           "Audit preparation where every decision needs a defensible trail",
         ],
-        productsHeading: "Start from the workflow pattern that already fits.",
+        productsHeading: "Accelerator paths for payer operating workflows.",
         productsBody:
           "Veyra and Luma accelerate payer review, evidence assembly, intake, and routing patterns from the same governed foundation.",
         products: [

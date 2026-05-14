@@ -15,11 +15,11 @@ export const caseStudies = {
   healthcare: {
     industry: "Healthcare",
     badge: "Major Health System",
-    title: "HIPAA-Compliant Patient Data Management",
+    title: "Patient Data Workflows with Governance Built In",
     challenge:
       "A large health system wanted to use AI for patient data summarization and care coordination but couldn't risk HIPAA violations.",
     solution:
-      "ArqAI's zero-trust architecture ensured that AI agents only accessed patient data with proper authorization. Every access is logged with cryptographic proof for HIPAA audits.",
+      "ArqAI designed the workflow so AI-assisted summarization and care coordination stayed inside defined access, approval, and audit boundaries.",
     results: [
       { metric: "50%", label: "Reduced Admin Time" },
       { metric: "100%", label: "HIPAA Compliance" },
@@ -27,7 +27,7 @@ export const caseStudies = {
       { metric: "3x", label: "AI Deployment Scale" },
     ],
     quote:
-      "Patient data security is non-negotiable. ArqAI's approach to zero-trust AI governance was exactly what we needed.",
+      "Patient data security is non-negotiable. ArqAI's workflow-first approach gave us the control model we needed.",
     quoteAuthor: "CISO",
   },
   financial: {
@@ -37,7 +37,7 @@ export const caseStudies = {
     challenge:
       "A leading global bank needed to automate their loan underwriting process while maintaining strict SOX compliance and Fair Lending Act adherence.",
     solution:
-      "ArqAI's Foundry platform enabled the bank to build compliant AI agents with built-in policy enforcement. Every underwriting decision is now backed by cryptographic proof.",
+      "ArqAI helped shape an underwriting workflow with policy-aware recommendations, human review, and decision evidence captured for audit.",
     results: [
       { metric: "70%", label: "Faster Underwriting" },
       { metric: "100%", label: "Audit Compliance" },
@@ -45,7 +45,7 @@ export const caseStudies = {
       { metric: "Zero", label: "Regulatory Findings" },
     ],
     quote:
-      "ArqAI gave us the confidence to deploy AI at scale. We no longer worry about compliance - it's built into every agent.",
+      "ArqAI gave us the confidence to use AI in the workflow because the evidence and review path were designed in.",
     quoteAuthor: "Chief Risk Officer",
   },
   insurance: {
@@ -55,7 +55,7 @@ export const caseStudies = {
     challenge:
       "A major insurer needed to accelerate claims processing while maintaining regulatory compliance with NAIC guidelines and detecting potential fraud.",
     solution:
-      "ArqAI enabled the deployment of AI agents that process claims autonomously while flagging potential fraud. Every decision is logged and can be reviewed.",
+      "ArqAI designed claims support that enriches files, recommends routing, flags suspicious patterns, and keeps adjusters in control of the final decision.",
     results: [
       { metric: "80%", label: "Faster Processing" },
       { metric: "35%", label: "More Fraud Detected" },
@@ -69,16 +69,16 @@ export const caseStudies = {
   general: {
     industry: "Enterprise",
     badge: "Fortune 500 Company",
-    title: "Enterprise-Wide AI Governance at Scale",
+    title: "Enterprise Workflow Governance at Scale",
     challenge:
-      "A Fortune 500 company was deploying AI across multiple departments but lacked visibility and control over their AI workforce.",
+      "A Fortune 500 company was moving AI into multiple operating teams but lacked a consistent way to govern workflow actions, evidence, and review.",
     solution:
-      "ArqAI's unified platform provided complete visibility across all AI deployments with consistent policy enforcement and audit trails.",
+      "ArqAI helped define a shared operating fabric with consistent policy enforcement, integration patterns, and audit trails across workflows.",
     results: [
       { metric: "60%", label: "Faster Deployment" },
       { metric: "100%", label: "Policy Compliance" },
       { metric: "45%", label: "Cost Reduction" },
-      { metric: "10x", label: "AI Scale Increase" },
+      { metric: "10x", label: "Workflow Scale Increase" },
     ],
     quote:
       "We finally have the control and visibility we need to confidently scale AI across the enterprise.",
@@ -93,7 +93,7 @@ const industryMessaging: Partial<Record<NonNullable<Industry>, {
   benefits: string[];
 }>> = {
   healthcare: {
-    headline: "AI Governance Built for Healthcare",
+    headline: "AI Workflows Built for Healthcare",
     challenges: [
       "HIPAA compliance for AI systems",
       "Patient data protection",
@@ -106,7 +106,7 @@ const industryMessaging: Partial<Record<NonNullable<Industry>, {
     ],
   },
   financial_services: {
-    headline: "Enterprise AI Governance for Financial Services",
+    headline: "Enterprise AI Workflows for Financial Services",
     challenges: [
       "SOX and regulatory compliance",
       "Fair lending requirements",
@@ -119,7 +119,7 @@ const industryMessaging: Partial<Record<NonNullable<Industry>, {
     ],
   },
   insurance: {
-    headline: "AI Governance for Modern Insurance",
+    headline: "AI Workflows for Modern Insurance",
     challenges: [
       "NAIC and state regulatory compliance",
       "Claims automation with oversight",
@@ -140,29 +140,29 @@ const painPointSolutions: Record<PainPoint, {
   feature: string;
 }> = {
   compliance_complexity: {
-    headline: "Simplify AI Compliance",
-    solution: "Compliance rules are compiled into every agent at build time - not bolted on after.",
-    feature: "CAPC - Compliance-Aware Prompt Compiler",
+    headline: "Build Compliance into the Workflow",
+    solution: "Compliance rules, approvals, and evidence capture are designed into the workflow before launch.",
+    feature: "Governance by Design",
   },
   audit_trail: {
-    headline: "Court-Ready Audit Trails",
-    solution: "Every action is cryptographically signed with immutable, tamper-proof logs.",
-    feature: "TAO - Trust-Aware Agent Orchestration",
+    headline: "Decision Trails Reviewers Can Trust",
+    solution: "Every recommendation, action, approval, and override can carry the evidence needed for review.",
+    feature: "Audit Evidence Layer",
   },
   ai_governance: {
-    headline: "Unified AI Governance",
-    solution: "Single platform to build, run, and govern your entire AI workforce.",
-    feature: "ArqAI Foundry Platform",
+    headline: "Governed AI Workflows",
+    solution: "A shared operating fabric helps teams build, run, and govern AI workflows without losing control.",
+    feature: "ArqAI Operating Fabric",
   },
   security_concerns: {
-    headline: "Zero-Trust AI Security",
-    solution: "Every action requires explicit permission. No implicit trust, no exceptions.",
-    feature: "TAO - Trust-Aware Agent Orchestration",
+    headline: "Permission-Aware AI Actions",
+    solution: "Every action runs inside explicit access, policy, and approval boundaries.",
+    feature: "Governance Plane",
   },
   scaling_ai: {
     headline: "Scale AI with Confidence",
-    solution: "Governance that scales with you - from 10 agents to 10,000.",
-    feature: "Enterprise-grade infrastructure",
+    solution: "Governance that scales from one workflow to a portfolio of production AI systems.",
+    feature: "Operating Loop",
   },
   cost_reduction: {
     headline: "Maximize AI ROI",
@@ -172,7 +172,7 @@ const painPointSolutions: Record<PainPoint, {
   risk_management: {
     headline: "Mitigate AI Risk",
     solution: "Proactive risk management with pre-execution policy enforcement.",
-    feature: "CAPC + TAO Integration",
+    feature: "Policy and Review Controls",
   },
   manual_processes: {
     headline: "Automate Compliance Work",
@@ -180,9 +180,9 @@ const painPointSolutions: Record<PainPoint, {
     feature: "Automated Compliance Reporting",
   },
   lack_visibility: {
-    headline: "Complete AI Visibility",
-    solution: "Single dashboard for your entire AI workforce with real-time monitoring.",
-    feature: "ODA-RAG - Observability Dashboard",
+    headline: "Complete Workflow Visibility",
+    solution: "Monitoring across workflow performance, exceptions, evidence, and reviewer feedback.",
+    feature: "Workflow Observability",
   },
   integration_challenges: {
     headline: "Seamless Integration",
@@ -192,7 +192,7 @@ const painPointSolutions: Record<PainPoint, {
   quality_control: {
     headline: "AI Quality Assurance",
     solution: "Secondary AI analyst evaluates every output with confidence scoring.",
-    feature: "ODA-RAG - Quality Analysis",
+    feature: "Evaluation and Quality Analysis",
   },
 };
 
@@ -221,7 +221,7 @@ export function getPersonalizedHeadline(context: UserContext): string {
   }
 
   // Default headline
-  return "The Enterprise Foundry for Trusted AI";
+  return "Production AI workflows built around your operation";
 }
 
 // Generate personalized feature highlights
@@ -248,7 +248,7 @@ export function getPersonalizedFeatures(context: UserContext): string[] {
     features.push(
       "Build agents with compliance baked in from day one",
       "Complete audit trails for every AI action",
-      "Unified dashboard for AI workforce visibility"
+      "Workflow visibility from signal to action"
     );
   }
 
@@ -342,15 +342,15 @@ export function getComparisonHighlights(context: UserContext): string[] {
 export function getContextualWelcome(context: UserContext): string {
   if (context.industry && industryMessaging[context.industry]) {
     const industry = industryNames[context.industry];
-    return `Welcome! I see you're in ${industry}. I'd love to show you how ArqAI helps ${industry.toLowerCase()} organizations govern their AI workforce with confidence. What would you like to know?`;
+    return `Welcome. I see you're in ${industry}. I can help map how ArqAI supports governed AI workflows for ${industry.toLowerCase()} operations. What workflow are you evaluating?`;
   }
 
   if (context.painPoints.length > 0) {
     const painPoint = painPointNames[context.painPoints[0]];
-    return `I understand ${painPoint.toLowerCase()} is a challenge you're facing. ArqAI is built specifically to solve this. Would you like to see how?`;
+    return `I understand ${painPoint.toLowerCase()} is a challenge you're facing. Want to look at how ArqAI would handle that inside a real workflow?`;
   }
 
-  return "Hi! I'm here to help you explore how ArqAI can help you build, run, and govern your enterprise AI workforce with confidence. What brings you here today?";
+  return "Hi. I can help you explore how ArqAI builds, governs, and operates production AI workflows. What workflow brings you here today?";
 }
 
 // Generate contextual follow-up based on card shown
@@ -447,34 +447,34 @@ function getPersonalizedSubheadline(cardType: string, context: UserContext): str
     case "casestudy":
     case "case-study":
       if (industryName) {
-        return `See how organizations like yours in ${industryName} are achieving compliance and scaling AI with confidence.`;
+        return `See how organizations in ${industryName} can improve workflow speed, evidence quality, and governance without handing decisions to a black box.`;
       }
-      return "See how leading enterprises are using ArqAI to govern their AI workforce with confidence.";
+      return "See how enterprises use ArqAI to turn AI into governed workflow execution.";
 
     case "roi":
       if (industryName) {
         return `Calculate the potential ROI of ArqAI for your ${industryName.toLowerCase()} organization.`;
       }
-      return "Estimate the potential return on investment from implementing ArqAI's enterprise AI governance platform.";
+      return "Estimate the potential return from improving a production workflow with ArqAI.";
 
     case "features":
       if (context.painPoints.length > 0) {
         const painPoint = painPointNames[context.painPoints[0]];
         return `Explore how ArqAI addresses ${painPoint.toLowerCase()} and more.`;
       }
-      return "Explore the comprehensive capabilities of the ArqAI Foundry platform.";
+      return "Explore the workflow, integration, governance, and operations capabilities behind ArqAI.";
 
     case "comparison":
       return "See how ArqAI's integrated approach compares to traditional solutions.";
 
     case "architecture":
-      return "The ArqAI Foundry is an integrated platform with three core pillars that work together for end-to-end AI governance.";
+      return "The ArqAI Operating Fabric connects workflow intelligence, governance, integration, and an operating loop for production AI.";
 
     case "timeline":
       if (context.companySize === "enterprise") {
         return "Our proven enterprise implementation methodology ensures a smooth deployment at scale.";
       }
-      return "Our proven implementation methodology ensures a smooth deployment of the ArqAI Foundry platform.";
+      return "Our implementation method keeps workflow scope, buildout, deployment, and operations connected.";
 
     case "integration":
       return "ArqAI integrates seamlessly with your existing infrastructure while maintaining complete governance.";

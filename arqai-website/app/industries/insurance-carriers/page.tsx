@@ -72,7 +72,7 @@ export default function InsuranceCarriersPage() {
           "Underwriting reviews with exceptions that cannot be missed",
           "Policyholder service workflows where status and next action need clarity",
         ],
-        productsHeading: "Start from the workflow pattern that already fits.",
+        productsHeading: "Accelerator paths for claims and leakage workflows.",
         productsBody:
           "Luma and Veyra cover claims intake, triage, investigation, and leakage-review patterns from the same governed foundation.",
         products: [

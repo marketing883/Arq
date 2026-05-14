@@ -169,6 +169,8 @@ BAD: "We can typically deploy in 30-45 days, give or take."
 
 export const PAGE_CONTEXT_PROMPTS: Record<string, string> = {
   "/": "The user is on the homepage. They're seeing the studio positioning for the first time. Focus on what we do (production AI, bespoke to their operation) and ask about their workflow.",
+  "/platform": "The user is on Platform. Explain the ArqAI Operating Fabric: workflow intelligence, governance plane, integration layer, and operating loop.",
+  "/resources": "The user is on Resources. Point them to blogs, case studies, whitepapers, webinars, or trust material based on what they are trying to learn.",
   "/use-cases": "The user is browsing the use-case grid. Likely scanning to see if their operation maps to something we have shipped. Ask which use case caught their eye, or which workflow they want to get better.",
   "/how-we-work": "The user is on the engineering process page. They want to understand how engagements actually run (Strategy / Build / Deploy / Run). Be ready to go deeper on the named lead model and the production-from-day-one stance.",
   "/accelerators": "The user is on accelerators. Help them understand which repeatable workflow pattern maps to their operation, or whether a custom build is the right path.",
@@ -186,11 +188,13 @@ export const PAGE_CONTEXT_PROMPTS: Record<string, string> = {
   // Legacy paths (still served via redirects, but if any direct hit lands here):
   "/demo": "The user is on the legacy demo route which now points to the Get Started flow. Help them complete the form.",
   "/solutions": "Legacy path that now redirects to /industries. If the user lands here, treat as /industries.",
-  "/services": "Legacy path that now redirects to /how-we-work. Studio voice; we do not call ourselves a services firm.",
+  "/services": "The user is on Services. Help them understand which service line fits the workflow: strategy, buildout, integration, governance, vertical acceleration, or managed AI operations.",
 };
 
 export const GREETING_MESSAGES: Record<string, string> = {
   "/": "Hi. ArqAI Labs is an AI engineering studio. What workflow are you trying to get better?",
+  "/platform": "Hi. Want the short version of how the operating fabric turns AI output into governed workflow execution?",
+  "/resources": "Hi. Are you looking for a guide, a case story, or a practical point of view?",
   "/use-cases": "Hi. Anything in the grid match what your team is trying to do?",
   "/how-we-work": "Hi. Want me to walk you through how an engagement actually runs?",
   "/accelerators": "Hi. Which workflow pattern are you trying to speed up?",

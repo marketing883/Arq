@@ -23,22 +23,22 @@ export const translations: Record<Locale, Record<string, string>> = {
   en: {
     // Navigation
     "nav.platform": "Platform",
-    "nav.solutions": "Solutions",
-    "nav.demo": "Request Demo",
-    "nav.pricing": "Pricing",
+    "nav.solutions": "Industries",
+    "nav.demo": "Get Started",
+    "nav.pricing": "Services",
     "nav.contact": "Contact",
 
     // Hero Section
-    "hero.tagline": "The Command Platform for Enterprise AI",
-    "hero.title.line1": "Intelligence,",
-    "hero.title.line2": "By Design",
-    "hero.description": "Move from high-risk AI chaos to a secure, compliant, and fully governed AI workforce. ArqAI is the industry's first integrated command platform for enterprise AI governance.",
-    "hero.cta.primary": "Request Demo",
+    "hero.tagline": "Production AI Workflows",
+    "hero.title.line1": "Workflow intelligence,",
+    "hero.title.line2": "built for operation",
+    "hero.description": "Move from scattered AI pilots to governed workflows that connect models, systems, evidence, review, and measurable business action.",
+    "hero.cta.primary": "Get Started",
     "hero.cta.secondary": "Explore Platform",
 
     // Problem Section
-    "problem.title": "The Enterprise AI Crisis",
-    "problem.subtitle": "Organizations are deploying AI without the governance framework to manage risk",
+    "problem.title": "The Production AI Gap",
+    "problem.subtitle": "Organizations can demo AI quickly, but production workflows need systems, controls, review, and evidence.",
     "problem.stat1.value": "73%",
     "problem.stat1.label": "of enterprises lack AI governance",
     "problem.stat2.value": "$4.2M",
@@ -47,19 +47,19 @@ export const translations: Record<Locale, Record<string, string>> = {
     "problem.stat3.label": "report shadow AI concerns",
 
     // Solution Section
-    "solution.title": "One Platform. Complete Control.",
-    "solution.subtitle": "ArqAI brings together everything you need to deploy AI safely at enterprise scale",
+    "solution.title": "One operating fabric. Real workflow control.",
+    "solution.subtitle": "ArqAI brings together orchestration, integration, governance, and managed operations for production AI workflows.",
     "solution.governance.title": "Governance",
-    "solution.governance.description": "Complete visibility and control over every AI agent in your organization",
+    "solution.governance.description": "Permissions, policy checks, approvals, human review, and audit trails designed into the workflow.",
     "solution.security.title": "Security",
     "solution.security.description": "Enterprise-grade security with SOC 2, HIPAA, and GDPR compliance built-in",
     "solution.orchestration.title": "Orchestration",
-    "solution.orchestration.description": "Deploy, manage, and scale AI agents across your entire infrastructure",
+    "solution.orchestration.description": "Connect AI actions across the systems, data, and tools your operation already uses.",
 
     // CTA Section
-    "cta.title": "Ready to take command of your AI?",
-    "cta.subtitle": "Join leading enterprises who trust ArqAI to govern their AI workforce.",
-    "cta.button": "Schedule Demo",
+    "cta.title": "Ready to improve one workflow?",
+    "cta.subtitle": "Bring us the process, systems, and operating metric. We will help map the production path.",
+    "cta.button": "Get Started",
 
     // Footer
     "footer.company": "Company",

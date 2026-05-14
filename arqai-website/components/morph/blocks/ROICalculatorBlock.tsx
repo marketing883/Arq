@@ -66,7 +66,7 @@ export function ROICalculatorBlock({ customizations }: ROICalculatorBlockProps) 
   const violationProbability = 0.15 * riskMultiplier; // Base 15% annual probability
   const riskMitigationValue = avgViolationCost * violationProbability;
 
-  // Productivity gains from AI workforce visibility
+  // Productivity gains from production AI workflow visibility
   const productivityGain = inputs.aiAgents * 5000; // $5k per agent per year from better management
 
   // Total annual value

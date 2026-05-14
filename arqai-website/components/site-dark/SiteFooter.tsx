@@ -2,28 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-
-const work = [
-  { name: "Services", href: "/services" },
-  { name: "Process", href: "/how-we-work" },
-  { name: "Accelerators", href: "/accelerators" },
-  { name: "Industries", href: "/industries" },
-];
-
-const company = [
-  { name: "About", href: "/about" },
-  { name: "Partners", href: "/partners" },
-  { name: "Careers", href: "/careers" },
-  { name: "Contact", href: "/contact" },
-  { name: "Trust", href: "/trust" },
-];
-
-const resources = [
-  { name: "Blog", href: "/blog" },
-  { name: "Case studies", href: "/case-studies" },
-  { name: "Whitepapers", href: "/whitepapers" },
-  { name: "Get Started", href: "/engage-us" },
-];
+import { footerNavigation } from "@/lib/data/site-navigation";
 
 export function SiteFooter() {
   return (
@@ -39,8 +18,9 @@ export function SiteFooter() {
               className="h-8 w-auto"
             />
           </Link>
-          <p style={{ color: "var(--ink-cream-d)", fontSize: 14, lineHeight: 1.55, marginTop: 16, maxWidth: 360 }}>
-            Agentic operating systems for enterprise workflows. An AI engineering studio backed by{" "}
+          <p style={{ color: "var(--ink-cream-d)", fontSize: 14, lineHeight: 1.55, marginTop: 16, maxWidth: 390 }}>
+            Production AI workflows, built around your operation. ArqAI Labs combines a focused AI engineering studio
+            with enterprise delivery depth from{" "}
             <a
               href="https://aciinfotech.com"
               target="_blank"
@@ -51,45 +31,28 @@ export function SiteFooter() {
             </a>
             .
           </p>
-          <div style={{ display: "flex", gap: 12, marginTop: 24 }}>
-            <span className="a-tag">SOC 2</span>
-            <span className="a-tag">HIPAA</span>
-            <span className="a-tag">GDPR</span>
+          <div style={{ display: "flex", gap: 12, marginTop: 24, flexWrap: "wrap" }}>
+            <span className="a-tag">SOC 2 aligned</span>
+            <span className="a-tag">HIPAA aware</span>
+            <span className="a-tag">GDPR aware</span>
           </div>
         </div>
-        <div>
-          <h5>Work</h5>
-          <ul>
-            {work.map((l) => (
-              <li key={l.name}>
-                <Link href={l.href}>{l.name}</Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <h5>Company</h5>
-          <ul>
-            {company.map((l) => (
-              <li key={l.name}>
-                <Link href={l.href}>{l.name}</Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <h5>Resources</h5>
-          <ul>
-            {resources.map((l) => (
-              <li key={l.name}>
-                <Link href={l.href}>{l.name}</Link>
-              </li>
-            ))}
-          </ul>
-        </div>
+
+        {footerNavigation.map((group) => (
+          <div key={group.title}>
+            <h5>{group.title}</h5>
+            <ul>
+              {group.links.map((link) => (
+                <li key={`${group.title}-${link.href}`}>
+                  <Link href={link.href}>{link.label}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </div>
       <div className="a-footer-bottom">
-        <span>© {new Date().getFullYear()} ArqAI Labs. All rights reserved.</span>
+        <span>(c) {new Date().getFullYear()} ArqAI Labs. All rights reserved.</span>
         <span style={{ display: "flex", gap: 16 }}>
           <Link href="/privacy">Privacy</Link>
           <Link href="/terms">Terms</Link>

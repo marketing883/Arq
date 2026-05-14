@@ -315,7 +315,7 @@ const placeholderWhitepaper: Whitepaper = {
     "Building a governance-first AI strategy",
     "Compliance frameworks for regulated industries",
     "Zero-trust security architecture for AI agents",
-    "Measuring and optimizing AI workforce ROI",
+    "Measuring and optimizing production AI workflow ROI",
     "Case studies from financial services and healthcare",
   ],
 };

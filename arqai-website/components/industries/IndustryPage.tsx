@@ -221,7 +221,7 @@ export function IndustryPage({ data }: { data: IndustryPageData }) {
           <div className="a-wrap">
             <div className="a-section-head">
               <div>
-                <span className="a-eyebrow">Proven starting points</span>
+                <span className="a-eyebrow">Accelerator starting points</span>
                 <h2 className="h-section" style={{ marginTop: 18 }}>
                   {data.productsHeading}
                 </h2>

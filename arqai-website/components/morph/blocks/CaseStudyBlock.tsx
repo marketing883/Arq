@@ -112,7 +112,7 @@ export function CaseStudyBlock({ customizations }: CaseStudyBlockProps) {
 
   // Personalized intro text
   const introText = customizations?.subheadline ||
-    "See how leading enterprises across industries are using ArqAI to govern their AI workforce with confidence.";
+    "See how enterprise teams use ArqAI Labs to govern production AI workflows with confidence.";
 
   return (
     <div className="space-y-8">

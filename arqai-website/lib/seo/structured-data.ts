@@ -28,19 +28,12 @@ export function generateOrganizationSchema(): Record<string, unknown> {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: "ArqAI",
+    name: "ArqAI Labs",
     url: "https://thearq.ai",
-    logo: "https://thearq.ai/logo.png",
+    logo: "https://thearq.ai/img/ArqAI-Labs-Logo.png",
     description:
-      "ArqAI is the industry's first integrated command platform for enterprise AI governance. Move from high-risk AI chaos to a secure, compliant, and fully governed AI workforce.",
+      "ArqAI Labs builds production AI workflows for enterprise operations, combining workflow strategy, agentic buildout, integration, governance, accelerators, and managed AI operations.",
     foundingDate: "2024",
-    founders: [
-      {
-        "@type": "Person",
-        name: "Habib Nassar",
-        jobTitle: "CEO & Co-Founder",
-      },
-    ],
     address: {
       "@type": "PostalAddress",
       addressLocality: "New Jersey",
@@ -49,21 +42,22 @@ export function generateOrganizationSchema(): Record<string, unknown> {
     contactPoint: {
       "@type": "ContactPoint",
       contactType: "sales",
-      email: "habib@thearq.ai",
-      url: "https://thearq.ai/demo",
+      url: "https://thearq.ai/engage-us",
     },
     sameAs: [
       "https://linkedin.com/company/arqai",
       "https://twitter.com/arqai",
     ],
     knowsAbout: [
+      "Agentic AI",
+      "Enterprise AI Workflows",
       "AI Governance",
       "Enterprise AI",
       "AI Security",
       "AI Compliance",
       "AI Orchestration",
-      "Machine Learning",
-      "Artificial Intelligence",
+      "Workflow Automation",
+      "Managed AI Operations",
     ],
   };
 }
@@ -75,32 +69,30 @@ export function generateSoftwareSchema(): Record<string, unknown> {
   return {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
-    name: "ArqAI Platform",
+    name: "ArqAI Operating Fabric",
     applicationCategory: "BusinessApplication",
     operatingSystem: "Web-based, Cloud",
     description:
-      "Enterprise AI command platform for deploying, governing, and managing AI agents securely with SOC 2, HIPAA, and GDPR compliance.",
+      "Operating fabric for production AI workflows across orchestration, enterprise integrations, human review, policy controls, audit evidence, and ongoing optimization.",
     url: "https://thearq.ai/platform",
     provider: {
       "@type": "Organization",
-      name: "ArqAI",
+      name: "ArqAI Labs",
       url: "https://thearq.ai",
     },
     offers: {
       "@type": "Offer",
-      price: "0",
-      priceCurrency: "USD",
       description: "Contact for enterprise pricing",
-      url: "https://thearq.ai/demo",
+      url: "https://thearq.ai/engage-us",
     },
     featureList: [
-      "AI Agent Orchestration",
-      "Enterprise Governance",
-      "Real-time Monitoring",
-      "Compliance Management",
-      "Security Controls",
+      "Agentic Workflow Orchestration",
+      "Enterprise Integration",
+      "Human Review Loops",
+      "Policy Controls",
       "Audit Trails",
-      "Multi-model Support",
+      "Evaluation and Monitoring",
+      "Managed AI Operations",
     ],
   };
 }
@@ -139,15 +131,15 @@ export function generateWebPageSchema(
     url: url,
     publisher: {
       "@type": "Organization",
-      name: "ArqAI",
+      name: "ArqAI Labs",
       logo: {
         "@type": "ImageObject",
-        url: "https://thearq.ai/logo.png",
+        url: "https://thearq.ai/img/ArqAI-Labs-Logo.png",
       },
     },
     isPartOf: {
       "@type": "WebSite",
-      name: "ArqAI",
+      name: "ArqAI Labs",
       url: "https://thearq.ai",
     },
   };
@@ -242,14 +234,14 @@ export function generateCaseStudySchema(caseStudy: CaseStudyData): Record<string
     image: caseStudy.image || "https://thearq.ai/og-image.png",
     author: {
       "@type": "Organization",
-      name: "ArqAI",
+      name: "ArqAI Labs",
     },
     publisher: {
       "@type": "Organization",
-      name: "ArqAI",
+      name: "ArqAI Labs",
       logo: {
         "@type": "ImageObject",
-        url: "https://thearq.ai/logo.png",
+        url: "https://thearq.ai/img/ArqAI-Labs-Logo.png",
       },
     },
     datePublished: caseStudy.publishedDate,
@@ -274,31 +266,31 @@ export const defaultFAQs: FAQData[] = [
   {
     question: "What is ArqAI?",
     answer:
-      "ArqAI is the industry's first integrated command platform for enterprise AI governance. It enables organizations to deploy, govern, and manage AI agents securely with built-in compliance for SOC 2, HIPAA, and GDPR.",
+      "ArqAI Labs is an AI engineering studio that builds production AI workflows around enterprise operations, with services and accelerators for strategy, buildout, integration, governance, and managed AI operations.",
   },
   {
-    question: "How does ArqAI ensure AI compliance?",
+    question: "How does ArqAI handle governance?",
     answer:
-      "ArqAI provides comprehensive compliance controls including real-time monitoring, audit trails, policy enforcement, and automated compliance reporting. The platform is designed to meet SOC 2, HIPAA, GDPR, and other regulatory requirements out of the box.",
+      "ArqAI designs governance into the workflow through permissions, policy checks, approval paths, human review, audit trails, exception handling, and evidence capture.",
   },
   {
     question: "What industries does ArqAI serve?",
     answer:
-      "ArqAI serves enterprise customers across Financial Services, Insurance, Healthcare, and other regulated industries that require secure and compliant AI deployments.",
+      "ArqAI focuses on healthcare payers, P&C insurance carriers, banking, retail, manufacturing, and other operations where AI has to work with complex data, policy, exceptions, and human accountability.",
   },
   {
-    question: "Can ArqAI integrate with existing AI models?",
+    question: "Can ArqAI integrate with existing enterprise systems?",
     answer:
-      "Yes, ArqAI supports multi-model orchestration and can integrate with various AI providers including OpenAI, Anthropic, and custom enterprise models. The platform acts as a unified control layer for all your AI agents.",
+      "Yes. ArqAI connects AI workflows to CRM, ERP, ITSM, data platforms, identity, knowledge bases, and operating tools without forcing rip-and-replace.",
   },
   {
     question: "How do I get started with ArqAI?",
     answer:
-      "You can request a demo at thearq.ai/demo. Our team will provide a personalized walkthrough of the platform and discuss how ArqAI can address your specific enterprise AI governance needs.",
+      "Start at thearq.ai/engage-us and share the workflow, systems, industry, and operating outcome you want to improve.",
   },
   {
-    question: "What security features does ArqAI provide?",
+    question: "What does ArqAI build?",
     answer:
-      "ArqAI includes enterprise-grade security features such as encryption at rest and in transit, role-based access controls, audit logging, anomaly detection, and integration with enterprise SSO providers.",
+      "ArqAI builds agentic workflows, copilots, automations, decision-support systems, integration layers, governance controls, and managed operating loops for enterprise work.",
   },
 ];

@@ -73,7 +73,7 @@ export default function RetailPage() {
           "Demand and replenishment decisions with too many disconnected signals",
           "E-commerce journeys where support, offers, and fulfillment need to stay aligned",
         ],
-        productsHeading: "Start from the workflow pattern that already fits.",
+        productsHeading: "Accelerator paths for retail workflow execution.",
         productsBody:
           "Nuvia accelerates loyalty and personalization patterns. Other retail workflows are built around the systems, stores, and constraints already in place.",
         products: [

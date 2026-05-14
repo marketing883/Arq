@@ -129,7 +129,7 @@ const featureCategories = [
       {
         title: "Unified Dashboard",
         description:
-          "Single pane of glass for your entire AI workforce with real-time visibility.",
+          "Real-time visibility across AI workflows, controls, performance, and handoffs.",
         capabilities: [
           "Agent inventory",
           "Performance metrics",

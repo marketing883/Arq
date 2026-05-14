@@ -105,11 +105,6 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        source: "/platform",
-        destination: "/how-it-works",
-        permanent: true,
-      },
-      {
         source: "/agents",
         destination: "/accelerators",
         permanent: true,

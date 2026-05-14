@@ -148,16 +148,16 @@ export function getIntentBasedEmailContent(intent: string, name: string): {
     demo: {
       subject: `Your ArqAI Demo Request, ${firstName}`,
       heading: "Your Demo is Being Prepared",
-      message: "We're excited to show you ArqAI in action! A solutions specialist will reach out within 24 hours to schedule your personalized demo and discuss your specific AI governance needs.",
-      ctaText: "View Our Platform",
+      message: "Thanks for sharing the workflow you want to improve. A member of the team will review the context and follow up to discuss the right production path.",
+      ctaText: "View the Platform",
       ctaUrl: "https://thearq.ai/platform",
     },
     pricing: {
       subject: `ArqAI Pricing Information for ${firstName}`,
       heading: "Custom Pricing Coming Your Way",
-      message: "Thank you for your interest in ArqAI pricing. Our team is preparing a custom quote tailored to your organization's needs. Expect to hear from us within 24 hours.",
-      ctaText: "Explore Solutions",
-      ctaUrl: "https://thearq.ai/solutions",
+      message: "Thank you for your interest in ArqAI pricing. Pricing depends on the workflow, systems, controls, and operating scope, so our team will follow up with the right questions before recommending a path.",
+      ctaText: "Explore Industries",
+      ctaUrl: "https://thearq.ai/industries",
     },
     support: {
       subject: `ArqAI Support Request Received`,
@@ -181,9 +181,9 @@ export function getIntentBasedEmailContent(intent: string, name: string): {
       ctaUrl: "mailto:hello@thearq.ai",
     },
     general: {
-      subject: `Thanks for Reaching Out, ${firstName}!`,
+      subject: `Thanks for Reaching Out, ${firstName}`,
       heading: "Message Received",
-      message: "Thank you for your interest in ArqAI. Our team will review your inquiry and reach out within 24 hours to discuss how we can help you build, run, and govern your AI workforce.",
+      message: "Thank you for your interest in ArqAI. Our team will review your inquiry and follow up to discuss how we can help you build, govern, and operate the workflow you have in mind.",
       ctaText: "Explore ArqAI",
       ctaUrl: "https://thearq.ai/platform",
     },

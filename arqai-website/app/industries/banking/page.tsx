@@ -73,7 +73,7 @@ export default function BankingPage() {
           "SAR narrative preparation that needs consistency and traceability",
           "Customer-risk monitoring where reviewers need the why, not just a score",
         ],
-        productsHeading: "Start from the workflow pattern that already fits.",
+        productsHeading: "Accelerator paths for financial-crime workflows.",
         productsBody:
           "Sentra accelerates alert triage, ownership review, sanctions context, and customer-risk workflows where the pattern fits.",
         products: [

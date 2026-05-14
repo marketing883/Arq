@@ -73,7 +73,7 @@ export default function ManufacturingPage() {
           "Shift handoffs where exceptions need continuity",
           "S&OP work where demand, capacity, inventory, and margin tradeoffs collide",
         ],
-        productsHeading: "Start from the workflow pattern that already fits.",
+        productsHeading: "Accelerator paths for industrial operating workflows.",
         productsBody:
           "Orbis accelerates supplier and dependency-risk workflows. Kyra supports service and incident operations. Plant-specific use cases are built around your stack and operating model.",
         products: [

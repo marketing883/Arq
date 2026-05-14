@@ -80,8 +80,8 @@ export function HomeStructuredData() {
   return (
     <StructuredData
       type="all"
-      pageTitle="ArqAI - The Command Platform for Enterprise AI"
-      pageDescription="Move from high-risk AI chaos to a secure, compliant, and fully governed AI workforce. ArqAI is the industry's first integrated command platform for enterprise AI governance."
+      pageTitle="ArqAI Labs - Production AI Workflows"
+      pageDescription="ArqAI Labs builds production AI workflows around enterprise operations: workflow strategy, agentic buildout, integration, governance, accelerators, and managed AI operations."
       pageUrl="https://thearq.ai"
       breadcrumbs={[{ name: "Home", url: "https://thearq.ai" }]}
     />
@@ -95,8 +95,8 @@ export function PlatformStructuredData() {
   return (
     <StructuredData
       type="all"
-      pageTitle="Platform | ArqAI"
-      pageDescription="Explore the ArqAI platform features including CAPC, TAO, ODA-RAG, and enterprise integrations for AI governance."
+      pageTitle="Platform | ArqAI Labs"
+      pageDescription="Explore the ArqAI Operating Fabric for governed production AI workflows: orchestration, integrations, evidence, controls, and operating loops."
       pageUrl="https://thearq.ai/platform"
       breadcrumbs={[
         { name: "Home", url: "https://thearq.ai" },
@@ -104,19 +104,19 @@ export function PlatformStructuredData() {
       ]}
       faqs={[
         {
-          question: "What is CAPC?",
+          question: "What is the ArqAI Operating Fabric?",
           answer:
-            "CAPC (Command Agent Protocol Core) is ArqAI's core orchestration engine that manages AI agent deployment, communication, and lifecycle across your enterprise.",
+            "The ArqAI Operating Fabric is the architecture we use to turn model output into governed workflow execution across orchestration, integrations, review, evidence, and monitoring.",
         },
         {
-          question: "What is TAO?",
+          question: "How does ArqAI handle governance?",
           answer:
-            "TAO (Trust Audit & Observability) provides real-time monitoring, compliance tracking, and audit capabilities for all AI operations in your organization.",
+            "Governance is designed into the workflow through permissions, policy checks, approval paths, human review, audit trails, and exception handling.",
         },
         {
-          question: "What is ODA-RAG?",
+          question: "Does ArqAI replace existing enterprise systems?",
           answer:
-            "ODA-RAG (Optimized Domain Adaptive Retrieval Augmented Generation) is ArqAI's advanced RAG system that enables AI agents to access and reason over your enterprise knowledge securely.",
+            "No. ArqAI connects AI workflows to the CRM, ERP, ITSM, data platforms, identity, knowledge, and operating tools already running the business.",
         },
       ]}
     />
@@ -130,23 +130,23 @@ export function SolutionsStructuredData() {
   return (
     <StructuredData
       type="all"
-      pageTitle="Solutions | ArqAI"
-      pageDescription="Enterprise AI solutions for Financial Services, Insurance, Healthcare, and other regulated industries."
-      pageUrl="https://thearq.ai/solutions"
+      pageTitle="Industries | ArqAI Labs"
+      pageDescription="Industry AI workflow systems for healthcare payers, insurance carriers, banking, retail, and manufacturing teams."
+      pageUrl="https://thearq.ai/industries"
       breadcrumbs={[
         { name: "Home", url: "https://thearq.ai" },
-        { name: "Solutions", url: "https://thearq.ai/solutions" },
+        { name: "Industries", url: "https://thearq.ai/industries" },
       ]}
       faqs={[
         {
           question: "How does ArqAI help financial services companies?",
           answer:
-            "ArqAI provides financial services companies with compliant AI deployment, real-time risk monitoring, and audit trails that meet SEC, FINRA, and SOX requirements.",
+            "ArqAI helps financial institutions improve AML, KYC, sanctions, customer-risk, and alert-triage workflows with explainable recommendations, cleaner evidence, and reviewer authority preserved.",
         },
         {
-          question: "Is ArqAI HIPAA compliant for healthcare?",
+          question: "How does ArqAI work with healthcare payer teams?",
           answer:
-            "Yes, ArqAI is designed with HIPAA compliance built-in, providing healthcare organizations with secure AI deployment that protects patient data and meets regulatory requirements.",
+            "ArqAI supports payment integrity, prior authorization, utilization management, and member operations with governed AI workflows designed around evidence, policy, and human review.",
         },
       ]}
     />

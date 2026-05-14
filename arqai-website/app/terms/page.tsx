@@ -38,16 +38,17 @@ export default function TermsPage() {
                   2. Description of Services
                 </h2>
                 <p className="text-[var(--arq-gray-600)] mb-4">
-                  ArqAI provides an enterprise AI command platform that enables
-                  organizations to deploy, govern, and manage AI agents securely.
+                  ArqAI provides AI engineering services, operating fabric, and
+                  accelerator patterns that help organizations build, govern, and
+                  operate production AI workflows securely.
                   Our services include:
                 </p>
                 <ul className="list-disc pl-6 text-[var(--arq-gray-600)] mb-4 space-y-2">
-                  <li>AI agent orchestration and deployment</li>
-                  <li>Enterprise governance and compliance tools</li>
+                  <li>Agentic workflow strategy, buildout, and deployment</li>
+                  <li>Enterprise governance, controls, and compliance support</li>
                   <li>Security and audit capabilities</li>
                   <li>Integration with existing enterprise systems</li>
-                  <li>Analytics and monitoring dashboards</li>
+                  <li>Evaluation, analytics, monitoring, and managed AI operations</li>
                 </ul>
               </section>
 

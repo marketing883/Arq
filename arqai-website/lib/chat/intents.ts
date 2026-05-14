@@ -360,17 +360,17 @@ export function detectCardTrigger(
 // Map pain points to relevant features for highlighting
 function painPointToFeature(painPoint: PainPoint): string {
   const mapping: Record<PainPoint, string> = {
-    compliance_complexity: "capc",
-    audit_trail: "tao",
-    ai_governance: "capc",
-    security_concerns: "tao",
-    scaling_ai: "oda-rag",
+    compliance_complexity: "governance",
+    audit_trail: "evidence",
+    ai_governance: "governance",
+    security_concerns: "controls",
+    scaling_ai: "operations",
     cost_reduction: "roi",
-    risk_management: "tao",
-    manual_processes: "capc",
-    lack_visibility: "oda-rag",
+    risk_management: "controls",
+    manual_processes: "workflow",
+    lack_visibility: "observability",
     integration_challenges: "integration",
-    quality_control: "oda-rag",
+    quality_control: "evaluation",
   };
   return mapping[painPoint] || "features";
 }

@@ -4,41 +4,41 @@ import { motion } from "framer-motion";
 
 const technologies = [
   {
-    abbr: "TAO",
-    name: "Trust-Aware Orchestration",
-    description: "Cryptographic identity & audit trails",
+    abbr: "GOV",
+    name: "Governance Plane",
+    description: "Permissions, approvals, and audit trails",
   },
   {
-    abbr: "CAPC",
-    name: "Compliance-Aware Compiler",
-    description: "Rules baked into agent behavior",
+    abbr: "POL",
+    name: "Workflow Policy",
+    description: "Rules built into agentic actions",
   },
   {
-    abbr: "ODA-RAG",
-    name: "Observability-Driven RAG",
-    description: "Real-time quality scoring",
+    abbr: "EVAL",
+    name: "Evaluation Layer",
+    description: "Quality, evidence, and performance review",
   },
 ];
 
 const layers = [
   {
     id: "agents",
-    label: "Industry AI Agents",
+    label: "Industry AI Workflows",
     sublabel: "Finance, Healthcare, Insurance, Telecom, Retail, Real Estate",
     color: "bg-accent",
     textColor: "text-base-opp",
   },
   {
     id: "blueprints",
-    label: "Pre-Built Agent Blueprints",
-    sublabel: "Reusable workflow blueprints for repeatable operating patterns",
+    label: "Accelerator Patterns",
+    sublabel: "Reusable workflow spines for repeatable operating patterns",
     color: "bg-accent/70",
     textColor: "text-base-opp",
   },
   {
     id: "governance",
-    label: "Governance Foundation",
-    sublabel: "TAO + CAPC + ODA-RAG",
+    label: "Operating Fabric",
+    sublabel: "Governance + policy + evaluation",
     color: "bg-base-opp",
     textColor: "text-base",
   },
@@ -149,15 +149,7 @@ export function GovernanceArchitecture({
                 <div className="flex items-center gap-3 mb-3">
                   <div className="w-12 h-12 rounded-lg bg-accent flex items-center justify-center shrink-0">
                     <span className="text-xs font-bold text-white">
-                      {tech.abbr === "ODA-RAG" ? (
-                        <span className="text-[9px] leading-tight text-center block">
-                          ODA
-                          <br />
-                          RAG
-                        </span>
-                      ) : (
-                        tech.abbr
-                      )}
+                      {tech.abbr}
                     </span>
                   </div>
                   <div>
