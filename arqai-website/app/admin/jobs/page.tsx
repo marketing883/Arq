@@ -71,7 +71,7 @@ export default function AdminJobsPage() {
       </div>
 
       {loading ? (
-        <p className="text-body-md text-text-muted">Loading…</p>
+        <p className="text-body-md text-text-muted">Loading...</p>
       ) : error ? (
         <p className="text-body-md text-red-600">{error}</p>
       ) : jobs.length === 0 ? (

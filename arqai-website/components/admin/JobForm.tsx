@@ -90,21 +90,36 @@ export function JobForm({
     }
   };
 
-  const buildPayload = () => ({
-    slug: values.slug.trim(),
-    title: values.title.trim(),
-    department: values.department.trim(),
-    location: values.location.trim(),
-    employment_type: values.employment_type,
-    short_description: values.short_description.trim() || null,
-    description: values.description.trim() || null,
-    requirements: values.requirements.trim() || null,
-    responsibilities: values.responsibilities.trim() || null,
-    salary_range: values.salary_range.trim() || null,
-    experience_level: values.experience_level || null,
-    remote: values.remote,
-    status: values.status,
-  });
+  const buildPayload = () => {
+    const payload: Record<string, string | boolean | null> = {
+      slug: values.slug.trim(),
+      title: values.title.trim(),
+      department: values.department.trim(),
+      location: values.location.trim(),
+      employment_type: values.employment_type,
+      remote: values.remote,
+      status: values.status,
+    };
+
+    const nullableFields = {
+      short_description: values.short_description.trim(),
+      description: values.description.trim(),
+      requirements: values.requirements.trim(),
+      responsibilities: values.responsibilities.trim(),
+      salary_range: values.salary_range.trim(),
+      experience_level: values.experience_level,
+    };
+
+    for (const [key, value] of Object.entries(nullableFields)) {
+      if (value) {
+        payload[key] = value;
+      } else if (mode === "edit") {
+        payload[key] = null;
+      }
+    }
+
+    return payload;
+  };
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -308,7 +323,7 @@ export function JobForm({
           disabled={saving}
           className="btn bg-accent text-white hover:bg-accent/90 disabled:opacity-50"
         >
-          {saving ? "Saving…" : mode === "create" ? "Create job" : "Save changes"}
+          {saving ? "Saving..." : mode === "create" ? "Create job" : "Save changes"}
         </button>
         <Link href="/admin/jobs" className="btn btn-outline">
           Cancel
@@ -320,7 +335,7 @@ export function JobForm({
             disabled={deleting}
             className="ml-auto btn border border-red-300 text-red-600 hover:bg-red-50 disabled:opacity-50"
           >
-            {deleting ? "Deleting…" : "Delete job"}
+            {deleting ? "Deleting..." : "Delete job"}
           </button>
         )}
       </div>

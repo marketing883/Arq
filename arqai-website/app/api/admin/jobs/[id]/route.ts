@@ -2,6 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
 import { z } from "zod";
 import { getAdminSession } from "@/lib/auth/admin-auth";
+import {
+  executeJobPostingMutationWithSchemaFallback,
+  getMissingSchemaColumn,
+  jobPostingSchemaDriftMessage,
+} from "@/lib/careers/job-postings";
 
 let supabase: SupabaseClient | null = null;
 function getClient() {
@@ -94,18 +99,27 @@ export async function PATCH(
     }
   }
 
-  const { data, error } = await client
-    .from("job_postings")
-    .update(updates)
-    .eq("id", id)
-    .select("*")
-    .single();
+  const { data, error, omittedColumns } = await executeJobPostingMutationWithSchemaFallback(
+    updates,
+    (nextUpdates) =>
+      client.from("job_postings").update(nextUpdates).eq("id", id).select("*").single()
+  );
   if (error) {
     console.error("[admin/jobs/:id] update error", error);
+    const missingColumn = getMissingSchemaColumn(error);
     return NextResponse.json(
-      { error: error.message || "Could not update job posting" },
+      {
+        error: missingColumn
+          ? jobPostingSchemaDriftMessage(missingColumn)
+          : error.message || "Could not update job posting",
+      },
       { status: 500 }
     );
+  }
+  if (omittedColumns.length > 0) {
+    console.warn("[admin/jobs/:id] updated job after omitting missing optional columns", {
+      omittedColumns,
+    });
   }
   return NextResponse.json({ job: data });
 }
