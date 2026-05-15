@@ -1881,17 +1881,6 @@ body:has(.a-nav) {
   letter-spacing: -0.02em;
   line-height: 1.05;
 }
-.arq-dark .a-mega-visual-focus {
-  width: fit-content;
-  max-width: 100%;
-  padding: 5px 8px;
-  border: 1px solid rgba(208,244,56,0.22);
-  border-radius: 999px;
-  background: rgba(208,244,56,0.08);
-  color: var(--ember);
-  font-size: 9.5px;
-  letter-spacing: .1em;
-}
 .arq-dark .a-mega-visual-svg {
   width: 100%;
   aspect-ratio: 1.18;
@@ -1969,8 +1958,12 @@ body:has(.a-nav) {
   letter-spacing: .08em;
   text-transform: uppercase;
 }
-.arq-dark .a-mega-v-module.is-contextual rect {
+.arq-dark .a-mega-v-module.is-active rect {
   stroke: rgba(208,244,56,0.35);
+  fill: rgba(208,244,56,0.12);
+}
+.arq-dark .a-mega-v-module.is-active text {
+  fill: var(--ember);
 }
 .arq-dark .a-mega-v-core circle {
   fill: rgba(208,244,56,0.18);

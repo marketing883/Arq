@@ -125,6 +125,16 @@ function PlatformVisual({ label }: { label: string }) {
 
 function ServicesVisual({ label, spotlight }: { label: string; spotlight: string | null }) {
   const stages = ["Map", "Build", "Launch", "Tune"];
+  const spotlightStage = spotlight
+    ? {
+        "Workflow Strategy": "Map",
+        "Agentic AI Buildout": "Build",
+        "Enterprise Integration": "Launch",
+        "Governance by Design": "Map",
+        "Vertical Acceleration": "Build",
+        "Managed AI Operations": "Tune",
+      }[spotlight] ?? null
+    : null;
 
   return (
     <svg viewBox="0 0 280 220" className="a-mega-visual-svg" role="img">
@@ -135,7 +145,7 @@ function ServicesVisual({ label, spotlight }: { label: string; spotlight: string
       {stages.map((stage, index) => (
         <g
           key={stage}
-          className={`a-mega-v-module${spotlight ? " is-contextual" : ""}`}
+          className={`a-mega-v-module${spotlightStage === stage ? " is-active" : ""}`}
           style={{ animationDelay: `${index * 0.16}s` }}
           transform={`translate(${142 + (index % 2) * 68} ${46 + Math.floor(index / 2) * 76})`}
         >
@@ -149,14 +159,6 @@ function ServicesVisual({ label, spotlight }: { label: string; spotlight: string
         <circle cx="140" cy="176" r="18" />
         <path d="M132 176h16M140 168v16" />
       </g>
-      {spotlight ? (
-        <g className="a-mega-v-spotlight" transform="translate(42 178)">
-          <rect width="112" height="24" rx="12" />
-          <text x="56" y="16" textAnchor="middle">
-            Active path
-          </text>
-        </g>
-      ) : null}
     </svg>
   );
 }
@@ -311,14 +313,12 @@ function MegaVisualSvg({ label, kind, spotlight }: { label: string; kind: MegaVi
 
 function MegaMenuVisual({ label, spotlight }: { label: string; spotlight: string | null }) {
   const visual = megaVisuals[label] ?? megaVisuals.Platform;
-  const spotlightText = spotlight && spotlight.length > 26 ? `${spotlight.slice(0, 23)}...` : spotlight;
 
   return (
     <div className="a-mega-visual" aria-hidden="true">
       <div className="a-mega-visual-copy">
         <span>{visual.kicker}</span>
         <strong>{visual.title}</strong>
-        {spotlightText ? <span className="a-mega-visual-focus">Showing {spotlightText}</span> : null}
       </div>
       <MegaVisualSvg label={label} kind={visual.kind} spotlight={spotlight} />
       <p>{visual.footer}</p>
