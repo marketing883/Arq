@@ -1881,48 +1881,173 @@ body:has(.a-nav) {
   letter-spacing: -0.02em;
   line-height: 1.05;
 }
+.arq-dark .a-mega-visual-focus {
+  width: fit-content;
+  max-width: 100%;
+  padding: 5px 8px;
+  border: 1px solid rgba(208,244,56,0.22);
+  border-radius: 999px;
+  background: rgba(208,244,56,0.08);
+  color: var(--ember);
+  font-size: 9.5px;
+  letter-spacing: .1em;
+}
 .arq-dark .a-mega-visual-svg {
   width: 100%;
   aspect-ratio: 1.18;
   display: block;
 }
-.arq-dark .a-mega-visual-ring {
+.arq-dark .a-mega-v-grid,
+.arq-dark .a-mega-v-blueprint,
+.arq-dark .a-mega-v-risk {
   fill: none;
   stroke: rgba(245,239,230,0.14);
-  stroke-width: 1.2;
-  stroke-dasharray: 7 9;
+  stroke-width: 1.1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
-.arq-dark .a-mega-visual-flow {
+.arq-dark .a-mega-v-grid {
+  opacity: .7;
+}
+.arq-dark .a-mega-v-blueprint {
+  stroke: rgba(245,239,230,0.22);
+}
+.arq-dark .a-mega-v-risk {
+  stroke: rgba(125,211,252,0.28);
+  stroke-dasharray: 5 8;
+}
+.arq-dark .a-mega-v-flow,
+.arq-dark .a-mega-v-pulse-line,
+.arq-dark .a-mega-v-spine {
   fill: none;
   stroke: rgba(208,244,56,0.72);
   stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
-  stroke-dasharray: 26 12;
+  stroke-dasharray: 24 13;
   animation: megaFlow 4.8s linear infinite;
 }
-.arq-dark .a-mega-visual-core circle:first-child {
-  fill: rgba(208,244,56,0.18);
-  stroke: rgba(208,244,56,0.7);
-  stroke-width: 1.5;
+.arq-dark .a-mega-v-flow-slow {
+  animation-duration: 6.4s;
+  stroke: rgba(125,211,252,0.5);
 }
-.arq-dark .a-mega-visual-core circle:last-child {
-  fill: var(--ember);
+.arq-dark .a-mega-v-pulse-line {
+  stroke: rgba(125,211,252,0.48);
+  stroke-dasharray: 12 10;
 }
-.arq-dark .a-mega-visual-node {
-  animation: megaNode 3.6s ease-in-out infinite;
+.arq-dark .a-mega-v-spine {
+  stroke-width: 1.2;
+  stroke-dasharray: 8 10;
 }
-.arq-dark .a-mega-visual-node rect {
-  fill: rgba(8,8,11,0.92);
+.arq-dark .a-mega-v-layer,
+.arq-dark .a-mega-v-module,
+.arq-dark .a-mega-v-tile,
+.arq-dark .a-mega-v-doc,
+.arq-dark .a-mega-v-pillar,
+.arq-dark .a-mega-v-pin {
+  animation: megaFloat 4.4s ease-in-out infinite;
+}
+.arq-dark .a-mega-v-layer rect,
+.arq-dark .a-mega-v-module rect,
+.arq-dark .a-mega-v-tile rect,
+.arq-dark .a-mega-v-doc rect {
+  fill: rgba(8,8,11,0.9);
   stroke: rgba(245,239,230,0.18);
 }
-.arq-dark .a-mega-visual-node text {
+.arq-dark .a-mega-v-layer text,
+.arq-dark .a-mega-v-module text,
+.arq-dark .a-mega-v-tile text,
+.arq-dark .a-mega-v-doc text,
+.arq-dark .a-mega-v-pillar text,
+.arq-dark .a-mega-v-pin text,
+.arq-dark .a-mega-v-spotlight text,
+.arq-dark .a-mega-v-caption {
   fill: var(--ink-cream-d);
   font-family: var(--mono);
   font-size: 9px;
   font-weight: 600;
   letter-spacing: .08em;
   text-transform: uppercase;
+}
+.arq-dark .a-mega-v-module.is-contextual rect {
+  stroke: rgba(208,244,56,0.35);
+}
+.arq-dark .a-mega-v-core circle {
+  fill: rgba(208,244,56,0.18);
+  stroke: rgba(208,244,56,0.7);
+  stroke-width: 1.5;
+}
+.arq-dark .a-mega-v-core path {
+  fill: none;
+  stroke: var(--ember);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+.arq-dark .a-mega-v-dot {
+  fill: var(--ember);
+  filter: drop-shadow(0 0 10px rgba(208,244,56,0.6));
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: megaPulse 2.2s ease-in-out infinite;
+}
+.arq-dark .a-mega-v-orbit {
+  fill: none;
+  stroke: rgba(245,239,230,0.16);
+  stroke-width: 1.15;
+  stroke-dasharray: 6 9;
+  animation: megaFlow 7.6s linear infinite;
+}
+.arq-dark .a-mega-v-orbit-inner {
+  stroke: rgba(208,244,56,0.24);
+  animation-duration: 5.8s;
+}
+.arq-dark .a-mega-v-tile.is-active rect,
+.arq-dark .a-mega-v-spotlight rect {
+  fill: rgba(208,244,56,0.16);
+  stroke: rgba(208,244,56,0.74);
+}
+.arq-dark .a-mega-v-tile.is-active text {
+  fill: var(--ember);
+}
+.arq-dark .a-mega-v-terrain {
+  fill: rgba(125,211,252,0.035);
+  stroke: rgba(245,239,230,0.17);
+  stroke-width: 1.2;
+  stroke-dasharray: 9 8;
+}
+.arq-dark .a-mega-v-pin circle:first-child {
+  fill: rgba(208,244,56,0.14);
+  stroke: rgba(208,244,56,0.7);
+  stroke-width: 1.35;
+}
+.arq-dark .a-mega-v-pin circle:nth-child(2) {
+  fill: var(--ember);
+}
+.arq-dark .a-mega-v-doc path {
+  fill: none;
+  stroke: rgba(245,239,230,0.23);
+  stroke-width: 1.1;
+  stroke-linecap: round;
+}
+.arq-dark .a-mega-v-search circle {
+  fill: rgba(208,244,56,0.13);
+  stroke: rgba(208,244,56,0.66);
+  stroke-width: 1.5;
+}
+.arq-dark .a-mega-v-search path {
+  fill: none;
+  stroke: var(--ember);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.arq-dark .a-mega-v-pillar rect {
+  fill: rgba(245,239,230,0.055);
+  stroke: rgba(245,239,230,0.17);
+}
+.arq-dark .a-mega-v-pillar.is-accent rect {
+  fill: rgba(208,244,56,0.1);
+  stroke: rgba(208,244,56,0.35);
 }
 .arq-dark .a-mega-visual p {
   color: var(--ink-cream-d);
@@ -1933,9 +2058,13 @@ body:has(.a-nav) {
 @keyframes megaFlow {
   to { stroke-dashoffset: -76; }
 }
-@keyframes megaNode {
-  0%, 100% { opacity: .68; }
+@keyframes megaFloat {
+  0%, 100% { opacity: .72; }
   50% { opacity: 1; }
+}
+@keyframes megaPulse {
+  0%, 100% { opacity: .55; transform: scale(.9); }
+  50% { opacity: 1; transform: scale(1.08); }
 }
 @media (max-width: 980px) {
   .arq-dark .a-mega { display: none; }

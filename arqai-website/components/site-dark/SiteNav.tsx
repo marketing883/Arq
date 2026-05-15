@@ -32,7 +32,7 @@ type MegaVisualConfig = {
   kicker: string;
   title: string;
   footer: string;
-  nodes: string[];
+  kind: "platform" | "services" | "accelerators" | "industries" | "resources" | "company";
 };
 
 const megaVisuals: Record<string, MegaVisualConfig> = {
@@ -40,99 +40,299 @@ const megaVisuals: Record<string, MegaVisualConfig> = {
     kicker: "Operating fabric",
     title: "Governed execution map",
     footer: "Workflow, policy, evidence, and action connected in one operating loop.",
-    nodes: ["Data", "Policy", "Review", "Action"],
+    kind: "platform",
   },
   Services: {
     kicker: "Service motion",
     title: "From problem to release",
     footer: "Discover, build, deploy, and improve around measurable operating outcomes.",
-    nodes: ["Map", "Build", "Deploy", "Operate"],
+    kind: "services",
   },
   Accelerators: {
     kicker: "Pattern library",
     title: "Reusable workflow starts",
     footer: "Domain-ready patterns tuned to your systems, controls, and review model.",
-    nodes: ["Claims", "AML", "Loyalty", "SecOps"],
+    kind: "accelerators",
   },
   Industries: {
     kicker: "Industry terrain",
     title: "Rules before automation",
     footer: "Model the operating context before agents touch high-stakes work.",
-    nodes: ["Rules", "Evidence", "Teams", "Risk"],
+    kind: "industries",
   },
   Resources: {
     kicker: "Knowledge hub",
     title: "Proof, guides, and field notes",
     footer: "Learn from practical delivery material shaped around production AI.",
-    nodes: ["Notes", "Proof", "Guides", "Events"],
+    kind: "resources",
   },
   Company: {
     kicker: "Studio depth",
     title: "AI plus enterprise delivery",
     footer: "Focused AI engineering backed by cloud, data, security, and managed operations.",
-    nodes: ["AI", "Cloud", "Data", "Security"],
+    kind: "company",
   },
 };
 
-function MegaMenuVisual({ label }: { label: string }) {
+function VisualDefs({ label }: { label: string }) {
+  return (
+    <defs>
+      <filter id={`mega-${label}-glow`} x="-60%" y="-60%" width="220%" height="220%">
+        <feGaussianBlur stdDeviation="5" result="blur" />
+        <feMerge>
+          <feMergeNode in="blur" />
+          <feMergeNode in="SourceGraphic" />
+        </feMerge>
+      </filter>
+      <linearGradient id={`mega-${label}-lime`} x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stopColor="#d0f438" stopOpacity="0.9" />
+        <stop offset="100%" stopColor="#7dd3fc" stopOpacity="0.45" />
+      </linearGradient>
+    </defs>
+  );
+}
+
+function PlatformVisual({ label }: { label: string }) {
+  const layers = [
+    { name: "Data", y: 48, width: 158 },
+    { name: "Policy", y: 82, width: 184 },
+    { name: "Review", y: 116, width: 168 },
+    { name: "Action", y: 150, width: 196 },
+  ];
+
+  return (
+    <svg viewBox="0 0 280 220" className="a-mega-visual-svg" role="img">
+      <VisualDefs label={label} />
+      <path className="a-mega-v-grid" d="M34 34H246M34 76H246M34 118H246M34 160H246M58 24V190M116 24V190M174 24V190M232 24V190" />
+      <path className="a-mega-v-flow" d="M42 36C82 26 116 38 144 64S188 96 232 84" />
+      {layers.map((layer, index) => (
+        <g key={layer.name} className="a-mega-v-layer" style={{ animationDelay: `${index * 0.18}s` }}>
+          <rect x={(280 - layer.width) / 2} y={layer.y} width={layer.width} height="22" rx="11" />
+          <text x="140" y={layer.y + 15} textAnchor="middle">
+            {layer.name}
+          </text>
+        </g>
+      ))}
+      <g className="a-mega-v-core" filter={`url(#mega-${label}-glow)`}>
+        <circle cx="140" cy="111" r="28" />
+        <path d="M127 111h26M140 98v26" />
+      </g>
+      <path className="a-mega-v-pulse-line" d="M140 139v36h72" />
+      <circle className="a-mega-v-dot" cx="212" cy="175" r="5" />
+    </svg>
+  );
+}
+
+function ServicesVisual({ label, spotlight }: { label: string; spotlight: string | null }) {
+  const stages = ["Map", "Build", "Launch", "Tune"];
+
+  return (
+    <svg viewBox="0 0 280 220" className="a-mega-visual-svg" role="img">
+      <VisualDefs label={label} />
+      <path className="a-mega-v-blueprint" d="M40 42h82v84H40zM54 60h54M54 78h36M54 96h48M54 114h28" />
+      <path className="a-mega-v-flow" d="M122 84C148 76 154 54 180 58C208 62 206 92 232 96" />
+      <path className="a-mega-v-flow a-mega-v-flow-slow" d="M122 112C150 120 158 156 188 156H238" />
+      {stages.map((stage, index) => (
+        <g
+          key={stage}
+          className={`a-mega-v-module${spotlight ? " is-contextual" : ""}`}
+          style={{ animationDelay: `${index * 0.16}s` }}
+          transform={`translate(${142 + (index % 2) * 68} ${46 + Math.floor(index / 2) * 76})`}
+        >
+          <rect width="58" height="42" rx="12" />
+          <text x="29" y="25" textAnchor="middle">
+            {stage}
+          </text>
+        </g>
+      ))}
+      <g className="a-mega-v-core" filter={`url(#mega-${label}-glow)`}>
+        <circle cx="140" cy="176" r="18" />
+        <path d="M132 176h16M140 168v16" />
+      </g>
+      {spotlight ? (
+        <g className="a-mega-v-spotlight" transform="translate(42 178)">
+          <rect width="112" height="24" rx="12" />
+          <text x="56" y="16" textAnchor="middle">
+            Active path
+          </text>
+        </g>
+      ) : null}
+    </svg>
+  );
+}
+
+function AcceleratorsVisual({ label, spotlight }: { label: string; spotlight: string | null }) {
+  const tiles = ["Veyra", "Luma", "Sentra", "Nuvia", "Kyra", "Orbis", "Astra", "Vantaq"];
+
+  return (
+    <svg viewBox="0 0 280 220" className="a-mega-visual-svg" role="img">
+      <VisualDefs label={label} />
+      <path className="a-mega-v-spine" d="M140 34v152" />
+      <circle className="a-mega-v-orbit" cx="140" cy="110" r="70" />
+      <circle className="a-mega-v-orbit a-mega-v-orbit-inner" cx="140" cy="110" r="42" />
+      {tiles.map((tile, index) => {
+        const angle = (Math.PI * 2 * index) / tiles.length - Math.PI / 2;
+        const x = 140 + Math.cos(angle) * 76 - 24;
+        const y = 110 + Math.sin(angle) * 62 - 12;
+        const active = spotlight === tile;
+
+        return (
+          <g
+            key={tile}
+            className={`a-mega-v-tile${active ? " is-active" : ""}`}
+            style={{ animationDelay: `${index * 0.08}s` }}
+            transform={`translate(${x.toFixed(1)} ${y.toFixed(1)})`}
+          >
+            <rect width="48" height="24" rx="9" />
+            <text x="24" y="16" textAnchor="middle">
+              {tile}
+            </text>
+          </g>
+        );
+      })}
+      <g className="a-mega-v-core" filter={`url(#mega-${label}-glow)`}>
+        <circle cx="140" cy="110" r="25" />
+        <path d="M127 110h26M140 97v26" />
+      </g>
+      <path className="a-mega-v-flow" d="M82 180C116 158 164 158 198 180" />
+    </svg>
+  );
+}
+
+function IndustriesVisual({ label }: { label: string }) {
+  const pins = [
+    { name: "Payer", x: 70, y: 66 },
+    { name: "P&C", x: 206, y: 64 },
+    { name: "Bank", x: 144, y: 104 },
+    { name: "Retail", x: 86, y: 160 },
+    { name: "MFG", x: 198, y: 158 },
+  ];
+
+  return (
+    <svg viewBox="0 0 280 220" className="a-mega-visual-svg" role="img">
+      <VisualDefs label={label} />
+      <path className="a-mega-v-terrain" d="M44 76L96 38L148 70L212 42L238 92L206 168L134 184L74 154Z" />
+      <path className="a-mega-v-flow" d="M70 66L144 104L206 64M144 104L86 160M144 104L198 158" />
+      {pins.map((pin, index) => (
+        <g key={pin.name} className="a-mega-v-pin" style={{ animationDelay: `${index * 0.18}s` }}>
+          <circle cx={pin.x} cy={pin.y} r="10" />
+          <circle cx={pin.x} cy={pin.y} r="3.5" />
+          <text x={pin.x} y={pin.y + 25} textAnchor="middle">
+            {pin.name}
+          </text>
+        </g>
+      ))}
+      <path className="a-mega-v-risk" d="M40 178h62M178 38h58" />
+    </svg>
+  );
+}
+
+function ResourcesVisual({ label }: { label: string }) {
+  const cards = [
+    { title: "Blog", x: 46, y: 52 },
+    { title: "Case", x: 116, y: 36 },
+    { title: "Guide", x: 154, y: 100 },
+    { title: "Event", x: 74, y: 126 },
+  ];
+
+  return (
+    <svg viewBox="0 0 280 220" className="a-mega-visual-svg" role="img">
+      <VisualDefs label={label} />
+      <circle className="a-mega-v-orbit" cx="142" cy="110" r="74" />
+      <path className="a-mega-v-flow" d="M74 96C96 72 132 62 166 74C198 86 216 116 210 148" />
+      {cards.map((card, index) => (
+        <g key={card.title} className="a-mega-v-doc" style={{ animationDelay: `${index * 0.2}s` }} transform={`translate(${card.x} ${card.y})`}>
+          <rect width="64" height="44" rx="10" />
+          <path d="M12 16h38M12 27h28" />
+          <text x="32" y="58" textAnchor="middle">
+            {card.title}
+          </text>
+        </g>
+      ))}
+      <g className="a-mega-v-search" filter={`url(#mega-${label}-glow)`}>
+        <circle cx="184" cy="150" r="25" />
+        <path d="M202 168l22 22" />
+        <path d="M174 150l9 8l16 -18" />
+      </g>
+    </svg>
+  );
+}
+
+function CompanyVisual({ label }: { label: string }) {
+  const pillars = [
+    { name: "AI", x: 50, h: 74 },
+    { name: "Data", x: 96, h: 96 },
+    { name: "Cloud", x: 142, h: 84 },
+    { name: "Sec", x: 188, h: 106 },
+  ];
+
+  return (
+    <svg viewBox="0 0 280 220" className="a-mega-visual-svg" role="img">
+      <VisualDefs label={label} />
+      <path className="a-mega-v-grid" d="M38 174h202M38 134h202M38 94h202M38 54h202" />
+      {pillars.map((pillar, index) => (
+        <g key={pillar.name} className={`a-mega-v-pillar${index % 2 === 1 ? " is-accent" : ""}`} style={{ animationDelay: `${index * 0.14}s` }}>
+          <rect x={pillar.x} y={174 - pillar.h} width="34" height={pillar.h} rx="12" />
+          <text x={pillar.x + 17} y={192} textAnchor="middle">
+            {pillar.name}
+          </text>
+        </g>
+      ))}
+      <path className="a-mega-v-flow" d="M67 88C100 52 164 50 205 76C228 90 236 116 222 140" />
+      <g className="a-mega-v-core" filter={`url(#mega-${label}-glow)`}>
+        <circle cx="220" cy="136" r="27" />
+        <path d="M209 136h22M220 125v22" />
+      </g>
+      <text className="a-mega-v-caption" x="140" y="34" textAnchor="middle">
+        Enterprise delivery stack
+      </text>
+    </svg>
+  );
+}
+
+function MegaVisualSvg({ label, kind, spotlight }: { label: string; kind: MegaVisualConfig["kind"]; spotlight: string | null }) {
+  switch (kind) {
+    case "platform":
+      return <PlatformVisual label={label} />;
+    case "services":
+      return <ServicesVisual label={label} spotlight={spotlight} />;
+    case "accelerators":
+      return <AcceleratorsVisual label={label} spotlight={spotlight} />;
+    case "industries":
+      return <IndustriesVisual label={label} />;
+    case "resources":
+      return <ResourcesVisual label={label} />;
+    case "company":
+      return <CompanyVisual label={label} />;
+    default:
+      return <PlatformVisual label={label} />;
+  }
+}
+
+function MegaMenuVisual({ label, spotlight }: { label: string; spotlight: string | null }) {
   const visual = megaVisuals[label] ?? megaVisuals.Platform;
+  const spotlightText = spotlight && spotlight.length > 26 ? `${spotlight.slice(0, 23)}...` : spotlight;
 
   return (
     <div className="a-mega-visual" aria-hidden="true">
       <div className="a-mega-visual-copy">
         <span>{visual.kicker}</span>
         <strong>{visual.title}</strong>
+        {spotlightText ? <span className="a-mega-visual-focus">Showing {spotlightText}</span> : null}
       </div>
-      <svg viewBox="0 0 280 220" className="a-mega-visual-svg" role="img">
-        <defs>
-          <filter id={`mega-${label}-glow`} x="-60%" y="-60%" width="220%" height="220%">
-            <feGaussianBlur stdDeviation="5" result="blur" />
-            <feMerge>
-              <feMergeNode in="blur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-        </defs>
-        <path
-          className="a-mega-visual-ring"
-          d="M68 54 C104 22 176 22 212 54 C250 88 250 146 212 180 C176 212 104 212 68 180 C30 146 30 88 68 54Z"
-        />
-        <path className="a-mega-visual-flow" d="M64 110 H110 L132 84 H176 L216 110 L176 136 H132 L110 110 H64" />
-        <g className="a-mega-visual-core" filter={`url(#mega-${label}-glow)`}>
-          <circle cx="140" cy="110" r="25" />
-          <circle cx="140" cy="110" r="7" />
-        </g>
-        {visual.nodes.map((node, index) => {
-          const points = [
-            { x: 44, y: 47 },
-            { x: 188, y: 39 },
-            { x: 202, y: 153 },
-            { x: 42, y: 158 },
-          ];
-          const point = points[index] ?? points[0];
-
-          return (
-            <g
-              key={node}
-              className="a-mega-visual-node"
-              style={{ animationDelay: `${index * 0.25}s` }}
-              transform={`translate(${point.x} ${point.y})`}
-            >
-              <rect width="58" height="24" rx="12" />
-              <text x="29" y="16" textAnchor="middle">
-                {node}
-              </text>
-            </g>
-          );
-        })}
-      </svg>
+      <MegaVisualSvg label={label} kind={visual.kind} spotlight={spotlight} />
       <p>{visual.footer}</p>
     </div>
   );
 }
 
 function MegaMenu({ item, onNavigate }: { item: SiteNavItem; onNavigate: () => void }) {
+  const [spotlight, setSpotlight] = useState<string | null>(null);
   const linkCount = item.sections.reduce((total, section) => total + section.links.length, 0);
+
+  useEffect(() => {
+    setSpotlight(null);
+  }, [item.label]);
 
   return (
     <div className={`a-mega${linkCount > 5 ? " a-mega-many" : ""}`} role="group" aria-label={`${item.label} menu`}>
@@ -145,13 +345,20 @@ function MegaMenu({ item, onNavigate }: { item: SiteNavItem; onNavigate: () => v
         </Link>
       </div>
 
-      <div className="a-mega-sections">
+      <div className="a-mega-sections" onMouseLeave={() => setSpotlight(null)}>
         {item.sections.map((section) => (
           <section key={section.title} className={`a-mega-section${section.links.length > 5 ? " is-wide" : ""}`}>
             <h4>{section.title}</h4>
             <div className={`a-mega-links${section.links.length > 5 ? " is-two-col" : ""}`}>
               {section.links.map((link) => (
-                <Link key={`${section.title}-${link.href}`} href={link.href} onClick={onNavigate} className="a-mega-link">
+                <Link
+                  key={`${section.title}-${link.href}`}
+                  href={link.href}
+                  onClick={onNavigate}
+                  onFocus={() => setSpotlight(link.label)}
+                  onMouseEnter={() => setSpotlight(link.label)}
+                  className="a-mega-link"
+                >
                   <span>{link.label}</span>
                   {link.description ? <small>{link.description}</small> : null}
                 </Link>
@@ -161,7 +368,7 @@ function MegaMenu({ item, onNavigate }: { item: SiteNavItem; onNavigate: () => v
         ))}
       </div>
 
-      <MegaMenuVisual label={item.label} />
+      <MegaMenuVisual label={item.label} spotlight={spotlight} />
     </div>
   );
 }
