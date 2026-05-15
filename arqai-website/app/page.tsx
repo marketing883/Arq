@@ -593,7 +593,6 @@ function AcceleratorsSection() {
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
                   <div className="name">
                     {p.name}
-                    <sup>™</sup>
                   </div>
                   <span className="a-tag">0{i + 1}</span>
                 </div>
