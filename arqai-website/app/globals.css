@@ -1708,7 +1708,7 @@ body:has(.a-nav) {
   position: absolute;
   left: var(--gutter);
   right: var(--gutter);
-  top: calc(100% + 10px);
+  top: calc(100% - 1px);
   display: grid;
   grid-template-columns: minmax(230px, .72fr) minmax(0, 1.35fr) minmax(220px, .68fr);
   gap: clamp(18px, 2.4vw, 32px);
@@ -1734,6 +1734,15 @@ body:has(.a-nav) {
   background-image: radial-gradient(rgba(245,239,230,0.05) 1px, transparent 1px);
   background-size: 18px 18px;
   opacity: .18;
+}
+.arq-dark .a-mega::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -18px;
+  height: 18px;
+  pointer-events: auto;
 }
 .arq-dark .a-mega > * {
   position: relative;
