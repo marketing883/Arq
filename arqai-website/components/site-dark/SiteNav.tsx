@@ -28,9 +28,114 @@ function ChevronIcon({ className = "" }: { className?: string }) {
   );
 }
 
-function MegaMenu({ item, onNavigate }: { item: SiteNavItem; onNavigate: () => void }) {
+type MegaVisualConfig = {
+  kicker: string;
+  title: string;
+  footer: string;
+  nodes: string[];
+};
+
+const megaVisuals: Record<string, MegaVisualConfig> = {
+  Platform: {
+    kicker: "Operating fabric",
+    title: "Governed execution map",
+    footer: "Workflow, policy, evidence, and action connected in one operating loop.",
+    nodes: ["Data", "Policy", "Review", "Action"],
+  },
+  Services: {
+    kicker: "Service motion",
+    title: "From problem to release",
+    footer: "Discover, build, deploy, and improve around measurable operating outcomes.",
+    nodes: ["Map", "Build", "Deploy", "Operate"],
+  },
+  Accelerators: {
+    kicker: "Pattern library",
+    title: "Reusable workflow starts",
+    footer: "Domain-ready patterns tuned to your systems, controls, and review model.",
+    nodes: ["Claims", "AML", "Loyalty", "SecOps"],
+  },
+  Industries: {
+    kicker: "Industry terrain",
+    title: "Rules before automation",
+    footer: "Model the operating context before agents touch high-stakes work.",
+    nodes: ["Rules", "Evidence", "Teams", "Risk"],
+  },
+  Resources: {
+    kicker: "Knowledge hub",
+    title: "Proof, guides, and field notes",
+    footer: "Learn from practical delivery material shaped around production AI.",
+    nodes: ["Notes", "Proof", "Guides", "Events"],
+  },
+  Company: {
+    kicker: "Studio depth",
+    title: "AI plus enterprise delivery",
+    footer: "Focused AI engineering backed by cloud, data, security, and managed operations.",
+    nodes: ["AI", "Cloud", "Data", "Security"],
+  },
+};
+
+function MegaMenuVisual({ label }: { label: string }) {
+  const visual = megaVisuals[label] ?? megaVisuals.Platform;
+
   return (
-    <div className="a-mega" role="group" aria-label={`${item.label} menu`}>
+    <div className="a-mega-visual" aria-hidden="true">
+      <div className="a-mega-visual-copy">
+        <span>{visual.kicker}</span>
+        <strong>{visual.title}</strong>
+      </div>
+      <svg viewBox="0 0 280 220" className="a-mega-visual-svg" role="img">
+        <defs>
+          <filter id={`mega-${label}-glow`} x="-60%" y="-60%" width="220%" height="220%">
+            <feGaussianBlur stdDeviation="5" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+        <path
+          className="a-mega-visual-ring"
+          d="M68 54 C104 22 176 22 212 54 C250 88 250 146 212 180 C176 212 104 212 68 180 C30 146 30 88 68 54Z"
+        />
+        <path className="a-mega-visual-flow" d="M64 110 H110 L132 84 H176 L216 110 L176 136 H132 L110 110 H64" />
+        <g className="a-mega-visual-core" filter={`url(#mega-${label}-glow)`}>
+          <circle cx="140" cy="110" r="25" />
+          <circle cx="140" cy="110" r="7" />
+        </g>
+        {visual.nodes.map((node, index) => {
+          const points = [
+            { x: 44, y: 47 },
+            { x: 188, y: 39 },
+            { x: 202, y: 153 },
+            { x: 42, y: 158 },
+          ];
+          const point = points[index] ?? points[0];
+
+          return (
+            <g
+              key={node}
+              className="a-mega-visual-node"
+              style={{ animationDelay: `${index * 0.25}s` }}
+              transform={`translate(${point.x} ${point.y})`}
+            >
+              <rect width="58" height="24" rx="12" />
+              <text x="29" y="16" textAnchor="middle">
+                {node}
+              </text>
+            </g>
+          );
+        })}
+      </svg>
+      <p>{visual.footer}</p>
+    </div>
+  );
+}
+
+function MegaMenu({ item, onNavigate }: { item: SiteNavItem; onNavigate: () => void }) {
+  const linkCount = item.sections.reduce((total, section) => total + section.links.length, 0);
+
+  return (
+    <div className={`a-mega${linkCount > 5 ? " a-mega-many" : ""}`} role="group" aria-label={`${item.label} menu`}>
       <div className="a-mega-feature">
         <span className="a-tag">{item.label}</span>
         <h3>{item.feature.title}</h3>
@@ -42,9 +147,9 @@ function MegaMenu({ item, onNavigate }: { item: SiteNavItem; onNavigate: () => v
 
       <div className="a-mega-sections">
         {item.sections.map((section) => (
-          <section key={section.title} className="a-mega-section">
+          <section key={section.title} className={`a-mega-section${section.links.length > 5 ? " is-wide" : ""}`}>
             <h4>{section.title}</h4>
-            <div className="a-mega-links">
+            <div className={`a-mega-links${section.links.length > 5 ? " is-two-col" : ""}`}>
               {section.links.map((link) => (
                 <Link key={`${section.title}-${link.href}`} href={link.href} onClick={onNavigate} className="a-mega-link">
                   <span>{link.label}</span>
@@ -55,6 +160,8 @@ function MegaMenu({ item, onNavigate }: { item: SiteNavItem; onNavigate: () => v
           </section>
         ))}
       </div>
+
+      <MegaMenuVisual label={item.label} />
     </div>
   );
 }
