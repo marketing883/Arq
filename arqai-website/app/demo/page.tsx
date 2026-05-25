@@ -1,9 +1,73 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { SiteNav } from "@/components/site-dark/SiteNav";
 import { SiteFooter } from "@/components/site-dark/SiteFooter";
+
+const V4_INDUSTRY_MAP: Record<string, string> = {
+  "healthcare-payer": "healthcare-payers",
+  "insurance-carrier": "insurance-carriers",
+  banking: "banking",
+  retail: "retail",
+  manufacturing: "manufacturing",
+  telecom: "other",
+  "enterprise-it": "other",
+  cybersecurity: "other",
+  other: "other",
+};
+
+const V4_WORKFLOW_MAP: Record<string, string> = {
+  claims: "claims-triage",
+  "fraud-aml": "fraud-leakage",
+  loyalty: "customer-operations",
+  "network-ops": "customer-operations",
+  "supply-chain": "supply-chain",
+  "service-ops": "customer-operations",
+  "security-ops": "governance",
+  knowledge: "enterprise-integration",
+};
+
+const V4_DEPLOYMENT_MAP: Record<string, string> = {
+  "our-cloud": "arq-managed",
+  "your-cloud": "customer-cloud",
+  "on-prem": "hybrid",
+};
+
+const V4_HORIZON_MAP: Record<string, string> = {
+  weeks: "now",
+  quarter: "quarter",
+  "multi-quarter": "half-year",
+};
+
+const V4_HUMAN_LABELS = {
+  industry: {
+    "healthcare-payer": "Healthcare payer",
+    "insurance-carrier": "Insurance carrier",
+    banking: "Banking",
+    retail: "Retail",
+    telecom: "Telecom",
+    manufacturing: "Manufacturing",
+    "enterprise-it": "Enterprise IT",
+    cybersecurity: "Cybersecurity",
+    other: "Other",
+  } as Record<string, string>,
+  workflows: {
+    claims: "Claims",
+    "fraud-aml": "Fraud / AML",
+    loyalty: "Loyalty",
+    "network-ops": "Network ops",
+    "supply-chain": "Supply chain",
+    "service-ops": "Service ops",
+    "security-ops": "Security ops",
+    knowledge: "Knowledge",
+  } as Record<string, string>,
+  approach: { accelerator: "Accelerator-first", hybrid: "Hybrid build", bespoke: "Bespoke build" } as Record<string, string>,
+  deployment: { "our-cloud": "Our cloud", "your-cloud": "Your cloud", "on-prem": "On-prem" } as Record<string, string>,
+  sensitivity: { public: "Public data", regulated: "Regulated", restricted: "PHI / PII" } as Record<string, string>,
+  horizon: { weeks: "Weeks", quarter: "One quarter", "multi-quarter": "Multi-quarter" } as Record<string, string>,
+};
 
 const industries = [
   { value: "healthcare-payers", label: "Healthcare payers" },
@@ -118,15 +182,55 @@ const emptyForm: EngageFormData = {
 };
 
 export default function EngageUsPage() {
+  return (
+    <Suspense fallback={null}>
+      <EngageUsPageInner />
+    </Suspense>
+  );
+}
+
+function EngageUsPageInner() {
+  const params = useSearchParams();
   const [formData, setFormData] = useState<EngageFormData>(emptyForm);
   const [selectedSystems, setSelectedSystems] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
   const [formLoadedAt, setFormLoadedAt] = useState(0);
+  const [v4Brief, setV4Brief] = useState<string>("");
 
   useEffect(() => {
     setFormLoadedAt(Date.now());
-  }, []);
+    if (!params) return;
+    const industry = params.get("industry");
+    const workflowsParam = params.get("workflows");
+    const approach = params.get("approach");
+    const deployment = params.get("deployment");
+    const sensitivity = params.get("sensitivity");
+    const horizon = params.get("horizon");
+    if (!industry && !workflowsParam && !approach && !deployment && !sensitivity && !horizon) return;
+
+    const workflows = workflowsParam ? workflowsParam.split(",").filter(Boolean) : [];
+    const primaryWorkflow = workflows[0];
+    const workflowHumans = workflows.map((w) => V4_HUMAN_LABELS.workflows[w] || w).join(", ");
+
+    setFormData((prev) => ({
+      ...prev,
+      industry: industry ? V4_INDUSTRY_MAP[industry] ?? prev.industry : prev.industry,
+      workflowArea: primaryWorkflow ? V4_WORKFLOW_MAP[primaryWorkflow] ?? prev.workflowArea : prev.workflowArea,
+      deploymentModel: deployment ? V4_DEPLOYMENT_MAP[deployment] ?? prev.deploymentModel : prev.deploymentModel,
+      timeline: horizon ? V4_HORIZON_MAP[horizon] ?? prev.timeline : prev.timeline,
+    }));
+
+    const lines = [
+      industry ? `Industry: ${V4_HUMAN_LABELS.industry[industry] || industry}` : null,
+      workflows.length ? `Workflows: ${workflowHumans}` : null,
+      approach ? `Approach: ${V4_HUMAN_LABELS.approach[approach] || approach}` : null,
+      deployment ? `Deployment: ${V4_HUMAN_LABELS.deployment[deployment] || deployment}` : null,
+      sensitivity ? `Data sensitivity: ${V4_HUMAN_LABELS.sensitivity[sensitivity] || sensitivity}` : null,
+      horizon ? `Time horizon: ${V4_HUMAN_LABELS.horizon[horizon] || horizon}` : null,
+    ].filter(Boolean) as string[];
+    setV4Brief(lines.join("\n"));
+  }, [params]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -140,6 +244,7 @@ export default function EngageUsPage() {
       `Deployment environment: ${formData.deploymentModel || "not provided"}`,
       `Success metric: ${formData.successMetric || "not provided"}`,
       formData.constraint ? `Important constraint: ${formData.constraint}` : null,
+      v4Brief ? `--- Match console configuration ---\n${v4Brief}` : null,
     ]
       .filter(Boolean)
       .join("\n");
@@ -252,6 +357,52 @@ export default function EngageUsPage() {
                         autoComplete="off"
                       />
                     </div>
+
+                    {v4Brief && (
+                      <div
+                        style={{
+                          marginBottom: 24,
+                          padding: 18,
+                          background: "rgba(208, 244, 56, 0.04)",
+                          border: "1px solid rgba(208, 244, 56, 0.2)",
+                          borderRadius: 8,
+                        }}
+                      >
+                        <div
+                          style={{
+                            fontFamily: "var(--mono)",
+                            fontSize: 10,
+                            letterSpacing: "0.22em",
+                            textTransform: "uppercase",
+                            color: "var(--ember)",
+                            marginBottom: 10,
+                          }}
+                        >
+                          ✓ From the match console
+                        </div>
+                        <pre
+                          style={{
+                            margin: 0,
+                            color: "var(--ink-cream-d, rgba(233, 220, 194, 0.75))",
+                            fontSize: 12.5,
+                            lineHeight: 1.6,
+                            fontFamily: "var(--mono)",
+                            whiteSpace: "pre-wrap",
+                          }}
+                        >
+                          {v4Brief}
+                        </pre>
+                        <div
+                          style={{
+                            marginTop: 10,
+                            fontSize: 12,
+                            color: "var(--ink-muted)",
+                          }}
+                        >
+                          Your selections have prefilled the form below. Edit any field that&apos;s off.
+                        </div>
+                      </div>
+                    )}
 
                     <FormSection eyebrow="01" title="Who should we speak with?">
                       <div className="form-grid two">
