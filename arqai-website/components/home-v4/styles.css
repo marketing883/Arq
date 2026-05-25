@@ -15,14 +15,17 @@
   --label-cream: #e9dcc2;
 
   min-height: 100vh;
+  min-height: 100svh;
   background:
     radial-gradient(ellipse at top, rgba(176, 138, 77, 0.08), transparent 60%),
     radial-gradient(ellipse at bottom, rgba(208, 244, 56, 0.04), transparent 50%),
     linear-gradient(180deg, #0c0a08 0%, #0a0806 100%);
   position: relative;
   overflow: hidden;
-  padding-top: clamp(100px, 12vh, 140px);
-  padding-bottom: clamp(40px, 6vh, 80px);
+  padding-top: clamp(32px, 4.5vh, 56px);
+  padding-bottom: clamp(28px, 3.5vh, 48px);
+  display: flex;
+  flex-direction: column;
 }
 
 .v4-stage::before {
@@ -37,53 +40,38 @@
 
 .v4-wrap {
   max-width: 1240px;
+  width: 100%;
   margin: 0 auto;
   padding: 0 clamp(20px, 4vw, 40px);
   position: relative;
   z-index: 2;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
-.v4-plate {
-  text-align: center;
-  margin-bottom: 28px;
+.v4-brand {
+  display: flex;
+  justify-content: center;
+  margin-bottom: clamp(12px, 2vh, 22px);
 }
 
-.v4-plate-logo {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-  color: var(--brass);
-  padding: 8px 18px;
-  border: 1px solid rgba(176, 138, 77, 0.3);
-  border-radius: 2px;
-  background: linear-gradient(180deg, rgba(176, 138, 77, 0.05), rgba(0, 0, 0, 0.2));
-  box-shadow:
-    inset 0 1px 0 rgba(176, 138, 77, 0.15),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.4);
-}
-
-.v4-plate-logo .dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--brass);
-  box-shadow: 0 0 8px var(--brass-glow);
-  animation: v4-pulse 2.4s ease-in-out infinite;
+.v4-brand img {
+  height: clamp(28px, 4vh, 40px);
+  width: auto;
+  opacity: 0.95;
 }
 
 .v4-title {
   font-family: var(--display);
-  font-size: clamp(40px, 6vw, 84px);
+  font-size: clamp(32px, 4.6vw, 60px);
   font-weight: 500;
   letter-spacing: -0.025em;
-  line-height: 1.02;
+  line-height: 1.04;
   color: var(--label-cream);
-  margin: 22px auto 18px;
+  margin: 0 auto clamp(18px, 3vh, 32px);
   max-width: 22ch;
+  text-align: center;
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.04), 0 2px 8px rgba(0, 0, 0, 0.6);
 }
 
@@ -93,15 +81,6 @@
   text-shadow: 0 0 24px rgba(208, 244, 56, 0.25);
 }
 
-.v4-sub {
-  font-family: var(--mono);
-  font-size: 12px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: rgba(233, 220, 194, 0.5);
-  margin: 0 0 36px;
-}
-
 /* The panel itself */
 .v4-panel {
   position: relative;
@@ -109,12 +88,16 @@
     linear-gradient(180deg, var(--panel-lt) 0%, var(--panel-md) 12%, var(--panel-dk) 100%);
   border: 1px solid var(--panel-edge);
   border-radius: 14px;
-  padding: clamp(20px, 3vw, 36px);
+  padding: clamp(16px, 2.4vw, 30px);
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.06) inset,
     0 -2px 0 rgba(0, 0, 0, 0.6) inset,
     0 30px 80px rgba(0, 0, 0, 0.6),
     0 0 0 1px rgba(176, 138, 77, 0.08);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
 }
 
 .v4-panel::before,
@@ -131,15 +114,17 @@
 .v4-panel::after { top: 12px; right: 12px; }
 
 .v4-panel-body {
+  flex: 1;
+  min-height: 0;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 24px;
+  gap: 18px;
 }
 
 @media (min-width: 900px) {
   .v4-panel-body {
     grid-template-columns: 1fr 1.4fr 1fr;
-    gap: 28px;
+    gap: 22px;
     align-items: stretch;
   }
 }
@@ -157,7 +142,7 @@
     inset 0 0 0 7px #2a2118,
     inset 0 0 80px rgba(92, 242, 138, 0.08),
     inset 0 0 12px rgba(0, 0, 0, 0.8);
-  min-height: 320px;
+  min-height: 280px;
   display: flex;
   flex-direction: column;
 }
@@ -575,17 +560,21 @@
 
 /* Skip affordance */
 .v4-skip {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
   text-align: center;
-  margin-top: 32px;
   font-family: var(--mono);
-  font-size: 10.5px;
+  font-size: 10px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: rgba(233, 220, 194, 0.4);
+  z-index: 3;
 }
 
 .v4-skip a {
-  color: rgba(233, 220, 194, 0.6);
+  color: rgba(233, 220, 194, 0.5);
   text-decoration: none;
 }
 .v4-skip a:hover { color: var(--ember); }

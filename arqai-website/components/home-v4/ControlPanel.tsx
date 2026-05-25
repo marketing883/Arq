@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import {
   resolve,
@@ -403,20 +404,19 @@ export default function ControlPanel() {
   return (
     <div className="v4-stage">
       <div className="v4-wrap">
-        <div className="v4-plate">
-          <div className="v4-plate-logo">
-            <span className="dot" />
-            ArqAI Labs · Match Console · MK-IV
-          </div>
+        <div className="v4-brand">
+          <Image
+            src="/img/ArqAI-Labs-Logo-light.png"
+            alt="ArqAI Labs"
+            width={720}
+            height={240}
+            priority
+          />
         </div>
 
         <h1 className="v4-title">
-          Configure your operation.<br />
-          We <em>resolve</em> the fit.
+          Configure your operation. We <em>resolve</em> the fit.
         </h1>
-        <p className="v4-sub">
-          Turn the dials. Flip the switches. The screen tells you what we&apos;d build.
-        </p>
 
         <div className="v4-panel">
           <div className="v4-panel-body">

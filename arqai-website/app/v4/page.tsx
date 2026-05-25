@@ -33,13 +33,11 @@ export default async function V4Page() {
 
   return (
     <div className="arq-dark min-h-screen">
-      <SiteNav />
       <main>
         <ControlPanel />
         <section id="next" className="a-section" style={{ paddingTop: 80, paddingBottom: 80 }}>
           <div className="a-wrap" style={{ textAlign: "center" }}>
-            <span className="a-eyebrow">Below the panel</span>
-            <h2 className="h-section" style={{ marginTop: 18, maxWidth: "22ch", marginInline: "auto" }}>
+            <h2 className="h-section" style={{ maxWidth: "22ch", marginInline: "auto" }}>
               Rest of the page coming next.
             </h2>
             <p className="lede" style={{ marginTop: 20, marginInline: "auto" }}>
