@@ -387,9 +387,7 @@
 .v5-hero-cta svg { transition: transform 0.2s; }
 .v5-hero-cta:hover svg { transform: translateX(4px); }
 
-/* Bottom-left cut — wide white rectangle with anti-radius top-right corner.
-   Sized to match the cutout shape in home-hero-v5.jpg so the slider's bottom-left
-   region stays consistent across all slides. */
+/* Bottom-left cut — white rectangle with a simple rounded top-right corner. */
 .v5-hero-cut-bl {
   position: absolute;
   bottom: 0;
@@ -397,22 +395,9 @@
   width: clamp(200px, 18vw, 300px);
   height: clamp(72px, 10vh, 100px);
   background: var(--v5-page);
+  border-top-right-radius: var(--v5-notch);
   z-index: 8;
   pointer-events: none;
-}
-
-.v5-hero-cut-bl::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: calc(-1 * var(--v5-notch));
-  width: var(--v5-notch);
-  height: var(--v5-notch);
-  background: radial-gradient(
-    circle at top left,
-    var(--v5-page) var(--v5-notch),
-    transparent calc(var(--v5-notch) + 0.5px)
-  );
 }
 
 /* Slide indicators — sit on the white area below/over the bottom-left cut */
