@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import V5Nav from "./V5Nav";
 
 type Slide = {
   bg: string;
@@ -79,6 +80,7 @@ export default function Hero() {
 
   return (
     <section className="v5-hero" aria-roledescription="carousel">
+      <V5Nav />
       <div className="v5-hero-bg">
         {SLIDES.map((s, i) => (
           <div
@@ -110,6 +112,8 @@ export default function Hero() {
           </Link>
         </div>
       </div>
+
+      <div className="v5-hero-cut-bl" aria-hidden="true" />
 
       <div className="v5-hero-indicators" role="tablist" aria-label="Slide selector">
         {SLIDES.map((_, i) => (
