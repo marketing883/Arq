@@ -850,9 +850,11 @@
 
 .v5-section-2-doodle {
   position: absolute;
-  left: -8%;
-  top: 22%;
-  width: 56%;
+  left: 0;
+  right: 0;
+  top: 38%;
+  width: 100%;
+  max-width: none;
   height: auto;
   pointer-events: none;
   z-index: 1;
@@ -879,6 +881,17 @@
   display: flex;
   align-items: flex-end;
   gap: 0;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  z-index: 3;
+  transition: transform 0.18s;
+}
+
+.v5-section-2-icons:hover { transform: translateY(-2px); }
+.v5-section-2-icons:hover .v5-section-2-icon.front {
+  box-shadow: 0 10px 22px rgba(249, 115, 22, 0.55);
 }
 
 .v5-section-2-icon {
@@ -907,4 +920,103 @@
   .v5-section-2-doodle { display: none; }
   .v5-section-2-image { max-width: 100%; }
   .v5-section-2-icon { width: 36px; height: 36px; }
+}
+
+/* === Video Lightbox === */
+.v5-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: clamp(16px, 4vw, 48px);
+  opacity: 0;
+  animation: v5-lightbox-in 0.32s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.v5-lightbox.is-open { opacity: 1; }
+
+.v5-lightbox-glass {
+  position: absolute;
+  inset: 0;
+  background: rgba(11, 7, 40, 0.55);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+}
+
+.v5-lightbox-panel {
+  position: relative;
+  width: 100%;
+  max-width: 1080px;
+  aspect-ratio: 16 / 9;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 20px;
+  box-shadow:
+    0 40px 100px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  overflow: hidden;
+  transform: scale(0.96);
+  animation: v5-lightbox-panel-in 0.42s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.v5-lightbox-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 4;
+  width: 40px;
+  height: 40px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: background 0.18s, border-color 0.18s;
+}
+
+.v5-lightbox-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.v5-lightbox-frame {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.18), rgba(11, 7, 40, 0.6));
+}
+
+.v5-lightbox-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.v5-lightbox-placeholder p {
+  margin: 0;
+  font-family: var(--mono, "IBM Plex Mono", monospace);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+@keyframes v5-lightbox-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes v5-lightbox-panel-in {
+  from { transform: scale(0.94) translateY(8px); opacity: 0; }
+  to { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v5-lightbox, .v5-lightbox-panel { animation: none; opacity: 1; transform: none; }
 }

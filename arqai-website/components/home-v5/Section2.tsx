@@ -1,9 +1,18 @@
 import Image from "next/image";
 import Link from "next/link";
+import VideoLightbox from "./VideoLightbox";
 
 export default function Section2() {
   return (
     <section id="v5-next" className="v5-section v5-section-2">
+      <Image
+        src="/img/Dooodle.png"
+        alt=""
+        width={1500}
+        height={550}
+        className="v5-section-2-doodle"
+        aria-hidden="true"
+      />
       <div className="v5-section-2-wrap">
         <div className="v5-section-2-top">
           <h2 className="v5-section-2-h2">
@@ -49,15 +58,6 @@ export default function Section2() {
           </div>
         </div>
 
-        <Image
-          src="/img/Dooodle.png"
-          alt=""
-          width={1500}
-          height={550}
-          className="v5-section-2-doodle"
-          aria-hidden="true"
-        />
-
         <div className="v5-section-2-image">
           <Image
             src="/img/2nd-scroll-img.png"
@@ -67,14 +67,7 @@ export default function Section2() {
             sizes="(max-width: 900px) 100vw, 1240px"
             priority={false}
           />
-          <div className="v5-section-2-icons" aria-hidden="true">
-            <div className="v5-section-2-icon back" />
-            <div className="v5-section-2-icon front">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="white">
-                <path d="M8 5v14l11-7z" />
-              </svg>
-            </div>
-          </div>
+          <VideoLightbox />
         </div>
       </div>
     </section>
