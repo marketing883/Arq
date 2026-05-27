@@ -12,7 +12,7 @@
   --v5-ink-muted: rgba(255, 255, 255, 0.55);
   --v5-cream: #f7f5ff;
   --v5-page: #ffffff;
-  --v5-notch: 36px;
+  --v5-notch: 48px;
   --v5-cut: 96px;
 
   background: var(--v5-page);
@@ -21,12 +21,12 @@
   min-height: 100vh;
 }
 
-/* === Hero shell — shaped dark container sitting inside the white page === */
+/* === Hero shell — dark full-bleed shape sitting in a white page === */
 .v5-hero {
   position: relative;
   margin: 0 auto;
-  height: calc(100vh - 0px);
-  height: calc(100svh - 0px);
+  height: 100vh;
+  height: 100svh;
   min-height: 640px;
   overflow: hidden;
   isolation: isolate;
@@ -40,12 +40,12 @@
   left: 0;
   right: 0;
   z-index: 50;
-  padding: 0 clamp(20px, 3vw, 36px);
+  padding: 0 clamp(20px, 3vw, 40px);
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: stretch;
   gap: 0;
-  height: 88px;
+  height: 100px;
   pointer-events: none;
 }
 
@@ -73,12 +73,12 @@
 .v5-nav-pill {
   position: relative;
   background: var(--v5-page);
-  padding: 0 18px;
+  padding: 0 24px;
   display: flex;
   align-items: center;
-  gap: 2px;
+  gap: 8px;
   border-radius: 0 0 var(--v5-notch) var(--v5-notch);
-  height: 72px;
+  height: 84px;
   margin-top: 0;
 }
 
@@ -344,35 +344,35 @@
 .v5-hero-wrap {
   position: relative;
   z-index: 2;
-  max-width: 1320px;
+  max-width: 1440px;
   margin: 0 auto;
-  padding: 0 clamp(24px, 5vw, 56px);
+  padding: 0 clamp(28px, 5vw, 72px);
   height: 100%;
   display: flex;
   align-items: center;
-  padding-top: 88px;
+  padding-top: 100px;
 }
 
 .v5-hero-text {
-  max-width: 560px;
+  max-width: 760px;
 }
 
 .v5-hero-h1 {
   font-family: var(--display, "Inter", system-ui, sans-serif);
-  font-size: clamp(32px, 4vw, 56px);
-  font-weight: 600;
+  font-size: clamp(40px, 5.4vw, 84px);
+  font-weight: 700;
   letter-spacing: -0.02em;
-  line-height: 1.1;
+  line-height: 1.08;
   color: white;
   margin: 0;
 }
 
 .v5-hero-sub {
-  font-size: clamp(14px, 1.05vw, 16px);
-  line-height: 1.65;
+  font-size: clamp(14px, 1.1vw, 17px);
+  line-height: 1.6;
   color: var(--v5-ink-soft);
-  margin: 22px 0 0;
-  max-width: 50ch;
+  margin: 28px 0 0;
+  max-width: 56ch;
 }
 
 .v5-hero-cta {
@@ -416,18 +416,19 @@
   pointer-events: none;
 }
 
-/* Slide indicators */
+/* Slide indicators — sit on the white area below/over the bottom-left cut */
 .v5-hero-indicators {
   position: absolute;
-  bottom: 32px;
-  left: calc(var(--v5-cut) + 16px);
-  z-index: 6;
+  bottom: 14px;
+  left: 24px;
+  z-index: 10;
   display: flex;
-  gap: 22px;
+  gap: 26px;
   font-family: var(--mono, "IBM Plex Mono", monospace);
-  font-size: 12px;
-  letter-spacing: 0.18em;
-  color: rgba(255, 255, 255, 0.4);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  color: rgba(26, 13, 75, 0.35);
+  font-weight: 500;
 }
 
 .v5-hero-indicators button {
@@ -442,34 +443,35 @@
   transition: color 0.2s;
 }
 
-.v5-hero-indicators button.active { color: white; }
+.v5-hero-indicators button.active { color: var(--v5-ink); }
 
 .v5-hero-indicators button.active::after {
   content: "";
   position: absolute;
-  bottom: -4px;
+  bottom: -2px;
   left: 0;
-  width: 16px;
+  width: 18px;
   height: 2px;
-  background: white;
+  background: var(--v5-ink);
   border-radius: 2px;
 }
 
-/* Scroll indicator */
+/* Scroll indicator — two stacked circles in the bottom-right corner */
 .v5-hero-scroll {
   position: absolute;
-  bottom: 32px;
-  right: clamp(24px, 5vw, 56px);
+  bottom: 28px;
+  right: clamp(24px, 4vw, 56px);
   z-index: 6;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 14px;
+  gap: -8px;
 }
 
 .v5-hero-scroll-text,
 .v5-hero-scroll-arrow {
-  width: 64px;
-  height: 64px;
+  width: 84px;
+  height: 84px;
   border-radius: 50%;
   display: grid;
   place-items: center;
@@ -478,21 +480,23 @@
 .v5-hero-scroll-text {
   background: white;
   color: var(--v5-ink);
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.18em;
+  font-family: var(--sans, "Inter", system-ui, sans-serif);
+  font-size: 14px;
   font-weight: 500;
-  text-transform: capitalize;
-  box-shadow: 0 10px 24px rgba(11, 7, 40, 0.3);
+  letter-spacing: 0.02em;
+  box-shadow: 0 14px 28px rgba(11, 7, 40, 0.3);
+  position: relative;
+  z-index: 2;
 }
 
 .v5-hero-scroll-arrow {
   background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  border: 1.5px solid rgba(255, 255, 255, 0.55);
   color: white;
   cursor: pointer;
   transition: background 0.18s, border-color 0.18s;
   animation: v5-bob 2.4s ease-in-out infinite;
+  margin-top: -10px;
 }
 
 .v5-hero-scroll-arrow:hover {
@@ -512,10 +516,10 @@
 
 @media (max-width: 720px) {
   .v5-hero-scroll-text { display: none; }
-  .v5-hero-indicators { bottom: 26px; gap: 18px; left: calc(var(--v5-cut) + 8px); }
+  .v5-hero-indicators { bottom: 12px; gap: 18px; left: 20px; font-size: 12px; }
   .v5-hero-scroll { bottom: 22px; right: 22px; }
-  .v5-hero-scroll-arrow { width: 52px; height: 52px; }
-  .v5-shell { --v5-notch: 24px; --v5-cut: 64px; }
+  .v5-hero-scroll-arrow { width: 60px; height: 60px; margin-top: 0; }
+  .v5-shell { --v5-notch: 28px; --v5-cut: 72px; }
 }
 
 
