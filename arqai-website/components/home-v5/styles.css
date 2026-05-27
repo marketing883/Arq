@@ -77,39 +77,15 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  border-radius: 0 0 var(--v5-notch) var(--v5-notch);
-  height: 84px;
-  margin-top: 0;
+  border-radius: 9999px;
+  height: 64px;
+  margin-top: 14px;
+  box-shadow: 0 14px 40px rgba(11, 7, 40, 0.18);
 }
 
-/* Anti-radius wings — small quarter-circles of white extending from the pill's bottom corners
-   into the dark hero. The wing's WHITE area is a quarter-pie adjacent to the pill, with the
-   rest transparent so the dark hero shows through. The curved boundary creates the dip. */
-.v5-nav-pill::before,
-.v5-nav-pill::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  width: var(--v5-notch);
-  height: var(--v5-notch);
-  pointer-events: none;
-}
-.v5-nav-pill::before {
-  left: calc(-1 * var(--v5-notch));
-  background: radial-gradient(
-    circle at bottom right,
-    var(--v5-page) var(--v5-notch),
-    transparent calc(var(--v5-notch) + 0.5px)
-  );
-}
-.v5-nav-pill::after {
-  right: calc(-1 * var(--v5-notch));
-  background: radial-gradient(
-    circle at bottom left,
-    var(--v5-page) var(--v5-notch),
-    transparent calc(var(--v5-notch) + 0.5px)
-  );
-}
+/* The pill renders cleanly without wing appendages.
+   The hero's top notch shape comes from the slide background image
+   (home-hero-v5.jpg has the notch baked in for slide 1). */
 
 .v5-nav-link {
   display: inline-flex;
