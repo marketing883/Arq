@@ -82,7 +82,9 @@
   margin-top: 0;
 }
 
-/* Anti-radius wings — the curves that flow from the pill's bottom corners into the dark hero */
+/* Anti-radius wings — small quarter-circles of white extending from the pill's bottom corners
+   into the dark hero. The wing's WHITE area is a quarter-pie adjacent to the pill, with the
+   rest transparent so the dark hero shows through. The curved boundary creates the dip. */
 .v5-nav-pill::before,
 .v5-nav-pill::after {
   content: "";
@@ -90,17 +92,23 @@
   bottom: 0;
   width: var(--v5-notch);
   height: var(--v5-notch);
-  background: var(--v5-page);
+  pointer-events: none;
 }
 .v5-nav-pill::before {
   left: calc(-1 * var(--v5-notch));
-  mask: radial-gradient(circle at top right, transparent var(--v5-notch), black calc(var(--v5-notch) + 0.5px));
-  -webkit-mask: radial-gradient(circle at top right, transparent var(--v5-notch), black calc(var(--v5-notch) + 0.5px));
+  background: radial-gradient(
+    circle at bottom right,
+    var(--v5-page) var(--v5-notch),
+    transparent calc(var(--v5-notch) + 0.5px)
+  );
 }
 .v5-nav-pill::after {
   right: calc(-1 * var(--v5-notch));
-  mask: radial-gradient(circle at top left, transparent var(--v5-notch), black calc(var(--v5-notch) + 0.5px));
-  -webkit-mask: radial-gradient(circle at top left, transparent var(--v5-notch), black calc(var(--v5-notch) + 0.5px));
+  background: radial-gradient(
+    circle at bottom left,
+    var(--v5-page) var(--v5-notch),
+    transparent calc(var(--v5-notch) + 0.5px)
+  );
 }
 
 .v5-nav-link {
@@ -403,7 +411,7 @@
 .v5-hero-cta svg { transition: transform 0.2s; }
 .v5-hero-cta:hover svg { transform: translateX(4px); }
 
-/* Bottom-left curved cut — white quarter circle */
+/* Bottom-left curved cut — white quarter-pie revealing the page beneath */
 .v5-hero-cut-bl {
   position: absolute;
   bottom: 0;
@@ -412,7 +420,7 @@
   height: var(--v5-cut);
   background: var(--v5-page);
   border-top-right-radius: var(--v5-cut);
-  z-index: 5;
+  z-index: 8;
   pointer-events: none;
 }
 
