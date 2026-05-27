@@ -14,14 +14,14 @@ type Slide = {
 
 const SLIDES: Slide[] = [
   {
-    bg: "/img/hero/slide-1-bg.jpg",
+    bg: "/img/hero/home-hero-v5.jpg",
     h1: (
       <>
         Industry-deep AI,
         <br />
         built around
         <br />
-        <span style={{ color: "#fff" }}>Your Operations.</span>
+        Your Operations.
       </>
     ),
     sub:
