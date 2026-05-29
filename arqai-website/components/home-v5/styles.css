@@ -1158,3 +1158,201 @@
 .v5-acc-icon {
   margin-top: 4px;
 }
+
+/* === Section 4 — Our Philosophy === */
+.v5-section-4 {
+  background: var(--v5-page);
+  padding: clamp(48px, 8vh, 96px) 0;
+}
+
+.v5-section-4-wrap {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 3vw, 40px);
+}
+
+.v5-section-4-card {
+  position: relative;
+  background: linear-gradient(180deg, #0f0a26 0%, #110a2a 50%, #0c0820 100%);
+  border-radius: 28px;
+  padding: clamp(36px, 5vw, 64px) clamp(28px, 4vw, 56px);
+  color: white;
+  overflow: visible;
+}
+
+/* Corner notches — small white quarter circles eating into the dark card */
+.v5-card-notch {
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  background: var(--v5-page);
+  pointer-events: none;
+  z-index: 2;
+}
+.v5-card-notch.tl { top: 0; left: 0; border-bottom-right-radius: 36px; }
+.v5-card-notch.tr { top: 0; right: 0; border-bottom-left-radius: 36px; }
+.v5-card-notch.bl { bottom: 0; left: 0; border-top-right-radius: 36px; }
+.v5-card-notch.br { bottom: 0; right: 0; border-top-left-radius: 36px; }
+
+.v5-section-4-head {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+  margin-bottom: clamp(40px, 5vh, 64px);
+  align-items: start;
+}
+
+@media (min-width: 900px) {
+  .v5-section-4-head {
+    grid-template-columns: 1fr 2.2fr;
+    gap: 56px;
+    align-items: end;
+  }
+}
+
+.v5-section-4-eyebrow {
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.55);
+  font-weight: 400;
+}
+
+.v5-section-4-h2 {
+  font-family: var(--display, "Inter", system-ui, sans-serif);
+  font-size: clamp(28px, 3.4vw, 46px);
+  font-weight: 500;
+  line-height: 1.18;
+  letter-spacing: -0.015em;
+  color: white;
+  margin: 0;
+}
+
+.v5-section-4-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(32px, 4vw, 64px);
+  align-items: start;
+}
+
+@media (min-width: 900px) {
+  .v5-section-4-grid {
+    grid-template-columns: 0.85fr 1fr;
+    gap: 64px;
+  }
+}
+
+/* Image card with its own notches */
+.v5-section-4-image {
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+  background:
+    linear-gradient(135deg, #1a0f3d 0%, #2a1668 60%, #4f2db4 100%);
+  aspect-ratio: 4 / 5;
+  isolation: isolate;
+}
+
+.v5-section-4-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.v5-section-4-image-notch {
+  position: absolute;
+  width: 56px;
+  height: 56px;
+  background: #110a2a;
+  pointer-events: none;
+  z-index: 2;
+}
+.v5-section-4-image-notch.tr { top: 0; right: 0; border-bottom-left-radius: 56px; }
+.v5-section-4-image-notch.br { bottom: 0; right: 0; border-top-left-radius: 56px; }
+
+/* Rotating ABOUT US badge */
+.v5-section-4-badge {
+  position: absolute;
+  bottom: 18px;
+  right: 18px;
+  width: 120px;
+  height: 120px;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+}
+
+.v5-section-4-badge-text {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  animation: v5-spin 14s linear infinite;
+}
+
+.v5-section-4-badge-dot {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: #f97316;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 8px 24px rgba(249, 115, 22, 0.5);
+}
+
+@keyframes v5-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v5-section-4-badge-text { animation: none; }
+}
+
+/* Features list */
+.v5-section-4-features {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.v5-feature {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 18px;
+  padding: 24px 0;
+  border-top: 1px dashed rgba(255, 255, 255, 0.14);
+}
+.v5-feature:first-child { border-top: none; padding-top: 0; }
+
+.v5-feature-num {
+  font-family: var(--mono, "IBM Plex Mono", monospace);
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.45);
+  padding-top: 6px;
+}
+
+.v5-feature-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 10px;
+}
+
+.v5-feature-head h3 {
+  font-family: var(--display, "Inter", system-ui, sans-serif);
+  font-size: 18px;
+  font-weight: 500;
+  color: white;
+  margin: 0;
+  letter-spacing: -0.005em;
+}
+
+.v5-feature-body p {
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0;
+  max-width: 56ch;
+}
