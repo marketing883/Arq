@@ -1,0 +1,277 @@
+"use client";
+
+import Link from "next/link";
+import { SiteFooter } from "@/components/site-dark/SiteFooter";
+import { SiteNav } from "@/components/site-dark/SiteNav";
+import { HeroImagePanel, SignalStrip } from "@/components/site-dark/InternalVisuals";
+
+function ArrowIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className={className} aria-hidden="true">
+      <path
+        d="M2 7h10M8 3l4 4-4 4"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
+      />
+    </svg>
+  );
+}
+
+function CheckIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <path
+        d="M3 8.5 6.4 12 13 4.5"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.6"
+      />
+    </svg>
+  );
+}
+
+export type IndustryPageData = {
+  eyebrow: string;
+  heroHeadline: string;
+  heroSubhead: string;
+  heroImage: string;
+  heroImageAlt: string;
+  primaryCta?: { label: string; href: string };
+  secondaryCta?: { label: string; href: string };
+  outcomes: { metric: string; label: string; description: string }[];
+  useCasesHeading: string;
+  useCases: { tag: string; title: string; body: string }[];
+  midCtaHeadline: string;
+  midCtaBody: string;
+  operatingContextHeading: string;
+  operatingContextBody: string;
+  operatingContextList: string[];
+  productsHeading: string;
+  productsBody: string;
+  products: {
+    name: string;
+    status: string;
+    statusColor: string;
+    description: string;
+    cta: string;
+    href: string;
+  }[];
+  closingCta: { headline: string; body: string };
+};
+
+export function IndustryPage({ data }: { data: IndustryPageData }) {
+  return (
+    <div className="arq-dark min-h-screen">
+      <SiteNav />
+      <main>
+        <section className="a-hero">
+          <div className="a-hero-grid" />
+          <div className="a-wrap" style={{ position: "relative" }}>
+            <div className="detail-hero-grid" style={{ display: "grid", gap: 48, alignItems: "center" }}>
+              <div>
+                <span className="a-pill">
+                  <span className="dot" /> {data.eyebrow}
+                </span>
+                <h1 className="h-display" style={{ marginTop: 28, maxWidth: "14ch" }}>
+                  {data.heroHeadline}
+                </h1>
+                <p className="lede" style={{ marginTop: 28, maxWidth: "62ch" }}>
+                  {data.heroSubhead}
+                </p>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginTop: 30 }}>
+                  <Link href={data.primaryCta?.href ?? "/engage-us"} className="a-btn a-btn-primary">
+                    {data.primaryCta?.label ?? "Get Started"} <ArrowIcon className="arrow" />
+                  </Link>
+                  {data.secondaryCta ? (
+                    <Link href={data.secondaryCta.href} className="a-btn a-btn-ghost">
+                      {data.secondaryCta.label}
+                    </Link>
+                  ) : null}
+                </div>
+              </div>
+
+              <HeroImagePanel
+                image={data.heroImage}
+                alt={data.heroImageAlt}
+                label="Operating signal"
+                title="Workflow intelligence"
+                variant="network"
+                priority
+              />
+            </div>
+          </div>
+        </section>
+
+        <section className="a-section">
+          <div className="a-wrap">
+            <div className="a-section-head">
+              <div>
+                <span className="a-eyebrow">What changes</span>
+                <h2 className="h-section" style={{ marginTop: 18 }}>
+                  Outcomes customers can measure.
+                </h2>
+              </div>
+              <p className="lede">
+                We anchor every engagement to the metrics operating leaders can defend: faster resolution, sharper
+                prioritization, cleaner evidence, and decisions people can trust.
+              </p>
+            </div>
+            <div className="steps steps-relief" style={{ marginTop: 44 }}>
+              {data.outcomes.map((outcome) => (
+                <div className="step" key={outcome.label}>
+                  <span className="num">{outcome.metric}</span>
+                  <h3 style={{ marginTop: 28 }}>{outcome.label}</h3>
+                  <p>{outcome.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="a-section">
+          <div className="a-wrap">
+            <SignalStrip
+              label="Where AI fits"
+              title="The useful surface is the workflow under pressure."
+              body="Industry expertise matters because the same model behaves differently inside claims, compliance, store operations, and plant maintenance. We design around the data, policy, exception paths, and review culture that already shape the work."
+              variant="network"
+              points={["Data", "Policy", "Exceptions", "Review"]}
+            />
+          </div>
+        </section>
+
+        <section className="a-section">
+          <div className="a-wrap">
+            <div className="a-section-head">
+              <div>
+                <span className="a-eyebrow">Use cases</span>
+                <h2 className="h-section" style={{ marginTop: 18 }}>
+                  {data.useCasesHeading}
+                </h2>
+              </div>
+              <p className="lede">
+                Each use case is scoped around the owner of the work, the systems they rely on, the decisions they make,
+                and the audit trail the business needs afterward.
+              </p>
+            </div>
+
+            <div className="svc-grid relief-grid" style={{ marginTop: 44 }}>
+              {data.useCases.map((useCase) => (
+                <article className="a-card" key={useCase.title} style={{ padding: 28 }}>
+                  <span className="a-tag">{useCase.tag}</span>
+                  <h3 style={{ color: "var(--ink-cream)", fontFamily: "var(--display)", fontSize: 24, marginTop: 22 }}>
+                    {useCase.title}
+                  </h3>
+                  <p style={{ color: "var(--ink-cream-d)", lineHeight: 1.6, marginTop: 12 }}>{useCase.body}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="a-section">
+          <div className="a-wrap">
+            <div className="cta-strip">
+              <span className="a-eyebrow">Next step</span>
+              <h2 className="h-section" style={{ marginTop: 18, maxWidth: "18ch" }}>
+                {data.midCtaHeadline}
+              </h2>
+              <p className="lede" style={{ marginTop: 18, maxWidth: "62ch" }}>
+                {data.midCtaBody}
+              </p>
+              <Link href="/engage-us" className="a-btn a-btn-primary" style={{ marginTop: 28 }}>
+                Get Started <ArrowIcon className="arrow" />
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        <section className="a-section">
+          <div className="a-wrap">
+            <div className="gap-split internal-story">
+              <article className="a-card" style={{ padding: 32 }}>
+                <span className="a-eyebrow">Where this helps</span>
+                <h2 className="h-section" style={{ fontSize: "clamp(28px, 3.2vw, 44px)", marginTop: 18 }}>
+                  {data.operatingContextHeading}
+                </h2>
+                <p className="lede" style={{ marginTop: 18 }}>
+                  {data.operatingContextBody}
+                </p>
+              </article>
+              <article className="a-card" style={{ padding: 32 }}>
+                <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "grid", gap: 14 }}>
+                  {data.operatingContextList.map((context) => (
+                    <li key={context} style={{ display: "flex", gap: 12, color: "var(--ink-cream-d)", lineHeight: 1.5 }}>
+                      <span style={{ color: "var(--ember)", marginTop: 2 }}>
+                        <CheckIcon />
+                      </span>
+                      {context}
+                    </li>
+                  ))}
+                </ul>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section className="a-section">
+          <div className="a-wrap">
+            <div className="a-section-head">
+              <div>
+                <span className="a-eyebrow">Accelerator starting points</span>
+                <h2 className="h-section" style={{ marginTop: 18 }}>
+                  {data.productsHeading}
+                </h2>
+              </div>
+              <p className="lede">{data.productsBody}</p>
+            </div>
+
+            {data.products.length > 0 ? (
+              <div className="svc-grid relief-grid" style={{ marginTop: 44 }}>
+                {data.products.map((product) => (
+                  <Link
+                    href={product.href}
+                    key={product.name}
+                    className="a-card"
+                    style={{ color: "inherit", textDecoration: "none", padding: 28 }}
+                  >
+                    <div style={{ display: "flex", justifyContent: "space-between", gap: 16, alignItems: "center" }}>
+                      <h3 style={{ color: "var(--ink-cream)", fontFamily: "var(--display)", fontSize: 28, margin: 0 }}>
+                        {product.name}
+                      </h3>
+                      <span className="a-tag">{product.status}</span>
+                    </div>
+                    <p style={{ color: "var(--ink-cream-d)", lineHeight: 1.6, marginTop: 18 }}>{product.description}</p>
+                    <span style={{ color: "var(--ember)", display: "inline-flex", gap: 8, alignItems: "center", marginTop: 18 }}>
+                      {product.cta} <ArrowIcon className="arrow" />
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            ) : null}
+          </div>
+        </section>
+
+        <section className="a-section">
+          <div className="a-wrap">
+            <div className="cta-strip">
+              <h2 className="h-section" style={{ marginTop: 0, maxWidth: "18ch" }}>
+                {data.closingCta.headline}
+              </h2>
+              <p className="lede" style={{ marginTop: 18, maxWidth: "62ch" }}>
+                {data.closingCta.body}
+              </p>
+              <Link href="/engage-us" className="a-btn a-btn-primary" style={{ marginTop: 28 }}>
+                Get Started <ArrowIcon className="arrow" />
+              </Link>
+            </div>
+          </div>
+        </section>
+      </main>
+      <SiteFooter />
+    </div>
+  );
+}
