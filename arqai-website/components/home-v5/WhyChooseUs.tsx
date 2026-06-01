@@ -17,7 +17,7 @@ export default function WhyChooseUs() {
         <div className="v5-why-bento">
           {/* 120+ — dark card with abstract image */}
           <div className="v5-bento v5-bento-fraud">
-            <img className="v5-bento-bg" src={WHY.abstractImage} alt="" />
+            <img className="v5-bento-bg" src={WHY.abstractImage} alt="" loading="lazy" decoding="async" />
             <div className="v5-bento-body">
               <div className="v5-bento-num">{WHY.fraud.num}</div>
               <div className="v5-bento-title">{WHY.fraud.title}</div>
@@ -27,7 +27,7 @@ export default function WhyChooseUs() {
 
           {/* hand image */}
           <div className="v5-bento v5-bento-hand">
-            <img src={WHY.handImage} alt="" />
+            <img src={WHY.handImage} alt="" loading="lazy" decoding="async" />
           </div>
 
           {/* 70% — green gradient */}
@@ -50,7 +50,7 @@ export default function WhyChooseUs() {
             <div className="v5-bento-title">{WHY.waste.title}</div>
             <div className="v5-bento-logos">
               {WHY.logos.map((src, i) => (
-                <img key={i} src={src} alt="" />
+                <img key={i} src={src} alt="" loading="lazy" decoding="async" />
               ))}
             </div>
             <p className="v5-bento-text">{WHY.waste.body}</p>

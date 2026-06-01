@@ -34,7 +34,7 @@ export default function Accelerators() {
                 style={{ ["--i" as string]: i }}
               >
                 <div className="v5-accel-media">
-                  <img src={a.image} alt={a.name} loading="lazy" />
+                  <img src={a.image} alt={a.name} loading="lazy" decoding="async" />
                   <span className="v5-accel-cat">{a.category}</span>
                   <span className="v5-accel-go">
                     <ArrowUpRight />

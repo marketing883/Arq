@@ -23,7 +23,7 @@ export default function Workflow() {
                 <h3 className="v5-h3">{s.title}</h3>
                 <p className="v5-body">{s.body}</p>
                 <div className="v5-process-step-media">
-                  <img src={s.image} alt={s.title} />
+                  <img src={s.image} alt={s.title} loading="lazy" decoding="async" />
                 </div>
               </div>
             </article>

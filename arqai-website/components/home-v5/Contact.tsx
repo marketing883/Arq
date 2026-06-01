@@ -10,7 +10,9 @@ export default function Contact() {
         muted
         loop
         playsInline
+        preload="none"
         poster={HERO_POSTER}
+        aria-hidden="true"
       >
         <source src={HERO_VIDEO} type="video/mp4" />
       </video>
@@ -29,7 +31,7 @@ export default function Contact() {
           <blockquote className="v5-contact-quote">{CONTACT.quote}</blockquote>
 
           <div className="v5-contact-founder">
-            <img src={CONTACT.founder.avatar} alt={CONTACT.founder.name} />
+            <img src={CONTACT.founder.avatar} alt={CONTACT.founder.name} loading="lazy" decoding="async" />
             <span>
               <span className="v5-contact-name">{CONTACT.founder.name}</span>
               <br />

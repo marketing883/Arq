@@ -93,7 +93,7 @@ export default async function Blogs() {
                 >
                   <div className="v5-blog-cover">
                     {post.featured_image ? (
-                      <img src={post.featured_image} alt={post.title} loading="lazy" />
+                      <img src={post.featured_image} alt={post.title} loading="lazy" decoding="async" />
                     ) : (
                       <div className="v5-blog-cover-placeholder" />
                     )}

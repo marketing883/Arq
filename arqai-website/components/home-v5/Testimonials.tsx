@@ -6,7 +6,7 @@ type Item = (typeof TESTIMONIALS.items)[number];
 function Author({ t, light }: { t: Item; light?: boolean }) {
   return (
     <div className={`v5-testi-author${light ? " light" : ""}`}>
-      <img src={t.avatar} alt={t.name} />
+      <img src={t.avatar} alt={t.name} loading="lazy" decoding="async" />
       <span>
         <span className="v5-testi-name">{t.name}</span>
         <br />

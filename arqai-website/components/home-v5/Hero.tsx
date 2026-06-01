@@ -10,7 +10,9 @@ export default function Hero() {
         muted
         loop
         playsInline
+        preload="metadata"
         poster={HERO_POSTER}
+        aria-hidden="true"
       >
         <source src={HERO_VIDEO} type="video/mp4" />
       </video>

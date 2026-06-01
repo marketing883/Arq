@@ -146,7 +146,7 @@ export default function V5Nav() {
       >
         <div className="v5-nav-inner">
           <a href="#top" className="v5-nav-brand" onClick={() => setMobile(false)}>
-            <img src={LOGO} alt="ArqAI Labs" className="v5-nav-logo-img" />
+            <img src={LOGO} alt="ArqAI Labs" className="v5-nav-logo-img" width="160" height="38" decoding="async" />
           </a>
 
           <ul className="v5-nav-links">
@@ -201,7 +201,7 @@ export default function V5Nav() {
                 ))}
               </div>
               <a href={MENUS[open].feature.href} className="v5-mega-feature" onClick={closeNow}>
-                <img src={MENUS[open].feature.image} alt="" />
+                <img src={MENUS[open].feature.image} alt="" loading="lazy" decoding="async" />
                 <span className="v5-mega-feature-body">
                   <span className="v5-mega-feature-tag">{MENUS[open].feature.tag}</span>
                   <strong>{MENUS[open].feature.title}</strong>
