@@ -1,25 +1,39 @@
 import type { Metadata } from "next";
+import V5Nav from "@/components/home-v5/V5Nav";
 import Hero from "@/components/home-v5/Hero";
-import Section2 from "@/components/home-v5/Section2";
-import Section3 from "@/components/home-v5/Section3";
-import Section4 from "@/components/home-v5/Section4";
+import Features from "@/components/home-v5/Features";
+import WhyChooseUs from "@/components/home-v5/WhyChooseUs";
+import Workflow from "@/components/home-v5/Workflow";
+import Integration from "@/components/home-v5/Integration";
+import Testimonials from "@/components/home-v5/Testimonials";
+import FAQ from "@/components/home-v5/FAQ";
+import Blogs from "@/components/home-v5/Blogs";
+import Contact from "@/components/home-v5/Contact";
+import Footer from "@/components/home-v5/Footer";
 import "@/components/home-v5/styles.css";
 
 export const metadata: Metadata = {
   title: "ArqAI Labs · v5 preview",
   description:
-    "Industry-deep AI, built around your operations. Production AI for retail, healthcare, banking, and insurance.",
+    "Empower your business with operational AI. We design, build, deploy, and run production AI for retail, healthcare, banking, and insurance.",
 };
 
 export default function V5Page() {
   return (
     <div className="v5-shell">
+      <V5Nav />
       <main>
         <Hero />
-        <Section2 />
-        <Section3 />
-        <Section4 />
+        <Features />
+        <WhyChooseUs />
+        <Workflow />
+        <Integration />
+        <Testimonials />
+        <FAQ />
+        <Blogs />
+        <Contact />
       </main>
+      <Footer />
     </div>
   );
 }
