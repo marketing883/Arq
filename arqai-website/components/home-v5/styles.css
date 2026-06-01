@@ -977,3 +977,63 @@ img.v5-testi-avatar { background: none; }
 .v5-footer-nav a { padding: 8px 14px; border-radius: 999px; color: var(--v5-grey-100); text-decoration: none; font-size: 15px; font-weight: 500; transition: background 0.15s ease, color 0.15s ease; }
 .v5-footer-nav a:hover { background: var(--v5-grey-5); color: var(--v5-ink); }
 @media (max-width: 540px) { .v5-footer-top { grid-template-columns: 1fr; align-items: flex-start; } }
+
+/* =====================================================
+   PROCESS — sticky left column, scrolling step list
+   (matches Framer: left max-width 40%, position:sticky top:120px)
+   ===================================================== */
+.v5-process {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 60px;
+}
+.v5-process-left {
+  flex: 1 1 0;
+  max-width: 40%;
+  position: sticky;
+  top: 120px;
+  align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.v5-process-left .v5-badge { align-self: flex-start; }
+.v5-process-right {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  min-width: 0;
+}
+.v5-process-step {
+  background: var(--v5-white);
+  border: 1px solid #ededed;
+  border-radius: var(--v5-radius-lg);
+  overflow: hidden;
+}
+.v5-process-step-media {
+  position: relative;
+  aspect-ratio: 16 / 11;
+  overflow: hidden;
+}
+.v5-process-step-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.v5-process-step .v5-step-num {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  margin: 0;
+}
+.v5-process-step-text { padding: 26px 28px 30px; }
+.v5-process-step-text h3 { font-size: 24px; margin-bottom: 10px; }
+
+@media (max-width: 860px) {
+  .v5-process { flex-direction: column; gap: 36px; }
+  .v5-process-left { position: static; max-width: 100%; }
+  .v5-process-right { width: 100%; gap: 24px; }
+}
