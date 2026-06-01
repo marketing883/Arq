@@ -1,9 +1,21 @@
 import { ArrowRight, Star } from "./icons";
-import { HERO } from "./content";
+import { HERO, HERO_VIDEO, HERO_POSTER } from "./content";
 
 export default function Hero() {
   return (
     <section className="v5-hero" id="top">
+      <video
+        className="v5-hero-video"
+        autoPlay
+        muted
+        loop
+        playsInline
+        poster={HERO_POSTER}
+      >
+        <source src={HERO_VIDEO} type="video/mp4" />
+      </video>
+      <div className="v5-hero-veil" />
+
       <div className="v5-hero-inner">
         <div className="v5-hero-left">
           <span className="v5-trust">

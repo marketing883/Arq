@@ -5,6 +5,7 @@ export const A = "/v5/assets";
 
 export const LOGO = `${A}/FEFrVVQtPUn7XSci8TiM5lb74o.png`;
 export const HERO_VIDEO = `${A}/ufsUXNNTVPKgg5ZhfzY4DHtmrKY.mp4`;
+export const HERO_POSTER = `${A}/pR0DzH2JNZa0vnz4l8WJLxvUKA.jpg`;
 
 export const NAV_LINKS = [
   { label: "Home", href: "#top" },
@@ -41,7 +42,7 @@ export const FEATURES = {
   cards: [
     {
       kind: "chat",
-      title: "Workflow Discovery and Assessment",
+      title: "Workflow Discovery And Assessment",
       body: "We map your operations and identify exactly where AI agents will move the needle before any build begins.",
       avatars: [`${A}/pAPxY6GbR780p3WdmjMvK78GIo.png`, `${A}/O0Q8HWESw0SuJvRoaa0ATiDOF4k.png`],
     },
@@ -56,13 +57,13 @@ export const FEATURES = {
       body: "Industry-specific patterns, pre-validated and ready to deploy. Faster to production, lower cost per engagement.",
     },
     {
-      kind: "generate",
+      kind: "wave",
       title: "Enterprise Systems Integration",
       body: "Agents wired directly into your existing stack. No rip and replace. No operational disruption.",
     },
     {
-      kind: "shield",
-      title: "Governance and Audit Architecture",
+      kind: "generate",
+      title: "Governance And Audit Architecture",
       body: "Encrypted, audit-ready proof on every agent action. Built in from day one, not added later.",
     },
   ],

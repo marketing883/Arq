@@ -1,8 +1,20 @@
-import { LOGO, FOOTER, NAV_LINKS } from "./content";
+import { LOGO, FOOTER, NAV_LINKS, HERO_VIDEO, HERO_POSTER } from "./content";
 
 export default function Footer() {
   return (
     <footer className="v5-footer">
+      <video
+        className="v5-footer-video"
+        autoPlay
+        muted
+        loop
+        playsInline
+        poster={HERO_POSTER}
+      >
+        <source src={HERO_VIDEO} type="video/mp4" />
+      </video>
+      <div className="v5-footer-veil" />
+
       <div className="v5-footer-inner">
         <div className="v5-footer-top">
           <a href="#top" className="v5-nav-brand">
