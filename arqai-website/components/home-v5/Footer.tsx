@@ -1,4 +1,4 @@
-import { LOGO, FOOTER, HERO_VIDEO, HERO_POSTER } from "./content";
+import { LOGO, FOOTER } from "./content";
 
 const COLUMNS = [
   {
@@ -60,11 +60,6 @@ const SOCIALS: { label: string; href: string; path: string }[] = [
 export default function Footer() {
   return (
     <footer className="v5-footer">
-      <video className="v5-footer-video" autoPlay muted loop playsInline poster={HERO_POSTER}>
-        <source src={HERO_VIDEO} type="video/mp4" />
-      </video>
-      <div className="v5-footer-veil" />
-
       <div className="v5-footer-inner">
         <div className="v5-footer-brand">
           <a href="#top" className="v5-nav-brand">
