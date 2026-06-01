@@ -1,4 +1,4 @@
-import { ArrowUpRight, Star } from "./icons";
+import { ArrowUpRight } from "./icons";
 import { HERO, HERO_VIDEO, HERO_POSTER } from "./content";
 
 export default function Hero() {
@@ -18,22 +18,6 @@ export default function Hero() {
 
       <div className="v5-hero-inner">
         <div className="v5-hero-left">
-          <span className="v5-trust">
-            <span className="v5-trust-avatars">
-              {HERO.trustAvatars.map((src, i) => (
-                <img key={i} src={src} alt="" />
-              ))}
-            </span>
-            <span className="v5-trust-meta">
-              <span className="v5-stars">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <Star key={i} />
-                ))}
-              </span>
-              <span className="v5-trust-label">{HERO.trustLabel}</span>
-            </span>
-          </span>
-
           <h1 className="v5-h1">{HERO.headline}</h1>
 
           <p className="v5-hero-sub">{HERO.sub}</p>
