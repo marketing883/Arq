@@ -37,6 +37,7 @@ export const HERO = {
 export const FEATURES = {
   eyebrow: "Services",
   heading: "We Make Operational AI work inside your enterprise",
+  seeAllImage: `${A}/seeall-abstract.jpg`,
   sub: "Experience how our AI-powered features simplify workflows, automate routine tasks, and help your team achieve more—so you can focus on growing your business.",
   cta: { label: "See All Services", href: "/about" },
   cards: [

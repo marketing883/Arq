@@ -159,7 +159,8 @@ export default function Features() {
           <div className="v5-fcol">
             <FeatureCard card={customAgent} />
             <a className="v5-feature-card v5-seeall" href={FEATURES.cta.href}>
-              <div className="v5-checker" />
+              <img className="v5-seeall-img" src={FEATURES.seeAllImage} alt="" />
+              <span className="v5-seeall-scrim" />
               <span className="v5-seeall-link">
                 {FEATURES.cta.label}
                 <ArrowRight />
