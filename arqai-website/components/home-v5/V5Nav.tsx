@@ -23,7 +23,7 @@ type Menu = {
 
 const mono = (s: string) => <span className="v5-mega-mono">{s.charAt(0)}</span>;
 
-const ACCEL_LINKS: Link[] = accelerators.slice(0, 6).map((a) => ({
+const ACCEL_LINKS: Link[] = accelerators.map((a) => ({
   title: a.name,
   desc: a.category,
   href: `/accelerators#${a.id}`,
