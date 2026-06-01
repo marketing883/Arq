@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { LOGO } from "./content";
 import { accelerators } from "@/lib/data/accelerators";
 import {
@@ -92,13 +92,58 @@ function Chevron() {
   );
 }
 
+const CLOSE_DELAY = 140;
+
 export default function V5Nav() {
   const [open, setOpen] = useState<number | null>(null);
   const [mobile, setMobile] = useState(false);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const rootRef = useRef<HTMLDivElement | null>(null);
+
+  const cancelClose = () => {
+    if (closeTimer.current) {
+      clearTimeout(closeTimer.current);
+      closeTimer.current = null;
+    }
+  };
+  const scheduleClose = () => {
+    cancelClose();
+    closeTimer.current = setTimeout(() => setOpen(null), CLOSE_DELAY);
+  };
+  const openMenu = (i: number) => {
+    cancelClose();
+    setOpen(i);
+  };
+  const closeNow = () => {
+    cancelClose();
+    setOpen(null);
+  };
+
+  useEffect(() => {
+    const onDocClick = (e: MouseEvent) => {
+      if (!rootRef.current) return;
+      if (!rootRef.current.contains(e.target as Node)) closeNow();
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeNow();
+    };
+    document.addEventListener("mousedown", onDocClick);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDocClick);
+      document.removeEventListener("keydown", onKey);
+      cancelClose();
+    };
+  }, []);
 
   return (
     <>
-      <div className="v5-nav" onMouseLeave={() => setOpen(null)}>
+      <div
+        className="v5-nav"
+        ref={rootRef}
+        onMouseLeave={scheduleClose}
+        onMouseEnter={cancelClose}
+      >
         <div className="v5-nav-inner">
           <a href="#top" className="v5-nav-brand" onClick={() => setMobile(false)}>
             <img src={LOGO} alt="ArqAI Labs" className="v5-nav-logo-img" />
@@ -106,8 +151,16 @@ export default function V5Nav() {
 
           <ul className="v5-nav-links">
             {MENUS.map((m, i) => (
-              <li key={m.label} onMouseEnter={() => setOpen(i)}>
-                <button type="button" className={`v5-nav-trigger${open === i ? " active" : ""}`}>
+              <li
+                key={m.label}
+                onMouseEnter={() => openMenu(i)}
+                onMouseLeave={scheduleClose}
+              >
+                <button
+                  type="button"
+                  className={`v5-nav-trigger${open === i ? " active" : ""}`}
+                  onFocus={() => openMenu(i)}
+                >
                   {m.label}
                   <Chevron />
                 </button>
@@ -129,12 +182,16 @@ export default function V5Nav() {
           </div>
         </div>
 
-        <div className={`v5-mega-wrap${open !== null ? " show" : ""}`}>
+        <div
+          className={`v5-mega-wrap${open !== null ? " show" : ""}`}
+          onMouseEnter={cancelClose}
+          onMouseLeave={scheduleClose}
+        >
           {open !== null && (
-            <div className="v5-mega" onMouseEnter={() => setOpen(open)}>
+            <div className="v5-mega">
               <div className="v5-mega-links">
                 {MENUS[open].links.map((l) => (
-                  <a key={l.title} href={l.href} className="v5-mega-link" onClick={() => setOpen(null)}>
+                  <a key={l.title} href={l.href} className="v5-mega-link" onClick={closeNow}>
                     <span className="v5-mega-ico">{l.icon}</span>
                     <span className="v5-mega-text">
                       <strong>{l.title}</strong>
@@ -143,7 +200,7 @@ export default function V5Nav() {
                   </a>
                 ))}
               </div>
-              <a href={MENUS[open].feature.href} className="v5-mega-feature" onClick={() => setOpen(null)}>
+              <a href={MENUS[open].feature.href} className="v5-mega-feature" onClick={closeNow}>
                 <img src={MENUS[open].feature.image} alt="" />
                 <span className="v5-mega-feature-body">
                   <span className="v5-mega-feature-tag">{MENUS[open].feature.tag}</span>
