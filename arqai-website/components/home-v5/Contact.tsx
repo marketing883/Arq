@@ -1,9 +1,21 @@
 import { ArrowUpRight } from "./icons";
-import { CONTACT } from "./content";
+import { CONTACT, HERO_VIDEO, HERO_POSTER } from "./content";
 
 export default function Contact() {
   return (
-    <section className="v5-section v5-bg-white" id="contact">
+    <section className="v5-section v5-contact-section" id="contact">
+      <video
+        className="v5-contact-video"
+        autoPlay
+        muted
+        loop
+        playsInline
+        poster={HERO_POSTER}
+      >
+        <source src={HERO_VIDEO} type="video/mp4" />
+      </video>
+      <div className="v5-contact-veil" />
+
       <div className="v5-container">
         <div className="v5-contact-head">
           <span className="v5-badge">
