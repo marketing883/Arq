@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import V5Nav from "@/components/home-v5/V5Nav";
 import Hero from "@/components/home-v5/Hero";
 import Features from "@/components/home-v5/Features";
+import Accelerators from "@/components/home-v5/Accelerators";
 import WhyChooseUs from "@/components/home-v5/WhyChooseUs";
 import Workflow from "@/components/home-v5/Workflow";
 import Integration from "@/components/home-v5/Integration";
@@ -25,6 +26,7 @@ export default function V5Page() {
       <main>
         <Hero />
         <Features />
+        <Accelerators />
         <WhyChooseUs />
         <Workflow />
         <Integration />

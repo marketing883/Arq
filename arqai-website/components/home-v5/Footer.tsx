@@ -6,24 +6,34 @@ const COLUMNS = [
     links: [
       { label: "Platform Overview", href: "/platform" },
       { label: "How It Works", href: "/how-it-works" },
-      { label: "Accelerators", href: "/accelerators" },
       { label: "Services", href: "/services" },
       { label: "Trust & Security", href: "/trust" },
     ],
   },
   {
-    title: "Solutions",
+    title: "Accelerators",
     links: [
-      { label: "Industries", href: "/industries" },
-      { label: "Use Cases", href: "/use-cases" },
-      { label: "Case Studies", href: "/case-studies" },
-      { label: "How We Work", href: "/how-we-work" },
+      { label: "Veyra", href: "/accelerators#veyra" },
+      { label: "Sentra", href: "/accelerators#sentra" },
+      { label: "Nuvia", href: "/accelerators#nuvia" },
+      { label: "All Accelerators", href: "/accelerators" },
+    ],
+  },
+  {
+    title: "Industries",
+    links: [
+      { label: "Healthcare Payers", href: "/industries/healthcare-payers" },
+      { label: "Banking", href: "/industries/banking" },
+      { label: "Insurance Carriers", href: "/industries/insurance-carriers" },
+      { label: "Retail", href: "/industries/retail" },
+      { label: "Manufacturing", href: "/industries/manufacturing" },
     ],
   },
   {
     title: "Resources",
     links: [
       { label: "Blog", href: "/blog" },
+      { label: "Case Studies", href: "/case-studies" },
       { label: "Whitepapers", href: "/whitepapers" },
       { label: "Webinars", href: "/webinars" },
       { label: "Resource Library", href: "/resources" },
@@ -33,9 +43,9 @@ const COLUMNS = [
     title: "Company",
     links: [
       { label: "About", href: "/about" },
+      { label: "How We Work", href: "/how-we-work" },
       { label: "Careers", href: "/careers" },
       { label: "Partners", href: "/partners" },
-      { label: "Engage Us", href: "/engage-us" },
       { label: "Contact", href: "/contact" },
     ],
   },
@@ -56,37 +66,35 @@ export default function Footer() {
       <div className="v5-footer-veil" />
 
       <div className="v5-footer-inner">
-        <div className="v5-footer-top">
-          <div className="v5-footer-brand">
-            <a href="#top" className="v5-nav-brand">
-              <img src={LOGO} alt="ArqAI Labs" className="v5-nav-logo-img" />
-            </a>
-            <p>Industry-deep AI, built around your operations — designed, deployed, and run in production.</p>
-            <div className="v5-footer-socials">
-              {SOCIALS.map((s) => (
-                <a key={s.label} href={s.href} aria-label={s.label}>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                    <path d={s.path} />
-                  </svg>
-                </a>
-              ))}
-            </div>
-          </div>
-
-          <div className="v5-footer-cols">
-            {COLUMNS.map((col) => (
-              <div className="v5-footer-col" key={col.title}>
-                <h4>{col.title}</h4>
-                <ul>
-                  {col.links.map((l) => (
-                    <li key={l.label}>
-                      <a href={l.href}>{l.label}</a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+        <div className="v5-footer-brand">
+          <a href="#top" className="v5-nav-brand">
+            <img src={LOGO} alt="ArqAI Labs" className="v5-nav-logo-img" />
+          </a>
+          <p>Industry-deep AI, built around your operations — designed, deployed, and run in production.</p>
+          <div className="v5-footer-socials">
+            {SOCIALS.map((s) => (
+              <a key={s.label} href={s.href} aria-label={s.label}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <path d={s.path} />
+                </svg>
+              </a>
             ))}
           </div>
+        </div>
+
+        <div className="v5-footer-cols">
+          {COLUMNS.map((col) => (
+            <div className="v5-footer-col" key={col.title}>
+              <h4>{col.title}</h4>
+              <ul>
+                {col.links.map((l) => (
+                  <li key={l.label}>
+                    <a href={l.href}>{l.label}</a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
 
         <div className="v5-footer-bottom">
