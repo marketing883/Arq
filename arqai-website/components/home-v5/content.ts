@@ -23,19 +23,19 @@ export const HERO = {
     `${A}/oGgAZMF0jq3eb456pPCbrdFzqM.jpg`,
   ],
   trustLabel: "Trusted by 120+ Businesses",
-  headline: "Operational AI built for your industry.",
+  headline: "Empower Your Business with Operational AI",
   sub: "Accelerate operations, reduce costs, and unlock new growth with AI strategies tailored for your organization.",
   cta: { label: "Get Started", href: "#contact" },
   metrics: [
     { num: "98", suffix: "%", label: "Client Satisfaction Rate" },
-    { num: "10", suffix: "x", label: "Faster Decision-Making" },
+    { num: "3", suffix: "X", label: "Faster Decision-Making" },
     { num: "40", suffix: "%", label: "Cost Reduction" },
   ],
 };
 
 export const FEATURES = {
   eyebrow: "Services",
-  heading: "Built for the specific decisions your industry depends on",
+  heading: "We Make Operational AI work inside your enterprise",
   sub: "Experience how our AI-powered features simplify workflows, automate routine tasks, and help your team achieve more—so you can focus on growing your business.",
   cta: { label: "See All Services", href: "/about" },
   cards: [
@@ -70,37 +70,43 @@ export const FEATURES = {
 
 export const WHY = {
   eyebrow: "Why ArqAI Labs",
-  heading: "Why ArqAI Labs",
+  heading: "We know your industry. We build for your operation. We stay after launch.",
   sub: "Three things separate us from platforms and consulting firms. We go deep on one vertical at a time, we ship to production, and we attach proof to everything we deploy.",
   cta: { label: "Get to Know Us", href: "/about" },
-  image: `${A}/DzGwMiEB7s9v8Ge70ZnDD22pw.jpeg`,
-  stats: [
-    {
-      num: "120+",
-      title: "Fraud Patterns Caught",
-      body: "Veyra detects 120+ TPA-specific fraud patterns that generic payer tools were never designed to find.",
-    },
-    {
-      num: "70%",
-      title: "Substrate Reuse by Engagement 3",
-      body: "Each delivery makes the next one faster. Our accelerator library compounds with every client we ship.",
-    },
-    {
-      num: "100%",
-      title: "Governance Built In",
-      body: "Every agent we deploy generates encrypted, audit-ready proof of its actions. Compliance architecture is never an afterthought.",
-    },
-    {
-      num: "$3.2M",
-      title: "Undetected Waste Found",
-      body: "Identified in a single Blind Spot Assessment for a mid-size TPA whose current vendor rated them fully compliant.",
-    },
+  abstractImage: `${A}/DzGwMiEB7s9v8Ge70ZnDD22pw.jpeg`,
+  handImage: `${A}/CtN60Gw14rqeKcm73KuXfmRIBo4.jpg`,
+  logos: [
+    `${A}/akO2rrXbBEO8RfhaK5uhWc4DNI.png`,
+    `${A}/IiNIMrlDdvweoyBG7DLzHieUFTA.png`,
+    `${A}/pl5sJDvTaeMYiqEwKprWNAmZI.png`,
+    `${A}/79WYzIFrcCC8qjZDpQFVCxF7L8.png`,
+    `${A}/B50CBh3QVNPbytu88jXaXBG1Lg.png`,
   ],
+  fraud: {
+    num: "120+",
+    title: "Fraud Patterns Caught",
+    body: "Veyra detects 120+ TPA-specific fraud patterns that generic payer tools were never designed to find.",
+  },
+  reuse: {
+    num: "70%",
+    title: "Substrate Reuse By Engagement 3",
+    body: "Each delivery makes the next one faster. Our accelerator library compounds with every client we ship.",
+  },
+  governance: {
+    num: "100%",
+    title: "Governance Built In",
+    body: "Every agent we deploy generates encrypted, audit-ready proof of its actions. Compliance architecture is never an afterthought.",
+  },
+  waste: {
+    num: "$3.2M",
+    title: "Undetected Waste Found",
+    body: "Identified in a single Blind Spot Assessment for a mid-size TPA whose current vendor rated them fully compliant.",
+  },
 };
 
 export const PROCESS = {
   eyebrow: "Our Process",
-  heading: "Our Process",
+  heading: "From Strategy to AI Success",
   sub: "We streamline the AI adoption journey with a clear, proven process — designed to ensure alignment, speed, and measurable outcomes.",
   steps: [
     {
@@ -131,8 +137,8 @@ export const PROCESS = {
 };
 
 export const INTEGRATION = {
-  eyebrow: "Integrations",
-  heading: "Connect Your Tools",
+  eyebrow: "Connect Your Tools",
+  heading: "Seamlessly Integrate With the Tools You Already Use",
   sub: "Connect your existing workflows with powerful AI capabilities. Whether it's Notion, Google Workspace, Slack, or Twitter, our solutions integrate effortlessly, keeping your data unified and your operations efficient.",
   tools: [
     { name: "Slack", color: "#4A154B", body: "Seamless team communication and real-time AI-powered responses through Slack integration." },
@@ -152,6 +158,7 @@ export const TESTIMONIALS = {
   eyebrow: "Testimonials",
   heading: "Real Results from AI-Powered Success",
   sub: "Hear how businesses like yours accelerated growth, optimized workflows, and delivered measurable outcomes through our custom AI solutions.",
+  image: `${A}/ftgLt3wWB2wrmUqDaOXqZwo66FA.jpeg`,
   items: [
     {
       quote: "We cut manual work by 70% and boosted task output 3.5× with their AI automation—like gaining a tireless team member.",
@@ -234,7 +241,7 @@ export const FAQ = {
 
 export const INSIGHTS = {
   eyebrow: "Insights & Articles",
-  heading: "Insights & Articles",
+  heading: "Discover the Future of AI in Business",
   sub: "Stay informed with expert-written articles on AI transformation, SaaS strategies, and startup innovation. Learn how to drive growth with the right technology.",
   cta: { label: "Discover More", href: "#insights" },
   posts: [
@@ -261,6 +268,7 @@ export const INSIGHTS = {
 
 export const CONTACT = {
   eyebrow: "Let's Connect",
+  heading: "Start the Conversation Today",
   quote:
     "We built ArqAI Labs because mid-market enterprises were being sold platforms when they needed a partner. Someone who understands their industry, builds for their specific operation, and stays accountable after go-live.",
   founder: {

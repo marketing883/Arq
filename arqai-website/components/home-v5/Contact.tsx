@@ -5,12 +5,15 @@ export default function Contact() {
   return (
     <section className="v5-section v5-bg-white" id="contact">
       <div className="v5-container">
-        <div className="v5-contact-card">
+        <div className="v5-contact-head">
           <span className="v5-badge">
             <span className="v5-badge-dot" />
             {CONTACT.eyebrow}
           </span>
+          <h2 className="v5-h2">{CONTACT.heading}</h2>
+        </div>
 
+        <div className="v5-contact-card">
           <blockquote className="v5-contact-quote">{CONTACT.quote}</blockquote>
 
           <div className="v5-contact-founder">
@@ -22,12 +25,10 @@ export default function Contact() {
             </span>
           </div>
 
-          <div className="v5-contact-actions">
-            <a href={CONTACT.cta.href} className="v5-btn v5-btn-primary">
-              {CONTACT.cta.label}
-              <ArrowRight />
-            </a>
-          </div>
+          <a href={CONTACT.cta.href} className="v5-btn v5-btn-primary">
+            {CONTACT.cta.label}
+            <ArrowRight />
+          </a>
         </div>
       </div>
     </section>

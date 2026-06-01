@@ -18,13 +18,13 @@ export default function Workflow() {
         <div className="v5-process-right">
           {PROCESS.steps.map((s) => (
             <article className="v5-process-step" key={s.num}>
-              <div className="v5-process-step-media">
-                <img src={s.image} alt={s.title} />
-                <span className="v5-step-num">{s.num}</span>
-              </div>
-              <div className="v5-process-step-text">
+              <span className="v5-process-num">{s.num}</span>
+              <div className="v5-process-step-main">
                 <h3 className="v5-h3">{s.title}</h3>
                 <p className="v5-body">{s.body}</p>
+                <div className="v5-process-step-media">
+                  <img src={s.image} alt={s.title} />
+                </div>
               </div>
             </article>
           ))}
