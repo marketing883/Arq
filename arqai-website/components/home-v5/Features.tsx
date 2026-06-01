@@ -97,7 +97,7 @@ function GenerateViz() {
   return (
     <div className="v5-fviz v5-gen">
       <div className="v5-gen-ai">AI</div>
-      <div className="v5-gen-aichip">AI</div>
+      <div className="v5-gen-aichip">Encrypted</div>
       <div className="v5-gen-input">
         <span>Generate email copy for...</span>
         <button type="button" tabIndex={-1}>Generate</button>

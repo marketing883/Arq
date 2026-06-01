@@ -1,15 +1,12 @@
 import { INTEGRATION } from "./content";
+import { TOOL_ICONS } from "./tool-icons";
 
-function ToolCard({ name, color, body }: { name: string; color: string; body: string }) {
+function ToolCard({ name, body }: { name: string; color: string; body: string }) {
   return (
     <div className="v5-tool-card">
-      <span className="v5-tool-icon" style={{ background: color }}>
-        {name.charAt(0)}
-      </span>
-      <div>
-        <h3 className="v5-tool-name">{name}</h3>
-        <p className="v5-body">{body}</p>
-      </div>
+      <span className="v5-tool-icon">{TOOL_ICONS[name]}</span>
+      <h3 className="v5-tool-name">{name}</h3>
+      <p className="v5-body">{body}</p>
     </div>
   );
 }

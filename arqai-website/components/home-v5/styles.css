@@ -436,3 +436,49 @@
   .v5-features-masonry { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 620px) { .v5-features-masonry { grid-template-columns: 1fr; } }
+
+/* ============================================================
+   v5 — refinements to match Framer screenshots
+   gradient CTA, hero metric cards, lime tool icons, blue contact
+   ============================================================ */
+
+/* gradient CTA pill + round arrow button (hero + contact) */
+.v5-cta-wrap { display: inline-flex; align-items: center; gap: 9px; }
+.v5-cta { display: inline-flex; align-items: center; justify-content: center; padding: 15px 28px; border-radius: 999px; font-family: var(--v5-sans); font-weight: 600; font-size: 15px; color: #14271b; text-decoration: none; background: linear-gradient(95deg, #a6d13f 0%, #5cb178 52%, #2f86b6 100%); box-shadow: 0 14px 30px -16px rgba(70,150,120,0.9); transition: transform .18s ease, filter .18s ease; }
+.v5-cta:hover { transform: translateY(-2px); filter: brightness(1.05); }
+.v5-cta-arrow { display: inline-flex; align-items: center; justify-content: center; width: 46px; height: 46px; border-radius: 50%; color: #fff; text-decoration: none; background: linear-gradient(135deg, #5cb178, #2f86b6); box-shadow: 0 14px 30px -16px rgba(47,134,182,0.9); transition: transform .18s ease; flex-shrink: 0; }
+.v5-cta-arrow:hover { transform: translateY(-2px); }
+
+/* hero metric cards (white / white / violet) with corner glyph */
+.v5-hero-metrics { display: grid; grid-template-columns: 162px 162px; gap: 14px; align-items: stretch; }
+.v5-hero-metric { position: relative; background: rgba(255,255,255,0.94); border: 1px solid rgba(255,255,255,0.9); border-radius: 18px; padding: 18px 20px; box-shadow: 0 20px 44px -26px rgba(37,46,61,0.55); backdrop-filter: blur(3px); }
+.v5-hero-metric:nth-child(1) { grid-column: 2; grid-row: 1; }
+.v5-hero-metric:nth-child(2) { grid-column: 1; grid-row: 2; }
+.v5-hero-metric:nth-child(3) { grid-column: 2; grid-row: 2; }
+.v5-hero-metric.accent { background: var(--v5-violet-grad); border: none; box-shadow: 0 20px 44px -22px rgba(70,60,200,0.7); }
+.v5-hero-metric-num { font-family: var(--v5-display); font-weight: 600; font-size: 40px; line-height: 1; letter-spacing: -0.02em; color: var(--v5-ink); }
+.v5-hero-metric-num span { font-size: 0.7em; }
+.v5-hero-metric.accent .v5-hero-metric-num { color: #fff; }
+.v5-hero-metric-label { font-size: 13px; color: var(--v5-grey-100); margin-top: 7px; max-width: none; }
+.v5-hero-metric.accent .v5-hero-metric-label { color: rgba(255,255,255,0.85); }
+.v5-metric-glyph { position: absolute; top: 14px; right: 14px; color: var(--v5-grey-10); line-height: 0; }
+.v5-hero-metric.accent .v5-metric-glyph { color: rgba(255,255,255,0.55); }
+@media (max-width: 980px) { .v5-hero-metrics { grid-template-columns: 150px 150px; } }
+@media (max-width: 480px) { .v5-hero-metrics { grid-template-columns: 1fr 1fr; } }
+
+/* integration tool cards — lime outline icon top-left, stacked */
+.v5-tool-card { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; width: 360px; flex-shrink: 0; background: var(--v5-white); border: 1px solid #edf0dd; border-radius: var(--v5-radius-md); padding: 22px; }
+.v5-tool-icon { width: auto !important; height: auto !important; background: none !important; color: #9bbf2e; margin-bottom: 10px; display: inline-flex; }
+.v5-tool-icon svg { width: 26px; height: 26px; }
+.v5-tool-name { font-family: var(--v5-display); font-weight: 600; font-size: 17px; color: var(--v5-ink); margin: 0 0 6px; }
+.v5-tools-track { align-items: stretch; }
+
+/* FAQ items — faint lime border like the design */
+.v5-faq-item { border-color: #eef1de; }
+.v5-faq-item.open { border-color: #dfe9b0; }
+
+/* contact card — royal blue with checker pattern */
+.v5-contact-card { background: #1b349b; }
+.v5-contact-card::before { background: radial-gradient(70% 90% at 50% -10%, rgba(120,150,255,0.35), transparent 70%); }
+.v5-contact-card::after { content: ""; position: absolute; inset: 0; background-image: conic-gradient(rgba(255,255,255,0.045) 90deg, transparent 0 180deg, rgba(255,255,255,0.045) 0 270deg, transparent 0); background-size: 48px 48px; pointer-events: none; z-index: 0; }
+.v5-contact-card > * { position: relative; z-index: 1; }

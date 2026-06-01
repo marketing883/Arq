@@ -14,6 +14,20 @@ export function ArrowRight(props: SVGProps<SVGSVGElement>) {
   );
 }
 
+export function ArrowUpRight(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 16 16" fill="none" width="16" height="16" {...props}>
+      <path
+        d="M5 11l6-6M6 5h5v5"
+        stroke="currentColor"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 export function Star(props: SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor" {...props}>

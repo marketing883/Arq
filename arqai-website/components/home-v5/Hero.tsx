@@ -1,4 +1,4 @@
-import { ArrowRight, Star } from "./icons";
+import { ArrowUpRight, Star } from "./icons";
 import { HERO, HERO_VIDEO, HERO_POSTER } from "./content";
 
 export default function Hero() {
@@ -38,10 +38,12 @@ export default function Hero() {
 
           <p className="v5-hero-sub">{HERO.sub}</p>
 
-          <a href={HERO.cta.href} className="v5-btn v5-btn-dark">
-            {HERO.cta.label}
-            <ArrowRight />
-          </a>
+          <div className="v5-cta-wrap">
+            <a href={HERO.cta.href} className="v5-cta">{HERO.cta.label}</a>
+            <a href={HERO.cta.href} className="v5-cta-arrow" aria-label={HERO.cta.label}>
+              <ArrowUpRight />
+            </a>
+          </div>
         </div>
 
         <div className="v5-hero-metrics">
@@ -50,6 +52,12 @@ export default function Hero() {
               className={`v5-hero-metric${i === HERO.metrics.length - 1 ? " accent" : ""}`}
               key={m.label}
             >
+              <span className="v5-metric-glyph" aria-hidden="true">
+                <svg viewBox="0 0 16 16" width="16" height="16" fill="none">
+                  <rect x="2" y="6" width="6" height="6" rx="1" stroke="currentColor" strokeWidth="1.3" />
+                  <rect x="8.5" y="2.5" width="5" height="5" rx="1" stroke="currentColor" strokeWidth="1.3" />
+                </svg>
+              </span>
               <div className="v5-hero-metric-num">
                 {m.num}
                 <span>{m.suffix}</span>

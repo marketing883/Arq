@@ -1,4 +1,4 @@
-import { ArrowRight } from "./icons";
+import { ArrowUpRight } from "./icons";
 import { CONTACT } from "./content";
 
 export default function Contact() {
@@ -25,10 +25,12 @@ export default function Contact() {
             </span>
           </div>
 
-          <a href={CONTACT.cta.href} className="v5-btn v5-btn-primary">
-            {CONTACT.cta.label}
-            <ArrowRight />
-          </a>
+          <div className="v5-cta-wrap">
+            <a href={CONTACT.cta.href} className="v5-cta">{CONTACT.cta.label}</a>
+            <a href={CONTACT.cta.href} className="v5-cta-arrow" aria-label={CONTACT.cta.label}>
+              <ArrowUpRight />
+            </a>
+          </div>
         </div>
       </div>
     </section>
