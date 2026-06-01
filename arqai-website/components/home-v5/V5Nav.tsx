@@ -1,15 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
-
-const LINKS = [
-  { label: "Platform", href: "#features" },
-  { label: "Why ArqAI", href: "#why" },
-  { label: "Process", href: "#process" },
-  { label: "Stories", href: "#testimonials" },
-  { label: "Insights", href: "#blog" },
-];
+import { LOGO, NAV_LINKS } from "./content";
 
 export default function V5Nav() {
   const [open, setOpen] = useState(false);
@@ -18,24 +10,21 @@ export default function V5Nav() {
     <>
       <nav className="v5-nav">
         <div className="v5-nav-inner">
-          <Link href="/v5" className="v5-nav-brand" onClick={() => setOpen(false)}>
-            <span className="v5-nav-logo">
-              <span />
-            </span>
-            ArqAI
-          </Link>
+          <a href="#top" className="v5-nav-brand" onClick={() => setOpen(false)}>
+            <img src={LOGO} alt="ArqAI Labs" className="v5-nav-logo-img" />
+          </a>
 
           <ul className="v5-nav-links">
-            {LINKS.map((l) => (
-              <li key={l.href}>
+            {NAV_LINKS.map((l) => (
+              <li key={l.label}>
                 <a href={l.href}>{l.label}</a>
               </li>
             ))}
           </ul>
 
           <div className="v5-nav-cta">
-            <a href="#contact" className="v5-btn v5-btn-primary">
-              Book a Strategy Call
+            <a href="#contact" className="v5-btn v5-btn-dark">
+              Get Started
             </a>
             <button
               type="button"
@@ -51,13 +40,13 @@ export default function V5Nav() {
       </nav>
 
       <div className={`v5-nav-mobile${open ? " open" : ""}`}>
-        {LINKS.map((l) => (
-          <a key={l.href} href={l.href} onClick={() => setOpen(false)}>
+        {NAV_LINKS.map((l) => (
+          <a key={l.label} href={l.href} onClick={() => setOpen(false)}>
             {l.label}
           </a>
         ))}
-        <a href="#contact" className="v5-btn v5-btn-primary" onClick={() => setOpen(false)}>
-          Book a Strategy Call
+        <a href="#contact" className="v5-btn v5-btn-dark" onClick={() => setOpen(false)}>
+          Get Started
         </a>
       </div>
     </>

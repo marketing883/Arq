@@ -1,118 +1,115 @@
-import { ChatIcon, DocIcon, InsightIcon, ShieldIcon, SparkIcon } from "./icons";
+import { ArrowRight, DocIcon, InsightIcon, ShieldIcon, SparkIcon } from "./icons";
+import { FEATURES } from "./content";
+
+function Visual({ kind, avatars }: { kind: string; avatars?: string[] }) {
+  if (kind === "chat") {
+    return (
+      <div className="v5-feature-visual v5-chat">
+        <div className="bubble">
+          {avatars?.[0] && <img src={avatars[0]} alt="" />}
+          Can I send you a proposal via email?
+        </div>
+        <div className="bubble me">Yes, please.</div>
+        <div className="bubble">
+          {avatars?.[1] && <img src={avatars[1]} alt="" />}
+          Done ✅
+        </div>
+      </div>
+    );
+  }
+  if (kind === "doc") {
+    return (
+      <div className="v5-feature-visual v5-docmock">
+        <div className="v5-docmock-title">Service Agreement Summary</div>
+        <p>
+          This agreement is made between NovaTech Solutions (&ldquo;Provider&rdquo;) and
+          Skybridge Enterprises (&ldquo;Client&rdquo;) on March 15, 2025. The Provider
+          agrees to deliver customized AI-driven data solutions.
+        </p>
+        <div className="v5-docmock-tag">Key Terms</div>
+      </div>
+    );
+  }
+  if (kind === "chart") {
+    return (
+      <div className="v5-feature-visual v5-chartmock">
+        <div className="v5-chartmock-head">Comparison</div>
+        <div className="v5-chartmock-row">
+          <span>Nov 24</span>
+          <div className="bar lime" style={{ width: "92%" }} />
+          <strong>$3,642</strong>
+        </div>
+        <div className="v5-chartmock-row">
+          <span>Nov 23</span>
+          <div className="bar" style={{ width: "48%" }} />
+          <strong>$1,937</strong>
+        </div>
+      </div>
+    );
+  }
+  if (kind === "generate") {
+    return (
+      <div className="v5-feature-visual v5-genmock">
+        <div className="v5-genmock-chip">
+          <span className="v5-genmock-ai">AI</span>
+          Generate email copy for…
+        </div>
+        <button className="v5-genmock-btn" type="button" tabIndex={-1}>
+          <SparkIcon width={16} height={16} />
+          Generate
+        </button>
+      </div>
+    );
+  }
+  return (
+    <div className="v5-feature-visual v5-shieldmock">
+      <ShieldIcon width={56} height={56} />
+    </div>
+  );
+}
+
+const ICONS: Record<string, React.ReactNode> = {
+  chat: <SparkIcon />,
+  doc: <DocIcon />,
+  chart: <InsightIcon />,
+  generate: <SparkIcon />,
+  shield: <ShieldIcon />,
+};
 
 export default function Features() {
+  const { cards } = FEATURES;
   return (
-    <section className="v5-section v5-bg-grey" id="features">
+    <section className="v5-section v5-bg-grey" id="services">
       <div className="v5-container">
         <div className="v5-title-block">
           <div>
             <span className="v5-badge">
               <span className="v5-badge-dot" />
-              Features
+              {FEATURES.eyebrow}
             </span>
           </div>
           <div className="v5-title-main">
-            <h2 className="v5-h2">
-              We Make Operational AI work inside your enterprise
-            </h2>
-            <p className="v5-lead">
-              Experience how our AI-powered features simplify workflows, automate
-              routine tasks, and help your team achieve more—so you can focus on
-              growing your business.
-            </p>
+            <h2 className="v5-h2">{FEATURES.heading}</h2>
+            <p className="v5-lead">{FEATURES.sub}</p>
           </div>
         </div>
 
         <div className="v5-features-grid">
-          {/* AI Chat Support — wide */}
-          <article className="v5-feature-card span-2">
-            <div className="v5-feature-visual v5-chat">
-              <div className="bubble">How many claims need review today?</div>
-              <div className="bubble me">412 flagged — 18 high-risk. Want the breakdown?</div>
-              <div className="bubble">Yes, show the high-risk ones.</div>
-            </div>
-            <div className="v5-feature-icon">
-              <ChatIcon />
-            </div>
-            <h3 className="v5-h3">AI Chat Support</h3>
-            <p className="v5-body">
-              Conversational agents grounded in your data and policies — answering
-              operational questions and triaging work the moment it lands.
-            </p>
-          </article>
+          {cards.map((c) => (
+            <article className="v5-feature-card" key={c.title}>
+              <Visual kind={c.kind} avatars={(c as { avatars?: string[] }).avatars} />
+              <div className="v5-feature-icon">{ICONS[c.kind]}</div>
+              <h3 className="v5-h3">{c.title}</h3>
+              <p className="v5-body">{c.body}</p>
+            </article>
+          ))}
+        </div>
 
-          {/* Smart Document */}
-          <article className="v5-feature-card">
-            <div className="v5-feature-visual v5-doc">
-              <div className="line" style={{ width: "90%" }} />
-              <div className="line lime" />
-              <div className="line" style={{ width: "70%" }} />
-              <div className="line" style={{ width: "80%" }} />
-            </div>
-            <div className="v5-feature-icon">
-              <DocIcon />
-            </div>
-            <h3 className="v5-h3">Smart Document</h3>
-            <p className="v5-body">
-              Extract, classify, and validate documents at scale — turning messy
-              paperwork into structured, audit-ready data.
-            </p>
-          </article>
-
-          {/* AI Business Insights */}
-          <article className="v5-feature-card">
-            <div className="v5-feature-visual v5-bars">
-              <div className="bar" style={{ height: "40%" }} />
-              <div className="bar" style={{ height: "65%" }} />
-              <div className="bar lime" style={{ height: "90%" }} />
-              <div className="bar" style={{ height: "55%" }} />
-              <div className="bar" style={{ height: "75%" }} />
-            </div>
-            <div className="v5-feature-icon">
-              <InsightIcon />
-            </div>
-            <h3 className="v5-h3">AI Business Insights</h3>
-            <p className="v5-body">
-              Surface the signal in your operations with insights that explain the
-              &ldquo;why&rdquo; behind every number.
-            </p>
-          </article>
-
-          {/* AI Detection — wide */}
-          <article className="v5-feature-card span-2">
-            <div className="v5-feature-visual v5-doc">
-              <div className="line" style={{ width: "60%" }} />
-              <div className="line lime" style={{ width: "30%" }} />
-              <div className="line" style={{ width: "85%" }} />
-              <div className="line" style={{ width: "50%" }} />
-            </div>
-            <div className="v5-feature-icon">
-              <ShieldIcon />
-            </div>
-            <h3 className="v5-h3">AI Detection</h3>
-            <p className="v5-body">
-              Catch fraud, waste, and anomalies generic tools miss. Vertical-specific
-              models trained on the patterns that matter in your industry — with proof
-              attached to every flag.
-            </p>
-          </article>
-
-          {/* Content Generation */}
-          <article className="v5-feature-card">
-            <div className="v5-feature-visual v5-doc">
-              <div className="line" style={{ width: "75%" }} />
-              <div className="line" style={{ width: "95%" }} />
-              <div className="line lime" style={{ width: "45%" }} />
-            </div>
-            <div className="v5-feature-icon">
-              <SparkIcon />
-            </div>
-            <h3 className="v5-h3">Content Generation</h3>
-            <p className="v5-body">
-              Draft reports, summaries, and responses in your voice — grounded in your
-              systems, ready for a human to approve.
-            </p>
-          </article>
+        <div className="v5-features-foot">
+          <a href={FEATURES.cta.href} className="v5-btn v5-btn-dark">
+            {FEATURES.cta.label}
+            <ArrowRight />
+          </a>
         </div>
       </div>
     </section>

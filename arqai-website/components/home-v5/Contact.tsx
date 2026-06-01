@@ -1,4 +1,5 @@
 import { ArrowRight } from "./icons";
+import { CONTACT } from "./content";
 
 export default function Contact() {
   return (
@@ -7,22 +8,24 @@ export default function Contact() {
         <div className="v5-contact-card">
           <span className="v5-badge">
             <span className="v5-badge-dot" />
-            Get started
+            {CONTACT.eyebrow}
           </span>
-          <h2 className="v5-h2">
-            Let&rsquo;s build your <span className="lime">operational AI</span>
-          </h2>
-          <p>
-            Tell us how your operation works. We&rsquo;ll show you where AI delivers
-            measurable value — and how fast we can get it into production.
-          </p>
+
+          <blockquote className="v5-contact-quote">{CONTACT.quote}</blockquote>
+
+          <div className="v5-contact-founder">
+            <img src={CONTACT.founder.avatar} alt={CONTACT.founder.name} />
+            <span>
+              <span className="v5-contact-name">{CONTACT.founder.name}</span>
+              <br />
+              <span className="v5-contact-role">{CONTACT.founder.role}</span>
+            </span>
+          </div>
+
           <div className="v5-contact-actions">
-            <a href="/demo" className="v5-btn v5-btn-primary">
-              Book a Strategy Call
+            <a href={CONTACT.cta.href} className="v5-btn v5-btn-primary">
+              {CONTACT.cta.label}
               <ArrowRight />
-            </a>
-            <a href="/contact" className="v5-btn v5-btn-ghost">
-              Contact us
             </a>
           </div>
         </div>
