@@ -370,8 +370,11 @@
 /* features — header + 3-column masonry */
 .v5-features-head { display: grid; grid-template-columns: 150px 1fr; gap: 28px; align-items: start; margin-bottom: 40px; }
 .v5-features-head .v5-h2 { max-width: 640px; }
-.v5-features-masonry { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: start; }
+.v5-features-masonry { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: stretch; }
 .v5-fcol { display: flex; flex-direction: column; gap: 20px; }
+/* anchor "See All Services" to the bottom and let it fill the right column,
+   so it reads as a tall card aligned with Governance (matches Framer) */
+.v5-fcol > .v5-seeall { flex: 1 1 auto; margin-top: 0; }
 .v5-features-sub { margin-bottom: 6px; }
 .v5-feature-card { min-height: 0 !important; padding: 22px; grid-column: auto !important; }
 .v5-feature-card h3 { margin: 4px 0 8px; font-size: 21px; }
@@ -427,7 +430,7 @@
 .v5-gen-input button { background: var(--v5-ink); color: #fff; border: none; border-radius: 7px; padding: 7px 13px; font-size: 11px; font-weight: 600; }
 
 /* see all services (checkerboard) */
-.v5-feature-card.v5-seeall { position: relative; overflow: hidden; min-height: 240px !important; display: flex; align-items: flex-end; padding: 24px; text-decoration: none; }
+.v5-feature-card.v5-seeall { position: relative; overflow: hidden; min-height: 240px !important; display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-start; padding: 24px; text-decoration: none; }
 .v5-checker { position: absolute; inset: 0; background-image: conic-gradient(#eef0ec 90deg, #f8f9f6 0 180deg, #eef0ec 0 270deg, #f8f9f6 0); background-size: 34px 34px; opacity: 0.7; -webkit-mask-image: radial-gradient(120% 120% at 50% 0%, #000 30%, transparent 85%); mask-image: radial-gradient(120% 120% at 50% 0%, #000 30%, transparent 85%); }
 .v5-seeall-link { position: relative; z-index: 2; display: inline-flex; align-items: center; gap: 8px; font-family: var(--v5-sans); font-weight: 600; font-size: 15px; color: var(--v5-ink); border-bottom: 1.5px solid var(--v5-ink); padding-bottom: 3px; }
 
