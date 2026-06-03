@@ -27,6 +27,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
   const client = getClient();
   if (!client) return NextResponse.json({ error: "Server not configured" }, { status: 500 });
 
+  // Preferred path: embedded job_postings relationship.
   const { data, error } = await client
     .from("job_applications")
     .select(
@@ -34,9 +35,36 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
     )
     .eq("id", id)
     .maybeSingle();
-  if (error) return NextResponse.json({ error: "Server error" }, { status: 500 });
-  if (!data) return NextResponse.json({ error: "Not found" }, { status: 404 });
-  return NextResponse.json({ application: data });
+  if (!error) {
+    if (!data) return NextResponse.json({ error: "Not found" }, { status: 404 });
+    return NextResponse.json({ application: data });
+  }
+
+  // Fallback for installs where the foreign key to job_postings isn't
+  // resolvable by PostgREST: fetch the row plainly and attach the job details.
+  console.warn(
+    "[admin/applications/:id] embedded join failed, falling back to manual merge",
+    error.message
+  );
+  const { data: row, error: rowError } = await client
+    .from("job_applications")
+    .select("*")
+    .eq("id", id)
+    .maybeSingle();
+  if (rowError) return NextResponse.json({ error: "Server error" }, { status: 500 });
+  if (!row) return NextResponse.json({ error: "Not found" }, { status: 404 });
+
+  let jobPosting = null;
+  if (row.job_id) {
+    const { data: job } = await client
+      .from("job_postings")
+      .select("title, slug, department, location, employment_type")
+      .eq("id", row.job_id)
+      .maybeSingle();
+    jobPosting = job ?? null;
+  }
+
+  return NextResponse.json({ application: { ...row, job_postings: jobPosting } });
 }
 
 export async function PATCH(
