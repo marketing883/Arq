@@ -1,13 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
-import { ArrowIcon, DarkShell } from "@/components/site-dark/DarkShell";
-import { SignalStrip } from "@/components/site-dark/InternalVisuals";
+import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
+import { ArrowRight, ArrowUpRight } from "@/components/home-v5/icons";
 
 export const metadata: Metadata = {
   title: "Industries | ArqAI Labs",
   description:
     "AI workflow systems for healthcare payers, insurance carriers, banking, retail, and manufacturing teams operating in high-stakes, data-rich environments.",
+  alternates: { canonical: "https://thearq.ai/industries" },
 };
 
 const industries = [
@@ -53,100 +54,94 @@ const industries = [
   },
 ];
 
+const paths = [
+  {
+    title: "Industry pages start with the workflow under pressure.",
+    body:
+      "Claims, alerts, authorizations, inspections, loyalty actions, and production exceptions all need different data, controls, and review habits.",
+    href: "/services/workflow-strategy",
+  },
+  {
+    title: "Accelerators shorten the path when the pattern repeats.",
+    body:
+      "Claims triage, payment integrity, financial crime, loyalty, service operations, supply chain, and SecOps have reusable spines that still need enterprise fit.",
+    href: "/accelerators",
+  },
+  {
+    title: "The operating fabric keeps the work governable.",
+    body:
+      "Each industry workflow gets the permissions, policy checks, evidence capture, and human review needed for production use.",
+    href: "/platform",
+  },
+];
+
 export default function IndustriesPage() {
   return (
-    <DarkShell>
-      <section className="a-hero">
-        <div className="a-hero-grid" />
-        <div className="a-wrap" style={{ position: "relative" }}>
-          <span className="a-pill">
-            <span className="dot" /> Industries
-          </span>
-          <div className="a-section-head" style={{ marginTop: 28, alignItems: "start" }}>
-            <div>
-              <h1 className="h-display" style={{ maxWidth: "13ch" }}>
-                AI for industries where the work cannot be reduced to a prompt.
-              </h1>
-            </div>
-            <div>
-              <p className="lede">
-                ArqAI Labs builds governed AI workflows for sectors where decisions depend on messy data, changing
-                policy, exception handling, evidence, and human accountability. We start with the work as it really
-                runs, then shape AI around the operating terrain.
-              </p>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginTop: 28 }}>
-                <Link href="/engage-us" className="a-btn a-btn-primary">
-                  Get Started <ArrowIcon className="arrow" />
-                </Link>
-                <Link href="/accelerators" className="a-btn a-btn-ghost">
-                  View accelerators
-                </Link>
-              </div>
+    <V5SiteLayout>
+      {/* Hero */}
+      <section className="v5-page-hero">
+        <div className="v5-container">
+          <div className="v5-page-hero-inner">
+            <span className="v5-badge">
+              <span className="v5-badge-dot" />
+              Industries
+            </span>
+            <h1 className="v5-h1">AI for industries where the work cannot be reduced to a prompt.</h1>
+            <p className="v5-lead">
+              ArqAI Labs builds governed AI workflows for sectors where decisions depend on
+              messy data, changing policy, exception handling, evidence, and human
+              accountability. We start with the work as it really runs, then shape AI around
+              the operating terrain.
+            </p>
+            <div className="v5-hero-actions">
+              <Link href="/engage-us" className="v5-btn v5-btn-primary">
+                Get Started <ArrowRight />
+              </Link>
+              <Link href="/accelerators" className="v5-btn v5-btn-ghost">
+                View accelerators
+              </Link>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="a-section">
-        <div className="a-wrap">
-          <SignalStrip
-            label="Industry focus"
-            title="Built where generic AI falls short."
-            body="Every industry we enter has fragmented systems, high exception volume, and teams accountable for the final call. We turn that complexity into AI workflows that can be governed, measured, and expanded."
-            variant="network"
-            points={["Policy", "Evidence", "Exceptions", "Human judgment", "Operating metrics"]}
-          />
-        </div>
-      </section>
-
-      <section className="a-section">
-        <div className="a-wrap">
-          <div className="pathway-list">
-            {[
-              {
-                title: "Industry pages start with the workflow under pressure.",
-                body:
-                  "Claims, alerts, authorizations, inspections, loyalty actions, and production exceptions all need different data, controls, and review habits.",
-                href: "/services/workflow-strategy",
-              },
-              {
-                title: "Accelerators shorten the path when the pattern repeats.",
-                body:
-                  "Claims triage, payment integrity, financial crime, loyalty, service operations, supply chain, and SecOps have reusable spines that still need enterprise fit.",
-                href: "/accelerators",
-              },
-              {
-                title: "The operating fabric keeps the work governable.",
-                body:
-                  "Each industry workflow gets the permissions, policy checks, evidence capture, and human review needed for production use.",
-                href: "/platform",
-              },
-            ].map((path, index) => (
-              <Link href={path.href} className="pathway-row" key={path.href}>
-                <span className="num">{String(index + 1).padStart(2, "0")}</span>
-                <div>
-                  <h3>{path.title}</h3>
-                  <p>{path.body}</p>
-                </div>
-                <ArrowIcon className="arrow" />
+      {/* How industry work is shaped */}
+      <section className="v5-section v5-bg-grey">
+        <div className="v5-container">
+          <div className="v5-section-head">
+            <span className="v5-eyebrow">Industry focus</span>
+            <h2 className="v5-h2">Built where generic AI falls short.</h2>
+            <p className="v5-lead">
+              Every industry we enter has fragmented systems, high exception volume, and
+              teams accountable for the final call. We turn that complexity into AI workflows
+              that can be governed, measured, and expanded.
+            </p>
+          </div>
+          <div className="v5-grid v5-grid-3">
+            {paths.map((path, index) => (
+              <Link href={path.href} className="v5-card v5-card-link v5-numcard" key={path.href}>
+                <span className="v5-num">{String(index + 1).padStart(2, "0")}</span>
+                <h3 className="v5-h3">{path.title}</h3>
+                <p className="v5-body">{path.body}</p>
+                <span className="v5-card-more">
+                  Explore <ArrowRight />
+                </span>
               </Link>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="a-section">
-        <div className="a-wrap">
-          <div className="a-section-head">
-            <div>
-              <span className="a-eyebrow">Industry depth</span>
-              <h2 className="h-section" style={{ marginTop: 18 }}>
-                Transformation areas we can build around today.
-              </h2>
-            </div>
-            <p className="lede">
-              Each page describes the workflows, outcomes, and accelerator starting points that make the industry
-              specific, from the systems involved to the evidence and review paths that shape production use.
+      {/* Industry rows */}
+      <section className="v5-section v5-bg-white">
+        <div className="v5-container">
+          <div className="v5-section-head">
+            <span className="v5-eyebrow">Industry depth</span>
+            <h2 className="v5-h2">Transformation areas we can build around today.</h2>
+            <p className="v5-lead">
+              Each page describes the workflows, outcomes, and accelerator starting points
+              that make the industry specific, from the systems involved to the evidence and
+              review paths that shape production use.
             </p>
           </div>
           <div style={{ display: "grid", gap: 22 }}>
@@ -154,10 +149,10 @@ export default function IndustriesPage() {
               <Link
                 href={industry.href}
                 key={industry.href}
-                className="a-card industry-row"
-                style={{ color: "inherit", textDecoration: "none", overflow: "hidden", padding: 0 }}
+                className="v5-card v5-card-link v5-industry-row"
+                style={{ padding: 0, overflow: "hidden" }}
               >
-                <div style={{ position: "relative", minHeight: 260 }}>
+                <div className="v5-industry-media">
                   <Image
                     src={industry.image}
                     alt={`${industry.title} operations`}
@@ -165,24 +160,19 @@ export default function IndustriesPage() {
                     sizes="(min-width: 1000px) 38vw, 100vw"
                     style={{ objectFit: "cover" }}
                   />
-                  <div className="svc-media-shade" />
                 </div>
-                <div style={{ padding: "clamp(24px, 4vw, 42px)", display: "flex", flexDirection: "column" }}>
+                <div className="v5-industry-body">
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 18 }}>
-                    <span className="a-eyebrow">0{index + 1}</span>
-                    <ArrowIcon className="arrow" />
+                    <span className="v5-card-eyebrow">0{index + 1}</span>
+                    <ArrowUpRight />
                   </div>
-                  <h2 className="h-section" style={{ fontSize: "clamp(28px, 3vw, 42px)", marginTop: 22 }}>
+                  <h3 className="v5-h2" style={{ fontSize: "clamp(24px, 2.6vw, 34px)", marginTop: 16 }}>
                     {industry.title}
-                  </h2>
-                  <p className="lede" style={{ marginTop: 14 }}>
-                    {industry.description}
-                  </p>
-                  <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 24 }}>
+                  </h3>
+                  <p className="v5-lead" style={{ marginTop: 12 }}>{industry.description}</p>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 22 }}>
                     {industry.accelerators.map((accelerator) => (
-                      <span className="a-tag" key={accelerator}>
-                        {accelerator}
-                      </span>
+                      <span className="v5-chip" key={accelerator}>{accelerator}</span>
                     ))}
                   </div>
                 </div>
@@ -191,6 +181,28 @@ export default function IndustriesPage() {
           </div>
         </div>
       </section>
-    </DarkShell>
+
+      {/* CTA band */}
+      <section className="v5-section v5-cta-band">
+        <div className="v5-container">
+          <div className="v5-cta-card">
+            <div className="v5-cta-glow" />
+            <h2 className="v5-h2">Tell us how the work really runs in your industry.</h2>
+            <p className="v5-lead">
+              We will map the workflow, the systems, the evidence, and the review paths, then
+              shape governed AI around the operating terrain you already know.
+            </p>
+            <div className="v5-cta-card-actions">
+              <Link href="/engage-us" className="v5-btn v5-btn-primary">
+                Get Started <ArrowRight />
+              </Link>
+              <Link href="/accelerators" className="v5-btn v5-btn-ghost">
+                View accelerators
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+    </V5SiteLayout>
   );
 }

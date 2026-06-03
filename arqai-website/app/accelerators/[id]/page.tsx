@@ -1,8 +1,9 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { ArrowIcon, CheckIcon, DarkShell } from "@/components/site-dark/DarkShell";
-import { HeroImagePanel, SignalStrip } from "@/components/site-dark/InternalVisuals";
+import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
+import { ArrowRight } from "@/components/home-v5/icons";
 import { accelerators, getAccelerator } from "@/lib/data/accelerators";
 
 type AcceleratorPageProps = {
@@ -27,6 +28,7 @@ export function generateMetadata({ params }: AcceleratorPageProps): Metadata {
   return {
     title: `${accelerator.name} | ArqAI Labs Accelerators`,
     description: accelerator.summary,
+    alternates: { canonical: `https://thearq.ai/accelerators/${accelerator.id}` },
   };
 }
 
@@ -38,148 +40,117 @@ export default function AcceleratorDetailPage({ params }: AcceleratorPageProps) 
   }
 
   return (
-    <DarkShell>
-      <section className="a-hero">
-        <div className="a-hero-grid" />
-        <div className="a-wrap" style={{ position: "relative" }}>
-          <div className="detail-hero-grid" style={{ display: "grid", gap: 48, alignItems: "center" }}>
-            <div>
-              <span className="a-pill">
-                <span className="dot" /> Accelerator / {accelerator.name}
+    <V5SiteLayout>
+      {/* Hero */}
+      <section className="v5-page-hero">
+        <div className="v5-container">
+          <div className="v5-crumbs" style={{ marginBottom: 22 }}>
+            <Link href="/accelerators">Accelerators</Link>
+            <span>/</span>
+            <span style={{ color: "var(--v5-ink-soft)" }}>{accelerator.name}</span>
+          </div>
+          <div className="v5-split">
+            <div className="v5-split-copy">
+              <span className="v5-badge">
+                <span className="v5-badge-dot" />
+                {accelerator.category}
               </span>
-              <h1 className="h-display" style={{ marginTop: 28, maxWidth: "13ch" }}>
-                {accelerator.name}
-              </h1>
-              <p className="lede" style={{ marginTop: 28, maxWidth: "62ch" }}>
-                {accelerator.tagline}
-              </p>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginTop: 30 }}>
-                <Link href="/engage-us" className="a-btn a-btn-primary">
-                  Get Started <ArrowIcon className="arrow" />
+              <h1 className="v5-h1" style={{ marginTop: 18 }}>{accelerator.name}</h1>
+              <p className="v5-lead">{accelerator.tagline}</p>
+              <div className="v5-hero-actions">
+                <Link href="/engage-us" className="v5-btn v5-btn-primary">
+                  Get Started <ArrowRight />
                 </Link>
-                <Link href="/accelerators" className="a-btn a-btn-ghost">
+                <Link href="/accelerators" className="v5-btn v5-btn-ghost">
                   All accelerators
                 </Link>
               </div>
             </div>
-
-            <HeroImagePanel
-              image={accelerator.image}
-              alt=""
-              label={accelerator.category}
-              title={accelerator.summary}
-              variant="orbit"
-              priority
-            />
-          </div>
-        </div>
-      </section>
-
-      <section className="a-section">
-        <div className="a-wrap">
-          <div className="gap-split internal-story">
-            <article className="gap-col fail">
-              <h4>Pain</h4>
-              <div className="big" style={{ marginTop: 8 }}>
-                The operating drag.
-              </div>
-              <p style={{ color: "var(--ink-cream-d)", lineHeight: 1.65, marginTop: 18 }}>
-                {accelerator.pain}
-              </p>
-            </article>
-            <article className="gap-col win">
-              <h4>Promise</h4>
-              <div className="big" style={{ marginTop: 8 }}>
-                The workflow shift.
-              </div>
-              <p style={{ color: "var(--ink-cream-d)", lineHeight: 1.65, marginTop: 18 }}>
-                {accelerator.promise}
-              </p>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section className="a-section">
-        <div className="a-wrap">
-          <div className="a-section-head">
-            <div>
-              <span className="a-eyebrow">Proof</span>
-              <h2 className="h-section" style={{ marginTop: 18 }}>
-                Reusable pattern, enterprise controls.
-              </h2>
+            <div className="v5-split-media">
+              <Image
+                src={accelerator.image}
+                alt={accelerator.name}
+                fill
+                sizes="(min-width: 860px) 50vw, 100vw"
+                style={{ objectFit: "cover" }}
+                priority
+              />
             </div>
-            <p className="lede">{accelerator.proof}</p>
           </div>
+        </div>
+      </section>
 
-          <div className="steps steps-relief" style={{ marginTop: 44 }}>
+      {/* Pain / Promise */}
+      <section className="v5-section v5-bg-grey">
+        <div className="v5-container">
+          <div className="v5-grid v5-grid-2">
+            <article className="v5-card">
+              <span className="v5-card-eyebrow">Pain</span>
+              <h2 className="v5-h3">The operating drag.</h2>
+              <p className="v5-body">{accelerator.pain}</p>
+            </article>
+            <article className="v5-card dark">
+              <span className="v5-card-eyebrow" style={{ color: "var(--v5-lime)" }}>Promise</span>
+              <h2 className="v5-h3">The workflow shift.</h2>
+              <p className="v5-body">{accelerator.promise}</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      {/* Proof + metrics */}
+      <section className="v5-section v5-bg-white">
+        <div className="v5-container">
+          <div className="v5-section-head">
+            <span className="v5-eyebrow">Proof</span>
+            <h2 className="v5-h2">Reusable pattern, enterprise controls.</h2>
+            <p className="v5-lead">{accelerator.proof}</p>
+          </div>
+          <div className="v5-stats">
             {accelerator.metrics.map((metric) => (
-              <div className="step" key={metric.label}>
-                <span className="num">{metric.value}</span>
-                <h3 style={{ marginTop: 28 }}>{metric.label}</h3>
-                <p>Target outcome calibrated against your workflow data, volume, controls, and reviewer feedback.</p>
+              <div className="v5-stat" key={metric.label}>
+                <strong>{metric.value}</strong>
+                <span>{metric.label}</span>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="a-section">
-        <div className="a-wrap">
-          <SignalStrip
-            label="Acceleration pattern"
-            title="Reusable core, tuned around your operating reality."
-            body="Each accelerator ships with a proven workflow spine, then bends around the data sources, controls, reviewers, and edge cases that make your environment different."
-            variant="flow"
-            points={["Core workflow", "Local data", "Controls", "Rollout"]}
-          />
-        </div>
-      </section>
-
-      <section className="a-section">
-        <div className="a-wrap">
-          <div className="a-section-head">
-            <div>
-              <span className="a-eyebrow">Rollout</span>
-              <h2 className="h-section" style={{ marginTop: 18 }}>
-                From fit check to first operating queue.
-              </h2>
-            </div>
-            <p className="lede">
-              Accelerators move fastest when the first release is narrow, measurable, and connected to the people who
-              own the work.
+      {/* Rollout */}
+      <section className="v5-section v5-bg-grey">
+        <div className="v5-container">
+          <div className="v5-section-head">
+            <span className="v5-eyebrow">Rollout</span>
+            <h2 className="v5-h2">From fit check to first operating queue.</h2>
+            <p className="v5-lead">
+              Accelerators move fastest when the first release is narrow, measurable, and
+              connected to the people who own the work.
             </p>
           </div>
-
-          <div className="steps steps-relief" style={{ marginTop: 44 }}>
+          <div className="v5-grid v5-grid-4">
             {accelerator.rollout.map((step, index) => (
-              <div className="step" key={step}>
-                <span className="num">STEP {String(index + 1).padStart(2, "0")}</span>
-                <h3 style={{ marginTop: 28 }}>{step}</h3>
+              <div className="v5-card v5-numcard" key={step}>
+                <span className="v5-num">{String(index + 1).padStart(2, "0")}</span>
+                <p className="v5-body" style={{ color: "var(--v5-ink-soft)" }}>{step}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="a-section">
-        <div className="a-wrap">
-          <div className="a-card" style={{ padding: 32 }}>
-            <div className="a-section-head" style={{ alignItems: "start" }}>
-              <div>
-                <span className="a-eyebrow">Fit signals</span>
-                <h2 className="h-section" style={{ marginTop: 18 }}>
-                  When {accelerator.name} is worth a closer look.
-                </h2>
-              </div>
-              <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "grid", gap: 14 }}>
+      {/* Fit signals */}
+      <section className="v5-section v5-bg-white">
+        <div className="v5-container">
+          <div className="v5-split">
+            <div className="v5-split-copy">
+              <span className="v5-eyebrow">Fit signals</span>
+              <h2 className="v5-h2">When {accelerator.name} is worth a closer look.</h2>
+            </div>
+            <div className="v5-card">
+              <ul className="v5-list">
                 {accelerator.signals.map((signal) => (
-                  <li key={signal} style={{ display: "flex", gap: 12, color: "var(--ink-cream-d)", lineHeight: 1.5 }}>
-                    <span style={{ color: "var(--ember)", marginTop: 2 }}>
-                      <CheckIcon />
-                    </span>
-                    {signal}
-                  </li>
+                  <li key={signal}>{signal}</li>
                 ))}
               </ul>
             </div>
@@ -187,22 +158,28 @@ export default function AcceleratorDetailPage({ params }: AcceleratorPageProps) 
         </div>
       </section>
 
-      <section className="a-section">
-        <div className="a-wrap">
-          <div className="cta-strip">
-            <h2 className="h-section" style={{ marginTop: 0, maxWidth: "18ch" }}>
-              Start with accelerator fit, not a generic demo.
-            </h2>
-            <p className="lede" style={{ marginTop: 18, maxWidth: "62ch" }}>
-              Bring us the workflow, the data sources, and the operating metric. We will show where {accelerator.name}
-              helps, what must be customized, and what should stay human-led.
+      {/* CTA band */}
+      <section className="v5-section v5-cta-band">
+        <div className="v5-container">
+          <div className="v5-cta-card">
+            <div className="v5-cta-glow" />
+            <h2 className="v5-h2">Start with accelerator fit, not a generic demo.</h2>
+            <p className="v5-lead">
+              Bring us the workflow, the data sources, and the operating metric. We will show
+              where {accelerator.name} helps, what must be customized, and what should stay
+              human-led.
             </p>
-            <Link href="/engage-us" className="a-btn a-btn-primary" style={{ marginTop: 28 }}>
-              Get Started <ArrowIcon className="arrow" />
-            </Link>
+            <div className="v5-cta-card-actions">
+              <Link href="/engage-us" className="v5-btn v5-btn-primary">
+                Get Started <ArrowRight />
+              </Link>
+              <Link href="/accelerators" className="v5-btn v5-btn-ghost">
+                All accelerators
+              </Link>
+            </div>
           </div>
         </div>
       </section>
-    </DarkShell>
+    </V5SiteLayout>
   );
 }

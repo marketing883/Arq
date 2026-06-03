@@ -1,8 +1,9 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { ArrowIcon, CheckIcon, DarkShell } from "@/components/site-dark/DarkShell";
-import { HeroImagePanel, SignalStrip } from "@/components/site-dark/InternalVisuals";
+import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
+import { ArrowRight } from "@/components/home-v5/icons";
 import { getService, services } from "@/lib/data/services";
 
 type ServicePageProps = {
@@ -27,6 +28,7 @@ export function generateMetadata({ params }: ServicePageProps): Metadata {
   return {
     title: `${service.title} | ArqAI Labs`,
     description: service.summary,
+    alternates: { canonical: `https://thearq.ai/services/${service.slug}` },
   };
 }
 
@@ -38,128 +40,104 @@ export default function ServiceDetailPage({ params }: ServicePageProps) {
   }
 
   return (
-    <DarkShell>
-      <section className="a-hero">
-        <div className="a-hero-grid" />
-        <div className="a-wrap" style={{ position: "relative" }}>
-          <div style={{ display: "grid", gap: 48, alignItems: "center" }} className="detail-hero-grid">
-            <div>
-              <span className="a-pill">
-                <span className="dot" /> {service.eyebrow}
+    <V5SiteLayout>
+      {/* Hero */}
+      <section className="v5-page-hero">
+        <div className="v5-container">
+          <div className="v5-crumbs" style={{ marginBottom: 22 }}>
+            <Link href="/services">Services</Link>
+            <span>/</span>
+            <span style={{ color: "var(--v5-ink-soft)" }}>{service.shortTitle}</span>
+          </div>
+          <div className="v5-split">
+            <div className="v5-split-copy">
+              <span className="v5-badge">
+                <span className="v5-badge-dot" />
+                {service.eyebrow}
               </span>
-              <h1 className="h-display" style={{ marginTop: 28, maxWidth: "14ch" }}>
-                {service.title}
-              </h1>
-              <p className="lede" style={{ marginTop: 28, maxWidth: "62ch" }}>
-                {service.summary}
-              </p>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginTop: 30 }}>
-                <Link href="/engage-us" className="a-btn a-btn-primary">
-                  Get Started <ArrowIcon className="arrow" />
+              <h1 className="v5-h1" style={{ marginTop: 18 }}>{service.title}</h1>
+              <p className="v5-lead">{service.summary}</p>
+              <div className="v5-hero-actions">
+                <Link href="/engage-us" className="v5-btn v5-btn-primary">
+                  Get Started <ArrowRight />
                 </Link>
-                <Link href="/services" className="a-btn a-btn-ghost">
+                <Link href="/services" className="v5-btn v5-btn-ghost">
                   All services
                 </Link>
               </div>
             </div>
-
-            <HeroImagePanel
-              image={service.image}
-              alt=""
-              label={service.shortTitle}
-              title="Workflow signal map"
-              variant="flow"
-              priority
-            />
-          </div>
-        </div>
-      </section>
-
-      <section className="a-section">
-        <div className="a-wrap">
-          <div className="gap-split internal-story">
-            <article className="gap-col fail">
-              <h4>The problem</h4>
-              <div className="big" style={{ marginTop: 8 }}>
-                Why teams get stuck.
-              </div>
-              <p style={{ color: "var(--ink-cream-d)", lineHeight: 1.65, marginTop: 18 }}>
-                {service.problem}
-              </p>
-            </article>
-            <article className="gap-col win">
-              <h4>The promise</h4>
-              <div className="big" style={{ marginTop: 8 }}>
-                What changes with ArqAI Labs.
-              </div>
-              <p style={{ color: "var(--ink-cream-d)", lineHeight: 1.65, marginTop: 18 }}>
-                {service.promise}
-              </p>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section className="a-section">
-        <div className="a-wrap">
-          <SignalStrip
-            label="Operating path"
-            title="A useful AI system needs more than a model."
-            body="The work moves through data, policy, exception handling, reviewer judgment, and system updates. We design the service around that path so the first release can be used in production."
-            variant="network"
-            points={["Data", "Policy", "Review", "Action"]}
-          />
-        </div>
-      </section>
-
-      <section className="a-section">
-        <div className="a-wrap">
-          <div className="a-section-head">
-            <div>
-              <span className="a-eyebrow">Measurable outcomes</span>
-              <h2 className="h-section" style={{ marginTop: 18 }}>
-                Built to move an operating metric.
-              </h2>
+            <div className="v5-split-media">
+              <Image
+                src={service.image}
+                alt=""
+                fill
+                sizes="(min-width: 860px) 50vw, 100vw"
+                style={{ objectFit: "cover" }}
+                priority
+              />
             </div>
-            <p className="lede">
-              Every service engagement starts with a specific workflow metric and a production path that can be
-              inspected by business, technology, and risk owners.
+          </div>
+        </div>
+      </section>
+
+      {/* Problem / Promise */}
+      <section className="v5-section v5-bg-grey">
+        <div className="v5-container">
+          <div className="v5-grid v5-grid-2">
+            <article className="v5-card">
+              <span className="v5-card-eyebrow">The problem</span>
+              <h2 className="v5-h3">Why teams get stuck.</h2>
+              <p className="v5-body">{service.problem}</p>
+            </article>
+            <article className="v5-card dark">
+              <span className="v5-card-eyebrow" style={{ color: "var(--v5-lime)" }}>The promise</span>
+              <h2 className="v5-h3">What changes with ArqAI Labs.</h2>
+              <p className="v5-body">{service.promise}</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      {/* Outcomes */}
+      <section className="v5-section v5-bg-white">
+        <div className="v5-container">
+          <div className="v5-section-head">
+            <span className="v5-eyebrow">Measurable outcomes</span>
+            <h2 className="v5-h2">Built to move an operating metric.</h2>
+            <p className="v5-lead">
+              Every service engagement starts with a specific workflow metric and a
+              production path that can be inspected by business, technology, and risk owners.
             </p>
           </div>
-
-          <div className="steps steps-relief" style={{ marginTop: 44 }}>
+          <div className="v5-grid v5-grid-3">
             {service.outcomes.map((outcome) => (
-              <div className="step" key={outcome.label}>
-                <span className="num">{outcome.value}</span>
-                <h3 style={{ marginTop: 28 }}>{outcome.label}</h3>
-                <p>{outcome.detail}</p>
+              <div className="v5-card" key={outcome.label}>
+                <strong style={{ fontFamily: "var(--v5-display)", fontWeight: 600, fontSize: 38, lineHeight: 1, color: "var(--v5-ink)", letterSpacing: "-0.02em" }}>
+                  {outcome.value}
+                </strong>
+                <h3 className="v5-h3" style={{ marginTop: 6 }}>{outcome.label}</h3>
+                <p className="v5-body">{outcome.detail}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="a-section">
-        <div className="a-wrap">
-          <div className="a-section-head">
-            <div>
-              <span className="a-eyebrow">Deliverables</span>
-              <h2 className="h-section" style={{ marginTop: 18 }}>
-                What the team leaves with.
-              </h2>
-            </div>
-            <p className="lede">
-              The artifacts are meant to be used by operators, engineers, risk owners, and executives. No shelfware.
+      {/* Deliverables */}
+      <section className="v5-section v5-bg-grey">
+        <div className="v5-container">
+          <div className="v5-section-head">
+            <span className="v5-eyebrow">Deliverables</span>
+            <h2 className="v5-h2">What the team leaves with.</h2>
+            <p className="v5-lead">
+              The artifacts are meant to be used by operators, engineers, risk owners, and
+              executives. No shelfware.
             </p>
           </div>
-
-          <div className="svc-grid relief-grid" style={{ marginTop: 44 }}>
+          <div className="v5-grid v5-grid-3">
             {service.deliverables.map((deliverable) => (
-              <div className="a-card" key={deliverable} style={{ padding: 24 }}>
-                <div style={{ color: "var(--ember)", marginBottom: 16 }}>
-                  <CheckIcon />
-                </div>
-                <p style={{ color: "var(--ink-cream)", fontSize: 17, lineHeight: 1.45, margin: 0 }}>
+              <div className="v5-card" key={deliverable}>
+                <p style={{ fontSize: 16, lineHeight: 1.5, color: "var(--v5-ink-soft)", margin: 0 }}>
                   {deliverable}
                 </p>
               </div>
@@ -168,38 +146,25 @@ export default function ServiceDetailPage({ params }: ServicePageProps) {
         </div>
       </section>
 
-      <section className="a-section">
-        <div className="a-wrap">
-          <div className="gap-split internal-story">
-            <article className="a-card" style={{ padding: 32 }}>
-              <span className="a-eyebrow">Signals</span>
-              <h2 className="h-section" style={{ fontSize: "clamp(28px, 3.2vw, 44px)", marginTop: 18 }}>
-                When this service fits.
-              </h2>
-              <ul style={{ listStyle: "none", padding: 0, margin: "28px 0 0", display: "grid", gap: 14 }}>
+      {/* Signals + contexts */}
+      <section className="v5-section v5-bg-white">
+        <div className="v5-container">
+          <div className="v5-grid v5-grid-2">
+            <article className="v5-card">
+              <span className="v5-card-eyebrow">Signals</span>
+              <h2 className="v5-h3">When this service fits.</h2>
+              <ul className="v5-list">
                 {service.signals.map((signal) => (
-                  <li key={signal} style={{ display: "flex", gap: 12, color: "var(--ink-cream-d)", lineHeight: 1.5 }}>
-                    <span style={{ color: "var(--ember)", marginTop: 2 }}>
-                      <CheckIcon />
-                    </span>
-                    {signal}
-                  </li>
+                  <li key={signal}>{signal}</li>
                 ))}
               </ul>
             </article>
-            <article className="a-card" style={{ padding: 32 }}>
-              <span className="a-eyebrow">Where this helps</span>
-              <h2 className="h-section" style={{ fontSize: "clamp(28px, 3.2vw, 44px)", marginTop: 18 }}>
-                What the work usually involves.
-              </h2>
-              <ul style={{ listStyle: "none", padding: 0, margin: "28px 0 0", display: "grid", gap: 14 }}>
+            <article className="v5-card">
+              <span className="v5-card-eyebrow">Where this helps</span>
+              <h2 className="v5-h3">What the work usually involves.</h2>
+              <ul className="v5-list">
                 {service.workflowContexts.map((context) => (
-                  <li key={context} style={{ display: "flex", gap: 12, color: "var(--ink-cream-d)", lineHeight: 1.5 }}>
-                    <span style={{ color: "var(--ember)", marginTop: 2 }}>
-                      <CheckIcon />
-                    </span>
-                    {context}
-                  </li>
+                  <li key={context}>{context}</li>
                 ))}
               </ul>
             </article>
@@ -207,21 +172,24 @@ export default function ServiceDetailPage({ params }: ServicePageProps) {
         </div>
       </section>
 
-      <section className="a-section">
-        <div className="a-wrap">
-          <div className="cta-strip">
-            <h2 className="h-section" style={{ marginTop: 0, maxWidth: "18ch" }}>
-              {service.cta.heading}
-            </h2>
-            <p className="lede" style={{ marginTop: 18, maxWidth: "62ch" }}>
-              {service.cta.body}
-            </p>
-            <Link href="/engage-us" className="a-btn a-btn-primary" style={{ marginTop: 28 }}>
-              Get Started <ArrowIcon className="arrow" />
-            </Link>
+      {/* CTA band */}
+      <section className="v5-section v5-cta-band">
+        <div className="v5-container">
+          <div className="v5-cta-card">
+            <div className="v5-cta-glow" />
+            <h2 className="v5-h2">{service.cta.heading}</h2>
+            <p className="v5-lead">{service.cta.body}</p>
+            <div className="v5-cta-card-actions">
+              <Link href="/engage-us" className="v5-btn v5-btn-primary">
+                Get Started <ArrowRight />
+              </Link>
+              <Link href="/services" className="v5-btn v5-btn-ghost">
+                All services
+              </Link>
+            </div>
           </div>
         </div>
       </section>
-    </DarkShell>
+    </V5SiteLayout>
   );
 }

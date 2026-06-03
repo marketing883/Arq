@@ -145,7 +145,7 @@ export default function V5Nav() {
         onMouseEnter={cancelClose}
       >
         <div className="v5-nav-inner">
-          <a href="#top" className="v5-nav-brand" onClick={() => setMobile(false)}>
+          <a href="/" className="v5-nav-brand" onClick={() => setMobile(false)}>
             <img src={LOGO} alt="ArqAI Labs" className="v5-nav-logo-img" width="160" height="38" decoding="async" />
           </a>
 

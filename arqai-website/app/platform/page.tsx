@@ -1,13 +1,14 @@
 import Link from "next/link";
 import { Metadata } from "next";
 import { PlatformStructuredData } from "@/components/seo/StructuredData";
-import { ArrowIcon, CheckIcon, DarkShell } from "@/components/site-dark/DarkShell";
-import { HeroImagePanel, SignalStrip } from "@/components/site-dark/InternalVisuals";
+import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
+import { ArrowRight, ArrowUpRight } from "@/components/home-v5/icons";
 
 export const metadata: Metadata = {
   title: "Platform | ArqAI Labs",
   description:
     "The ArqAI Operating Fabric turns models into governed workflow execution across orchestration, integrations, evidence, controls, and managed AI operations.",
+  alternates: { canonical: "https://thearq.ai/platform" },
 };
 
 const layers = [
@@ -85,88 +86,61 @@ const pathways = [
 
 export default function PlatformPage() {
   return (
-    <>
+    <V5SiteLayout>
       <PlatformStructuredData />
-      <DarkShell>
-      <section className="a-hero">
-        <div className="a-hero-grid" />
-        <div className="a-wrap" style={{ position: "relative" }}>
-          <div className="detail-hero-grid" style={{ display: "grid", gap: 48, alignItems: "center" }}>
-            <div>
-              <span className="a-pill">
-                <span className="dot" /> Platform
-              </span>
-              <h1 className="h-display" style={{ marginTop: 28, maxWidth: "13ch" }}>
-                The operating fabric for production AI workflows.
-              </h1>
-              <p className="lede" style={{ marginTop: 28, maxWidth: "62ch" }}>
-                ArqAI is not a generic model wrapper. It is the architecture we use to move enterprise AI from useful
-                output to governed business execution: workflow intelligence, orchestration, integrations, evidence,
-                controls, and an operating loop that keeps improving after launch.
-              </p>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginTop: 30 }}>
-                <Link href="/engage-us" className="a-btn a-btn-primary">
-                  Get Started <ArrowIcon className="arrow" />
-                </Link>
-                <Link href="/services" className="a-btn a-btn-ghost">
-                  View services
-                </Link>
-              </div>
-            </div>
 
-            <HeroImagePanel
-              image="/img/hero/arq-layer.png"
-              alt="ArqAI operating fabric"
-              label="Operating fabric"
-              title="From signal to governed action"
-              variant="orbit"
-              priority
-            />
+      {/* Hero */}
+      <section className="v5-page-hero">
+        <div className="v5-container">
+          <div className="v5-page-hero-inner">
+            <span className="v5-badge">
+              <span className="v5-badge-dot" />
+              Platform
+            </span>
+            <h1 className="v5-h1">The operating fabric for production AI workflows.</h1>
+            <p className="v5-lead">
+              ArqAI is not a generic model wrapper. It is the architecture we use to move
+              enterprise AI from useful output to governed business execution: workflow
+              intelligence, orchestration, integrations, evidence, controls, and an
+              operating loop that keeps improving after launch.
+            </p>
+            <div className="v5-hero-actions">
+              <Link href="/engage-us" className="v5-btn v5-btn-primary">
+                Get Started <ArrowRight />
+              </Link>
+              <Link href="/services" className="v5-btn v5-btn-ghost">
+                View services
+              </Link>
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="a-section">
-        <div className="a-wrap">
-          <SignalStrip
-            label="Platform architecture"
-            title="Models answer. Operating fabric makes the work move."
-            body="The difference between a demo and an operating system is everything around the model: context, tools, permissions, review, observability, evidence, and ownership."
-            variant="flow"
-            points={["Context", "Tools", "Controls", "Evidence", "Improvement"]}
-          />
-        </div>
-      </section>
-
-      <section className="a-section">
-        <div className="a-wrap">
-          <div className="a-section-head">
-            <div>
-              <span className="a-eyebrow">Operating fabric</span>
-              <h2 className="h-section" style={{ marginTop: 18 }}>
-                Four layers that turn AI into execution.
-              </h2>
-            </div>
-            <p className="lede">
-              Each layer can be part of a services engagement, an accelerator rollout, or a managed AI operations
-              program. The point is to build the whole path, not a clever fragment.
+      {/* Four layers */}
+      <section className="v5-section v5-bg-grey">
+        <div className="v5-container">
+          <div className="v5-section-head">
+            <span className="v5-eyebrow">Operating fabric</span>
+            <h2 className="v5-h2">Four layers that turn AI into execution.</h2>
+            <p className="v5-lead">
+              Each layer can be part of a services engagement, an accelerator rollout, or a
+              managed AI operations program. The point is to build the whole path, not a
+              clever fragment.
             </p>
           </div>
 
-          <div className="platform-layers">
+          <div className="v5-grid v5-grid-2">
             {layers.map((layer, index) => (
-              <article id={layer.id} className="platform-layer" key={layer.id}>
-                <span className="num">{String(index + 1).padStart(2, "0")}</span>
-                <div>
-                  <h3>{layer.title}</h3>
-                  <p>{layer.body}</p>
-                  <div className="platform-layer-links">
-                    {layer.links.map((link) => (
-                      <Link href={link.href} key={link.href}>
-                        {link.label} <ArrowIcon className="arrow" />
-                      </Link>
-                    ))}
-                  </div>
+              <article id={layer.id} className="v5-card v5-numcard" key={layer.id}>
+                <span className="v5-num">{String(index + 1).padStart(2, "0")}</span>
+                <h3 className="v5-h3">{layer.title}</h3>
+                <p className="v5-body">{layer.body}</p>
+                <div className="v5-card-more" style={{ display: "flex", gap: 18, flexWrap: "wrap" }}>
+                  {layer.links.map((link) => (
+                    <Link href={link.href} key={link.href} style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+                      {link.label} <ArrowUpRight />
+                    </Link>
+                  ))}
                 </div>
               </article>
             ))}
@@ -174,83 +148,79 @@ export default function PlatformPage() {
         </div>
       </section>
 
-      <section className="a-section">
-        <div className="a-wrap">
-          <div className="gap-split internal-story">
-            <article className="a-card" style={{ padding: 32 }}>
-              <span className="a-eyebrow">Enterprise standard</span>
-              <h2 className="h-section" style={{ fontSize: "clamp(28px, 3.2vw, 44px)", marginTop: 18 }}>
-                Built for environments where the final decision still matters.
-              </h2>
-              <p className="lede" style={{ marginTop: 18 }}>
-                The operating fabric is designed for regulated, data-rich, exception-heavy work where AI has to earn
-                trust from operators, technology leaders, and risk owners at the same time.
+      {/* Enterprise standard + principles */}
+      <section className="v5-section v5-bg-white">
+        <div className="v5-container">
+          <div className="v5-split">
+            <div className="v5-split-copy">
+              <span className="v5-eyebrow">Enterprise standard</span>
+              <h2 className="v5-h2">Built for environments where the final decision still matters.</h2>
+              <p className="v5-lead">
+                The operating fabric is designed for regulated, data-rich, exception-heavy
+                work where AI has to earn trust from operators, technology leaders, and risk
+                owners at the same time.
               </p>
-            </article>
-            <article className="a-card" style={{ padding: 32 }}>
-              <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "grid", gap: 14 }}>
+            </div>
+            <div className="v5-card">
+              <ul className="v5-list">
                 {principles.map((principle) => (
-                  <li key={principle} style={{ display: "flex", gap: 12, color: "var(--ink-cream-d)", lineHeight: 1.5 }}>
-                    <span style={{ color: "var(--ember)", marginTop: 2 }}>
-                      <CheckIcon />
-                    </span>
-                    {principle}
-                  </li>
+                  <li key={principle}>{principle}</li>
                 ))}
               </ul>
-            </article>
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="a-section">
-        <div className="a-wrap">
-          <div className="a-section-head">
-            <div>
-              <span className="a-eyebrow">Pathways</span>
-              <h2 className="h-section" style={{ marginTop: 18 }}>
-                Choose the right starting point.
-              </h2>
-            </div>
-            <p className="lede">
-              The same operating fabric can support bespoke workflows, productized accelerator patterns, and ongoing
-              AI operations. The starting point depends on how specific the work is and how fast the first release
-              needs to land.
+      {/* Pathways */}
+      <section className="v5-section v5-bg-grey">
+        <div className="v5-container">
+          <div className="v5-section-head">
+            <span className="v5-eyebrow">Pathways</span>
+            <h2 className="v5-h2">Choose the right starting point.</h2>
+            <p className="v5-lead">
+              The same operating fabric can support bespoke workflows, productized
+              accelerator patterns, and ongoing AI operations. The starting point depends on
+              how specific the work is and how fast the first release needs to land.
             </p>
           </div>
 
-          <div className="pathway-list">
+          <div className="v5-grid v5-grid-3">
             {pathways.map((pathway, index) => (
-              <Link href={pathway.href} className="pathway-row" key={pathway.href}>
-                <span className="num">{String(index + 1).padStart(2, "0")}</span>
-                <div>
-                  <h3>{pathway.title}</h3>
-                  <p>{pathway.body}</p>
-                </div>
-                <ArrowIcon className="arrow" />
+              <Link href={pathway.href} className="v5-card v5-card-link v5-numcard" key={pathway.href}>
+                <span className="v5-num">{String(index + 1).padStart(2, "0")}</span>
+                <h3 className="v5-h3">{pathway.title}</h3>
+                <p className="v5-body">{pathway.body}</p>
+                <span className="v5-card-more">
+                  Explore <ArrowRight />
+                </span>
               </Link>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="a-section">
-        <div className="a-wrap">
-          <div className="cta-strip">
-            <h2 className="h-section" style={{ marginTop: 0, maxWidth: "18ch" }}>
-              Bring us the workflow that should be operating differently.
-            </h2>
-            <p className="lede" style={{ marginTop: 18, maxWidth: "62ch" }}>
-              We will map the operating fabric around it: the systems, evidence, risk boundaries, users, approvals,
-              integrations, and first release path.
+      {/* CTA band */}
+      <section className="v5-section v5-cta-band">
+        <div className="v5-container">
+          <div className="v5-cta-card">
+            <div className="v5-cta-glow" />
+            <h2 className="v5-h2">Bring us the workflow that should be operating differently.</h2>
+            <p className="v5-lead">
+              We will map the operating fabric around it: the systems, evidence, risk
+              boundaries, users, approvals, integrations, and first release path.
             </p>
-            <Link href="/engage-us" className="a-btn a-btn-primary" style={{ marginTop: 28 }}>
-              Get Started <ArrowIcon className="arrow" />
-            </Link>
+            <div className="v5-cta-card-actions">
+              <Link href="/engage-us" className="v5-btn v5-btn-primary">
+                Get Started <ArrowRight />
+              </Link>
+              <Link href="/services" className="v5-btn v5-btn-ghost">
+                View services
+              </Link>
+            </div>
           </div>
         </div>
       </section>
-      </DarkShell>
-    </>
+    </V5SiteLayout>
   );
 }

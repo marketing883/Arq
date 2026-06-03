@@ -62,7 +62,7 @@ export default function Footer() {
     <footer className="v5-footer">
       <div className="v5-footer-inner">
         <div className="v5-footer-brand">
-          <a href="#top" className="v5-nav-brand">
+          <a href="/" className="v5-nav-brand">
             <img src={LOGO} alt="ArqAI Labs" className="v5-nav-logo-img" width="160" height="28" loading="lazy" decoding="async" />
           </a>
           <p>Industry-deep AI, built around your operations — designed, deployed, and run in production.</p>
