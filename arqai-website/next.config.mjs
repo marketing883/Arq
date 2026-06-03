@@ -104,6 +104,12 @@ const nextConfig = {
   // Redirects for deprecated pages
   async redirects() {
     return [
+      // v5 promoted to the main homepage
+      {
+        source: "/v5",
+        destination: "/",
+        permanent: true,
+      },
       {
         source: "/agents",
         destination: "/accelerators",
