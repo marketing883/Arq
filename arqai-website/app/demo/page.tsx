@@ -3,8 +3,9 @@
 import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { SiteNav } from "@/components/site-dark/SiteNav";
-import { SiteFooter } from "@/components/site-dark/SiteFooter";
+import V5Nav from "@/components/home-v5/V5Nav";
+import Footer from "@/components/home-v5/Footer";
+import "@/components/home-v5/styles.css";
 
 const V4_INDUSTRY_MAP: Record<string, string> = {
   "healthcare-payer": "healthcare-payers",
@@ -300,29 +301,31 @@ function EngageUsPageInner() {
   };
 
   return (
-    <div className="arq-dark min-h-screen">
-      <SiteNav />
+    <div className="v5-shell">
+      <V5Nav />
       <main>
-        <section className="engage-section">
-          <div className="a-wrap">
-            <div className="engage-grid">
-              <div className="engage-copy">
-                <span className="a-eyebrow">Get Started</span>
-                <h1 className="h-display">
-                  Scope the workflow before we <em>build</em>.
-                </h1>
-                <p className="lede">
-                  Share the operating context in a few structured answers. We will use that to decide whether the right
-                  next step is strategy, an accelerator fit check, or a custom build conversation.
+        <section className="v5-page-hero">
+          <div className="v5-container">
+            <div className="v5-engage-grid">
+              <div>
+                <span className="v5-badge">
+                  <span className="v5-badge-dot" />
+                  Get Started
+                </span>
+                <h1 className="v5-h1" style={{ marginTop: 18 }}>Scope the workflow before we build.</h1>
+                <p className="v5-lead">
+                  Share the operating context in a few structured answers. We will use that to
+                  decide whether the right next step is strategy, an accelerator fit check, or
+                  a custom build conversation.
                 </p>
-                <div className="engage-proof">
+                <div className="v5-proof">
                   {[
                     "Workflow fit before tool selection",
                     "Systems, data, and control boundaries captured upfront",
                     "Senior engineering review before the first call",
                   ].map((item) => (
-                    <div className="proof-row" key={item}>
-                      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--ember)" strokeWidth={2.4}>
+                    <div className="v5-proof-row" key={item}>
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.4}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                       </svg>
                       <span>{item}</span>
@@ -333,21 +336,24 @@ function EngageUsPageInner() {
 
               <div>
                 {submitStatus === "success" ? (
-                  <div className="a-card engage-success">
-                    <div className="success-mark">
-                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--ember)" strokeWidth={2.5}>
+                  <div className="v5-card v5-success">
+                    <div className="v5-success-mark">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--v5-ink)" strokeWidth={2.5}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                       </svg>
                     </div>
-                    <h3>Thanks. We have enough to start.</h3>
-                    <p>A senior on our team will review the workflow context and follow up within one business day.</p>
-                    <Link href="/" className="a-btn a-btn-ghost">
+                    <h3 className="v5-h3">Thanks. We have enough to start.</h3>
+                    <p className="v5-body" style={{ marginTop: 8, marginBottom: 22 }}>
+                      A senior on our team will review the workflow context and follow up
+                      within one business day.
+                    </p>
+                    <Link href="/" className="v5-btn v5-btn-ghost">
                       Back to home
                     </Link>
                   </div>
                 ) : (
-                  <form onSubmit={handleSubmit} className="a-card engage-form">
-                    <div className="d-honeypot" aria-hidden="true">
+                  <form onSubmit={handleSubmit} className="v5-card v5-form" style={{ position: "relative" }}>
+                    <div className="v5-honeypot" aria-hidden="true">
                       <input
                         type="text"
                         name="website_url"
@@ -359,79 +365,41 @@ function EngageUsPageInner() {
                     </div>
 
                     {v4Brief && (
-                      <div
-                        style={{
-                          marginBottom: 24,
-                          padding: 18,
-                          background: "rgba(208, 244, 56, 0.04)",
-                          border: "1px solid rgba(208, 244, 56, 0.2)",
-                          borderRadius: 8,
-                        }}
-                      >
-                        <div
-                          style={{
-                            fontFamily: "var(--mono)",
-                            fontSize: 10,
-                            letterSpacing: "0.22em",
-                            textTransform: "uppercase",
-                            color: "var(--ember)",
-                            marginBottom: 10,
-                          }}
-                        >
-                          ✓ From the match console
-                        </div>
-                        <pre
-                          style={{
-                            margin: 0,
-                            color: "var(--ink-cream-d, rgba(233, 220, 194, 0.75))",
-                            fontSize: 12.5,
-                            lineHeight: 1.6,
-                            fontFamily: "var(--mono)",
-                            whiteSpace: "pre-wrap",
-                          }}
-                        >
-                          {v4Brief}
-                        </pre>
-                        <div
-                          style={{
-                            marginTop: 10,
-                            fontSize: 12,
-                            color: "var(--ink-muted)",
-                          }}
-                        >
+                      <div className="v5-prefill">
+                        <div className="v5-prefill-label">✓ From the match console</div>
+                        <pre>{v4Brief}</pre>
+                        <div className="v5-prefill-note">
                           Your selections have prefilled the form below. Edit any field that&apos;s off.
                         </div>
                       </div>
                     )}
 
                     <FormSection eyebrow="01" title="Who should we speak with?">
-                      <div className="form-grid two">
+                      <div className="v5-form-grid two">
                         <Field label="Full name" required>
-                          <input type="text" name="fullName" required value={formData.fullName} onChange={handleChange} className="d-input" autoComplete="name" />
+                          <input type="text" name="fullName" required value={formData.fullName} onChange={handleChange} className="v5-input" autoComplete="name" />
                         </Field>
                         <Field label="Work email" required>
-                          <input type="email" name="email" required value={formData.email} onChange={handleChange} className="d-input" autoComplete="email" />
+                          <input type="email" name="email" required value={formData.email} onChange={handleChange} className="v5-input" autoComplete="email" />
                         </Field>
                       </div>
-                      <div className="form-grid two">
+                      <div className="v5-form-grid two">
                         <Field label="Company" required>
-                          <input type="text" name="company" required value={formData.company} onChange={handleChange} className="d-input" autoComplete="organization" />
+                          <input type="text" name="company" required value={formData.company} onChange={handleChange} className="v5-input" autoComplete="organization" />
                         </Field>
                         <Field label="Role" required>
-                          <input type="text" name="role" required value={formData.role} onChange={handleChange} className="d-input" autoComplete="organization-title" />
+                          <input type="text" name="role" required value={formData.role} onChange={handleChange} className="v5-input" autoComplete="organization-title" />
                         </Field>
                       </div>
-                      <div className="form-grid two">
+                      <div className="v5-form-grid two">
                         <Field label="Phone">
-                          <input type="tel" name="phone" value={formData.phone} onChange={handleChange} className="d-input" autoComplete="tel" />
+                          <input type="tel" name="phone" value={formData.phone} onChange={handleChange} className="v5-input" autoComplete="tel" />
                         </Field>
                         <Field label="Company size" required>
-                          <select name="companySize" required value={formData.companySize} onChange={handleChange} className="d-input">
+                          <select name="companySize" required value={formData.companySize} onChange={handleChange} className="v5-input">
                             <option value="">Select size</option>
                             {companySizes.map((option) => (
-                              <option key={option.value} value={option.value}>
-                                {option.label}
-                              </option>
+                              <option key={option.value} value={option.value}>{option.label}</option>
                             ))}
                           </select>
                         </Field>
@@ -439,32 +407,28 @@ function EngageUsPageInner() {
                     </FormSection>
 
                     <FormSection eyebrow="02" title="What workflow should we evaluate?">
-                      <div className="form-grid two">
+                      <div className="v5-form-grid two">
                         <Field label="Industry" required>
-                          <select name="industry" required value={formData.industry} onChange={handleChange} className="d-input">
+                          <select name="industry" required value={formData.industry} onChange={handleChange} className="v5-input">
                             <option value="">Select industry</option>
                             {industries.map((option) => (
-                              <option key={option.value} value={option.value}>
-                                {option.label}
-                              </option>
+                              <option key={option.value} value={option.value}>{option.label}</option>
                             ))}
                           </select>
                         </Field>
                         <Field label="Primary workflow" required>
-                          <select name="workflowArea" required value={formData.workflowArea} onChange={handleChange} className="d-input">
+                          <select name="workflowArea" required value={formData.workflowArea} onChange={handleChange} className="v5-input">
                             <option value="">Select workflow</option>
                             {workflowAreas.map((option) => (
-                              <option key={option.value} value={option.value}>
-                                {option.label}
-                              </option>
+                              <option key={option.value} value={option.value}>{option.label}</option>
                             ))}
                           </select>
                         </Field>
                       </div>
                       <Field label="Systems involved">
-                        <div className="chip-grid">
+                        <div className="v5-chip-grid">
                           {systemOptions.map((option) => (
-                            <label className="system-chip" key={option.value}>
+                            <label className="v5-system-chip" key={option.value}>
                               <input
                                 type="checkbox"
                                 checked={selectedSystems.includes(option.value)}
@@ -481,64 +445,54 @@ function EngageUsPageInner() {
                           name="otherSystems"
                           value={formData.otherSystems}
                           onChange={handleChange}
-                          className="d-input"
+                          className="v5-input"
                           placeholder="Guidewire, Duck Creek, ServiceNow, Salesforce, SAP..."
                         />
                       </Field>
                     </FormSection>
 
                     <FormSection eyebrow="03" title="How real is the initiative?">
-                      <div className="form-grid two">
+                      <div className="v5-form-grid two">
                         <Field label="Timeline" required>
-                          <select name="timeline" required value={formData.timeline} onChange={handleChange} className="d-input">
+                          <select name="timeline" required value={formData.timeline} onChange={handleChange} className="v5-input">
                             <option value="">Select timeline</option>
                             {timelineOptions.map((option) => (
-                              <option key={option.value} value={option.value}>
-                                {option.label}
-                              </option>
+                              <option key={option.value} value={option.value}>{option.label}</option>
                             ))}
                           </select>
                         </Field>
                         <Field label="Budget range" required>
-                          <select name="budgetRange" required value={formData.budgetRange} onChange={handleChange} className="d-input">
+                          <select name="budgetRange" required value={formData.budgetRange} onChange={handleChange} className="v5-input">
                             <option value="">Select range</option>
                             {budgetRanges.map((option) => (
-                              <option key={option.value} value={option.value}>
-                                {option.label}
-                              </option>
+                              <option key={option.value} value={option.value}>{option.label}</option>
                             ))}
                           </select>
                         </Field>
                       </div>
-                      <div className="form-grid two">
+                      <div className="v5-form-grid two">
                         <Field label="Data readiness" required>
-                          <select name="dataReadiness" required value={formData.dataReadiness} onChange={handleChange} className="d-input">
+                          <select name="dataReadiness" required value={formData.dataReadiness} onChange={handleChange} className="v5-input">
                             <option value="">Select readiness</option>
                             {dataReadinessOptions.map((option) => (
-                              <option key={option.value} value={option.value}>
-                                {option.label}
-                              </option>
+                              <option key={option.value} value={option.value}>{option.label}</option>
                             ))}
                           </select>
                         </Field>
                         <Field label="Deployment preference" required>
-                          <select name="deploymentModel" required value={formData.deploymentModel} onChange={handleChange} className="d-input">
+                          <select name="deploymentModel" required value={formData.deploymentModel} onChange={handleChange} className="v5-input">
                             <option value="">Select preference</option>
                             {deploymentModels.map((option) => (
-                              <option key={option.value} value={option.value}>
-                                {option.label}
-                              </option>
+                              <option key={option.value} value={option.value}>{option.label}</option>
                             ))}
                           </select>
                         </Field>
                       </div>
                       <Field label="Primary success metric" required>
-                        <select name="successMetric" required value={formData.successMetric} onChange={handleChange} className="d-input">
+                        <select name="successMetric" required value={formData.successMetric} onChange={handleChange} className="v5-input">
                           <option value="">Select metric</option>
                           {successMetrics.map((option) => (
-                            <option key={option.value} value={option.value}>
-                              {option.label}
-                            </option>
+                            <option key={option.value} value={option.value}>{option.label}</option>
                           ))}
                         </select>
                       </Field>
@@ -548,26 +502,22 @@ function EngageUsPageInner() {
                           rows={3}
                           value={formData.constraint}
                           onChange={handleChange}
-                          className="d-input"
+                          className="v5-input"
                           placeholder="A policy, integration, review, security, or operational constraint we should know."
                         />
                       </Field>
                     </FormSection>
 
                     {submitStatus === "error" && (
-                      <div className="form-error">Something went wrong. Please try again.</div>
+                      <div className="v5-form-error">Something went wrong. Please try again.</div>
                     )}
 
-                    <button type="submit" disabled={isSubmitting} className="a-btn a-btn-primary form-submit">
+                    <button type="submit" disabled={isSubmitting} className="v5-btn v5-btn-primary v5-form-submit">
                       {isSubmitting ? "Sending..." : "Get Started"}
                     </button>
 
-                    <p className="form-privacy">
-                      We use this only to follow up.{" "}
-                      <Link href="/privacy" style={{ color: "var(--ember)" }}>
-                        Privacy notice
-                      </Link>
-                      .
+                    <p className="v5-form-note">
+                      We use this only to follow up. <Link href="/privacy">Privacy notice</Link>.
                     </p>
                   </form>
                 )}
@@ -576,303 +526,7 @@ function EngageUsPageInner() {
           </div>
         </section>
       </main>
-      <SiteFooter />
-      <style>{`
-        .arq-dark .engage-section {
-          padding: clamp(132px, 15vh, 184px) 0 clamp(72px, 10vw, 128px);
-          overflow-x: hidden;
-        }
-        .arq-dark .engage-grid {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 44px;
-          align-items: start;
-          min-width: 0;
-        }
-        @media (min-width: 1080px) {
-          .arq-dark .engage-grid {
-            grid-template-columns: minmax(300px, 0.82fr) minmax(600px, 1.18fr);
-            gap: 76px;
-          }
-          .arq-dark .engage-copy {
-            position: sticky;
-            top: 132px;
-          }
-        }
-        @media (max-width: 760px) {
-          .arq-dark .engage-section .a-wrap {
-            max-width: 100vw;
-            max-width: 100dvw;
-            overflow: hidden;
-          }
-          .arq-dark .engage-copy,
-          .arq-dark .engage-form,
-          .arq-dark .engage-success {
-            width: calc(100vw - 40px);
-            width: calc(100dvw - 40px);
-            max-width: calc(100vw - 40px);
-            max-width: calc(100dvw - 40px);
-          }
-          .arq-dark .form-grid.two {
-            grid-template-columns: 1fr !important;
-          }
-          .arq-dark .engage-form {
-            padding: 22px !important;
-          }
-          .arq-dark .engage-copy .h-display {
-            max-width: 10.5ch;
-            font-size: clamp(38px, 12vw, 52px);
-          }
-          .arq-dark .engage-copy .lede,
-          .arq-dark .proof-row {
-            max-width: 100%;
-            font-size: 15px;
-          }
-          .arq-dark .proof-row span,
-          .arq-dark .engage-copy .lede {
-            min-width: 0;
-            overflow-wrap: anywhere;
-          }
-          .arq-dark .chip-grid {
-            grid-template-columns: 1fr !important;
-          }
-        }
-        @media (max-width: 520px) {
-          .arq-dark .engage-copy,
-          .arq-dark .engage-form,
-          .arq-dark .engage-success {
-            width: min(100%, 340px);
-            max-width: 340px;
-          }
-        }
-        .arq-dark .engage-copy .h-display {
-          margin-top: 18px;
-          max-width: 13ch;
-          font-size: clamp(42px, 5.6vw, 78px);
-        }
-        .arq-dark .engage-proof {
-          margin-top: 30px;
-          border-top: 1px solid var(--aline);
-          padding-top: 24px;
-          display: flex;
-          flex-direction: column;
-          gap: 13px;
-        }
-        .arq-dark .proof-row {
-          display: flex;
-          align-items: flex-start;
-          gap: 12px;
-          color: var(--ink-cream-d);
-          font-size: 15px;
-          line-height: 1.5;
-        }
-        .arq-dark .proof-row svg {
-          flex: 0 0 auto;
-          margin-top: 2px;
-        }
-        .arq-dark .engage-form {
-          padding: clamp(24px, 4vw, 38px);
-          position: relative;
-          overflow: hidden;
-          max-width: 100%;
-        }
-        .arq-dark .engage-form::after {
-          content: "";
-          position: absolute;
-          inset: 0 auto auto 0;
-          width: 180px;
-          height: 180px;
-          background: radial-gradient(circle, rgba(208,244,56,0.13), transparent 62%);
-          pointer-events: none;
-        }
-        .arq-dark .engage-form > * {
-          position: relative;
-          z-index: 1;
-        }
-        .arq-dark .form-section {
-          padding: 0 0 24px;
-          margin-bottom: 24px;
-          border-bottom: 1px solid var(--aline);
-        }
-        .arq-dark .form-section:last-of-type {
-          border-bottom: 0;
-          margin-bottom: 8px;
-          padding-bottom: 0;
-        }
-        .arq-dark .form-section-head {
-          display: flex;
-          gap: 12px;
-          align-items: center;
-          margin-bottom: 18px;
-        }
-        .arq-dark .form-section-head span {
-          width: 28px;
-          height: 28px;
-          border-radius: 999px;
-          display: grid;
-          place-items: center;
-          background: rgba(208,244,56,0.10);
-          border: 1px solid rgba(208,244,56,0.30);
-          color: var(--ember);
-          font-family: var(--mono);
-          font-size: 10px;
-          letter-spacing: .08em;
-        }
-        .arq-dark .form-section-head h2 {
-          margin: 0;
-          color: var(--ink-cream);
-          font-family: var(--display);
-          font-weight: 500;
-          letter-spacing: -0.02em;
-          font-size: clamp(20px, 2vw, 25px);
-        }
-        .arq-dark .form-grid {
-          display: grid;
-          gap: 16px;
-          min-width: 0;
-        }
-        .arq-dark .form-grid.two {
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
-        .arq-dark .form-field {
-          display: block;
-          margin-bottom: 16px;
-        }
-        .arq-dark .form-label {
-          display: block;
-          font-family: var(--mono);
-          font-size: 10.5px;
-          letter-spacing: .11em;
-          text-transform: uppercase;
-          color: var(--ink-cream-d);
-          margin-bottom: 8px;
-        }
-        .arq-dark .d-input {
-          width: 100%;
-          min-width: 0;
-          min-height: 46px;
-          padding: 12px 14px;
-          border-radius: 10px;
-          background: rgba(245,239,230,0.055);
-          border: 1px solid var(--aline-2);
-          color: var(--ink-cream);
-          font-family: inherit;
-          font-size: 14.5px;
-          line-height: 1.5;
-          transition: border-color .2s, background .2s, box-shadow .2s;
-        }
-        .arq-dark select.d-input {
-          color-scheme: dark;
-        }
-        .arq-dark textarea.d-input {
-          min-height: 92px;
-          resize: vertical;
-        }
-        .arq-dark .d-input:focus {
-          outline: none;
-          border-color: var(--ember);
-          background: rgba(245,239,230,0.075);
-          box-shadow: 0 0 0 3px rgba(208,244,56,0.10);
-        }
-        .arq-dark .d-input::placeholder {
-          color: var(--ink-muted);
-        }
-        .arq-dark .chip-grid {
-          display: grid;
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-          gap: 10px;
-        }
-        @media (min-width: 720px) {
-          .arq-dark .chip-grid {
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-          }
-        }
-        .arq-dark .system-chip {
-          min-width: 0;
-          min-height: 42px;
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          padding: 10px 12px;
-          border-radius: 999px;
-          background: rgba(245,239,230,0.045);
-          border: 1px solid var(--aline);
-          color: var(--ink-cream-d);
-          font-size: 13px;
-          cursor: pointer;
-          transition: color .2s, border-color .2s, background .2s;
-        }
-        .arq-dark .system-chip:has(input:checked) {
-          color: var(--ink-cream);
-          border-color: rgba(208,244,56,0.44);
-          background: rgba(208,244,56,0.08);
-        }
-        .arq-dark .system-chip input {
-          width: 14px;
-          height: 14px;
-          accent-color: var(--ember);
-          flex: 0 0 auto;
-        }
-        .arq-dark .system-chip span {
-          min-width: 0;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        }
-        .arq-dark .d-honeypot {
-          position: absolute;
-          left: -9999px;
-          opacity: 0;
-          pointer-events: none;
-        }
-        .arq-dark .form-error {
-          margin-top: 12px;
-          padding: 12px;
-          background: rgba(255, 90, 90, 0.08);
-          border: 1px solid rgba(255, 90, 90, 0.3);
-          border-radius: 8px;
-          color: rgba(255,200,200,0.95);
-          font-size: 13px;
-        }
-        .arq-dark .form-submit {
-          width: 100%;
-          justify-content: center;
-          margin-top: 20px;
-        }
-        .arq-dark .form-privacy {
-          margin-top: 16px;
-          font-size: 12px;
-          color: var(--ink-muted);
-          text-align: center;
-        }
-        .arq-dark .engage-success {
-          padding: clamp(32px, 5vw, 52px);
-          text-align: center;
-        }
-        .arq-dark .engage-success h3 {
-          font-family: var(--display);
-          color: var(--ink-cream);
-          font-size: 28px;
-          font-weight: 500;
-          letter-spacing: -0.02em;
-          margin: 0 0 12px;
-        }
-        .arq-dark .engage-success p {
-          color: var(--ink-cream-d);
-          margin: 0 auto 26px;
-          max-width: 42ch;
-          line-height: 1.55;
-        }
-        .arq-dark .success-mark {
-          width: 56px;
-          height: 56px;
-          border-radius: 999px;
-          background: rgba(208,244,56,0.10);
-          border: 1px solid rgba(208,244,56,0.35);
-          display: grid;
-          place-items: center;
-          margin: 0 auto 20px;
-        }
-      `}</style>
+      <Footer />
     </div>
   );
 }
@@ -887,8 +541,8 @@ function FormSection({
   children: React.ReactNode;
 }) {
   return (
-    <section className="form-section">
-      <div className="form-section-head">
+    <section className="v5-form-section">
+      <div className="v5-form-section-head">
         <span>{eyebrow}</span>
         <h2>{title}</h2>
       </div>
@@ -907,9 +561,9 @@ function Field({
   children: React.ReactNode;
 }) {
   return (
-    <label className="form-field">
-      <span className="form-label">
-        {label} {required && <span style={{ color: "var(--ember)" }}>*</span>}
+    <label className="v5-field">
+      <span className="v5-field-label">
+        {label} {required && <span className="req">*</span>}
       </span>
       {children}
     </label>

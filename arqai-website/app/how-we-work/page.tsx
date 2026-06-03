@@ -1,18 +1,14 @@
-"use client";
-
+import type { Metadata } from "next";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
-import { SignalStrip } from "@/components/site-dark/InternalVisuals";
+import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
+import { ArrowRight } from "@/components/home-v5/icons";
 
-function StarIcon({ className = "" }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 20 20" fill="currentColor" className={className}>
-      <path d="M19.6,9.6h-3.9c-.4,0-1.8-.2-1.8-.2-.6,0-1.1-.2-1.6-.6-.5-.3-.9-.8-1.2-1.2-.3-.4-.4-.9-.5-1.4,0,0,0-1.1-.2-1.5V.4c0-.2-.2-.4-.4-.4s-.4.2-.4.4v4.4c0,.4-.2,1.5-.2,1.5,0,.5-.2,1-.5,1.4-.3.5-.7.9-1.2,1.2s-1,.5-1.6.6c0,0-1.2,0-1.7.2H.4c-.2,0-.4.2-.4.4s.2.4.4.4h4.1c.4,0,1.7.2,1.7.2.6,0,1.1.2,1.6.6.4.3.8.7,1.1,1.1.3.5.5,1,.6,1.6,0,0,0,1.3.2,1.7v4.1c0,.2.2.4.4.4s.4-.2.4-.4v-4.1c0-.4.2-1.7.2-1.7,0-.6.2-1.1.6-1.6.3-.4.7-.8,1.1-1.1.5-.3,1-.5,1.6-.6,0,0,1.3,0,1.8-.2h3.9c.2,0,.4-.2.4-.4s-.2-.4-.4-.4h0Z" />
-    </svg>
-  );
-}
+export const metadata: Metadata = {
+  title: "How We Work",
+  description:
+    "Every ArqAI Labs engagement runs on the same four steps — strategy, build, deploy, run — end-to-end, with your team in the room.",
+  alternates: { canonical: "https://thearq.ai/how-we-work" },
+};
 
 const steps = [
   {
@@ -46,122 +42,87 @@ const dontDo = [
 
 export default function HowWeWorkPage() {
   return (
-    <>
-      <Header />
+    <V5SiteLayout>
+      {/* Hero */}
+      <section className="v5-page-hero">
+        <div className="v5-container">
+          <div className="v5-page-hero-inner">
+            <span className="v5-badge">
+              <span className="v5-badge-dot" />
+              How we work
+            </span>
+            <h1 className="v5-h1">Four steps. End-to-end. No handoffs to someone else&apos;s team.</h1>
+            <p className="v5-lead">
+              Every ArqAI Labs engagement runs on the same four steps. We do all of them.
+              Together. With your team in the room.
+            </p>
+          </div>
+        </div>
+      </section>
 
-      <main className="bg-base">
-        {/* Hero */}
-        <section className="pt-32 md:pt-40 pb-16">
-          <div className="container mx-auto px-4 md:px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="max-w-4xl"
-            >
-              <p className="flex items-center gap-2 text-body-sm text-accent mb-6 uppercase tracking-wider font-medium">
-                <StarIcon className="w-4 h-4" />
-                How we work
+      {/* Steps */}
+      <section className="v5-section v5-bg-grey">
+        <div className="v5-container">
+          <div className="v5-section-head">
+            <span className="v5-eyebrow">Operating rhythm</span>
+            <h2 className="v5-h2">From messy signal to governed system.</h2>
+            <p className="v5-lead">
+              We move from a real workflow problem to a governed production system, keeping
+              scope, build, deployment, and ongoing operations connected the whole way.
+            </p>
+          </div>
+          <div className="v5-grid v5-grid-2">
+            {steps.map((step, index) => (
+              <article className="v5-card v5-numcard" key={step.name}>
+                <span className="v5-num">{String(index + 1).padStart(2, "0")}</span>
+                <h3 className="v5-h3">{step.name}</h3>
+                <p className="v5-body">{step.description}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* What we don't do */}
+      <section className="v5-section v5-bg-white">
+        <div className="v5-container">
+          <div className="v5-split">
+            <div className="v5-split-copy">
+              <span className="v5-eyebrow">Boundaries</span>
+              <h2 className="v5-h2">What we don&apos;t do.</h2>
+              <p className="v5-lead">
+                Clear boundaries keep every engagement honest. If a request looks like one of
+                these, we will say so early.
               </p>
-
-              <h1 className="text-display-xl md:text-[clamp(2.5rem,5vw,4.5rem)] font-display leading-[1.1] text-text-bright mb-6">
-                Four steps. End-to-end. No handoffs to someone else&apos;s team.
-              </h1>
-
-              <p className="text-body-lg md:text-xl text-text-medium leading-relaxed max-w-3xl">
-                Every ArqAI Labs engagement runs on the same four steps. We do all of them. Together. With your team in the room.
-              </p>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* Operating rhythm */}
-        <section className="pb-10 md:pb-16">
-          <div className="container mx-auto px-4 md:px-6 lg:px-8">
-            <div className="arq-dark arq-dark-compat">
-              <SignalStrip
-                label="Operating rhythm"
-                title="The work moves from messy signal to governed system."
-                body="We move from a real workflow problem to a governed production system, keeping scope, build, deployment, and ongoing operations connected the whole way."
-                variant="flow"
-                points={["Scope", "Build", "Deploy", "Run"]}
-              />
             </div>
-          </div>
-        </section>
-
-        {/* Steps */}
-        <section className="py-section bg-base-tint">
-          <div className="container mx-auto px-4 md:px-6 lg:px-8">
-            <div className="space-y-12 md:space-y-16 max-w-4xl mx-auto">
-              {steps.map((step, index) => (
-                <motion.div
-                  key={step.name}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.05 }}
-                  className="flex gap-8 md:gap-12 items-start"
-                >
-                  <div className="text-6xl md:text-8xl font-display font-bold text-accent/20 shrink-0 leading-none">
-                    {String(index + 1).padStart(2, "0")}
-                  </div>
-                  <div className="flex-1 pt-2">
-                    <h2 className="text-2xl md:text-3xl font-display font-semibold text-text-bright mb-4">
-                      {step.name}
-                    </h2>
-                    <p className="text-body-lg text-text-muted leading-relaxed">
-                      {step.description}
-                    </p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* What we don't do */}
-        <section className="py-section bg-base">
-          <div className="container mx-auto px-4 md:px-6 lg:px-8">
-            <div className="max-w-3xl mx-auto">
-              <h2 className="text-display-md font-display text-text-bright mb-8">
-                What we don&apos;t do.
-              </h2>
-              <ul className="space-y-4">
+            <div className="v5-card">
+              <ul className="v5-list">
                 {dontDo.map((item) => (
-                  <li
-                    key={item}
-                    className="flex items-start gap-4 p-5 rounded-lg bg-base-tint border border-stroke-muted"
-                  >
-                    <div className="w-2 h-2 rounded-full bg-accent shrink-0 mt-2.5" />
-                    <p className="text-body-md text-text-bright">{item}</p>
-                  </li>
+                  <li key={item}>{item}</li>
                 ))}
               </ul>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* CTA */}
-        <section className="py-section bg-base-tint">
-          <div className="container mx-auto px-4 md:px-6 lg:px-8 text-center">
-            <h2 className="text-display-md font-display text-text-bright mb-6">
-              Tell us what your operation needs.
-            </h2>
-            <p className="text-body-lg text-text-muted mb-8">
+      {/* CTA band */}
+      <section className="v5-section v5-cta-band">
+        <div className="v5-container">
+          <div className="v5-cta-card">
+            <div className="v5-cta-glow" />
+            <h2 className="v5-h2">Tell us what your operation needs.</h2>
+            <p className="v5-lead">
               We&apos;ll tell you what&apos;s honestly possible. In plain language. Without a deck.
             </p>
-            <Link href="/engage-us" className="btn bg-accent text-white">
-              Get Started
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
-              </svg>
-            </Link>
+            <div className="v5-cta-card-actions">
+              <Link href="/engage-us" className="v5-btn v5-btn-primary">
+                Get Started <ArrowRight />
+              </Link>
+            </div>
           </div>
-        </section>
-      </main>
-
-      <Footer />
-    </>
+        </div>
+      </section>
+    </V5SiteLayout>
   );
 }
