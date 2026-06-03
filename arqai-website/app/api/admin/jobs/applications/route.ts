@@ -28,7 +28,17 @@ export async function GET(request: NextRequest) {
   if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const client = getClient();
-  if (!client) return NextResponse.json({ applications: [] });
+  if (!client) {
+    // Don't masquerade a misconfiguration as "no applications" -- that makes
+    // a missing service-role key look identical to an empty table.
+    console.error(
+      "[admin/applications] Supabase client unavailable: NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY is not set in this runtime"
+    );
+    return NextResponse.json(
+      { error: "Applications backend is not configured (missing Supabase service role key)." },
+      { status: 500 }
+    );
+  }
 
   const url = new URL(request.url);
   const jobId = url.searchParams.get("jobId");

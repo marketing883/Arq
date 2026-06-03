@@ -73,6 +73,75 @@ export function jobPostingConstraintMessage(constraint: string | null) {
   return null;
 }
 
+// Columns on job_applications that older installs may be missing. The core
+// columns (job_id, full_name, email, phone, resume_*, status) are never
+// dropped, so a candidate's application is always saved even if the careers
+// schema migration hasn't been run yet.
+export const OPTIONAL_APPLICATION_COLUMNS = [
+  "linkedin_url",
+  "total_experience",
+  "skills",
+  "achievements",
+  "compensation_currency",
+  "compensation_basis",
+  "current_compensation",
+  "expected_compensation",
+  "compensation_negotiable",
+  "current_ctc",
+  "expected_ctc",
+  "notice_period",
+  "cover_letter",
+  "ip",
+  "user_agent",
+  "notified_at",
+] as const;
+
+const OPTIONAL_APPLICATION_COLUMN_SET = new Set<string>(OPTIONAL_APPLICATION_COLUMNS);
+
+export function isOptionalApplicationColumn(column: string | null) {
+  return !!column && OPTIONAL_APPLICATION_COLUMN_SET.has(column);
+}
+
+// Insert a job application, dropping optional columns that the database
+// reports as missing and retrying, so schema drift never silently loses an
+// application. Returns the result plus the list of columns that were omitted.
+export async function executeApplicationInsertWithSchemaFallback<T>(
+  payload: Record<string, unknown>,
+  execute: (
+    payload: Record<string, unknown>
+  ) => PromiseLike<{ data: T | null; error: SupabaseErrorLike | null }>
+) {
+  let currentPayload = { ...payload };
+  let lastResult: { data: T | null; error: SupabaseErrorLike | null } | null = null;
+  const omittedColumns: string[] = [];
+
+  for (let attempt = 0; attempt <= OPTIONAL_APPLICATION_COLUMNS.length; attempt += 1) {
+    lastResult = await execute(currentPayload);
+    if (!lastResult.error) {
+      return { ...lastResult, omittedColumns };
+    }
+
+    const missingColumn = getMissingSchemaColumn(lastResult.error);
+    if (
+      !isOptionalApplicationColumn(missingColumn) ||
+      !missingColumn ||
+      !(missingColumn in currentPayload)
+    ) {
+      return { ...lastResult, omittedColumns };
+    }
+
+    omittedColumns.push(missingColumn);
+    const { [missingColumn]: _omitted, ...rest } = currentPayload;
+    currentPayload = rest;
+  }
+
+  return {
+    data: lastResult?.data ?? null,
+    error: lastResult?.error ?? null,
+    omittedColumns,
+  };
+}
+
 export async function executeJobPostingMutationWithSchemaFallback<T>(
   payload: Record<string, unknown>,
   execute: (

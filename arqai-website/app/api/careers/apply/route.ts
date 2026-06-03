@@ -2,7 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
 import { Resend } from "resend";
 import { z } from "zod";
-import { getMissingSchemaColumn, isPublicJobStatus } from "@/lib/careers/job-postings";
+import {
+  executeApplicationInsertWithSchemaFallback,
+  getMissingSchemaColumn,
+  isPublicJobStatus,
+} from "@/lib/careers/job-postings";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -214,33 +218,37 @@ export async function POST(request: NextRequest) {
     null;
   const userAgent = request.headers.get("user-agent") || null;
 
-  const { data: inserted, error: insertErr } = await client
-    .from("job_applications")
-    .insert({
-      job_id: job.id,
-      full_name: data.fullName,
-      email: data.email,
-      phone: data.phone,
-      linkedin_url: data.linkedin || null,
-      total_experience: data.totalExperience,
-      skills: data.skills,
-      achievements: data.achievements,
-      compensation_currency: data.compensationCurrency,
-      compensation_basis: data.compensationBasis,
-      current_compensation: data.currentCompensation || null,
-      expected_compensation: data.expectedCompensation,
-      compensation_negotiable: data.compensationNegotiable,
-      notice_period: data.noticePeriod,
-      cover_letter: data.coverLetter || null,
-      resume_path: path,
-      resume_filename: filename,
-      resume_mime_type: resume.type || "application/octet-stream",
-      resume_size_bytes: resume.size,
-      ip,
-      user_agent: userAgent,
-    })
-    .select("id")
-    .single();
+  // Insert with schema-drift fallback: if the table is missing optional
+  // screening/compensation columns (older installs that never ran the careers
+  // migration), drop those columns and retry so the application -- name,
+  // email, phone, resume, and the job it's for -- is never lost wholesale.
+  const { data: inserted, error: insertErr, omittedColumns } =
+    await executeApplicationInsertWithSchemaFallback<{ id: string }>(
+      {
+        job_id: job.id,
+        full_name: data.fullName,
+        email: data.email,
+        phone: data.phone,
+        linkedin_url: data.linkedin || null,
+        total_experience: data.totalExperience,
+        skills: data.skills,
+        achievements: data.achievements,
+        compensation_currency: data.compensationCurrency,
+        compensation_basis: data.compensationBasis,
+        current_compensation: data.currentCompensation || null,
+        expected_compensation: data.expectedCompensation,
+        compensation_negotiable: data.compensationNegotiable,
+        notice_period: data.noticePeriod,
+        cover_letter: data.coverLetter || null,
+        resume_path: path,
+        resume_filename: filename,
+        resume_mime_type: resume.type || "application/octet-stream",
+        resume_size_bytes: resume.size,
+        ip,
+        user_agent: userAgent,
+      },
+      (payload) => client.from("job_applications").insert(payload).select("id").single()
+    );
   if (insertErr || !inserted) {
     console.error("[careers/apply] insert failed", insertErr);
     // Best-effort cleanup of the uploaded file
@@ -254,6 +262,14 @@ export async function POST(request: NextRequest) {
             : "Could not save application. Please try again.",
       },
       { status: 500 }
+    );
+  }
+  if (omittedColumns.length > 0) {
+    // The application was saved, but some screening fields couldn't be stored
+    // because the table is behind on migrations. Surface this in the logs so
+    // the schema can be fixed without losing applications in the meantime.
+    console.warn(
+      `[careers/apply] saved application ${inserted.id} but dropped columns missing from job_applications: ${omittedColumns.join(", ")}. Run supabase-careers-compensation-migration.sql.`
     );
   }
 
