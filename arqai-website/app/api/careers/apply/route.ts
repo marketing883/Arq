@@ -122,6 +122,9 @@ function formBoolean(value: FormDataEntryValue | null) {
 export async function POST(request: NextRequest) {
   const client = getClient();
   if (!client) {
+    console.error(
+      "[careers/apply] Supabase client unavailable: NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY is not set in this runtime"
+    );
     return NextResponse.json({ error: "Server not configured" }, { status: 500 });
   }
 
@@ -129,12 +132,14 @@ export async function POST(request: NextRequest) {
   try {
     formData = await request.formData();
   } catch {
+    console.warn("[careers/apply] rejected: could not parse multipart form data");
     return NextResponse.json({ error: "Invalid form data" }, { status: 400 });
   }
 
   // Honeypot
   const honey = (formData.get("website_url") as string) || "";
   if (honey.trim().length > 0) {
+    console.warn("[careers/apply] dropped: honeypot field 'website_url' was filled (likely bot or browser autofill)");
     return NextResponse.json({ ok: true });
   }
 
@@ -156,6 +161,10 @@ export async function POST(request: NextRequest) {
     coverLetter: formData.get("coverLetter") || null,
   });
   if (!parsed.success) {
+    console.warn(
+      "[careers/apply] rejected: validation failed",
+      JSON.stringify(parsed.error.flatten().fieldErrors)
+    );
     return NextResponse.json(
       { error: "Invalid input", details: parsed.error.flatten() },
       { status: 400 }
@@ -165,18 +174,24 @@ export async function POST(request: NextRequest) {
 
   const resume = formData.get("resume");
   if (!(resume instanceof File)) {
+    console.warn("[careers/apply] rejected: resume missing or not a file");
     return NextResponse.json({ error: "Resume is required" }, { status: 400 });
   }
   if (resume.size === 0) {
+    console.warn("[careers/apply] rejected: resume file is empty");
     return NextResponse.json({ error: "Resume file is empty" }, { status: 400 });
   }
   if (resume.size > MAX_BYTES) {
+    console.warn("[careers/apply] rejected: resume exceeds 5 MB");
     return NextResponse.json(
       { error: "Resume must be 5 MB or less" },
       { status: 400 }
     );
   }
   if (!ALLOWED_MIME.has(resume.type) && !ALLOWED_EXT.test(resume.name || "")) {
+    console.warn(
+      `[careers/apply] rejected: resume type not allowed (type=${resume.type}, name=${resume.name})`
+    );
     return NextResponse.json(
       { error: "Resume must be a PDF, DOC, or DOCX file" },
       { status: 400 }
@@ -190,6 +205,9 @@ export async function POST(request: NextRequest) {
     .eq("id", data.jobId)
     .maybeSingle();
   if (jobErr || !job || !isPublicJobStatus(job.status)) {
+    console.warn(
+      `[careers/apply] rejected: job lookup failed (jobId=${data.jobId}, found=${!!job}, status=${job?.status ?? "n/a"}, error=${jobErr?.message ?? "none"})`
+    );
     return NextResponse.json({ error: "Job posting not found" }, { status: 404 });
   }
 
@@ -271,6 +289,8 @@ export async function POST(request: NextRequest) {
     console.warn(
       `[careers/apply] saved application ${inserted.id} but dropped columns missing from job_applications: ${omittedColumns.join(", ")}. Run supabase-careers-compensation-migration.sql.`
     );
+  } else {
+    console.log(`[careers/apply] saved application ${inserted.id} for job ${job.slug}`);
   }
 
   // Send notification email with the resume attached
