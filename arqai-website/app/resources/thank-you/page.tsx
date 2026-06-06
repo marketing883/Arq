@@ -2,10 +2,11 @@
 
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import { motion } from "framer-motion";
 import Link from "next/link";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
+import V5Nav from "@/components/home-v5/V5Nav";
+import Footer from "@/components/home-v5/Footer";
+import { ArrowRight } from "@/components/home-v5/icons";
+import "@/components/home-v5/styles.css";
 
 interface DownloadInfo {
   title: string;
@@ -13,6 +14,24 @@ interface DownloadInfo {
   download_url: string;
   file_name: string;
   expires_at: string;
+}
+
+function Loader() {
+  return (
+    <div className="v5-shell">
+      <V5Nav />
+      <main>
+        <section className="v5-section v5-bg-grey">
+          <div className="v5-container">
+            <p className="v5-body" style={{ textAlign: "center" }}>
+              Loading...
+            </p>
+          </div>
+        </section>
+      </main>
+      <Footer />
+    </div>
+  );
 }
 
 function ThankYouContent() {
@@ -52,101 +71,86 @@ function ThankYouContent() {
   };
 
   if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="w-16 h-16 border-4 border-[var(--arq-blue)] border-t-transparent rounded-full animate-spin" />
-      </div>
-    );
+    return <Loader />;
   }
 
   if (error) {
     return (
-      <>
-        <Header />
-        <main className="min-h-screen pt-32 pb-16 bg-gray-50">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="max-w-lg mx-auto text-center">
-              <div className="w-20 h-20 rounded-full bg-red-100 flex items-center justify-center mx-auto mb-6">
-                <svg className="w-10 h-10 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                </svg>
+      <div className="v5-shell">
+        <V5Nav />
+        <main>
+          <section className="v5-section v5-bg-grey">
+            <div className="v5-container">
+              <div className="v5-card" style={{ maxWidth: 560, margin: "0 auto", textAlign: "center" }}>
+                <h1 className="v5-h2">Download Unavailable</h1>
+                <p className="v5-body" style={{ marginTop: 12, marginBottom: 24 }}>
+                  {error}
+                </p>
+                <Link href="/" className="v5-btn v5-btn-primary">
+                  Return Home <ArrowRight />
+                </Link>
               </div>
-              <h1 className="text-3xl font-bold text-gray-900 mb-4">Download Unavailable</h1>
-              <p className="text-gray-600 mb-8">{error}</p>
-              <Link href="/" className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--arq-blue)] text-white font-semibold rounded-full">Return Home</Link>
             </div>
-          </div>
+          </section>
         </main>
         <Footer />
-      </>
+      </div>
     );
   }
 
   return (
-    <>
-      <Header />
-      <main className="min-h-screen pt-32 pb-16 bg-gradient-to-b from-gray-50 to-white">
-        <div className="container mx-auto px-4 md:px-6">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-2xl mx-auto text-center">
-            <div className="w-24 h-24 rounded-full bg-gradient-to-br from-[var(--arq-lime)] to-[var(--arq-lime-dark)] flex items-center justify-center mx-auto mb-8 shadow-lg">
-              <svg className="w-12 h-12 text-[var(--arq-black)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-              </svg>
-            </div>
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Thank You!</h1>
-            <p className="text-xl text-gray-600 mb-8">Your download is ready.</p>
-
-            {downloadInfo && (
-              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="bg-white rounded-2xl p-8 shadow-xl border border-gray-200 mb-8">
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-16 h-16 rounded-xl bg-[var(--arq-blue)]/10 flex items-center justify-center flex-shrink-0">
-                    <svg className="w-8 h-8 text-[var(--arq-blue)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                    </svg>
-                  </div>
-                  <div className="text-left">
-                    <h3 className="text-lg font-semibold text-gray-900">{downloadInfo.title}</h3>
-                    <p className="text-sm text-gray-500">{downloadInfo.file_name} • PDF</p>
-                  </div>
+    <div className="v5-shell">
+      <V5Nav />
+      <main>
+        <section className="v5-section v5-bg-grey">
+          <div className="v5-container">
+            <div style={{ maxWidth: 680, margin: "0 auto" }}>
+              <div className="v5-card v5-success">
+                <div className="v5-success-mark">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--v5-ink)" strokeWidth={2.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                  </svg>
                 </div>
-                <button
-                  onClick={handleDownload}
-                  disabled={hasDownloaded}
-                  className={`w-full py-4 px-6 font-semibold rounded-xl flex items-center justify-center gap-3 transition-all ${hasDownloaded ? "bg-gray-200 text-gray-500 cursor-not-allowed" : "bg-[var(--arq-blue)] text-white hover:bg-[var(--arq-blue-dark)]"}`}
-                >
-                  {hasDownloaded ? "Download Started" : "Download Now"}
-                </button>
-                <p className="mt-4 text-sm text-gray-500">This link is for one-time use only</p>
-              </motion.div>
-            )}
+                <h1 className="v5-h2">Thank You!</h1>
+                <p className="v5-lead" style={{ marginTop: 8 }}>
+                  Your download is ready.
+                </p>
+              </div>
 
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="text-left bg-gray-50 rounded-2xl p-8">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">What&apos;s Next?</h3>
-              <div className="space-y-4">
-                <Link href="/demo" className="flex items-center gap-4 p-4 bg-white rounded-xl hover:shadow-md transition-shadow group">
-                  <div className="w-12 h-12 rounded-lg bg-[var(--arq-blue)]/10 flex items-center justify-center flex-shrink-0">
-                    <svg className="w-6 h-6 text-[var(--arq-blue)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-gray-900">Get Started</h4>
-                    <p className="text-sm text-gray-500">See ArqAI in action</p>
-                  </div>
+              {downloadInfo && (
+                <div className="v5-card" style={{ marginTop: 24 }}>
+                  <span className="v5-card-eyebrow">{downloadInfo.file_name} • PDF</span>
+                  <h3 className="v5-h3">{downloadInfo.title}</h3>
+                  <button
+                    onClick={handleDownload}
+                    disabled={hasDownloaded}
+                    className="v5-btn v5-btn-primary v5-form-submit"
+                    style={{ marginTop: 20 }}
+                  >
+                    {hasDownloaded ? "Download Started" : "Download Now"}
+                  </button>
+                  <p className="v5-form-note">This link is for one-time use only</p>
+                </div>
+              )}
+
+              <div className="v5-card" style={{ marginTop: 24 }}>
+                <h3 className="v5-h3">What&apos;s Next?</h3>
+                <Link href="/demo" className="v5-card-more" style={{ marginTop: 12 }}>
+                  Get Started — See ArqAI in action <ArrowRight />
                 </Link>
               </div>
-            </motion.div>
-          </motion.div>
-        </div>
+            </div>
+          </div>
+        </section>
       </main>
       <Footer />
-    </>
+    </div>
   );
 }
 
 export default function ThankYouPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><div className="w-16 h-16 border-4 border-[var(--arq-blue)] border-t-transparent rounded-full animate-spin" /></div>}>
+    <Suspense fallback={<Loader />}>
       <ThankYouContent />
     </Suspense>
   );

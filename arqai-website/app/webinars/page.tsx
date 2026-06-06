@@ -1,12 +1,14 @@
 import { createClient } from "@supabase/supabase-js";
 import Link from "next/link";
 import { Metadata } from "next";
-import { ArrowIcon, DarkShell } from "@/components/site-dark/DarkShell";
+import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
+import { ArrowRight } from "@/components/home-v5/icons";
 
 export const metadata: Metadata = {
   title: "Webinars | ArqAI Labs",
   description:
     "Live and on-demand sessions for teams moving from AI pilots to governed enterprise workflows.",
+  alternates: { canonical: "https://thearq.ai/webinars" },
 };
 
 function getSupabase() {
@@ -92,56 +94,51 @@ function WebinarCard({ webinar, isOnDemand = false }: { webinar: Webinar; isOnDe
   const actionUrl = isOnDemand ? webinar.recording_url : webinar.registration_url;
 
   return (
-    <article className="a-card" style={{ padding: 0, overflow: "hidden" }}>
+    <article className="v5-blog-card">
       <Link href={`/webinars/${webinar.slug}`} style={{ color: "inherit", textDecoration: "none" }}>
-        <div style={{ position: "relative", aspectRatio: "16 / 9", background: "var(--ink-2)", overflow: "hidden" }}>
+        <div className="v5-blog-cover">
           {webinar.banner_image ? (
             <img
               src={webinar.banner_image}
               alt=""
               loading="lazy"
               decoding="async"
-              style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
             />
-          ) : null}
-          <div className="svc-media-shade" />
-          <div style={{ position: "absolute", left: 18, top: 18 }}>
-            <span className="a-tag">{webinar.status === "live" ? "Live" : isOnDemand ? "On-demand" : "Upcoming"}</span>
+          ) : (
+            <div className="v5-blog-cover-placeholder" />
+          )}
+          <div style={{ position: "absolute", left: 14, top: 14 }}>
+            <span className="v5-chip">{webinar.status === "live" ? "Live" : isOnDemand ? "On-demand" : "Upcoming"}</span>
           </div>
-          <div style={{ position: "absolute", right: 18, top: 18 }}>
-            <span className="a-tag">{formatDuration(webinar.duration)}</span>
+          <div style={{ position: "absolute", right: 14, top: 14 }}>
+            <span className="v5-chip">{formatDuration(webinar.duration)}</span>
           </div>
         </div>
       </Link>
 
-      <div style={{ padding: 24 }}>
-        <div className="kicker">{formatDate(webinar.webinar_date, webinar.timezone)}</div>
+      <div className="v5-blog-body">
+        <span className="v5-blog-meta">{formatDate(webinar.webinar_date, webinar.timezone)}</span>
         <Link href={`/webinars/${webinar.slug}`} style={{ color: "inherit", textDecoration: "none" }}>
-          <h3 style={{ color: "var(--ink-cream)", fontFamily: "var(--display)", fontSize: 24, lineHeight: 1.2, marginTop: 14 }}>
-            {webinar.title}
-          </h3>
+          <h3 className="v5-h3">{webinar.title}</h3>
         </Link>
-        {webinar.description ? (
-          <p style={{ color: "var(--ink-cream-d)", lineHeight: 1.6, marginTop: 12 }}>{webinar.description}</p>
-        ) : null}
+        {webinar.description ? <p className="v5-body">{webinar.description}</p> : null}
         {webinar.presenters?.length ? (
-          <p className="kicker" style={{ marginTop: 18 }}>
+          <p className="v5-blog-meta" style={{ marginTop: 14 }}>
             {webinar.presenters.map((presenter) => presenter.name).join(", ")}
           </p>
         ) : null}
         <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginTop: 22 }}>
-          <Link href={`/webinars/${webinar.slug}`} className="a-btn a-btn-ghost" style={{ padding: "10px 16px", fontSize: 13 }}>
-            View details <ArrowIcon className="arrow" />
+          <Link href={`/webinars/${webinar.slug}`} className="v5-btn v5-btn-ghost">
+            View details <ArrowRight />
           </Link>
           {actionUrl ? (
             <a
               href={actionUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="a-btn a-btn-primary"
-              style={{ padding: "10px 16px", fontSize: 13 }}
+              className="v5-btn v5-btn-primary"
             >
-              {isOnDemand ? "Watch" : "Register"} <ArrowIcon className="arrow" />
+              {isOnDemand ? "Watch" : "Register"} <ArrowRight />
             </a>
           ) : null}
         </div>
@@ -155,35 +152,34 @@ export default async function WebinarsPage() {
   const hasWebinars = upcoming.length > 0 || onDemand.length > 0;
 
   return (
-    <DarkShell>
-      <section className="a-hero">
-        <div className="a-hero-grid" />
-        <div className="a-wrap" style={{ position: "relative", textAlign: "center" }}>
-          <span className="a-pill">
-            <span className="dot" /> Webinars
-          </span>
-          <h1 className="h-display" style={{ margin: "28px auto 0", maxWidth: "14ch" }}>
-            Field notes for production enterprise AI.
-          </h1>
-          <p className="lede" style={{ margin: "28px auto 0", maxWidth: "66ch" }}>
-            Live and on-demand sessions for leaders turning AI from pilots into governed workflows.
-          </p>
+    <V5SiteLayout>
+      <section className="v5-page-hero">
+        <div className="v5-container">
+          <div className="v5-page-hero-inner">
+            <span className="v5-badge">
+              <span className="v5-badge-dot" />
+              Webinars
+            </span>
+            <h1 className="v5-h1">Field notes for production enterprise AI.</h1>
+            <p className="v5-lead">
+              Live and on-demand sessions for leaders turning AI from pilots into governed
+              workflows.
+            </p>
+          </div>
         </div>
       </section>
 
       {upcoming.length > 0 ? (
-        <section className="a-section">
-          <div className="a-wrap">
-            <div className="a-section-head">
-              <div>
-                <span className="a-eyebrow">Upcoming</span>
-                <h2 className="h-section" style={{ marginTop: 18 }}>
-                  Join the next session.
-                </h2>
-              </div>
-              <p className="lede">Practical conversations for teams moving AI into real operating environments.</p>
+        <section className="v5-section v5-bg-grey">
+          <div className="v5-container">
+            <div className="v5-section-head">
+              <span className="v5-eyebrow">Upcoming</span>
+              <h2 className="v5-h2">Join the next session.</h2>
+              <p className="v5-lead">
+                Practical conversations for teams moving AI into real operating environments.
+              </p>
             </div>
-            <div className="svc-grid" style={{ marginTop: 44 }}>
+            <div className="v5-blog-grid">
               {upcoming.map((webinar) => (
                 <WebinarCard key={webinar.id} webinar={webinar} />
               ))}
@@ -193,18 +189,16 @@ export default async function WebinarsPage() {
       ) : null}
 
       {onDemand.length > 0 ? (
-        <section className="a-section">
-          <div className="a-wrap">
-            <div className="a-section-head">
-              <div>
-                <span className="a-eyebrow">On-demand</span>
-                <h2 className="h-section" style={{ marginTop: 18 }}>
-                  Watch when the workflow needs it.
-                </h2>
-              </div>
-              <p className="lede">Recorded sessions, product thinking, and implementation guidance.</p>
+        <section className="v5-section v5-bg-white">
+          <div className="v5-container">
+            <div className="v5-section-head">
+              <span className="v5-eyebrow">On-demand</span>
+              <h2 className="v5-h2">Watch when the workflow needs it.</h2>
+              <p className="v5-lead">
+                Recorded sessions, product thinking, and implementation guidance.
+              </p>
             </div>
-            <div className="svc-grid" style={{ marginTop: 44 }}>
+            <div className="v5-blog-grid">
               {onDemand.map((webinar) => (
                 <WebinarCard key={webinar.id} webinar={webinar} isOnDemand />
               ))}
@@ -214,23 +208,26 @@ export default async function WebinarsPage() {
       ) : null}
 
       {!hasWebinars ? (
-        <section className="a-section">
-          <div className="a-wrap">
-            <div className="a-card" style={{ padding: "clamp(32px, 6vw, 72px)", textAlign: "center" }}>
-              <span className="a-eyebrow" style={{ justifyContent: "center" }}>Coming soon</span>
-              <h2 className="h-section" style={{ marginTop: 18 }}>
+        <section className="v5-section v5-bg-grey">
+          <div className="v5-container">
+            <div className="v5-card" style={{ padding: "clamp(32px, 6vw, 72px)", textAlign: "center" }}>
+              <span className="v5-eyebrow">Coming soon</span>
+              <h2 className="v5-h2" style={{ marginTop: 14 }}>
                 The next sessions are being prepared.
               </h2>
-              <p className="lede" style={{ margin: "18px auto 0", maxWidth: "58ch" }}>
-                Until then, bring us the workflow you want to modernize and we will tell you what is honestly possible.
+              <p className="v5-lead" style={{ margin: "18px auto 0", maxWidth: "58ch" }}>
+                Until then, bring us the workflow you want to modernize and we will tell you
+                what is honestly possible.
               </p>
-              <Link href="/engage-us" className="a-btn a-btn-primary" style={{ marginTop: 28 }}>
-                Get Started <ArrowIcon className="arrow" />
-              </Link>
+              <div style={{ marginTop: 28 }}>
+                <Link href="/engage-us" className="v5-btn v5-btn-primary">
+                  Get Started <ArrowRight />
+                </Link>
+              </div>
             </div>
           </div>
         </section>
       ) : null}
-    </DarkShell>
+    </V5SiteLayout>
   );
 }

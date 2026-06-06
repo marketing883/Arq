@@ -2,9 +2,10 @@
 
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
+import V5Nav from "@/components/home-v5/V5Nav";
+import Footer from "@/components/home-v5/Footer";
+import { ArrowRight } from "@/components/home-v5/icons";
+import "@/components/home-v5/styles.css";
 
 type Job = {
   id: string;
@@ -61,37 +62,26 @@ function toDisplayText(value: unknown): string {
   return String(value);
 }
 
-function StarIcon({ className = "" }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 20 20" fill="currentColor" className={className}>
-      <path d="M19.6,9.6h-3.9c-.4,0-1.8-.2-1.8-.2-.6,0-1.1-.2-1.6-.6-.5-.3-.9-.8-1.2-1.2-.3-.4-.4-.9-.5-1.4,0,0,0-1.1-.2-1.5V.4c0-.2-.2-.4-.4-.4s-.4.2-.4.4v4.4c0,.4-.2,1.5-.2,1.5,0,.5-.2,1-.5,1.4-.3.5-.7.9-1.2,1.2s-1,.5-1.6.6c0,0-1.2,0-1.7.2H.4c-.2,0-.4.2-.4.4s.2.4.4.4h4.1c.4,0,1.7.2,1.7.2.6,0,1.1.2,1.6.6.4.3.8.7,1.1,1.1.3.5.5,1,.6,1.6,0,0,0,1.3.2,1.7v4.1c0,.2.2.4.4.4s.4-.2.4-.4v-4.1c0-.4.2-1.7.2-1.7,0-.6.2-1.1.6-1.6.3-.4.7-.8,1.1-1.1.5-.3,1-.5,1.6-.6,0,0,1.3,0,1.8-.2h3.9c.2,0,.4-.2.4-.4s-.2-.4-.4-.4h0Z" />
-    </svg>
-  );
-}
-
 function renderBlock(text: string) {
-  // Split lines that start with "-" or "*" into bullet list, otherwise paragraph
+  // Split lines that start with "-" or "*" into a bullet list, otherwise paragraphs.
   const lines = text
     .split(/\r?\n/)
     .map((l) => l.trim())
     .filter((l) => l.length > 0);
-  const isList = lines.every((l) => /^[-*]/.test(l));
+  const isList = lines.length > 0 && lines.every((l) => /^[-*]/.test(l));
   if (isList) {
     return (
-      <ul className="space-y-3">
+      <ul className="v5-list">
         {lines.map((line, i) => (
-          <li key={i} className="flex items-start gap-3 text-body-md text-text-muted leading-relaxed">
-            <span className="mt-2 w-1.5 h-1.5 rounded-full bg-accent shrink-0" />
-            <span>{line.replace(/^[-*]\s*/, "")}</span>
-          </li>
+          <li key={i}>{line.replace(/^[-*]\s*/, "")}</li>
         ))}
       </ul>
     );
   }
   return (
-    <div className="space-y-4">
+    <div className="v5-prose">
       {text.split(/\n{2,}/).map((para, i) => (
-        <p key={i} className="text-body-md text-text-muted leading-relaxed whitespace-pre-line">
+        <p key={i} style={{ whiteSpace: "pre-line" }}>
           {para.trim()}
         </p>
       ))}
@@ -252,39 +242,39 @@ export default function JobDetailPage({ params }: { params: { slug: string } }) 
 
   if (loading) {
     return (
-      <>
-        <Header />
-        <main className="bg-base pt-32 md:pt-40 pb-20">
-          <div className="container mx-auto px-4 md:px-6 lg:px-8">
-            <p className="text-body-md text-text-muted">Loading role...</p>
-          </div>
+      <div className="v5-shell">
+        <V5Nav />
+        <main>
+          <section className="v5-page-hero">
+            <div className="v5-container">
+              <p className="v5-lead">Loading role...</p>
+            </div>
+          </section>
         </main>
         <Footer />
-      </>
+      </div>
     );
   }
 
   if (missing) {
     return (
-      <>
-        <Header />
-        <main className="bg-base pt-32 md:pt-40 pb-20">
-          <div className="container mx-auto px-4 md:px-6 lg:px-8">
-            <div className="card max-w-2xl p-8">
-              <h1 className="text-display-sm font-display text-text-bright mb-3">
-                Role not found.
-              </h1>
-              <p className="text-body-md text-text-muted mb-6">
-                This opening may have closed or moved.
-              </p>
-              <Link href="/careers" className="btn btn-outline">
-                Back to all roles
-              </Link>
+      <div className="v5-shell">
+        <V5Nav />
+        <main>
+          <section className="v5-page-hero">
+            <div className="v5-container">
+              <div className="v5-card" style={{ maxWidth: 640 }}>
+                <h1 className="v5-h2">Role not found.</h1>
+                <p className="v5-body">This opening may have closed or moved.</p>
+                <Link href="/careers" className="v5-btn v5-btn-ghost" style={{ alignSelf: "flex-start" }}>
+                  Back to all roles
+                </Link>
+              </div>
             </div>
-          </div>
+          </section>
         </main>
         <Footer />
-      </>
+      </div>
     );
   }
 
@@ -298,166 +288,98 @@ export default function JobDetailPage({ params }: { params: { slug: string } }) 
   const experienceLevel = toDisplayText(job.experience_level);
 
   return (
-    <>
-      <Header />
-      <main className="bg-base">
+    <div className="v5-shell">
+      <V5Nav />
+      <main>
         {/* Hero */}
-        <section className="pt-32 md:pt-40 pb-12">
-          <div className="container mx-auto px-4 md:px-6 lg:px-8">
-            <Link
-              href="/careers"
-              className="inline-flex items-center gap-2 text-body-sm text-accent hover:underline mb-6"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-              </svg>
-              All roles
-            </Link>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="max-w-4xl"
-            >
-              <p className="flex items-center gap-2 text-body-sm text-accent mb-5 uppercase tracking-wider font-medium">
-                <StarIcon className="w-4 h-4" />
+        <section className="v5-page-hero">
+          <div className="v5-container">
+            <div className="v5-crumbs" style={{ marginBottom: 22 }}>
+              <Link href="/careers">Careers</Link>
+              <span>/</span>
+              <span style={{ color: "var(--v5-ink-soft)" }}>{job.title}</span>
+            </div>
+            <div className="v5-page-hero-inner">
+              <span className="v5-badge">
+                <span className="v5-badge-dot" />
                 {job.department}
-              </p>
-              <h1 className="text-display-xl md:text-[clamp(2.5rem,5vw,4.5rem)] font-display leading-[1.1] text-text-bright mb-6">
-                {job.title}
-              </h1>
-              <div className="flex flex-wrap items-center gap-3 text-body-sm">
-                <span className="px-3 py-1 rounded-full bg-base-tint border border-stroke-muted text-text-bright">
-                  {job.location}
-                </span>
-                <span className="px-3 py-1 rounded-full bg-base-tint border border-stroke-muted text-text-bright">
+              </span>
+              <h1 className="v5-h1">{job.title}</h1>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 22 }}>
+                <span className="v5-chip">{job.location}</span>
+                <span className="v5-chip">
                   {employmentTypeLabel[job.employment_type] ?? job.employment_type}
                 </span>
-                {experienceLevel && (
-                  <span className="px-3 py-1 rounded-full bg-base-tint border border-stroke-muted text-text-bright">
-                    {experienceLevel} level
-                  </span>
-                )}
-                {job.remote && (
-                  <span className="px-3 py-1 rounded-full bg-accent/10 text-accent">
-                    Remote-friendly
-                  </span>
-                )}
-                {salaryRange && (
-                  <span className="px-3 py-1 rounded-full bg-base-tint border border-stroke-muted text-text-bright">
-                    {salaryRange}
-                  </span>
-                )}
+                {experienceLevel && <span className="v5-chip">{experienceLevel} level</span>}
+                {job.remote && <span className="v5-chip">Remote-friendly</span>}
+                {salaryRange && <span className="v5-chip">{salaryRange}</span>}
               </div>
-              <div className="mt-8">
-                <button onClick={scrollToForm} className="btn bg-accent text-white hover:bg-accent/90">
-                  Apply for this role
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H7M17 7v10" />
-                  </svg>
+              <div className="v5-hero-actions">
+                <button onClick={scrollToForm} className="v5-btn v5-btn-primary">
+                  Apply for this role <ArrowRight />
                 </button>
               </div>
-            </motion.div>
+            </div>
           </div>
         </section>
 
         {/* Body */}
-        <section className="py-section bg-base-tint">
-          <div className="container mx-auto px-4 md:px-6 lg:px-8">
-            <div className="grid lg:grid-cols-12 gap-10 lg:gap-16">
-              <div className="lg:col-span-8 space-y-12">
-                {shortDescription && (
-                  <p className="text-body-lg text-text-bright leading-relaxed">
-                    {shortDescription}
-                  </p>
-                )}
-                {description && (
-                  <div>
-                    <h2 className="text-display-sm font-display text-text-bright mb-4">
-                      About the role
-                    </h2>
-                    {renderBlock(description)}
-                  </div>
-                )}
-                {responsibilities && (
-                  <div>
-                    <h2 className="text-display-sm font-display text-text-bright mb-4">
-                      What you&apos;ll do
-                    </h2>
-                    {renderBlock(responsibilities)}
-                  </div>
-                )}
-                {requirements && (
-                  <div>
-                    <h2 className="text-display-sm font-display text-text-bright mb-4">
-                      What we&apos;re looking for
-                    </h2>
-                    {renderBlock(requirements)}
-                  </div>
-                )}
-              </div>
-
-              <aside className="lg:col-span-4">
-                <div className="lg:sticky lg:top-32 card p-6">
-                  <h3 className="text-lg font-display font-semibold text-text-bright mb-2">
-                    Ready to apply?
-                  </h3>
-                  <p className="text-body-sm text-text-muted mb-5">
-                    Send us your resume and a short note about why this role.
-                  </p>
-                  <button
-                    onClick={scrollToForm}
-                    className="w-full btn bg-accent text-white hover:bg-accent/90"
-                  >
-                    Apply now
-                  </button>
-                  <Link href="/careers" className="block text-body-sm text-accent hover:underline mt-4 text-center">
-                    See other roles
-                  </Link>
+        <section className="v5-section v5-bg-grey">
+          <div className="v5-container">
+            <div style={{ maxWidth: 760, display: "flex", flexDirection: "column", gap: 40 }}>
+              {shortDescription && <p className="v5-lead">{shortDescription}</p>}
+              {description && (
+                <div>
+                  <h2 className="v5-h2" style={{ marginBottom: 14 }}>About the role</h2>
+                  {renderBlock(description)}
                 </div>
-              </aside>
+              )}
+              {responsibilities && (
+                <div>
+                  <h2 className="v5-h2" style={{ marginBottom: 14 }}>What you&apos;ll do</h2>
+                  {renderBlock(responsibilities)}
+                </div>
+              )}
+              {requirements && (
+                <div>
+                  <h2 className="v5-h2" style={{ marginBottom: 14 }}>What we&apos;re looking for</h2>
+                  {renderBlock(requirements)}
+                </div>
+              )}
             </div>
           </div>
         </section>
 
         {/* Application form */}
-        <section className="py-section bg-base" ref={formRef}>
-          <div className="container mx-auto px-4 md:px-6 lg:px-8">
-            <div className="max-w-3xl mx-auto">
-              <p className="flex items-center gap-2 text-body-sm text-accent mb-3 uppercase tracking-wider font-medium">
-                <StarIcon className="w-4 h-4" />
-                Apply
-              </p>
-              <h2 className="text-display-md font-display text-text-bright mb-2">
-                Apply for {job.title}
-              </h2>
-              <p className="text-body-md text-text-muted mb-8">
-                Resume in PDF, DOC, or DOCX. 5 MB max.
-              </p>
+        <section className="v5-section v5-bg-white">
+          <div className="v5-container" ref={formRef}>
+            <div style={{ maxWidth: 760, margin: "0 auto" }}>
+              <div className="v5-section-head" style={{ marginBottom: 28 }}>
+                <span className="v5-eyebrow">Apply</span>
+                <h2 className="v5-h2">Apply for {job.title}</h2>
+                <p className="v5-lead">Resume in PDF, DOC, or DOCX. 5 MB max.</p>
+              </div>
 
               {submitStatus === "success" ? (
-                <div className="card p-8 md:p-10 text-center">
-                  <div className="w-14 h-14 rounded-full bg-green-100 dark:bg-green-900/20 flex items-center justify-center mx-auto mb-5">
-                    <svg className="w-7 h-7 text-green-500" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+                <div className="v5-card v5-success">
+                  <div className="v5-success-mark">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--v5-ink)" strokeWidth={2.5}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
-                  <h3 className="text-2xl font-display font-semibold text-text-bright mb-3">
-                    Application received.
-                  </h3>
-                  <p className="text-body-md text-text-muted">
-                    Thanks. Our team will review and get back to you. You will hear from us within
-                    a few business days.
+                  <h3 className="v5-h3">Application received.</h3>
+                  <p className="v5-body" style={{ marginTop: 8, marginBottom: 22 }}>
+                    Thanks. Our team will review and get back to you. You will hear from us
+                    within a few business days.
                   </p>
-                  <Link href="/careers" className="inline-block mt-6 btn btn-outline">
+                  <Link href="/careers" className="v5-btn v5-btn-ghost">
                     Back to all roles
                   </Link>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="card p-6 md:p-8 relative" noValidate>
+                <form onSubmit={handleSubmit} className="v5-card v5-form" style={{ position: "relative" }} noValidate>
                   {/* Honeypot */}
-                  <div className="absolute left-[-9999px] opacity-0 pointer-events-none" aria-hidden="true" tabIndex={-1}>
+                  <div className="v5-honeypot" aria-hidden="true" tabIndex={-1}>
                     <input
                       type="text"
                       name="website_url"
@@ -468,146 +390,74 @@ export default function JobDetailPage({ params }: { params: { slug: string } }) 
                     />
                   </div>
 
-                  <div className="grid sm:grid-cols-2 gap-5 mb-5">
+                  <div className="v5-form-grid two">
                     <Field label="Full name" required>
-                      <input
-                        type="text"
-                        required
-                        value={fullName}
-                        onChange={(e) => setFullName(e.target.value)}
-                        className="form-input"
-                      />
+                      <input type="text" required value={fullName} onChange={(e) => setFullName(e.target.value)} className="v5-input" />
                     </Field>
                     <Field label="Email" required>
-                      <input
-                        type="email"
-                        required
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        className="form-input"
-                      />
+                      <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} className="v5-input" />
                     </Field>
                   </div>
-                  <div className="grid sm:grid-cols-2 gap-5 mb-5">
+
+                  <div className="v5-form-grid two">
                     <Field label="Phone" required>
-                      <input
-                        type="tel"
-                        required
-                        value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
-                        className="form-input"
-                      />
+                      <input type="tel" required value={phone} onChange={(e) => setPhone(e.target.value)} className="v5-input" />
                     </Field>
                     <Field label="LinkedIn">
-                      <input
-                        type="url"
-                        placeholder="https://linkedin.com/in/..."
-                        value={linkedin}
-                        onChange={(e) => setLinkedin(e.target.value)}
-                        className="form-input"
-                      />
+                      <input type="url" placeholder="https://linkedin.com/in/..." value={linkedin} onChange={(e) => setLinkedin(e.target.value)} className="v5-input" />
                     </Field>
                   </div>
 
-                  <div className="grid sm:grid-cols-2 gap-5 mb-5">
+                  <div className="v5-form-grid two">
                     <Field label="Total experience" required>
-                      <input
-                        type="text"
-                        required
-                        placeholder="e.g. 6 years, 3 years in AI systems"
-                        value={totalExperience}
-                        onChange={(e) => setTotalExperience(e.target.value)}
-                        className="form-input"
-                      />
+                      <input type="text" required placeholder="e.g. 6 years, 3 years in AI systems" value={totalExperience} onChange={(e) => setTotalExperience(e.target.value)} className="v5-input" />
                     </Field>
                     <Field label="Notice period" required>
-                      <input
-                        type="text"
-                        required
-                        placeholder="e.g. Immediate, 30 days, 60 days"
-                        value={noticePeriod}
-                        onChange={(e) => setNoticePeriod(e.target.value)}
-                        className="form-input"
-                      />
+                      <input type="text" required placeholder="e.g. Immediate, 30 days, 60 days" value={noticePeriod} onChange={(e) => setNoticePeriod(e.target.value)} className="v5-input" />
                     </Field>
                   </div>
 
-                  <div className="grid sm:grid-cols-2 gap-5 mb-5">
-                    <Field
-                      label="Compensation currency"
-                      required
-                      hint="Choose the currency most relevant to your location or engagement."
-                    >
-                      <select
-                        required
-                        value={compensationCurrency}
-                        onChange={(e) => setCompensationCurrency(e.target.value)}
-                        className="form-input"
-                      >
+                  <div className="v5-form-grid two">
+                    <Field label="Compensation currency" required hint="Choose the currency most relevant to your location or engagement.">
+                      <select required value={compensationCurrency} onChange={(e) => setCompensationCurrency(e.target.value)} className="v5-input">
                         {compensationCurrencies.map((option) => (
-                          <option key={option.value || "empty"} value={option.value}>
-                            {option.label}
-                          </option>
+                          <option key={option.value || "empty"} value={option.value}>{option.label}</option>
                         ))}
                       </select>
                     </Field>
                     <Field label="Pay basis" required>
-                      <select
-                        required
-                        value={compensationBasis}
-                        onChange={(e) => setCompensationBasis(e.target.value)}
-                        className="form-input"
-                      >
+                      <select required value={compensationBasis} onChange={(e) => setCompensationBasis(e.target.value)} className="v5-input">
                         {compensationBasisOptions.map((option) => (
-                          <option key={option.value || "empty"} value={option.value}>
-                            {option.label}
-                          </option>
+                          <option key={option.value || "empty"} value={option.value}>{option.label}</option>
                         ))}
                       </select>
                     </Field>
                   </div>
 
-                  <div className="grid sm:grid-cols-2 gap-5 mb-5">
-                    <Field
-                      label="Current compensation"
-                      hint="Optional. Use the currency and pay basis that applies to you."
-                    >
-                      <input
-                        type="text"
-                        value={currentCompensation}
-                        onChange={(e) => setCurrentCompensation(e.target.value)}
-                        placeholder="e.g. USD 120k/year, INR 24 LPA, EUR 70/hour"
-                        className="form-input"
-                      />
+                  <div className="v5-form-grid two">
+                    <Field label="Current compensation" hint="Optional. Use the currency and pay basis that applies to you.">
+                      <input type="text" value={currentCompensation} onChange={(e) => setCurrentCompensation(e.target.value)} placeholder="e.g. USD 120k/year, INR 24 LPA, EUR 70/hour" className="v5-input" />
                     </Field>
-                    <Field
-                      label="Expected compensation / range"
-                      required
-                      hint="A range or 'open to market range' is fine."
-                    >
-                      <input
-                        type="text"
-                        required
-                        value={expectedCompensation}
-                        onChange={(e) => setExpectedCompensation(e.target.value)}
-                        placeholder="e.g. USD 140k/year, INR 32 LPA, open to market range"
-                        className="form-input"
-                      />
+                    <Field label="Expected compensation / range" required hint="A range or 'open to market range' is fine.">
+                      <input type="text" required value={expectedCompensation} onChange={(e) => setExpectedCompensation(e.target.value)} placeholder="e.g. USD 140k/year, INR 32 LPA, open to market range" className="v5-input" />
                     </Field>
                   </div>
 
-                  <label className="mb-5 flex items-start gap-3 rounded-lg border border-stroke-muted bg-base-tint px-4 py-3">
+                  <label
+                    className="v5-field"
+                    style={{ display: "flex", alignItems: "flex-start", gap: 12, padding: "12px 14px", border: "1px solid #e2e2e2", borderRadius: 12, background: "var(--v5-grey-5)" }}
+                  >
                     <input
                       type="checkbox"
                       checked={compensationNegotiable}
                       onChange={(e) => setCompensationNegotiable(e.target.checked)}
-                      className="mt-1 h-4 w-4 rounded border-stroke-muted accent-accent"
+                      style={{ marginTop: 3, accentColor: "var(--v5-ink)" }}
                     />
                     <span>
-                      <span className="block text-body-sm text-text-bright">
+                      <span style={{ display: "block", fontSize: 14.5, color: "var(--v5-ink)" }}>
                         I am open to discussing market-aligned compensation.
                       </span>
-                      <span className="block mt-1 text-body-xs text-text-muted">
+                      <span style={{ display: "block", marginTop: 4, fontSize: 12.5, color: "var(--v5-grey-100)" }}>
                         This helps us evaluate applications across full-time, contract, hourly,
                         stipend, and project-based roles.
                       </span>
@@ -615,25 +465,11 @@ export default function JobDetailPage({ params }: { params: { slug: string } }) 
                   </label>
 
                   <Field label="Primary skills" required>
-                    <textarea
-                      rows={4}
-                      required
-                      value={skills}
-                      onChange={(e) => setSkills(e.target.value)}
-                      placeholder="List the tools, frameworks, domains, and workflows you are strongest in."
-                      className="form-input resize-y"
-                    />
+                    <textarea rows={4} required value={skills} onChange={(e) => setSkills(e.target.value)} placeholder="List the tools, frameworks, domains, and workflows you are strongest in." className="v5-input" />
                   </Field>
 
                   <Field label="Relevant achievements" required>
-                    <textarea
-                      rows={5}
-                      required
-                      value={achievements}
-                      onChange={(e) => setAchievements(e.target.value)}
-                      placeholder="Share 2-3 shipped projects, measurable outcomes, or production systems you have owned."
-                      className="form-input resize-y"
-                    />
+                    <textarea rows={5} required value={achievements} onChange={(e) => setAchievements(e.target.value)} placeholder="Share 2-3 shipped projects, measurable outcomes, or production systems you have owned." className="v5-input" />
                   </Field>
 
                   <Field label="Resume" required>
@@ -641,57 +477,42 @@ export default function JobDetailPage({ params }: { params: { slug: string } }) 
                       type="file"
                       accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                       onChange={handleResume}
-                      className="block w-full text-body-sm text-text-bright file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border file:border-stroke-muted file:text-body-sm file:font-medium file:bg-base file:text-text-bright hover:file:bg-base-tint"
+                      className="v5-input"
+                      style={{ padding: 10 }}
                     />
                     {resume && !resumeError && (
-                      <p className="mt-2 text-body-xs text-text-muted">
+                      <span style={{ display: "block", marginTop: 6, fontSize: 12.5, color: "var(--v5-grey-100)" }}>
                         {resume.name} - {(resume.size / 1024 / 1024).toFixed(2)} MB
-                      </p>
+                      </span>
                     )}
                     {resumeError && (
-                      <p className="mt-2 text-body-xs text-red-600">{resumeError}</p>
+                      <span style={{ display: "block", marginTop: 6, fontSize: 12.5, color: "#b42318" }}>{resumeError}</span>
                     )}
                   </Field>
 
                   <Field label="Cover note">
-                    <textarea
-                      rows={5}
-                      value={coverLetter}
-                      onChange={(e) => setCoverLetter(e.target.value)}
-                      placeholder="Why this role, and a project you've shipped that's relevant."
-                      className="form-input resize-none"
-                    />
+                    <textarea rows={5} value={coverLetter} onChange={(e) => setCoverLetter(e.target.value)} placeholder="Why this role, and a project you've shipped that's relevant." className="v5-input" />
                   </Field>
 
                   {formError && (
-                    <div className="mb-5 p-4 bg-amber-100 dark:bg-amber-900/20 rounded-lg">
-                      <p className="text-sm text-amber-700 dark:text-amber-300">{formError}</p>
+                    <div className="v5-form-error" style={{ background: "#fff7e6", borderColor: "#f5d99a", color: "#8a5a00" }}>
+                      {formError}
                     </div>
                   )}
 
                   {submitStatus === "error" && (
-                    <div className="mb-5 p-4 bg-red-100 dark:bg-red-900/20 rounded-lg">
-                      <p className="text-sm text-red-600 dark:text-red-400">
-                        {serverError ||
-                          "Something went wrong. Please try again or email us at hello@thearq.ai."}
-                      </p>
+                    <div className="v5-form-error">
+                      {serverError || "Something went wrong. Please try again or email us at hello@thearq.ai."}
                     </div>
                   )}
 
-                  <button
-                    type="submit"
-                    disabled={submitting || !!resumeError}
-                    className="w-full btn bg-accent text-white hover:bg-accent/90 disabled:opacity-50"
-                  >
+                  <button type="submit" disabled={submitting || !!resumeError} className="v5-btn v5-btn-primary v5-form-submit">
                     {submitting ? "Submitting..." : "Submit application"}
                   </button>
 
-                  <p className="mt-4 text-body-xs text-text-muted text-center">
+                  <p className="v5-form-note">
                     We use this only to evaluate your application. See our{" "}
-                    <Link href="/privacy" className="text-accent hover:underline">
-                      privacy notice
-                    </Link>
-                    .
+                    <Link href="/privacy">privacy notice</Link>.
                   </p>
                 </form>
               )}
@@ -700,7 +521,7 @@ export default function JobDetailPage({ params }: { params: { slug: string } }) 
         </section>
       </main>
       <Footer />
-    </>
+    </div>
   );
 }
 
@@ -716,12 +537,16 @@ function Field({
   children: React.ReactNode;
 }) {
   return (
-    <label className="block mb-5">
-      <span className="block text-body-sm font-medium text-text-bright mb-2">
-        {label} {required && <span className="text-accent">*</span>}
+    <label className="v5-field">
+      <span className="v5-field-label">
+        {label} {required && <span className="req">*</span>}
       </span>
       {children}
-      {hint && <span className="block mt-1 text-body-xs text-text-muted">{hint}</span>}
+      {hint && (
+        <span style={{ display: "block", marginTop: 6, fontSize: 12.5, color: "var(--v5-grey-100)" }}>
+          {hint}
+        </span>
+      )}
     </label>
   );
 }

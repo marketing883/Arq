@@ -1,12 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
+import V5Nav from "@/components/home-v5/V5Nav";
+import Footer from "@/components/home-v5/Footer";
+import { ArrowRight } from "@/components/home-v5/icons";
 import { trackResourceDownload } from "@/lib/analytics/gtm-events";
+import "@/components/home-v5/styles.css";
 
 interface Whitepaper {
   id: string;
@@ -107,240 +108,190 @@ export default function WhitepapersPage() {
   };
 
   return (
-    <>
-      <Header />
-      <main className="min-h-screen bg-[var(--arq-gray-50)] dark:bg-[var(--arq-gray-900)]">
-        {/* Hero Section */}
-        <section className="pt-32 pb-16 bg-gradient-to-br from-[var(--arq-blue)] via-[var(--arq-blue-dark)] to-[#1a1a2e]">
-          <div className="container mx-auto px-4 md:px-6">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-center max-w-3xl mx-auto"
-            >
-              <span className="inline-block px-4 py-2 rounded-full bg-white/10 text-white text-sm font-semibold mb-6">
+    <div className="v5-shell">
+      <V5Nav />
+      <main>
+        {/* Hero */}
+        <section className="v5-page-hero">
+          <div className="v5-container">
+            <div className="v5-page-hero-inner">
+              <span className="v5-badge">
+                <span className="v5-badge-dot" />
                 Resources
               </span>
-              <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
-                Whitepapers & Guides
-              </h1>
-              <p className="text-lg text-white/80">
-                Deep-dive resources on AI governance, compliance frameworks, and enterprise automation strategies
+              <h1 className="v5-h1">Whitepapers &amp; Guides</h1>
+              <p className="v5-lead">
+                Deep-dive resources on AI governance, compliance frameworks, and enterprise
+                automation strategies.
               </p>
-            </motion.div>
+            </div>
           </div>
         </section>
 
-        {/* Whitepapers Grid */}
-        <section className="py-16">
-          <div className="container mx-auto px-4 md:px-6">
+        {/* Whitepapers grid */}
+        <section className="v5-section v5-bg-grey">
+          <div className="v5-container">
             {isLoading ? (
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {[1, 2, 3].map((i) => (
-                  <div key={i} className="bg-white dark:bg-[var(--arq-gray-800)] rounded-2xl overflow-hidden animate-pulse">
-                    <div className="aspect-[3/4] bg-[var(--arq-gray-200)] dark:bg-[var(--arq-gray-700)]" />
-                    <div className="p-6 space-y-3">
-                      <div className="h-4 bg-[var(--arq-gray-200)] dark:bg-[var(--arq-gray-700)] rounded w-1/3" />
-                      <div className="h-6 bg-[var(--arq-gray-200)] dark:bg-[var(--arq-gray-700)] rounded" />
-                      <div className="h-4 bg-[var(--arq-gray-200)] dark:bg-[var(--arq-gray-700)] rounded w-2/3" />
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <p className="v5-body" style={{ textAlign: "center" }}>
+                Loading whitepapers...
+              </p>
             ) : whitepapers.length === 0 ? (
-              <div className="text-center py-16">
-                <div className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-[var(--arq-blue)]/10 flex items-center justify-center">
-                  <svg className="w-10 h-10 text-[var(--arq-blue)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                  </svg>
-                </div>
-                <h2 className="text-2xl font-bold text-[var(--arq-black)] dark:text-white mb-4">
-                  No Whitepapers Yet
-                </h2>
-                <p className="text-[var(--arq-gray-600)] dark:text-[var(--arq-gray-400)] mb-8">
+              <div className="v5-card" style={{ maxWidth: 560, margin: "0 auto", textAlign: "center" }}>
+                <h2 className="v5-h2">No Whitepapers Yet</h2>
+                <p className="v5-body" style={{ marginTop: 12, marginBottom: 24 }}>
                   Check back soon for our latest research and guides.
                 </p>
-                <Link
-                  href="/"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--arq-blue)] text-white font-semibold rounded-full hover:bg-[var(--arq-blue-dark)] transition-colors"
-                >
-                  Back to Home
+                <Link href="/" className="v5-btn v5-btn-primary">
+                  Back to Home <ArrowRight />
                 </Link>
               </div>
             ) : (
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {whitepapers.map((whitepaper, index) => (
-                  <motion.div
+              <div className="v5-blog-grid">
+                {whitepapers.map((whitepaper) => (
+                  <button
                     key={whitepaper.id}
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                    className="bg-white dark:bg-[var(--arq-gray-800)] rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow group"
+                    type="button"
+                    onClick={() => handleDownload(whitepaper)}
+                    className="v5-blog-card"
+                    style={{ textAlign: "left", cursor: "pointer", background: "none", border: "none", padding: 0 }}
                   >
-                    {/* Cover Image */}
-                    <div className="relative aspect-[3/4] bg-[var(--arq-gray-100)] dark:bg-[var(--arq-gray-700)]">
+                    <div className="v5-blog-cover">
                       {whitepaper.cover_image ? (
                         <Image
                           src={whitepaper.cover_image}
                           alt={whitepaper.title}
                           fill
-                          className="object-cover"
+                          style={{ objectFit: "cover" }}
                         />
                       ) : (
-                        <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center bg-gradient-to-br from-[var(--arq-gray-100)] to-[var(--arq-gray-200)] dark:from-[var(--arq-gray-700)] dark:to-[var(--arq-gray-800)]">
-                          <div className="w-16 h-16 rounded-2xl bg-[var(--arq-blue)]/10 flex items-center justify-center mb-4">
-                            <svg className="w-8 h-8 text-[var(--arq-blue)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                            </svg>
-                          </div>
-                          <p className="text-sm text-[var(--arq-gray-600)] dark:text-[var(--arq-gray-400)]">
-                            {whitepaper.title}
-                          </p>
-                        </div>
-                      )}
-                      {whitepaper.category && (
-                        <span className="absolute top-4 left-4 px-3 py-1 bg-white/90 dark:bg-[var(--arq-gray-800)]/90 backdrop-blur-sm text-xs font-semibold text-[var(--arq-blue)] rounded-full">
-                          {whitepaper.category}
-                        </span>
+                        <div className="v5-blog-cover-placeholder" />
                       )}
                     </div>
-
-                    {/* Content */}
-                    <div className="p-6">
-                      <p className="text-sm text-[var(--arq-gray-500)] mb-2">
+                    <div className="v5-blog-body">
+                      <span className="v5-blog-meta">
+                        {whitepaper.category && (
+                          <span className="v5-blog-cat">{whitepaper.category}</span>
+                        )}
                         {formatDate(whitepaper.published_at)}
-                      </p>
-                      <h3 className="text-lg font-bold text-[var(--arq-black)] dark:text-white mb-3 line-clamp-2">
-                        {whitepaper.title}
-                      </h3>
-                      <p className="text-sm text-[var(--arq-gray-600)] dark:text-[var(--arq-gray-400)] mb-4 line-clamp-3">
-                        {whitepaper.description}
-                      </p>
-                      <button
-                        onClick={() => handleDownload(whitepaper)}
-                        className="w-full py-3 px-4 bg-[var(--arq-blue)] text-white font-semibold rounded-lg hover:bg-[var(--arq-blue-dark)] transition-colors flex items-center justify-center gap-2"
-                      >
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                        </svg>
-                        {whitepaper.gated ? "Download Free" : "Download"}
-                      </button>
+                      </span>
+                      <h3 className="v5-h3">{whitepaper.title}</h3>
+                      <p className="v5-body">{whitepaper.description}</p>
+                      <span className="v5-card-more">
+                        {whitepaper.gated ? "Download Free" : "Download"} <ArrowRight />
+                      </span>
                     </div>
-                  </motion.div>
+                  </button>
                 ))}
               </div>
             )}
           </div>
         </section>
       </main>
-
-      {/* Lead Capture Modal */}
-      <AnimatePresence>
-        {selectedWhitepaper && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
-            onClick={() => setSelectedWhitepaper(null)}
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="bg-white dark:bg-[var(--arq-gray-800)] rounded-2xl shadow-2xl max-w-md w-full overflow-hidden"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="bg-gradient-to-r from-[var(--arq-blue)] to-[var(--arq-blue-dark)] p-6 text-white">
-                <div className="flex items-center justify-between mb-4">
-                  <span className="px-3 py-1 bg-white/20 rounded-full text-sm font-medium">Free Download</span>
-                  <button
-                    onClick={() => setSelectedWhitepaper(null)}
-                    className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"
-                  >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </button>
-                </div>
-                <h3 className="text-xl font-bold">{selectedWhitepaper.title}</h3>
-              </div>
-
-              <form onSubmit={handleSubmit} className="p-6 space-y-4">
-                {error && (
-                  <div className="p-3 bg-red-100 text-red-700 rounded-lg text-sm">{error}</div>
-                )}
-
-                <div>
-                  <label className="block text-sm font-medium text-[var(--arq-gray-700)] dark:text-[var(--arq-gray-300)] mb-1.5">
-                    Full Name *
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full px-4 py-2.5 rounded-lg border border-[var(--arq-gray-300)] dark:border-[var(--arq-gray-600)] bg-white dark:bg-[var(--arq-gray-900)] text-[var(--arq-black)] dark:text-white focus:ring-2 focus:ring-[var(--arq-blue)] focus:border-transparent"
-                    placeholder="John Smith"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-[var(--arq-gray-700)] dark:text-[var(--arq-gray-300)] mb-1.5">
-                    Work Email *
-                  </label>
-                  <input
-                    type="email"
-                    required
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full px-4 py-2.5 rounded-lg border border-[var(--arq-gray-300)] dark:border-[var(--arq-gray-600)] bg-white dark:bg-[var(--arq-gray-900)] text-[var(--arq-black)] dark:text-white focus:ring-2 focus:ring-[var(--arq-blue)] focus:border-transparent"
-                    placeholder="john@company.com"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-[var(--arq-gray-700)] dark:text-[var(--arq-gray-300)] mb-1.5">
-                    Company
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.company}
-                    onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                    className="w-full px-4 py-2.5 rounded-lg border border-[var(--arq-gray-300)] dark:border-[var(--arq-gray-600)] bg-white dark:bg-[var(--arq-gray-900)] text-[var(--arq-black)] dark:text-white focus:ring-2 focus:ring-[var(--arq-blue)] focus:border-transparent"
-                    placeholder="Acme Corp"
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full py-3 px-6 bg-[var(--arq-blue)] text-white font-semibold rounded-lg hover:bg-[var(--arq-blue-dark)] transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
-                >
-                  {isSubmitting ? (
-                    <>
-                      <svg className="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                      </svg>
-                      Processing...
-                    </>
-                  ) : (
-                    <>
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                      </svg>
-                      Get Your Free Copy
-                    </>
-                  )}
-                </button>
-              </form>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
       <Footer />
-    </>
+
+      {/* Lead capture modal */}
+      {selectedWhitepaper && (
+        <div
+          onClick={() => setSelectedWhitepaper(null)}
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 50,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: 16,
+            background: "rgba(0,0,0,0.6)",
+            backdropFilter: "blur(4px)",
+          }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="v5-card v5-form"
+            style={{ maxWidth: 460, width: "100%", position: "relative" }}
+          >
+            <button
+              type="button"
+              onClick={() => setSelectedWhitepaper(null)}
+              aria-label="Close"
+              style={{
+                position: "absolute",
+                top: 16,
+                right: 16,
+                width: 32,
+                height: 32,
+                borderRadius: 999,
+                border: "none",
+                background: "var(--v5-grey-100)",
+                cursor: "pointer",
+                display: "grid",
+                placeItems: "center",
+                color: "var(--v5-ink)",
+              }}
+            >
+              <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            <span className="v5-card-eyebrow">Free Download</span>
+            <h3 className="v5-h3" style={{ marginBottom: 20, paddingRight: 32 }}>
+              {selectedWhitepaper.title}
+            </h3>
+
+            <form onSubmit={handleSubmit}>
+              <label className="v5-field">
+                <span className="v5-field-label">
+                  Full Name <span className="req">*</span>
+                </span>
+                <input
+                  type="text"
+                  required
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  className="v5-input"
+                  placeholder="John Smith"
+                />
+              </label>
+
+              <label className="v5-field">
+                <span className="v5-field-label">
+                  Work Email <span className="req">*</span>
+                </span>
+                <input
+                  type="email"
+                  required
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  className="v5-input"
+                  placeholder="john@company.com"
+                />
+              </label>
+
+              <label className="v5-field">
+                <span className="v5-field-label">Company</span>
+                <input
+                  type="text"
+                  value={formData.company}
+                  onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                  className="v5-input"
+                  placeholder="Acme Corp"
+                />
+              </label>
+
+              {error && <div className="v5-form-error">{error}</div>}
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="v5-btn v5-btn-primary v5-form-submit"
+              >
+                {isSubmitting ? "Processing..." : "Get Your Free Copy"}
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
+    </div>
   );
 }

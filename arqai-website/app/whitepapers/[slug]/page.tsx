@@ -1,14 +1,15 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
+import V5Nav from "@/components/home-v5/V5Nav";
+import Footer from "@/components/home-v5/Footer";
+import { ArrowRight } from "@/components/home-v5/icons";
 import { sanitizeHtml } from "@/lib/security/sanitize";
 import { trackResourceDownload } from "@/lib/analytics/gtm-events";
+import "@/components/home-v5/styles.css";
 
 interface Whitepaper {
   id: string;
@@ -123,156 +124,135 @@ export default function WhitepaperDetailPage() {
 
   if (isLoading) {
     return (
-      <>
-        <Header />
-        <main className="min-h-screen bg-base pt-32 pb-16">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="max-w-4xl mx-auto animate-pulse">
-              <div className="h-8 bg-base-tint rounded w-1/4 mb-4" />
-              <div className="h-12 bg-base-tint rounded w-3/4 mb-6" />
-              <div className="h-6 bg-base-tint rounded w-1/2 mb-8" />
-              <div className="aspect-[16/9] bg-base-tint rounded-2xl mb-8" />
-              <div className="space-y-4">
-                <div className="h-4 bg-base-tint rounded" />
-                <div className="h-4 bg-base-tint rounded w-5/6" />
-                <div className="h-4 bg-base-tint rounded w-4/6" />
+      <div className="v5-shell">
+        <V5Nav />
+        <main>
+          <section className="v5-section v5-bg-grey">
+            <div className="v5-container">
+              <div style={{ maxWidth: 880, margin: "0 auto" }}>
+                <div className="v5-skel v5-skel-sm" style={{ width: "25%" }} />
+                <div className="v5-skel v5-skel-lg" style={{ width: "75%", marginTop: 16 }} />
+                <div className="v5-skel v5-skel-md" style={{ width: "50%", marginTop: 16 }} />
+                <div className="v5-blog-cover v5-blog-cover-placeholder" style={{ marginTop: 32 }} />
+                <div className="v5-skel v5-skel-md" style={{ marginTop: 24 }} />
+                <div className="v5-skel v5-skel-md" style={{ width: "83%", marginTop: 12 }} />
+                <div className="v5-skel v5-skel-md" style={{ width: "66%", marginTop: 12 }} />
               </div>
             </div>
-          </div>
+          </section>
         </main>
         <Footer />
-      </>
+      </div>
     );
   }
 
   if (!whitepaper) {
     return (
-      <>
-        <Header />
-        <main className="min-h-screen bg-base pt-32 pb-16">
-          <div className="container mx-auto px-4 md:px-6 text-center">
-            <div className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-accent/10 flex items-center justify-center">
-              <svg className="w-10 h-10 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
+      <div className="v5-shell">
+        <V5Nav />
+        <main>
+          <section className="v5-section v5-bg-grey">
+            <div className="v5-container">
+              <div className="v5-card" style={{ textAlign: "center", padding: "clamp(32px, 6vw, 72px)" }}>
+                <h1 className="v5-h2">Whitepaper Not Found</h1>
+                <p className="v5-lead" style={{ margin: "16px auto 28px", maxWidth: "52ch" }}>
+                  The whitepaper you are looking for does not exist or has been removed.
+                </p>
+                <Link href="/whitepapers" className="v5-btn v5-btn-primary">
+                  View All Whitepapers <ArrowRight />
+                </Link>
+              </div>
             </div>
-            <h1 className="text-3xl font-display font-bold text-text-bright mb-4">
-              Whitepaper Not Found
-            </h1>
-            <p className="text-text-muted mb-8">
-              The whitepaper you are looking for does not exist or has been removed.
-            </p>
-            <Link href="/whitepapers" className="btn bg-accent text-white">
-              View All Whitepapers
-            </Link>
-          </div>
+          </section>
         </main>
         <Footer />
-      </>
+      </div>
     );
   }
 
   return (
-    <>
-      <Header />
-      <main className="min-h-screen bg-base">
-        {/* Hero Section */}
-        <section className="pt-32 pb-16 bg-base-opp">
-          <div className="container mx-auto px-4 md:px-6">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="max-w-4xl mx-auto"
-            >
-              <Link
-                href="/whitepapers"
-                className="inline-flex items-center gap-2 text-accent hover:underline mb-6"
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-                Back to Whitepapers
-              </Link>
+    <div className="v5-shell">
+      <V5Nav />
+      <main>
+        {/* Hero */}
+        <section className="v5-page-hero">
+          <div className="v5-container">
+            <div style={{ maxWidth: 880, margin: "0 auto" }}>
+              <div className="v5-crumbs">
+                <Link href="/whitepapers">Whitepapers</Link>
+                <span>/</span>
+                <span style={{ color: "var(--v5-ink-soft)" }}>{whitepaper.title}</span>
+              </div>
 
               {whitepaper.category && (
-                <span className="inline-block px-4 py-2 rounded-full bg-accent/20 text-accent text-sm font-semibold mb-4">
+                <span className="v5-badge" style={{ marginTop: 18 }}>
+                  <span className="v5-badge-dot" />
                   {whitepaper.category}
                 </span>
               )}
 
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-base mb-4">
+              <h1 className="v5-h1" style={{ marginTop: 18 }}>
                 {whitepaper.title}
               </h1>
 
-              <p className="text-lg text-base/70 mb-6">
+              <p className="v5-lead" style={{ marginTop: 18 }}>
                 {whitepaper.description}
               </p>
 
-              <div className="flex items-center gap-4 text-sm text-base/60">
-                <span>Published {formatDate(whitepaper.published_at)}</span>
-              </div>
-            </motion.div>
+              <p className="v5-body" style={{ marginTop: 18, color: "var(--v5-ink-soft)" }}>
+                Published {formatDate(whitepaper.published_at)}
+              </p>
+            </div>
           </div>
         </section>
 
-        {/* Content Section */}
-        <section className="py-16">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="max-w-4xl mx-auto">
-              <div className="grid lg:grid-cols-3 gap-12">
-                {/* Main Content */}
-                <div className="lg:col-span-2">
-                  {whitepaper.cover_image && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.1 }}
-                      className="relative aspect-[3/4] rounded-2xl overflow-hidden mb-8 shadow-lg"
-                    >
-                      <Image
-                        src={whitepaper.cover_image}
-                        alt={whitepaper.title}
-                        fill
-                        className="object-cover"
-                      />
-                    </motion.div>
-                  )}
-
-                  {whitepaper.content && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.2 }}
-                      className="prose prose-lg dark:prose-invert max-w-none"
-                      dangerouslySetInnerHTML={{ __html: sanitizeHtml(whitepaper.content) }}
-                    />
-                  )}
-                </div>
-
-                {/* Sidebar */}
-                <div className="lg:col-span-1">
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3 }}
-                    className="card sticky top-32"
+        {/* Content */}
+        <section className="v5-section v5-bg-grey">
+          <div className="v5-container">
+            <div className="v5-split">
+              <div className="v5-split-copy">
+                {whitepaper.cover_image && (
+                  <div
+                    style={{
+                      position: "relative",
+                      aspectRatio: "3 / 4",
+                      borderRadius: 16,
+                      overflow: "hidden",
+                      marginBottom: 32,
+                    }}
                   >
-                    <h3 className="text-lg font-display font-bold text-text-bright mb-4">
-                      Download This Whitepaper
-                    </h3>
-                    <p className="text-sm text-text-muted mb-6">
-                      Get instant access to this comprehensive guide on AI governance and compliance.
-                    </p>
-                    <button
-                      onClick={handleDownload}
-                      className="w-full py-3 px-4 bg-accent text-white font-semibold rounded-lg hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
-                    >
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                      </svg>
-                      {whitepaper.gated ? "Download Free" : "Download PDF"}
-                    </button>
-                  </motion.div>
+                    <Image
+                      src={whitepaper.cover_image}
+                      alt={whitepaper.title}
+                      fill
+                      style={{ objectFit: "cover" }}
+                    />
+                  </div>
+                )}
+
+                {whitepaper.content && (
+                  <div
+                    className="v5-prose"
+                    dangerouslySetInnerHTML={{ __html: sanitizeHtml(whitepaper.content) }}
+                  />
+                )}
+              </div>
+
+              <div className="v5-split-media">
+                <div className="v5-card" style={{ position: "sticky", top: 112 }}>
+                  <h3 className="v5-h3">Download This Whitepaper</h3>
+                  <p className="v5-body" style={{ marginTop: 12 }}>
+                    Get instant access to this comprehensive guide on AI governance and
+                    compliance.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={handleDownload}
+                    className="v5-btn v5-btn-primary"
+                    style={{ marginTop: 22, width: "100%", justifyContent: "center" }}
+                  >
+                    {whitepaper.gated ? "Download Free" : "Download PDF"} <ArrowRight />
+                  </button>
                 </div>
               </div>
             </div>
@@ -280,127 +260,112 @@ export default function WhitepaperDetailPage() {
         </section>
       </main>
 
-      {/* Lead Capture Modal */}
-      <AnimatePresence>
-        {showModal && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
-            onClick={() => setShowModal(false)}
+      {/* Lead capture modal */}
+      {showModal && (
+        <div
+          className="v5-modal-overlay"
+          onClick={() => setShowModal(false)}
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 50,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: 16,
+            background: "rgba(0,0,0,0.6)",
+            backdropFilter: "blur(4px)",
+          }}
+        >
+          <div
+            className="v5-card v5-form"
+            onClick={(e) => e.stopPropagation()}
+            style={{ maxWidth: 460, width: "100%", position: "relative" }}
           >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="bg-base rounded-2xl shadow-2xl max-w-md w-full overflow-hidden"
-              onClick={(e) => e.stopPropagation()}
+            <button
+              type="button"
+              onClick={() => setShowModal(false)}
+              aria-label="Close"
+              className="v5-btn v5-btn-ghost"
+              style={{ position: "absolute", top: 16, right: 16, padding: "6px 10px" }}
             >
-              <div className="bg-accent p-6 text-white">
-                <div className="flex items-center justify-between mb-4">
-                  <span className="px-3 py-1 bg-white/20 rounded-full text-sm font-medium">Free Download</span>
-                  <button
-                    onClick={() => setShowModal(false)}
-                    className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"
-                  >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </button>
-                </div>
-                <h3 className="text-xl font-bold">{whitepaper.title}</h3>
+              ✕
+            </button>
+
+            <span className="v5-eyebrow">Free Download</span>
+            <h3 className="v5-h3" style={{ marginTop: 10 }}>
+              {whitepaper.title}
+            </h3>
+
+            <form onSubmit={handleSubmit} style={{ marginTop: 22 }}>
+              {error && <div className="v5-form-error">{error}</div>}
+
+              <label className="v5-field">
+                <span className="v5-field-label">
+                  Full Name <span className="req">*</span>
+                </span>
+                <input
+                  type="text"
+                  required
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  className="v5-input"
+                  placeholder="John Smith"
+                />
+              </label>
+
+              <label className="v5-field">
+                <span className="v5-field-label">
+                  Work Email <span className="req">*</span>
+                </span>
+                <input
+                  type="email"
+                  required
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  className="v5-input"
+                  placeholder="john@company.com"
+                />
+              </label>
+
+              <label className="v5-field">
+                <span className="v5-field-label">Company</span>
+                <input
+                  type="text"
+                  value={formData.company}
+                  onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                  className="v5-input"
+                  placeholder="Acme Corp"
+                />
+              </label>
+
+              {/* Honeypot field - hidden from real users */}
+              <div className="v5-honeypot" aria-hidden="true">
+                <label htmlFor="wpd_website_url">Website</label>
+                <input
+                  type="text"
+                  id="wpd_website_url"
+                  name="website_url"
+                  value={formData.website_url}
+                  onChange={(e) => setFormData({ ...formData, website_url: e.target.value })}
+                  tabIndex={-1}
+                  autoComplete="off"
+                />
               </div>
 
-              <form onSubmit={handleSubmit} className="p-6 space-y-4">
-                {error && (
-                  <div className="p-3 bg-red-100 text-red-700 rounded-lg text-sm">{error}</div>
-                )}
-
-                <div>
-                  <label className="block text-sm font-medium text-text-medium mb-1.5">
-                    Full Name *
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full px-4 py-2.5 rounded-lg border border-stroke-muted bg-base text-text-bright focus:ring-2 focus:ring-accent focus:border-transparent"
-                    placeholder="John Smith"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-text-medium mb-1.5">
-                    Work Email *
-                  </label>
-                  <input
-                    type="email"
-                    required
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full px-4 py-2.5 rounded-lg border border-stroke-muted bg-base text-text-bright focus:ring-2 focus:ring-accent focus:border-transparent"
-                    placeholder="john@company.com"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-text-medium mb-1.5">
-                    Company
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.company}
-                    onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                    className="w-full px-4 py-2.5 rounded-lg border border-stroke-muted bg-base text-text-bright focus:ring-2 focus:ring-accent focus:border-transparent"
-                    placeholder="Acme Corp"
-                  />
-                </div>
-
-                {/* Honeypot field - hidden from real users */}
-                <div className="absolute left-[-9999px] opacity-0 pointer-events-none" aria-hidden="true" tabIndex={-1}>
-                  <label htmlFor="wpd_website_url">Website</label>
-                  <input
-                    type="text"
-                    id="wpd_website_url"
-                    name="website_url"
-                    value={formData.website_url}
-                    onChange={(e) => setFormData({ ...formData, website_url: e.target.value })}
-                    tabIndex={-1}
-                    autoComplete="off"
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full py-3 px-6 bg-accent text-white font-semibold rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50 flex items-center justify-center gap-2"
-                >
-                  {isSubmitting ? (
-                    <>
-                      <svg className="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                      </svg>
-                      Processing...
-                    </>
-                  ) : (
-                    <>
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                      </svg>
-                      Get Your Free Copy
-                    </>
-                  )}
-                </button>
-              </form>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="v5-btn v5-btn-primary v5-form-submit"
+              >
+                {isSubmitting ? "Processing..." : "Get Your Free Copy"}
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
 
       <Footer />
-    </>
+    </div>
   );
 }

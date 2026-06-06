@@ -1,13 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams, notFound } from "next/navigation";
+import { useParams } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
-import { motion } from "framer-motion";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
+import V5Nav from "@/components/home-v5/V5Nav";
+import Footer from "@/components/home-v5/Footer";
+import { ArrowRight } from "@/components/home-v5/icons";
 import { sanitizeHtml } from "@/lib/security/sanitize";
+import "@/components/home-v5/styles.css";
 
 interface BlogPost {
   id: string;
@@ -75,156 +75,131 @@ export default function BlogPostPage() {
 
   if (isLoading) {
     return (
-      <>
-        <Header />
-        <main className="min-h-screen bg-base pt-32">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="max-w-3xl mx-auto">
-              <div className="animate-pulse space-y-6">
-                <div className="h-4 bg-base-tint rounded w-24" />
-                <div className="h-12 bg-base-tint rounded w-3/4" />
-                <div className="h-4 bg-base-tint rounded w-1/2" />
-                <div className="h-64 bg-base-tint rounded-2xl" />
-                <div className="space-y-3">
-                  <div className="h-4 bg-base-tint rounded" />
-                  <div className="h-4 bg-base-tint rounded" />
-                  <div className="h-4 bg-base-tint rounded w-5/6" />
-                </div>
-              </div>
+      <div className="v5-shell">
+        <V5Nav />
+        <main>
+          <section className="v5-section">
+            <div className="v5-container">
+              <div className="v5-skel v5-skel-sm" style={{ marginBottom: 20 }} />
+              <div className="v5-skel v5-skel-lg" style={{ height: 40, marginBottom: 20 }} />
+              <div className="v5-skel v5-skel-md" style={{ marginBottom: 32 }} />
+              <div
+                className="v5-skel"
+                style={{ height: 320, width: "100%", marginBottom: 32 }}
+              />
+              <div className="v5-skel v5-skel-lg" style={{ marginBottom: 12 }} />
+              <div className="v5-skel v5-skel-lg" style={{ marginBottom: 12 }} />
+              <div className="v5-skel v5-skel-md" />
             </div>
-          </div>
+          </section>
         </main>
         <Footer />
-      </>
+      </div>
     );
   }
 
   if (error || !post) {
     return (
-      <>
-        <Header />
-        <main className="min-h-screen bg-base pt-32">
-          <div className="container mx-auto px-4 md:px-6 text-center py-20">
-            <h1 className="text-3xl font-bold text-text-bright mb-4">Post Not Found</h1>
-            <p className="text-text-muted mb-8">The blog post you're looking for doesn't exist or has been removed.</p>
-            <Link
-              href="/blog"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-accent text-base-opp font-semibold rounded-full hover:bg-accent/90 transition-colors"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-              Back to Blog
-            </Link>
-          </div>
+      <div className="v5-shell">
+        <V5Nav />
+        <main>
+          <section className="v5-section">
+            <div className="v5-container">
+              <div className="v5-section-head center">
+                <h1 className="v5-h2">Post Not Found</h1>
+                <p className="v5-lead">
+                  The blog post you&apos;re looking for doesn&apos;t exist or has been
+                  removed.
+                </p>
+                <div className="v5-hero-actions" style={{ justifyContent: "center" }}>
+                  <Link href="/blog" className="v5-btn v5-btn-dark">
+                    Back to Blog
+                    <ArrowRight />
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </section>
         </main>
         <Footer />
-      </>
+      </div>
     );
   }
 
   const readTime = post.read_time_minutes || calculateReadTime(post.content || "");
 
   return (
-    <>
-      <Header />
-      <main className="min-h-screen bg-base pt-24 md:pt-32">
-        <article className="container mx-auto px-4 md:px-6">
-          {/* Article Header */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="max-w-3xl mx-auto mb-8 md:mb-12"
-          >
-            {/* Breadcrumb */}
-            <nav className="flex items-center gap-2 text-sm text-text-muted mb-6">
-              <Link href="/" className="hover:text-accent transition-colors">Home</Link>
-              <span>/</span>
-              <Link href="/blog" className="hover:text-accent transition-colors">Blog</Link>
-              <span>/</span>
-              <span className="text-text-bright truncate">{post.title}</span>
-            </nav>
+    <div className="v5-shell">
+      <V5Nav />
+      <main>
+        {/* Article Header */}
+        <section className="v5-page-hero">
+          <div className="v5-container">
+            <div className="v5-page-hero-inner">
+              {/* Breadcrumb */}
+              <div className="v5-crumbs" style={{ marginBottom: 24 }}>
+                <Link href="/">Home</Link>
+                <span>/</span>
+                <Link href="/blog">Blog</Link>
+                <span>/</span>
+                <span style={{ color: "var(--v5-ink-soft)" }}>{post.title}</span>
+              </div>
 
-            {/* Category Badge */}
-            {post.category && (
-              <span className="inline-block px-3 py-1 bg-accent/10 text-accent text-sm font-medium rounded-full mb-4">
-                {post.category}
-              </span>
+              {/* Category Badge */}
+              {post.category && (
+                <span className="v5-badge">
+                  <span className="v5-badge-dot" />
+                  {post.category}
+                </span>
+              )}
+
+              {/* Title */}
+              <h1 className="v5-h1">{post.title}</h1>
+
+              {/* Meta Info */}
+              <p className="v5-body" style={{ marginTop: 18 }}>
+                By {post.author} &middot; {formatDate(post.published_at)} &middot; {readTime} min read
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section className="v5-section v5-bg-white">
+          <div className="v5-container">
+            {/* Featured Image */}
+            {post.featured_image && (
+              <div className="v5-split-media" style={{ aspectRatio: "16 / 9", marginBottom: 40 }}>
+                <img src={post.featured_image} alt={post.title} decoding="async" />
+              </div>
             )}
 
-            {/* Title */}
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-text-bright mb-6 leading-tight">
-              {post.title}
-            </h1>
-
-            {/* Meta Info */}
-            <div className="flex flex-wrap items-center gap-4 text-text-muted">
-              <div className="flex items-center gap-2">
-                <div className="w-10 h-10 rounded-full bg-accent/20 flex items-center justify-center">
-                  <svg className="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                  </svg>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-text-bright">{post.author}</p>
-                  <p className="text-xs">{formatDate(post.published_at)}</p>
-                </div>
-              </div>
-              <span className="text-text-muted">•</span>
-              <span className="text-sm">{readTime} min read</span>
-            </div>
-          </motion.div>
-
-          {/* Featured Image */}
-          {post.featured_image && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="max-w-4xl mx-auto mb-12"
-            >
-              <div className="relative aspect-[16/9] rounded-2xl overflow-hidden bg-base-tint">
-                <Image
-                  src={post.featured_image}
-                  alt={post.title}
-                  fill
-                  className="object-cover"
-                  priority
-                />
-              </div>
-            </motion.div>
-          )}
-
-          {/* Article Content */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="max-w-3xl mx-auto"
-          >
             {/* Excerpt */}
             {post.excerpt && (
-              <p className="text-xl text-text-muted leading-relaxed mb-8 pb-8 border-b border-stroke-muted">
+              <p className="v5-lead" style={{ marginBottom: 32 }}>
                 {post.excerpt}
               </p>
             )}
 
             {/* Content */}
             <div
-              className="blog-content max-w-none"
+              className="v5-prose"
               dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.content || "") }}
             />
 
             {/* Tags */}
             {post.tags && post.tags.length > 0 && (
-              <div className="mt-12 pt-8 border-t border-stroke-muted">
-                <h4 className="text-sm font-medium text-text-muted mb-3">Tags</h4>
-                <div className="flex flex-wrap gap-2">
+              <div style={{ marginTop: 48 }}>
+                <span className="v5-eyebrow">Tags</span>
+                <div
+                  style={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    gap: 8,
+                    marginTop: 12,
+                  }}
+                >
                   {post.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="px-3 py-1.5 bg-base-tint text-text-muted text-sm rounded-full hover:bg-base-shade transition-colors"
-                    >
+                    <span key={tag} className="v5-chip">
                       {tag}
                     </span>
                   ))}
@@ -233,24 +208,16 @@ export default function BlogPostPage() {
             )}
 
             {/* Back to Blog */}
-            <div className="mt-12 pt-8 border-t border-stroke-muted">
-              <Link
-                href="/blog"
-                className="inline-flex items-center gap-2 text-accent font-medium hover:gap-3 transition-all"
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
+            <div className="v5-hero-actions" style={{ marginTop: 40 }}>
+              <Link href="/blog" className="v5-btn v5-btn-ghost">
                 Back to all articles
+                <ArrowRight />
               </Link>
             </div>
-          </motion.div>
-        </article>
-
-        {/* Spacer */}
-        <div className="h-20" />
+          </div>
+        </section>
       </main>
       <Footer />
-    </>
+    </div>
   );
 }

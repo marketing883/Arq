@@ -2,8 +2,8 @@ import { createClient } from "@supabase/supabase-js";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
+import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
+import { ArrowRight } from "@/components/home-v5/icons";
 import { generateCaseStudySchema, generateBreadcrumbSchema } from "@/lib/seo/structured-data";
 
 function getSupabase() {
@@ -104,7 +104,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
   ]);
 
   return (
-    <>
+    <V5SiteLayout>
       {/* Structured Data for SEO/AEO */}
       <script
         type="application/ld+json"
@@ -114,221 +114,159 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
-      <Header />
-      <main className="min-h-screen bg-base">
-        {/* Hero Section - Uses ArqAI brand blue */}
-        <section className="bg-[#0432a5] py-20 md:py-28">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="max-w-4xl">
-              <div className="flex items-center gap-3 mb-6">
-                <span className="px-3 py-1 bg-white/20 text-white rounded-full text-sm font-medium">
-                  {caseStudy.industry}
-                </span>
-                <span className="text-white/60">|</span>
-                <span className="text-white/80">{caseStudy.client_name}</span>
-              </div>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
-                {caseStudy.title}
-              </h1>
-              {caseStudy.overview && (
-                <p className="text-xl text-white/90 leading-relaxed">
-                  {caseStudy.overview}
+
+      {/* Hero */}
+      <section className="v5-page-hero">
+        <div className="v5-container">
+          <div className="v5-page-hero-inner">
+            <div className="v5-crumbs" style={{ marginBottom: 24 }}>
+              <Link href="/">Home</Link>
+              <span>/</span>
+              <Link href="/case-studies">Case Studies</Link>
+              <span>/</span>
+              <span style={{ color: "var(--v5-ink-soft)" }}>{caseStudy.title}</span>
+            </div>
+            <span className="v5-badge">
+              <span className="v5-badge-dot" />
+              {caseStudy.industry}
+              {caseStudy.client_name ? ` · ${caseStudy.client_name}` : ""}
+            </span>
+            <h1 className="v5-h1">{caseStudy.title}</h1>
+            {caseStudy.overview && <p className="v5-lead">{caseStudy.overview}</p>}
+          </div>
+        </div>
+      </section>
+
+      {/* Metrics Section */}
+      {metrics.length > 0 && (
+        <section className="v5-section v5-bg-white">
+          <div className="v5-container">
+            <div className="v5-stats">
+              {metrics.map(
+                (
+                  metric: { label: string; value: string; description: string },
+                  index: number
+                ) => (
+                  <div key={index} className="v5-stat">
+                    <strong>{metric.value}</strong>
+                    <span>{metric.label}</span>
+                    {metric.description && (
+                      <span style={{ color: "var(--v5-grey-100)" }}>
+                        {metric.description}
+                      </span>
+                    )}
+                  </div>
+                )
+              )}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Challenge Section */}
+      {(caseStudy.challenge_description || challengePoints.length > 0) && (
+        <section className="v5-section v5-bg-grey">
+          <div className="v5-container">
+            <div className="v5-section-head">
+              <span className="v5-eyebrow">The Challenge</span>
+              {caseStudy.challenge_description && (
+                <p className="v5-lead">{caseStudy.challenge_description}</p>
+              )}
+            </div>
+            {challengePoints.length > 0 && (
+              <ul className="v5-prose" style={{ maxWidth: "none" }}>
+                {challengePoints.map((point: { text: string }, index: number) => (
+                  <li key={index}>{point.text}</li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </section>
+      )}
+
+      {/* Solution Section */}
+      {(caseStudy.solution_description || solutionPoints.length > 0) && (
+        <section className="v5-section v5-bg-white">
+          <div className="v5-container">
+            <div className="v5-section-head">
+              <span className="v5-eyebrow">Our Solution</span>
+              {caseStudy.solution_description && (
+                <p className="v5-lead">{caseStudy.solution_description}</p>
+              )}
+            </div>
+            {solutionPoints.length > 0 && (
+              <ul className="v5-prose" style={{ maxWidth: "none" }}>
+                {solutionPoints.map((point: { text: string }, index: number) => (
+                  <li key={index}>{point.text}</li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </section>
+      )}
+
+      {/* Impact Section */}
+      {caseStudy.impact_summary && (
+        <section className="v5-section v5-bg-grey">
+          <div className="v5-container">
+            <div className="v5-section-head">
+              <span className="v5-eyebrow">The Impact</span>
+              <p className="v5-lead">{caseStudy.impact_summary}</p>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Testimonial Section */}
+      {caseStudy.testimonial_quote && (
+        <section className="v5-section v5-bg-white">
+          <div className="v5-container">
+            <div className="v5-section-head center">
+              <blockquote className="v5-h2">
+                &ldquo;{caseStudy.testimonial_quote}&rdquo;
+              </blockquote>
+              {caseStudy.testimonial_author_name && (
+                <p className="v5-lead">
+                  {caseStudy.testimonial_author_name}
+                  {(caseStudy.testimonial_author_title ||
+                    caseStudy.testimonial_author_company) && (
+                    <>
+                      {" — "}
+                      {caseStudy.testimonial_author_title}
+                      {caseStudy.testimonial_author_title &&
+                        caseStudy.testimonial_author_company &&
+                        ", "}
+                      {caseStudy.testimonial_author_company}
+                    </>
+                  )}
                 </p>
               )}
             </div>
           </div>
         </section>
+      )}
 
-        {/* Metrics Section */}
-        {metrics.length > 0 && (
-          <section className="py-16 bg-[#161616]">
-            <div className="container mx-auto px-4 md:px-6">
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                {metrics.map((metric: { label: string; value: string; description: string }, index: number) => (
-                  <div
-                    key={index}
-                    className="bg-[#1C1C1C] rounded-2xl p-6 text-center border border-[#252525]"
-                  >
-                    <div className="text-4xl md:text-5xl font-bold text-[#d0f438] mb-2">
-                      {metric.value}
-                    </div>
-                    <div className="font-semibold text-white mb-1">
-                      {metric.label}
-                    </div>
-                    {metric.description && (
-                      <div className="text-sm text-[#ACACAC]">
-                        {metric.description}
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
-        )}
-
-        {/* Challenge Section */}
-        {(caseStudy.challenge_description || challengePoints.length > 0) && (
-          <section className="py-16 md:py-20 bg-base">
-            <div className="container mx-auto px-4 md:px-6">
-              <div className="max-w-4xl mx-auto">
-                <div className="flex items-center gap-4 mb-8">
-                  <div className="w-12 h-12 rounded-xl bg-accent flex items-center justify-center">
-                    <svg className="w-6 h-6 text-base-opp" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                    </svg>
-                  </div>
-                  <h2 className="text-3xl md:text-4xl font-bold text-text-bright">
-                    The Challenge
-                  </h2>
-                </div>
-                {caseStudy.challenge_description && (
-                  <p className="text-lg text-text-muted mb-8 leading-relaxed">
-                    {caseStudy.challenge_description}
-                  </p>
-                )}
-                {challengePoints.length > 0 && (
-                  <ul className="space-y-4">
-                    {challengePoints.map((point: { text: string }, index: number) => (
-                      <li key={index} className="flex items-start gap-4">
-                        <div className="w-8 h-8 rounded-lg bg-red-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                          <svg className="w-4 h-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                          </svg>
-                        </div>
-                        <span className="text-text-medium">
-                          {point.text}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            </div>
-          </section>
-        )}
-
-        {/* Solution Section */}
-        {(caseStudy.solution_description || solutionPoints.length > 0) && (
-          <section className="py-16 md:py-20 bg-[#161616]">
-            <div className="container mx-auto px-4 md:px-6">
-              <div className="max-w-4xl mx-auto">
-                <div className="flex items-center gap-4 mb-8">
-                  <div className="w-12 h-12 rounded-xl bg-[#0432a5] flex items-center justify-center">
-                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                    </svg>
-                  </div>
-                  <h2 className="text-3xl md:text-4xl font-bold text-white">
-                    Our Solution
-                  </h2>
-                </div>
-                {caseStudy.solution_description && (
-                  <p className="text-lg text-[#ACACAC] mb-8 leading-relaxed">
-                    {caseStudy.solution_description}
-                  </p>
-                )}
-                {solutionPoints.length > 0 && (
-                  <ul className="space-y-4">
-                    {solutionPoints.map((point: { text: string }, index: number) => (
-                      <li key={index} className="flex items-start gap-4">
-                        <div className="w-8 h-8 rounded-lg bg-green-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                          <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                          </svg>
-                        </div>
-                        <span className="text-[#E0E0E0]">
-                          {point.text}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            </div>
-          </section>
-        )}
-
-        {/* Impact Section */}
-        {caseStudy.impact_summary && (
-          <section className="py-16 md:py-20 bg-base">
-            <div className="container mx-auto px-4 md:px-6">
-              <div className="max-w-4xl mx-auto">
-                <div className="flex items-center gap-4 mb-8">
-                  <div className="w-12 h-12 rounded-xl bg-accent flex items-center justify-center">
-                    <svg className="w-6 h-6 text-base-opp" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                    </svg>
-                  </div>
-                  <h2 className="text-3xl md:text-4xl font-bold text-text-bright">
-                    The Impact
-                  </h2>
-                </div>
-                <p className="text-lg text-text-muted leading-relaxed">
-                  {caseStudy.impact_summary}
-                </p>
-              </div>
-            </div>
-          </section>
-        )}
-
-        {/* Testimonial Section */}
-        {caseStudy.testimonial_quote && (
-          <section className="py-16 md:py-20 bg-[#0432a5]">
-            <div className="container mx-auto px-4 md:px-6">
-              <div className="max-w-4xl mx-auto text-center">
-                <svg className="w-12 h-12 mx-auto mb-6 text-white/40" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-                </svg>
-                <blockquote className="text-2xl md:text-3xl font-medium text-white mb-8 leading-relaxed">
-                  &ldquo;{caseStudy.testimonial_quote}&rdquo;
-                </blockquote>
-                {caseStudy.testimonial_author_name && (
-                  <div className="flex flex-col items-center">
-                    <div className="font-semibold text-white text-lg">
-                      {caseStudy.testimonial_author_name}
-                    </div>
-                    {(caseStudy.testimonial_author_title || caseStudy.testimonial_author_company) && (
-                      <div className="text-white/80">
-                        {caseStudy.testimonial_author_title}
-                        {caseStudy.testimonial_author_title && caseStudy.testimonial_author_company && ", "}
-                        {caseStudy.testimonial_author_company}
-                      </div>
-                    )}
-                  </div>
-                )}
-              </div>
-            </div>
-          </section>
-        )}
-
-        {/* CTA Section */}
-        <section className="py-16 md:py-20 bg-base">
-          <div className="container mx-auto px-4 md:px-6 text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-text-bright mb-4">
-              Ready to Transform Your Business?
-            </h2>
-            <p className="text-lg text-text-muted mb-8 max-w-2xl mx-auto">
+      {/* CTA Section */}
+      <section className="v5-section v5-cta-band">
+        <div className="v5-container">
+          <div className="v5-cta-card">
+            <div className="v5-cta-glow" />
+            <h2 className="v5-h2">Ready to Transform Your Business?</h2>
+            <p className="v5-lead">
               See how ArqAI can help you achieve similar results with governed AI solutions.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                href="/contact"
-                className="btn btn-primary"
-              >
+            <div className="v5-cta-card-actions">
+              <Link href="/contact" className="v5-btn v5-btn-primary">
                 Get Started
+                <ArrowRight />
               </Link>
-              <Link
-                href="/case-studies"
-                className="btn btn-outline"
-              >
+              <Link href="/case-studies" className="v5-btn v5-btn-ghost">
                 View More Case Studies
               </Link>
             </div>
           </div>
-        </section>
-      </main>
-      <Footer />
-    </>
+        </div>
+      </section>
+    </V5SiteLayout>
   );
 }

@@ -2,9 +2,10 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
+import V5Nav from "@/components/home-v5/V5Nav";
+import Footer from "@/components/home-v5/Footer";
+import { ArrowRight } from "@/components/home-v5/icons";
+import "@/components/home-v5/styles.css";
 
 type JobListItem = {
   id: string;
@@ -19,14 +20,6 @@ type JobListItem = {
   published_at: string | null;
   created_at: string;
 };
-
-function StarIcon({ className = "" }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 20 20" fill="currentColor" className={className}>
-      <path d="M19.6,9.6h-3.9c-.4,0-1.8-.2-1.8-.2-.6,0-1.1-.2-1.6-.6-.5-.3-.9-.8-1.2-1.2-.3-.4-.4-.9-.5-1.4,0,0,0-1.1-.2-1.5V.4c0-.2-.2-.4-.4-.4s-.4.2-.4.4v4.4c0,.4-.2,1.5-.2,1.5,0,.5-.2,1-.5,1.4-.3.5-.7.9-1.2,1.2s-1,.5-1.6.6c0,0-1.2,0-1.7.2H.4c-.2,0-.4.2-.4.4s.2.4.4.4h4.1c.4,0,1.7.2,1.7.2.6,0,1.1.2,1.6.6.4.3.8.7,1.1,1.1.3.5.5,1,.6,1.6,0,0,0,1.3.2,1.7v4.1c0,.2.2.4.4.4s.4-.2.4-.4v-4.1c0-.4.2-1.7.2-1.7,0-.6.2-1.1.6-1.6.3-.4.7-.8,1.1-1.1.5-.3,1-.5,1.6-.6,0,0,1.3,0,1.8-.2h3.9c.2,0,.4-.2.4-.4s-.2-.4-.4-.4h0Z" />
-    </svg>
-  );
-}
 
 const employmentTypeLabel: Record<string, string> = {
   "full-time": "Full-time",
@@ -107,198 +100,177 @@ export default function CareersPage() {
     (search.trim() ? 1 : 0);
 
   return (
-    <>
-      <Header />
-
-      <main className="bg-base">
+    <div className="v5-shell">
+      <V5Nav />
+      <main>
         {/* Hero */}
-        <section className="pt-32 md:pt-40 pb-12 md:pb-16">
-          <div className="container mx-auto px-4 md:px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="max-w-4xl"
-            >
-              <p className="flex items-center gap-2 text-body-sm text-accent mb-6 uppercase tracking-wider font-medium">
-                <StarIcon className="w-4 h-4" />
+        <section className="v5-page-hero">
+          <div className="v5-container">
+            <div className="v5-page-hero-inner">
+              <span className="v5-badge">
+                <span className="v5-badge-dot" />
                 Careers
-              </p>
-              <h1 className="text-display-xl md:text-[clamp(2.5rem,5vw,4.5rem)] font-display leading-[1.1] text-text-bright mb-6">
-                Join the team shipping production AI.
-              </h1>
-              <p className="text-body-lg md:text-xl text-text-medium leading-relaxed max-w-3xl">
+              </span>
+              <h1 className="v5-h1">Join the team shipping production AI.</h1>
+              <p className="v5-lead">
                 We are a lean team of senior AI engineers and domain leads building bespoke AI
                 for the operations that matter. If you would rather build than describe, look
                 below.
               </p>
-            </motion.div>
+            </div>
           </div>
         </section>
 
         {/* Filters + jobs */}
-        <section className="pb-section">
-          <div className="container mx-auto px-4 md:px-6 lg:px-8">
-            <div className="grid lg:grid-cols-12 gap-8 lg:gap-12">
+        <section className="v5-section v5-bg-grey">
+          <div className="v5-container">
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "minmax(0, 320px) minmax(0, 1fr)",
+                gap: 40,
+                alignItems: "start",
+              }}
+            >
               {/* Filters */}
-              <aside className="lg:col-span-4 lg:sticky lg:top-32 self-start">
-                <div className="card p-6">
-                  <div className="flex items-center justify-between mb-5">
-                    <h2 className="text-lg font-display font-semibold text-text-bright">
-                      Filter roles
-                    </h2>
-                    {activeFilterCount > 0 && (
-                      <button
-                        onClick={clearFilters}
-                        className="text-body-xs text-accent hover:underline"
-                      >
-                        Clear ({activeFilterCount})
-                      </button>
-                    )}
-                  </div>
-
-                  <label className="block mb-4">
-                    <span className="block text-body-xs text-text-muted uppercase tracking-wider mb-2">
-                      Search
-                    </span>
-                    <input
-                      type="text"
-                      value={search}
-                      onChange={(e) => setSearch(e.target.value)}
-                      placeholder="Title, location, keyword"
-                      className="w-full px-3 py-2.5 rounded-lg bg-base border border-stroke-muted text-body-sm focus:outline-none focus:ring-2 focus:ring-accent"
-                    />
-                  </label>
-
-                  <Select
-                    label="Department"
-                    value={department}
-                    onChange={setDepartment}
-                    options={["all", ...departments]}
-                  />
-                  <Select
-                    label="Location"
-                    value={location}
-                    onChange={setLocation}
-                    options={["all", ...locations]}
-                  />
-                  <Select
-                    label="Employment type"
-                    value={employmentType}
-                    onChange={setEmploymentType}
-                    options={["all", ...employmentTypes]}
-                    formatter={(v) => (v === "all" ? "All" : employmentTypeLabel[v] || v)}
-                  />
-
-                  <label className="flex items-center gap-2 text-body-sm text-text-bright mt-2 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={remoteOnly}
-                      onChange={(e) => setRemoteOnly(e.target.checked)}
-                      className="w-4 h-4 rounded border-stroke-muted text-accent focus:ring-accent"
-                    />
-                    Remote-friendly only
-                  </label>
+              <aside className="v5-card" style={{ position: "sticky", top: 100 }}>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    marginBottom: 20,
+                  }}
+                >
+                  <h2 className="v5-h3" style={{ margin: 0 }}>
+                    Filter roles
+                  </h2>
+                  {activeFilterCount > 0 && (
+                    <button
+                      onClick={clearFilters}
+                      className="v5-btn v5-btn-ghost"
+                      style={{ padding: "4px 10px", fontSize: 13 }}
+                    >
+                      Clear ({activeFilterCount})
+                    </button>
+                  )}
                 </div>
 
-                <div className="mt-6 p-5 rounded-lg bg-base-tint border border-stroke-muted text-body-sm text-text-muted">
+                <label className="v5-field">
+                  <span className="v5-field-label">Search</span>
+                  <input
+                    type="text"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    placeholder="Title, location, keyword"
+                    className="v5-input"
+                  />
+                </label>
+
+                <Select
+                  label="Department"
+                  value={department}
+                  onChange={setDepartment}
+                  options={["all", ...departments]}
+                />
+                <Select
+                  label="Location"
+                  value={location}
+                  onChange={setLocation}
+                  options={["all", ...locations]}
+                />
+                <Select
+                  label="Employment type"
+                  value={employmentType}
+                  onChange={setEmploymentType}
+                  options={["all", ...employmentTypes]}
+                  formatter={(v) => (v === "all" ? "All" : employmentTypeLabel[v] || v)}
+                />
+
+                <label
+                  className="v5-body"
+                  style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 8, cursor: "pointer" }}
+                >
+                  <input
+                    type="checkbox"
+                    checked={remoteOnly}
+                    onChange={(e) => setRemoteOnly(e.target.checked)}
+                  />
+                  Remote-friendly only
+                </label>
+
+                <p className="v5-body" style={{ marginTop: 24, color: "var(--v5-ink-soft)" }}>
                   Don&apos;t see the right role? We&apos;re always interested in senior engineers and
                   domain leads.{" "}
-                  <Link href="/contact" className="text-accent hover:underline font-medium">
-                    Send us a note &rarr;
-                  </Link>
-                </div>
+                  <Link href="/contact">Send us a note &rarr;</Link>
+                </p>
               </aside>
 
               {/* Results */}
-              <div className="lg:col-span-8">
+              <div>
                 {loading ? (
-                  <p className="text-body-md text-text-muted">Loading roles...</p>
+                  <p className="v5-body">Loading roles...</p>
                 ) : error ? (
-                  <p className="text-body-md text-text-muted">{error}</p>
+                  <p className="v5-body">{error}</p>
                 ) : filtered.length === 0 ? (
-                  <div className="card p-10 text-center">
-                    <h3 className="text-xl font-display font-semibold text-text-bright mb-3">
+                  <div className="v5-card" style={{ textAlign: "center" }}>
+                    <h3 className="v5-h3">
                       {jobs.length === 0 ? "No roles open right now." : "No roles match those filters."}
                     </h3>
-                    <p className="text-body-md text-text-muted mb-6">
+                    <p className="v5-body" style={{ marginTop: 8, marginBottom: 20 }}>
                       {jobs.length === 0
                         ? "We will post new roles here. Bookmark or check back."
                         : "Try clearing one of the filters."}
                     </p>
                     {jobs.length === 0 ? (
-                      <Link href="/contact" className="btn btn-outline">
+                      <Link href="/contact" className="v5-btn v5-btn-dark">
                         Tell us why we should hire you anyway
                       </Link>
                     ) : (
-                      <button onClick={clearFilters} className="btn btn-outline">
+                      <button onClick={clearFilters} className="v5-btn v5-btn-dark">
                         Clear filters
                       </button>
                     )}
                   </div>
                 ) : (
-                  <ul className="space-y-4">
+                  <div className="v5-grid" style={{ gridTemplateColumns: "1fr", gap: 16 }}>
                     {filtered.map((job) => (
-                      <motion.li
+                      <Link
                         key={job.id}
-                        initial={{ opacity: 0, y: 12 }}
-                        animate={{ opacity: 1, y: 0 }}
+                        href={`/careers/${job.slug}`}
+                        className="v5-card v5-card-link"
                       >
-                        <Link
-                          href={`/careers/${job.slug}`}
-                          className="group block card p-6 md:p-7 hover:border-accent transition-colors"
-                        >
-                          <div className="flex flex-wrap items-center gap-2 mb-3 text-body-xs text-accent uppercase tracking-wider">
-                            <span>{job.department}</span>
-                            <span className="text-text-muted">/</span>
-                            <span>{employmentTypeLabel[job.employment_type] ?? job.employment_type}</span>
-                            {job.experience_level && (
-                              <>
-                                <span className="text-text-muted">/</span>
-                                <span>{job.experience_level}</span>
-                              </>
-                            )}
-                            {job.remote && (
-                              <>
-                                <span className="text-text-muted">/</span>
-                                <span>Remote-friendly</span>
-                              </>
-                            )}
-                          </div>
-                          <h3 className="text-2xl font-display font-semibold text-text-bright group-hover:text-accent transition-colors">
-                            {job.title}
-                          </h3>
-                          <p className="text-body-sm text-text-muted mt-1">{job.location}</p>
-                          {job.short_description && (
-                            <p className="text-body-md text-text-muted mt-3 leading-relaxed">
-                              {job.short_description}
-                            </p>
-                          )}
-                          <div className="mt-5 inline-flex items-center gap-2 text-accent font-medium">
-                            View role
-                            <svg
-                              className="w-4 h-4 transition-transform group-hover:translate-x-0.5"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth={2}
-                              viewBox="0 0 24 24"
-                            >
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                            </svg>
-                          </div>
-                        </Link>
-                      </motion.li>
+                        <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 12 }}>
+                          <span className="v5-chip">{job.department}</span>
+                          <span className="v5-chip">
+                            {employmentTypeLabel[job.employment_type] ?? job.employment_type}
+                          </span>
+                          {job.experience_level && <span className="v5-chip">{job.experience_level}</span>}
+                          {job.remote && <span className="v5-chip">Remote-friendly</span>}
+                        </div>
+                        <h3 className="v5-h3">{job.title}</h3>
+                        <p className="v5-body" style={{ marginTop: 4, color: "var(--v5-ink-soft)" }}>
+                          {job.location}
+                        </p>
+                        {job.short_description && (
+                          <p className="v5-body" style={{ marginTop: 12 }}>
+                            {job.short_description}
+                          </p>
+                        )}
+                        <span className="v5-card-more">
+                          View role <ArrowRight />
+                        </span>
+                      </Link>
                     ))}
-                  </ul>
+                  </div>
                 )}
               </div>
             </div>
           </div>
         </section>
       </main>
-
       <Footer />
-    </>
+    </div>
   );
 }
 
@@ -316,15 +288,9 @@ function Select({
   formatter?: (v: string) => string;
 }) {
   return (
-    <label className="block mb-4">
-      <span className="block text-body-xs text-text-muted uppercase tracking-wider mb-2">
-        {label}
-      </span>
-      <select
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="w-full px-3 py-2.5 rounded-lg bg-base border border-stroke-muted text-body-sm text-text-bright focus:outline-none focus:ring-2 focus:ring-accent"
-      >
+    <label className="v5-field">
+      <span className="v5-field-label">{label}</span>
+      <select value={value} onChange={(e) => onChange(e.target.value)} className="v5-input">
         {options.map((opt) => (
           <option key={opt} value={opt}>
             {formatter ? formatter(opt) : opt === "all" ? "All" : opt}

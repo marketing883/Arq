@@ -1,12 +1,13 @@
 import Link from "next/link";
 import { Metadata } from "next";
-import { ArrowIcon, DarkShell } from "@/components/site-dark/DarkShell";
-import { SignalStrip } from "@/components/site-dark/InternalVisuals";
+import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
+import { ArrowRight } from "@/components/home-v5/icons";
 
 export const metadata: Metadata = {
   title: "Resources | ArqAI Labs",
   description:
     "ArqAI Labs resources for enterprise AI leaders: blogs, case studies, whitepapers, webinars, and trust material for production AI workflows.",
+  alternates: { canonical: "https://thearq.ai/resources" },
 };
 
 const resources = [
@@ -53,62 +54,72 @@ const tracks = [
 
 export default function ResourcesPage() {
   return (
-    <DarkShell>
-      <section className="a-hero">
-        <div className="a-hero-grid" />
-        <div className="a-wrap" style={{ position: "relative" }}>
-          <span className="a-pill">
-            <span className="dot" /> Resources
-          </span>
-          <div className="a-section-head" style={{ marginTop: 28, alignItems: "start" }}>
-            <div>
-              <h1 className="h-display" style={{ maxWidth: "13ch" }}>
-                Thinking for teams turning AI into operating advantage.
-              </h1>
-            </div>
-            <div>
-              <p className="lede">
-                Browse practical writing, proof, guides, and conversations for enterprise teams moving from AI
-                experiments to governed workflows that people use every day.
-              </p>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginTop: 28 }}>
-                <Link href="/engage-us" className="a-btn a-btn-primary">
-                  Get Started <ArrowIcon className="arrow" />
-                </Link>
-                <Link href="/blog" className="a-btn a-btn-ghost">
-                  Read the blog
-                </Link>
-              </div>
+    <V5SiteLayout>
+      {/* Hero */}
+      <section className="v5-page-hero">
+        <div className="v5-container">
+          <div className="v5-page-hero-inner">
+            <span className="v5-badge">
+              <span className="v5-badge-dot" />
+              Resources
+            </span>
+            <h1 className="v5-h1">Thinking for teams turning AI into operating advantage.</h1>
+            <p className="v5-lead">
+              Browse practical writing, proof, guides, and conversations for enterprise teams moving from AI
+              experiments to governed workflows that people use every day.
+            </p>
+            <div className="v5-hero-actions">
+              <Link href="/engage-us" className="v5-btn v5-btn-primary">
+                Get Started <ArrowRight />
+              </Link>
+              <Link href="/blog" className="v5-btn v5-btn-ghost">
+                Read the blog
+              </Link>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="a-section">
-        <div className="a-wrap">
-          <SignalStrip
-            label="Knowledge hub"
-            title="Practical material for production AI decisions."
-            body="The useful questions are rarely model-only questions. The resources here focus on workflow selection, operating metrics, integration, governance, adoption, and expansion."
-            variant="evidence"
-            points={tracks}
-          />
+      {/* Knowledge hub */}
+      <section className="v5-section v5-bg-grey">
+        <div className="v5-container">
+          <div className="v5-split">
+            <div className="v5-split-copy">
+              <span className="v5-eyebrow">Knowledge hub</span>
+              <h2 className="v5-h2">Practical material for production AI decisions.</h2>
+              <p className="v5-lead">
+                The useful questions are rarely model-only questions. The resources here focus on workflow
+                selection, operating metrics, integration, governance, adoption, and expansion.
+              </p>
+            </div>
+            <div className="v5-card">
+              <ul className="v5-list">
+                {tracks.map((track) => (
+                  <li key={track}>{track}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
         </div>
       </section>
 
-      <section className="a-section">
-        <div className="a-wrap">
-          <div className="resource-grid">
+      {/* Resource grid */}
+      <section className="v5-section v5-bg-white">
+        <div className="v5-container">
+          <div className="v5-blog-grid">
             {resources.map((resource) => (
-              <Link href={resource.href} className="resource-card" key={resource.href}>
-                <div className="resource-card-media" style={{ backgroundImage: `url(${resource.image})` }} aria-hidden="true" />
-                <div className="resource-card-shade" aria-hidden="true" />
-                <div className="resource-card-body">
-                  <span className="a-tag">{resource.label}</span>
-                  <h2>{resource.title}</h2>
-                  <p>{resource.body}</p>
-                  <span className="resource-card-link">
-                    Explore <ArrowIcon className="arrow" />
+              <Link href={resource.href} className="v5-blog-card" key={resource.href}>
+                <div className="v5-blog-cover">
+                  <img src={resource.image} alt={resource.title} loading="lazy" decoding="async" />
+                </div>
+                <div className="v5-blog-body">
+                  <span className="v5-blog-meta">
+                    <span className="v5-blog-cat">{resource.label}</span>
+                  </span>
+                  <h2 className="v5-h3">{resource.title}</h2>
+                  <p className="v5-body">{resource.body}</p>
+                  <span className="v5-card-more">
+                    Explore <ArrowRight />
                   </span>
                 </div>
               </Link>
@@ -117,22 +128,24 @@ export default function ResourcesPage() {
         </div>
       </section>
 
-      <section className="a-section">
-        <div className="a-wrap">
-          <div className="cta-strip">
-            <h2 className="h-section" style={{ marginTop: 0, maxWidth: "18ch" }}>
-              Want a sharper point of view for your workflow?
-            </h2>
-            <p className="lede" style={{ marginTop: 18, maxWidth: "62ch" }}>
+      {/* CTA band */}
+      <section className="v5-section v5-cta-band">
+        <div className="v5-container">
+          <div className="v5-cta-card">
+            <div className="v5-cta-glow" />
+            <h2 className="v5-h2">Want a sharper point of view for your workflow?</h2>
+            <p className="v5-lead">
               Bring us the workflow, the systems involved, and the decision your team wants to improve. We will help
               turn the question into a buildable path.
             </p>
-            <Link href="/engage-us" className="a-btn a-btn-primary" style={{ marginTop: 28 }}>
-              Get Started <ArrowIcon className="arrow" />
-            </Link>
+            <div className="v5-cta-card-actions">
+              <Link href="/engage-us" className="v5-btn v5-btn-primary">
+                Get Started <ArrowRight />
+              </Link>
+            </div>
           </div>
         </div>
       </section>
-    </DarkShell>
+    </V5SiteLayout>
   );
 }
