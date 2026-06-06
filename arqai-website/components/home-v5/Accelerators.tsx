@@ -29,7 +29,7 @@ export default function Accelerators() {
             return (
               <a
                 key={a.id}
-                href={`/accelerators#${a.id}`}
+                href={`/accelerators/${a.id}`}
                 className="v5-accel-card"
                 style={{ ["--i" as string]: i }}
               >

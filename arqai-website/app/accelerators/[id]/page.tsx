@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
 import { ArrowRight, SparkIcon, ShieldIcon, InsightIcon, DocIcon, ChatIcon } from "@/components/home-v5/icons";
 import { accelerators, getAccelerator } from "@/lib/data/accelerators";
+import AcceleratorForm from "@/components/accelerators/AcceleratorForm";
 
 const CAP_ICONS = [SparkIcon, InsightIcon, ShieldIcon, DocIcon, ChatIcon];
 
@@ -67,8 +68,8 @@ export default function AcceleratorDetailPage({ params }: AcceleratorPageProps) 
               <h1 className="v5-h1" style={{ marginTop: 18 }}>{accelerator.name}</h1>
               <p className="v5-lead">{accelerator.tagline}</p>
               <div className="v5-hero-actions">
-                <Link href="/engage-us" className="v5-btn v5-btn-primary">
-                  Get Started <ArrowRight />
+                <Link href="#get-started" className="v5-btn v5-btn-primary">
+                  Request a walkthrough <ArrowRight />
                 </Link>
                 <Link href="/accelerators" className="v5-btn v5-btn-ghost">
                   All accelerators
@@ -148,7 +149,7 @@ export default function AcceleratorDetailPage({ params }: AcceleratorPageProps) 
             </span>
             <h2 className="v5-h2" style={{ marginTop: 10 }}>{accelerator.promise}</h2>
             <div className="v5-cta-card-actions" style={{ justifyContent: "flex-start", marginTop: 24 }}>
-              <Link href="/engage-us" className="v5-btn v5-btn-primary">
+              <Link href="#get-started" className="v5-btn v5-btn-primary">
                 Get Started <ArrowRight />
               </Link>
             </div>
@@ -297,22 +298,39 @@ export default function AcceleratorDetailPage({ params }: AcceleratorPageProps) 
         </div>
       </section>
 
-      {/* CTA band */}
-      <section className="v5-section v5-cta-band">
+      {/* Conversion form */}
+      <section className="v5-section v5-bg-grey" id="get-started" style={{ scrollMarginTop: 96 }}>
         <div className="v5-container">
-          <div className="v5-cta-card">
-            <div className="v5-cta-glow" />
-            <h2 className="v5-h2">Start with accelerator fit, not a generic demo.</h2>
-            <p className="v5-lead">
-              Bring us the workflow, the data sources, and the operating metric. We will show where {accelerator.name} helps, what must be customized, and what should stay human-led.
-            </p>
-            <div className="v5-cta-card-actions">
-              <Link href="/engage-us" className="v5-btn v5-btn-primary">
-                Get Started <ArrowRight />
-              </Link>
-              <Link href="/accelerators" className="v5-btn v5-btn-ghost">
-                All accelerators
-              </Link>
+          <div className="v5-contact-grid">
+            <aside>
+              <span className="v5-eyebrow">Get started</span>
+              <h2 className="v5-h2" style={{ marginTop: 14 }}>
+                Put {accelerator.name} to work on your workflow.
+              </h2>
+              <p className="v5-lead" style={{ marginTop: 16 }}>
+                Tell us about the workflow. We&apos;ll show where {accelerator.name} fits, what
+                must be customized for your environment, and the fastest path to a measurable
+                first release — not a generic demo.
+              </p>
+              <ul className="v5-list">
+                <li>Fit check against your data, systems, and controls</li>
+                <li>Senior engineering review before the first call</li>
+                <li>A narrow, measurable first-release plan</li>
+              </ul>
+              <div className="v5-stats" style={{ gridTemplateColumns: "1fr 1fr", marginTop: 28 }}>
+                {accelerator.metrics.slice(0, 2).map((metric) => (
+                  <div className="v5-stat" key={metric.label} style={{ background: "var(--v5-white)" }}>
+                    <strong>{metric.value}</strong>
+                    <span>{metric.label}</span>
+                  </div>
+                ))}
+              </div>
+            </aside>
+            <div>
+              <AcceleratorForm
+                acceleratorName={accelerator.name}
+                acceleratorCategory={accelerator.category}
+              />
             </div>
           </div>
         </div>

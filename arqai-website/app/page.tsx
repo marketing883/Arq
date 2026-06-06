@@ -167,7 +167,7 @@ function StructuredData() {
         applicationCategory: "BusinessApplication",
         applicationSubCategory: a.category,
         description: a.summary,
-        url: `${SITE_URL}/accelerators#${a.id}`,
+        url: `${SITE_URL}/accelerators/${a.id}`,
         provider: { "@id": orgId },
       },
     })),

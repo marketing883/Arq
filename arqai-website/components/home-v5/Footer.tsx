@@ -13,9 +13,9 @@ const COLUMNS = [
   {
     title: "Accelerators",
     links: [
-      { label: "Veyra", href: "/accelerators#veyra" },
-      { label: "Sentra", href: "/accelerators#sentra" },
-      { label: "Nuvia", href: "/accelerators#nuvia" },
+      { label: "Veyra", href: "/accelerators/veyra" },
+      { label: "Sentra", href: "/accelerators/sentra" },
+      { label: "Nuvia", href: "/accelerators/nuvia" },
       { label: "All Accelerators", href: "/accelerators" },
     ],
   },

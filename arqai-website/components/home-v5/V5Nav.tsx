@@ -26,7 +26,7 @@ const mono = (s: string) => <span className="v5-mega-mono">{s.charAt(0)}</span>;
 const ACCEL_LINKS: Link[] = accelerators.map((a) => ({
   title: a.name,
   desc: a.category,
-  href: `/accelerators#${a.id}`,
+  href: `/accelerators/${a.id}`,
   icon: mono(a.name),
 }));
 
