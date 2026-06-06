@@ -10,6 +10,8 @@ export type Accelerator = {
   builtFor: string;
   image: string;
   heroImage: string;
+  secondaryImage: string;
+  tertiaryImage: string;
   overview: string;
   capabilities: AcceleratorCapability[];
   useCases: AcceleratorUseCase[];
@@ -38,6 +40,8 @@ export const accelerators: Accelerator[] = [
     builtFor: "Healthcare payers, TPAs, PBMs, and program-integrity teams",
     image: img("photo-1576091160550-2173dba999ef", 1200),
     heroImage: img("photo-1576091160550-2173dba999ef", 1600),
+    secondaryImage: img("photo-1517120026326-d87759a7b63b", 1920),
+    tertiaryImage: img("photo-1516549655169-df83a0774514", 800),
     overview:
       "Veyra is a payment-integrity intelligence layer for healthcare payers. It reads across claims, providers, policy, and member context to surface the cases most likely to be fraud, waste, abuse, or leakage — and explains the reasoning clearly enough for an investigator to act on and defend.",
     capabilities: [
@@ -118,6 +122,8 @@ export const accelerators: Accelerator[] = [
     builtFor: "Healthcare, insurance, benefits, and claims operations",
     image: img("photo-1554224155-1696413565d3", 1200),
     heroImage: img("photo-1554224155-1696413565d3", 1600),
+    secondaryImage: img("photo-1521791055366-0d553872125f", 1920),
+    tertiaryImage: img("photo-1619418602850-35ad20aa1700", 800),
     overview:
       "Luma turns claims intake into a governed triage flow. It enriches each file, checks it against policy, flags missing evidence, and recommends the next action — while every decision stays with your reviewers and every override is captured.",
     capabilities: [
@@ -198,6 +204,8 @@ export const accelerators: Accelerator[] = [
     builtFor: "Banks, fintechs, credit unions, and financial institutions",
     image: img("photo-1582139329536-e7284fece509", 1200),
     heroImage: img("photo-1582139329536-e7284fece509", 1600),
+    secondaryImage: img("photo-1592698765727-387c9464cd7f", 1920),
+    tertiaryImage: img("photo-1616803140344-6682afb13cda", 800),
     overview:
       "Sentra is an analyst-first financial-crime accelerator. It clears alert noise, assembles customer risk context, and drafts examiner-ready narratives across AML, KYC, sanctions, and CDD — keeping disposition authority firmly with your team.",
     capabilities: [
@@ -278,6 +286,8 @@ export const accelerators: Accelerator[] = [
     builtFor: "Retail, QSR, consumer brands, and loyalty teams",
     image: img("photo-1481437156560-3205f6a55735", 1200),
     heroImage: img("photo-1481437156560-3205f6a55735", 1600),
+    secondaryImage: img("photo-1483985988355-763728e1935b", 1920),
+    tertiaryImage: img("photo-1556742502-ec7c0e9f34b1", 800),
     overview:
       "Nuvia turns customer, transaction, and product signals into the next useful action for each segment — offers, retention nudges, and associate prompts — all inside your margin, inventory, and consent guardrails, learning from every campaign.",
     capabilities: [
@@ -358,6 +368,8 @@ export const accelerators: Accelerator[] = [
     builtFor: "Telecom, managed services, enterprise IT, and operations teams",
     image: img("photo-1558494949-ef010cbdcc31", 1200),
     heroImage: img("photo-1558494949-ef010cbdcc31", 1600),
+    secondaryImage: img("photo-1544197150-b99a580bb7a8", 1920),
+    tertiaryImage: img("photo-1506399558188-acca6f8cbf41", 800),
     overview:
       "Kyra gives network and service operations a working memory. It correlates telemetry, tickets, and runbooks into enriched incidents with a recommended next action — and turns every event into reusable operational knowledge.",
     capabilities: [
@@ -438,6 +450,8 @@ export const accelerators: Accelerator[] = [
     builtFor: "Energy, manufacturing, logistics, and procurement teams",
     image: img("photo-1494412519320-aa613dfb7738", 1200),
     heroImage: img("photo-1494412519320-aa613dfb7738", 1600),
+    secondaryImage: img("photo-1605745341112-85968b19335b", 1920),
+    tertiaryImage: img("photo-1493946740644-2d8a1f1a6aff", 800),
     overview:
       "Orbis watches your supplier and logistics dependency graph for risk — across contracts, ERP, shipments, quality data, and external signals — and routes exposure-backed actions to the right owner before disruption becomes a business event.",
     capabilities: [
@@ -518,6 +532,8 @@ export const accelerators: Accelerator[] = [
     builtFor: "Enterprise IT, shared services, HR ops, finance ops, and support teams",
     image: img("photo-1497366754035-f200968a6e72", 1200),
     heroImage: img("photo-1497366754035-f200968a6e72", 1600),
+    secondaryImage: img("photo-1556761175-4b46a572b786", 1920),
+    tertiaryImage: img("photo-1531973576160-7125cd663d86", 800),
     overview:
       "Astra automates internal service workflows end to end — classifying requests, retrieving the right answer, executing low-risk steps, and routing exceptions with full context — while preserving the approvals and audit trail your controls require.",
     capabilities: [
@@ -598,6 +614,8 @@ export const accelerators: Accelerator[] = [
     builtFor: "Cybersecurity, SecOps, GRC, and risk teams",
     image: img("photo-1550751827-4bd374c3f58b", 1200),
     heroImage: img("photo-1550751827-4bd374c3f58b", 1600),
+    secondaryImage: img("photo-1526374965328-7f61d4dc18c5", 1920),
+    tertiaryImage: img("photo-1510915228340-29c85a43dcfe", 800),
     overview:
       "Vantaq is a SecOps copilot that compresses time-to-context. It enriches alerts, correlates incidents, drafts summaries, recommends response steps, and captures the evidence GRC needs — so analysts spend their time on investigation, not assembly.",
     capabilities: [

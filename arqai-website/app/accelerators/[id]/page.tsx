@@ -131,6 +131,31 @@ export default function AcceleratorDetailPage({ params }: AcceleratorPageProps) 
         </div>
       </section>
 
+      {/* Full-width showcase band */}
+      <section className="v5-showcase">
+        <Image
+          src={accelerator.secondaryImage}
+          alt=""
+          fill
+          sizes="100vw"
+          className="v5-showcase-img"
+        />
+        <span className="v5-showcase-inset" />
+        <div className="v5-container">
+          <div className="v5-showcase-body">
+            <span className="v5-card-eyebrow" style={{ color: "var(--v5-lime)" }}>
+              Built for production
+            </span>
+            <h2 className="v5-h2" style={{ marginTop: 10 }}>{accelerator.promise}</h2>
+            <div className="v5-cta-card-actions" style={{ justifyContent: "flex-start", marginTop: 24 }}>
+              <Link href="/engage-us" className="v5-btn v5-btn-primary">
+                Get Started <ArrowRight />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Capabilities */}
       <section className="v5-section v5-bg-grey">
         <div className="v5-container">
@@ -203,13 +228,21 @@ export default function AcceleratorDetailPage({ params }: AcceleratorPageProps) 
               <span className="v5-eyebrow">Integrations</span>
               <h2 className="v5-h2">Wired into the stack you already run.</h2>
               <p className="v5-lead">{accelerator.proof}</p>
-            </div>
-            <div className="v5-card">
-              <span className="v5-card-eyebrow">Connects with</span>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 4 }}>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 22 }}>
                 {accelerator.integrations.map((tool) => (
                   <span className="v5-chip" key={tool}>{tool}</span>
                 ))}
+              </div>
+            </div>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <div className="v5-media-sm">
+                <Image
+                  src={accelerator.tertiaryImage}
+                  alt={`${accelerator.name} in context`}
+                  width={420}
+                  height={315}
+                  sizes="(min-width: 860px) 420px, 100vw"
+                />
               </div>
             </div>
           </div>
