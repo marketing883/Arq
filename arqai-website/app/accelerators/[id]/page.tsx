@@ -51,40 +51,43 @@ export default function AcceleratorDetailPage({ params }: AcceleratorPageProps) 
 
   return (
     <V5SiteLayout>
-      {/* Hero */}
-      <section className="v5-page-hero">
+      {/* Hero — full-bleed image, animated overlay, content on top */}
+      <section className="v5-acc-hero">
+        <Image
+          src={accelerator.heroImage}
+          alt={`${accelerator.name} — ${accelerator.category}`}
+          fill
+          sizes="100vw"
+          style={{ objectFit: "cover" }}
+          priority
+          className="v5-acc-hero-img"
+        />
+        <span className="v5-acc-hero-aurora" aria-hidden="true" />
+        <span className="v5-acc-hero-sheen" aria-hidden="true" />
         <div className="v5-container">
-          <div className="v5-crumbs" style={{ marginBottom: 22 }}>
-            <Link href="/accelerators">Accelerators</Link>
-            <span>/</span>
-            <span style={{ color: "var(--v5-ink-soft)" }}>{accelerator.name}</span>
-          </div>
-          <div className="v5-split">
-            <div className="v5-split-copy">
-              <span className="v5-badge">
-                <span className="v5-badge-dot" />
-                {accelerator.category}
-              </span>
-              <h1 className="v5-h1" style={{ marginTop: 18 }}>{accelerator.name}</h1>
-              <p className="v5-lead">{accelerator.tagline}</p>
-              <div className="v5-hero-actions">
-                <Link href="#get-started" className="v5-btn v5-btn-primary">
-                  Request a walkthrough <ArrowRight />
-                </Link>
-                <Link href="/accelerators" className="v5-btn v5-btn-ghost">
-                  All accelerators
-                </Link>
-              </div>
+          <div className="v5-acc-hero-body">
+            <div className="v5-crumbs" style={{ marginBottom: 18 }}>
+              <Link href="/accelerators">Accelerators</Link>
+              <span>/</span>
+              <span style={{ color: "#fff" }}>{accelerator.name}</span>
             </div>
-            <div className="v5-split-media">
-              <Image
-                src={accelerator.heroImage}
-                alt={`${accelerator.name} — ${accelerator.category}`}
-                fill
-                sizes="(min-width: 860px) 50vw, 100vw"
-                style={{ objectFit: "cover" }}
-                priority
-              />
+            <span className="v5-badge on-dark">
+              <span className="v5-badge-dot" />
+              {accelerator.category}
+            </span>
+            <h1 className="v5-h1">{accelerator.name}</h1>
+            <p className="v5-lead">{accelerator.tagline}</p>
+            <div className="v5-hero-actions">
+              <Link href="#get-started" className="v5-btn v5-btn-primary">
+                Request a walkthrough <ArrowRight />
+              </Link>
+              <Link
+                href="/accelerators"
+                className="v5-btn v5-btn-ghost"
+                style={{ background: "transparent", borderColor: "rgba(255,255,255,0.4)", color: "#fff" }}
+              >
+                All accelerators
+              </Link>
             </div>
           </div>
         </div>
