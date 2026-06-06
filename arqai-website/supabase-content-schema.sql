@@ -130,18 +130,22 @@ CREATE INDEX IF NOT EXISTS idx_resource_leads_token ON public.resource_leads(dow
 -- ============================================
 -- AUTO-UPDATE TRIGGERS
 -- ============================================
+DROP TRIGGER IF EXISTS update_blog_posts_updated_at ON public.blog_posts;
 CREATE TRIGGER update_blog_posts_updated_at
     BEFORE UPDATE ON public.blog_posts
     FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
+DROP TRIGGER IF EXISTS update_case_studies_updated_at ON public.case_studies;
 CREATE TRIGGER update_case_studies_updated_at
     BEFORE UPDATE ON public.case_studies
     FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
+DROP TRIGGER IF EXISTS update_whitepapers_updated_at ON public.whitepapers;
 CREATE TRIGGER update_whitepapers_updated_at
     BEFORE UPDATE ON public.whitepapers
     FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
+DROP TRIGGER IF EXISTS update_webinars_updated_at ON public.webinars;
 CREATE TRIGGER update_webinars_updated_at
     BEFORE UPDATE ON public.webinars
     FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
