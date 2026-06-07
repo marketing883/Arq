@@ -64,9 +64,11 @@ const MENUS: Menu[] = [
     links: [
       { title: "Blog", desc: "Insights on operational AI", href: "/blog", icon: <ChatIcon /> },
       { title: "Case Studies", desc: "Proof from production", href: "/case-studies", icon: <DocIcon /> },
-      { title: "Whitepapers", desc: "Deep dives and frameworks", href: "/whitepapers", icon: <DocIcon /> },
-      { title: "Webinars", desc: "Live sessions and replays", href: "/webinars", icon: <InsightIcon /> },
-      { title: "Resource Library", desc: "Everything in one place", href: "/resources", icon: <SparkIcon /> },
+      // Deactivated until there is published CMS content. Re-enable by
+      // uncommenting (the destination pages already exist and render).
+      // { title: "Whitepapers", desc: "Deep dives and frameworks", href: "/whitepapers", icon: <DocIcon /> },
+      // { title: "Webinars", desc: "Live sessions and replays", href: "/webinars", icon: <InsightIcon /> },
+      // { title: "Resource Library", desc: "Everything in one place", href: "/resources", icon: <SparkIcon /> },
     ],
     feature: { href: "/blog", image: `${A}/whRZNEnCa32wPqqJtkEo07xTe50.jpeg`, tag: "Latest", title: "How AI is revolutionizing support" },
   },
