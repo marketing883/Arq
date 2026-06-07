@@ -13,6 +13,9 @@ export default function BankingPage() {
         heroImage: "https://images.unsplash.com/photo-1684679674829-fc7b436ec8e8?auto=format&fit=crop&w=1600&q=80",
         secondaryImage: "https://images.unsplash.com/photo-1633059050703-0f1b50828402?auto=format&fit=crop&w=1920&q=80",
         heroImageAlt: "Banking operations",
+        featuredAcceleratorId: "sentra",
+        contactIndustry: "Banking",
+        contactWorkflow: "Financial crime, AML/KYC, and customer risk",
         primaryCta: { label: "Get Started", href: "/engage-us" },
         secondaryCta: { label: "Explore Sentra", href: "/accelerators/sentra" },
         outcomes: [

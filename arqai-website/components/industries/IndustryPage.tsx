@@ -1,11 +1,11 @@
 import Link from "next/link";
 import V5Nav from "@/components/home-v5/V5Nav";
 import Footer from "@/components/home-v5/Footer";
-import { ArrowRight, ArrowUpRight } from "@/components/home-v5/icons";
+import { ArrowRight } from "@/components/home-v5/icons";
+import { getAccelerator } from "@/lib/data/accelerators";
 import "@/components/home-v5/styles.css";
 
-// Serve big decorative images straight from the Unsplash CDN (already AVIF/WebP
-// via auto=format) instead of routing them through Next's image optimizer.
+// Serve big decorative images straight from the Unsplash CDN.
 const cdn = (url: string, w: number) =>
   url.replace(/w=\d+/, `w=${w}`).replace(/q=\d+/, "q=62");
 const cdnSrcSet = (url: string, widths: number[]) =>
@@ -18,8 +18,12 @@ export type IndustryPageData = {
   heroImage: string;
   secondaryImage: string;
   heroImageAlt: string;
+  /** The single accelerator built for this industry (id from lib/data/accelerators). */
+  featuredAcceleratorId: string;
+  /** Pre-fill values carried into the contact form. */
+  contactIndustry: string;
+  contactWorkflow: string;
   primaryCta?: { label: string; href: string };
-  secondaryCta?: { label: string; href: string };
   outcomes: { metric: string; label: string; description: string }[];
   useCasesHeading: string;
   useCases: { tag: string; title: string; body: string }[];
@@ -28,9 +32,12 @@ export type IndustryPageData = {
   operatingContextHeading: string;
   operatingContextBody: string;
   operatingContextList: string[];
-  productsHeading: string;
-  productsBody: string;
-  products: {
+  closingCta: { headline: string; body: string };
+  // Legacy fields retained for compatibility; no longer rendered.
+  secondaryCta?: { label: string; href: string };
+  productsHeading?: string;
+  productsBody?: string;
+  products?: {
     name: string;
     status: string;
     statusColor: string;
@@ -38,12 +45,15 @@ export type IndustryPageData = {
     cta: string;
     href: string;
   }[];
-  closingCta: { headline: string; body: string };
 };
 
 export function IndustryPage({ data }: { data: IndustryPageData }) {
-  const primaryHref = data.primaryCta?.href ?? "/engage-us";
-  const primaryLabel = data.primaryCta?.label ?? "Get Started";
+  const ctaLabel = data.primaryCta?.label ?? "Talk to our team";
+  const contactHref = `/contact?industry=${encodeURIComponent(
+    data.contactIndustry
+  )}&workflow=${encodeURIComponent(data.contactWorkflow)}&inquiry=workflow`;
+  const accelerator = getAccelerator(data.featuredAcceleratorId);
+  const accMetric = accelerator?.metrics?.[0];
 
   return (
     <div className="v5-shell">
@@ -80,42 +90,30 @@ export function IndustryPage({ data }: { data: IndustryPageData }) {
               <h1 className="v5-h1">{data.heroHeadline}</h1>
               <p className="v5-lead">{data.heroSubhead}</p>
               <div className="v5-hero-actions">
-                <Link href={primaryHref} className="v5-btn v5-btn-primary">
-                  {primaryLabel} <ArrowRight />
+                <Link href={contactHref} className="v5-btn v5-btn-primary">
+                  {ctaLabel} <ArrowRight />
                 </Link>
-                {data.secondaryCta ? (
-                  <Link
-                    href={data.secondaryCta.href}
-                    className="v5-btn v5-btn-ghost"
-                    style={{ background: "transparent", borderColor: "rgba(255,255,255,0.4)", color: "#fff" }}
-                  >
-                    {data.secondaryCta.label}
-                  </Link>
-                ) : null}
               </div>
             </div>
           </div>
         </section>
 
-        {/* Outcomes */}
+        {/* Outcomes — accented stat band */}
         <section className="v5-section v5-bg-grey">
           <div className="v5-container">
-            <div className="v5-section-head">
+            <div className="v5-section-head center">
               <span className="v5-eyebrow">What changes</span>
-              <h2 className="v5-h2">Outcomes customers can measure.</h2>
+              <h2 className="v5-h2">Outcomes leaders can measure.</h2>
               <p className="v5-lead">
-                We anchor every engagement to the metrics operating leaders can defend:
-                faster resolution, sharper prioritization, cleaner evidence, and decisions
-                people can trust.
+                Every engagement is anchored to metrics operating leaders can defend — faster
+                resolution, sharper prioritization, cleaner evidence, decisions people trust.
               </p>
             </div>
             <div className="v5-grid v5-grid-3">
               {data.outcomes.map((outcome) => (
-                <div className="v5-card" key={outcome.label}>
-                  <strong style={{ fontFamily: "var(--v5-display)", fontWeight: 600, fontSize: 40, lineHeight: 1, color: "var(--v5-ink)", letterSpacing: "-0.02em" }}>
-                    {outcome.metric}
-                  </strong>
-                  <h3 className="v5-h3" style={{ marginTop: 6 }}>{outcome.label}</h3>
+                <div className="v5-card v5-outcome" key={outcome.label}>
+                  <strong className="v5-outcome-metric">{outcome.metric}</strong>
+                  <h3 className="v5-h3">{outcome.label}</h3>
                   <p className="v5-body">{outcome.description}</p>
                 </div>
               ))}
@@ -123,7 +121,7 @@ export function IndustryPage({ data }: { data: IndustryPageData }) {
           </div>
         </section>
 
-        {/* Use cases */}
+        {/* Use cases — numbered cards */}
         <section className="v5-section v5-bg-white">
           <div className="v5-container">
             <div className="v5-section-head">
@@ -135,10 +133,11 @@ export function IndustryPage({ data }: { data: IndustryPageData }) {
               </p>
             </div>
             <div className="v5-grid v5-grid-2">
-              {data.useCases.map((useCase) => (
-                <article className="v5-card" key={useCase.title}>
+              {data.useCases.map((useCase, i) => (
+                <article className="v5-card v5-usecase" key={useCase.title}>
+                  <span className="v5-num">{String(i + 1).padStart(2, "0")}</span>
                   <span className="v5-chip">{useCase.tag}</span>
-                  <h3 className="v5-h3" style={{ marginTop: 6 }}>{useCase.title}</h3>
+                  <h3 className="v5-h3">{useCase.title}</h3>
                   <p className="v5-body">{useCase.body}</p>
                 </article>
               ))}
@@ -146,7 +145,7 @@ export function IndustryPage({ data }: { data: IndustryPageData }) {
           </div>
         </section>
 
-        {/* Full-width showcase band (mid CTA over imagery) */}
+        {/* Full-width showcase band */}
         <section className="v5-showcase">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
@@ -165,8 +164,8 @@ export function IndustryPage({ data }: { data: IndustryPageData }) {
               <h2 className="v5-h2" style={{ marginTop: 10 }}>{data.midCtaHeadline}</h2>
               <p className="v5-lead">{data.midCtaBody}</p>
               <div className="v5-cta-card-actions" style={{ justifyContent: "flex-start", marginTop: 24 }}>
-                <Link href={primaryHref} className="v5-btn v5-btn-primary">
-                  Get Started <ArrowRight />
+                <Link href={contactHref} className="v5-btn v5-btn-primary">
+                  {ctaLabel} <ArrowRight />
                 </Link>
               </div>
             </div>
@@ -193,28 +192,46 @@ export function IndustryPage({ data }: { data: IndustryPageData }) {
           </div>
         </section>
 
-        {/* Accelerator products */}
-        {data.products.length > 0 ? (
+        {/* Featured accelerator — the one built for this industry */}
+        {accelerator ? (
           <section className="v5-section v5-bg-white">
             <div className="v5-container">
               <div className="v5-section-head">
-                <span className="v5-eyebrow">Accelerator starting points</span>
-                <h2 className="v5-h2">{data.productsHeading}</h2>
-                <p className="v5-lead">{data.productsBody}</p>
+                <span className="v5-eyebrow">Recommended accelerator</span>
+                <h2 className="v5-h2">Start from the pattern built for this work.</h2>
               </div>
-              <div className="v5-grid v5-grid-2">
-                {data.products.map((product) => (
-                  <Link href={product.href} key={product.name} className="v5-card v5-card-link">
-                    <div style={{ display: "flex", justifyContent: "space-between", gap: 16, alignItems: "center" }}>
-                      <h3 className="v5-h3" style={{ fontSize: 26 }}>{product.name}</h3>
-                      <span className="v5-chip">{product.status}</span>
+              <div className="v5-split">
+                <div className="v5-split-media">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={cdn(accelerator.image, 1200)}
+                    srcSet={cdnSrcSet(accelerator.image, [640, 960, 1200])}
+                    sizes="(min-width: 860px) 50vw, 100vw"
+                    alt={accelerator.name}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                <div className="v5-split-copy">
+                  <span className="v5-chip">{accelerator.category}</span>
+                  <h3 className="v5-h2" style={{ fontSize: "clamp(28px, 3vw, 38px)", marginTop: 12 }}>
+                    {accelerator.name}
+                  </h3>
+                  <p className="v5-lead" style={{ marginTop: 12 }}>{accelerator.tagline}</p>
+                  {accMetric ? (
+                    <div className="v5-stat" style={{ background: "var(--v5-grey-5)", marginTop: 20, maxWidth: 260 }}>
+                      <strong>{accMetric.value}</strong>
+                      <span>{accMetric.label}</span>
                     </div>
-                    <p className="v5-body">{product.description}</p>
-                    <span className="v5-card-more">
-                      {product.cta} <ArrowUpRight />
-                    </span>
+                  ) : null}
+                  <Link
+                    href={`/accelerators/${accelerator.id}`}
+                    className="v5-card-more"
+                    style={{ marginTop: 22, fontSize: 16 }}
+                  >
+                    Explore the {accelerator.name} accelerator <ArrowRight />
                   </Link>
-                ))}
+                </div>
               </div>
             </div>
           </section>
@@ -228,11 +245,8 @@ export function IndustryPage({ data }: { data: IndustryPageData }) {
               <h2 className="v5-h2">{data.closingCta.headline}</h2>
               <p className="v5-lead">{data.closingCta.body}</p>
               <div className="v5-cta-card-actions">
-                <Link href={primaryHref} className="v5-btn v5-btn-primary">
-                  Get Started <ArrowRight />
-                </Link>
-                <Link href="/accelerators" className="v5-btn v5-btn-ghost">
-                  View accelerators
+                <Link href={contactHref} className="v5-btn v5-btn-primary">
+                  {ctaLabel} <ArrowRight />
                 </Link>
               </div>
             </div>

@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import V5Nav from "@/components/home-v5/V5Nav";
 import Footer from "@/components/home-v5/Footer";
 import { ArrowUpRight } from "@/components/home-v5/icons";
@@ -74,6 +75,15 @@ const emptyForm: ContactFormData = {
 };
 
 export default function ContactPage() {
+  return (
+    <Suspense fallback={null}>
+      <ContactPageInner />
+    </Suspense>
+  );
+}
+
+function ContactPageInner() {
+  const params = useSearchParams();
   const [formData, setFormData] = useState<ContactFormData>(emptyForm);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
@@ -81,7 +91,20 @@ export default function ContactPage() {
 
   useEffect(() => {
     setFormLoadedAt(Date.now());
-  }, []);
+    if (!params) return;
+    // Pre-fill from deep links (e.g. industry pages -> /contact?industry=...&workflow=...&inquiry=...)
+    const industry = params.get("industry");
+    const workflow = params.get("workflow");
+    const inquiry = params.get("inquiry");
+    if (industry || workflow || inquiry) {
+      setFormData((prev) => ({
+        ...prev,
+        industry: industry ?? prev.industry,
+        workflowArea: workflow ?? prev.workflowArea,
+        inquiryType: inquiry ?? prev.inquiryType,
+      }));
+    }
+  }, [params]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

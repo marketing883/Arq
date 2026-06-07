@@ -13,6 +13,9 @@ export default function InsuranceCarriersPage() {
         heroImage: "https://images.unsplash.com/photo-1597328290883-50c5787b7c7e?auto=format&fit=crop&w=1600&q=80",
         secondaryImage: "https://images.unsplash.com/photo-1683446748468-eba61cda9473?auto=format&fit=crop&w=1920&q=80",
         heroImageAlt: "P&C insurance operations",
+        featuredAcceleratorId: "luma",
+        contactIndustry: "Insurance carriers",
+        contactWorkflow: "Claims triage, intake, and review",
         primaryCta: { label: "Get Started", href: "/engage-us" },
         secondaryCta: { label: "Explore accelerators", href: "/accelerators" },
         outcomes: [

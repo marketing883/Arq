@@ -813,6 +813,11 @@ textarea.v5-input { resize: vertical; }
 .v5-engage-grid { display: grid; grid-template-columns: 1fr; gap: 40px; align-items: start; }
 @media (min-width: 980px) { .v5-engage-grid { grid-template-columns: 5fr 7fr; gap: 56px; } }
 
+/* industry outcome card (lime-accented stat) */
+.v5-outcome { border-top: 3px solid var(--v5-lime); }
+.v5-outcome-metric { display: block; font-family: var(--v5-display); font-weight: 600; font-size: clamp(36px, 4.4vw, 52px); line-height: 1; letter-spacing: -0.02em; color: var(--v5-ink); }
+.v5-usecase .v5-num { margin-bottom: 4px; }
+
 /* industry row — wide media + body */
 .v5-industry-row { display: grid; grid-template-columns: 38% 1fr; align-items: stretch; }
 .v5-industry-media { position: relative; min-height: 260px; background: var(--v5-grey-5); overflow: hidden; }

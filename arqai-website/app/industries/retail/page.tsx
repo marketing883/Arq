@@ -13,6 +13,9 @@ export default function RetailPage() {
         heroImage: "https://images.unsplash.com/photo-1759323321196-2813db509285?auto=format&fit=crop&w=1600&q=80",
         secondaryImage: "https://images.unsplash.com/photo-1736236560164-bc741c70bca5?auto=format&fit=crop&w=1920&q=80",
         heroImageAlt: "Retail operations",
+        featuredAcceleratorId: "nuvia",
+        contactIndustry: "Retail",
+        contactWorkflow: "Loyalty, personalization, and customer operations",
         primaryCta: { label: "Get Started", href: "/engage-us" },
         secondaryCta: { label: "See use cases", href: "/use-cases" },
         outcomes: [

@@ -13,6 +13,9 @@ export default function ManufacturingPage() {
         heroImage: "https://images.unsplash.com/photo-1610891015188-5369212db097?auto=format&fit=crop&w=1600&q=80",
         secondaryImage: "https://images.unsplash.com/photo-1496247749665-49cf5b1022e9?auto=format&fit=crop&w=1920&q=80",
         heroImageAlt: "Manufacturing operations",
+        featuredAcceleratorId: "orbis",
+        contactIndustry: "Manufacturing",
+        contactWorkflow: "Supply chain and vendor risk",
         primaryCta: { label: "Get Started", href: "/engage-us" },
         secondaryCta: { label: "See use cases", href: "/use-cases" },
         outcomes: [
