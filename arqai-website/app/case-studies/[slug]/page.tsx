@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
 import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
+import V5CtaSection from "@/components/home-v5/V5CtaSection";
 import { ArrowRight } from "@/components/home-v5/icons";
 import { generateCaseStudySchema, generateBreadcrumbSchema } from "@/lib/seo/structured-data";
 
@@ -247,10 +248,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
       )}
 
       {/* CTA Section */}
-      <section className="v5-section v5-cta-band">
-        <div className="v5-container">
-          <div className="v5-cta-card">
-            <div className="v5-cta-glow" />
+      <V5CtaSection>
             <h2 className="v5-h2">Ready to Transform Your Business?</h2>
             <p className="v5-lead">
               See how ArqAI can help you achieve similar results with governed AI solutions.
@@ -264,9 +262,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
                 View More Case Studies
               </Link>
             </div>
-          </div>
-        </div>
-      </section>
+      </V5CtaSection>
     </V5SiteLayout>
   );
 }

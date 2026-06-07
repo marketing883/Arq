@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
+import V5CtaSection from "@/components/home-v5/V5CtaSection";
 import { ArrowRight } from "@/components/home-v5/icons";
 
 export const metadata: Metadata = {
@@ -99,10 +100,7 @@ export default function AboutPage() {
       </section>
 
       {/* CTA band */}
-      <section className="v5-section v5-cta-band">
-        <div className="v5-container">
-          <div className="v5-cta-card">
-            <div className="v5-cta-glow" />
+      <V5CtaSection>
             <h2 className="v5-h2">Want to work with us, build with us, or sell with us?</h2>
             <div className="v5-cta-card-actions">
               <Link href="/engage-us" className="v5-btn v5-btn-primary">
@@ -115,9 +113,7 @@ export default function AboutPage() {
                 Become a partner
               </Link>
             </div>
-          </div>
-        </div>
-      </section>
+      </V5CtaSection>
     </V5SiteLayout>
   );
 }

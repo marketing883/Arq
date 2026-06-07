@@ -3,6 +3,7 @@
 import Link from "next/link";
 import V5Nav from "@/components/home-v5/V5Nav";
 import Footer from "@/components/home-v5/Footer";
+import V5CtaSection from "@/components/home-v5/V5CtaSection";
 import { ArrowRight } from "@/components/home-v5/icons";
 import "@/components/home-v5/styles.css";
 
@@ -113,10 +114,7 @@ export default function UseCasesPage() {
         </section>
 
         {/* Don't see your use case */}
-        <section className="v5-section v5-cta-band">
-          <div className="v5-container">
-            <div className="v5-cta-card">
-              <div className="v5-cta-glow" />
+        <V5CtaSection>
               <h2 className="v5-h2">Don&apos;t see your use case?</h2>
               <p className="v5-lead">
                 We don&apos;t ship templates. Most of the engagements we run weren&apos;t on a public page when they started. Tell us what your operation needs. We&apos;ll tell you what&apos;s honestly possible.
@@ -126,9 +124,7 @@ export default function UseCasesPage() {
                   Get Started <ArrowRight />
                 </Link>
               </div>
-            </div>
-          </div>
-        </section>
+        </V5CtaSection>
       </main>
       <Footer />
     </div>

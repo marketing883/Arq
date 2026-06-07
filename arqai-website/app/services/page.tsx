@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
 import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
+import V5CtaSection from "@/components/home-v5/V5CtaSection";
 import { ArrowRight } from "@/components/home-v5/icons";
 import { services } from "@/lib/data/services";
 
@@ -136,10 +137,7 @@ export default function ServicesPage() {
       </section>
 
       {/* CTA band */}
-      <section className="v5-section v5-cta-band">
-        <div className="v5-container">
-          <div className="v5-cta-card">
-            <div className="v5-cta-glow" />
+      <V5CtaSection>
             <h2 className="v5-h2">Start with the workflow that needs to change.</h2>
             <p className="v5-lead">
               We will help decide whether the right path is a strategy sprint, a bespoke
@@ -154,9 +152,7 @@ export default function ServicesPage() {
                 Explore accelerators
               </Link>
             </div>
-          </div>
-        </div>
-      </section>
+      </V5CtaSection>
     </V5SiteLayout>
   );
 }

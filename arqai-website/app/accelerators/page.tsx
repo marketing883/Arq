@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Metadata } from "next";
 import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
+import V5CtaSection from "@/components/home-v5/V5CtaSection";
 import { ArrowRight, ArrowUpRight } from "@/components/home-v5/icons";
 import { accelerators } from "@/lib/data/accelerators";
 
@@ -132,10 +133,7 @@ export default function AcceleratorsPage() {
       </section>
 
       {/* CTA band */}
-      <section className="v5-section v5-cta-band">
-        <div className="v5-container">
-          <div className="v5-cta-card">
-            <div className="v5-cta-glow" />
+      <V5CtaSection>
             <h2 className="v5-h2">Faster should still feel built for your business.</h2>
             <p className="v5-lead">
               Bring us the queue, case type, signal source, or review workflow. We will show
@@ -150,9 +148,7 @@ export default function AcceleratorsPage() {
                 View services
               </Link>
             </div>
-          </div>
-        </div>
-      </section>
+      </V5CtaSection>
     </V5SiteLayout>
   );
 }

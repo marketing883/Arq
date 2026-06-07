@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
+import V5CtaSection from "@/components/home-v5/V5CtaSection";
 import { ArrowRight } from "@/components/home-v5/icons";
 
 export const metadata: Metadata = {
@@ -111,10 +112,7 @@ export default function HowItWorksPage() {
       </section>
 
       {/* CTA band */}
-      <section className="v5-section v5-cta-band">
-        <div className="v5-container">
-          <div className="v5-cta-card">
-            <div className="v5-cta-glow" />
+      <V5CtaSection>
             <h2 className="v5-h2">See the architecture in action.</h2>
             <p className="v5-lead">
               We can show how your workflow would run on this foundation in your environment.
@@ -124,9 +122,7 @@ export default function HowItWorksPage() {
                 Get Started <ArrowRight />
               </Link>
             </div>
-          </div>
-        </div>
-      </section>
+      </V5CtaSection>
     </V5SiteLayout>
   );
 }

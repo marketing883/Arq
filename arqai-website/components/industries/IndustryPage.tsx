@@ -1,6 +1,7 @@
 import Link from "next/link";
 import V5Nav from "@/components/home-v5/V5Nav";
 import Footer from "@/components/home-v5/Footer";
+import V5CtaSection from "@/components/home-v5/V5CtaSection";
 import { ArrowRight } from "@/components/home-v5/icons";
 import { getAccelerator } from "@/lib/data/accelerators";
 import "@/components/home-v5/styles.css";
@@ -238,10 +239,7 @@ export function IndustryPage({ data }: { data: IndustryPageData }) {
         ) : null}
 
         {/* Closing CTA */}
-        <section className="v5-section v5-cta-band">
-          <div className="v5-container">
-            <div className="v5-cta-card">
-              <div className="v5-cta-glow" />
+        <V5CtaSection>
               <h2 className="v5-h2">{data.closingCta.headline}</h2>
               <p className="v5-lead">{data.closingCta.body}</p>
               <div className="v5-cta-card-actions">
@@ -249,9 +247,7 @@ export function IndustryPage({ data }: { data: IndustryPageData }) {
                   {ctaLabel} <ArrowRight />
                 </Link>
               </div>
-            </div>
-          </div>
-        </section>
+        </V5CtaSection>
       </main>
       <Footer />
     </div>

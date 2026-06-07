@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
+import V5CtaSection from "@/components/home-v5/V5CtaSection";
 import { ArrowRight, SparkIcon, ShieldIcon, InsightIcon, DocIcon, ChatIcon } from "@/components/home-v5/icons";
 import { getService, services } from "@/lib/data/services";
 
@@ -318,10 +319,7 @@ export default function ServiceDetailPage({ params }: ServicePageProps) {
       </section>
 
       {/* CTA band */}
-      <section className="v5-section v5-cta-band">
-        <div className="v5-container">
-          <div className="v5-cta-card">
-            <div className="v5-cta-glow" />
+      <V5CtaSection>
             <h2 className="v5-h2">{service.cta.heading}</h2>
             <p className="v5-lead">{service.cta.body}</p>
             <div className="v5-cta-card-actions">
@@ -332,9 +330,7 @@ export default function ServiceDetailPage({ params }: ServicePageProps) {
                 All services
               </Link>
             </div>
-          </div>
-        </div>
-      </section>
+      </V5CtaSection>
     </V5SiteLayout>
   );
 }

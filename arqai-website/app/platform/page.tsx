@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Metadata } from "next";
 import { PlatformStructuredData } from "@/components/seo/StructuredData";
 import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
+import V5CtaSection from "@/components/home-v5/V5CtaSection";
 import { ArrowRight, ArrowUpRight } from "@/components/home-v5/icons";
 
 export const metadata: Metadata = {
@@ -201,10 +202,7 @@ export default function PlatformPage() {
       </section>
 
       {/* CTA band */}
-      <section className="v5-section v5-cta-band">
-        <div className="v5-container">
-          <div className="v5-cta-card">
-            <div className="v5-cta-glow" />
+      <V5CtaSection>
             <h2 className="v5-h2">Bring us the workflow that should be operating differently.</h2>
             <p className="v5-lead">
               We will map the operating fabric around it: the systems, evidence, risk
@@ -218,9 +216,7 @@ export default function PlatformPage() {
                 View services
               </Link>
             </div>
-          </div>
-        </div>
-      </section>
+      </V5CtaSection>
     </V5SiteLayout>
   );
 }
