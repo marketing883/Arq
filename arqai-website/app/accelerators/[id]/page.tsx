@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -8,6 +7,14 @@ import { accelerators, getAccelerator } from "@/lib/data/accelerators";
 import AcceleratorForm from "@/components/accelerators/AcceleratorForm";
 
 const CAP_ICONS = [SparkIcon, InsightIcon, ShieldIcon, DocIcon, ChatIcon];
+
+// Serve big decorative images straight from the Unsplash CDN (already AVIF/WebP
+// via auto=format) instead of routing them through Next's image optimizer,
+// which adds a fetch+transcode round-trip for remote images.
+const cdn = (url: string, w: number) =>
+  url.replace(/w=\d+/, `w=${w}`).replace(/q=\d+/, "q=70");
+const cdnSrcSet = (url: string, widths: number[]) =>
+  widths.map((w) => `${cdn(url, w)} ${w}w`).join(", ");
 
 type AcceleratorPageProps = {
   params: {
@@ -51,16 +58,27 @@ export default function AcceleratorDetailPage({ params }: AcceleratorPageProps) 
 
   return (
     <V5SiteLayout>
+      {/* Preload the LCP hero image (served from the Unsplash CDN, not the Next optimizer) */}
+      <link
+        rel="preload"
+        as="image"
+        href={cdn(accelerator.heroImage, 1920)}
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        {...({ imageSrcSet: cdnSrcSet(accelerator.heroImage, [1024, 1440, 1920, 2400]), imageSizes: "100vw", fetchPriority: "high" } as any)}
+      />
+
       {/* Hero — full-bleed image, animated overlay, content on top */}
       <section className="v5-acc-hero">
-        <Image
-          src={accelerator.heroImage}
-          alt={`${accelerator.name} — ${accelerator.category}`}
-          fill
-          sizes="100vw"
-          style={{ objectFit: "cover" }}
-          priority
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
           className="v5-acc-hero-img"
+          src={cdn(accelerator.heroImage, 1920)}
+          srcSet={cdnSrcSet(accelerator.heroImage, [1024, 1440, 1920, 2400])}
+          sizes="100vw"
+          alt={`${accelerator.name} — ${accelerator.category}`}
+          decoding="async"
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          {...({ fetchPriority: "high" } as any)}
         />
         <span className="v5-acc-hero-aurora" aria-hidden="true" />
         <span className="v5-acc-hero-sheen" aria-hidden="true" />
@@ -137,12 +155,15 @@ export default function AcceleratorDetailPage({ params }: AcceleratorPageProps) 
 
       {/* Full-width showcase band */}
       <section className="v5-showcase">
-        <Image
-          src={accelerator.secondaryImage}
-          alt=""
-          fill
-          sizes="100vw"
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
           className="v5-showcase-img"
+          src={cdn(accelerator.secondaryImage, 1920)}
+          srcSet={cdnSrcSet(accelerator.secondaryImage, [1024, 1440, 1920, 2400])}
+          sizes="100vw"
+          alt=""
+          loading="lazy"
+          decoding="async"
         />
         <span className="v5-showcase-inset" />
         <div className="v5-container">
@@ -240,12 +261,14 @@ export default function AcceleratorDetailPage({ params }: AcceleratorPageProps) 
             </div>
             <div style={{ display: "flex", justifyContent: "center" }}>
               <div className="v5-media-sm">
-                <Image
-                  src={accelerator.tertiaryImage}
-                  alt={`${accelerator.name} in context`}
-                  width={420}
-                  height={315}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={cdn(accelerator.tertiaryImage, 800)}
+                  srcSet={cdnSrcSet(accelerator.tertiaryImage, [480, 800])}
                   sizes="(min-width: 860px) 420px, 100vw"
+                  alt={`${accelerator.name} in context`}
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
             </div>

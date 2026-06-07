@@ -715,8 +715,8 @@
 .v5-svc-num { position: absolute; top: 14px; left: 14px; z-index: 1; width: 38px; height: 38px; border-radius: 10px; background: rgba(255,255,255,0.92); backdrop-filter: blur(6px); display: inline-flex; align-items: center; justify-content: center; font-family: var(--v5-display); font-weight: 600; font-size: 14px; color: var(--v5-ink); }
 
 /* accelerator detail hero — full-bleed image, animated overlay, content on top */
-.v5-acc-hero { position: relative; display: flex; align-items: flex-end; min-height: clamp(540px, 80vh, 760px); overflow: hidden; }
-.v5-acc-hero-img { z-index: 0; }
+.v5-acc-hero { position: relative; display: flex; align-items: flex-end; min-height: clamp(540px, 80vh, 760px); overflow: hidden; background: var(--v5-navy); }
+.v5-acc-hero-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
 /* legibility veil (top-to-bottom + left bias) */
 .v5-acc-hero::after { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(15,20,40,0.55) 0%, rgba(15,20,40,0.18) 34%, rgba(15,20,40,0.82) 100%), linear-gradient(100deg, rgba(15,20,40,0.6) 0%, rgba(15,20,40,0.12) 55%, transparent 100%); }
 /* animated aurora glow — subtle, drifting */
@@ -743,8 +743,8 @@
 @media (prefers-reduced-motion: reduce) { .v5-acc-hero-aurora, .v5-acc-hero-sheen { animation: none; } }
 
 /* full-width showcase band: image + dark overlay + inner shadow + content */
-.v5-showcase { position: relative; display: flex; justify-content: center; min-height: clamp(340px, 44vh, 480px); overflow: hidden; }
-.v5-showcase-img { object-fit: cover; z-index: 0; }
+.v5-showcase { position: relative; display: flex; justify-content: center; min-height: clamp(340px, 44vh, 480px); overflow: hidden; background: var(--v5-navy); }
+.v5-showcase-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
 .v5-showcase::after { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(110deg, rgba(20,27,52,0.9) 0%, rgba(20,27,52,0.6) 52%, rgba(20,27,52,0.32) 100%); }
 .v5-showcase-inset { position: absolute; inset: 0; z-index: 1; box-shadow: inset 0 0 140px 36px rgba(0,0,0,0.6); pointer-events: none; }
 .v5-showcase .v5-container { position: relative; z-index: 2; display: flex; align-items: center; padding-top: clamp(72px, 10vh, 120px); padding-bottom: clamp(72px, 10vh, 120px); }
