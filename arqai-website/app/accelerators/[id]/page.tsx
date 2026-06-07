@@ -12,7 +12,7 @@ const CAP_ICONS = [SparkIcon, InsightIcon, ShieldIcon, DocIcon, ChatIcon];
 // via auto=format) instead of routing them through Next's image optimizer,
 // which adds a fetch+transcode round-trip for remote images.
 const cdn = (url: string, w: number) =>
-  url.replace(/w=\d+/, `w=${w}`).replace(/q=\d+/, "q=70");
+  url.replace(/w=\d+/, `w=${w}`).replace(/q=\d+/, "q=62");
 const cdnSrcSet = (url: string, widths: number[]) =>
   widths.map((w) => `${cdn(url, w)} ${w}w`).join(", ");
 
@@ -64,7 +64,7 @@ export default function AcceleratorDetailPage({ params }: AcceleratorPageProps) 
         as="image"
         href={cdn(accelerator.heroImage, 1920)}
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        {...({ imageSrcSet: cdnSrcSet(accelerator.heroImage, [1024, 1440, 1920, 2400]), imageSizes: "100vw", fetchPriority: "high" } as any)}
+        {...({ imageSrcSet: cdnSrcSet(accelerator.heroImage, [960, 1280, 1600, 1920]), imageSizes: "100vw", fetchPriority: "high" } as any)}
       />
 
       {/* Hero — full-bleed image, animated overlay, content on top */}
@@ -73,7 +73,7 @@ export default function AcceleratorDetailPage({ params }: AcceleratorPageProps) 
         <img
           className="v5-acc-hero-img"
           src={cdn(accelerator.heroImage, 1920)}
-          srcSet={cdnSrcSet(accelerator.heroImage, [1024, 1440, 1920, 2400])}
+          srcSet={cdnSrcSet(accelerator.heroImage, [960, 1280, 1600, 1920])}
           sizes="100vw"
           alt={`${accelerator.name} — ${accelerator.category}`}
           decoding="async"
@@ -159,7 +159,7 @@ export default function AcceleratorDetailPage({ params }: AcceleratorPageProps) 
         <img
           className="v5-showcase-img"
           src={cdn(accelerator.secondaryImage, 1920)}
-          srcSet={cdnSrcSet(accelerator.secondaryImage, [1024, 1440, 1920, 2400])}
+          srcSet={cdnSrcSet(accelerator.secondaryImage, [960, 1280, 1600, 1920])}
           sizes="100vw"
           alt=""
           loading="lazy"

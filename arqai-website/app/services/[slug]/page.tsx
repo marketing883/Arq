@@ -10,7 +10,7 @@ const CAP_ICONS = [SparkIcon, InsightIcon, ShieldIcon, DocIcon, ChatIcon];
 // Serve big decorative images straight from the Unsplash CDN (already AVIF/WebP
 // via auto=format) instead of routing them through Next's image optimizer.
 const cdn = (url: string, w: number) =>
-  url.replace(/w=\d+/, `w=${w}`).replace(/q=\d+/, "q=70");
+  url.replace(/w=\d+/, `w=${w}`).replace(/q=\d+/, "q=62");
 const cdnSrcSet = (url: string, widths: number[]) =>
   widths.map((w) => `${cdn(url, w)} ${w}w`).join(", ");
 
@@ -57,7 +57,7 @@ export default function ServiceDetailPage({ params }: ServicePageProps) {
         as="image"
         href={cdn(service.heroImage, 1920)}
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        {...({ imageSrcSet: cdnSrcSet(service.heroImage, [1024, 1440, 1920, 2400]), imageSizes: "100vw", fetchPriority: "high" } as any)}
+        {...({ imageSrcSet: cdnSrcSet(service.heroImage, [960, 1280, 1600, 1920]), imageSizes: "100vw", fetchPriority: "high" } as any)}
       />
 
       {/* Hero — full-bleed image, animated overlay, content on top */}
@@ -66,7 +66,7 @@ export default function ServiceDetailPage({ params }: ServicePageProps) {
         <img
           className="v5-acc-hero-img"
           src={cdn(service.heroImage, 1920)}
-          srcSet={cdnSrcSet(service.heroImage, [1024, 1440, 1920, 2400])}
+          srcSet={cdnSrcSet(service.heroImage, [960, 1280, 1600, 1920])}
           sizes="100vw"
           alt={service.title}
           decoding="async"
@@ -151,7 +151,7 @@ export default function ServiceDetailPage({ params }: ServicePageProps) {
         <img
           className="v5-showcase-img"
           src={cdn(service.secondaryImage, 1920)}
-          srcSet={cdnSrcSet(service.secondaryImage, [1024, 1440, 1920, 2400])}
+          srcSet={cdnSrcSet(service.secondaryImage, [960, 1280, 1600, 1920])}
           sizes="100vw"
           alt=""
           loading="lazy"
