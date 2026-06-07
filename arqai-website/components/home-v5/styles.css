@@ -710,7 +710,7 @@
 
 /* service / media card top image with number badge */
 .v5-svc-media { position: relative; aspect-ratio: 16 / 10; background: var(--v5-grey-5); overflow: hidden; }
-.v5-svc-media img { transition: transform .4s ease; }
+.v5-svc-media img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s ease; }
 .v5-card-link:hover .v5-svc-media img { transform: scale(1.05); }
 .v5-svc-num { position: absolute; top: 14px; left: 14px; z-index: 1; width: 38px; height: 38px; border-radius: 10px; background: rgba(255,255,255,0.92); backdrop-filter: blur(6px); display: inline-flex; align-items: center; justify-content: center; font-family: var(--v5-display); font-weight: 600; font-size: 14px; color: var(--v5-ink); }
 
