@@ -10,8 +10,8 @@ export default function HealthcarePayersPage() {
         heroHeadline: "AI for payer workflows where every decision needs evidence.",
         heroSubhead:
           "Payment integrity, prior authorization, utilization management, and care operations all depend on the same thing: the right context, in the right workflow, before the decision is made.",
-        heroImage:
-          "/img/services/Healthcare-Real-Time-Risk-Stratification-With-Built-In-Compliance.jpg",
+        heroImage: "https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&w=1600&q=80",
+        secondaryImage: "https://images.unsplash.com/photo-1538108149393-fbbd81895907?auto=format&fit=crop&w=1920&q=80",
         heroImageAlt: "Healthcare payer operations",
         primaryCta: { label: "Get Started", href: "/engage-us" },
         secondaryCta: { label: "Explore accelerators", href: "/accelerators" },

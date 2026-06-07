@@ -1,15 +1,22 @@
-import Image from "next/image";
 import Link from "next/link";
 import V5Nav from "@/components/home-v5/V5Nav";
 import Footer from "@/components/home-v5/Footer";
 import { ArrowRight, ArrowUpRight } from "@/components/home-v5/icons";
 import "@/components/home-v5/styles.css";
 
+// Serve big decorative images straight from the Unsplash CDN (already AVIF/WebP
+// via auto=format) instead of routing them through Next's image optimizer.
+const cdn = (url: string, w: number) =>
+  url.replace(/w=\d+/, `w=${w}`).replace(/q=\d+/, "q=62");
+const cdnSrcSet = (url: string, widths: number[]) =>
+  widths.map((w) => `${cdn(url, w)} ${w}w`).join(", ");
+
 export type IndustryPageData = {
   eyebrow: string;
   heroHeadline: string;
   heroSubhead: string;
   heroImage: string;
+  secondaryImage: string;
   heroImageAlt: string;
   primaryCta?: { label: string; href: string };
   secondaryCta?: { label: string; href: string };
@@ -35,41 +42,56 @@ export type IndustryPageData = {
 };
 
 export function IndustryPage({ data }: { data: IndustryPageData }) {
+  const primaryHref = data.primaryCta?.href ?? "/engage-us";
+  const primaryLabel = data.primaryCta?.label ?? "Get Started";
+
   return (
     <div className="v5-shell">
+      <link
+        rel="preload"
+        as="image"
+        href={cdn(data.heroImage, 1920)}
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        {...({ imageSrcSet: cdnSrcSet(data.heroImage, [960, 1280, 1600, 1920]), imageSizes: "100vw", fetchPriority: "high" } as any)}
+      />
       <V5Nav />
       <main>
-        {/* Hero */}
-        <section className="v5-page-hero">
+        {/* Hero — full-bleed image, animated overlay, content on top */}
+        <section className="v5-acc-hero">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            className="v5-acc-hero-img"
+            src={cdn(data.heroImage, 1920)}
+            srcSet={cdnSrcSet(data.heroImage, [960, 1280, 1600, 1920])}
+            sizes="100vw"
+            alt={data.heroImageAlt}
+            decoding="async"
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            {...({ fetchPriority: "high" } as any)}
+          />
+          <span className="v5-acc-hero-aurora" aria-hidden="true" />
+          <span className="v5-acc-hero-sheen" aria-hidden="true" />
           <div className="v5-container">
-            <div className="v5-split">
-              <div className="v5-split-copy">
-                <span className="v5-badge">
-                  <span className="v5-badge-dot" />
-                  {data.eyebrow}
-                </span>
-                <h1 className="v5-h1" style={{ marginTop: 18 }}>{data.heroHeadline}</h1>
-                <p className="v5-lead">{data.heroSubhead}</p>
-                <div className="v5-hero-actions">
-                  <Link href={data.primaryCta?.href ?? "/engage-us"} className="v5-btn v5-btn-primary">
-                    {data.primaryCta?.label ?? "Get Started"} <ArrowRight />
+            <div className="v5-acc-hero-body">
+              <span className="v5-badge on-dark">
+                <span className="v5-badge-dot" />
+                {data.eyebrow}
+              </span>
+              <h1 className="v5-h1">{data.heroHeadline}</h1>
+              <p className="v5-lead">{data.heroSubhead}</p>
+              <div className="v5-hero-actions">
+                <Link href={primaryHref} className="v5-btn v5-btn-primary">
+                  {primaryLabel} <ArrowRight />
+                </Link>
+                {data.secondaryCta ? (
+                  <Link
+                    href={data.secondaryCta.href}
+                    className="v5-btn v5-btn-ghost"
+                    style={{ background: "transparent", borderColor: "rgba(255,255,255,0.4)", color: "#fff" }}
+                  >
+                    {data.secondaryCta.label}
                   </Link>
-                  {data.secondaryCta ? (
-                    <Link href={data.secondaryCta.href} className="v5-btn v5-btn-ghost">
-                      {data.secondaryCta.label}
-                    </Link>
-                  ) : null}
-                </div>
-              </div>
-              <div className="v5-split-media">
-                <Image
-                  src={data.heroImage}
-                  alt={data.heroImageAlt}
-                  fill
-                  sizes="(min-width: 860px) 50vw, 100vw"
-                  style={{ objectFit: "cover" }}
-                  priority
-                />
+                ) : null}
               </div>
             </div>
           </div>
@@ -124,16 +146,26 @@ export function IndustryPage({ data }: { data: IndustryPageData }) {
           </div>
         </section>
 
-        {/* Mid CTA */}
-        <section className="v5-section v5-cta-band">
+        {/* Full-width showcase band (mid CTA over imagery) */}
+        <section className="v5-showcase">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            className="v5-showcase-img"
+            src={cdn(data.secondaryImage, 1920)}
+            srcSet={cdnSrcSet(data.secondaryImage, [960, 1280, 1600, 1920])}
+            sizes="100vw"
+            alt=""
+            loading="lazy"
+            decoding="async"
+          />
+          <span className="v5-showcase-inset" />
           <div className="v5-container">
-            <div className="v5-cta-card">
-              <div className="v5-cta-glow" />
+            <div className="v5-showcase-body">
               <span className="v5-card-eyebrow" style={{ color: "var(--v5-lime)" }}>Next step</span>
-              <h2 className="v5-h2" style={{ marginTop: 12 }}>{data.midCtaHeadline}</h2>
+              <h2 className="v5-h2" style={{ marginTop: 10 }}>{data.midCtaHeadline}</h2>
               <p className="v5-lead">{data.midCtaBody}</p>
-              <div className="v5-cta-card-actions">
-                <Link href="/engage-us" className="v5-btn v5-btn-primary">
+              <div className="v5-cta-card-actions" style={{ justifyContent: "flex-start", marginTop: 24 }}>
+                <Link href={primaryHref} className="v5-btn v5-btn-primary">
                   Get Started <ArrowRight />
                 </Link>
               </div>
@@ -196,7 +228,7 @@ export function IndustryPage({ data }: { data: IndustryPageData }) {
               <h2 className="v5-h2">{data.closingCta.headline}</h2>
               <p className="v5-lead">{data.closingCta.body}</p>
               <div className="v5-cta-card-actions">
-                <Link href="/engage-us" className="v5-btn v5-btn-primary">
+                <Link href={primaryHref} className="v5-btn v5-btn-primary">
                   Get Started <ArrowRight />
                 </Link>
                 <Link href="/accelerators" className="v5-btn v5-btn-ghost">

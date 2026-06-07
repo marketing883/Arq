@@ -56,7 +56,6 @@ const MENUS: Menu[] = [
       { title: "Insurance Carriers", desc: "Triage, intake, and review", href: "/industries/insurance-carriers", icon: <InsightIcon /> },
       { title: "Retail", desc: "Loyalty, pricing, and service", href: "/industries/retail", icon: <ChatIcon /> },
       { title: "Manufacturing", desc: "Supply chain and operations", href: "/industries/manufacturing", icon: <SparkIcon /> },
-      { title: "Use Cases", desc: "Where agents move the needle", href: "/use-cases", icon: <SparkIcon /> },
     ],
     feature: { href: "/case-studies", image: `${A}/wqdffQW0WSkz5XQ7YchgqN2bDQ.jpeg`, tag: "Case study", title: "$3.2M in undetected waste, found" },
   },

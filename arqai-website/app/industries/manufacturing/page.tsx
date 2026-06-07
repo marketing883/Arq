@@ -10,8 +10,8 @@ export default function ManufacturingPage() {
         heroHeadline: "AI for manufacturers that need the plant, ERP, and supply chain to speak the same language.",
         heroSubhead:
           "Manufacturing teams already have the data. The hard part is turning ERP, MES, quality, maintenance, supplier, and shift context into decisions before the line feels the cost.",
-        heroImage:
-          "/img/services/Manufacturing-Autonomous-Maintenance-With-Scoped-Agent-Control.jpg",
+        heroImage: "https://images.unsplash.com/photo-1610891015188-5369212db097?auto=format&fit=crop&w=1600&q=80",
+        secondaryImage: "https://images.unsplash.com/photo-1496247749665-49cf5b1022e9?auto=format&fit=crop&w=1920&q=80",
         heroImageAlt: "Manufacturing operations",
         primaryCta: { label: "Get Started", href: "/engage-us" },
         secondaryCta: { label: "See use cases", href: "/use-cases" },

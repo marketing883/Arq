@@ -10,8 +10,8 @@ export default function RetailPage() {
         heroHeadline: "AI for retailers turning customer signals into better decisions.",
         heroSubhead:
           "Retail teams have signals everywhere: transactions, loyalty, inventory, store activity, pricing, and service conversations. We help turn those signals into actions that protect margin and deepen the customer relationship.",
-        heroImage:
-          "/img/services/Retail-40-percent-Faster-Pricing-Ops-Without-Manual-Review.jpg",
+        heroImage: "https://images.unsplash.com/photo-1759323321196-2813db509285?auto=format&fit=crop&w=1600&q=80",
+        secondaryImage: "https://images.unsplash.com/photo-1736236560164-bc741c70bca5?auto=format&fit=crop&w=1920&q=80",
         heroImageAlt: "Retail operations",
         primaryCta: { label: "Get Started", href: "/engage-us" },
         secondaryCta: { label: "See use cases", href: "/use-cases" },

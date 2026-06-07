@@ -10,8 +10,8 @@ export default function BankingPage() {
         heroHeadline: "AI for financial-crime teams that need fewer false positives and cleaner evidence.",
         heroSubhead:
           "Regional and mid-tier banks need automation that respects examiner scrutiny, analyst judgment, and thin operational capacity. We build around that reality from day one.",
-        heroImage:
-          "/img/services/Banking-Customer-Service-That-Resolves-50-percent-of-Tickets-Automatically.jpg",
+        heroImage: "https://images.unsplash.com/photo-1684679674829-fc7b436ec8e8?auto=format&fit=crop&w=1600&q=80",
+        secondaryImage: "https://images.unsplash.com/photo-1633059050703-0f1b50828402?auto=format&fit=crop&w=1920&q=80",
         heroImageAlt: "Banking operations",
         primaryCta: { label: "Get Started", href: "/engage-us" },
         secondaryCta: { label: "Explore Sentra", href: "/accelerators/sentra" },

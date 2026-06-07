@@ -17,7 +17,7 @@ const industries = [
     description:
       "Payment integrity, prior authorization, utilization management, and member operations where policy, claims, clinical context, and reviewer judgment need to line up.",
     href: "/industries/healthcare-payers",
-    image: "/img/services/Healthcare-Real-Time-Risk-Stratification-With-Built-In-Compliance.jpg",
+    image: "https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&w=1400&q=80",
     accelerators: ["Veyra", "Luma"],
   },
   {
@@ -25,7 +25,7 @@ const industries = [
     description:
       "Claims intake, coverage review, SIU routing, reserve analysis, and adjuster support for carriers that need faster movement without weaker judgment.",
     href: "/industries/insurance-carriers",
-    image: "/img/industries/insurance-claims-vehicle.jpg",
+    image: "https://images.unsplash.com/photo-1597328290883-50c5787b7c7e?auto=format&fit=crop&w=1400&q=80",
     accelerators: ["Luma", "Veyra"],
   },
   {
@@ -33,7 +33,7 @@ const industries = [
     description:
       "AML, KYC, sanctions, alert triage, customer due diligence, and SAR support for institutions that need cleaner evidence and fewer false positives.",
     href: "/industries/banking",
-    image: "/img/services/Banking-Customer-Service-That-Resolves-50-percent-of-Tickets-Automatically.jpg",
+    image: "https://images.unsplash.com/photo-1684679674829-fc7b436ec8e8?auto=format&fit=crop&w=1400&q=80",
     accelerators: ["Sentra"],
   },
   {
@@ -41,7 +41,7 @@ const industries = [
     description:
       "Loyalty, pricing, inventory, store operations, and customer-service workflows where every signal should improve margin, experience, or repeat behavior.",
     href: "/industries/retail",
-    image: "/img/services/Retail-40-percent-Faster-Pricing-Ops-Without-Manual-Review.jpg",
+    image: "https://images.unsplash.com/photo-1759323321196-2813db509285?auto=format&fit=crop&w=1400&q=80",
     accelerators: ["Nuvia"],
   },
   {
@@ -49,7 +49,7 @@ const industries = [
     description:
       "Quality, maintenance, supplier risk, procurement exposure, and production exceptions across plants, ERP, MES, and supply-chain systems.",
     href: "/industries/manufacturing",
-    image: "/img/services/Manufacturing-Autonomous-Maintenance-With-Scoped-Agent-Control.jpg",
+    image: "https://images.unsplash.com/photo-1610891015188-5369212db097?auto=format&fit=crop&w=1400&q=80",
     accelerators: ["Orbis", "Kyra"],
   },
 ];

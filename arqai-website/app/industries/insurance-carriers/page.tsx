@@ -10,7 +10,8 @@ export default function InsuranceCarriersPage() {
         heroHeadline: "AI for carriers that need faster claims without weaker judgment.",
         heroSubhead:
           "From FNOL to SIU referral, carriers need speed, evidence, and adjuster confidence in the same workflow. We build AI around the decisions your teams already own.",
-        heroImage: "/img/industries/insurance-claims-vehicle.jpg",
+        heroImage: "https://images.unsplash.com/photo-1597328290883-50c5787b7c7e?auto=format&fit=crop&w=1600&q=80",
+        secondaryImage: "https://images.unsplash.com/photo-1683446748468-eba61cda9473?auto=format&fit=crop&w=1920&q=80",
         heroImageAlt: "P&C insurance operations",
         primaryCta: { label: "Get Started", href: "/engage-us" },
         secondaryCta: { label: "Explore accelerators", href: "/accelerators" },
