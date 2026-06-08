@@ -17,6 +17,10 @@
 begin;
 
 -- 1. Ensure every candidate column the application API writes actually exists.
+--    The resume_* columns are written on every insert and are NOT droppable by
+--    the API's schema-drift fallback, so if any is missing every application
+--    fails outright -- they are added here (nullable, since an existing table
+--    may already hold rows) to guarantee inserts can land.
 alter table public.job_applications
   add column if not exists linkedin_url text,
   add column if not exists total_experience text,
@@ -29,10 +33,17 @@ alter table public.job_applications
   add column if not exists compensation_negotiable boolean not null default false,
   add column if not exists notice_period text,
   add column if not exists cover_letter text,
+  add column if not exists resume_path text,
+  add column if not exists resume_filename text,
+  add column if not exists resume_mime_type text,
+  add column if not exists resume_size_bytes bigint,
+  add column if not exists status text not null default 'new',
   add column if not exists notes text,
   add column if not exists ip text,
   add column if not exists user_agent text,
-  add column if not exists notified_at timestamptz;
+  add column if not exists notified_at timestamptz,
+  add column if not exists created_at timestamptz not null default now(),
+  add column if not exists updated_at timestamptz not null default now();
 
 -- 2. Ensure the job_id column + foreign key to job_postings exist. The admin
 --    dashboard joins job_applications -> job_postings; without this FK the list

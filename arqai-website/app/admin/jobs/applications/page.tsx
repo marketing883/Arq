@@ -265,6 +265,15 @@ export default function AdminApplicationsPage() {
           </p>
         </div>
         <div className="flex gap-3">
+          <a
+            href="/api/admin/jobs/applications/diagnostics"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-outline"
+            title="Live health check of the application pipeline (schema, storage bucket, row count)"
+          >
+            Run diagnostics
+          </a>
           <Link href="/admin/jobs" className="btn btn-outline">
             Manage jobs
           </Link>
