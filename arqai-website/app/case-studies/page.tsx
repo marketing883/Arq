@@ -64,7 +64,7 @@ export default function CaseStudiesPage() {
         <section className="v5-section v5-bg-grey">
           <div className="v5-container">
             {isLoading ? (
-              <div className="v5-blog-grid">
+              <div className="v5-cs-grid">
                 {[1, 2, 3, 4].map((i) => (
                   <div key={i} className="v5-blog-card v5-blog-skeleton">
                     <div className="v5-blog-cover v5-blog-cover-placeholder" />
@@ -82,7 +82,7 @@ export default function CaseStudiesPage() {
                 <p className="v5-lead">Check back soon for client success stories.</p>
               </div>
             ) : (
-              <div className="v5-blog-grid">
+              <div className="v5-cs-grid">
                 {caseStudies.map((study) => (
                   <a
                     key={study.id}
@@ -109,13 +109,13 @@ export default function CaseStudiesPage() {
                         {study.client_name}
                       </span>
                       <h3 className="v5-h3">{study.title}</h3>
-                      {study.overview && <p className="v5-body">{study.overview}</p>}
+                      {study.overview && <p className="v5-cs-overview">{study.overview}</p>}
 
-                      {/* Metrics Preview */}
+                      {/* Impact metrics */}
                       {study.metrics && study.metrics.length > 0 && (
-                        <div className="v5-stats" style={{ marginTop: 4 }}>
+                        <div className="v5-cs-metrics">
                           {study.metrics.slice(0, 3).map((metric, idx) => (
-                            <div key={idx} className="v5-stat">
+                            <div key={idx} className="v5-cs-metric">
                               <strong>{metric.value}</strong>
                               <span>{metric.label}</span>
                             </div>
