@@ -98,8 +98,14 @@ const CLOSE_DELAY = 140;
 export default function V5Nav() {
   const [open, setOpen] = useState<number | null>(null);
   const [mobile, setMobile] = useState(false);
+  const [mobileSection, setMobileSection] = useState<number | null>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const rootRef = useRef<HTMLDivElement | null>(null);
+
+  const closeMobile = () => {
+    setMobile(false);
+    setMobileSection(null);
+  };
 
   const cancelClose = () => {
     if (closeTimer.current) {
@@ -176,7 +182,7 @@ export default function V5Nav() {
               className="v5-nav-burger"
               aria-label="Toggle menu"
               aria-expanded={mobile}
-              onClick={() => setMobile((v) => !v)}
+              onClick={() => (mobile ? closeMobile() : setMobile(true))}
             >
               <span />
             </button>
@@ -217,17 +223,33 @@ export default function V5Nav() {
       </div>
 
       <div className={`v5-nav-mobile${mobile ? " open" : ""}`}>
-        {MENUS.map((m) => (
-          <div className="v5-nav-mobile-group" key={m.label}>
-            <span className="v5-nav-mobile-title">{m.label}</span>
-            {m.links.map((l) => (
-              <a key={l.title} href={l.href} onClick={() => setMobile(false)}>
-                {l.title}
-              </a>
-            ))}
-          </div>
-        ))}
-        <a href="/demo" className="v5-cta" onClick={() => setMobile(false)} style={{ marginTop: 10 }}>
+        {MENUS.map((m, i) => {
+          const expanded = mobileSection === i;
+          return (
+            <div
+              className={`v5-nav-mobile-group${expanded ? " expanded" : ""}`}
+              key={m.label}
+            >
+              <button
+                type="button"
+                className="v5-nav-mobile-title"
+                aria-expanded={expanded}
+                onClick={() => setMobileSection(expanded ? null : i)}
+              >
+                {m.label}
+                <Chevron />
+              </button>
+              <div className="v5-nav-mobile-panel">
+                {m.links.map((l) => (
+                  <a key={l.title} href={l.href} onClick={closeMobile}>
+                    {l.title}
+                  </a>
+                ))}
+              </div>
+            </div>
+          );
+        })}
+        <a href="/demo" className="v5-cta" onClick={closeMobile} style={{ marginTop: 10 }}>
           Book a Demo
         </a>
       </div>
