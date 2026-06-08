@@ -795,7 +795,10 @@
 .v5-input:focus { outline: none; border-color: var(--v5-ink); box-shadow: 0 0 0 3px rgba(37,46,61,0.08); }
 textarea.v5-input { resize: vertical; }
 .v5-form { padding: clamp(24px, 4vw, 36px); }
-.v5-honeypot { position: absolute; left: -9999px; opacity: 0; pointer-events: none; }
+/* display:none (rather than off-screen) so browser autofill and password
+   managers don't populate the honeypot for real applicants -- a filled
+   honeypot is treated as spam and the submission is silently dropped. */
+.v5-honeypot { display: none !important; }
 .v5-form-error { margin-top: 12px; padding: 12px 14px; background: #fdecec; border: 1px solid #f5c2c2; border-radius: 10px; color: #b42318; font-size: 13px; }
 .v5-form-submit { width: 100%; justify-content: center; margin-top: 20px; }
 .v5-form-note { margin-top: 16px; font-size: 12.5px; color: var(--v5-grey-100); text-align: center; }
