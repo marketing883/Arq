@@ -45,8 +45,9 @@ export function generateOrganizationSchema(): Record<string, unknown> {
       url: "https://thearq.ai/engage-us",
     },
     sameAs: [
-      "https://linkedin.com/company/arqai",
-      "https://twitter.com/arqai",
+      "https://www.linkedin.com/company/thearq-ai",
+      "https://x.com/The_ArqAI",
+      "https://www.instagram.com/thearq.ai",
     ],
     knowsAbout: [
       "Agentic AI",

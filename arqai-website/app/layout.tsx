@@ -67,7 +67,8 @@ export const metadata: Metadata = {
     description:
       "Production AI workflows for healthcare, insurance, banking, retail, manufacturing, and complex enterprise operations.",
     images: ["/og-image.png"],
-    creator: "@arqai",
+    site: "@The_ArqAI",
+    creator: "@The_ArqAI",
   },
   icons: {
     icon: "/favicon.ico",

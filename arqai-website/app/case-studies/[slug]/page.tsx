@@ -52,6 +52,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       title,
       description,
       images: caseStudy.featured_image ? [caseStudy.featured_image] : [],
+      site: "@The_ArqAI",
+      creator: "@The_ArqAI",
     },
     alternates: {
       canonical: `https://thearq.ai/case-studies/${slug}`,

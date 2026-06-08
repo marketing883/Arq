@@ -51,6 +51,8 @@ export const metadata: Metadata = {
     title: PAGE_TITLE,
     description: PAGE_DESC,
     images: ["/og-image.png"],
+    site: "@The_ArqAI",
+    creator: "@The_ArqAI",
   },
   robots: {
     index: true,
@@ -83,8 +85,9 @@ function StructuredData() {
       "ArqAI Labs designs, builds, deploys, and runs production AI workflows for enterprise operations across healthcare, banking, insurance, retail, and manufacturing.",
     foundingDate: "2024",
     sameAs: [
-      "https://www.linkedin.com/company/arqai-labs",
-      "https://twitter.com/arqai",
+      "https://www.linkedin.com/company/thearq-ai",
+      "https://x.com/The_ArqAI",
+      "https://www.instagram.com/thearq.ai",
     ],
     knowsAbout: [
       "Operational AI",
