@@ -46,6 +46,26 @@ const compensationCurrencyLabels: Record<string, string> = {
   other: "Other / discuss",
 };
 
+// Human labels for fields, used to turn Zod validation errors into a readable
+// "Field: message" summary the applicant can act on.
+const FIELD_LABELS: Record<string, string> = {
+  jobId: "Job",
+  fullName: "Full name",
+  email: "Email",
+  phone: "Phone",
+  linkedin: "LinkedIn",
+  totalExperience: "Total experience",
+  skills: "Primary skills",
+  achievements: "Relevant achievements",
+  compensationCurrency: "Compensation currency",
+  compensationBasis: "Pay basis",
+  currentCompensation: "Current compensation",
+  expectedCompensation: "Expected compensation",
+  compensationNegotiable: "Compensation flexibility",
+  noticePeriod: "Notice period",
+  coverLetter: "Cover note",
+};
+
 const compensationBasisLabels: Record<string, string> = {
   annual: "Annual",
   monthly: "Monthly",
@@ -67,39 +87,36 @@ function getClient() {
 }
 
 const applicationSchema = z.object({
-  jobId: z.string().uuid(),
-  fullName: z.string().min(2).max(120),
-  email: z.string().email().max(200),
-  phone: z.string().min(5).max(40),
-  linkedin: z.string().max(300).optional().nullable(),
-  totalExperience: z.string().min(1).max(120),
-  skills: z.string().min(10).max(5000),
-  achievements: z.string().min(10).max(5000),
-  compensationCurrency: z.enum([
-    "INR",
-    "USD",
-    "EUR",
-    "GBP",
-    "AED",
-    "SGD",
-    "AUD",
-    "CAD",
-    "other",
-  ]),
-  compensationBasis: z.enum([
-    "annual",
-    "monthly",
-    "hourly",
-    "daily",
-    "project",
-    "stipend",
-    "other",
-  ]),
-  currentCompensation: z.string().max(200).optional().nullable(),
-  expectedCompensation: z.string().min(1).max(200),
+  jobId: z.string().uuid("This job link looks invalid. Please reopen the posting and try again."),
+  fullName: z.string().min(2, "Please enter your full name.").max(120, "Name is too long."),
+  email: z.string().email("Please enter a valid email address.").max(200, "Email is too long."),
+  phone: z.string().min(5, "Please enter a valid phone number.").max(40, "Phone number is too long."),
+  linkedin: z.string().max(300, "LinkedIn URL is too long.").optional().nullable(),
+  totalExperience: z.string().min(1, "Please add your total experience.").max(120, "Total experience is too long."),
+  skills: z
+    .string()
+    .min(10, "Please describe your primary skills (at least 10 characters).")
+    .max(5000, "Primary skills is too long (5000 characters max)."),
+  achievements: z
+    .string()
+    .min(10, "Please add a few relevant achievements (at least 10 characters).")
+    .max(5000, "Achievements is too long (5000 characters max)."),
+  compensationCurrency: z.enum(
+    ["INR", "USD", "EUR", "GBP", "AED", "SGD", "AUD", "CAD", "other"],
+    { errorMap: () => ({ message: "Please select a compensation currency." }) }
+  ),
+  compensationBasis: z.enum(
+    ["annual", "monthly", "hourly", "daily", "project", "stipend", "other"],
+    { errorMap: () => ({ message: "Please select a pay basis." }) }
+  ),
+  currentCompensation: z.string().max(200, "Current compensation is too long.").optional().nullable(),
+  expectedCompensation: z
+    .string()
+    .min(1, "Please add your expected compensation or range.")
+    .max(200, "Expected compensation is too long."),
   compensationNegotiable: z.boolean(),
-  noticePeriod: z.string().min(1).max(120),
-  coverLetter: z.string().max(5000).optional().nullable(),
+  noticePeriod: z.string().min(1, "Please add your notice period.").max(120, "Notice period is too long."),
+  coverLetter: z.string().max(5000, "Cover note is too long (5000 characters max).").optional().nullable(),
 });
 
 function safeFilename(name: string) {
@@ -161,12 +178,25 @@ export async function POST(request: NextRequest) {
     coverLetter: formData.get("coverLetter") || null,
   });
   if (!parsed.success) {
+    const flattened = parsed.error.flatten();
     console.warn(
       "[careers/apply] rejected: validation failed",
-      JSON.stringify(parsed.error.flatten().fieldErrors)
+      JSON.stringify(flattened.fieldErrors)
     );
+    // Build a readable, field-by-field summary so the applicant sees exactly
+    // what to fix instead of a bare "Invalid input".
+    const summary = Object.entries(flattened.fieldErrors)
+      .map(([field, errors]) => {
+        const label = FIELD_LABELS[field] ?? field;
+        const message = Array.isArray(errors) && errors.length > 0 ? errors[0] : "is invalid";
+        return `${label}: ${message}`;
+      })
+      .join(" ");
     return NextResponse.json(
-      { error: "Invalid input", details: parsed.error.flatten() },
+      {
+        error: summary || "Some fields need attention. Please review and try again.",
+        fieldErrors: flattened.fieldErrors,
+      },
       { status: 400 }
     );
   }
