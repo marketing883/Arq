@@ -12,6 +12,7 @@ export const OPTIONAL_JOB_POSTING_COLUMNS = [
   "responsibilities",
   "salary_range",
   "experience_level",
+  "notification_email",
 ] as const;
 
 export const PUBLIC_JOB_STATUSES = ["active", "published"] as const;

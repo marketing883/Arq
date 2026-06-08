@@ -42,6 +42,15 @@ const patchSchema = z.object({
     .enum(["entry", "mid", "senior", "lead", "principal"])
     .optional()
     .nullable(),
+  notification_email: z.preprocess(
+    (v) => (typeof v === "string" && v.trim() === "" ? null : v),
+    z
+      .string()
+      .email("Notification email must be a valid email address")
+      .max(200)
+      .nullable()
+      .optional()
+  ),
   remote: z.boolean().optional(),
   status: z.enum(["draft", "active", "closed"]).optional(),
 });

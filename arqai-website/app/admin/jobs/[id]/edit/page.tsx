@@ -17,6 +17,7 @@ type Job = {
   responsibilities: string | null;
   salary_range: string | null;
   experience_level: string | null;
+  notification_email: string | null;
   remote: boolean;
   status: string;
 };
@@ -79,6 +80,7 @@ export default function AdminJobEditPage({ params }: { params: { id: string } })
             responsibilities: job.responsibilities ?? "",
             salary_range: job.salary_range ?? "",
             experience_level: job.experience_level ?? "",
+            notification_email: job.notification_email ?? "",
             remote: job.remote,
             status: job.status,
           }}

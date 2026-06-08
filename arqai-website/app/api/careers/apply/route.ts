@@ -229,9 +229,12 @@ export async function POST(request: NextRequest) {
   }
 
   // Confirm the job exists and is active
+  // select("*") rather than an explicit column list so the lookup keeps working
+  // even on installs that haven't yet added the optional notification_email
+  // column (it simply comes back undefined there).
   const { data: job, error: jobErr } = await client
     .from("job_postings")
-    .select("id, slug, title, department, location, employment_type, status")
+    .select("*")
     .eq("id", data.jobId)
     .maybeSingle();
   if (jobErr || !job || !isPublicJobStatus(job.status)) {
@@ -393,9 +396,21 @@ export async function POST(request: NextRequest) {
         .filter(Boolean)
         .join("\n");
 
+      // Always notify the default recruiting inbox, plus the per-job
+      // notification email if one was set on the posting (and isn't a duplicate).
+      const recipients = [NOTIFY_TO];
+      const jobNotifyEmail =
+        typeof job.notification_email === "string" ? job.notification_email.trim() : "";
+      if (
+        jobNotifyEmail &&
+        jobNotifyEmail.toLowerCase() !== NOTIFY_TO.toLowerCase()
+      ) {
+        recipients.push(jobNotifyEmail);
+      }
+
       await resend.emails.send({
         from: NOTIFY_FROM,
-        to: NOTIFY_TO,
+        to: recipients,
         reply_to: data.email,
         subject,
         html,

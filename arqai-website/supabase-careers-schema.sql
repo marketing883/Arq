@@ -30,6 +30,7 @@ create table if not exists public.job_postings (
   experience_level text check (
     experience_level in ('entry', 'mid', 'senior', 'lead', 'principal') or experience_level is null
   ),
+  notification_email text,     -- optional: extra recipient for application alerts on this role
   remote boolean not null default false,
   status text not null default 'draft' check (status in ('draft', 'active', 'closed')),
   published_at timestamptz,

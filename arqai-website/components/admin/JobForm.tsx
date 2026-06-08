@@ -16,6 +16,7 @@ export type JobFormValues = {
   responsibilities: string;
   salary_range: string;
   experience_level: string;
+  notification_email: string;
   remote: boolean;
   status: string;
 };
@@ -32,6 +33,7 @@ const DEFAULTS: JobFormValues = {
   responsibilities: "",
   salary_range: "",
   experience_level: "",
+  notification_email: "",
   remote: true,
   status: "draft",
 };
@@ -108,6 +110,7 @@ export function JobForm({
       responsibilities: values.responsibilities.trim(),
       salary_range: values.salary_range.trim(),
       experience_level: values.experience_level,
+      notification_email: values.notification_email.trim(),
     };
 
     for (const [key, value] of Object.entries(nullableFields)) {
@@ -283,6 +286,19 @@ export function JobForm({
           value={values.requirements}
           onChange={(e) => update("requirements", e.target.value)}
           className="form-input resize-y"
+        />
+      </Field>
+
+      <Field
+        label="Notification email"
+        hint="Optional. New applications for this role also notify this address, in addition to the default recruiting inbox (rmg.india@aciinfotech.com)."
+      >
+        <input
+          type="email"
+          value={values.notification_email}
+          onChange={(e) => update("notification_email", e.target.value)}
+          placeholder="e.g. hiring-manager@company.com"
+          className="form-input"
         />
       </Field>
 
