@@ -715,6 +715,37 @@
 .v5-prose li { margin-bottom: 8px; }
 .v5-prose blockquote { margin: 24px 0; padding: 4px 0 4px 22px; border-left: 3px solid var(--v5-lime); font-size: 19px; color: var(--v5-ink); }
 
+/* individual job (careers) detail */
+.v5-job-layout { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 56px; align-items: start; }
+.v5-job-main { min-width: 0; display: flex; flex-direction: column; }
+.v5-job-intro { font-size: 19px; line-height: 1.6; color: var(--v5-ink); margin: 0 0 12px; }
+.v5-job-section { padding-top: 34px; margin-top: 34px; border-top: 1px solid #e6e6e6; }
+.v5-job-section:first-child { padding-top: 0; margin-top: 0; border-top: none; }
+.v5-job-section > h2 { font-family: var(--v5-display); font-weight: 600; font-size: 24px; line-height: 1.2; letter-spacing: -0.01em; color: var(--v5-ink); margin: 0 0 16px; }
+.v5-job-section .v5-prose { max-width: none; font-size: 16px; line-height: 1.68; }
+.v5-job-section .v5-prose h3 { font-size: 18px; margin: 26px 0 10px; }
+.v5-job-section .v5-prose p { margin: 0 0 14px; }
+.v5-job-section .v5-prose .v5-list { margin: 16px 0; padding-left: 0; }
+.v5-job-section .v5-prose .v5-list li { font-size: 16px; }
+.v5-job-section .v5-prose > :last-child { margin-bottom: 0; }
+
+.v5-job-aside { position: sticky; top: 96px; }
+.v5-job-summary { background: var(--v5-white); border: 1px solid #ececec; border-radius: var(--v5-radius-md); padding: 26px 24px; box-shadow: var(--v5-shadow-soft); }
+.v5-job-summary-title { display: block; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--v5-grey-100); margin-bottom: 18px; }
+.v5-job-facts { margin: 0 0 22px; display: flex; flex-direction: column; gap: 15px; }
+.v5-job-fact { display: flex; flex-direction: column; gap: 3px; }
+.v5-job-fact dt { font-size: 12px; letter-spacing: 0.01em; color: var(--v5-grey-100); }
+.v5-job-fact dd { margin: 0; font-size: 15px; font-weight: 500; color: var(--v5-ink); }
+.v5-job-apply { width: 100%; justify-content: center; }
+.v5-job-summary-back { display: block; text-align: center; margin-top: 14px; font-size: 13px; color: var(--v5-grey-100); text-decoration: none; }
+.v5-job-summary-back:hover { color: var(--v5-ink); }
+
+@media (max-width: 900px) {
+  .v5-job-layout { grid-template-columns: 1fr; gap: 28px; }
+  .v5-job-aside { position: static; }
+  .v5-job-summary { padding: 22px 20px; }
+}
+
 /* breadcrumb */
 .v5-crumbs { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 13px; color: var(--v5-grey-100); }
 .v5-crumbs a { color: var(--v5-grey-100); text-decoration: none; }

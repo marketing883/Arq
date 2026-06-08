@@ -62,29 +62,89 @@ function toDisplayText(value: unknown): string {
   return String(value);
 }
 
-function renderBlock(text: string) {
-  // Split lines that start with "-" or "*" into a bullet list, otherwise paragraphs.
-  const lines = text
-    .split(/\r?\n/)
-    .map((l) => l.trim())
-    .filter((l) => l.length > 0);
-  const isList = lines.length > 0 && lines.every((l) => /^[-*]/.test(l));
-  if (isList) {
-    return (
-      <ul className="v5-list">
-        {lines.map((line, i) => (
-          <li key={i}>{line.replace(/^[-*]\s*/, "")}</li>
-        ))}
-      </ul>
-    );
+type ContentBlock =
+  | { type: "heading"; text: string }
+  | { type: "para"; text: string }
+  | { type: "list"; items: string[] };
+
+// Turn free-form admin text (typed in a textarea, often a mix of intro
+// sentences, sub-headings, and bullets) into structured blocks so it renders
+// as clean paragraphs and lists instead of one undifferentiated chunk.
+function parseContent(raw: string): ContentBlock[] {
+  const lines = raw.split(/\r?\n/);
+  const blocks: ContentBlock[] = [];
+  let list: string[] | null = null;
+
+  const flushList = () => {
+    if (list && list.length) blocks.push({ type: "list", items: list });
+    list = null;
+  };
+
+  for (const rawLine of lines) {
+    const line = rawLine.trim();
+    if (!line) {
+      flushList();
+      continue;
+    }
+
+    const mdHeading = line.match(/^#{1,3}\s+(.*)$/);
+    const boldHeading = line.match(/^\*\*(.+?)\*\*:?$/);
+    const colonHeading = /^[A-Z][^.!?:]{0,58}:$/.test(line);
+    if (mdHeading || boldHeading) {
+      flushList();
+      blocks.push({ type: "heading", text: (mdHeading?.[1] ?? boldHeading?.[1] ?? "").trim() });
+      continue;
+    }
+
+    const bullet = line.match(/^[-*•·]\s+(.*)$/);
+    if (bullet) {
+      if (!list) list = [];
+      list.push(bullet[1].trim());
+      continue;
+    }
+
+    if (colonHeading) {
+      flushList();
+      blocks.push({ type: "heading", text: line.replace(/:$/, "") });
+      continue;
+    }
+
+    flushList();
+    blocks.push({ type: "para", text: line });
   }
+  flushList();
+  return blocks;
+}
+
+// Minimal inline formatting: **bold**.
+function renderInline(text: string): React.ReactNode {
+  const parts = text.split(/(\*\*[^*]+\*\*)/g);
+  return parts.map((part, i) => {
+    const m = part.match(/^\*\*([^*]+)\*\*$/);
+    return m ? <strong key={i}>{m[1]}</strong> : <span key={i}>{part}</span>;
+  });
+}
+
+function JobContent({ text }: { text: string }) {
+  const blocks = parseContent(text);
+  if (blocks.length === 0) return null;
   return (
     <div className="v5-prose">
-      {text.split(/\n{2,}/).map((para, i) => (
-        <p key={i} style={{ whiteSpace: "pre-line" }}>
-          {para.trim()}
-        </p>
-      ))}
+      {blocks.map((block, i) => {
+        if (block.type === "heading") {
+          return <h3 key={i}>{renderInline(block.text)}</h3>;
+        }
+        if (block.type === "list") {
+          return (
+            <ul key={i} className="v5-list">
+              {block.items.map((item, j) => (
+                <li key={j}>{renderInline(item)}</li>
+              ))}
+            </ul>
+          );
+        }
+        return <p key={i}>{renderInline(block.text)}</p>;
+      })}
     </div>
   );
 }
@@ -326,26 +386,56 @@ export default function JobDetailPage({ params }: { params: { slug: string } }) 
         {/* Body */}
         <section className="v5-section v5-bg-grey">
           <div className="v5-container">
-            <div style={{ maxWidth: 760, display: "flex", flexDirection: "column", gap: 40 }}>
-              {shortDescription && <p className="v5-lead">{shortDescription}</p>}
-              {description && (
-                <div>
-                  <h2 className="v5-h2" style={{ marginBottom: 14 }}>About the role</h2>
-                  {renderBlock(description)}
+            <div className="v5-job-layout">
+              <div className="v5-job-main">
+                {shortDescription && <p className="v5-lead v5-job-intro">{shortDescription}</p>}
+                {description && (
+                  <div className="v5-job-section">
+                    <h2>About the role</h2>
+                    <JobContent text={description} />
+                  </div>
+                )}
+                {responsibilities && (
+                  <div className="v5-job-section">
+                    <h2>What you&apos;ll do</h2>
+                    <JobContent text={responsibilities} />
+                  </div>
+                )}
+                {requirements && (
+                  <div className="v5-job-section">
+                    <h2>What we&apos;re looking for</h2>
+                    <JobContent text={requirements} />
+                  </div>
+                )}
+                {!description && !responsibilities && !requirements && !shortDescription && (
+                  <p className="v5-body">Full role details are coming soon. Apply below and our team will share more.</p>
+                )}
+              </div>
+
+              <aside className="v5-job-aside">
+                <div className="v5-job-summary">
+                  <span className="v5-job-summary-title">Role at a glance</span>
+                  <dl className="v5-job-facts">
+                    <SummaryRow label="Department" value={job.department} />
+                    <SummaryRow label="Location" value={job.location} />
+                    <SummaryRow
+                      label="Employment"
+                      value={employmentTypeLabel[job.employment_type] ?? job.employment_type}
+                    />
+                    {experienceLevel && (
+                      <SummaryRow label="Experience" value={`${experienceLevel} level`} />
+                    )}
+                    <SummaryRow label="Work style" value={job.remote ? "Remote-friendly" : "On-site"} />
+                    {salaryRange && <SummaryRow label="Compensation" value={salaryRange} />}
+                  </dl>
+                  <button onClick={scrollToForm} className="v5-btn v5-btn-primary v5-job-apply">
+                    Apply for this role <ArrowRight />
+                  </button>
+                  <Link href="/careers" className="v5-job-summary-back">
+                    View all open roles
+                  </Link>
                 </div>
-              )}
-              {responsibilities && (
-                <div>
-                  <h2 className="v5-h2" style={{ marginBottom: 14 }}>What you&apos;ll do</h2>
-                  {renderBlock(responsibilities)}
-                </div>
-              )}
-              {requirements && (
-                <div>
-                  <h2 className="v5-h2" style={{ marginBottom: 14 }}>What we&apos;re looking for</h2>
-                  {renderBlock(requirements)}
-                </div>
-              )}
+              </aside>
             </div>
           </div>
         </section>
@@ -521,6 +611,15 @@ export default function JobDetailPage({ params }: { params: { slug: string } }) 
         </section>
       </main>
       <Footer />
+    </div>
+  );
+}
+
+function SummaryRow({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="v5-job-fact">
+      <dt>{label}</dt>
+      <dd>{value}</dd>
     </div>
   );
 }
