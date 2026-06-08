@@ -4,6 +4,13 @@ import { accelerators } from "@/lib/data/accelerators";
 import { services } from "@/lib/data/services";
 import { coreStaticPaths, industryLinks } from "@/lib/data/site-navigation";
 
+// The sitemap pulls CMS content (blog posts, case studies, whitepapers,
+// webinars) from Supabase. Without this, Next.js statically renders the
+// sitemap once at build time and never picks up content published later from
+// the CMS. Revalidating hourly keeps newly published content discoverable by
+// search engines without re-deploying.
+export const revalidate = 3600;
+
 function getSupabase() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -84,6 +91,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     if (blogPosts) {
       blogPosts.forEach((post) => {
+        if (!post.slug) return;
         dynamicPages.push({
           url: `${baseUrl}/blog/${post.slug}`,
           lastModified: post.updated_at || post.published_at || currentDate,
@@ -102,6 +110,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     if (caseStudies) {
       caseStudies.forEach((study) => {
+        if (!study.slug) return;
         dynamicPages.push({
           url: `${baseUrl}/case-studies/${study.slug}`,
           lastModified: study.updated_at || study.created_at || currentDate,
@@ -111,17 +120,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       });
     }
 
-    // Fetch published whitepapers
+    // Fetch published whitepapers. The public detail page lives at
+    // /whitepapers/{slug} (not /resources/whitepapers/{id}), so emit the slug.
     const { data: whitepapers } = await supabase
       .from("whitepapers")
-      .select("id, updated_at, created_at")
+      .select("slug, updated_at, created_at")
       .eq("status", "published")
       .order("created_at", { ascending: false });
 
     if (whitepapers) {
       whitepapers.forEach((wp) => {
+        if (!wp.slug) return;
         dynamicPages.push({
-          url: `${baseUrl}/resources/whitepapers/${wp.id}`,
+          url: `${baseUrl}/whitepapers/${wp.slug}`,
           lastModified: wp.updated_at || wp.created_at || currentDate,
           changeFrequency: "monthly",
           priority: 0.6,
@@ -129,15 +140,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       });
     }
 
-    // Fetch published webinars
+    // Fetch live/upcoming/on-demand webinars. Webinars never carry a
+    // "published" status -- the public listing surfaces these three states.
     const { data: webinars } = await supabase
       .from("webinars")
       .select("slug, updated_at, created_at")
-      .eq("status", "published")
+      .in("status", ["upcoming", "live", "on-demand"])
       .order("created_at", { ascending: false });
 
     if (webinars) {
       webinars.forEach((webinar) => {
+        if (!webinar.slug) return;
         dynamicPages.push({
           url: `${baseUrl}/webinars/${webinar.slug}`,
           lastModified: webinar.updated_at || webinar.created_at || currentDate,
