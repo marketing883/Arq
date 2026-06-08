@@ -50,11 +50,12 @@ export function ChatWidget() {
   const containerRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
 
-  // Disable chat widget on admin pages and design-preview routes
+  // Disable chat widget on admin pages, design-preview routes, and standalone survey pages
   const isAdminPage =
     pathname?.startsWith("/admin") ||
     pathname?.startsWith("/v4") ||
-    pathname?.startsWith("/v5");
+    pathname?.startsWith("/v5") ||
+    pathname?.startsWith("/survey");
 
   // Scroll to bottom when messages change
   useEffect(() => {
