@@ -71,11 +71,12 @@ function ResultsInner() {
   }
 
   if (error || !data) {
+    const isAuth = error === "Unauthorized" || error === "Invalid key.";
     return (
       <div className="srv-shell">
         <div className="srv-card srv-thanks">
           <div className="srv-thanks-icon srv-thanks-icon--err">✕</div>
-          <h1 className="srv-thanks-title">Access denied</h1>
+          <h1 className="srv-thanks-title">{isAuth ? "Access denied" : "Something went wrong"}</h1>
           <p className="srv-thanks-body">{error || "Invalid key."}</p>
         </div>
       </div>

@@ -28,7 +28,11 @@ export async function GET(request: NextRequest) {
 
   if (error) {
     console.error("[survey/naming/results] fetch error:", error);
-    return NextResponse.json({ error: "Failed to fetch results" }, { status: 500 });
+    const hint =
+      error.code === "42P01" || error.message?.includes("does not exist")
+        ? "The naming_survey_responses table has not been created yet. Run supabase-naming-survey.sql in the Supabase SQL editor."
+        : error.message || "Failed to fetch results";
+    return NextResponse.json({ error: hint }, { status: 500 });
   }
 
   const rows = data ?? [];

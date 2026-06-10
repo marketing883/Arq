@@ -48,7 +48,11 @@ export async function POST(request: NextRequest) {
 
     if (error) {
       console.error("[survey/naming] insert error:", error);
-      return NextResponse.json({ error: "Failed to save response" }, { status: 500 });
+      const hint =
+        error.code === "42P01" || error.message?.includes("does not exist")
+          ? "Survey database table has not been created. Please contact admin."
+          : "Failed to save response. Please try again.";
+      return NextResponse.json({ error: hint }, { status: 500 });
     }
 
     return NextResponse.json({ ok: true });
