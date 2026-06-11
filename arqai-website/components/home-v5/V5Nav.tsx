@@ -5,11 +5,32 @@ import { LOGO } from "./content";
 import { accelerators } from "@/lib/data/accelerators";
 import {
   ArrowUpRight,
-  ChatIcon,
-  DocIcon,
+  BagIcon,
+  BankIcon,
+  BotIcon,
+  BriefcaseIcon,
+  ClaimsIcon,
+  CompassIcon,
+  FactoryIcon,
+  FlagIcon,
+  FraudIcon,
+  GaugeIcon,
+  HeadsetIcon,
+  HeartPulseIcon,
   InsightIcon,
+  LayersIcon,
+  LinkIcon,
+  LockIcon,
+  MailIcon,
+  NetworkIcon,
+  PenIcon,
+  RouteIcon,
   ShieldIcon,
   SparkIcon,
+  TagIcon,
+  TruckIcon,
+  UmbrellaIcon,
+  UsersIcon,
 } from "./icons";
 
 const A = "/v5/assets";
@@ -21,28 +42,34 @@ type Menu = {
   feature: { href: string; image: string; tag: string; title: string };
 };
 
-// Use the letter after the shared "Arq" prefix so each tile stays distinct.
-const mono = (s: string) => (
-  <span className="v5-mega-mono">{(s.replace(/^Arq/, "") || s).charAt(0)}</span>
-);
+const ACCEL_ICONS: Record<string, React.ReactNode> = {
+  arqfwa: <FraudIcon />,
+  arqclaims: <ClaimsIcon />,
+  arqbanker: <BankIcon />,
+  arqretail: <TagIcon />,
+  arqtechops: <NetworkIcon />,
+  arqlogistics: <TruckIcon />,
+  arqdesk: <HeadsetIcon />,
+  arqsecops: <LockIcon />,
+};
 
 const ACCEL_LINKS: Link[] = accelerators.map((a) => ({
   title: a.name,
   desc: a.category,
   href: `/accelerators/${a.id}`,
-  icon: mono(a.name),
+  icon: ACCEL_ICONS[a.id] ?? <SparkIcon />,
 }));
 
 const MENUS: Menu[] = [
   {
     label: "Platform",
     links: [
-      { title: "Workflow Strategy", desc: "Find the workflows worth automating", href: "/services/workflow-strategy", icon: <InsightIcon /> },
-      { title: "Agentic AI Buildout", desc: "Production agents, not demos", href: "/services/agentic-ai-buildout", icon: <SparkIcon /> },
-      { title: "Enterprise Integration", desc: "Wired into your existing stack", href: "/services/enterprise-integration", icon: <DocIcon /> },
+      { title: "Workflow Strategy", desc: "Find the workflows worth automating", href: "/services/workflow-strategy", icon: <CompassIcon /> },
+      { title: "Agentic AI Buildout", desc: "Production agents, not demos", href: "/services/agentic-ai-buildout", icon: <BotIcon /> },
+      { title: "Enterprise Integration", desc: "Wired into your existing stack", href: "/services/enterprise-integration", icon: <LinkIcon /> },
       { title: "Governance by Design", desc: "Audit-ready from day one", href: "/services/governance-by-design", icon: <ShieldIcon /> },
-      { title: "Vertical Acceleration", desc: "Pre-built patterns for your industry", href: "/services/vertical-acceleration", icon: <SparkIcon /> },
-      { title: "Managed AI Operations", desc: "We run it after go-live", href: "/services/managed-ai-operations", icon: <ChatIcon /> },
+      { title: "Vertical Acceleration", desc: "Pre-built patterns for your industry", href: "/services/vertical-acceleration", icon: <LayersIcon /> },
+      { title: "Managed AI Operations", desc: "We run it after go-live", href: "/services/managed-ai-operations", icon: <GaugeIcon /> },
     ],
     feature: { href: "/platform", image: `${A}/seeall-abstract.jpg`, tag: "Platform", title: "The operational AI foundation" },
   },
@@ -54,21 +81,22 @@ const MENUS: Menu[] = [
   {
     label: "Industries",
     links: [
-      { title: "Healthcare Payers", desc: "Claims, fraud, program integrity", href: "/industries/healthcare-payers", icon: <ShieldIcon /> },
-      { title: "Banking", desc: "Financial crime and customer risk", href: "/industries/banking", icon: <DocIcon /> },
-      { title: "Insurance Carriers", desc: "Triage, intake, and review", href: "/industries/insurance-carriers", icon: <InsightIcon /> },
-      { title: "Retail", desc: "Loyalty, pricing, and service", href: "/industries/retail", icon: <ChatIcon /> },
-      { title: "Manufacturing", desc: "Supply chain and operations", href: "/industries/manufacturing", icon: <SparkIcon /> },
+      { title: "Healthcare Payers", desc: "Claims, fraud, program integrity", href: "/industries/healthcare-payers", icon: <HeartPulseIcon /> },
+      { title: "Banking", desc: "Financial crime and customer risk", href: "/industries/banking", icon: <BankIcon /> },
+      { title: "Insurance Carriers", desc: "Triage, intake, and review", href: "/industries/insurance-carriers", icon: <UmbrellaIcon /> },
+      { title: "Retail", desc: "Loyalty, pricing, and service", href: "/industries/retail", icon: <BagIcon /> },
+      { title: "Manufacturing", desc: "Supply chain and operations", href: "/industries/manufacturing", icon: <FactoryIcon /> },
     ],
     feature: { href: "/case-studies", image: `${A}/wqdffQW0WSkz5XQ7YchgqN2bDQ.jpeg`, tag: "Case study", title: "$3.2M in undetected waste, found" },
   },
   {
     label: "Resources",
     links: [
-      { title: "Blog", desc: "Insights on operational AI", href: "/blog", icon: <ChatIcon /> },
-      { title: "Case Studies", desc: "Proof from production", href: "/case-studies", icon: <DocIcon /> },
+      { title: "Blog", desc: "Insights on operational AI", href: "/blog", icon: <PenIcon /> },
+      { title: "Case Studies", desc: "Proof from production", href: "/case-studies", icon: <InsightIcon /> },
       // Deactivated until there is published CMS content. Re-enable by
-      // uncommenting (the destination pages already exist and render).
+      // uncommenting (the destination pages already exist and render) and
+      // re-importing the referenced icons from "./icons".
       // { title: "Whitepapers", desc: "Deep dives and frameworks", href: "/whitepapers", icon: <DocIcon /> },
       // { title: "Webinars", desc: "Live sessions and replays", href: "/webinars", icon: <InsightIcon /> },
       // { title: "Resource Library", desc: "Everything in one place", href: "/resources", icon: <SparkIcon /> },
@@ -78,11 +106,11 @@ const MENUS: Menu[] = [
   {
     label: "Company",
     links: [
-      { title: "About", desc: "Why we built ArqAI Labs", href: "/about", icon: <SparkIcon /> },
-      { title: "How We Work", desc: "Our engagement model", href: "/how-we-work", icon: <InsightIcon /> },
-      { title: "Careers", desc: "Build the future with us", href: "/careers", icon: <ChatIcon /> },
-      { title: "Partners", desc: "Grow together", href: "/partners", icon: <ShieldIcon /> },
-      { title: "Contact", desc: "Talk to our team", href: "/contact", icon: <DocIcon /> },
+      { title: "About", desc: "Why we built ArqAI Labs", href: "/about", icon: <FlagIcon /> },
+      { title: "How We Work", desc: "Our engagement model", href: "/how-we-work", icon: <RouteIcon /> },
+      { title: "Careers", desc: "Build the future with us", href: "/careers", icon: <BriefcaseIcon /> },
+      { title: "Partners", desc: "Grow together", href: "/partners", icon: <UsersIcon /> },
+      { title: "Contact", desc: "Talk to our team", href: "/contact", icon: <MailIcon /> },
     ],
     feature: { href: "/about", image: `${A}/8KKNOMGpz3fVUEZDOXTVXjXkICU.jpg`, tag: "About us", title: "A partner, not a platform vendor" },
   },
