@@ -50,12 +50,12 @@ Each industry page is outcome-led and lists specific use cases:
 When the same operating pattern appears often enough, we use accelerators to shorten the path from discovery to production. They are reusable starting points, not named products.
 
 Current accelerator lines include:
-- Veyra for suspicious-claim, payment-integrity, and leakage-intelligence workflows.
-- Luma for intake, enrichment, routing, and reviewer-support workflows.
-- Sentra for AML, KYC, sanctions, ownership, and alert-triage workflows.
-- Nuvia for loyalty, personalization, and retention workflows.
-- Orbis for supplier, procurement, logistics, and dependency-risk workflows.
-- Kyra for incident enrichment, escalation, and service-restoration workflows.
+- ArqFWA for suspicious-claim, payment-integrity, and leakage-intelligence workflows.
+- ArqClaims for intake, enrichment, routing, and reviewer-support workflows.
+- ArqBanker for AML, KYC, sanctions, ownership, and alert-triage workflows.
+- ArqRetail for loyalty, personalization, and retention workflows.
+- ArqLogistics for supplier, procurement, logistics, and dependency-risk workflows.
+- ArqTechOps for incident enrichment, escalation, and service-restoration workflows.
 
 ## How we engineer
 Every ArqAI Labs build runs on a shared architectural foundation:

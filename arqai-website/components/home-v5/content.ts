@@ -87,7 +87,7 @@ export const WHY = {
   fraud: {
     num: "120+",
     title: "Fraud Patterns Caught",
-    body: "Veyra detects 120+ TPA-specific fraud patterns that generic payer tools were never designed to find.",
+    body: "ArqFWA detects 120+ TPA-specific fraud patterns that generic payer tools were never designed to find.",
   },
   reuse: {
     num: "70%",

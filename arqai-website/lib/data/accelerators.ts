@@ -31,8 +31,8 @@ const img = (id: string, w = 1600) =>
 
 export const accelerators: Accelerator[] = [
   {
-    id: "veyra",
-    name: "Veyra",
+    id: "arqfwa",
+    name: "ArqFWA",
     category: "Payment integrity and fraud intelligence",
     tagline: "Fraud, waste, abuse, and claims-leakage intelligence for payer operations.",
     summary:
@@ -43,7 +43,7 @@ export const accelerators: Accelerator[] = [
     secondaryImage: img("photo-1517120026326-d87759a7b63b", 1920),
     tertiaryImage: img("photo-1516549655169-df83a0774514", 800),
     overview:
-      "Veyra is a payment-integrity intelligence layer for healthcare payers. It reads across claims, providers, policy, and member context to surface the cases most likely to be fraud, waste, abuse, or leakage — and explains the reasoning clearly enough for an investigator to act on and defend.",
+      "ArqFWA is a payment-integrity intelligence layer for healthcare payers. It reads across claims, providers, policy, and member context to surface the cases most likely to be fraud, waste, abuse, or leakage — and explains the reasoning clearly enough for an investigator to act on and defend.",
     capabilities: [
       {
         title: "Cross-signal anomaly detection",
@@ -91,7 +91,7 @@ export const accelerators: Accelerator[] = [
     pain:
       "Payment-integrity teams are buried in claim volume, brittle rules, and cases that arrive too late to protect margin. The highest-risk patterns sit across claims, providers, policy, and member context — and no single system sees all of it.",
     promise:
-      "Veyra prioritizes the cases worth human attention, explains why they matter, and keeps the evidence trail clean enough for downstream recovery and audit.",
+      "ArqFWA prioritizes the cases worth human attention, explains why they matter, and keeps the evidence trail clean enough for downstream recovery and audit.",
     proof:
       "Built from payer fraud, waste, abuse, and claims-review patterns already appearing across ArqAI healthcare work, with governance-first review loops and auditable recommendations.",
     rollout: [
@@ -113,8 +113,8 @@ export const accelerators: Accelerator[] = [
     ],
   },
   {
-    id: "luma",
-    name: "Luma",
+    id: "arqclaims",
+    name: "ArqClaims",
     category: "Claims triage and decision support",
     tagline: "AI-assisted claims intake, enrichment, routing, and reviewer support.",
     summary:
@@ -125,7 +125,7 @@ export const accelerators: Accelerator[] = [
     secondaryImage: img("photo-1521791055366-0d553872125f", 1920),
     tertiaryImage: img("photo-1619418602850-35ad20aa1700", 800),
     overview:
-      "Luma turns claims intake into a governed triage flow. It enriches each file, checks it against policy, flags missing evidence, and recommends the next action — while every decision stays with your reviewers and every override is captured.",
+      "ArqClaims turns claims intake into a governed triage flow. It enriches each file, checks it against policy, flags missing evidence, and recommends the next action — while every decision stays with your reviewers and every override is captured.",
     capabilities: [
       {
         title: "Intelligent intake & classification",
@@ -173,7 +173,7 @@ export const accelerators: Accelerator[] = [
     pain:
       "Claims teams lose time on incomplete files, manual routing, repetitive documentation checks, and reviews that should have been escalated earlier.",
     promise:
-      "Luma turns intake into a governed triage flow — enriching the file, identifying missing evidence, recommending next action, and keeping reviewers in control.",
+      "ArqClaims turns intake into a governed triage flow — enriching the file, identifying missing evidence, recommending next action, and keeping reviewers in control.",
     proof:
       "The accelerator combines claims operating patterns with policy-aware routing, evidence capture, and human-in-the-loop decision support.",
     rollout: [
@@ -195,8 +195,8 @@ export const accelerators: Accelerator[] = [
     ],
   },
   {
-    id: "sentra",
-    name: "Sentra",
+    id: "arqbanker",
+    name: "ArqBanker",
     category: "Financial crime and customer risk",
     tagline: "AML, KYC, sanctions, ownership, and alert-triage automation.",
     summary:
@@ -207,7 +207,7 @@ export const accelerators: Accelerator[] = [
     secondaryImage: img("photo-1592698765727-387c9464cd7f", 1920),
     tertiaryImage: img("photo-1616803140344-6682afb13cda", 800),
     overview:
-      "Sentra is an analyst-first financial-crime accelerator. It clears alert noise, assembles customer risk context, and drafts examiner-ready narratives across AML, KYC, sanctions, and CDD — keeping disposition authority firmly with your team.",
+      "ArqBanker is an analyst-first financial-crime accelerator. It clears alert noise, assembles customer risk context, and drafts examiner-ready narratives across AML, KYC, sanctions, and CDD — keeping disposition authority firmly with your team.",
     capabilities: [
       {
         title: "Alert triage & deduplication",
@@ -255,7 +255,7 @@ export const accelerators: Accelerator[] = [
     pain:
       "Financial-crime teams face rising alert volume, examiner pressure, thin analyst capacity, and onboarding flows that frustrate good customers.",
     promise:
-      "Sentra helps analysts clear noise faster, escalate real risk earlier, and keep defensible evidence across AML, KYC, sanctions, and CDD workflows.",
+      "ArqBanker helps analysts clear noise faster, escalate real risk earlier, and keep defensible evidence across AML, KYC, sanctions, and CDD workflows.",
     proof:
       "Built from banking use cases around AML, KYC, SAR support, and sanctions screening, with audit-first recommendations and reviewer authority.",
     rollout: [
@@ -277,8 +277,8 @@ export const accelerators: Accelerator[] = [
     ],
   },
   {
-    id: "nuvia",
-    name: "Nuvia",
+    id: "arqretail",
+    name: "ArqRetail",
     category: "Loyalty and personalization automation",
     tagline: "Next-best offers, retention actions, and customer engagement workflows.",
     summary:
@@ -289,7 +289,7 @@ export const accelerators: Accelerator[] = [
     secondaryImage: img("photo-1483985988355-763728e1935b", 1920),
     tertiaryImage: img("photo-1556742502-ec7c0e9f34b1", 800),
     overview:
-      "Nuvia turns customer, transaction, and product signals into the next useful action for each segment — offers, retention nudges, and associate prompts — all inside your margin, inventory, and consent guardrails, learning from every campaign.",
+      "ArqRetail turns customer, transaction, and product signals into the next useful action for each segment — offers, retention nudges, and associate prompts — all inside your margin, inventory, and consent guardrails, learning from every campaign.",
     capabilities: [
       {
         title: "Next-best-action recommendations",
@@ -337,7 +337,7 @@ export const accelerators: Accelerator[] = [
     pain:
       "Loyalty programs often become static discount engines. Teams know they have useful customer signals, but campaign operations cannot react fast enough.",
     promise:
-      "Nuvia identifies the next useful action for each customer segment, keeps offers inside margin and policy guardrails, and learns from campaign response.",
+      "ArqRetail identifies the next useful action for each customer segment, keeps offers inside margin and policy guardrails, and learns from campaign response.",
     proof:
       "The accelerator draws on retail personalization, inventory, pricing, and store-operations patterns that need fast action with clear business rules.",
     rollout: [
@@ -359,8 +359,8 @@ export const accelerators: Accelerator[] = [
     ],
   },
   {
-    id: "kyra",
-    name: "Kyra",
+    id: "arqtechops",
+    name: "ArqTechOps",
     category: "Network and service operations",
     tagline: "Incident detection, ticket enrichment, escalation, and service restoration.",
     summary:
@@ -371,7 +371,7 @@ export const accelerators: Accelerator[] = [
     secondaryImage: img("photo-1544197150-b99a580bb7a8", 1920),
     tertiaryImage: img("photo-1506399558188-acca6f8cbf41", 800),
     overview:
-      "Kyra gives network and service operations a working memory. It correlates telemetry, tickets, and runbooks into enriched incidents with a recommended next action — and turns every event into reusable operational knowledge.",
+      "ArqTechOps gives network and service operations a working memory. It correlates telemetry, tickets, and runbooks into enriched incidents with a recommended next action — and turns every event into reusable operational knowledge.",
     capabilities: [
       {
         title: "Alert correlation & enrichment",
@@ -419,7 +419,7 @@ export const accelerators: Accelerator[] = [
     pain:
       "Operations teams lose time correlating alerts, rewriting tickets, searching runbooks, and escalating incidents without enough context.",
     promise:
-      "Kyra enriches incidents, recommends the next action, routes escalations, and builds a cleaner operational memory from every event.",
+      "ArqTechOps enriches incidents, recommends the next action, routes escalations, and builds a cleaner operational memory from every event.",
     proof:
       "The accelerator starts from service-operations and network workflow patterns where speed, evidence, and handoff quality matter most.",
     rollout: [
@@ -441,8 +441,8 @@ export const accelerators: Accelerator[] = [
     ],
   },
   {
-    id: "orbis",
-    name: "Orbis",
+    id: "arqlogistics",
+    name: "ArqLogistics",
     category: "Supply chain and vendor risk",
     tagline: "Supplier risk, procurement exposure, contract signals, and shipment exceptions.",
     summary:
@@ -453,7 +453,7 @@ export const accelerators: Accelerator[] = [
     secondaryImage: img("photo-1605745341112-85968b19335b", 1920),
     tertiaryImage: img("photo-1493946740644-2d8a1f1a6aff", 800),
     overview:
-      "Orbis watches your supplier and logistics dependency graph for risk — across contracts, ERP, shipments, quality data, and external signals — and routes exposure-backed actions to the right owner before disruption becomes a business event.",
+      "ArqLogistics watches your supplier and logistics dependency graph for risk — across contracts, ERP, shipments, quality data, and external signals — and routes exposure-backed actions to the right owner before disruption becomes a business event.",
     capabilities: [
       {
         title: "Dependency-graph monitoring",
@@ -501,7 +501,7 @@ export const accelerators: Accelerator[] = [
     pain:
       "Supplier and shipment risks appear across contracts, ERP records, emails, news, quality data, and logistics tools long before they show up in a monthly report.",
     promise:
-      "Orbis watches the dependency graph, highlights exposure, and routes the right action to procurement, operations, or risk owners.",
+      "ArqLogistics watches the dependency graph, highlights exposure, and routes the right action to procurement, operations, or risk owners.",
     proof:
       "The accelerator is shaped around supply-chain and vendor-risk workflows where external signals must be tied back to internal exposure.",
     rollout: [
@@ -523,8 +523,8 @@ export const accelerators: Accelerator[] = [
     ],
   },
   {
-    id: "astra",
-    name: "Astra",
+    id: "arqdesk",
+    name: "ArqDesk",
     category: "Enterprise service workflow automation",
     tagline: "Classify, route, resolve, and govern enterprise service workflows.",
     summary:
@@ -535,7 +535,7 @@ export const accelerators: Accelerator[] = [
     secondaryImage: img("photo-1556761175-4b46a572b786", 1920),
     tertiaryImage: img("photo-1531973576160-7125cd663d86", 800),
     overview:
-      "Astra automates internal service workflows end to end — classifying requests, retrieving the right answer, executing low-risk steps, and routing exceptions with full context — while preserving the approvals and audit trail your controls require.",
+      "ArqDesk automates internal service workflows end to end — classifying requests, retrieving the right answer, executing low-risk steps, and routing exceptions with full context — while preserving the approvals and audit trail your controls require.",
     capabilities: [
       {
         title: "Request classification",
@@ -583,7 +583,7 @@ export const accelerators: Accelerator[] = [
     pain:
       "Internal service teams are buried in repetitive requests, inconsistent routing, stale knowledge, and handoffs that slow employees down.",
     promise:
-      "Astra classifies the request, retrieves the right answer, executes low-risk steps, and routes exceptions with the context a human needs.",
+      "ArqDesk classifies the request, retrieves the right answer, executes low-risk steps, and routes exceptions with the context a human needs.",
     proof:
       "The accelerator packages enterprise service-workflow patterns with knowledge retrieval, permission-aware actions, and service-desk integration.",
     rollout: [
@@ -605,8 +605,8 @@ export const accelerators: Accelerator[] = [
     ],
   },
   {
-    id: "vantaq",
-    name: "Vantaq",
+    id: "arqsecops",
+    name: "ArqSecOps",
     category: "Security operations and incident intelligence",
     tagline: "Alert triage, incident summaries, threat context, and compliance evidence.",
     summary:
@@ -617,7 +617,7 @@ export const accelerators: Accelerator[] = [
     secondaryImage: img("photo-1526374965328-7f61d4dc18c5", 1920),
     tertiaryImage: img("photo-1510915228340-29c85a43dcfe", 800),
     overview:
-      "Vantaq is a SecOps copilot that compresses time-to-context. It enriches alerts, correlates incidents, drafts summaries, recommends response steps, and captures the evidence GRC needs — so analysts spend their time on investigation, not assembly.",
+      "ArqSecOps is a SecOps copilot that compresses time-to-context. It enriches alerts, correlates incidents, drafts summaries, recommends response steps, and captures the evidence GRC needs — so analysts spend their time on investigation, not assembly.",
     capabilities: [
       {
         title: "Alert enrichment & correlation",
@@ -665,7 +665,7 @@ export const accelerators: Accelerator[] = [
     pain:
       "Security teams face alert overload, fragmented tooling, and reporting demands that pull analysts away from investigation and response.",
     promise:
-      "Vantaq enriches alerts, summarizes incidents, recommends next steps, and captures the evidence needed for compliance and post-incident review.",
+      "ArqSecOps enriches alerts, summarizes incidents, recommends next steps, and captures the evidence needed for compliance and post-incident review.",
     proof:
       "The accelerator combines incident intelligence, workflow governance, and audit-ready evidence patterns for security operations.",
     rollout: [

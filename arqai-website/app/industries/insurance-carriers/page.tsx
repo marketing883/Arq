@@ -13,7 +13,7 @@ export default function InsuranceCarriersPage() {
         heroImage: "https://images.unsplash.com/photo-1597328290883-50c5787b7c7e?auto=format&fit=crop&w=1600&q=80",
         secondaryImage: "https://images.unsplash.com/photo-1683446748468-eba61cda9473?auto=format&fit=crop&w=1920&q=80",
         heroImageAlt: "P&C insurance operations",
-        featuredAcceleratorId: "luma",
+        featuredAcceleratorId: "arqclaims",
         contactIndustry: "Insurance carriers",
         contactWorkflow: "Claims triage, intake, and review",
         primaryCta: { label: "Get Started", href: "/engage-us" },
@@ -78,25 +78,25 @@ export default function InsuranceCarriersPage() {
         ],
         productsHeading: "Accelerator paths for claims and leakage workflows.",
         productsBody:
-          "Luma and Veyra cover claims intake, triage, investigation, and leakage-review patterns from the same governed foundation.",
+          "ArqClaims and ArqFWA cover claims intake, triage, investigation, and leakage-review patterns from the same governed foundation.",
         products: [
           {
-            name: "Luma",
+            name: "ArqClaims",
             status: "ACCELERATOR",
             statusColor: "bg-lime-500",
             description:
               "Claims intake, enrichment, routing, and reviewer support for teams moving high-volume claim queues.",
             cta: "Get Started",
-            href: "/accelerators/luma",
+            href: "/accelerators/arqclaims",
           },
           {
-            name: "Veyra",
+            name: "ArqFWA",
             status: "ACCELERATOR",
             statusColor: "bg-lime-500",
             description:
               "Suspicious-claim and leakage intelligence that gives SIU teams a cleaner path to the right cases.",
             cta: "Get Started",
-            href: "/accelerators/veyra",
+            href: "/accelerators/arqfwa",
           },
         ],
         closingCta: {

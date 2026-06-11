@@ -21,7 +21,10 @@ type Menu = {
   feature: { href: string; image: string; tag: string; title: string };
 };
 
-const mono = (s: string) => <span className="v5-mega-mono">{s.charAt(0)}</span>;
+// Use the letter after the shared "Arq" prefix so each tile stays distinct.
+const mono = (s: string) => (
+  <span className="v5-mega-mono">{(s.replace(/^Arq/, "") || s).charAt(0)}</span>
+);
 
 const ACCEL_LINKS: Link[] = accelerators.map((a) => ({
   title: a.name,

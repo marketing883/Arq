@@ -13,7 +13,7 @@ export default function ManufacturingPage() {
         heroImage: "https://images.unsplash.com/photo-1610891015188-5369212db097?auto=format&fit=crop&w=1600&q=80",
         secondaryImage: "https://images.unsplash.com/photo-1496247749665-49cf5b1022e9?auto=format&fit=crop&w=1920&q=80",
         heroImageAlt: "Manufacturing operations",
-        featuredAcceleratorId: "orbis",
+        featuredAcceleratorId: "arqlogistics",
         contactIndustry: "Manufacturing",
         contactWorkflow: "Supply chain and vendor risk",
         primaryCta: { label: "Get Started", href: "/engage-us" },
@@ -64,7 +64,7 @@ export default function ManufacturingPage() {
         midCtaHeadline:
           "Bring us the production workflow where delays are most expensive.",
         midCtaBody:
-          "We will map the systems, signals, handoffs, and decision owners, then show whether Orbis, Kyra, or a custom build is the right starting point.",
+          "We will map the systems, signals, handoffs, and decision owners, then show whether ArqLogistics, ArqTechOps, or a custom build is the right starting point.",
         operatingContextHeading: "Useful where plant decisions depend on signals spread across systems.",
         operatingContextBody:
           "Manufacturing AI creates value when it connects production reality, quality evidence, maintenance risk, supply constraints, and the people responsible for the next decision.",
@@ -78,25 +78,25 @@ export default function ManufacturingPage() {
         ],
         productsHeading: "Accelerator paths for industrial operating workflows.",
         productsBody:
-          "Orbis accelerates supplier and dependency-risk workflows. Kyra supports service and incident operations. Plant-specific use cases are built around your stack and operating model.",
+          "ArqLogistics accelerates supplier and dependency-risk workflows. ArqTechOps supports service and incident operations. Plant-specific use cases are built around your stack and operating model.",
         products: [
           {
-            name: "Orbis",
+            name: "ArqLogistics",
             status: "ACCELERATOR",
             statusColor: "bg-lime-500",
             description:
               "Supplier, procurement, logistics, and dependency-risk intelligence for industrial operating teams.",
             cta: "Get Started",
-            href: "/accelerators/orbis",
+            href: "/accelerators/arqlogistics",
           },
           {
-            name: "Kyra",
+            name: "ArqTechOps",
             status: "ACCELERATOR",
             statusColor: "bg-lime-500",
             description:
               "Incident enrichment, escalation, and service-restoration support for operations and service teams.",
             cta: "Get Started",
-            href: "/accelerators/kyra",
+            href: "/accelerators/arqtechops",
           },
         ],
         closingCta: {

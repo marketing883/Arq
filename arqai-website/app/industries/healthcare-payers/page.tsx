@@ -13,7 +13,7 @@ export default function HealthcarePayersPage() {
         heroImage: "https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&w=1600&q=80",
         secondaryImage: "https://images.unsplash.com/photo-1538108149393-fbbd81895907?auto=format&fit=crop&w=1920&q=80",
         heroImageAlt: "Healthcare payer operations",
-        featuredAcceleratorId: "veyra",
+        featuredAcceleratorId: "arqfwa",
         contactIndustry: "Healthcare payers",
         contactWorkflow: "Payment integrity, claims, and program integrity",
         primaryCta: { label: "Get Started", href: "/engage-us" },
@@ -78,25 +78,25 @@ export default function HealthcarePayersPage() {
         ],
         productsHeading: "Accelerator paths for payer operating workflows.",
         productsBody:
-          "Veyra and Luma accelerate payer review, evidence assembly, intake, and routing patterns from the same governed foundation.",
+          "ArqFWA and ArqClaims accelerate payer review, evidence assembly, intake, and routing patterns from the same governed foundation.",
         products: [
           {
-            name: "Veyra",
+            name: "ArqFWA",
             status: "ACCELERATOR",
             statusColor: "bg-lime-500",
             description:
               "Payment-integrity and fraud intelligence for payer teams that need better prioritization and cleaner evidence.",
             cta: "Get Started",
-            href: "/accelerators/veyra",
+            href: "/accelerators/arqfwa",
           },
           {
-            name: "Luma",
+            name: "ArqClaims",
             status: "ACCELERATOR",
             statusColor: "bg-lime-500",
             description:
               "Claims triage and decision support for intake, routing, evidence review, and reviewer handoff.",
             cta: "Get Started",
-            href: "/accelerators/luma",
+            href: "/accelerators/arqclaims",
           },
         ],
         closingCta: {

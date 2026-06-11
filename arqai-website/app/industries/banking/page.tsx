@@ -13,11 +13,11 @@ export default function BankingPage() {
         heroImage: "https://images.unsplash.com/photo-1684679674829-fc7b436ec8e8?auto=format&fit=crop&w=1600&q=80",
         secondaryImage: "https://images.unsplash.com/photo-1633059050703-0f1b50828402?auto=format&fit=crop&w=1920&q=80",
         heroImageAlt: "Banking operations",
-        featuredAcceleratorId: "sentra",
+        featuredAcceleratorId: "arqbanker",
         contactIndustry: "Banking",
         contactWorkflow: "Financial crime, AML/KYC, and customer risk",
         primaryCta: { label: "Get Started", href: "/engage-us" },
-        secondaryCta: { label: "Explore Sentra", href: "/accelerators/sentra" },
+        secondaryCta: { label: "Explore ArqBanker", href: "/accelerators/arqbanker" },
         outcomes: [
           {
             metric: "60%",
@@ -64,7 +64,7 @@ export default function BankingPage() {
         midCtaHeadline:
           "Bring us the financial-crime workflow creating the most friction.",
         midCtaBody:
-          "We will map the alert sources, evidence needs, review steps, and risk boundaries, then show whether Sentra or a custom build is the right path.",
+          "We will map the alert sources, evidence needs, review steps, and risk boundaries, then show whether ArqBanker or a custom build is the right path.",
         operatingContextHeading: "Useful where compliance work depends on judgment, evidence, and timing.",
         operatingContextBody:
           "Financial-crime workflows benefit when AI narrows the queue, assembles the evidence, and keeps the rationale clear enough for review.",
@@ -78,16 +78,16 @@ export default function BankingPage() {
         ],
         productsHeading: "Accelerator paths for financial-crime workflows.",
         productsBody:
-          "Sentra accelerates alert triage, ownership review, sanctions context, and customer-risk workflows where the pattern fits.",
+          "ArqBanker accelerates alert triage, ownership review, sanctions context, and customer-risk workflows where the pattern fits.",
         products: [
           {
-            name: "Sentra",
+            name: "ArqBanker",
             status: "ACCELERATOR",
             statusColor: "bg-lime-500",
             description:
               "Financial-crime and customer-risk acceleration for AML, KYC, sanctions, ownership, and alert-triage workflows.",
             cta: "Get Started",
-            href: "/accelerators/sentra",
+            href: "/accelerators/arqbanker",
           },
         ],
         closingCta: {

@@ -144,6 +144,22 @@ const nextConfig = {
       // v3 IA: how-it-works renamed to how-we-work; the engineering deep-dive
       // remains accessible at /how-it-works for product-page deep-links.
       // No redirect on /how-it-works -- both are valid routes.
+      // Accelerators reverted from standalone brand names back to the
+      // Arq-prefixed names. Keep any indexed/shared links working.
+      ...[
+        ["veyra", "arqfwa"],
+        ["luma", "arqclaims"],
+        ["sentra", "arqbanker"],
+        ["nuvia", "arqretail"],
+        ["kyra", "arqtechops"],
+        ["orbis", "arqlogistics"],
+        ["astra", "arqdesk"],
+        ["vantaq", "arqsecops"],
+      ].map(([oldSlug, newSlug]) => ({
+        source: `/accelerators/${oldSlug}`,
+        destination: `/accelerators/${newSlug}`,
+        permanent: true,
+      })),
     ];
   },
 };

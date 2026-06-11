@@ -164,7 +164,11 @@ function ServicesVisual({ label, spotlight }: { label: string; spotlight: string
 }
 
 function AcceleratorsVisual({ label, spotlight }: { label: string; spotlight: string | null }) {
-  const tiles = ["Veyra", "Luma", "Sentra", "Nuvia", "Kyra", "Orbis", "Astra", "Vantaq"];
+  const tiles = ["ArqFWA", "ArqClaims", "ArqBanker", "ArqRetail", "ArqTechOps", "ArqLogistics", "ArqDesk", "ArqSecOps"];
+  // Show the part after the shared "Arq" prefix and size each tile to fit
+  // its label (9px mono + letter-spacing runs ~6.2px per character).
+  const tileText = (name: string) => name.replace(/^Arq/, "");
+  const tileWidth = (text: string) => Math.max(48, text.length * 6.2 + 14);
 
   return (
     <svg viewBox="0 0 280 220" className="a-mega-visual-svg" role="img">
@@ -173,8 +177,10 @@ function AcceleratorsVisual({ label, spotlight }: { label: string; spotlight: st
       <circle className="a-mega-v-orbit" cx="140" cy="110" r="70" />
       <circle className="a-mega-v-orbit a-mega-v-orbit-inner" cx="140" cy="110" r="42" />
       {tiles.map((tile, index) => {
+        const text = tileText(tile);
+        const w = tileWidth(text);
         const angle = (Math.PI * 2 * index) / tiles.length - Math.PI / 2;
-        const x = 140 + Math.cos(angle) * 76 - 24;
+        const x = 140 + Math.cos(angle) * 76 - w / 2;
         const y = 110 + Math.sin(angle) * 62 - 12;
         const active = spotlight === tile;
 
@@ -185,9 +191,9 @@ function AcceleratorsVisual({ label, spotlight }: { label: string; spotlight: st
             style={{ animationDelay: `${index * 0.08}s` }}
             transform={`translate(${x.toFixed(1)} ${y.toFixed(1)})`}
           >
-            <rect width="48" height="24" rx="9" />
-            <text x="24" y="16" textAnchor="middle">
-              {tile}
+            <rect width={w} height="24" rx="9" />
+            <text x={w / 2} y="16" textAnchor="middle">
+              {text}
             </text>
           </g>
         );
