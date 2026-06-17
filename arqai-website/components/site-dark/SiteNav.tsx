@@ -164,7 +164,7 @@ function ServicesVisual({ label, spotlight }: { label: string; spotlight: string
 }
 
 function AcceleratorsVisual({ label, spotlight }: { label: string; spotlight: string | null }) {
-  const tiles = ["ArqFWA", "ArqClaims", "ArqBanker", "ArqRetail", "ArqTechOps", "ArqLogistics", "ArqDesk", "ArqSecOps"];
+  const tiles = ["ArqFWA", "ArqClaims", "ArqBanker", "ArqLoyalty", "ArqTechOps", "ArqLogistics", "ArqDesk", "ArqSecOps"];
   // Show the part after the shared "Arq" prefix and size each tile to fit
   // its label (9px mono + letter-spacing runs ~6.2px per character).
   const tileText = (name: string) => name.replace(/^Arq/, "");

@@ -43,7 +43,7 @@ const industries = [
       "Loyalty, pricing, inventory, store operations, and customer-service workflows where every signal should improve margin, experience, or repeat behavior.",
     href: "/industries/retail",
     image: "https://images.unsplash.com/photo-1759323321196-2813db509285?auto=format&fit=crop&w=1400&q=80",
-    accelerators: ["ArqRetail"],
+    accelerators: ["ArqLoyalty"],
   },
   {
     title: "Manufacturing and supply chain",

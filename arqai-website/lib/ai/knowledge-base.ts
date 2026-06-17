@@ -53,7 +53,7 @@ Current accelerator lines include:
 - ArqFWA for suspicious-claim, payment-integrity, and leakage-intelligence workflows.
 - ArqClaims for intake, enrichment, routing, and reviewer-support workflows.
 - ArqBanker for AML, KYC, sanctions, ownership, and alert-triage workflows.
-- ArqRetail for loyalty, personalization, and retention workflows.
+- ArqLoyalty for replacing a retail loyalty platform without migration risk — a modern, AI-governed loyalty engine that runs in shadow alongside the incumbent, proves its numbers match penny-for-penny every day, and cuts over one capability at a time. Horizontal by design (fuel & convenience, hospitality, malls, and any loyalty operator) via thin vertical packs on a shared core.
 - ArqLogistics for supplier, procurement, logistics, and dependency-risk workflows.
 - ArqTechOps for incident enrichment, escalation, and service-restoration workflows.
 

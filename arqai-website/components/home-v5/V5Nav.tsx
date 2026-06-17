@@ -46,7 +46,7 @@ const ACCEL_ICONS: Record<string, React.ReactNode> = {
   arqfwa: <FraudIcon />,
   arqclaims: <ClaimsIcon />,
   arqbanker: <BankIcon />,
-  arqretail: <TagIcon />,
+  arqloyalty: <TagIcon />,
   arqtechops: <NetworkIcon />,
   arqlogistics: <TruckIcon />,
   arqdesk: <HeadsetIcon />,

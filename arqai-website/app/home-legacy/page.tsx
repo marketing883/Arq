@@ -521,12 +521,12 @@ function AcceleratorsSection() {
       href: "/accelerators/arqbanker",
     },
     {
-      name: "ArqRetail",
-      tag: "Loyalty & personalization automation",
-      desc: "Turn customer, transaction, and behavioral data into personalized offers, retention actions, and next-best engagement.",
-      built: "Retail · QSR · Consumer brands",
+      name: "ArqLoyalty",
+      tag: "Loyalty platform modernization",
+      desc: "Replace your loyalty platform without betting the business: run in shadow, prove penny-for-penny parity daily, and cut over on your timeline.",
+      built: "Fuel & convenience · Hospitality · Malls",
       img: "/img/services/Retail-40-percent-Faster-Pricing-Ops-Without-Manual-Review.jpg",
-      href: "/accelerators/arqretail",
+      href: "/accelerators/arqloyalty",
     },
     {
       name: "ArqTechOps",

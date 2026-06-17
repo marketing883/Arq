@@ -13,7 +13,7 @@ export default function RetailPage() {
         heroImage: "https://images.unsplash.com/photo-1759323321196-2813db509285?auto=format&fit=crop&w=1600&q=80",
         secondaryImage: "https://images.unsplash.com/photo-1736236560164-bc741c70bca5?auto=format&fit=crop&w=1920&q=80",
         heroImageAlt: "Retail operations",
-        featuredAcceleratorId: "arqretail",
+        featuredAcceleratorId: "arqloyalty",
         contactIndustry: "Retail",
         contactWorkflow: "Loyalty, personalization, and customer operations",
         primaryCta: { label: "Get Started", href: "/engage-us" },
@@ -64,7 +64,7 @@ export default function RetailPage() {
         midCtaHeadline:
           "Bring us the retail workflow where better timing would change the outcome.",
         midCtaBody:
-          "We will map the signals, decisions, and guardrails, then show whether ArqRetail, a custom workflow, or a services-led build is the right starting point.",
+          "We will map the signals, decisions, and guardrails, then show whether ArqLoyalty, a custom workflow, or a services-led build is the right starting point.",
         operatingContextHeading: "Useful where customer, inventory, and service signals need to become action.",
         operatingContextBody:
           "Retail AI works best when it can connect demand, behavior, margin, store execution, and service context without burying teams in another dashboard.",
@@ -78,16 +78,16 @@ export default function RetailPage() {
         ],
         productsHeading: "Accelerator paths for retail workflow execution.",
         productsBody:
-          "ArqRetail accelerates loyalty and personalization patterns. Other retail workflows are built around the systems, stores, and constraints already in place.",
+          "ArqLoyalty replaces an aging loyalty platform without migration risk. Other retail workflows are built around the systems, stores, and constraints already in place.",
         products: [
           {
-            name: "ArqRetail",
+            name: "ArqLoyalty",
             status: "ACCELERATOR",
             statusColor: "bg-lime-500",
             description:
-              "Loyalty and personalization automation for next-best offers, retention actions, and customer engagement workflows.",
+              "A modern, AI-governed loyalty engine that runs in shadow, proves penny-for-penny parity daily, and cuts over on your timeline — no big-bang migration.",
             cta: "Get Started",
-            href: "/accelerators/arqretail",
+            href: "/accelerators/arqloyalty",
           },
         ],
         closingCta: {

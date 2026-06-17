@@ -125,13 +125,13 @@ export const ACCELERATORS: AcceleratorEntry[] = [
     href: "/accelerators/arqbanker",
   },
   {
-    id: "arqretail",
-    name: "ArqRetail",
-    category: "Loyalty and personalization automation",
-    tagline: "Next-best offers, retention actions, and customer engagement workflows.",
+    id: "arqloyalty",
+    name: "ArqLoyalty",
+    category: "Loyalty platform modernization",
+    tagline: "Replace your loyalty platform without betting the business.",
     industries: ["retail"],
     workflows: ["loyalty"],
-    href: "/accelerators/arqretail",
+    href: "/accelerators/arqloyalty",
   },
   {
     id: "arqtechops",
