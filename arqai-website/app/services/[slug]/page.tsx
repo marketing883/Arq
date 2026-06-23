@@ -5,6 +5,7 @@ import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
 import V5CtaSection from "@/components/home-v5/V5CtaSection";
 import { ArrowRight, SparkIcon, ShieldIcon, InsightIcon, DocIcon, ChatIcon } from "@/components/home-v5/icons";
 import { getService, services } from "@/lib/data/services";
+import { generateServiceSchema, generateBreadcrumbSchema } from "@/lib/seo/structured-data";
 
 const CAP_ICONS = [SparkIcon, InsightIcon, ShieldIcon, DocIcon, ChatIcon];
 
@@ -50,8 +51,30 @@ export default function ServiceDetailPage({ params }: ServicePageProps) {
 
   const others = services.filter((s) => s.slug !== service.slug).slice(0, 3);
 
+  const url = `https://thearq.ai/services/${service.slug}`;
+  const serviceSchema = generateServiceSchema({
+    name: service.title,
+    description: service.summary,
+    serviceType: service.shortTitle,
+    url,
+    image: service.image,
+  });
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: "Home", url: "https://thearq.ai" },
+    { name: "Services", url: "https://thearq.ai/services" },
+    { name: service.title, url },
+  ]);
+
   return (
     <V5SiteLayout>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       {/* Preload the LCP hero image (served from the Unsplash CDN) */}
       <link
         rel="preload"

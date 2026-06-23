@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
 import { ArrowRight, SparkIcon, ShieldIcon, InsightIcon, DocIcon, ChatIcon } from "@/components/home-v5/icons";
 import { accelerators, getAccelerator } from "@/lib/data/accelerators";
+import { generateServiceSchema, generateBreadcrumbSchema } from "@/lib/seo/structured-data";
 import AcceleratorForm from "@/components/accelerators/AcceleratorForm";
 
 const CAP_ICONS = [SparkIcon, InsightIcon, ShieldIcon, DocIcon, ChatIcon];
@@ -56,8 +57,30 @@ export default function AcceleratorDetailPage({ params }: AcceleratorPageProps) 
 
   const others = accelerators.filter((a) => a.id !== accelerator.id).slice(0, 3);
 
+  const url = `https://thearq.ai/accelerators/${accelerator.id}`;
+  const serviceSchema = generateServiceSchema({
+    name: accelerator.name,
+    description: accelerator.summary,
+    serviceType: accelerator.category,
+    url,
+    image: accelerator.image,
+  });
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: "Home", url: "https://thearq.ai" },
+    { name: "Accelerators", url: "https://thearq.ai/accelerators" },
+    { name: accelerator.name, url },
+  ]);
+
   return (
     <V5SiteLayout>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       {/* Preload the LCP hero image (served from the Unsplash CDN, not the Next optimizer) */}
       <link
         rel="preload"

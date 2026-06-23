@@ -261,6 +261,43 @@ export function generateCaseStudySchema(caseStudy: CaseStudyData): Record<string
 }
 
 /**
+ * Generate Service structured data (SEO/AEO) for accelerators and service lines.
+ * Accelerators are productized, named patterns delivered as services, so the
+ * schema.org Service type fits better than Product (no SKU or list price).
+ */
+export interface ServiceSchemaData {
+  name: string;
+  description: string;
+  url: string;
+  serviceType: string;
+  image?: string;
+  areaServed?: string;
+}
+
+export function generateServiceSchema(service: ServiceSchemaData): Record<string, unknown> {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: service.name,
+    description: service.description,
+    serviceType: service.serviceType,
+    url: service.url,
+    provider: {
+      "@type": "Organization",
+      name: "ArqAI Labs",
+      url: "https://thearq.ai",
+    },
+    areaServed: service.areaServed || "Global",
+    ...(service.image && { image: service.image }),
+    offers: {
+      "@type": "Offer",
+      url: "https://thearq.ai/engage-us",
+      description: "Contact for an enterprise engagement",
+    },
+  };
+}
+
+/**
  * Default FAQs for the website (AEO optimization)
  */
 export const defaultFAQs: FAQData[] = [
