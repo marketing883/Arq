@@ -19,8 +19,8 @@ export function SiteFooter() {
             />
           </Link>
           <p style={{ color: "var(--ink-cream-d)", fontSize: 14, lineHeight: 1.55, marginTop: 16, maxWidth: 390 }}>
-            Production AI workflows, built around your operation. ArqAI Labs combines a focused AI engineering studio
-            with enterprise delivery depth from{" "}
+            Production AI workflows, built around your operation. ArqAI Labs is an independent AI engineering studio,
+            in partnership with{" "}
             <a
               href="https://aciinfotech.com"
               target="_blank"
@@ -29,7 +29,7 @@ export function SiteFooter() {
             >
               ACI Infotech
             </a>
-            .
+            {" "}for enterprise delivery depth.
           </p>
           <div style={{ display: "flex", gap: 12, marginTop: 24, flexWrap: "wrap" }}>
             <span className="a-tag">SOC 2 aligned</span>

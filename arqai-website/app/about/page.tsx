@@ -7,7 +7,7 @@ import { ArrowRight } from "@/components/home-v5/icons";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "ArqAI Labs is an AI engineering studio. Production AI, bespoke to your operation. Backed by ACI Infotech.",
+    "ArqAI Labs is an independent AI engineering studio. Production AI, bespoke to your operation. In partnership with ACI Infotech.",
   alternates: { canonical: "https://thearq.ai/about" },
 };
 
@@ -73,26 +73,29 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ACI parent */}
-      <section className="v5-section v5-bg-white" id="parent">
+      {/* ACI partnership */}
+      <section className="v5-section v5-bg-white" id="partner">
         <div className="v5-container">
           <div className="v5-split">
             <div className="v5-split-copy">
-              <span className="v5-eyebrow">Our parent</span>
-              <h2 className="v5-h2">Backed by enterprise delivery depth.</h2>
+              <span className="v5-eyebrow">Our partner</span>
+              <h2 className="v5-h2">Independent studio. Enterprise reach.</h2>
               <p className="v5-lead">
-                ArqAI Labs is an AI engineering studio backed by ACI Infotech, a privately
-                held technology services firm. ACI works with senior technology leaders
-                across financial services, healthcare, insurance, telecommunications, and
-                manufacturing.
+                ArqAI Labs is an independent AI engineering studio. We work in close
+                partnership with ACI Infotech, a privately held enterprise technology firm,
+                and that partnership gives us what most AI studios never get: direct access
+                to enterprise operators, proven implementation playbooks, and the delivery
+                depth to take AI all the way into production and keep it running.
               </p>
             </div>
             <div className="v5-card">
               <p style={{ fontSize: 16, lineHeight: 1.65, color: "var(--v5-ink-soft)", margin: 0 }}>
-                The relationship gives ArqAI Labs the implementation playbooks, the delivery
-                muscle, and the access to enterprise customers that most AI engineering
-                studios don&apos;t have. Same engineering standard. Same end-to-end ownership.
-                Same team, all the way from strategy to run.
+                Our founders built their careers inside enterprise operations through ACI.
+                That is why we engineer for production from day one, and why we stand up
+                governed AI inside real systems instead of stopping at a slide.
+              </p>
+              <p style={{ fontSize: 16, fontWeight: 600, color: "var(--v5-ink)", marginTop: 18, marginBottom: 0 }}>
+                Independent by design. Enterprise-deep by partnership.
               </p>
             </div>
           </div>
