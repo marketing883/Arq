@@ -24,8 +24,8 @@ export const HERO = {
     `${A}/oGgAZMF0jq3eb456pPCbrdFzqM.jpg`,
   ],
   trustLabel: "Trusted by 120+ Businesses",
-  headline: "Empower Your Business with Operational AI",
-  sub: "Accelerate operations, reduce costs, and unlock new growth with AI strategies tailored for your organization.",
+  headline: "Operational AI, built for your enterprise and shipped to production.",
+  sub: "We design, build, deploy, and run AI for the operations that don't fit off-the-shelf — bespoke to how your team works, with governance attached to every action.",
   cta: { label: "Get Started", href: "#contact" },
   metrics: [
     { num: "98", suffix: "%", label: "Client Satisfaction Rate" },
@@ -139,20 +139,18 @@ export const PROCESS = {
 };
 
 export const INTEGRATION = {
-  eyebrow: "Connect Your Tools",
-  heading: "Seamlessly Integrate With the Tools You Already Use",
-  sub: "Connect your existing workflows with powerful AI capabilities. Whether it's Notion, Google Workspace, Slack, or Twitter, our solutions integrate effortlessly, keeping your data unified and your operations efficient.",
+  eyebrow: "Connect Your Stack",
+  heading: "Wired into the systems already running your business",
+  sub: "Agents connect to the CRM, ERP, ITSM, data platforms, identity, and core systems your operation depends on — retrieving live context and updating records within the permissions your security team already trusts. No rip-and-replace, no disconnected workbench.",
   tools: [
-    { name: "Slack", color: "#4A154B", body: "Seamless team communication and real-time AI-powered responses through Slack integration." },
-    { name: "Notion", color: "#111111", body: "Generate meeting notes, summaries, and structured content with AI embedded directly into Notion." },
-    { name: "Gmail", color: "#EA4335", body: "Draft, sort, and prioritize emails faster using AI-powered insights via Gmail integration." },
-    { name: "Google Sheets", color: "#0F9D58", body: "Automate data analysis, forecasting, and reporting with AI-enhanced Google Sheets workflows." },
-    { name: "Amazon", color: "#FF9900", body: "Optimize product listings, inventory predictions with AI-powered tools integrated into your Amazon operations." },
-    { name: "Reddit", color: "#FF4500", body: "Gain trend insights, automate content interaction, and analyze community sentiment with Reddit + AI integration." },
-    { name: "X (Twitter)", color: "#111111", body: "Schedule, generate, and analyze posts with AI to enhance engagement and automate social media presence." },
-    { name: "LinkedIn", color: "#0A66C2", body: "Craft professional outreach messages and automate lead research using AI for smarter networking on LinkedIn." },
-    { name: "Meta", color: "#0866FF", body: "Use AI to auto-generate ad creatives, target the right audience, and optimize campaigns across Meta's platforms." },
-    { name: "PayPal", color: "#003087", body: "Enhance fraud detection, automate transaction categorization with AI-powered PayPal integrations." },
+    { name: "Salesforce", color: "#00A1E0", body: "Ground agents in live CRM data and let them update records within your permission model." },
+    { name: "SAP", color: "#0FAAFF", body: "Turn ERP master data into decisions, with governed write-back inside approval boundaries." },
+    { name: "ServiceNow", color: "#62D84E", body: "Classify, enrich, and route tickets — and resolve the repeatable ones end to end." },
+    { name: "Snowflake", color: "#29B5E8", body: "Read governed, current data from the warehouse instead of stale exports." },
+    { name: "Databricks", color: "#FF3621", body: "Run retrieval and reasoning against the lakehouse your data team already operates." },
+    { name: "Microsoft 365", color: "#0078D4", body: "Extend Copilot with your context, workflows, and the security posture IT requires." },
+    { name: "Okta", color: "#007DC1", body: "Agent actions inherit the identity and access boundaries your security team already trusts." },
+    { name: "Guidewire", color: "#00739D", body: "Wire claims and policy workflows into the core platform carriers run on." },
   ],
 };
 

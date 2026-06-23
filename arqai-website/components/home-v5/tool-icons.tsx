@@ -10,69 +10,51 @@ const s = {
 };
 
 export const TOOL_ICONS: Record<string, ReactNode> = {
-  Slack: (
+  Salesforce: (
     <svg viewBox="0 0 24 24" width="24" height="24" {...s}>
-      <rect x="10" y="3" width="4" height="11" rx="2" />
-      <rect x="10" y="17" width="4" height="4" rx="2" />
-      <rect x="3" y="10" width="11" height="4" rx="2" />
-      <rect x="17" y="10" width="4" height="4" rx="2" />
+      <path d="M8 18h8.5a3.5 3.5 0 0 0 .4-7 4.5 4.5 0 0 0-8.6-1.3A3.4 3.4 0 0 0 8 18z" />
     </svg>
   ),
-  Notion: (
+  SAP: (
     <svg viewBox="0 0 24 24" width="24" height="24" {...s}>
-      <rect x="4" y="3" width="16" height="18" rx="2" />
-      <path d="M8 16V8l8 8V8" />
+      <path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z" />
+      <path d="M4 7.5l8 4.5 8-4.5M12 12v9" />
     </svg>
   ),
-  Gmail: (
+  ServiceNow: (
     <svg viewBox="0 0 24 24" width="24" height="24" {...s}>
-      <rect x="3" y="5" width="18" height="14" rx="2" />
-      <path d="M3 7l9 6 9-6" />
+      <path d="M3 8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2 2 2 0 0 0 0 4 2 2 0 0 1-2 2H5a2 2 0 0 1-2-2 2 2 0 0 0 0-4z" />
+      <path d="M14 7.5v9" />
     </svg>
   ),
-  "Google Sheets": (
+  Snowflake: (
     <svg viewBox="0 0 24 24" width="24" height="24" {...s}>
-      <rect x="5" y="3" width="14" height="18" rx="2" />
-      <path d="M9 9h6M9 13h6M9 17h6M12 9v8" />
+      <path d="M12 3v18M4.2 7.5l15.6 9M19.8 7.5l-15.6 9" />
     </svg>
   ),
-  Amazon: (
+  Databricks: (
     <svg viewBox="0 0 24 24" width="24" height="24" {...s}>
-      <path d="M5 15c4 3 10 3 14 0" />
-      <path d="M17 17c1-.6 1.6-1.4 2-2.5" />
-      <path d="M8 11c0-2 1.5-3 4-3s4 1 4 3v3" />
-      <path d="M8 13c0 1.5 1.2 2.5 3 2.5 1.6 0 3-1 3-2.5" />
+      <path d="M12 3l3 2-3 2-3-2 3-2zM12 9l3 2-3 2-3-2 3-2zM12 15l3 2-3 2-3-2 3-2z" />
     </svg>
   ),
-  Reddit: (
+  "Microsoft 365": (
     <svg viewBox="0 0 24 24" width="24" height="24" {...s}>
-      <circle cx="12" cy="13" r="7" />
-      <circle cx="9" cy="13" r="1" />
-      <circle cx="15" cy="13" r="1" />
-      <path d="M9 16c1.8 1.2 4.2 1.2 6 0" />
-      <path d="M16 7l-1 4M16 7a1.4 1.4 0 1 0 0-.1" />
+      <rect x="4" y="4" width="7" height="7" rx="1" />
+      <rect x="13" y="4" width="7" height="7" rx="1" />
+      <rect x="4" y="13" width="7" height="7" rx="1" />
+      <rect x="13" y="13" width="7" height="7" rx="1" />
     </svg>
   ),
-  "X (Twitter)": (
+  Okta: (
     <svg viewBox="0 0 24 24" width="24" height="24" {...s}>
-      <path d="M5 5l14 14M19 5L5 19" />
+      <path d="M12 3l7 3v5c0 4.2-3 7.4-7 8.6C8 18.4 5 15.2 5 11V6l7-3z" />
+      <path d="M9 12l2 2 4-4" />
     </svg>
   ),
-  LinkedIn: (
+  Guidewire: (
     <svg viewBox="0 0 24 24" width="24" height="24" {...s}>
-      <rect x="3" y="3" width="18" height="18" rx="3" />
-      <path d="M7 10v7M7 7v.01M11 17v-4a2 2 0 0 1 4 0v4M11 17v-7" />
-    </svg>
-  ),
-  Meta: (
-    <svg viewBox="0 0 24 24" width="24" height="24" {...s}>
-      <path d="M3 15c0-5 2.5-8 5-8s3.5 3 4 5 1.5 5 4 5 4-3 4-6-1.5-6-4-6" />
-    </svg>
-  ),
-  PayPal: (
-    <svg viewBox="0 0 24 24" width="24" height="24" {...s}>
-      <path d="M8 19l2-14h5a3 3 0 0 1 0 6h-4" />
-      <path d="M7 16h4a3 3 0 0 0 0-6" />
+      <path d="M6 3h8l4 4v14H6V3z" />
+      <path d="M14 3v4h4M9 12h6M9 16h6" />
     </svg>
   ),
 };
