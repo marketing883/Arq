@@ -24,7 +24,7 @@ export const HERO = {
     `${A}/oGgAZMF0jq3eb456pPCbrdFzqM.jpg`,
   ],
   trustLabel: "Trusted by 120+ Businesses",
-  headline: "Operational AI, built for your enterprise and shipped to production.",
+  headline: "Operational AI. Built for Your Enterprise.",
   sub: "We design, build, deploy, and run AI for the operations that don't fit off-the-shelf — bespoke to how your team works, with governance attached to every action.",
   cta: { label: "Get Started", href: "#contact" },
   metrics: [
