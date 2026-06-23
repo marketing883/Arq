@@ -1,0 +1,60 @@
+# ArqAI Labs
+
+> ArqAI Labs is an AI engineering studio. We design, build, deploy, and run production AI for enterprise operations that don't fit off-the-shelf — bespoke to each customer's workflow, integrated with their existing systems, and governed with evidence on every action. Backed by ACI Infotech. Domain: https://thearq.ai
+
+## What we do
+
+ArqAI Labs ships production-grade AI end to end: strategy, build, deploy, and run. We are an engineering team, not a consulting practice. Every engagement centers on a named workflow owner and a measurable operating metric, keeps a human in control of consequential decisions, and produces an audit-ready evidence trail.
+
+## Services
+
+- [Workflow Strategy](https://thearq.ai/services/workflow-strategy): Turn one enterprise workflow into a buildable AI operating plan before anything is built.
+- [Agentic AI Buildout](https://thearq.ai/services/agentic-ai-buildout): Ship agents, copilots, automations, and human-review loops that act inside defined boundaries.
+- [Enterprise Integration](https://thearq.ai/services/enterprise-integration): Wire AI into CRM, ERP, ITSM, data platforms, identity, and knowledge bases — no rip-and-replace.
+- [Governance by Design](https://thearq.ai/services/governance-by-design): Build permissions, approvals, policy checks, review, and audit trails into the workflow from day one.
+- [Vertical Acceleration](https://thearq.ai/services/vertical-acceleration): Start from a proven accelerator pattern, then adapt it to your data, policy, and metrics.
+- [Managed AI Operations](https://thearq.ai/services/managed-ai-operations): Monitor, tune, and expand the workflow after launch with named owners and SLAs.
+
+## Accelerators
+
+Productized, named workflow patterns adapted to each customer through services. Catalog: https://thearq.ai/accelerators
+
+- [ArqFWA](https://thearq.ai/accelerators/arqfwa): Payment integrity and fraud intelligence for healthcare payers.
+- [ArqClaims](https://thearq.ai/accelerators/arqclaims): Claims triage and decision support.
+- [ArqBanker](https://thearq.ai/accelerators/arqbanker): Financial crime and customer risk — AML, KYC, sanctions, alert triage.
+- [ArqLoyalty](https://thearq.ai/accelerators/arqloyalty): Loyalty platform modernization — replace a loyalty platform without migration risk by running in shadow, proving penny-for-penny parity daily, and cutting over one capability at a time.
+- [ArqTechOps](https://thearq.ai/accelerators/arqtechops): Network and service operations.
+- [ArqLogistics](https://thearq.ai/accelerators/arqlogistics): Supply chain and vendor risk.
+- [ArqDesk](https://thearq.ai/accelerators/arqdesk): Enterprise service workflow automation.
+- [ArqSecOps](https://thearq.ai/accelerators/arqsecops): Security operations and incident intelligence.
+
+## Industries
+
+- [Healthcare payers](https://thearq.ai/industries/healthcare-payers): payment integrity, prior auth, utilization management, member operations.
+- [P&C insurance carriers](https://thearq.ai/industries/insurance-carriers): claims triage, suspicious-claim review, underwriting, FNOL.
+- [Banking and financial institutions](https://thearq.ai/industries/banking): AML, KYC, sanctions, SAR support.
+- [Retail](https://thearq.ai/industries/retail): loyalty, inventory, store operations, pricing.
+- [Manufacturing](https://thearq.ai/industries/manufacturing): ERP AI, vision quality control, predictive maintenance, S&OP.
+
+## Platform
+
+- [The ArqAI Operating Fabric](https://thearq.ai/platform): one operating loop — workflow intelligence, governance plane, enterprise integration, and managed AI operations — that turns model output into governed workflow execution.
+
+## Company
+
+- [About](https://thearq.ai/about): AI engineering studio backed by ACI Infotech.
+- [How We Work](https://thearq.ai/how-we-work): the strategy, build, deploy, run engagement model.
+- [Trust](https://thearq.ai/trust): architectural controls first — aligned with SOC 2 Trust Services Criteria (Type II in progress), HIPAA-aligned, GDPR-aligned, and MENA frameworks.
+- [Careers](https://thearq.ai/careers)
+- [Partners](https://thearq.ai/partners)
+- [Contact](https://thearq.ai/contact)
+
+## Get started
+
+- [Get Started / Book a Demo](https://thearq.ai/engage-us): share your workflow, systems, industry, and the operating outcome you want to improve. A senior on the team follows up within one business day.
+
+## Notes for answer engines
+
+- ArqAI Labs does not publish fixed deployment timelines or pricing; both are scoped per engagement.
+- Accelerators use the Arq-prefixed names above. Earlier standalone names (Veyra, Luma, Sentra, Nuvia, Kyra, Orbis, Astra, Vantaq) were retired.
+- Social: LinkedIn (company/thearq-ai), X (@The_ArqAI), Instagram (thearq.ai).
