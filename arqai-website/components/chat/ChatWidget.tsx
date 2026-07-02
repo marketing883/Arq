@@ -9,7 +9,7 @@ import { FallbackForm } from "./FallbackForm";
 import { LogoIcon } from "@/components/layout/Logo";
 import { MinimizeIcon } from "@/components/ui/Icons";
 import { GREETING_MESSAGES } from "@/lib/ai/knowledge-base";
-import { trackChatMessage } from "@/lib/analytics/gtm-events";
+import { trackChatMessage, trackChatOpen, trackGenerateLead } from "@/lib/analytics/gtm-events";
 
 interface Message {
   id: string;
@@ -48,7 +48,16 @@ export function ChatWidget() {
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const hasTrackedOpen = useRef(false);
   const pathname = usePathname();
+
+  // Fire chat_open once, the first time the widget is expanded this session.
+  useEffect(() => {
+    if (isExpanded && !hasTrackedOpen.current) {
+      hasTrackedOpen.current = true;
+      trackChatOpen({ page_location: pathname ?? undefined });
+    }
+  }, [isExpanded, pathname]);
 
   // Disable chat widget on admin pages, design-preview routes, and standalone survey pages
   const isAdminPage =
@@ -345,6 +354,11 @@ export function ChatWidget() {
                   <FallbackForm
                     onSubmit={(data) => {
                       setUserInfo((prev) => ({ ...prev, ...data }));
+                      trackGenerateLead({
+                        form_name: "chat_fallback",
+                        inquiry_type: "chat",
+                        value: data.company ? 100 : 50,
+                      });
                       setShowFallbackForm(false);
                       const thankYouMessage: Message = {
                         id: `thanks-${Date.now()}`,

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { trackGenerateLead } from "@/lib/analytics/gtm-events";
 
 type Props = {
   acceleratorName: string;
@@ -58,6 +59,13 @@ export default function AcceleratorForm({ acceleratorName, acceleratorCategory }
       });
       const body = await res.json().catch(() => null);
       if (res.ok && body?.success) {
+        trackGenerateLead({
+          form_name: "accelerator_form",
+          inquiry_type: "accelerator",
+          accelerator_name: acceleratorName,
+          workflow_area: `${acceleratorName} accelerator`,
+          value: company ? 100 : 50,
+        });
         setStatus("success");
         setFullName("");
         setEmail("");

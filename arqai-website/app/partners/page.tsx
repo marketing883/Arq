@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import V5Nav from "@/components/home-v5/V5Nav";
 import Footer from "@/components/home-v5/Footer";
+import { trackGenerateLead } from "@/lib/analytics/gtm-events";
 import "@/components/home-v5/styles.css";
 
 const partnerModels = [
@@ -115,6 +116,13 @@ export default function PartnersPage() {
         throw new Error(data.error || "Failed to submit partner enquiry");
       }
 
+      trackGenerateLead({
+        form_name: "partner_form",
+        inquiry_type: `partner_${formData.partnershipType}`,
+        company_size: formData.companySize,
+        timeline: formData.timeline,
+        value: 100,
+      });
       setFormSuccess(true);
       setFormData(emptyForm);
       setFormLoadedAt(Date.now());

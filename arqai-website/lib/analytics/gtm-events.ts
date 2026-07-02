@@ -56,6 +56,13 @@ export function trackGenerateLead(params: {
   lead_source?: string;
   form_name?: string;
   inquiry_type?: string;
+  // Optional lead-qualification dimensions (captured from the form when present)
+  industry?: string;
+  company_size?: string;
+  timeline?: string;
+  budget_range?: string;
+  workflow_area?: string;
+  accelerator_name?: string;
 }): void {
   pushToDataLayer({
     event: "generate_lead",
@@ -71,6 +78,73 @@ export function trackGenerateLead(params: {
     lead_source: params.lead_source || "website",
     form_name: params.form_name || "contact_form",
     inquiry_type: params.inquiry_type,
+    industry: params.industry,
+    company_size: params.company_size,
+    timeline: params.timeline,
+    budget_range: params.budget_range,
+    workflow_area: params.workflow_area,
+    accelerator_name: params.accelerator_name,
+  });
+}
+
+/**
+ * Track submit_application event
+ * Fired when a candidate submits a job application (careers).
+ * Kept distinct from generate_lead so applicants don't inflate lead metrics.
+ */
+export function trackJobApplication(params: {
+  job_title?: string;
+  job_slug?: string;
+  department?: string;
+  employment_type?: string;
+  location?: string;
+}): void {
+  pushToDataLayer({
+    event: "submit_application",
+    // GTM Data Layer Variables (camelCase for GTM compatibility)
+    eventCategory: "Careers",
+    eventAction: "application_submit",
+    eventLabel: params.job_title || "Job Application",
+    eventValue: undefined,
+    // Custom parameters
+    job_title: params.job_title,
+    job_slug: params.job_slug,
+    department: params.department,
+    employment_type: params.employment_type,
+    location: params.location,
+  });
+}
+
+/**
+ * Track survey_submit event
+ * Fired when an internal survey (e.g. accelerator naming) is submitted.
+ * Engagement signal, not a marketing conversion.
+ */
+export function trackSurveySubmit(params: { survey_name: string }): void {
+  pushToDataLayer({
+    event: "survey_submit",
+    eventCategory: "Survey",
+    eventAction: "survey_submit",
+    eventLabel: params.survey_name,
+    eventValue: undefined,
+    survey_name: params.survey_name,
+  });
+}
+
+/**
+ * Track chat_open event
+ * Fired the first time a visitor expands the chat widget in a session.
+ */
+export function trackChatOpen(params?: { page_location?: string }): void {
+  pushToDataLayer({
+    event: "chat_open",
+    eventCategory: "Chat",
+    eventAction: "chat_open",
+    eventLabel: params?.page_location || "chat_widget",
+    eventValue: undefined,
+    page_location:
+      params?.page_location ||
+      (typeof window !== "undefined" ? window.location.pathname : undefined),
   });
 }
 

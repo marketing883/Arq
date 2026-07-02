@@ -5,6 +5,7 @@ import Link from "next/link";
 import V5Nav from "@/components/home-v5/V5Nav";
 import Footer from "@/components/home-v5/Footer";
 import { ArrowRight } from "@/components/home-v5/icons";
+import { trackJobApplication } from "@/lib/analytics/gtm-events";
 import "@/components/home-v5/styles.css";
 
 type Job = {
@@ -269,6 +270,16 @@ export default function JobDetailPage({ params }: { params: { slug: string } }) 
     try {
       const res = await fetch("/api/careers/apply", { method: "POST", body: fd });
       if (res.ok) {
+        // `job` is not reset below, so its fields are safe to read here.
+        if (job) {
+          trackJobApplication({
+            job_title: job.title,
+            job_slug: job.slug,
+            department: job.department,
+            employment_type: job.employment_type,
+            location: job.location,
+          });
+        }
         setSubmitStatus("success");
         setFullName("");
         setEmail("");

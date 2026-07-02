@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import V5Nav from "@/components/home-v5/V5Nav";
 import Footer from "@/components/home-v5/Footer";
+import { trackGenerateLead } from "@/lib/analytics/gtm-events";
 import "@/components/home-v5/styles.css";
 
 const V4_INDUSTRY_MAP: Record<string, string> = {
@@ -274,6 +275,17 @@ function EngageUsPageInner() {
       });
 
       if (response.ok) {
+        // Capture lead dimensions before the form state is reset below.
+        trackGenerateLead({
+          form_name: "engagement_form",
+          inquiry_type: "demo",
+          industry: formData.industry,
+          company_size: formData.companySize,
+          timeline: formData.timeline,
+          budget_range: formData.budgetRange,
+          workflow_area: formData.workflowArea,
+          value: formData.company ? 100 : 50,
+        });
         setSubmitStatus("success");
         setFormData(emptyForm);
         setSelectedSystems([]);

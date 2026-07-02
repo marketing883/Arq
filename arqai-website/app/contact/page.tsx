@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 import V5Nav from "@/components/home-v5/V5Nav";
 import Footer from "@/components/home-v5/Footer";
 import { ArrowUpRight } from "@/components/home-v5/icons";
+import { trackGenerateLead } from "@/lib/analytics/gtm-events";
 import "@/components/home-v5/styles.css";
 
 const inquiryTypes = [
@@ -135,6 +136,17 @@ function ContactPageInner() {
       });
 
       if (response.ok) {
+        // Capture lead dimensions before the form state is reset below.
+        trackGenerateLead({
+          form_name: "contact_form",
+          inquiry_type: formData.inquiryType,
+          industry: formData.industry,
+          company_size: formData.companySize,
+          timeline: formData.timeline,
+          budget_range: formData.budgetRange,
+          workflow_area: formData.workflowArea,
+          value: formData.company ? 100 : 50,
+        });
         setSubmitStatus("success");
         setFormData(emptyForm);
         setFormLoadedAt(Date.now());

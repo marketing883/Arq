@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { QUESTIONS, SURVEY_TITLE, SURVEY_INTRO, type SurveyQuestion } from "./questions";
+import { trackSurveySubmit } from "@/lib/analytics/gtm-events";
 import "./survey.css";
 
 type Answers = {
@@ -129,6 +130,7 @@ export default function NamingSurveyPage() {
         const data = await res.json().catch(() => ({}));
         throw new Error(data.error || "Submission failed");
       }
+      trackSurveySubmit({ survey_name: "accelerator_naming" });
       setSubmitted(true);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
