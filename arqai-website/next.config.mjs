@@ -144,6 +144,21 @@ const nextConfig = {
       // v3 IA: how-it-works renamed to how-we-work; the engineering deep-dive
       // remains accessible at /how-it-works for product-page deep-links.
       // No redirect on /how-it-works -- both are valid routes.
+      // Legacy static site: /about-us.html is gone, still indexed. Consolidate
+      // into the current page instead of leaving a dead result.
+      {
+        source: "/about-us.html",
+        destination: "/about",
+        permanent: true,
+      },
+      // Consolidate the www host onto the apex domain -- both currently serve
+      // identical content, which splits crawl/index signal across two hosts.
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "www.thearq.ai" }],
+        destination: "https://thearq.ai/:path*",
+        permanent: true,
+      },
       // Accelerators reverted from standalone brand names back to the
       // Arq-prefixed names. Keep any indexed/shared links working.
       ...[

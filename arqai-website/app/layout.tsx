@@ -9,7 +9,7 @@ import { Tracker } from "@/components/analytics/Tracker";
 // Temporarily disabled for GTM debugging
 // import { GoogleTagManager as GTMConsentHandler } from "@/components/analytics/GoogleTagManager";
 
-const GTM_ID = "GTM-PR74FLRQ";
+const GTM_ID = "GTM-ND8HXL7Z";
 
 export const metadata: Metadata = {
   title: {
