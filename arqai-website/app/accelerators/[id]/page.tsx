@@ -4,7 +4,11 @@ import { notFound } from "next/navigation";
 import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
 import { ArrowRight, SparkIcon, ShieldIcon, InsightIcon, DocIcon, ChatIcon } from "@/components/home-v5/icons";
 import { accelerators, getAccelerator } from "@/lib/data/accelerators";
-import { generateServiceSchema, generateBreadcrumbSchema } from "@/lib/seo/structured-data";
+import {
+  generateServiceSchema,
+  generateBreadcrumbSchema,
+  generateFAQSchema,
+} from "@/lib/seo/structured-data";
 import AcceleratorForm from "@/components/accelerators/AcceleratorForm";
 
 const CAP_ICONS = [SparkIcon, InsightIcon, ShieldIcon, DocIcon, ChatIcon];
@@ -36,14 +40,33 @@ export function generateMetadata({ params }: AcceleratorPageProps): Metadata {
     };
   }
 
+  const url = `https://thearq.ai/accelerators/${accelerator.id}`;
+  const title = `${accelerator.name} — ${accelerator.category} | ArqAI Labs`;
+
   return {
-    title: `${accelerator.name} | ArqAI Labs Accelerators`,
+    title,
     description: accelerator.summary,
-    alternates: { canonical: `https://thearq.ai/accelerators/${accelerator.id}` },
+    keywords: [
+      accelerator.name,
+      `${accelerator.name} accelerator`,
+      ...accelerator.keywords,
+      "ArqAI Labs",
+    ],
+    alternates: { canonical: url },
     openGraph: {
-      title: `${accelerator.name} — ${accelerator.category}`,
+      type: "website",
+      url,
+      title,
       description: accelerator.summary,
-      images: [{ url: accelerator.heroImage }],
+      siteName: "ArqAI Labs",
+      images: [{ url: accelerator.heroImage, alt: `${accelerator.name} — ${accelerator.category}` }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description: accelerator.summary,
+      images: [accelerator.heroImage],
+      site: "@The_ArqAI",
     },
   };
 }
@@ -55,7 +78,11 @@ export default function AcceleratorDetailPage({ params }: AcceleratorPageProps) 
     notFound();
   }
 
-  const others = accelerators.filter((a) => a.id !== accelerator.id).slice(0, 3);
+  // Prefer same-track accelerators for the "explore more" rail.
+  const others = [
+    ...accelerators.filter((a) => a.id !== accelerator.id && a.track === accelerator.track),
+    ...accelerators.filter((a) => a.id !== accelerator.id && a.track !== accelerator.track),
+  ].slice(0, 3);
 
   const url = `https://thearq.ai/accelerators/${accelerator.id}`;
   const serviceSchema = generateServiceSchema({
@@ -65,6 +92,34 @@ export default function AcceleratorDetailPage({ params }: AcceleratorPageProps) 
     url,
     image: accelerator.image,
   });
+  const softwareSchema = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: accelerator.name,
+    applicationCategory: "BusinessApplication",
+    applicationSubCategory: accelerator.category,
+    operatingSystem: "Cloud",
+    description: accelerator.summary,
+    url,
+    image: accelerator.image,
+    audience: {
+      "@type": "BusinessAudience",
+      audienceType: accelerator.builtFor,
+    },
+    provider: {
+      "@type": "Organization",
+      name: "ArqAI Labs",
+      url: "https://thearq.ai",
+    },
+    offers: {
+      "@type": "Offer",
+      url: `${url}#get-started`,
+      description: accelerator.entryPoint.name,
+    },
+  };
+  const faqSchema = generateFAQSchema(
+    accelerator.faqs.map((f) => ({ question: f.q, answer: f.a }))
+  );
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: "Home", url: "https://thearq.ai" },
     { name: "Accelerators", url: "https://thearq.ai/accelerators" },
@@ -76,6 +131,14 @@ export default function AcceleratorDetailPage({ params }: AcceleratorPageProps) 
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <script
         type="application/ld+json"
@@ -112,10 +175,12 @@ export default function AcceleratorDetailPage({ params }: AcceleratorPageProps) 
               <span>/</span>
               <span style={{ color: "#fff" }}>{accelerator.name}</span>
             </div>
-            <span className="v5-badge on-dark">
-              <span className="v5-badge-dot" />
-              {accelerator.category}
-            </span>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+              <span className="v5-badge on-dark">
+                <span className="v5-badge-dot" />
+                {accelerator.track} · {accelerator.domain}
+              </span>
+            </div>
             <h1 className="v5-h1">{accelerator.name}</h1>
             <p className="v5-lead">{accelerator.tagline}</p>
             <div className="v5-hero-actions">
@@ -140,10 +205,13 @@ export default function AcceleratorDetailPage({ params }: AcceleratorPageProps) 
           <div className="v5-split">
             <div className="v5-split-copy">
               <span className="v5-eyebrow">Overview</span>
-              <h2 className="v5-h2" style={{ marginTop: 14 }}>Built for {accelerator.builtFor.split(",")[0].toLowerCase()} and the teams around them.</h2>
+              <h2 className="v5-h2" style={{ marginTop: 14 }}>What is {accelerator.name}?</h2>
               <p className="v5-lead" style={{ marginTop: 16 }}>{accelerator.overview}</p>
               <p className="v5-body" style={{ marginTop: 16 }}>
                 <strong style={{ color: "var(--v5-ink)" }}>Built for:</strong> {accelerator.builtFor}
+              </p>
+              <p className="v5-body" style={{ marginTop: 8 }}>
+                <strong style={{ color: "var(--v5-ink)" }}>Typically owned by:</strong> {accelerator.buyers}
               </p>
             </div>
             <div className="v5-stats" style={{ gridTemplateColumns: "1fr", alignContent: "start" }}>
@@ -170,7 +238,7 @@ export default function AcceleratorDetailPage({ params }: AcceleratorPageProps) 
             <article className="v5-card dark">
               <span className="v5-card-eyebrow" style={{ color: "var(--v5-lime)" }}>The shift</span>
               <h2 className="v5-h3">What changes with {accelerator.name}.</h2>
-              <p className="v5-body">{accelerator.promise}</p>
+              <p className="v5-body">{accelerator.whatChanges}</p>
             </article>
           </div>
         </div>
@@ -229,8 +297,32 @@ export default function AcceleratorDetailPage({ params }: AcceleratorPageProps) 
         </div>
       </section>
 
-      {/* How it works (rollout) */}
+      {/* Agent architecture */}
       <section className="v5-section v5-bg-white">
+        <div className="v5-container">
+          <div className="v5-split">
+            <div className="v5-split-copy">
+              <span className="v5-eyebrow">Agent architecture</span>
+              <h2 className="v5-h2">How the agents work together.</h2>
+              <p className="v5-lead" style={{ marginTop: 16 }}>
+                Every agent action carries the trigger, the reasoning, the inputs, and the
+                outcome in an encrypted, persistent audit trail. No black boxes.
+              </p>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
+              {accelerator.architecture.map((para, i) => (
+                <article className="v5-card" key={i}>
+                  <span className="v5-num" style={{ marginBottom: 4 }}>{String(i + 1).padStart(2, "0")}</span>
+                  <p className="v5-body" style={{ color: "var(--v5-ink-soft)" }}>{para}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* How it works (rollout) */}
+      <section className="v5-section v5-bg-grey">
         <div className="v5-container">
           <div className="v5-section-head">
             <span className="v5-eyebrow">How it rolls out</span>
@@ -251,7 +343,7 @@ export default function AcceleratorDetailPage({ params }: AcceleratorPageProps) 
       </section>
 
       {/* Use cases */}
-      <section className="v5-section v5-bg-grey">
+      <section className="v5-section v5-bg-white">
         <div className="v5-container">
           <div className="v5-section-head">
             <span className="v5-eyebrow">Use cases</span>
@@ -269,7 +361,7 @@ export default function AcceleratorDetailPage({ params }: AcceleratorPageProps) 
       </section>
 
       {/* Integrations + proof */}
-      <section className="v5-section v5-bg-white">
+      <section className="v5-section v5-bg-grey">
         <div className="v5-container">
           <div className="v5-split">
             <div className="v5-split-copy">
@@ -278,7 +370,7 @@ export default function AcceleratorDetailPage({ params }: AcceleratorPageProps) 
               <p className="v5-lead">{accelerator.proof}</p>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 22 }}>
                 {accelerator.integrations.map((tool) => (
-                  <span className="v5-chip" key={tool}>{tool}</span>
+                  <span className="v5-chip" key={tool} style={{ background: "var(--v5-white)" }}>{tool}</span>
                 ))}
               </div>
             </div>
@@ -299,13 +391,23 @@ export default function AcceleratorDetailPage({ params }: AcceleratorPageProps) 
         </div>
       </section>
 
-      {/* Fit signals */}
-      <section className="v5-section v5-bg-grey">
+      {/* Fit signals + entry point */}
+      <section className="v5-section v5-bg-white">
         <div className="v5-container">
           <div className="v5-split">
             <div className="v5-split-copy">
               <span className="v5-eyebrow">Fit signals</span>
               <h2 className="v5-h2">When {accelerator.name} is worth a closer look.</h2>
+              <div className="v5-card dark" style={{ marginTop: 24 }}>
+                <span className="v5-card-eyebrow" style={{ color: "var(--v5-lime)" }}>
+                  How engagements start
+                </span>
+                <h3 className="v5-h3">{accelerator.entryPoint.name}</h3>
+                <p className="v5-body">{accelerator.entryPoint.body}</p>
+                <Link href="#get-started" className="v5-card-more" style={{ color: "var(--v5-lime)" }}>
+                  Book it <ArrowRight />
+                </Link>
+              </div>
             </div>
             <div className="v5-card">
               <ul className="v5-list">
@@ -318,12 +420,30 @@ export default function AcceleratorDetailPage({ params }: AcceleratorPageProps) 
         </div>
       </section>
 
+      {/* FAQ — visible answers for people and answer engines alike */}
+      <section className="v5-section v5-bg-grey">
+        <div className="v5-container">
+          <div className="v5-section-head">
+            <span className="v5-eyebrow">FAQ</span>
+            <h2 className="v5-h2">Common questions about {accelerator.name}.</h2>
+          </div>
+          <div className="v5-grid v5-grid-2">
+            {accelerator.faqs.map((faq) => (
+              <article className="v5-card" key={faq.q}>
+                <h3 className="v5-h3">{faq.q}</h3>
+                <p className="v5-body">{faq.a}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Explore other accelerators */}
       <section className="v5-section v5-bg-white">
         <div className="v5-container">
           <div className="v5-section-head">
             <span className="v5-eyebrow">More accelerators</span>
-            <h2 className="v5-h2">Explore the rest of the catalog.</h2>
+            <h2 className="v5-h2">Explore the rest of the portfolio.</h2>
           </div>
           <div className="v5-grid v5-grid-3">
             {others.map((a) => (
@@ -357,9 +477,10 @@ export default function AcceleratorDetailPage({ params }: AcceleratorPageProps) 
                 Put {accelerator.name} to work on your workflow.
               </h2>
               <p className="v5-lead" style={{ marginTop: 16 }}>
-                Tell us about the workflow. We&apos;ll show where {accelerator.name} fits, what
-                must be customized for your environment, and the fastest path to a measurable
-                first release — not a generic demo.
+                Start with the {accelerator.entryPoint.name}, or tell us about the workflow.
+                We&apos;ll show where {accelerator.name} fits, what must be configured for your
+                environment, and the fastest path to a measurable first release — not a
+                generic demo.
               </p>
               <ul className="v5-list">
                 <li>Fit check against your data, systems, and controls</li>

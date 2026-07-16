@@ -183,7 +183,7 @@ export const primaryNavigation: SiteNavItem[] = [
     summary: "Reusable vertical AI patterns that are tailored to your systems, policies, and review model.",
     feature: {
       title: "Productized patterns, tuned for your operation",
-      body: "Start closer to production with accelerators for claims, payment integrity, financial crime, loyalty, service ops, supply chain, and SecOps.",
+      body: "Start closer to production with ten accelerators spanning payment integrity, loyalty, supply chain, banking, forecasting, support, data quality, pricing, SecOps, and data observability.",
       href: "/accelerators",
       cta: "Explore accelerators",
     },

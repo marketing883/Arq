@@ -14,8 +14,8 @@ const COLUMNS = [
     title: "Accelerators",
     links: [
       { label: "ArqFWA", href: "/accelerators/arqfwa" },
-      { label: "ArqBanker", href: "/accelerators/arqbanker" },
       { label: "ArqLoyalty", href: "/accelerators/arqloyalty" },
+      { label: "ArqBanker", href: "/accelerators/arqbanker" },
       { label: "ArqVantage", href: "/accelerators/arqvantage" },
       { label: "All Accelerators", href: "/accelerators" },
     ],

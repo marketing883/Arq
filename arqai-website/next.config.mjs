@@ -110,6 +110,22 @@ const nextConfig = {
         destination: "/",
         permanent: true,
       },
+      // Retired accelerators (portfolio consolidated to the canonical ten)
+      {
+        source: "/accelerators/arqclaims",
+        destination: "/accelerators/arqfwa",
+        permanent: true,
+      },
+      {
+        source: "/accelerators/arqtechops",
+        destination: "/accelerators/arqsupport",
+        permanent: true,
+      },
+      {
+        source: "/accelerators/arqdesk",
+        destination: "/accelerators/arqsupport",
+        permanent: true,
+      },
       {
         source: "/agents",
         destination: "/accelerators",
