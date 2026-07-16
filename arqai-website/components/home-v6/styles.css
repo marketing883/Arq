@@ -1,0 +1,50 @@
+/* ============================================================
+   v6 Homepage — additions on top of home-v5/styles.css.
+   Scoped under .v6-home (applied alongside .v5-shell).
+   New pieces: hero tag pills, secondary hero CTA sizing,
+   3-up flagship accelerator grid, results (proof) cards,
+   non-numeric bento stat.
+   ============================================================ */
+
+/* ---------- hero tag pills ---------- */
+.v6-home .v6-hero-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+.v6-home .v6-hero-tags span {
+  display: inline-flex; align-items: center; padding: 6px 14px; border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72); border: 1px solid rgba(37, 46, 61, 0.12);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  font-size: 12.5px; font-weight: 600; letter-spacing: 0.02em; color: var(--v5-ink);
+}
+
+/* hero: ghost secondary CTA matches the gradient pill height */
+.v6-home .v5-hero .v5-cta-wrap { flex-wrap: wrap; }
+.v6-home .v5-hero .v5-btn-ghost { padding: 15px 26px; background: rgba(255,255,255,0.8); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+
+/* hero metric cards: room for the "40–60%" range stat */
+.v6-home .v5-hero-metrics { grid-template-columns: 176px 176px; }
+.v6-home .v5-hero-metric-num { font-size: 34px; }
+@media (max-width: 980px) { .v6-home .v5-hero-metrics { grid-template-columns: 160px 160px; } }
+@media (max-width: 480px) { .v6-home .v5-hero-metrics { grid-template-columns: 1fr 1fr; } }
+
+/* ---------- flagship accelerators: 3 across ---------- */
+.v6-home .v6-accel-grid { grid-template-columns: repeat(3, 1fr); }
+.v6-home .v6-accel-grid .v5-accel-media { aspect-ratio: 16 / 9; }
+.v6-home .v6-accel-cat-line { font-size: 12px; font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase; color: rgba(208, 244, 57, 0.85); margin: 0; }
+@media (max-width: 960px) { .v6-home .v6-accel-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .v6-home .v6-accel-grid { grid-template-columns: 1fr; } }
+
+/* ---------- results (proof) cards ---------- */
+.v6-proof-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.v6-proof-card { border-radius: var(--v5-radius-lg); padding: 30px 28px; min-height: 240px; display: flex; flex-direction: column; gap: 16px; }
+.v6-proof-num { font-family: var(--v5-display); font-weight: 600; font-size: clamp(40px, 4.6vw, 56px); line-height: 1; letter-spacing: -0.02em; }
+.v6-proof-body { font-size: 14.5px; line-height: 1.6em; margin: auto 0 0; }
+.v6-proof-card.dark { background: var(--v5-dark-grad); color: #fff; }
+.v6-proof-card.dark .v6-proof-num { color: var(--v5-lime); }
+.v6-proof-card.dark .v6-proof-body { color: rgba(255, 255, 255, 0.78); }
+.v6-proof-card.green { background: var(--v5-green-grad); color: #fff; }
+.v6-proof-card.green .v6-proof-body { color: rgba(255, 255, 255, 0.88); }
+.v6-proof-card.light { background: var(--v5-white); border: 1px solid #ededed; color: var(--v5-ink); }
+.v6-proof-card.light .v6-proof-body { color: var(--v5-grey-100); }
+@media (max-width: 860px) { .v6-proof-grid { grid-template-columns: 1fr; } .v6-proof-card { min-height: 0; } }
+
+/* ---------- bento: text stat ("TPA-specific") instead of a number ---------- */
+.v6-home .v6-bento-num-text { font-size: 30px; line-height: 1.1; }

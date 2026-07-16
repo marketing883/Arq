@@ -51,6 +51,7 @@ const ACCEL_ICONS: Record<string, React.ReactNode> = {
   arqlogistics: <TruckIcon />,
   arqdesk: <HeadsetIcon />,
   arqsecops: <LockIcon />,
+  arqvantage: <InsightIcon />,
 };
 
 const ACCEL_LINKS: Link[] = accelerators.map((a) => ({

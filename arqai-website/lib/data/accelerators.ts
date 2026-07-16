@@ -690,6 +690,88 @@ export const accelerators: Accelerator[] = [
       "GRC teams need better evidence from SecOps workflows",
     ],
   },
+  {
+    id: "arqvantage",
+    name: "ArqVantage",
+    category: "Competitive pricing intelligence",
+    tagline: "Real-time competitive pricing intelligence with governed, automated response.",
+    summary:
+      "Monitor competitor SKUs in real time, reason about why prices moved rather than just that they did, and adjust within your guardrails — with MAP compliance enforced automatically.",
+    builtFor: "Retailers, distributors, and brands in price-competitive markets",
+    image: img("photo-1460925895917-afdab827c52f", 1200),
+    heroImage: img("photo-1460925895917-afdab827c52f", 1600),
+    secondaryImage: img("photo-1551288049-bebda4e38f71", 1920),
+    tertiaryImage: img("photo-1543286386-713bdd548da4", 800),
+    overview:
+      "ArqVantage is a competitive pricing intelligence layer for price-competitive markets. Agents monitor competitor SKUs in real time, reason about why prices moved rather than just that they did, and recommend or execute adjustments within your commercial guardrails — with MAP compliance enforced automatically and an audit-ready evidence trail on every pricing action.",
+    capabilities: [
+      {
+        title: "Real-time SKU monitoring",
+        body: "Tracks competitor prices, availability, and promotions across channels continuously — not on a weekly crawl cadence.",
+      },
+      {
+        title: "Causal price reasoning",
+        body: "Distinguishes a genuine repricing strategy from a stockout, a promotion, or a data glitch before your prices move in response.",
+      },
+      {
+        title: "Guardrailed response",
+        body: "Adjusts prices within the floors, ceilings, and margin rules your commercial team sets — automatically or with approval, per category.",
+      },
+      {
+        title: "MAP compliance enforcement",
+        body: "Monitors minimum advertised price across your channels and flags or blocks violations before they propagate.",
+      },
+      {
+        title: "Pricing audit trail",
+        body: "Every recommendation and adjustment carries the trigger, the reasoning, the inputs, and the outcome for merchandising and finance review.",
+      },
+    ],
+    useCases: [
+      {
+        title: "Competitive response",
+        body: "Respond to competitor price moves in minutes, with reasoning attached, instead of days behind a manual review queue.",
+      },
+      {
+        title: "Promotion intelligence",
+        body: "Spot competitor promotions early and decide whether to match, hold, or counter — with margin impact quantified.",
+      },
+      {
+        title: "Channel price governance",
+        body: "Keep marketplace, direct-to-consumer, and dealer pricing consistent with MAP and contract terms automatically.",
+      },
+    ],
+    integrations: [
+      "E-commerce platforms (Shopify, Salesforce Commerce)",
+      "ERP & pricing engines",
+      "Marketplace channels (Amazon, Walmart)",
+      "Product information management",
+      "Data warehouse / lakehouse",
+      "BI & reporting",
+    ],
+    pain:
+      "Pricing teams see that competitor prices moved, but not why — and by the time a manual review catches up, the margin or the sale is gone. Guardrails live in spreadsheets, and MAP enforcement is reactive.",
+    promise:
+      "ArqVantage watches the market continuously, explains price moves before reacting to them, and keeps every adjustment inside the guardrails your commercial and compliance teams set.",
+    proof:
+      "Built on the same governed agent substrate as ArqAI's production deployments, with pricing patterns validated against an active reference use case.",
+    rollout: [
+      "Connect competitor and channel price feeds for a priority category.",
+      "Codify pricing guardrails, margin floors, and MAP rules with your commercial team.",
+      "Run in recommend-only mode until reasoning quality is validated.",
+      "Enable governed auto-adjustment category by category.",
+    ],
+    metrics: [
+      { value: "Minutes", label: "To respond to competitor price moves" },
+      { value: "100%", label: "MAP compliance enforced automatically" },
+      { value: "24/7", label: "Continuous SKU-level monitoring" },
+    ],
+    signals: [
+      "Competitor price checks are manual and weekly",
+      "You react to price moves without knowing why they happened",
+      "MAP violations surface after the damage is done",
+      "Pricing rules live in spreadsheets, not systems",
+    ],
+  },
 ];
 
 export function getAccelerator(id: string) {

@@ -16,6 +16,7 @@ const COLUMNS = [
       { label: "ArqFWA", href: "/accelerators/arqfwa" },
       { label: "ArqBanker", href: "/accelerators/arqbanker" },
       { label: "ArqLoyalty", href: "/accelerators/arqloyalty" },
+      { label: "ArqVantage", href: "/accelerators/arqvantage" },
       { label: "All Accelerators", href: "/accelerators" },
     ],
   },
@@ -65,7 +66,7 @@ export default function Footer() {
           <a href="/" className="v5-nav-brand">
             <img src={LOGO} alt="ArqAI Labs" className="v5-nav-logo-img" width="160" height="28" loading="lazy" decoding="async" />
           </a>
-          <p>Industry-deep AI, built around your operations — designed, deployed, and run in production.</p>
+          <p>Forward-deployed AI engineering for regulated enterprises. Designed, built, and run in production.</p>
           <div className="v5-footer-socials">
             {SOCIALS.map((s) => (
               <a key={s.label} href={s.href} aria-label={s.label} target="_blank" rel="noopener noreferrer">
