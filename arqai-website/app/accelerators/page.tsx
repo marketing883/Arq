@@ -158,9 +158,6 @@ export default function AcceleratorsPage() {
               <Link href="/engage-us" className="v5-btn v5-btn-primary">
                 Book a fit check <ArrowRight />
               </Link>
-              <Link href="/services/vertical-acceleration" className="v5-btn v5-btn-ghost">
-                How acceleration works
-              </Link>
             </div>
           </div>
         </div>
@@ -287,9 +284,6 @@ export default function AcceleratorsPage() {
             <div className="v5-cta-card-actions">
               <Link href="/engage-us" className="v5-btn v5-btn-primary">
                 Book a fit check <ArrowRight />
-              </Link>
-              <Link href="/services" className="v5-btn v5-btn-ghost">
-                View services
               </Link>
             </div>
       </V5CtaSection>

@@ -26,7 +26,11 @@ export default function Hero() {
             ))}
           </div>
 
-          <h1 className="v5-h1">{HERO.headline}</h1>
+          <h1 className="v5-h1 v6-hero-h1">
+            {HERO.headlineLine1}
+            <br />
+            {HERO.headlineLine2}
+          </h1>
 
           <p className="v5-hero-sub">{HERO.sub}</p>
 
@@ -34,9 +38,6 @@ export default function Hero() {
             <a href={HERO.cta.href} className="v5-cta">{HERO.cta.label}</a>
             <a href={HERO.cta.href} className="v5-cta-arrow" aria-label={HERO.cta.label}>
               <ArrowUpRight />
-            </a>
-            <a href={HERO.ctaSecondary.href} className="v5-btn v5-btn-ghost">
-              {HERO.ctaSecondary.label}
             </a>
           </div>
         </div>

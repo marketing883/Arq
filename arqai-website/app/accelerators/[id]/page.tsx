@@ -187,13 +187,6 @@ export default function AcceleratorDetailPage({ params }: AcceleratorPageProps) 
               <Link href="#get-started" className="v5-btn v5-btn-primary">
                 Request a walkthrough <ArrowRight />
               </Link>
-              <Link
-                href="/accelerators"
-                className="v5-btn v5-btn-ghost"
-                style={{ background: "transparent", borderColor: "rgba(255,255,255,0.4)", color: "#fff" }}
-              >
-                All accelerators
-              </Link>
             </div>
           </div>
         </div>

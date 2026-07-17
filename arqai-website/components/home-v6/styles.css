@@ -15,9 +15,9 @@
   font-size: 12.5px; font-weight: 600; letter-spacing: 0.02em; color: var(--v5-ink);
 }
 
-/* hero: ghost secondary CTA matches the gradient pill height */
-.v6-home .v5-hero .v5-cta-wrap { flex-wrap: wrap; }
-.v6-home .v5-hero .v5-btn-ghost { padding: 15px 26px; background: rgba(255,255,255,0.8); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+/* hero headline: fixed two-line lockup */
+.v6-home .v6-hero-h1 { font-size: clamp(28px, 4.3vw, 54px); white-space: nowrap; }
+@media (max-width: 560px) { .v6-home .v6-hero-h1 { font-size: clamp(24px, 7.2vw, 30px); } }
 
 /* hero metric cards: room for the "40–60%" range stat */
 .v6-home .v5-hero-metrics { grid-template-columns: 176px 176px; }

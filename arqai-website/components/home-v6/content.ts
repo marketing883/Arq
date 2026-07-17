@@ -10,10 +10,10 @@ export const HERO_POSTER = `${A}/pR0DzH2JNZa0vnz4l8WJLxvUKA.jpg`;
 
 export const HERO = {
   tags: ["Forward-Deployed", "Accelerators", "Production AI"],
-  headline: "Forward Deployed AI Engineering. At Scale.",
+  headlineLine1: "Forward Deployed AI",
+  headlineLine2: "Engineering. At Scale.",
   sub: "Engineers embedded in the problem, not advising from outside. Every accelerator comes from years of doing this work: designed, built, deployed, and run in production, with audit-ready proof on every agent action.",
   cta: { label: "Book a Workflow Assessment", href: "/demo" },
-  ctaSecondary: { label: "Explore Accelerators", href: "#accelerators" },
   metrics: [
     { num: "40–60", suffix: "%", label: "Faster delivery on flagship accelerators" },
     { num: "70", suffix: "%", label: "Substrate reuse by engagement three" },
