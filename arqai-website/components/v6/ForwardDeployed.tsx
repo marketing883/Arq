@@ -2,7 +2,6 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import {
-  ArrowRight,
   ArrowUpRight,
   Bot,
   Compass,
@@ -217,10 +216,13 @@ export default function ForwardDeployed() {
             <div className="mt-8">
               <a
                 href="/services"
-                className="inline-flex items-center gap-2 rounded-lg bg-gray-900 px-7 py-3.5 font-semibold text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-800"
+                className="group inline-flex items-center gap-1.5 text-[15.5px] font-semibold text-gray-900 transition-colors hover:text-gray-600"
               >
                 See All Services
-                <ArrowRight size={16} />
+                <ArrowUpRight
+                  size={17}
+                  className="text-[#9bbf2e] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                />
               </a>
             </div>
           </Reveal>
@@ -274,7 +276,7 @@ export default function ForwardDeployed() {
                   Explore this service
                   <ArrowUpRight
                     size={15}
-                    className="transition-transform duration-300 group-hover/panel:translate-x-0.5 group-hover/panel:-translate-y-0.5"
+                    className="text-[#d0f438] transition-transform duration-300 group-hover/panel:translate-x-0.5 group-hover/panel:-translate-y-0.5"
                   />
                 </span>
               </span>

@@ -2,7 +2,6 @@
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
-  ArrowRight,
   ArrowUpRight,
   Headset,
   Landmark,
@@ -259,7 +258,7 @@ function MainCard({
             Explore {item.name}
             <ArrowUpRight
               size={15}
-              className="transition-transform duration-300 group-hover/main:translate-x-0.5 group-hover/main:-translate-y-0.5"
+              className="text-[#d0f438] transition-transform duration-300 group-hover/main:translate-x-0.5 group-hover/main:-translate-y-0.5"
             />
           </span>
         </span>
@@ -307,11 +306,8 @@ function SecondaryCard({
       </span>
 
       <span className={`transition-opacity duration-300 ${compact ? "opacity-0" : "opacity-100"}`}>
-        <span className="flex items-center justify-between">
+        <span className="flex items-center">
           <CardLabel light={false}>{item.track}</CardLabel>
-          <span className="liquid-glass flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-white transition-transform duration-300 group-hover/sec:rotate-45">
-            <ArrowUpRight size={15} strokeWidth={1.5} />
-          </span>
         </span>
 
         <span className="mt-3 flex items-center gap-2.5">
@@ -330,7 +326,7 @@ function SecondaryCard({
         >
           <span className="block text-[12.5px] leading-[1.6] text-white/60">{item.more}</span>
           <span className="mt-2 inline-flex items-center gap-1.5 text-[13px] font-semibold text-white">
-            Explore {item.name} <ArrowRight size={13} />
+            Explore {item.name} <ArrowUpRight size={13} className="text-[#d0f438]" />
           </span>
         </span>
       </span>
@@ -390,10 +386,13 @@ export default function AcceleratorShowcase() {
           </div>
           <a
             href="/accelerators"
-            className="liquid-glass inline-flex shrink-0 items-center gap-2 rounded-lg px-5 py-2.5 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 sm:px-6 sm:py-3"
+            className="group inline-flex shrink-0 items-center gap-1.5 text-[15px] font-semibold text-white transition-colors hover:text-[#d0f438]"
           >
             Explore All Accelerators
-            <ArrowRight size={15} />
+            <ArrowUpRight
+              size={16}
+              className="text-[#d0f438] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+            />
           </a>
         </div>
 
@@ -495,7 +494,7 @@ export default function AcceleratorShowcase() {
                   <>
                     <p className="mt-2 text-[13.5px] leading-relaxed text-white/80">{item.line}</p>
                     <a href={item.href} className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-white">
-                      Explore {item.name} <ArrowUpRight size={14} />
+                      Explore {item.name} <ArrowUpRight size={14} className="text-[#d0f438]" />
                     </a>
                   </>
                 )}
@@ -512,7 +511,6 @@ export default function AcceleratorShowcase() {
               <span className="flex items-center gap-2.5">
                 <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/10 text-[#d0f438]">{item.icon}</span>
                 <span className="font-display text-lg font-semibold text-white">{item.name}</span>
-                <ArrowUpRight size={15} className="ml-auto text-white/70" />
               </span>
               <span className="mt-2 block text-[13px] leading-[1.6] text-white/80">{item.tagline}</span>
             </a>
@@ -520,16 +518,18 @@ export default function AcceleratorShowcase() {
         </div>
 
         {/* The rest of the portfolio */}
-        <div className="mt-10 flex flex-wrap items-center gap-3">
-          <span className="text-[11px] uppercase tracking-[0.22em] text-white/50">Plus five more</span>
-          {CHIPS.map((m) => (
-            <a
-              key={m.href}
-              href={m.href}
-              className="liquid-glass rounded-lg px-4 py-2 text-[13px] font-medium text-white/85 transition-all duration-300 hover:-translate-y-0.5 hover:text-white"
-            >
-              {m.name}
-            </a>
+        <div className="mt-10 flex flex-wrap items-center gap-x-3 gap-y-2">
+          <span className="mr-1 text-[11px] uppercase tracking-[0.22em] text-white/50">Plus five more</span>
+          {CHIPS.map((m, i) => (
+            <span key={m.href} className="flex items-center gap-3">
+              <a
+                href={m.href}
+                className="text-[13.5px] font-medium text-white/75 underline-offset-4 transition-colors hover:text-white hover:underline"
+              >
+                {m.name}
+              </a>
+              {i < CHIPS.length - 1 && <span className="text-white/25" aria-hidden="true">·</span>}
+            </span>
           ))}
         </div>
       </div>

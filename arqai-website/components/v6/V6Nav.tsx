@@ -2,7 +2,6 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import {
-  ArrowRight,
   ArrowUpRight,
   BadgePercent,
   BookOpen,
@@ -127,13 +126,7 @@ function MegaLinkItem({ link, index }: { link: MegaLink; index: number }) {
         {link.icon}
       </span>
       <span>
-        <span className="flex items-center gap-1.5 font-display text-[15px] font-semibold text-gray-900">
-          {link.label}
-          <ArrowUpRight
-            size={13}
-            className="text-gray-400 opacity-0 -translate-x-1 translate-y-1 transition-all duration-300 group-hover/link:opacity-100 group-hover/link:translate-x-0 group-hover/link:translate-y-0"
-          />
-        </span>
+        <span className="font-display text-[15px] font-semibold text-gray-900">{link.label}</span>
         <span className="mt-0.5 block text-[12.5px] leading-snug text-gray-500">{link.desc}</span>
       </span>
     </a>
@@ -192,7 +185,10 @@ function FeatureTile({
         <span className="mt-1 block font-display text-lg font-semibold leading-snug text-white">{title}</span>
         <span className="mt-2 inline-flex items-center gap-1.5 text-[13px] font-semibold text-white">
           {cta}
-          <ArrowRight size={14} className="transition-transform duration-300 group-hover/feature:translate-x-1" />
+          <ArrowUpRight
+            size={14}
+            className="text-[#d0f438] transition-transform duration-300 group-hover/feature:translate-x-0.5 group-hover/feature:-translate-y-0.5"
+          />
         </span>
       </span>
     </a>
@@ -291,9 +287,7 @@ function IndustriesPanel() {
               <span className="block font-display text-[15px] font-semibold text-white">{ind.label}</span>
               <span className="mt-0.5 block text-[12px] leading-snug text-white/70">{ind.desc}</span>
             </span>
-            <span className="absolute right-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-[#d0f438] text-gray-900 opacity-0 scale-75 transition-all duration-300 group-hover/card:opacity-100 group-hover/card:scale-100">
-              <ArrowUpRight size={15} />
-            </span>
+
           </a>
         ))}
       </div>
@@ -441,9 +435,13 @@ export default function V6Nav() {
           <div className="flex items-center gap-2">
             <a
               href="/demo"
-              className="hidden rounded-lg bg-gray-900 px-5 py-2.5 text-sm font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-gray-800 lg:inline-flex"
+              className="group hidden items-center gap-1.5 text-[15px] font-semibold text-gray-900 transition-colors hover:text-gray-600 lg:inline-flex"
             >
               Book a Demo
+              <ArrowUpRight
+                size={16}
+                className="text-[#9bbf2e] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              />
             </a>
             <button
               type="button"
@@ -524,9 +522,10 @@ export default function V6Nav() {
           ))}
           <a
             href="/demo"
-            className="mt-4 block rounded-lg bg-gray-900 px-5 py-3.5 text-center font-semibold text-white"
+            className="group mt-4 flex items-center justify-center gap-1.5 py-3 text-center font-semibold text-gray-900"
           >
             Book a Demo
+            <ArrowUpRight size={16} className="text-[#9bbf2e]" />
           </a>
         </div>
       )}

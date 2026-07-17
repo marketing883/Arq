@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { ArrowUpRight } from "lucide-react";
 
 // --- Data for the image accordion ---
 // The five accelerators we lead with, each panel linking to its page.
@@ -206,9 +207,13 @@ export function LandingAccordionItem({
             <div className="mt-8">
               <a
                 href="/demo"
-                className="inline-block bg-gray-900 text-white font-semibold px-8 py-3.5 rounded-lg shadow-lg hover:bg-gray-800 hover:-translate-y-0.5 transition-all duration-300"
+                className="group inline-flex items-center gap-2 text-[17px] font-semibold text-gray-900 transition-colors hover:text-gray-600 md:text-lg"
               >
                 Book a Workflow Assessment
+                <ArrowUpRight
+                  size={19}
+                  className="text-[#9bbf2e] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                />
               </a>
             </div>
 

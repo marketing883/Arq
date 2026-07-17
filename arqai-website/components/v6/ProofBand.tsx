@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { ArrowRight } from "lucide-react";
 
 const HERO_VIDEO = "/v5/assets/ufsUXNNTVPKgg5ZhfzY4DHtmrKY.mp4";
 const HERO_POSTER = "/v5/assets/pR0DzH2JNZa0vnz4l8WJLxvUKA.jpg";
@@ -169,10 +168,9 @@ export default function ProofBand() {
           </p>
           <a
             href="/case-studies"
-            className="group mt-3 inline-flex items-center gap-1.5 text-[12.5px] font-semibold text-white/70 transition-colors hover:text-white"
+            className="mt-3 inline-block text-[12.5px] font-semibold text-white/70 underline-offset-4 transition-colors hover:text-white hover:underline"
           >
             See the case studies
-            <ArrowRight size={13} className="transition-transform duration-300 group-hover:translate-x-1" />
           </a>
         </div>
 

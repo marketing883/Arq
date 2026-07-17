@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
 // ---------------------------------------------------------------------------
 // Client presentation for the CMS-driven case study spotlight band.
@@ -24,7 +24,7 @@ export type SpotlightStudy = {
 };
 
 const FALLBACK_BG =
-  "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1920&q=80";
+  "https://images.unsplash.com/photo-1517120026326-d87759a7b63b?auto=format&fit=crop&w=1920&q=80";
 
 function useInView<T extends HTMLElement>(threshold = 0.3) {
   const ref = useRef<T | null>(null);
@@ -90,6 +90,8 @@ export default function CaseStudySpotlight({
   const { ref, inView } = useInView<HTMLElement>(0.25);
   const metrics = (study.metrics ?? []).slice(0, 4);
   const bg = study.hero_image || FALLBACK_BG;
+  const rawSummary = study.impact_summary || study.overview || "";
+  const summary = rawSummary.split(/(?<=[.!?])\s+/)[0] ?? rawSummary;
 
   return (
     <section ref={ref} className="relative overflow-hidden bg-[#070a14]" id="case-studies">
@@ -104,39 +106,9 @@ export default function CaseStudySpotlight({
       />
       <div className="absolute inset-0 bg-gradient-to-r from-[#070a14]/95 via-[#070a14]/80 to-[#070a14]/60" aria-hidden="true" />
       <div className="absolute inset-0 bg-[radial-gradient(55%_80%_at_90%_10%,rgba(208,244,56,0.12),transparent_60%)]" aria-hidden="true" />
+      <div className="absolute inset-0 shadow-[inset_0_0_160px_60px_rgba(0,0,0,0.65)]" aria-hidden="true" />
+      <div className="noise-overlay absolute inset-0" aria-hidden="true" />
 
-      {/* Animated outcome curve — draws itself on entry */}
-      <svg
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-[46%] w-full"
-        viewBox="0 0 1200 300"
-        preserveAspectRatio="none"
-        aria-hidden="true"
-      >
-        <defs>
-          <linearGradient id="cs-area" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="rgba(208,244,56,0.16)" />
-            <stop offset="100%" stopColor="rgba(208,244,56,0)" />
-          </linearGradient>
-        </defs>
-        <path
-          d="M0,268 C140,258 240,252 360,224 S 600,160 740,128 S 1020,64 1200,34 L1200,300 L0,300 Z"
-          fill="url(#cs-area)"
-          className={`transition-opacity duration-[1400ms] ${inView ? "opacity-100" : "opacity-0"}`}
-          style={{ transitionDelay: "700ms" }}
-        />
-        <path
-          d="M0,268 C140,258 240,252 360,224 S 600,160 740,128 S 1020,64 1200,34"
-          fill="none"
-          stroke="#d0f438"
-          strokeWidth="2.4"
-          strokeLinecap="round"
-          pathLength={1}
-          strokeDasharray={1}
-          strokeDashoffset={inView ? 0 : 1}
-          style={{ transition: "stroke-dashoffset 2000ms cubic-bezier(0.4,0,0.2,1) 300ms" }}
-          opacity={0.75}
-        />
-      </svg>
 
       <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 md:px-10 md:py-20 lg:px-14">
         {/* Overline row */}
@@ -151,104 +123,100 @@ export default function CaseStudySpotlight({
           </p>
           <a
             href="/case-studies"
-            className="group inline-flex items-center gap-1.5 text-[13px] font-semibold text-white/70 transition-colors hover:text-white"
+            className="text-[13px] font-semibold text-white/70 transition-colors hover:text-white"
           >
             All case studies
-            <ArrowRight size={13} className="transition-transform duration-300 group-hover:translate-x-1" />
           </a>
         </div>
 
-        {/* Study narrative */}
-        <div className="mt-8 max-w-3xl">
-          <div
-            className={`flex flex-wrap items-center gap-2.5 transition-all duration-700 ${
-              inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-            }`}
-            style={{ transitionDelay: "100ms" }}
-          >
-            <span className="bg-[#d0f438] px-2.5 py-1 text-[10.5px] font-bold uppercase tracking-[0.14em] text-gray-900">
-              {study.industry}
-            </span>
-            <span className="text-[13px] font-medium text-white/60">{study.client_name}</span>
-          </div>
+        {/* Narrative left · stats right */}
+        <div className="mt-8 grid gap-10 lg:grid-cols-[1.45fr_1fr] lg:gap-14">
+          <div>
+            <div
+              className={`flex flex-wrap items-center gap-2.5 transition-all duration-700 ${
+                inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+              }`}
+              style={{ transitionDelay: "100ms" }}
+            >
+              <span className="bg-[#d0f438] px-2.5 py-1 text-[10.5px] font-bold uppercase tracking-[0.14em] text-gray-900">
+                {study.industry}
+              </span>
+              <span className="text-[13px] font-medium text-white/60">{study.client_name}</span>
+            </div>
 
-          <h2
-            className={`mt-4 font-display text-[clamp(26px,3.2vw,44px)] font-semibold leading-[1.1] tracking-tight text-white transition-all duration-700 ${
-              inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
-            }`}
-            style={{ transitionDelay: "180ms" }}
-          >
-            {study.title}
-          </h2>
-
-          {(study.impact_summary || study.overview) && (
-            <p
-              className={`mt-4 max-w-2xl text-[15px] leading-relaxed text-white/70 transition-all duration-700 ${
+            <h2
+              className={`mt-4 font-display text-[clamp(26px,3.2vw,44px)] font-semibold leading-[1.1] tracking-tight text-white transition-all duration-700 ${
                 inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
               }`}
-              style={{ transitionDelay: "260ms" }}
+              style={{ transitionDelay: "180ms" }}
             >
-              {study.impact_summary || study.overview}
-            </p>
-          )}
+              {study.title}
+            </h2>
 
-          <div
-            className={`mt-6 flex flex-wrap items-center gap-5 transition-all duration-700 ${
-              inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
-            }`}
-            style={{ transitionDelay: "340ms" }}
-          >
-            <a
-              href={`/case-studies/${study.slug}`}
-              className="inline-flex items-center gap-2 rounded-lg bg-[#d0f438] px-6 py-3 text-sm font-semibold text-gray-900 transition-all duration-300 hover:-translate-y-0.5 hover:brightness-105"
-            >
-              Read the full case study
-              <ArrowRight size={15} />
-            </a>
-            {others.slice(0, 2).map((o) => (
-              <a
-                key={o.slug}
-                href={`/case-studies/${o.slug}`}
-                className="group inline-flex items-center gap-1.5 text-[13.5px] font-semibold text-white/65 transition-colors hover:text-white"
-              >
-                {o.title}
-                <ArrowUpRight size={13} className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </a>
-            ))}
-          </div>
-        </div>
-
-        {/* Stats row — percentages front and center */}
-        {metrics.length > 0 && (
-          <div className="mt-12 grid grid-cols-2 gap-x-6 gap-y-8 border-t border-white/10 pt-8 md:mt-14 md:flex md:items-start md:gap-0">
-            {metrics.map((m, i) => (
-              <div
-                key={m.label}
-                className={`relative transition-all duration-700 ease-out md:flex-1 md:px-8 md:first:pl-0 md:last:pr-0 ${
-                  inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+            {summary && (
+              <p
+                className={`mt-4 max-w-xl text-[15px] leading-relaxed text-white/70 transition-all duration-700 ${
+                  inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
                 }`}
-                style={{ transitionDelay: `${420 + i * 120}ms` }}
+                style={{ transitionDelay: "260ms" }}
               >
-                <div className="font-display text-[44px] font-semibold leading-none tracking-tight text-[#d0f438] md:text-[60px]">
-                  <StatValue value={m.value} start={inView} />
-                </div>
-                <div className="mt-2.5 text-[12.5px] font-semibold uppercase tracking-[0.08em] text-white/80">
-                  {m.label}
-                </div>
-                {m.description && (
-                  <div className="mt-1 text-[12.5px] leading-snug text-white/50">{m.description}</div>
-                )}
-                {/* slanted hairline between stats */}
-                {i < metrics.length - 1 && (
-                  <span
-                    className="absolute right-0 top-1/2 hidden h-14 w-px -translate-y-1/2 rotate-[16deg] bg-white/15 md:block"
-                    aria-hidden="true"
-                  />
-                )}
-              </div>
-            ))}
+                {summary}
+              </p>
+            )}
+
+            <div
+              className={`mt-7 flex flex-wrap items-center gap-x-6 gap-y-3 transition-all duration-700 ${
+                inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
+              }`}
+              style={{ transitionDelay: "340ms" }}
+            >
+              <a
+                href={`/case-studies/${study.slug}`}
+                className="group inline-flex items-center gap-1.5 text-[15.5px] font-semibold text-white transition-colors hover:text-[#d0f438]"
+              >
+                Read the full case study
+                <ArrowUpRight
+                  size={17}
+                  className="text-[#d0f438] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                />
+              </a>
+              {others.slice(0, 2).map((o) => (
+                <a
+                  key={o.slug}
+                  href={`/case-studies/${o.slug}`}
+                  className="text-[13.5px] font-semibold text-white/65 underline-offset-4 transition-colors hover:text-white hover:underline"
+                >
+                  {o.title}
+                </a>
+              ))}
+            </div>
           </div>
-        )}
+
+          {/* Stats column */}
+          {metrics.length > 0 && (
+            <div className="grid grid-cols-2 content-center gap-x-8 gap-y-7 border-t border-white/10 pt-8 lg:border-l lg:border-t-0 lg:pl-12 lg:pt-0">
+              {metrics.map((m, i) => (
+                <div
+                  key={m.label}
+                  className={`transition-all duration-700 ease-out ${
+                    inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+                  }`}
+                  style={{ transitionDelay: `${420 + i * 120}ms` }}
+                >
+                  <div className="font-display text-[40px] font-semibold leading-none tracking-tight text-[#d0f438] md:text-[48px]">
+                    <StatValue value={m.value} start={inView} />
+                  </div>
+                  <div className="mt-2 text-[12px] font-semibold uppercase tracking-[0.08em] text-white/80">
+                    {m.label}
+                  </div>
+                  {m.description && (
+                    <div className="mt-0.5 text-[12px] leading-snug text-white/50">{m.description}</div>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </section>
   );
