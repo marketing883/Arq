@@ -9,6 +9,7 @@ export type ImageAccordionItem = {
   id: string;
   title: string;
   tag: string;
+  description: string;
   imageUrl: string;
   href: string;
 };
@@ -16,11 +17,16 @@ export type ImageAccordionItem = {
 const unsplash = (id: string, w = 1200) =>
   `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=80`;
 
+const HERO_VIDEO = "/v5/assets/ufsUXNNTVPKgg5ZhfzY4DHtmrKY.mp4";
+const HERO_POSTER = "/v5/assets/pR0DzH2JNZa0vnz4l8WJLxvUKA.jpg";
+
 export const defaultAccordionItems: ImageAccordionItem[] = [
   {
     id: "arqfwa",
     title: "ArqFWA",
     tag: "Payment Integrity",
+    description:
+      "Surfaces the claims most likely to be fraud, waste, or abuse — with evidence investigators can defend.",
     imageUrl: unsplash("photo-1576091160550-2173dba999ef"),
     href: "/accelerators/arqfwa",
   },
@@ -28,6 +34,8 @@ export const defaultAccordionItems: ImageAccordionItem[] = [
     id: "arqloyalty",
     title: "ArqLoyalty",
     tag: "Loyalty Modernization",
+    description:
+      "Replace your loyalty platform with parity proven daily. Zero migration risk at cut-over.",
     imageUrl: unsplash("photo-1481437156560-3205f6a55735"),
     href: "/accelerators/arqloyalty",
   },
@@ -35,6 +43,8 @@ export const defaultAccordionItems: ImageAccordionItem[] = [
     id: "arqbanker",
     title: "ArqBanker",
     tag: "Banking Operations",
+    description:
+      "Underwriting, KYC, AML, and regulatory reporting — with explainable reasoning on every decision.",
     imageUrl: unsplash("photo-1582139329536-e7284fece509"),
     href: "/accelerators/arqbanker",
   },
@@ -42,6 +52,8 @@ export const defaultAccordionItems: ImageAccordionItem[] = [
     id: "arqvantage",
     title: "ArqVantage",
     tag: "Pricing Intelligence",
+    description:
+      "Reads why competitor prices moved and reprices within your guardrails, with MAP enforced automatically.",
     imageUrl: unsplash("photo-1460925895917-afdab827c52f"),
     href: "/accelerators/arqvantage",
   },
@@ -49,6 +61,8 @@ export const defaultAccordionItems: ImageAccordionItem[] = [
     id: "arqforecast",
     title: "ArqForecast",
     tag: "Forecasting",
+    description:
+      "Demand, inventory, and cash flow forecasts from a 20+ model ensemble — in production in weeks.",
     imageUrl: unsplash("photo-1554224155-1696413565d3"),
     href: "/accelerators/arqforecast",
   },
@@ -67,9 +81,9 @@ function AccordionPanel({ item, isActive, onActivate }: AccordionPanelProps) {
       href={item.href}
       aria-label={`${item.title} — ${item.tag}`}
       className={`
-        relative block h-[340px] md:h-[460px] rounded-2xl overflow-hidden cursor-pointer
+        relative block h-[360px] md:h-[470px] rounded-2xl overflow-hidden cursor-pointer
         outline-none transition-all duration-700 ease-in-out
-        ${isActive ? "w-[220px] md:w-[340px]" : "w-[48px] md:w-[60px]"}
+        ${isActive ? "w-[230px] md:w-[350px]" : "w-[48px] md:w-[60px]"}
       `}
       onMouseEnter={onActivate}
       onFocus={onActivate}
@@ -92,38 +106,41 @@ function AccordionPanel({ item, isActive, onActivate }: AccordionPanelProps) {
       <div
         className={`absolute inset-0 transition-colors duration-700 ${
           isActive
-            ? "bg-gradient-to-t from-black/70 via-black/20 to-black/10"
+            ? "bg-gradient-to-t from-black/80 via-black/25 to-black/10"
             : "bg-black/45"
         }`}
       />
 
-      {/* Caption */}
+      {/* Collapsed caption — rotated name */}
       <span
         className={`
-          absolute text-white whitespace-nowrap font-display font-semibold
-          transition-all duration-300 ease-in-out
-          ${
-            isActive
-              ? "bottom-5 left-5 rotate-0 text-lg md:text-xl"
-              : "bottom-20 left-1/2 -translate-x-1/2 rotate-90 text-sm md:text-base"
-          }
+          absolute bottom-20 left-1/2 -translate-x-1/2 rotate-90 whitespace-nowrap
+          font-display font-semibold text-white text-sm md:text-base
+          transition-opacity duration-300
+          ${isActive ? "opacity-0" : "opacity-100"}
         `}
+        aria-hidden="true"
       >
         {item.title}
-        {isActive && (
-          <span className="block text-xs md:text-sm font-sans font-medium text-white/75 mt-0.5">
-            {item.tag}
-          </span>
-        )}
       </span>
 
-      {/* Lime tick on the active panel */}
+      {/* Active caption — name, tag, description */}
       <span
-        className={`absolute top-4 right-4 h-2.5 w-2.5 rounded-full bg-[#d0f438] shadow-[0_0_0_4px_rgba(208,244,56,0.3)] transition-opacity duration-500 ${
-          isActive ? "opacity-100" : "opacity-0"
-        }`}
-        aria-hidden="true"
-      />
+        className={`
+          absolute inset-x-0 bottom-0 p-5 transition-all duration-500 ease-out
+          ${isActive ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3 pointer-events-none"}
+        `}
+      >
+        <span className="block text-[11px] font-semibold uppercase tracking-[0.14em] text-[#d0f438]">
+          {item.tag}
+        </span>
+        <span className="mt-1 block font-display text-lg md:text-xl font-semibold text-white">
+          {item.title}
+        </span>
+        <span className="mt-1.5 block max-w-[290px] text-xs md:text-[13px] leading-relaxed text-white/80">
+          {item.description}
+        </span>
+      </span>
     </a>
   );
 }
@@ -139,22 +156,47 @@ export function LandingAccordionItem({
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
-    <div className="bg-white font-sans">
-      <section className="container mx-auto px-4 pt-28 pb-12 md:pt-36 md:pb-24">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-12">
+    <div className="relative overflow-hidden bg-white font-sans">
+      {/* --- Background video with stylized overlay --- */}
+      <video
+        className="absolute inset-0 h-full w-full object-cover"
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        poster={HERO_POSTER}
+        aria-hidden="true"
+      >
+        <source src={HERO_VIDEO} type="video/mp4" />
+      </video>
+      {/* Legibility veil: strong on the copy side, lighter over the accordion */}
+      <div
+        className="absolute inset-0 bg-gradient-to-r from-white via-white/85 to-white/35"
+        aria-hidden="true"
+      />
+      {/* Lime glow accent, top-right */}
+      <div
+        className="absolute inset-0 bg-[radial-gradient(52%_44%_at_82%_6%,rgba(208,244,56,0.22),transparent_62%)]"
+        aria-hidden="true"
+      />
+      {/* Fade into the next section */}
+      <div
+        className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-white to-transparent"
+        aria-hidden="true"
+      />
+
+      <section className="relative mx-auto flex min-h-screen max-w-7xl items-center px-4 pt-24 pb-10 md:px-8 md:pt-20 md:pb-14">
+        <div className="flex w-full flex-col items-center justify-between gap-12 md:-mt-10 md:flex-row">
           {/* Left Side: Text Content */}
-          <div className="w-full md:w-1/2 text-center md:text-left">
-            <div className="flex flex-wrap justify-center md:justify-start gap-2 mb-6">
-              {["Forward-Deployed", "Accelerators", "Production AI"].map((t) => (
-                <span
-                  key={t}
-                  className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-3.5 py-1.5 text-xs font-semibold text-gray-900 shadow-sm"
-                >
-                  <span className="h-1.5 w-1.5 rounded-full bg-[#d0f438] shadow-[0_0_0_3px_rgba(208,244,56,0.35)]" />
-                  {t}
-                </span>
-              ))}
-            </div>
+          <div className="w-full text-center md:w-1/2 md:text-left">
+            <p className="mb-5 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[13px] font-semibold uppercase tracking-[0.16em] text-gray-500 md:justify-start">
+              Forward-Deployed
+              <span className="h-1 w-1 rounded-full bg-[#b9d532]" aria-hidden="true" />
+              Accelerators
+              <span className="h-1 w-1 rounded-full bg-[#b9d532]" aria-hidden="true" />
+              Production AI
+            </p>
 
             <h1 className="font-display text-[clamp(26px,3.8vw,52px)] font-semibold text-gray-900 leading-[1.08] tracking-tight whitespace-nowrap">
               Forward Deployed AI
@@ -207,9 +249,9 @@ export function LandingAccordionItem({
                 />
               ))}
             </div>
-            <p className="text-center text-xs text-gray-400 mt-2">
+            <p className="text-center text-xs text-gray-500 mt-2">
               Flagship accelerators — part of a growing library.{" "}
-              <a href="/accelerators" className="underline underline-offset-2 hover:text-gray-600">
+              <a href="/accelerators" className="underline underline-offset-2 hover:text-gray-800">
                 Explore all
               </a>
             </p>

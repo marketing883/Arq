@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import V6Nav from "@/components/v6/V6Nav";
 import { LandingAccordionItem } from "@/components/ui/interactive-image-accordion";
 
 // Design-iteration preview for the reimagined homepage (v6).
@@ -11,6 +12,7 @@ export const metadata: Metadata = {
 export default function V6PreviewPage() {
   return (
     <main className="w-full">
+      <V6Nav />
       <LandingAccordionItem />
     </main>
   );
