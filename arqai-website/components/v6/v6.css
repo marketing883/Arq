@@ -58,18 +58,35 @@
   .kenburns { animation: none; }
 }
 
-/* results ticker */
-@keyframes v6-ticker-scroll {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+
+/* cinematic card overlays */
+@keyframes v6-sheen-sweep {
+  0% { background-position: 180% 0; }
+  100% { background-position: -180% 0; }
 }
-.v6-ticker-track {
-  width: max-content;
-  animation: v6-ticker-scroll 36s linear infinite;
+.v6-sheen {
+  pointer-events: none;
+  background: linear-gradient(105deg, transparent 42%, rgba(255, 255, 255, 0.09) 50%, transparent 58%);
+  background-size: 280% 100%;
+  animation: v6-sheen-sweep 9s linear infinite;
+  mix-blend-mode: screen;
 }
-.v6-ticker:hover .v6-ticker-track {
-  animation-play-state: paused;
+
+@keyframes v6-particles-drift {
+  from { background-position: 0 0, 30px 60px; }
+  to { background-position: 0 -420px, 30px -540px; }
 }
+.v6-particles {
+  pointer-events: none;
+  opacity: 0.5;
+  background-image:
+    radial-gradient(circle, rgba(255, 255, 255, 0.55) 1px, transparent 1.6px),
+    radial-gradient(circle, rgba(208, 244, 56, 0.4) 1px, transparent 1.8px);
+  background-size: 110px 140px, 170px 180px;
+  animation: v6-particles-drift 30s linear infinite;
+  mix-blend-mode: screen;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .v6-ticker-track { animation: none; }
+  .v6-sheen, .v6-particles { animation: none; }
 }

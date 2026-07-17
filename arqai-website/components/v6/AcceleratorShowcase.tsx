@@ -52,7 +52,7 @@ const MAINS: Record<string, MainItem> = {
     stat: { value: "30%+", label: "more high-value cases surfaced" },
     href: "/accelerators/arqfwa",
     videoSrc: PLACEHOLDER_VIDEO,
-    imageUrl: unsplash("photo-1576091160550-2173dba999ef"),
+    imageUrl: unsplash("photo-1579546929518-9e396f3cc809"),
   },
   arqloyalty: {
     id: "arqloyalty",
@@ -62,7 +62,7 @@ const MAINS: Record<string, MainItem> = {
     stat: { value: "Zero", label: "migration risk at cut-over" },
     href: "/accelerators/arqloyalty",
     videoSrc: PLACEHOLDER_VIDEO,
-    imageUrl: unsplash("photo-1483985988355-763728e1935b"),
+    imageUrl: unsplash("photo-1541701494587-cb58502866ab"),
   },
   arqvantage: {
     id: "arqvantage",
@@ -72,7 +72,7 @@ const MAINS: Record<string, MainItem> = {
     stat: { value: "<5 min", label: "to respond to a price move" },
     href: "/accelerators/arqvantage",
     videoSrc: PLACEHOLDER_VIDEO,
-    imageUrl: unsplash("photo-1551288049-bebda4e38f71"),
+    imageUrl: unsplash("photo-1618005182384-a83a8bd57fbe"),
   },
 };
 
@@ -172,15 +172,19 @@ function MainCard({
       onMouseEnter={onActivate}
       onFocus={onActivate}
     >
-      {/* Idle imagery — vibrant, relevant still with a slow drift */}
+      {/* Idle imagery — vibrant abstract with a slow drift, dimmed for legibility */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={item.imageUrl}
         alt=""
         loading="lazy"
         decoding="async"
-        className="kenburns absolute inset-0 h-full w-full object-cover"
+        className="kenburns absolute inset-0 h-full w-full object-cover opacity-80 saturate-[1.15]"
       />
+      {/* Cinematic layers: base dim, drifting particles, shimmer sweep */}
+      <span className="absolute inset-0 bg-black/30" aria-hidden="true" />
+      <span className="v6-particles absolute inset-0" aria-hidden="true" />
+      <span className="v6-sheen absolute inset-0" aria-hidden="true" />
 
       {/* Screengrab footage — fades in when the card takes the stage */}
       <video
@@ -200,8 +204,8 @@ function MainCard({
       <span
         className={`absolute inset-0 bg-gradient-to-t transition-opacity duration-700 ${
           isActive
-            ? "from-black/85 via-black/25 to-black/15"
-            : "from-black/70 via-black/10 to-black/30"
+            ? "from-black/90 via-black/35 to-black/20"
+            : "from-black/85 via-black/25 to-black/35"
         }`}
         aria-hidden="true"
       />
@@ -474,7 +478,10 @@ export default function AcceleratorShowcase() {
               onClick={() => setActiveMain(activeMain === item.id ? null : item.id)}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={item.imageUrl} alt="" loading="lazy" decoding="async" className="absolute inset-0 h-full w-full object-cover" />
+              <img src={item.imageUrl} alt="" loading="lazy" decoding="async" className="absolute inset-0 h-full w-full object-cover opacity-80 saturate-[1.15]" />
+              <span className="absolute inset-0 bg-black/30" aria-hidden="true" />
+              <span className="v6-particles absolute inset-0" aria-hidden="true" />
+              <span className="v6-sheen absolute inset-0" aria-hidden="true" />
               {activeMain === item.id && (
                 <video className="absolute inset-0 h-full w-full object-cover" autoPlay muted loop playsInline aria-hidden="true">
                   <source src={item.videoSrc} type="video/mp4" />
