@@ -25,6 +25,10 @@
 @media (max-width: 980px) { .v6-home .v5-hero-metrics { grid-template-columns: 160px 160px; } }
 @media (max-width: 480px) { .v6-home .v5-hero-metrics { grid-template-columns: 1fr 1fr; } }
 
+/* services heading: fixed two-line lockup on desktop */
+.v6-home .v6-features-h2 { max-width: none !important; font-size: clamp(26px, 3.1vw, 40px); }
+@media (max-width: 920px) { .v6-home .v6-features-br { display: none; } }
+
 /* ---------- flagship accelerators: 3 across ---------- */
 .v6-home .v6-accel-grid { grid-template-columns: repeat(3, 1fr); }
 .v6-home .v6-accel-grid .v5-accel-media { aspect-ratio: 16 / 9; }

@@ -139,7 +139,11 @@ export default function Features() {
             <span className="v5-badge-dot" />
             {FEATURES.eyebrow}
           </span>
-          <h2 className="v5-h2">{FEATURES.heading}</h2>
+          <h2 className="v5-h2 v6-features-h2">
+            {FEATURES.headingLine1}
+            <br className="v6-features-br" />{" "}
+            {FEATURES.headingLine2}
+          </h2>
         </div>
 
         <div className="v5-features-masonry">

@@ -23,7 +23,8 @@ export const HERO = {
 
 export const FEATURES = {
   eyebrow: "Services",
-  heading: "Engineers embedded in your operation, not advising from outside",
+  headingLine1: "Engineers embedded in your operation,",
+  headingLine2: "not advising from outside",
   seeAllImage: `${A}/seeall-abstract.jpg`,
   sub: "Platforms hand you tools. Consultancies hand you decks. Our engineers deploy into your operation and take responsibility for the full path: mapping the workflow, building the agents, wiring them into your systems, and running them in production with governance attached.",
   cta: { label: "See All Services", href: "/services" },
