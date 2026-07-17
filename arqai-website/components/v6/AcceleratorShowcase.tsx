@@ -1,7 +1,13 @@
 "use client";
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { ArrowRight, ArrowUpRight, Sparkle } from "lucide-react";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  Headset,
+  Landmark,
+  Sparkle,
+} from "lucide-react";
 
 // ---------------------------------------------------------------------------
 // Content
@@ -14,7 +20,7 @@ const PLACEHOLDER_VIDEO = "/v5/assets/ufsUXNNTVPKgg5ZhfzY4DHtmrKY.mp4";
 
 type SceneKind = "fireflies" | "petals" | "hills";
 
-type ShowcaseItem = {
+type MainItem = {
   id: string;
   name: string;
   track: string;
@@ -25,8 +31,19 @@ type ShowcaseItem = {
   scene: SceneKind;
 };
 
-const ITEMS: ShowcaseItem[] = [
-  {
+type SecondaryItem = {
+  id: string;
+  name: string;
+  track: string;
+  tagline: string;
+  more: string;
+  href: string;
+  tint: string;
+  icon: React.ReactNode;
+};
+
+const MAINS: Record<string, MainItem> = {
+  arqfwa: {
     id: "arqfwa",
     name: "ArqFWA",
     track: "Vertical · Healthcare Payers",
@@ -36,7 +53,7 @@ const ITEMS: ShowcaseItem[] = [
     videoSrc: PLACEHOLDER_VIDEO,
     scene: "fireflies",
   },
-  {
+  arqloyalty: {
     id: "arqloyalty",
     name: "ArqLoyalty",
     track: "Vertical · Retail & Hospitality",
@@ -46,7 +63,7 @@ const ITEMS: ShowcaseItem[] = [
     videoSrc: PLACEHOLDER_VIDEO,
     scene: "petals",
   },
-  {
+  arqvantage: {
     id: "arqvantage",
     name: "ArqVantage",
     track: "Horizontal · Cross-Industry",
@@ -56,27 +73,54 @@ const ITEMS: ShowcaseItem[] = [
     videoSrc: PLACEHOLDER_VIDEO,
     scene: "hills",
   },
-];
+};
 
-const MORE = [
+const SECONDARIES: Record<string, SecondaryItem> = {
+  arqbanker: {
+    id: "arqbanker",
+    name: "ArqBanker",
+    track: "Vertical · Banking",
+    tagline: "AI-native underwriting, onboarding, AML, and compliance.",
+    more: "70% faster underwriting, 85% less KYC manual review, and 3x fraud detection precision — with explainable reasoning on every decision.",
+    href: "/accelerators/arqbanker",
+    tint: "#26333f",
+    icon: <Landmark size={18} strokeWidth={1.5} />,
+  },
+  arqsupport: {
+    id: "arqsupport",
+    name: "ArqSupport",
+    track: "Horizontal · Shared Services",
+    tagline: "Agentic L1/L2/L3 triage and auto-resolution.",
+    more: "40–60% of L1 tickets resolved autonomously from your knowledge base, with SLA breaches prevented rather than reported.",
+    href: "/accelerators/arqsupport",
+    tint: "#333044",
+    icon: <Headset size={18} strokeWidth={1.5} />,
+  },
+};
+
+const CHIPS = [
   { name: "ArqLogistics", href: "/accelerators/arqlogistics" },
-  { name: "ArqBanker", href: "/accelerators/arqbanker" },
   { name: "ArqForecast", href: "/accelerators/arqforecast" },
-  { name: "ArqSupport", href: "/accelerators/arqsupport" },
   { name: "ArqDataQ", href: "/accelerators/arqdataq" },
   { name: "ArqSecOps", href: "/accelerators/arqsecops" },
   { name: "ArqEye", href: "/accelerators/arqeye" },
 ];
 
+// Column membership for the bento stage
+const COL_OF: Record<string, number> = {
+  arqfwa: 0,
+  arqbanker: 1,
+  arqloyalty: 1,
+  arqvantage: 2,
+  arqsupport: 2,
+};
+
 // ---------------------------------------------------------------------------
-// Canvas dream-loops — serene, hand-animated idle scenes per accelerator.
-// Lightweight 2D canvas (no three.js dependency); each scene is a closure
-// holding its own particle state.
+// Canvas dream-loops (idle scenes) — lightweight 2D canvas, no three.js.
 // ---------------------------------------------------------------------------
 
 type DrawFn = (ctx: CanvasRenderingContext2D, w: number, h: number, t: number) => void;
 
-/** ArqFWA — deep-teal night, drifting lanterns; a few glow lime (the signal in the noise). */
 function createFireflies(): DrawFn {
   const flies = Array.from({ length: 42 }, (_, i) => ({
     x: Math.random(),
@@ -95,7 +139,6 @@ function createFireflies(): DrawFn {
     ctx.fillStyle = sky;
     ctx.fillRect(0, 0, w, h);
 
-    // soft moon glow
     const glow = ctx.createRadialGradient(w * 0.78, h * 0.2, 0, w * 0.78, h * 0.2, w * 0.45);
     glow.addColorStop(0, "rgba(214,255,235,0.10)");
     glow.addColorStop(1, "rgba(214,255,235,0)");
@@ -125,7 +168,6 @@ function createFireflies(): DrawFn {
   };
 }
 
-/** ArqLoyalty — dusk sky, petals falling in perfect mirror parity across a glowing seam. */
 function createPetals(): DrawFn {
   const petals = Array.from({ length: 26 }, () => ({
     x: 0.06 + Math.random() * 0.36,
@@ -136,7 +178,14 @@ function createPetals(): DrawFn {
     spin: 0.6 + Math.random() * 1.6,
     phase: Math.random() * Math.PI * 2,
   }));
-  const drawPetal = (ctx: CanvasRenderingContext2D, px: number, py: number, r: number, angle: number, alpha: number) => {
+  const drawPetal = (
+    ctx: CanvasRenderingContext2D,
+    px: number,
+    py: number,
+    r: number,
+    angle: number,
+    alpha: number
+  ) => {
     ctx.save();
     ctx.translate(px, py);
     ctx.rotate(angle);
@@ -154,14 +203,12 @@ function createPetals(): DrawFn {
     ctx.fillStyle = sky;
     ctx.fillRect(0, 0, w, h);
 
-    // warm horizon glow
     const glow = ctx.createRadialGradient(w * 0.5, h * 1.05, 0, w * 0.5, h * 1.05, h * 0.9);
     glow.addColorStop(0, "rgba(255,171,122,0.20)");
     glow.addColorStop(1, "rgba(255,171,122,0)");
     ctx.fillStyle = glow;
     ctx.fillRect(0, 0, w, h);
 
-    // parity seam
     const seam = ctx.createLinearGradient(0, 0, 0, h);
     seam.addColorStop(0, "rgba(208,244,56,0)");
     seam.addColorStop(0.5, "rgba(208,244,56,0.35)");
@@ -174,14 +221,12 @@ function createPetals(): DrawFn {
       const x = p.x + Math.sin(t * p.sway + p.phase) * 0.025;
       const angle = t * p.spin + p.phase;
       const alpha = 0.55 + 0.3 * Math.sin(t + p.phase);
-      // left petal and its mirror twin — penny-for-penny parity
       drawPetal(ctx, x * w, y * h, p.r, angle, alpha);
       drawPetal(ctx, (1 - x) * w, y * h, p.r, -angle, alpha);
     }
   };
 }
 
-/** ArqVantage — moonlit rolling hills that read like gentle price curves, stars above. */
 function createHills(): DrawFn {
   const stars = Array.from({ length: 40 }, () => ({
     x: Math.random(),
@@ -202,7 +247,6 @@ function createHills(): DrawFn {
     ctx.fillStyle = sky;
     ctx.fillRect(0, 0, w, h);
 
-    // moon
     const mx = w * 0.24;
     const my = h * 0.24;
     const moon = ctx.createRadialGradient(mx, my, 0, mx, my, w * 0.3);
@@ -224,7 +268,6 @@ function createHills(): DrawFn {
       ctx.fill();
     }
 
-    // rolling hills = drifting price curves
     for (const layer of layers) {
       ctx.fillStyle = layer.color;
       ctx.beginPath();
@@ -243,7 +286,6 @@ function createHills(): DrawFn {
       ctx.fill();
     }
 
-    // a single lime tracer riding the front hill — the repricing signal
     const front = layers[2];
     const tx = ((t * 0.06) % 1) * w;
     const nx = tx / w;
@@ -317,12 +359,16 @@ function SceneCanvas({ scene }: { scene: SceneKind }) {
 }
 
 // ---------------------------------------------------------------------------
-// Section label with sparkles (from the seed layout)
+// Shared pieces
 // ---------------------------------------------------------------------------
 
-function SectionLabel({ children }: { children: React.ReactNode }) {
+function CardLabel({ children, light = true }: { children: React.ReactNode; light?: boolean }) {
   return (
-    <span className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-white/70">
+    <span
+      className={`pointer-events-none inline-flex items-center gap-2 text-[10.5px] uppercase tracking-[0.22em] ${
+        light ? "text-white/70" : "text-white/60"
+      }`}
+    >
       <Sparkle className="h-3 w-3" strokeWidth={1.5} />
       {children}
       <Sparkle className="h-3 w-3" strokeWidth={1.5} />
@@ -330,22 +376,25 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   );
 }
 
+const EASE = "cubic-bezier(0.32,0.72,0.24,1)";
+
 // ---------------------------------------------------------------------------
-// Accordion card
+// Main (video) card
 // ---------------------------------------------------------------------------
 
-function ShowcaseCard({
+function MainCard({
   item,
-  isActive,
-  anyActive,
+  flexGrow,
+  state,
   onActivate,
 }: {
-  item: ShowcaseItem;
-  isActive: boolean;
-  anyActive: boolean;
+  item: MainItem;
+  flexGrow: number;
+  state: "rest" | "active" | "compact";
   onActivate: () => void;
 }) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const isActive = state === "active";
 
   useEffect(() => {
     const video = videoRef.current;
@@ -358,20 +407,13 @@ function ShowcaseCard({
     }
   }, [isActive]);
 
-  const collapsed = anyActive && !isActive;
-
   return (
     <div
-      className={`
-        group/card relative h-[420px] cursor-pointer overflow-hidden rounded-2xl bg-black
-        transition-[flex-grow] duration-700 ease-[cubic-bezier(0.32,0.72,0.24,1)] lg:h-[560px]
-        ${isActive ? "flex-[10]" : collapsed ? "flex-[1.15]" : "flex-[3.33]"}
-      `}
-      style={{ flexBasis: 0, minWidth: 0 }}
+      className="group/main relative min-h-0 cursor-pointer overflow-hidden rounded-2xl bg-black transition-[flex-grow] duration-700"
+      style={{ flexGrow, flexBasis: 0, transitionTimingFunction: EASE }}
       onMouseEnter={onActivate}
       onFocus={onActivate}
     >
-      {/* Idle dream-loop */}
       <SceneCanvas scene={item.scene} />
 
       {/* Screengrab footage — fades in when the card takes the stage */}
@@ -389,41 +431,48 @@ function ShowcaseCard({
         <source src={item.videoSrc} type="video/mp4" />
       </video>
 
-      {/* Scrims */}
       <span
         className={`absolute inset-0 bg-gradient-to-t transition-opacity duration-700 ${
           isActive
-            ? "from-black/85 via-black/25 to-black/15 opacity-100"
-            : "from-black/70 via-black/10 to-black/25 opacity-90"
+            ? "from-black/85 via-black/25 to-black/15"
+            : "from-black/70 via-black/10 to-black/30"
         }`}
         aria-hidden="true"
       />
 
-      {/* Collapsed chip: rotated name */}
+      {/* Top label (rest state) */}
       <span
-        className={`absolute bottom-24 left-1/2 -translate-x-1/2 rotate-90 whitespace-nowrap font-display text-[15px] font-semibold text-white transition-opacity duration-300 ${
-          collapsed ? "opacity-100" : "opacity-0"
+        className={`absolute inset-x-0 top-5 flex justify-center transition-opacity duration-500 ${
+          state === "rest" ? "opacity-100" : "opacity-0"
+        }`}
+      >
+        <CardLabel>{item.track}</CardLabel>
+      </span>
+
+      {/* Rest caption */}
+      <span
+        className={`absolute inset-x-0 bottom-0 p-5 transition-all duration-500 md:p-6 ${
+          state === "rest" ? "opacity-100 translate-y-0" : "pointer-events-none opacity-0 translate-y-3"
+        }`}
+      >
+        <span className="block font-display text-2xl font-semibold text-white">{item.name}</span>
+        <span className="mt-1 block text-[12.5px] text-white/60">Hover to see it in action</span>
+      </span>
+
+      {/* Compact chip: rotated name */}
+      <span
+        className={`absolute bottom-20 left-1/2 -translate-x-1/2 rotate-90 whitespace-nowrap font-display text-[15px] font-semibold text-white transition-opacity duration-300 ${
+          state === "compact" ? "opacity-100" : "opacity-0"
         }`}
         aria-hidden="true"
       >
         {item.name}
       </span>
 
-      {/* Resting caption (equal thirds, nothing hovered) */}
-      <span
-        className={`absolute inset-x-0 bottom-0 p-6 transition-all duration-500 md:p-7 ${
-          !anyActive ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3 pointer-events-none"
-        }`}
-      >
-        <span className="text-[10.5px] font-bold uppercase tracking-[0.18em] text-[#d0f438]">{item.track}</span>
-        <span className="mt-1.5 block font-display text-2xl font-semibold text-white">{item.name}</span>
-        <span className="mt-1 block text-[13px] text-white/65">Hover to see it in action</span>
-      </span>
-
-      {/* Expanded content */}
+      {/* Active content */}
       <a
         href={item.href}
-        className={`absolute inset-0 flex flex-col justify-end p-7 outline-none transition-all duration-500 md:p-9 ${
+        className={`absolute inset-0 flex flex-col justify-end p-6 outline-none transition-all duration-500 md:p-8 ${
           isActive ? "opacity-100 translate-y-0" : "pointer-events-none opacity-0 translate-y-4"
         }`}
         tabIndex={isActive ? 0 : -1}
@@ -431,15 +480,17 @@ function ShowcaseCard({
         <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#d0f438]">{item.track}</span>
         <span className="mt-2 block font-display text-3xl font-semibold text-white md:text-4xl">{item.name}</span>
         <span className="mt-3 block max-w-xl text-[15px] leading-relaxed text-white/80">{item.line}</span>
-
-        <span className="mt-6 flex flex-wrap items-center gap-4">
+        <span className="mt-5 flex flex-wrap items-center gap-4">
           <span className="liquid-glass inline-flex items-baseline gap-2 rounded-lg px-4 py-2.5">
             <span className="font-display text-xl font-semibold text-[#d0f438]">{item.stat.value}</span>
             <span className="text-[12px] text-white/70">{item.stat.label}</span>
           </span>
           <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-white">
             Explore {item.name}
-            <ArrowUpRight size={15} className="transition-transform duration-300 group-hover/card:translate-x-0.5 group-hover/card:-translate-y-0.5" />
+            <ArrowUpRight
+              size={15}
+              className="transition-transform duration-300 group-hover/main:translate-x-0.5 group-hover/main:-translate-y-0.5"
+            />
           </span>
         </span>
       </a>
@@ -448,11 +499,105 @@ function ShowcaseCard({
 }
 
 // ---------------------------------------------------------------------------
+// Secondary (solid panel) card
+// ---------------------------------------------------------------------------
+
+function SecondaryCard({
+  item,
+  flexGrow,
+  compact,
+  hovered,
+  onHover,
+  onLeave,
+}: {
+  item: SecondaryItem;
+  flexGrow: number;
+  compact: boolean;
+  hovered: boolean;
+  onHover: () => void;
+  onLeave: () => void;
+}) {
+  return (
+    <a
+      href={item.href}
+      className="noise-overlay group/sec relative flex min-h-0 flex-col overflow-hidden rounded-2xl p-5 transition-[flex-grow] duration-700 md:p-6"
+      style={{ flexGrow, flexBasis: 0, backgroundColor: item.tint, transitionTimingFunction: EASE }}
+      onMouseEnter={onHover}
+      onMouseLeave={onLeave}
+      onFocus={onHover}
+    >
+      {/* Compact: icon only */}
+      <span
+        className={`absolute inset-0 flex items-center justify-center text-white/70 transition-opacity duration-300 ${
+          compact ? "opacity-100" : "opacity-0"
+        }`}
+        aria-hidden="true"
+      >
+        {item.icon}
+      </span>
+
+      <span className={`transition-opacity duration-300 ${compact ? "opacity-0" : "opacity-100"}`}>
+        <span className="flex items-center justify-between">
+          <CardLabel light={false}>{item.track}</CardLabel>
+          <span className="liquid-glass flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-white transition-transform duration-300 group-hover/sec:rotate-45">
+            <ArrowUpRight size={15} strokeWidth={1.5} />
+          </span>
+        </span>
+
+        <span className="mt-3 flex items-center gap-2.5">
+          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/10 text-[#d0f438]">
+            {item.icon}
+          </span>
+          <span className="font-display text-xl font-semibold text-white">{item.name}</span>
+        </span>
+        <span className="mt-2 block text-[13px] leading-[1.6] text-white/85">{item.tagline}</span>
+
+        {/* Extra content revealed on hover */}
+        <span
+          className={`block overflow-hidden transition-all duration-500 ${
+            hovered ? "mt-2.5 max-h-32 opacity-100" : "max-h-0 opacity-0"
+          }`}
+        >
+          <span className="block text-[12.5px] leading-[1.6] text-white/60">{item.more}</span>
+          <span className="mt-2 inline-flex items-center gap-1.5 text-[13px] font-semibold text-white">
+            Explore {item.name} <ArrowRight size={13} />
+          </span>
+        </span>
+      </span>
+    </a>
+  );
+}
+
+// ---------------------------------------------------------------------------
 // Section
 // ---------------------------------------------------------------------------
 
 export default function AcceleratorShowcase() {
-  const [active, setActive] = useState<number | null>(null);
+  const [activeMain, setActiveMain] = useState<string | null>(null);
+  const [hoverSec, setHoverSec] = useState<string | null>(null);
+
+  const activeCol = activeMain ? COL_OF[activeMain] : null;
+
+  // Column flex: the column holding the active main takes over the stage.
+  const colFlex = (col: number) => (activeCol === null ? 1 : activeCol === col ? 6.5 : 0.55);
+
+  // In-column flex values.
+  const mainFlex = (id: string) => {
+    if (activeMain === id) return 9;
+    if (activeMain && COL_OF[activeMain] === COL_OF[id]) return 0.6; // same column as an active main
+    if (!activeMain && hoverSec && COL_OF[hoverSec] === COL_OF[id]) return 1.55; // secondary sibling grew a bit
+    return COL_OF[id] === 0 ? 1 : 1.9;
+  };
+  const secFlex = (id: string) => {
+    if (activeMain && COL_OF[activeMain] === COL_OF[id]) return 0.45;
+    if (!activeMain && hoverSec === id) return 1.45;
+    return 1;
+  };
+
+  const mainState = (id: string): "rest" | "active" | "compact" =>
+    activeMain === id ? "active" : activeMain ? "compact" : "rest";
+
+  const secCompact = (id: string) => activeMain !== null && COL_OF[activeMain!] !== COL_OF[id];
 
   return (
     <section className="relative overflow-hidden bg-[#0a0a0a] antialiased" id="accelerators">
@@ -460,7 +605,7 @@ export default function AcceleratorShowcase() {
         {/* Header row */}
         <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
           <div className="max-w-3xl">
-            <SectionLabel>Accelerators in action</SectionLabel>
+            <CardLabel>Accelerators in action</CardLabel>
             <h2 className="mt-4 font-display text-[28px] font-semibold leading-[1.15] tracking-tight text-white sm:text-3xl md:text-4xl lg:text-[44px]">
               Proven workflow spines,
               <br />
@@ -470,8 +615,7 @@ export default function AcceleratorShowcase() {
               An accelerator is a reusable workflow spine for a recurring
               enterprise problem: a proven pattern of agents, integrations, and
               governance controls, configured to your systems and policies
-              rather than designed from scratch. These are three of them —
-              hover to watch each one work.
+              rather than designed from scratch.
             </p>
           </div>
           <a
@@ -483,42 +627,89 @@ export default function AcceleratorShowcase() {
           </a>
         </div>
 
-        {/* Accordion stage */}
+        {/* Bento stage — desktop */}
         <div
-          className="mt-12 hidden gap-4 md:gap-5 lg:flex"
-          onMouseLeave={() => setActive(null)}
+          className="mt-12 hidden h-[620px] gap-4 md:gap-5 lg:flex"
+          onMouseLeave={() => {
+            setActiveMain(null);
+            setHoverSec(null);
+          }}
         >
-          {ITEMS.map((item, i) => (
-            <ShowcaseCard
-              key={item.id}
-              item={item}
-              isActive={active === i}
-              anyActive={active !== null}
-              onActivate={() => setActive(i)}
+          {/* Column 1 — ArqFWA */}
+          <div
+            className="flex min-w-0 flex-col gap-4 transition-[flex-grow] duration-700 md:gap-5"
+            style={{ flexGrow: colFlex(0), flexBasis: 0, transitionTimingFunction: EASE }}
+          >
+            <MainCard
+              item={MAINS.arqfwa}
+              flexGrow={mainFlex("arqfwa")}
+              state={mainState("arqfwa")}
+              onActivate={() => setActiveMain("arqfwa")}
             />
-          ))}
+          </div>
+
+          {/* Column 2 — ArqBanker (secondary) + ArqLoyalty (main) */}
+          <div
+            className="flex min-w-0 flex-col gap-4 transition-[flex-grow] duration-700 md:gap-5"
+            style={{ flexGrow: colFlex(1), flexBasis: 0, transitionTimingFunction: EASE }}
+          >
+            <SecondaryCard
+              item={SECONDARIES.arqbanker}
+              flexGrow={secFlex("arqbanker")}
+              compact={secCompact("arqbanker")}
+              hovered={hoverSec === "arqbanker"}
+              onHover={() => {
+                setHoverSec("arqbanker");
+                setActiveMain(null);
+              }}
+              onLeave={() => setHoverSec(null)}
+            />
+            <MainCard
+              item={MAINS.arqloyalty}
+              flexGrow={mainFlex("arqloyalty")}
+              state={mainState("arqloyalty")}
+              onActivate={() => setActiveMain("arqloyalty")}
+            />
+          </div>
+
+          {/* Column 3 — ArqVantage (main) + ArqSupport (secondary) */}
+          <div
+            className="flex min-w-0 flex-col gap-4 transition-[flex-grow] duration-700 md:gap-5"
+            style={{ flexGrow: colFlex(2), flexBasis: 0, transitionTimingFunction: EASE }}
+          >
+            <MainCard
+              item={MAINS.arqvantage}
+              flexGrow={mainFlex("arqvantage")}
+              state={mainState("arqvantage")}
+              onActivate={() => setActiveMain("arqvantage")}
+            />
+            <SecondaryCard
+              item={SECONDARIES.arqsupport}
+              flexGrow={secFlex("arqsupport")}
+              compact={secCompact("arqsupport")}
+              hovered={hoverSec === "arqsupport"}
+              onHover={() => {
+                setHoverSec("arqsupport");
+                setActiveMain(null);
+              }}
+              onLeave={() => setHoverSec(null)}
+            />
+          </div>
         </div>
 
-        {/* Mobile / tablet: stacked cards, tap to expand */}
+        {/* Mobile / tablet: stacked cards, tap to expand mains */}
         <div className="mt-12 flex flex-col gap-4 lg:hidden">
-          {ITEMS.map((item, i) => (
+          {Object.values(MAINS).map((item) => (
             <div
               key={item.id}
               className={`relative overflow-hidden rounded-2xl bg-black transition-all duration-500 ${
-                active === i ? "h-[440px]" : "h-[150px]"
+                activeMain === item.id ? "h-[440px]" : "h-[150px]"
               }`}
-              onClick={() => setActive(active === i ? null : i)}
+              onClick={() => setActiveMain(activeMain === item.id ? null : item.id)}
             >
               <SceneCanvas scene={item.scene} />
-              {active === i && (
-                <video
-                  className="absolute inset-0 h-full w-full object-cover"
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  aria-hidden="true"
-                >
+              {activeMain === item.id && (
+                <video className="absolute inset-0 h-full w-full object-cover" autoPlay muted loop playsInline aria-hidden="true">
                   <source src={item.videoSrc} type="video/mp4" />
                 </video>
               )}
@@ -526,7 +717,7 @@ export default function AcceleratorShowcase() {
               <div className="absolute inset-x-0 bottom-0 p-5">
                 <span className="text-[10.5px] font-bold uppercase tracking-[0.18em] text-[#d0f438]">{item.track}</span>
                 <span className="mt-1 block font-display text-xl font-semibold text-white">{item.name}</span>
-                {active === i && (
+                {activeMain === item.id && (
                   <>
                     <p className="mt-2 text-[13.5px] leading-relaxed text-white/80">{item.line}</p>
                     <a href={item.href} className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-white">
@@ -537,14 +728,27 @@ export default function AcceleratorShowcase() {
               </div>
             </div>
           ))}
+          {Object.values(SECONDARIES).map((item) => (
+            <a
+              key={item.id}
+              href={item.href}
+              className="noise-overlay relative overflow-hidden rounded-2xl p-5"
+              style={{ backgroundColor: item.tint }}
+            >
+              <span className="flex items-center gap-2.5">
+                <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/10 text-[#d0f438]">{item.icon}</span>
+                <span className="font-display text-lg font-semibold text-white">{item.name}</span>
+                <ArrowUpRight size={15} className="ml-auto text-white/70" />
+              </span>
+              <span className="mt-2 block text-[13px] leading-[1.6] text-white/80">{item.tagline}</span>
+            </a>
+          ))}
         </div>
 
-        {/* The rest of the portfolio — liquid-glass chips */}
+        {/* The rest of the portfolio */}
         <div className="mt-10 flex flex-wrap items-center gap-3">
-          <span className="text-[11px] uppercase tracking-[0.22em] text-white/50">
-            Plus seven more
-          </span>
-          {MORE.map((m) => (
+          <span className="text-[11px] uppercase tracking-[0.22em] text-white/50">Plus five more</span>
+          {CHIPS.map((m) => (
             <a
               key={m.href}
               href={m.href}
