@@ -57,3 +57,19 @@
 @media (prefers-reduced-motion: reduce) {
   .kenburns { animation: none; }
 }
+
+/* results ticker */
+@keyframes v6-ticker-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.v6-ticker-track {
+  width: max-content;
+  animation: v6-ticker-scroll 36s linear infinite;
+}
+.v6-ticker:hover .v6-ticker-track {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .v6-ticker-track { animation: none; }
+}
