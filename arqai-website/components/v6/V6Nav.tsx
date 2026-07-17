@@ -123,7 +123,7 @@ function MegaLinkItem({ link, index }: { link: MegaLink; index: number }) {
       className="group/link flex items-start gap-3.5 rounded-2xl p-3 opacity-0 animate-fade-in-up transition-colors hover:bg-gray-50"
       style={{ animationDelay: `${60 + index * 35}ms` }}
     >
-      <span className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gray-100 text-gray-900 transition-all duration-300 group-hover/link:bg-gray-900 group-hover/link:text-[#d0f438] group-hover/link:scale-105">
+      <span className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-gray-100 text-gray-900 transition-all duration-300 group-hover/link:bg-gray-900 group-hover/link:text-[#d0f438] group-hover/link:scale-105">
         {link.icon}
       </span>
       <span>
@@ -511,7 +511,7 @@ export default function V6Nav() {
                     <a
                       key={link.href}
                       href={link.href}
-                      className="flex items-center gap-3 rounded-xl px-2 py-2.5 text-[15px] text-gray-700 hover:bg-gray-50"
+                      className="flex items-center gap-3 rounded-lg px-2 py-2.5 text-[15px] text-gray-700 hover:bg-gray-50"
                       onClick={() => setMobileOpen(false)}
                     >
                       {link.icon && <span className="text-gray-500">{link.icon}</span>}

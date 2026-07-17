@@ -55,27 +55,24 @@ async function getCaseStudies(): Promise<CaseStudy[]> {
 // Pieces
 // ---------------------------------------------------------------------------
 
-function MetricTile({ metric, accent = false }: { metric: Metric; accent?: boolean }) {
+function MetricRow({ metric, lead = false }: { metric: Metric; lead?: boolean }) {
   return (
-    <div
-      className={`rounded-xl p-5 ${
-        accent ? "bg-[#0d1226] text-white" : "border border-gray-100 bg-white"
-      }`}
-    >
-      <div
-        className={`font-display text-3xl font-semibold tracking-tight md:text-4xl ${
-          accent ? "text-[#d0f438]" : "text-gray-900"
-        }`}
-      >
-        {metric.value}
+    <div className="py-5 first:pt-0 last:pb-0">
+      <div className="flex items-baseline gap-3">
+        <span
+          className={`font-display font-semibold tracking-tight text-gray-900 ${
+            lead ? "text-5xl md:text-[56px]" : "text-3xl md:text-4xl"
+          }`}
+        >
+          {metric.value}
+        </span>
+        {lead && (
+          <span className="h-2.5 w-2.5 shrink-0 self-center bg-[#d0f438]" aria-hidden="true" />
+        )}
       </div>
-      <div className={`mt-1.5 text-[12.5px] font-semibold ${accent ? "text-white/85" : "text-gray-800"}`}>
-        {metric.label}
-      </div>
+      <div className="mt-1.5 text-[13px] font-semibold text-gray-800">{metric.label}</div>
       {metric.description && (
-        <div className={`mt-1 text-[12px] leading-snug ${accent ? "text-white/55" : "text-gray-500"}`}>
-          {metric.description}
-        </div>
+        <div className="mt-0.5 text-[12.5px] leading-snug text-gray-500">{metric.description}</div>
       )}
     </div>
   );
@@ -129,13 +126,17 @@ function FeaturedStudy({ study }: { study: CaseStudy }) {
         </a>
       </div>
 
-      {/* Metrics side */}
-      <div className="relative flex flex-col justify-center gap-4 border-t border-gray-100 bg-white p-8 md:p-10 lg:border-l lg:border-t-0">
-        <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-gray-400">
+      {/* Metrics side — editorial rows, hairline-divided */}
+      <div className="relative flex flex-col justify-center border-t border-gray-100 bg-white p-8 md:p-10 lg:border-l lg:border-t-0">
+        <p className="mb-5 text-[11px] font-bold uppercase tracking-[0.18em] text-gray-400">
           Measured outcomes
         </p>
         {metrics.length > 0 ? (
-          metrics.map((m, i) => <MetricTile key={m.label} metric={m} accent={i === 0} />)
+          <div className="divide-y divide-gray-100">
+            {metrics.map((m, i) => (
+              <MetricRow key={m.label} metric={m} lead={i === 0} />
+            ))}
+          </div>
         ) : (
           <p className="text-sm text-gray-500">{study.overview}</p>
         )}
