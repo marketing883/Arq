@@ -12,9 +12,9 @@ import {
 import { generateBreadcrumbSchema, generateFAQSchema } from "@/lib/seo/structured-data";
 
 const SITE_URL = "https://thearq.ai";
-const PAGE_TITLE = "AI Accelerators — Ten Production-Grade Workflow Spines | ArqAI Labs";
+const PAGE_TITLE = "AI Accelerators — Production-Ready, Governed From Day One | ArqAI Labs";
 const PAGE_DESC =
-  "Ten production-grade AI accelerators on one governed spine: four vertical (ArqFWA, ArqLoyalty, ArqLogistics, ArqBanker) and six horizontal (ArqForecast, ArqSupport, ArqDataQ, ArqVantage, ArqSecOps, ArqEye). Every agent action carries encrypted, audit-ready proof.";
+  "Ten production-ready AI accelerators, governed from day one: four vertical (ArqFWA, ArqLoyalty, ArqLogistics, ArqBanker) and six horizontal (ArqForecast, ArqSupport, ArqDataQ, ArqVantage, ArqSecOps, ArqEye). Every agent action carries encrypted, audit-ready proof.";
 
 export const metadata: Metadata = {
   title: PAGE_TITLE,
@@ -49,7 +49,7 @@ const PORTFOLIO_FAQS = [
   {
     question: "What is an ArqAI accelerator?",
     answer:
-      "An ArqAI accelerator is a reusable workflow spine for a recurring enterprise problem: a pre-built pattern of agents, integrations, governance controls, and operational logic proven against a category of problem, configured to fit your data, systems, policies, and operating metrics. Deployment is measured in weeks rather than quarters.",
+      "An ArqAI accelerator is a pre-built, production-proven pattern of agents, integrations, governance controls, and operational logic for a recurring enterprise problem, configured to fit your data, systems, policies, and operating metrics. Deployment is measured in weeks rather than quarters.",
   },
   {
     question: "What is the difference between vertical and horizontal accelerators?",
@@ -64,7 +64,7 @@ const PORTFOLIO_FAQS = [
   {
     question: "How do accelerator engagements start?",
     answer:
-      "Each accelerator has a fixed two-week entry point — a fit check such as the FWA Blind Spot Assessment or the Forecasting Accuracy Baseline — that compares your workflow, data, and controls against the accelerator spine and delivers a quantified analysis before any build commitment.",
+      "Each accelerator has a fixed two-week entry point — a fit check such as the FWA Blind Spot Assessment or the Forecasting Accuracy Baseline — that compares your workflow, data, and controls against the accelerator and delivers a quantified analysis before any build commitment.",
   },
 ];
 
@@ -146,11 +146,11 @@ export default function AcceleratorsPage() {
               <span className="v5-badge-dot" />
               Accelerators
             </span>
-            <h1 className="v5-h1">Ten accelerators. One governed spine.</h1>
+            <h1 className="v5-h1">Ten production-ready accelerators. Governed from day one.</h1>
             <p className="v5-lead">
-              An accelerator is a reusable workflow spine for a recurring enterprise problem:
-              a proven pattern of agents, integrations, and governance controls, configured to
-              your data, systems, and policies rather than designed from scratch. Four vertical
+              An accelerator is a proven pattern of agents, integrations, and governance
+              controls for a recurring enterprise problem, configured to your data, systems,
+              and policies rather than designed from scratch. Four vertical
               accelerators for industry-specific deployment. Six horizontal accelerators for
               cross-industry configuration.
             </p>
@@ -179,7 +179,7 @@ export default function AcceleratorsPage() {
             {[
               {
                 title: "Fit check before build.",
-                body: "Every accelerator starts with a fixed two-week entry point that compares your workflow, data sources, and controls against the accelerator spine — and delivers a quantified analysis you keep.",
+                body: "Every accelerator starts with a fixed two-week entry point that compares your workflow, data sources, and controls against the accelerator — and delivers a quantified analysis you keep.",
                 href: "/services/vertical-acceleration",
               },
               {
@@ -211,7 +211,7 @@ export default function AcceleratorsPage() {
         <div className="v5-container">
           <div className="v5-section-head">
             <span className="v5-eyebrow">Vertical · {verticalAccelerators.length} accelerators</span>
-            <h2 className="v5-h2">Industry-specific domain intelligence built into the spine.</h2>
+            <h2 className="v5-h2">Industry-specific domain intelligence built in.</h2>
             <p className="v5-lead">
               Built for industries where domain knowledge is integral to the solution: healthcare
               payment integrity, loyalty program reconciliation, supply chain dependency modeling,
@@ -278,7 +278,7 @@ export default function AcceleratorsPage() {
             <h2 className="v5-h2">Put an accelerator to work.</h2>
             <p className="v5-lead">
               Start with a fit check. We compare your workflow, data, and controls against the
-              accelerator spine before recommending a rollout path — and show where bespoke
+              accelerator before recommending a rollout path — and show where bespoke
               engineering is the better answer.
             </p>
             <div className="v5-cta-card-actions">

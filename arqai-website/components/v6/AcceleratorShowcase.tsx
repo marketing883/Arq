@@ -373,15 +373,15 @@ export default function AcceleratorShowcase() {
           <div className="max-w-3xl">
             <CardLabel>Accelerators in action</CardLabel>
             <h2 className="mt-4 font-display text-[28px] font-semibold leading-[1.15] tracking-tight text-white sm:text-3xl md:text-4xl lg:text-[44px]">
-              Proven workflow spines,
+              Proven in production,
               <br />
-              running in production.
+              configured to your operation.
             </h2>
             <p className="mt-4 max-w-3xl text-sm leading-[1.6] text-white/60 md:text-[15px]">
-              An accelerator is a reusable workflow spine for a recurring
-              enterprise problem: a proven pattern of agents, integrations, and
-              governance controls, configured to your systems and policies
-              rather than designed from scratch.
+              An accelerator is a proven pattern of agents, integrations, and
+              governance controls for a recurring enterprise problem —
+              configured to your systems and policies rather than designed
+              from scratch.
             </p>
           </div>
           <a

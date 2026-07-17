@@ -37,7 +37,7 @@ const SERVICES: Service[] = [
   {
     num: "02",
     title: "Accelerator Deployment",
-    body: "Industry-specific workflow spines, validated across deployments and configured to your data, policies, and reviewers. Faster to production, lower cost per engagement, less risk than a custom build from scratch.",
+    body: "Industry-specific patterns, validated across deployments and configured to your data, policies, and reviewers. Faster to production, lower cost per engagement, less risk than a custom build from scratch.",
     href: "/services/vertical-acceleration",
     icon: <Layers size={20} />,
     image: `${A}/H4rP4HWageK0Wzp8OfGGGbv8M0.jpeg`,

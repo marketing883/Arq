@@ -176,7 +176,7 @@ export default function V6Footer() {
             </a>
             <span className="hidden items-center gap-2 text-white/35 md:inline-flex">
               <span className="h-1.5 w-1.5 rounded-full bg-[#d0f438]/70" aria-hidden="true" />
-              Ten accelerators. One governed spine.
+              Ten accelerators, governed from day one.
             </span>
           </div>
         </div>

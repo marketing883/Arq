@@ -232,7 +232,7 @@ function AcceleratorsPanel() {
       <FeatureTile
         href="/accelerators"
         tag="The portfolio"
-        title="Ten accelerators. One governed spine."
+        title="Ten production-ready accelerators, governed from day one."
         cta="Explore all accelerators"
         video
       />
@@ -265,7 +265,7 @@ function ServicesPanel() {
 function IndustriesPanel() {
   return (
     <div>
-      <ColumnHeading>Regulated industries, one governed spine</ColumnHeading>
+      <ColumnHeading>Built for regulated industries</ColumnHeading>
       <div className="mt-2 grid grid-cols-2 gap-4 lg:grid-cols-5">
         {INDUSTRIES.map((ind, i) => (
           <a
