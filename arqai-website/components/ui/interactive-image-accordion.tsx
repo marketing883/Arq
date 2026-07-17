@@ -40,15 +40,6 @@ export const defaultAccordionItems: ImageAccordionItem[] = [
     href: "/accelerators/arqloyalty",
   },
   {
-    id: "arqbanker",
-    title: "ArqBanker",
-    tag: "Banking Operations",
-    description:
-      "Underwriting, KYC, AML, and regulatory reporting — with explainable reasoning on every decision.",
-    imageUrl: unsplash("photo-1582139329536-e7284fece509"),
-    href: "/accelerators/arqbanker",
-  },
-  {
     id: "arqvantage",
     title: "ArqVantage",
     tag: "Pricing Intelligence",
@@ -58,13 +49,22 @@ export const defaultAccordionItems: ImageAccordionItem[] = [
     href: "/accelerators/arqvantage",
   },
   {
-    id: "arqforecast",
-    title: "ArqForecast",
-    tag: "Forecasting",
+    id: "arqbanker",
+    title: "ArqBanker",
+    tag: "Banking Operations",
     description:
-      "Demand, inventory, and cash flow forecasts from a 20+ model ensemble — in production in weeks.",
-    imageUrl: unsplash("photo-1554224155-1696413565d3"),
-    href: "/accelerators/arqforecast",
+      "Underwriting, KYC, AML, and regulatory reporting — with explainable reasoning on every decision.",
+    imageUrl: unsplash("photo-1582139329536-e7284fece509"),
+    href: "/accelerators/arqbanker",
+  },
+  {
+    id: "arqsupport",
+    title: "ArqSupport",
+    tag: "Service Management",
+    description:
+      "Agentic L1/L2/L3 ticket triage and auto-resolution, with SLA breaches prevented rather than reported.",
+    imageUrl: unsplash("photo-1497366754035-f200968a6e72"),
+    href: "/accelerators/arqsupport",
   },
 ];
 
@@ -190,14 +190,6 @@ export function LandingAccordionItem({
         <div className="flex w-full flex-col items-center justify-between gap-12 md:-mt-10 md:flex-row">
           {/* Left Side: Text Content */}
           <div className="w-full text-center md:w-1/2 md:text-left">
-            <p className="mb-5 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[13px] font-semibold uppercase tracking-[0.16em] text-gray-500 md:justify-start">
-              Forward-Deployed
-              <span className="h-1 w-1 rounded-full bg-[#b9d532]" aria-hidden="true" />
-              Accelerators
-              <span className="h-1 w-1 rounded-full bg-[#b9d532]" aria-hidden="true" />
-              Production AI
-            </p>
-
             <h1 className="font-display text-[clamp(26px,3.8vw,52px)] font-semibold text-gray-900 leading-[1.08] tracking-tight whitespace-nowrap">
               Forward Deployed AI
               <br />
@@ -214,7 +206,7 @@ export function LandingAccordionItem({
             <div className="mt-8">
               <a
                 href="/demo"
-                className="inline-block bg-gray-900 text-white font-semibold px-8 py-3.5 rounded-full shadow-lg hover:bg-gray-800 hover:-translate-y-0.5 transition-all duration-300"
+                className="inline-block bg-gray-900 text-white font-semibold px-8 py-3.5 rounded-lg shadow-lg hover:bg-gray-800 hover:-translate-y-0.5 transition-all duration-300"
               >
                 Book a Workflow Assessment
               </a>

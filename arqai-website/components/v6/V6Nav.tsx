@@ -441,7 +441,7 @@ export default function V6Nav() {
           <div className="flex items-center gap-2">
             <a
               href="/demo"
-              className="hidden rounded-full bg-gray-900 px-5 py-2.5 text-sm font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-gray-800 lg:inline-flex"
+              className="hidden rounded-lg bg-gray-900 px-5 py-2.5 text-sm font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-gray-800 lg:inline-flex"
             >
               Book a Demo
             </a>
@@ -524,7 +524,7 @@ export default function V6Nav() {
           ))}
           <a
             href="/demo"
-            className="mt-4 block rounded-full bg-gray-900 px-5 py-3.5 text-center font-semibold text-white"
+            className="mt-4 block rounded-lg bg-gray-900 px-5 py-3.5 text-center font-semibold text-white"
           >
             Book a Demo
           </a>
