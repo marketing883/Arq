@@ -7,6 +7,7 @@ import CaseStudies from "@/components/v6/CaseStudies";
 import Insights from "@/components/v6/Insights";
 import FaqSection from "@/components/v6/FaqSection";
 import ClosingCta from "@/components/v6/ClosingCta";
+import V6Footer from "@/components/v6/V6Footer";
 import "@/components/v6/v6.css";
 import { LandingAccordionItem } from "@/components/ui/interactive-image-accordion";
 
@@ -32,6 +33,7 @@ export default function V6PreviewPage() {
       <Insights />
       <FaqSection />
       <ClosingCta />
+      <V6Footer />
     </main>
   );
 }
