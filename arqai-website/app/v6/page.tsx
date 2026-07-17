@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import V6Nav from "@/components/v6/V6Nav";
 import ForwardDeployed from "@/components/v6/ForwardDeployed";
+import ProofBand from "@/components/v6/ProofBand";
 import { LandingAccordionItem } from "@/components/ui/interactive-image-accordion";
 
 // Design-iteration preview for the reimagined homepage (v6).
@@ -16,6 +17,7 @@ export default function V6PreviewPage() {
       <V6Nav />
       <LandingAccordionItem />
       <ForwardDeployed />
+      <ProofBand />
     </main>
   );
 }
