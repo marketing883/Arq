@@ -3,6 +3,33 @@ import Link from "next/link";
 import { Metadata } from "next";
 import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
 import V5CtaSection from "@/components/home-v5/V5CtaSection";
+import FAQStatic from "@/components/home-v5/FAQStatic";
+import { SolutionsStructuredData } from "@/components/seo/StructuredData";
+
+// One list feeds both the visible FAQ section and the FAQPage JSON-LD, so
+// schema and on-page content stay in parity.
+const faqs = [
+  {
+    question: "Which industries does ArqAI Labs serve?",
+    answer:
+      "ArqAI Labs builds production AI for healthcare payers, insurance carriers, banking and financial institutions, retail, and manufacturing — plus other operations whose complexity rewards specialist work.",
+  },
+  {
+    question: "How does ArqAI help financial services companies?",
+    answer:
+      "ArqAI helps financial institutions improve AML, KYC, sanctions, customer-risk, and alert-triage workflows with explainable recommendations, cleaner evidence, and reviewer authority preserved.",
+  },
+  {
+    question: "How does ArqAI work with healthcare payer teams?",
+    answer:
+      "ArqAI supports payment integrity, prior authorization, utilization management, and member operations with governed AI workflows designed around evidence, policy, and human review.",
+  },
+  {
+    question: "Can ArqAI operate in regulated environments?",
+    answer:
+      "Yes. Governance is designed in from day one — permissions, approvals, policy checks, human review, and audit trails — and every deployment works within your security, compliance, and data-residency requirements.",
+  },
+];
 import { ArrowRight, ArrowUpRight } from "@/components/home-v5/icons";
 
 export const metadata: Metadata = {
@@ -79,6 +106,7 @@ const paths = [
 export default function IndustriesPage() {
   return (
     <V5SiteLayout>
+      <SolutionsStructuredData faqs={faqs} />
       {/* Hero */}
       <section className="v5-page-hero">
         <div className="v5-container">
@@ -184,6 +212,13 @@ export default function IndustriesPage() {
       </section>
 
       {/* CTA band */}
+      <FAQStatic
+        items={faqs}
+        heading="Industry questions, answered."
+        bg="white"
+        withSchema={false}
+      />
+
       <V5CtaSection>
             <h2 className="v5-h2">Tell us how the work really runs in your industry.</h2>
             <p className="v5-lead">

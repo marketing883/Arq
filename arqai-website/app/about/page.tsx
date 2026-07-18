@@ -3,6 +3,52 @@ import Link from "next/link";
 import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
 import V5CtaSection from "@/components/home-v5/V5CtaSection";
 import { ArrowRight } from "@/components/home-v5/icons";
+import {
+  generateOrganizationSchema,
+  generateBreadcrumbSchema,
+} from "@/lib/seo/structured-data";
+
+// /about is the entity home for ArqAI Labs: it carries the Organization
+// schema plus an AboutPage wrapper so search and answer engines have one
+// authoritative source for company facts.
+function AboutStructuredData() {
+  const graph = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "AboutPage",
+        "@id": "https://thearq.ai/about#webpage",
+        url: "https://thearq.ai/about",
+        name: "About ArqAI Labs",
+        description:
+          "ArqAI Labs is an independent AI engineering studio. Production AI, bespoke to your operation. In partnership with ACI Infotech.",
+        inLanguage: "en-US",
+        about: { "@id": "https://thearq.ai/#organization" },
+      },
+      { ...generateOrganizationSchema(), "@id": "https://thearq.ai/#organization" },
+      generateBreadcrumbSchema([
+        { name: "Home", url: "https://thearq.ai" },
+        { name: "About", url: "https://thearq.ai/about" },
+      ]),
+    ],
+  };
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(graph) }}
+    />
+  );
+}
+
+const glance = [
+  { label: "What we are", value: "An independent AI engineering studio" },
+  { label: "What we do", value: "Design, build, deploy, and run production AI for enterprise operations" },
+  { label: "Founded", value: "2024" },
+  { label: "Headquarters", value: "New Jersey, United States" },
+  { label: "Delivery partner", value: "ACI Infotech — enterprise delivery and distribution partner" },
+  { label: "Industries", value: "Healthcare payers, insurance carriers, banking, retail, manufacturing" },
+  { label: "How we deliver", value: "Six service lines and eight Arq-prefixed accelerators on one operating fabric" },
+];
 
 export const metadata: Metadata = {
   title: "About",
@@ -32,6 +78,7 @@ const beliefs = [
 export default function AboutPage() {
   return (
     <V5SiteLayout>
+      <AboutStructuredData />
       {/* Hero */}
       <section className="v5-page-hero">
         <div className="v5-container">
@@ -47,6 +94,24 @@ export default function AboutPage() {
               engineering team, not a consulting practice. We ship the work; we do not
               decorate the deck.
             </p>
+          </div>
+        </div>
+      </section>
+
+      {/* At a glance — the extractable fact box answer engines can cite */}
+      <section className="v5-section v5-bg-white" id="at-a-glance">
+        <div className="v5-container">
+          <div className="v5-section-head">
+            <span className="v5-eyebrow">At a glance</span>
+            <h2 className="v5-h2">ArqAI Labs, in plain facts.</h2>
+          </div>
+          <div className="v5-grid v5-grid-3">
+            {glance.map((fact) => (
+              <div className="v5-card" key={fact.label}>
+                <span className="v5-eyebrow">{fact.label}</span>
+                <p className="v5-body" style={{ marginTop: 8 }}>{fact.value}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>

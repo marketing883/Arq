@@ -49,6 +49,16 @@ Productized, named workflow patterns adapted to each customer through services. 
 - [Partners](https://thearq.ai/partners)
 - [Contact](https://thearq.ai/contact)
 
+## Content library
+
+- [Blog](https://thearq.ai/blog): articles from the ArqAI Labs team on operational AI — agent design, governance, enterprise integration, and moving AI from pilot to production. Individual posts live at https://thearq.ai/blog/{slug}.
+- [Case studies](https://thearq.ai/case-studies): production engagements with the baseline, intervention, and measured outcome. Individual case studies live at https://thearq.ai/case-studies/{slug}.
+- [Whitepapers](https://thearq.ai/whitepapers): deep dives and frameworks on operational AI.
+- [Webinars](https://thearq.ai/webinars): live sessions and replays.
+- [Resources hub](https://thearq.ai/resources)
+- [Use cases](https://thearq.ai/use-cases): the workflows we have built, are building, or are ready to build.
+- All published content is enumerated in the sitemap: https://thearq.ai/sitemap.xml
+
 ## Get started
 
 - [Get Started / Book a Demo](https://thearq.ai/engage-us): share your workflow, systems, industry, and the operating outcome you want to improve. A senior on the team follows up within one business day.

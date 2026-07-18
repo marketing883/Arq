@@ -3,7 +3,33 @@ import { Metadata } from "next";
 import { PlatformStructuredData } from "@/components/seo/StructuredData";
 import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
 import V5CtaSection from "@/components/home-v5/V5CtaSection";
+import FAQStatic from "@/components/home-v5/FAQStatic";
 import { ArrowRight, ArrowUpRight } from "@/components/home-v5/icons";
+
+// One list feeds both the visible FAQ section and the FAQPage JSON-LD, so
+// schema and on-page content stay in parity.
+const faqs = [
+  {
+    question: "What is the ArqAI Operating Fabric?",
+    answer:
+      "The ArqAI Operating Fabric is the architecture we use to turn model output into governed workflow execution across orchestration, integrations, review, evidence, and monitoring.",
+  },
+  {
+    question: "How does ArqAI handle governance?",
+    answer:
+      "Governance is designed into the workflow through permissions, policy checks, approval paths, human review, audit trails, and exception handling.",
+  },
+  {
+    question: "Does ArqAI replace existing enterprise systems?",
+    answer:
+      "No. ArqAI connects AI workflows to the CRM, ERP, ITSM, data platforms, identity, knowledge, and operating tools already running the business.",
+  },
+  {
+    question: "Is the Operating Fabric a standalone product we license?",
+    answer:
+      "No. It is the architecture every ArqAI Labs engagement runs on, delivered through services and accelerators and adapted to your systems, data, and controls rather than licensed as a standalone platform.",
+  },
+];
 
 export const metadata: Metadata = {
   title: "Platform: The Operating Fabric for Production AI",
@@ -88,7 +114,7 @@ const pathways = [
 export default function PlatformPage() {
   return (
     <V5SiteLayout>
-      <PlatformStructuredData />
+      <PlatformStructuredData faqs={faqs} />
 
       {/* Hero */}
       <section className="v5-page-hero">
@@ -200,6 +226,14 @@ export default function PlatformPage() {
           </div>
         </div>
       </section>
+
+      {/* FAQ — visible content matching the FAQPage schema above */}
+      <FAQStatic
+        items={faqs}
+        heading="Platform questions, answered."
+        bg="white"
+        withSchema={false}
+      />
 
       {/* CTA band */}
       <V5CtaSection>

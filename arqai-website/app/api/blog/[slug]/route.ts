@@ -28,27 +28,14 @@ export async function GET(
       return NextResponse.json({ error: "Database not configured" }, { status: 500 });
     }
 
-    // Try exact match first
-    let { data, error } = await supabase
+    // Exact slug match on published posts only. Drafts must never be
+    // publicly fetchable, and no fuzzy slug fallback: one URL, one post.
+    const { data, error } = await supabase
       .from("blog_posts")
       .select("*")
       .eq("slug", slug)
+      .eq("status", "published")
       .single();
-
-    // If not found, try matching slug that ends with the provided value
-    // (handles case where full URL was stored as slug)
-    if (error || !data) {
-      const { data: dataAlt, error: errorAlt } = await supabase
-        .from("blog_posts")
-        .select("*")
-        .ilike("slug", `%${slug}`)
-        .single();
-
-      if (!errorAlt && dataAlt) {
-        data = dataAlt;
-        error = null;
-      }
-    }
 
     if (error || !data) {
       console.error("Error fetching blog post:", error);

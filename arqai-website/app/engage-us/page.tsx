@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { generateFAQSchema } from "@/lib/seo/structured-data";
+import { engageFaqs } from "./faqs";
 import EngageUsClient from "./EngageUsClient";
 
 export const metadata: Metadata = {
@@ -15,5 +17,13 @@ export const metadata: Metadata = {
 };
 
 export default function EngageUsPage() {
-  return <EngageUsClient />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(generateFAQSchema(engageFaqs)) }}
+      />
+      <EngageUsClient />
+    </>
+  );
 }

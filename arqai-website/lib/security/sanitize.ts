@@ -97,3 +97,31 @@ export function sanitizeText(dirty: string): string {
     return dirty;
   }
 }
+
+/**
+ * Server-side defense-in-depth filter for CMS-authored HTML that is rendered
+ * in React Server Components (where DOMPurify has no DOM). Content here comes
+ * only from the authenticated admin editor, so this is a hardening layer for
+ * a compromised-admin scenario, not a substitute for DOMPurify on untrusted
+ * input: it strips script/style/iframe/object/embed/form blocks, inline
+ * event handlers, and javascript: URLs.
+ */
+export function sanitizeHtmlServer(dirty: string): string {
+  if (!dirty) return "";
+  let clean = dirty;
+  // Remove dangerous elements together with their content.
+  clean = clean.replace(
+    /<(script|style|iframe|object|embed|form)\b[\s\S]*?<\/\1\s*>/gi,
+    ""
+  );
+  // Remove any stray/self-closing dangerous tags left over.
+  clean = clean.replace(/<\/?(script|style|iframe|object|embed|form)\b[^>]*>/gi, "");
+  // Strip inline event handlers (onclick=, onerror=, ...).
+  clean = clean.replace(/\son[a-z]+\s*=\s*("[^"]*"|'[^']*'|[^\s>]+)/gi, "");
+  // Neutralize javascript:/vbscript:/data:text URLs in href/src.
+  clean = clean.replace(
+    /\s(href|src)\s*=\s*(["']?)\s*(javascript|vbscript|data:text)[^"'\s>]*\2/gi,
+    ""
+  );
+  return clean;
+}

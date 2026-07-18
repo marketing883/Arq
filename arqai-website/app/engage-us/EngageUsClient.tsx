@@ -6,6 +6,8 @@ import { useSearchParams } from "next/navigation";
 import V5Nav from "@/components/home-v5/V5Nav";
 import Footer from "@/components/home-v5/Footer";
 import { trackGenerateLead } from "@/lib/analytics/gtm-events";
+import FAQStatic from "@/components/home-v5/FAQStatic";
+import { engageFaqs } from "./faqs";
 import "@/components/home-v5/styles.css";
 
 const V4_INDUSTRY_MAP: Record<string, string> = {
@@ -537,6 +539,12 @@ function EngageUsPageInner() {
             </div>
           </div>
         </section>
+        <FAQStatic
+          items={engageFaqs}
+          heading="What to expect"
+          bg="white"
+          withSchema={false}
+        />
       </main>
       <Footer />
     </div>

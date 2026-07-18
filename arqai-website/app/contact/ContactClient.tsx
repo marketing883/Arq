@@ -7,6 +7,8 @@ import V5Nav from "@/components/home-v5/V5Nav";
 import Footer from "@/components/home-v5/Footer";
 import { ArrowUpRight } from "@/components/home-v5/icons";
 import { trackGenerateLead } from "@/lib/analytics/gtm-events";
+import FAQStatic from "@/components/home-v5/FAQStatic";
+import { contactFaqs } from "./faqs";
 import "@/components/home-v5/styles.css";
 
 const inquiryTypes = [
@@ -342,6 +344,12 @@ function ContactPageInner() {
             </div>
           </div>
         </section>
+        <FAQStatic
+          items={contactFaqs}
+          heading="Before you reach out"
+          bg="white"
+          withSchema={false}
+        />
       </main>
       <Footer />
     </div>

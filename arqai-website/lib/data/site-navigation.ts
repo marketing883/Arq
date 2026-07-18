@@ -311,7 +311,6 @@ export const coreStaticPaths = [
   "/trust",
   "/blog",
   "/case-studies",
-  "/resources/whitepapers",
   "/whitepapers",
   "/webinars",
   "/engage-us",
