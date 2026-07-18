@@ -8,6 +8,7 @@ import Footer from "@/components/home-v5/Footer";
 import { ArrowRight } from "@/components/home-v5/icons";
 import { trackResourceDownload } from "@/lib/analytics/gtm-events";
 import "@/components/home-v5/styles.css";
+import V5CtaStandard from "@/components/home-v5/V5CtaStandard";
 
 interface Whitepaper {
   id: string;
@@ -186,6 +187,10 @@ export default function WhitepapersPage() {
             )}
           </div>
         </section>
+        <V5CtaStandard
+          heading="Want the thinking applied, not just written down?"
+          sub="Tell us which workflow should run differently and we will scope the path to production."
+        />
       </main>
       <Footer />
 

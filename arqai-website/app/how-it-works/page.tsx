@@ -5,9 +5,9 @@ import V5CtaSection from "@/components/home-v5/V5CtaSection";
 import { ArrowRight } from "@/components/home-v5/icons";
 
 export const metadata: Metadata = {
-  title: "How It Works",
+  title: "How It Works: Inside the Agent Runtime",
   description:
-    "Every ArqAI Labs agent is built on the same three-layer architecture: scoped agent identity, runtime policy enforcement, and observable retrieval.",
+    "Inside the governance plane of the ArqAI Operating Fabric, every agent runs on the same three runtime guarantees: scoped agent identity, runtime policy enforcement, and observable retrieval.",
   alternates: { canonical: "https://thearq.ai/how-it-works" },
 };
 
@@ -46,19 +46,21 @@ export default function HowItWorksPage() {
               <span className="v5-badge-dot" />
               Architecture
             </span>
-            <h1 className="v5-h1">Three layers. Every workflow. Production-grade by design.</h1>
+            <h1 className="v5-h1">Inside every agent: identity, policy, observability.</h1>
             <p className="v5-lead">
-              Every ArqAI Labs agent is built on the same architectural foundation. We do not
-              rebuild reliability for each workflow. We build it once, deeply, and apply it
-              everywhere. That is why repeat workflows move faster, and why customers can
-              deploy another agent without re-evaluating the foundation from scratch.
+              The ArqAI Operating Fabric has four layers — workflow intelligence, the
+              governance plane, the integration layer, and the operating loop. This page goes
+              one level deeper: inside the governance plane, every agent we ship runs on the
+              same three runtime guarantees. We build reliability once, deeply, and apply it
+              everywhere — which is why repeat workflows move faster and a new agent never
+              means re-evaluating the foundation from scratch.
             </p>
             <div className="v5-hero-actions">
               <Link href="/engage-us" className="v5-btn v5-btn-primary">
                 Get Started <ArrowRight />
               </Link>
               <Link href="/platform" className="v5-btn v5-btn-ghost">
-                See the platform
+                See the full Operating Fabric
               </Link>
             </div>
           </div>
@@ -69,18 +71,18 @@ export default function HowItWorksPage() {
       <section className="v5-section v5-bg-grey">
         <div className="v5-container">
           <div className="v5-section-head">
-            <span className="v5-eyebrow">The foundation</span>
-            <h2 className="v5-h2">Reliability built once, applied everywhere.</h2>
+            <span className="v5-eyebrow">The runtime</span>
+            <h2 className="v5-h2">Three guarantees carry every agent from identity to action.</h2>
             <p className="v5-lead">
-              Three layers carry every agent from identity to action — scoped, enforced, and
-              observable end to end.
+              Scoped, enforced, and observable end to end — this is what the Operating
+              Fabric&apos;s governance plane means at the level of a single agent.
             </p>
           </div>
           <div className="v5-grid v5-grid-3">
             {layers.map((layer, index) => (
               <article className="v5-card v5-numcard" key={layer.number}>
                 <span className="v5-num">{layer.number}</span>
-                <span className="v5-card-eyebrow">Layer {index + 1} · {layer.title}</span>
+                <span className="v5-card-eyebrow">Guarantee {index + 1} · {layer.title}</span>
                 <h3 className="v5-h3">{layer.headline}</h3>
                 <p className="v5-body">{layer.description}</p>
               </article>

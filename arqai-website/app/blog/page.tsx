@@ -5,6 +5,7 @@ import V5Nav from "@/components/home-v5/V5Nav";
 import Footer from "@/components/home-v5/Footer";
 import { ArrowRight } from "@/components/home-v5/icons";
 import "@/components/home-v5/styles.css";
+import V5CtaStandard from "@/components/home-v5/V5CtaStandard";
 
 // Server-rendered listing so crawlers (including non-JS AI crawlers) see the
 // full post index. Reads searchParams for pagination, so the route is
@@ -182,6 +183,10 @@ export default async function BlogIndexPage({
             )}
           </div>
         </section>
+        <V5CtaStandard
+          heading="Put these ideas to work in your operation."
+          sub="Reading about operational AI is the easy part. Tell us which workflow should run differently and we will scope the path."
+        />
       </main>
       <Footer />
     </div>

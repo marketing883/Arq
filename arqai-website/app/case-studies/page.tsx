@@ -4,6 +4,7 @@ import V5Nav from "@/components/home-v5/V5Nav";
 import Footer from "@/components/home-v5/Footer";
 import { ArrowRight } from "@/components/home-v5/icons";
 import "@/components/home-v5/styles.css";
+import V5CtaStandard from "@/components/home-v5/V5CtaStandard";
 
 // Server-rendered so the proof section of the site is visible to crawlers
 // and answer engines (which do not execute JavaScript).
@@ -138,6 +139,10 @@ export default async function CaseStudiesPage() {
             </div>
           </div>
         </section>
+        <V5CtaStandard
+          heading="What would an assessment find in your operation?"
+          sub="One engagement surfaced $3.2M a compliant-rated program had missed. Tell us about your workflow and we will scope what to look for."
+        />
       </main>
       <Footer />
     </div>

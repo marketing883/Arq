@@ -10,6 +10,7 @@ import { ArrowRight } from "@/components/home-v5/icons";
 import { sanitizeHtml } from "@/lib/security/sanitize";
 import { trackResourceDownload } from "@/lib/analytics/gtm-events";
 import "@/components/home-v5/styles.css";
+import V5CtaStandard from "@/components/home-v5/V5CtaStandard";
 
 interface Whitepaper {
   id: string;
@@ -258,6 +259,10 @@ export default function WhitepaperDetailPage() {
             </div>
           </div>
         </section>
+        <V5CtaStandard
+          heading="Want the thinking applied, not just written down?"
+          sub="Tell us which workflow should run differently and we will scope the path to production."
+        />
       </main>
 
       {/* Lead capture modal */}

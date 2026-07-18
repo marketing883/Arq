@@ -20,7 +20,7 @@ const featureCategories = [
     id: "compliance",
     name: "Compliance",
     icon: BlueprintIcon,
-    color: "#d0f438",
+    color: "#d0f439",
     features: [
       {
         title: "Policy Hub",
@@ -209,7 +209,7 @@ export function FeaturesBlock({ customizations }: FeaturesBlockProps) {
 
   return (
     <div className="space-y-8">
-      <p className="text-gray-600 dark:text-gray-400 text-center max-w-2xl mx-auto">
+      <p className="text-gray-600 text-center max-w-2xl mx-auto">
         {introText}
       </p>
 
@@ -225,7 +225,7 @@ export function FeaturesBlock({ customizations }: FeaturesBlockProps) {
               className={`flex items-center gap-2 px-5 py-3 rounded-xl font-medium transition-all ${
                 isActive
                   ? "text-gray-900 shadow-lg"
-                  : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700"
+                  : "bg-gray-100 text-gray-600 hover:bg-gray-200"
               }`}
               style={{
                 backgroundColor: isActive ? category.color : undefined,
@@ -257,14 +257,14 @@ export function FeaturesBlock({ customizations }: FeaturesBlockProps) {
                   onClick={() => setActiveFeature(feature)}
                   className={`w-full text-left p-4 rounded-xl transition-all border-2 ${
                     isActiveFeature
-                      ? "bg-white dark:bg-gray-800 shadow-md"
-                      : "bg-gray-50 dark:bg-gray-800/50 hover:bg-white dark:hover:bg-gray-800 border-transparent"
+                      ? "bg-white shadow-md"
+                      : "bg-gray-50 hover:bg-white border-transparent"
                   }`}
                   style={{
                     borderColor: isActiveFeature ? activeCategory.color : "transparent",
                   }}
                 >
-                  <h4 className="font-semibold text-gray-900 dark:text-gray-100">
+                  <h4 className="font-semibold text-gray-900">
                     {feature.title}
                   </h4>
                 </button>
@@ -280,7 +280,7 @@ export function FeaturesBlock({ customizations }: FeaturesBlockProps) {
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
-                className="p-6 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm h-full"
+                className="p-6 rounded-xl bg-white border border-gray-200 shadow-sm h-full"
               >
                 <div className="flex items-center gap-3 mb-4">
                   <div
@@ -289,16 +289,16 @@ export function FeaturesBlock({ customizations }: FeaturesBlockProps) {
                   >
                     <Icon size={20} />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100">
+                  <h3 className="text-xl font-bold text-gray-900">
                     {activeFeature.title}
                   </h3>
                 </div>
 
-                <p className="text-gray-600 dark:text-gray-400 mb-6">
+                <p className="text-gray-600 mb-6">
                   {activeFeature.description}
                 </p>
 
-                <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
+                <h4 className="text-sm font-semibold text-gray-700 mb-3">
                   Key Capabilities
                 </h4>
                 <div className="grid grid-cols-2 gap-3">
@@ -315,7 +315,7 @@ export function FeaturesBlock({ customizations }: FeaturesBlockProps) {
                         size={16}
                         className="flex-shrink-0"
                       />
-                      <span className="text-sm text-gray-600 dark:text-gray-400">
+                      <span className="text-sm text-gray-600">
                         {capability}
                       </span>
                     </motion.div>
@@ -323,7 +323,7 @@ export function FeaturesBlock({ customizations }: FeaturesBlockProps) {
                 </div>
 
                 <div
-                  className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700"
+                  className="mt-6 pt-6 border-t border-gray-200"
                 >
                   <a
                     href="/how-it-works"
@@ -349,7 +349,7 @@ export function FeaturesBlock({ customizations }: FeaturesBlockProps) {
       >
         <a
           href="/engage-us"
-          className="inline-flex items-center gap-2 px-6 py-3 bg-[#0432a5] text-white rounded-lg font-semibold hover:opacity-90 transition-colors"
+          className="inline-flex items-center gap-2 px-6 py-3 bg-[#252e3d] text-white rounded-lg font-semibold hover:opacity-90 transition-colors"
         >
           Get Started
           <ArrowRightIcon size={18} />

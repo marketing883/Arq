@@ -84,7 +84,7 @@ export function IntegrationBlock({ customizations }: IntegrationBlockProps) {
 
   return (
     <div className="space-y-8">
-      <p className="text-gray-600 dark:text-gray-400 text-center max-w-2xl mx-auto">
+      <p className="text-gray-600 text-center max-w-2xl mx-auto">
         {introText}
       </p>
 
@@ -96,8 +96,8 @@ export function IntegrationBlock({ customizations }: IntegrationBlockProps) {
             onClick={() => setActiveCategory(category)}
             className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
               activeCategory.id === category.id
-                ? "bg-[#0432a5] text-white"
-                : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700"
+                ? "bg-[#252e3d] text-white"
+                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
             }`}
           >
             {category.name}
@@ -112,7 +112,7 @@ export function IntegrationBlock({ customizations }: IntegrationBlockProps) {
         animate={{ opacity: 1, y: 0 }}
         className="space-y-4"
       >
-        <p className="text-center text-gray-600 dark:text-gray-400">
+        <p className="text-center text-gray-600">
           {activeCategory.description}
         </p>
 
@@ -125,20 +125,20 @@ export function IntegrationBlock({ customizations }: IntegrationBlockProps) {
               transition={{ delay: index * 0.05 }}
               className={`p-4 rounded-xl border ${
                 integration.status === "coming-soon"
-                  ? "bg-gray-50 dark:bg-gray-800/50 border-gray-200 dark:border-gray-700"
-                  : "bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:border-[#0432a5]/50 dark:hover:border-[#d0f438]/50 hover:shadow-md"
+                  ? "bg-gray-50 border-gray-200"
+                  : "bg-white border-gray-200 hover:border-[#252e3d]/50 hover:shadow-md"
               } transition-all`}
             >
               <div className="flex items-start justify-between mb-3">
-                <h4 className="font-semibold text-gray-900 dark:text-gray-100">
+                <h4 className="font-semibold text-gray-900">
                   {integration.name}
                 </h4>
                 {integration.status === "coming-soon" ? (
-                  <span className="text-xs px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400">
+                  <span className="text-xs px-2 py-0.5 rounded-full bg-amber-100 text-amber-700">
                     Coming Soon
                   </span>
                 ) : (
-                  <span className="text-xs px-2 py-0.5 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400">
+                  <span className="text-xs px-2 py-0.5 rounded-full bg-green-100 text-green-700">
                     Available
                   </span>
                 )}
@@ -147,7 +147,7 @@ export function IntegrationBlock({ customizations }: IntegrationBlockProps) {
                 {integration.features.map((feature) => (
                   <span
                     key={feature}
-                    className="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-gray-600 dark:text-gray-400"
+                    className="text-xs px-2 py-1 bg-gray-100 rounded text-gray-600"
                   >
                     {feature}
                   </span>
@@ -163,9 +163,9 @@ export function IntegrationBlock({ customizations }: IntegrationBlockProps) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
-        className="p-6 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700"
+        className="p-6 rounded-xl bg-gray-50 border border-gray-200"
       >
-        <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-4">
+        <h3 className="font-semibold text-gray-900 mb-4">
           Integration Readiness Checklist
         </h3>
         <div className="grid md:grid-cols-2 gap-4">
@@ -178,10 +178,10 @@ export function IntegrationBlock({ customizations }: IntegrationBlockProps) {
             "Secret management solution (optional)",
           ].map((item, index) => (
             <div key={index} className="flex items-center gap-3">
-              <div className="w-5 h-5 rounded border-2 border-gray-300 dark:border-gray-600 flex items-center justify-center">
-                <CheckIcon size={12} className="text-gray-400 dark:text-gray-500" />
+              <div className="w-5 h-5 rounded border-2 border-gray-300 flex items-center justify-center">
+                <CheckIcon size={12} className="text-gray-400" />
               </div>
-              <span className="text-sm text-gray-600 dark:text-gray-400">{item}</span>
+              <span className="text-sm text-gray-600">{item}</span>
             </div>
           ))}
         </div>
@@ -194,12 +194,12 @@ export function IntegrationBlock({ customizations }: IntegrationBlockProps) {
         transition={{ delay: 0.5 }}
         className="text-center pt-4"
       >
-        <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+        <p className="text-sm text-gray-600 mb-4">
           Don&apos;t see an integration you need? We can help.
         </p>
         <a
           href="/engage-us"
-          className="inline-flex items-center gap-2 px-6 py-3 bg-[#0432a5] text-white rounded-lg font-semibold hover:opacity-90 transition-colors"
+          className="inline-flex items-center gap-2 px-6 py-3 bg-[#252e3d] text-white rounded-lg font-semibold hover:opacity-90 transition-colors"
         >
           Get Started
           <ArrowRightIcon size={18} />

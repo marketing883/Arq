@@ -15,7 +15,7 @@ const architectureLayers = [
     fullName: "Compliance-Aware Prompt Compiler",
     description: "Build with Confidence",
     icon: BlueprintIcon,
-    color: "#d0f438",
+    color: "#d0f439",
     features: [
       "Policy Hub for centralized rule management",
       "Automatic compliance injection at build time",
@@ -69,14 +69,14 @@ export function ArchitectureBlock({ customizations }: ArchitectureBlockProps) {
 
   return (
     <div className="space-y-8">
-      <p className="text-gray-600 dark:text-gray-400 text-center max-w-2xl mx-auto">
+      <p className="text-gray-600 text-center max-w-2xl mx-auto">
         {introText}
       </p>
 
       {/* Architecture Diagram */}
       <div className="relative">
         {/* Flow Lines */}
-        <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-[#d0f438] via-green-500 to-purple-500 opacity-20" />
+        <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-[#d0f439] via-green-500 to-purple-500 opacity-20" />
 
         <div className="space-y-6">
           {architectureLayers.map((layer, index) => {
@@ -96,7 +96,7 @@ export function ArchitectureBlock({ customizations }: ArchitectureBlockProps) {
                 >
                   {/* Info Card */}
                   <div
-                    className={`p-6 rounded-xl border-2 bg-white dark:bg-gray-800 shadow-sm ${
+                    className={`p-6 rounded-xl border-2 bg-white shadow-sm ${
                       index % 2 === 1 ? "md:order-2" : ""
                     }`}
                     style={{ borderColor: `${layer.color}30` }}
@@ -109,10 +109,10 @@ export function ArchitectureBlock({ customizations }: ArchitectureBlockProps) {
                         <Icon size={24} />
                       </div>
                       <div>
-                        <h3 className="font-bold text-gray-900 dark:text-gray-100">
+                        <h3 className="font-bold text-gray-900">
                           {layer.name}
                         </h3>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                        <p className="text-sm text-gray-500">
                           {layer.fullName}
                         </p>
                       </div>
@@ -127,7 +127,7 @@ export function ArchitectureBlock({ customizations }: ArchitectureBlockProps) {
                       {layer.features.map((feature, i) => (
                         <li
                           key={i}
-                          className="flex items-start gap-2 text-sm text-gray-600 dark:text-gray-400"
+                          className="flex items-start gap-2 text-sm text-gray-600"
                         >
                           <span
                             className="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0"
@@ -162,7 +162,7 @@ export function ArchitectureBlock({ customizations }: ArchitectureBlockProps) {
                         >
                           <ArrowRightIcon
                             size={24}
-                            className="rotate-90 text-gray-300 dark:text-gray-600"
+                            className="rotate-90 text-gray-300"
                           />
                         </motion.div>
                       )}
@@ -180,9 +180,9 @@ export function ArchitectureBlock({ customizations }: ArchitectureBlockProps) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.6 }}
-        className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700"
+        className="mt-12 pt-8 border-t border-gray-200"
       >
-        <h3 className="text-center font-semibold text-gray-900 dark:text-gray-100 mb-6">
+        <h3 className="text-center font-semibold text-gray-900 mb-6">
           Seamless Integration Ecosystem
         </h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -192,16 +192,16 @@ export function ArchitectureBlock({ customizations }: ArchitectureBlockProps) {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7 + index * 0.1 }}
-              className="p-4 rounded-xl bg-gray-50 dark:bg-gray-800 text-center"
+              className="p-4 rounded-xl bg-gray-50 text-center"
             >
-              <h4 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">
+              <h4 className="text-sm font-semibold text-gray-900 mb-2">
                 {point.name}
               </h4>
               <div className="flex flex-wrap justify-center gap-1">
                 {point.items.map((item) => (
                   <span
                     key={item}
-                    className="text-xs px-2 py-1 bg-white dark:bg-gray-700 rounded border border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-400"
+                    className="text-xs px-2 py-1 bg-white rounded border border-gray-200 text-gray-600"
                   >
                     {item}
                   </span>
@@ -221,7 +221,7 @@ export function ArchitectureBlock({ customizations }: ArchitectureBlockProps) {
       >
         <a
           href="/how-it-works"
-          className="inline-flex items-center gap-2 px-6 py-3 bg-[#0432a5] text-white rounded-lg font-semibold hover:opacity-90 transition-colors"
+          className="inline-flex items-center gap-2 px-6 py-3 bg-[#252e3d] text-white rounded-lg font-semibold hover:opacity-90 transition-colors"
         >
           Get Started
           <ArrowRightIcon size={18} />

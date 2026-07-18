@@ -74,21 +74,6 @@ export function StructuredData({
 }
 
 /**
- * Default structured data for homepage
- */
-export function HomeStructuredData() {
-  return (
-    <StructuredData
-      type="all"
-      pageTitle="ArqAI Labs - Production AI Workflows"
-      pageDescription="ArqAI Labs builds production AI workflows around enterprise operations: workflow strategy, agentic buildout, integration, governance, accelerators, and managed AI operations."
-      pageUrl="https://thearq.ai"
-      breadcrumbs={[{ name: "Home", url: "https://thearq.ai" }]}
-    />
-  );
-}
-
-/**
  * Platform page structured data. The FAQ list is owned by the platform page
  * so the visible FAQ section and the FAQPage schema never drift apart.
  */

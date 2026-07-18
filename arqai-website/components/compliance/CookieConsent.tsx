@@ -113,7 +113,7 @@ export function CookieConsent() {
                   We use cookies to enhance your experience, analyze site traffic, and
                   personalize content. By clicking &ldquo;Accept All&rdquo;, you consent to
                   our use of cookies.{" "}
-                  <a href="/privacy" className="text-[#0432a5] hover:underline">
+                  <a href="/privacy" className="text-[#252e3d] hover:underline">
                     Learn more
                   </a>
                 </p>
@@ -122,7 +122,7 @@ export function CookieConsent() {
                 <div className="flex flex-wrap gap-3">
                   <button
                     onClick={acceptAll}
-                    className="px-6 py-2.5 bg-[#d0f438] text-gray-900 font-semibold rounded-lg hover:bg-[#b8dc2f] transition-colors"
+                    className="px-6 py-2.5 bg-[#d0f439] text-gray-900 font-semibold rounded-lg hover:bg-[#b8dc2f] transition-colors"
                   >
                     Accept All
                   </button>
@@ -134,7 +134,7 @@ export function CookieConsent() {
                   </button>
                   <button
                     onClick={() => setShowDetails(!showDetails)}
-                    className="px-6 py-2.5 text-[#0432a5] font-semibold hover:underline"
+                    className="px-6 py-2.5 text-[#252e3d] font-semibold hover:underline"
                   >
                     {showDetails ? "Hide Details" : "Customize"}
                   </button>
@@ -184,7 +184,7 @@ export function CookieConsent() {
                       onChange={(e) =>
                         setConsent({ ...consent, analytics: e.target.checked })
                       }
-                      className="mt-1 w-5 h-5 rounded border-gray-300 text-[#0432a5] focus:ring-[#0432a5]"
+                      className="mt-1 w-5 h-5 rounded border-gray-300 text-[#252e3d] focus:ring-[#252e3d]"
                     />
                     <div className="flex-1">
                       <h4 className="font-semibold text-gray-900">
@@ -204,7 +204,7 @@ export function CookieConsent() {
                       onChange={(e) =>
                         setConsent({ ...consent, marketing: e.target.checked })
                       }
-                      className="mt-1 w-5 h-5 rounded border-gray-300 text-[#0432a5] focus:ring-[#0432a5]"
+                      className="mt-1 w-5 h-5 rounded border-gray-300 text-[#252e3d] focus:ring-[#252e3d]"
                     />
                     <div className="flex-1">
                       <h4 className="font-semibold text-gray-900">
@@ -224,7 +224,7 @@ export function CookieConsent() {
                       onChange={(e) =>
                         setConsent({ ...consent, preferences: e.target.checked })
                       }
-                      className="mt-1 w-5 h-5 rounded border-gray-300 text-[#0432a5] focus:ring-[#0432a5]"
+                      className="mt-1 w-5 h-5 rounded border-gray-300 text-[#252e3d] focus:ring-[#252e3d]"
                     />
                     <div className="flex-1">
                       <h4 className="font-semibold text-gray-900">
@@ -238,7 +238,7 @@ export function CookieConsent() {
 
                   <button
                     onClick={acceptSelected}
-                    className="w-full py-3 bg-[#0432a5] text-white font-semibold rounded-lg hover:bg-[#032080] transition-colors"
+                    className="w-full py-3 bg-[#252e3d] text-white font-semibold rounded-lg hover:bg-[#032080] transition-colors"
                   >
                     Save Preferences
                   </button>

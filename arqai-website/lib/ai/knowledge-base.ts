@@ -37,7 +37,7 @@ The work is delivered through six service lines, each with its own page at /serv
 The list grows. The /use-cases page lists thirteen we have built, are building, or are ready to build:
 1. **Retail / Loyalty**: Loyalty that learns what each customer values. Retention up, spend on stale incentives down.
 2. **Healthcare / Patient management**: AI that follows up, schedules, and surfaces the patients to call today. Less leakage between visits.
-3. **Insurance & healthcare / Claims triage**: AI that routes incoming claims to the right person, prioritises the queue, and supports the decision the team makes.
+3. **Insurance & healthcare / Claims triage**: AI that routes incoming claims to the right person, prioritizes the queue, and supports the decision the team makes.
 4. **Manufacturing / ERP**: AI on top of the customer's ERP that turns data into decisions. Fewer manual reports.
 5. **Hospitality / Revenue management**: Dynamic pricing of rooms, packages, and add-ons against demand, competitor signals, and historical patterns.
 6. **Facilities / Predictive maintenance**: AI that predicts failures across HVAC, elevators, lighting, and critical equipment from sensor data.

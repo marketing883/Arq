@@ -5,6 +5,7 @@ import V5Nav from "@/components/home-v5/V5Nav";
 import Footer from "@/components/home-v5/Footer";
 import { trackGenerateLead } from "@/lib/analytics/gtm-events";
 import "@/components/home-v5/styles.css";
+import V5CtaStandard from "@/components/home-v5/V5CtaStandard";
 
 const partnerModels = [
   {
@@ -353,6 +354,10 @@ export default function PartnersPage() {
             </div>
           </div>
         </section>
+        <V5CtaStandard
+          heading="Rather engage us directly?"
+          sub="If a partnership isn't the right shape yet, bring us the workflow instead — a senior member of the team follows up within one business day."
+        />
       </main>
       <Footer />
     </div>

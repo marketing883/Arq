@@ -25,8 +25,8 @@ export function ChatMessage({ message }: ChatMessageProps) {
     >
       {/* Avatar */}
       {!isUser && (
-        <div className="w-8 h-8 rounded-full bg-[#0432a5] flex items-center justify-center flex-shrink-0">
-          <LogoIcon size={18} className="[&_path]:fill-white [&_circle]:fill-[#d0f438]" />
+        <div className="w-8 h-8 rounded-full bg-[#252e3d] flex items-center justify-center flex-shrink-0">
+          <LogoIcon size={18} className="[&_path]:fill-white [&_circle]:fill-[#d0f439]" />
         </div>
       )}
 
@@ -34,16 +34,16 @@ export function ChatMessage({ message }: ChatMessageProps) {
       <div
         className={`max-w-[80%] rounded-2xl px-4 py-2.5 ${
           isUser
-            ? "bg-[#0432a5] rounded-br-md"
-            : "bg-gray-100 dark:bg-gray-800 rounded-bl-md"
+            ? "bg-[#252e3d] rounded-br-md"
+            : "bg-gray-100 rounded-bl-md"
         }`}
       >
         <p className={`text-sm leading-relaxed whitespace-pre-wrap ${
-          isUser ? "text-white" : "text-gray-900 dark:text-gray-100"
+          isUser ? "text-white" : "text-gray-900"
         }`}>{message.content}</p>
         <p
           className={`text-xs mt-1 ${
-            isUser ? "text-white/70" : "text-gray-500 dark:text-gray-400"
+            isUser ? "text-white/70" : "text-gray-500"
           }`}
         >
           {formatTime(message.timestamp)}

@@ -21,7 +21,7 @@ const useCases: { tag: string; title: string; body: string }[] = [
   {
     tag: "Insurance / Healthcare",
     title: "Claims triage in days, not weeks.",
-    body: "AI that routes incoming claims to the right person, prioritises the queue, and supports the decision your team makes.",
+    body: "AI that routes incoming claims to the right person, prioritizes the queue, and supports the decision your team makes.",
   },
   {
     tag: "Manufacturing",

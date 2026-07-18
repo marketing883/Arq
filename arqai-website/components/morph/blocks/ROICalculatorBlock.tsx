@@ -77,7 +77,7 @@ export function ROICalculatorBlock({ customizations }: ROICalculatorBlockProps) 
 
   return (
     <div className="space-y-8">
-      <p className="text-gray-600 dark:text-gray-400 text-center max-w-2xl mx-auto">
+      <p className="text-gray-600 text-center max-w-2xl mx-auto">
         {introText}
       </p>
 
@@ -88,13 +88,13 @@ export function ROICalculatorBlock({ customizations }: ROICalculatorBlockProps) 
           animate={{ opacity: 1, x: 0 }}
           className="space-y-6"
         >
-          <h3 className="font-semibold text-gray-900 dark:text-gray-100">
+          <h3 className="font-semibold text-gray-900">
             Your AI Footprint
           </h3>
 
           {/* Number of AI Agents */}
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            <label className="block text-sm font-medium text-gray-700">
               Number of AI Agents / Workflows
             </label>
             <input
@@ -105,11 +105,11 @@ export function ROICalculatorBlock({ customizations }: ROICalculatorBlockProps) 
               onChange={(e) =>
                 setInputs({ ...inputs, aiAgents: Number(e.target.value) })
               }
-              className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-[#0432a5] dark:accent-[#d0f438]"
+              className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[#252e3d]"
             />
-            <div className="flex justify-between text-sm text-gray-500 dark:text-gray-400">
+            <div className="flex justify-between text-sm text-gray-500">
               <span>5</span>
-              <span className="font-semibold text-[#0432a5] dark:text-[#d0f438]">
+              <span className="font-semibold text-[#252e3d]">
                 {inputs.aiAgents} agents
               </span>
               <span>100</span>
@@ -118,7 +118,7 @@ export function ROICalculatorBlock({ customizations }: ROICalculatorBlockProps) 
 
           {/* Average Salary */}
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            <label className="block text-sm font-medium text-gray-700">
               Average Team Member Salary (USD)
             </label>
             <input
@@ -130,11 +130,11 @@ export function ROICalculatorBlock({ customizations }: ROICalculatorBlockProps) 
               onChange={(e) =>
                 setInputs({ ...inputs, avgSalary: Number(e.target.value) })
               }
-              className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-[#0432a5] dark:accent-[#d0f438]"
+              className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[#252e3d]"
             />
-            <div className="flex justify-between text-sm text-gray-500 dark:text-gray-400">
+            <div className="flex justify-between text-sm text-gray-500">
               <span>$60k</span>
-              <span className="font-semibold text-[#0432a5] dark:text-[#d0f438]">
+              <span className="font-semibold text-[#252e3d]">
                 ${(inputs.avgSalary / 1000).toFixed(0)}k
               </span>
               <span>$250k</span>
@@ -143,7 +143,7 @@ export function ROICalculatorBlock({ customizations }: ROICalculatorBlockProps) 
 
           {/* Compliance Risk Level */}
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            <label className="block text-sm font-medium text-gray-700">
               Compliance Risk Level
             </label>
             <div className="grid grid-cols-3 gap-2">
@@ -154,8 +154,8 @@ export function ROICalculatorBlock({ customizations }: ROICalculatorBlockProps) 
                     onClick={() => setInputs({ ...inputs, complianceRisk: level })}
                     className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                       inputs.complianceRisk === level
-                        ? "bg-[#0432a5] text-white"
-                        : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700"
+                        ? "bg-[#252e3d] text-white"
+                        : "bg-gray-100 text-gray-600 hover:bg-gray-200"
                     }`}
                   >
                     {level.charAt(0).toUpperCase() + level.slice(1)}
@@ -163,14 +163,14 @@ export function ROICalculatorBlock({ customizations }: ROICalculatorBlockProps) 
                 )
               )}
             </div>
-            <p className="text-xs text-gray-500 dark:text-gray-400">
+            <p className="text-xs text-gray-500">
               {riskLabels[inputs.complianceRisk]}
             </p>
           </div>
 
           {/* Manual Audit Hours */}
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            <label className="block text-sm font-medium text-gray-700">
               Monthly Hours Spent on AI Auditing (per agent)
             </label>
             <input
@@ -181,11 +181,11 @@ export function ROICalculatorBlock({ customizations }: ROICalculatorBlockProps) 
               onChange={(e) =>
                 setInputs({ ...inputs, manualAuditHours: Number(e.target.value) })
               }
-              className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-[#0432a5] dark:accent-[#d0f438]"
+              className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[#252e3d]"
             />
-            <div className="flex justify-between text-sm text-gray-500 dark:text-gray-400">
+            <div className="flex justify-between text-sm text-gray-500">
               <span>5 hrs</span>
-              <span className="font-semibold text-[#0432a5] dark:text-[#d0f438]">
+              <span className="font-semibold text-[#252e3d]">
                 {inputs.manualAuditHours} hrs
               </span>
               <span>40 hrs</span>
@@ -200,7 +200,7 @@ export function ROICalculatorBlock({ customizations }: ROICalculatorBlockProps) 
           transition={{ delay: 0.2 }}
           className="space-y-6"
         >
-          <h3 className="font-semibold text-gray-900 dark:text-gray-100">
+          <h3 className="font-semibold text-gray-900">
             Estimated Annual Value
           </h3>
 
@@ -210,17 +210,17 @@ export function ROICalculatorBlock({ customizations }: ROICalculatorBlockProps) 
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.3 }}
-              className="p-4 rounded-xl bg-[#d0f438]/10 border border-[#d0f438]/30"
+              className="p-4 rounded-xl bg-[#d0f439]/10 border border-[#d0f439]/30"
             >
               <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600 dark:text-gray-400">
+                <span className="text-sm text-gray-600">
                   Time Savings (70% audit automation)
                 </span>
-                <span className="text-lg font-bold text-gray-900 dark:text-gray-100">
+                <span className="text-lg font-bold text-gray-900">
                   ${annualCostSavings.toLocaleString()}
                 </span>
               </div>
-              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+              <p className="text-xs text-gray-500 mt-1">
                 {annualTimeSavings.toLocaleString()} hours saved annually
               </p>
             </motion.div>
@@ -229,17 +229,17 @@ export function ROICalculatorBlock({ customizations }: ROICalculatorBlockProps) 
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.4 }}
-              className="p-4 rounded-xl bg-[#0432a5]/10 border border-[#0432a5]/30"
+              className="p-4 rounded-xl bg-[#252e3d]/10 border border-[#252e3d]/30"
             >
               <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600 dark:text-gray-400">
+                <span className="text-sm text-gray-600">
                   Risk Mitigation Value
                 </span>
-                <span className="text-lg font-bold text-gray-900 dark:text-gray-100">
+                <span className="text-lg font-bold text-gray-900">
                   ${riskMitigationValue.toLocaleString()}
                 </span>
               </div>
-              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+              <p className="text-xs text-gray-500 mt-1">
                 Reduced compliance violation probability
               </p>
             </motion.div>
@@ -248,17 +248,17 @@ export function ROICalculatorBlock({ customizations }: ROICalculatorBlockProps) 
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.5 }}
-              className="p-4 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700"
+              className="p-4 rounded-xl bg-gray-50 border border-gray-200"
             >
               <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600 dark:text-gray-400">
+                <span className="text-sm text-gray-600">
                   Productivity Gains
                 </span>
-                <span className="text-lg font-bold text-gray-900 dark:text-gray-100">
+                <span className="text-lg font-bold text-gray-900">
                   ${productivityGain.toLocaleString()}
                 </span>
               </div>
-              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+              <p className="text-xs text-gray-500 mt-1">
                 Better agent management and observability
               </p>
             </motion.div>
@@ -269,11 +269,11 @@ export function ROICalculatorBlock({ customizations }: ROICalculatorBlockProps) 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6 }}
-            className="p-6 rounded-xl bg-gray-900 dark:bg-gray-800 text-white"
+            className="p-6 rounded-xl bg-gray-900 text-white"
           >
             <div className="flex justify-between items-center mb-4">
               <span className="text-white/80">Total Annual Value</span>
-              <span className="text-3xl font-bold text-[#d0f438]">
+              <span className="text-3xl font-bold text-[#d0f439]">
                 ${totalAnnualValue.toLocaleString()}
               </span>
             </div>
@@ -297,12 +297,12 @@ export function ROICalculatorBlock({ customizations }: ROICalculatorBlockProps) 
         transition={{ delay: 0.7 }}
         className="text-center pt-4"
       >
-        <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+        <p className="text-sm text-gray-600 mb-4">
           Want a personalized ROI analysis for your organization?
         </p>
         <a
           href="/engage-us"
-          className="inline-flex items-center gap-2 px-6 py-3 bg-[#0432a5] text-white rounded-lg font-semibold hover:opacity-90 transition-colors"
+          className="inline-flex items-center gap-2 px-6 py-3 bg-[#252e3d] text-white rounded-lg font-semibold hover:opacity-90 transition-colors"
         >
           Get Started
         </a>

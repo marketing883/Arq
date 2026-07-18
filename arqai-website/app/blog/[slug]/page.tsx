@@ -13,6 +13,7 @@ import V5Nav from "@/components/home-v5/V5Nav";
 import Footer from "@/components/home-v5/Footer";
 import { ArrowRight } from "@/components/home-v5/icons";
 import "@/components/home-v5/styles.css";
+import V5CtaStandard from "@/components/home-v5/V5CtaStandard";
 
 // Blog content is DB-backed; revalidate so crawlers get fresh server HTML
 // without rebuilding the whole site.
@@ -243,6 +244,10 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
             </div>
           </div>
         </section>
+        <V5CtaStandard
+          heading="Put these ideas to work in your operation."
+          sub="Reading about operational AI is the easy part. Tell us which workflow should run differently and we will scope the path."
+        />
       </main>
       <Footer />
     </div>

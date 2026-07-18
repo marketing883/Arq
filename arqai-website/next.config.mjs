@@ -104,9 +104,19 @@ const nextConfig = {
   // Redirects for deprecated pages
   async redirects() {
     return [
-      // v5 promoted to the main homepage
+      // v5 promoted to the main homepage; old homepage variants removed
       {
         source: "/v5",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/v4",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/home-legacy",
         destination: "/",
         permanent: true,
       },

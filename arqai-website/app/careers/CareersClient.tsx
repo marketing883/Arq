@@ -6,6 +6,7 @@ import V5Nav from "@/components/home-v5/V5Nav";
 import Footer from "@/components/home-v5/Footer";
 import { ArrowRight } from "@/components/home-v5/icons";
 import "@/components/home-v5/styles.css";
+import V5CtaStandard from "@/components/home-v5/V5CtaStandard";
 
 type JobListItem = {
   id: string;
@@ -268,6 +269,10 @@ export default function CareersPage() {
             </div>
           </div>
         </section>
+        <V5CtaStandard
+          heading="Building production AI somewhere else?"
+          sub="If the right opening isn't listed, talk to us anyway — we hire for the work. And if you're here about a project, the same door works."
+        />
       </main>
       <Footer />
     </div>
