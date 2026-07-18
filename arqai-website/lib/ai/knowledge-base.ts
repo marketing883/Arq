@@ -119,9 +119,9 @@ The nav's primary button is "Book a Demo" → /demo. In-page "Get Started" butto
 - Press / analyst → /contact
 
 ## Proof points (as shown on the site; always hedge)
-- ArqFWA detects 120+ TPA-specific fraud patterns generic payer tools were not designed to find.
-- A single Blind Spot Assessment surfaced ~$3.2M in undetected waste for a mid-size TPA a prior vendor had rated fully compliant.
-- Accelerator/substrate reuse compounds — roughly 70% reuse by the third engagement, so each delivery makes the next faster.
+- A single Blind Spot Assessment surfaced ~$3.2M in undetected waste for a mid-size TPA a prior vendor had rated fully compliant, and cut the team's manual claims-review time by roughly 70%. Full story: /case-studies/tpa-blind-spot-assessment
+- ArqFWA draws on a library of 120+ TPA-specific fraud, waste, and abuse patterns that generic payer tools were not designed to look for.
+- Accelerator reuse compounds across engagements, so each delivery makes the next one faster (no fixed percentage — scope-dependent).
 - Every agent we deploy generates encrypted, audit-ready proof of its actions.
 
 ## Reach

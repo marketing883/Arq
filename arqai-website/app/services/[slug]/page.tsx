@@ -140,6 +140,7 @@ export default function ServiceDetailPage({ params }: ServicePageProps) {
               <p className="v5-lead" style={{ marginTop: 16 }}>{service.overview}</p>
             </div>
             <div className="v5-stats" style={{ gridTemplateColumns: "1fr", alignContent: "start" }}>
+              <span className="v5-eyebrow">Engagement targets</span>
               {service.outcomes.map((o) => (
                 <div className="v5-stat" key={o.label} style={{ background: "var(--v5-white)" }}>
                   <strong>{o.value}</strong>

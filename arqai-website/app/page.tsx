@@ -6,7 +6,7 @@ import Accelerators from "@/components/home-v5/Accelerators";
 import WhyChooseUs from "@/components/home-v5/WhyChooseUs";
 import Workflow from "@/components/home-v5/Workflow";
 import Integration from "@/components/home-v5/Integration";
-import Testimonials from "@/components/home-v5/Testimonials";
+import ProofSpotlight from "@/components/home-v5/ProofSpotlight";
 import FAQ from "@/components/home-v5/FAQ";
 import Blogs from "@/components/home-v5/Blogs";
 import Contact from "@/components/home-v5/Contact";
@@ -240,7 +240,7 @@ export default function HomePage() {
         <WhyChooseUs />
         <Workflow />
         <Integration />
-        <Testimonials />
+        <ProofSpotlight />
         <FAQ />
         <Blogs />
         <Contact />

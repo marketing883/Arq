@@ -311,6 +311,7 @@ export const coreStaticPaths = [
   "/trust",
   "/blog",
   "/case-studies",
+  "/case-studies/tpa-blind-spot-assessment",
   "/whitepapers",
   "/webinars",
   "/engage-us",

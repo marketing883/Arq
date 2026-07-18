@@ -51,8 +51,26 @@ async function getCaseStudies(): Promise<CaseStudy[]> {
   return (data as CaseStudy[]) || [];
 }
 
+// The real, publishable engagement lives at a static route and is pinned to
+// the top of the listing so the proof section is never empty.
+const pinned: CaseStudy = {
+  id: "tpa-blind-spot-assessment",
+  title: "$3.2M in Undetected Waste Found at a Mid-Size TPA",
+  slug: "tpa-blind-spot-assessment",
+  client_name: "Mid-size third-party administrator",
+  industry: "Healthcare Payers",
+  overview:
+    "Rated fully compliant by its payment-integrity vendor, one ArqAI Blind Spot Assessment still surfaced roughly $3.2M in undetected waste — and cut manual claims-review time by about 70%.",
+  metrics: [
+    { label: "Undetected waste surfaced", value: "$3.2M" },
+    { label: "Less manual review time", value: "70%" },
+    { label: "Assessment engagement", value: "1" },
+  ],
+};
+
 export default async function CaseStudiesPage() {
-  const caseStudies = await getCaseStudies();
+  const fromDb = await getCaseStudies();
+  const caseStudies = [pinned, ...fromDb.filter((s) => s.slug !== pinned.slug)];
 
   return (
     <div className="v5-shell">
@@ -77,13 +95,7 @@ export default async function CaseStudiesPage() {
         {/* Case Studies Grid */}
         <section className="v5-section v5-bg-grey">
           <div className="v5-container">
-            {caseStudies.length === 0 ? (
-              <div className="v5-section-head center">
-                <h2 className="v5-h2">No case studies yet</h2>
-                <p className="v5-lead">Check back soon for client success stories.</p>
-              </div>
-            ) : (
-              <div className="v5-cs-grid">
+            <div className="v5-cs-grid">
                 {caseStudies.map((study) => (
                   <a key={study.id} className="v5-blog-card" href={`/case-studies/${study.slug}`}>
                     <div className="v5-blog-cover">
@@ -122,9 +134,8 @@ export default async function CaseStudiesPage() {
                       </span>
                     </div>
                   </a>
-                ))}
-              </div>
-            )}
+              ))}
+            </div>
           </div>
         </section>
       </main>

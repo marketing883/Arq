@@ -19,7 +19,6 @@ export default function FAQ() {
           <p className="v5-lead">{DATA.sub}</p>
 
           <div className="v5-support-card">
-            <img className="v5-support-avatar" src={support.avatar} alt="" loading="lazy" decoding="async" />
             <div className="v5-support-text">
               <h3 className="v5-h3">{support.title}</h3>
               <p>{support.body}</p>

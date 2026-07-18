@@ -147,12 +147,16 @@ export default function AcceleratorDetailPage({ params }: AcceleratorPageProps) 
               </p>
             </div>
             <div className="v5-stats" style={{ gridTemplateColumns: "1fr", alignContent: "start" }}>
+              <span className="v5-eyebrow">Design targets</span>
               {accelerator.metrics.map((metric) => (
                 <div className="v5-stat" key={metric.label} style={{ background: "var(--v5-white)" }}>
                   <strong>{metric.value}</strong>
                   <span>{metric.label}</span>
                 </div>
               ))}
+              <p className="v5-body" style={{ fontSize: 13, opacity: 0.75 }}>
+                Targets we engineer each deployment toward, measured against your baseline during rollout.
+              </p>
             </div>
           </div>
         </div>

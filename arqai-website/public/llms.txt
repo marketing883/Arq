@@ -53,6 +53,7 @@ Productized, named workflow patterns adapted to each customer through services. 
 
 - [Blog](https://thearq.ai/blog): articles from the ArqAI Labs team on operational AI — agent design, governance, enterprise integration, and moving AI from pilot to production. Individual posts live at https://thearq.ai/blog/{slug}.
 - [Case studies](https://thearq.ai/case-studies): production engagements with the baseline, intervention, and measured outcome. Individual case studies live at https://thearq.ai/case-studies/{slug}.
+- [Featured case study — TPA Blind Spot Assessment](https://thearq.ai/case-studies/tpa-blind-spot-assessment): a mid-size third-party administrator rated fully compliant by its payment-integrity vendor ran one ArqAI Blind Spot Assessment; it surfaced roughly $3.2M in undetected waste and cut manual claims-review time by about 70%.
 - [Whitepapers](https://thearq.ai/whitepapers): deep dives and frameworks on operational AI.
 - [Webinars](https://thearq.ai/webinars): live sessions and replays.
 - [Resources hub](https://thearq.ai/resources)

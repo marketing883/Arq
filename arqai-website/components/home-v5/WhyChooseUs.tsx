@@ -48,6 +48,18 @@ export default function WhyChooseUs() {
           <div className="v5-bento v5-bento-waste">
             <div className="v5-bento-num">{WHY.waste.num}</div>
             <div className="v5-bento-title">{WHY.waste.title}</div>
+            <span
+              style={{
+                display: "block",
+                fontSize: 11,
+                letterSpacing: "0.08em",
+                textTransform: "uppercase",
+                opacity: 0.65,
+                marginBottom: 8,
+              }}
+            >
+              Built on the modern AI stack
+            </span>
             <div className="v5-bento-logos">
               {WHY.logos.map((src, i) => (
                 <img key={i} src={src} alt="" loading="lazy" decoding="async" />

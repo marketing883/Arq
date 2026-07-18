@@ -87,7 +87,7 @@ const MENUS: Menu[] = [
       { title: "Retail", desc: "Loyalty, pricing, and service", href: "/industries/retail", icon: <BagIcon /> },
       { title: "Manufacturing", desc: "Supply chain and operations", href: "/industries/manufacturing", icon: <FactoryIcon /> },
     ],
-    feature: { href: "/case-studies", image: `${A}/wqdffQW0WSkz5XQ7YchgqN2bDQ.jpeg`, tag: "Case study", title: "$3.2M in undetected waste, found" },
+    feature: { href: "/case-studies/tpa-blind-spot-assessment", image: `${A}/wqdffQW0WSkz5XQ7YchgqN2bDQ.jpeg`, tag: "Case study", title: "$3.2M in undetected waste, found" },
   },
   {
     label: "Resources",

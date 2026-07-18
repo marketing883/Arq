@@ -10,80 +10,32 @@ import {
 } from "./types";
 import { industryNames, painPointNames } from "./context";
 
-// Industry-specific case studies
+// The one real, publishable engagement. All industry keys resolve to it —
+// proof content is never invented or personalized per-industry.
+// Full narrative: /case-studies/tpa-blind-spot-assessment
+const realCaseStudy = {
+  industry: "Healthcare Payers",
+  badge: "Mid-Size TPA",
+  title: "$3.2M in Undetected Waste Found in One Blind Spot Assessment",
+  challenge:
+    "A mid-size third-party administrator had been rated fully compliant by its payment-integrity vendor — a rating that reflected what the incumbent tooling was designed to look for, not what pattern-level analysis could still find.",
+  solution:
+    "A single ArqAI Blind Spot Assessment ran ArqFWA's cross-signal analysis over historical claims the incumbent tools had already cleared, and delivered every flagged case with the evidence a reviewer needs to act.",
+  results: [
+    { metric: "$3.2M", label: "Undetected waste surfaced" },
+    { metric: "70%", label: "Less manual review time" },
+    { metric: "1", label: "Assessment engagement" },
+    { metric: "100%", label: "Findings with reviewable evidence" },
+  ],
+  quote: "",
+  quoteAuthor: "",
+};
+
 export const caseStudies = {
-  healthcare: {
-    industry: "Healthcare",
-    badge: "Major Health System",
-    title: "Patient Data Workflows with Governance Built In",
-    challenge:
-      "A large health system wanted to use AI for patient data summarization and care coordination but couldn't risk HIPAA violations.",
-    solution:
-      "ArqAI designed the workflow so AI-assisted summarization and care coordination stayed inside defined access, approval, and audit boundaries.",
-    results: [
-      { metric: "50%", label: "Reduced Admin Time" },
-      { metric: "100%", label: "HIPAA Compliance" },
-      { metric: "40%", label: "Faster Care Coordination" },
-      { metric: "3x", label: "AI Deployment Scale" },
-    ],
-    quote:
-      "Patient data security is non-negotiable. ArqAI's workflow-first approach gave us the control model we needed.",
-    quoteAuthor: "CISO",
-  },
-  financial: {
-    industry: "Financial Services",
-    badge: "Top 5 Global Bank",
-    title: "Automated Loan Underwriting with Complete Audit Trails",
-    challenge:
-      "A leading global bank needed to automate their loan underwriting process while maintaining strict SOX compliance and Fair Lending Act adherence.",
-    solution:
-      "ArqAI helped shape an underwriting workflow with policy-aware recommendations, human review, and decision evidence captured for audit.",
-    results: [
-      { metric: "70%", label: "Faster Underwriting" },
-      { metric: "100%", label: "Audit Compliance" },
-      { metric: "$2.3M", label: "Annual Savings" },
-      { metric: "Zero", label: "Regulatory Findings" },
-    ],
-    quote:
-      "ArqAI gave us the confidence to use AI in the workflow because the evidence and review path were designed in.",
-    quoteAuthor: "Chief Risk Officer",
-  },
-  insurance: {
-    industry: "Insurance",
-    badge: "Fortune 100 Insurer",
-    title: "Intelligent Claims Processing with Fraud Detection",
-    challenge:
-      "A major insurer needed to accelerate claims processing while maintaining regulatory compliance with NAIC guidelines and detecting potential fraud.",
-    solution:
-      "ArqAI designed claims support that enriches files, recommends routing, flags suspicious patterns, and keeps adjusters in control of the final decision.",
-    results: [
-      { metric: "80%", label: "Faster Processing" },
-      { metric: "35%", label: "More Fraud Detected" },
-      { metric: "$5M+", label: "Fraud Prevented" },
-      { metric: "98%", label: "Customer Satisfaction" },
-    ],
-    quote:
-      "The combination of speed and compliance oversight has transformed our claims operation.",
-    quoteAuthor: "VP of Claims Operations",
-  },
-  general: {
-    industry: "Enterprise",
-    badge: "Fortune 500 Company",
-    title: "Enterprise Workflow Governance at Scale",
-    challenge:
-      "A Fortune 500 company was moving AI into multiple operating teams but lacked a consistent way to govern workflow actions, evidence, and review.",
-    solution:
-      "ArqAI helped define a shared operating fabric with consistent policy enforcement, integration patterns, and audit trails across workflows.",
-    results: [
-      { metric: "60%", label: "Faster Deployment" },
-      { metric: "100%", label: "Policy Compliance" },
-      { metric: "45%", label: "Cost Reduction" },
-      { metric: "10x", label: "Workflow Scale Increase" },
-    ],
-    quote:
-      "We finally have the control and visibility we need to confidently scale AI across the enterprise.",
-    quoteAuthor: "CIO",
-  },
+  healthcare: realCaseStudy,
+  financial: realCaseStudy,
+  insurance: realCaseStudy,
+  general: realCaseStudy,
 };
 
 // Industry-specific messaging

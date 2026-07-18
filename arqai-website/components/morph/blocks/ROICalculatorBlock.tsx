@@ -279,8 +279,11 @@ export function ROICalculatorBlock({ customizations }: ROICalculatorBlockProps) 
             </div>
             <div className="pt-4 border-t border-white/20">
               <p className="text-sm text-white/60">
-                * This is an estimate based on industry averages. Contact us for
-                a detailed ROI analysis tailored to your organization.
+                * Illustrative estimate from stated modeling assumptions (70%
+                reduction in manual audit hours, $500K average violation cost,
+                15% base annual violation probability, $5K per agent per year in
+                productivity) — not measured client results. Contact us for an
+                analysis built on your own numbers.
               </p>
             </div>
           </motion.div>

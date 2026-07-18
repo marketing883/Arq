@@ -93,7 +93,7 @@ export const accelerators: Accelerator[] = [
     promise:
       "ArqFWA prioritizes the cases worth human attention, explains why they matter, and keeps the evidence trail clean enough for downstream recovery and audit.",
     proof:
-      "Built from payer fraud, waste, abuse, and claims-review patterns already appearing across ArqAI healthcare work, with governance-first review loops and auditable recommendations.",
+      "Proven in the field: a single ArqFWA-powered Blind Spot Assessment surfaced roughly $3.2M in undetected waste for a mid-size TPA whose prior vendor had rated it fully compliant — while cutting manual review time by about 70%.",
     rollout: [
       "Load a sample claims and provider-history slice.",
       "Calibrate risk signals against known leakage and investigation outcomes.",

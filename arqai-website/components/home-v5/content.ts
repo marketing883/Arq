@@ -7,30 +7,16 @@ export const LOGO = `${A}/FEFrVVQtPUn7XSci8TiM5lb74o.png`;
 export const HERO_VIDEO = `${A}/ufsUXNNTVPKgg5ZhfzY4DHtmrKY.mp4`;
 export const HERO_POSTER = `${A}/pR0DzH2JNZa0vnz4l8WJLxvUKA.jpg`;
 
-export const NAV_LINKS = [
-  { label: "Home", href: "#top" },
-  { label: "About", href: "/about" },
-  { label: "Feature", href: "#services" },
-  { label: "Pricing", href: "#pricing" },
-  { label: "Blog", href: "#insights" },
-  { label: "Contact", href: "#contact" },
-];
-
 export const HERO = {
-  trustAvatars: [
-    `${A}/OlsXhJ1weAZUQl3ikE7Nrmj9cg8.jpg`,
-    `${A}/xPotMb4VrNT5rTGtXQvpYqXunU.jpg`,
-    `${A}/9TPGOiWddBWZAZ2mYFDOzpSoILE.jpg`,
-    `${A}/oGgAZMF0jq3eb456pPCbrdFzqM.jpg`,
-  ],
-  trustLabel: "Trusted by 120+ Businesses",
   headline: "Operational AI. Built for Your Enterprise.",
   sub: "We design, build, deploy, and run AI for the operations that don't fit off-the-shelf — bespoke to how your team works, with governance attached to every action.",
   cta: { label: "Get Started", href: "#contact" },
+  // Real proof only: the TPA Blind Spot Assessment engagement and the
+  // shipped accelerator catalog. No template numbers.
   metrics: [
-    { num: "98", suffix: "%", label: "Client Satisfaction Rate" },
-    { num: "3", suffix: "X", label: "Faster Decision-Making" },
-    { num: "40", suffix: "%", label: "Cost Reduction" },
+    { num: "$3.2", suffix: "M", label: "Undetected waste surfaced in one assessment" },
+    { num: "70", suffix: "%", label: "Less manual review time in that engagement" },
+    { num: "8", suffix: "", label: "Production-ready accelerator lines" },
   ],
 };
 
@@ -45,7 +31,6 @@ export const FEATURES = {
       kind: "chat",
       title: "Workflow Discovery And Assessment",
       body: "We map your operations and identify exactly where AI agents will move the needle before any build begins.",
-      avatars: [`${A}/pAPxY6GbR780p3WdmjMvK78GIo.png`, `${A}/O0Q8HWESw0SuJvRoaa0ATiDOF4k.png`],
     },
     {
       kind: "doc",
@@ -86,13 +71,13 @@ export const WHY = {
   ],
   fraud: {
     num: "120+",
-    title: "Fraud Patterns Caught",
-    body: "ArqFWA detects 120+ TPA-specific fraud patterns that generic payer tools were never designed to find.",
+    title: "Fraud Pattern Library",
+    body: "ArqFWA draws on a library of 120+ TPA-specific fraud, waste, and abuse patterns that generic payer tools were never designed to find.",
   },
   reuse: {
     num: "70%",
-    title: "Substrate Reuse By Engagement 3",
-    body: "Each delivery makes the next one faster. Our accelerator library compounds with every client we ship.",
+    title: "Review Time Saved",
+    body: "The same Blind Spot Assessment cut manual claims-review time by roughly 70% for the team running it.",
   },
   governance: {
     num: "100%",
@@ -154,47 +139,20 @@ export const INTEGRATION = {
   ],
 };
 
-export const TESTIMONIALS = {
-  eyebrow: "Testimonials",
-  heading: "Real Results from AI-Powered Success",
-  sub: "Hear how businesses like yours accelerated growth, optimized workflows, and delivered measurable outcomes through our custom AI solutions.",
-  image: `${A}/ftgLt3wWB2wrmUqDaOXqZwo66FA.jpeg`,
-  items: [
-    {
-      quote: "We cut manual work by 70% and boosted task output 3.5× with their AI automation—like gaining a tireless team member.",
-      name: "Alex Rivera",
-      role: "Product Manager, Zylo Ren",
-      avatar: `${A}/Ah6vtDjqQV4pmxuHjEOGW2rX0.jpg`,
-      stats: [
-        { num: "+70%", label: "Reduction in manual work" },
-        { num: "3.5x", label: "Increase in automation efficiency" },
-      ],
-    },
-    {
-      quote: "Integrating their AI planning system cut our turnaround time in half. We now deliver client projects twice as fast, without sacrificing quality.",
-      name: "Jenna Li",
-      role: "Operations Director, NeoTech Architectures",
-      avatar: `${A}/PQ0CdHcvW9qzllrrn2lyBWphgQ.jpg`,
-      stats: [
-        { num: "2x", label: "Faster project delivery" },
-        { num: "+50%", label: "Improvement in client satisfaction" },
-      ],
-    },
-    {
-      quote: "The customer support automation workflow they built exceeded all expectations. It feels like a real assistant and drastically reduced our customer support load.",
-      name: "Marcus Green",
-      role: "Support Lead, HelioWave",
-      avatar: `${A}/gVhsOa2hfMCiXvrdcBkklcFUIQ.jpg`,
-      stats: [],
-    },
-    {
-      quote: "Their team really understands AI. They guided us from strategy to deployment with clarity and precision. A pleasure to work with.",
-      name: "Rachel Torres",
-      role: "CTO, Wong's Wings",
-      avatar: `${A}/GJfjZ9RBgmpJlrnvg487NysRJkE.jpg`,
-      stats: [],
-    },
+// The one real, publishable engagement — told once in full at
+// /case-studies/tpa-blind-spot-assessment and summarized here. No invented
+// clients, no fabricated quotes.
+export const PROOF = {
+  eyebrow: "Proof",
+  heading: "One assessment. $3.2M surfaced.",
+  sub: "A mid-size third-party administrator came to us rated fully compliant by its payment-integrity vendor. One ArqAI Blind Spot Assessment later, the picture looked different.",
+  stats: [
+    { num: "$3.2M", label: "Undetected waste and claims leakage surfaced" },
+    { num: "70%", label: "Less manual review time for the claims team" },
+    { num: "100%", label: "Findings delivered with reviewable evidence" },
   ],
+  body: "The assessment ran ArqFWA's cross-signal analysis across historical claims the incumbent tools had already cleared — correlating billing patterns, provider behavior, and member history that rule-based reviews score in isolation. Every flagged case carried the evidence an investigator needed to act on it.",
+  cta: { label: "Read the case study", href: "/case-studies/tpa-blind-spot-assessment" },
 };
 
 export const FAQ = {
@@ -202,7 +160,6 @@ export const FAQ = {
   heading: "Answers to Common Questions",
   sub: "We've gathered the most frequently asked questions to help you better understand our AI services, pricing, and integration process.",
   support: {
-    avatar: `${A}/te6yqxk271CgPcNMrhntCcC6y7E.png`,
     title: "Need more help?",
     body: "We're here to answer any questions you may have.",
     cta: { label: "Ask a Question", href: "#contact" },
@@ -239,33 +196,6 @@ export const FAQ = {
   ],
 };
 
-export const INSIGHTS = {
-  eyebrow: "Insights & Articles",
-  heading: "Discover the Future of AI in Business",
-  sub: "Stay informed with expert-written articles on AI transformation, SaaS strategies, and startup innovation. Learn how to drive growth with the right technology.",
-  cta: { label: "Discover More", href: "#insights" },
-  posts: [
-    {
-      cover: `${A}/whRZNEnCa32wPqqJtkEo07xTe50.jpeg`,
-      date: "Jun 18, 2025",
-      title: "How AI is Revolutionizing Customer Support in 2025",
-      body: "See how AI chatbots and NLP enhance support with speed and personalization.",
-    },
-    {
-      cover: `${A}/6s6XHJiR7LUyTcFFZHDFjSarks.jpeg`,
-      date: "May 29, 2025",
-      title: "Building a Lean AI-Ready Startup: Tips for Founders",
-      body: "Help startups adopt AI early with budget-friendly, scalable solutions.",
-    },
-    {
-      cover: `${A}/mu6sFIgrbmHNxa3m94cG4VVROM.jpeg`,
-      date: "Jun 4, 2025",
-      title: "5 Must-Have SaaS Integrations to Supercharge Your Workflow",
-      body: "Streamline team operations by integrating AI with essential SaaS tools.",
-    },
-  ],
-};
-
 export const CONTACT = {
   eyebrow: "Let's Connect",
   heading: "Start the Conversation Today",
@@ -280,6 +210,5 @@ export const CONTACT = {
 };
 
 export const FOOTER = {
-  links: ["Home", "About", "Feature", "Pricing", "Blog", "Contact"],
   copyright: "© Copyright 2026. All Rights Reserved.",
 };

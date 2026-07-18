@@ -103,11 +103,11 @@ export function IndustryPage({ data }: { data: IndustryPageData }) {
         <section className="v5-section v5-bg-grey">
           <div className="v5-container">
             <div className="v5-section-head center">
-              <span className="v5-eyebrow">What changes</span>
-              <h2 className="v5-h2">Outcomes leaders can measure.</h2>
+              <span className="v5-eyebrow">What we engineer toward</span>
+              <h2 className="v5-h2">Design targets leaders can measure us against.</h2>
               <p className="v5-lead">
-                Every engagement is anchored to metrics operating leaders can defend — faster
-                resolution, sharper prioritization, cleaner evidence, decisions people trust.
+                Every engagement is anchored to targets operating leaders can defend — measured
+                against your baseline, not someone else&apos;s brochure.
               </p>
             </div>
             <div className="v5-grid v5-grid-3">
