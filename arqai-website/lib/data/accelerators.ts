@@ -24,8 +24,10 @@ export type Accelerator = {
   signals: string[];
 };
 
-// Optimized Unsplash delivery. `w` controls the crop width; auto=format serves
-// AVIF/WebP, q=80 keeps it sharp but light.
+// Card artwork (`image`) is bespoke generative art in /public/v5/assets/accel —
+// one palette + motif per accelerator, no stock photography.
+// Optimized Unsplash delivery for the remaining detail-page imagery. `w`
+// controls the crop width; auto=format serves AVIF/WebP, q=80 keeps it light.
 const img = (id: string, w = 1600) =>
   `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=80`;
 
@@ -38,7 +40,7 @@ export const accelerators: Accelerator[] = [
     summary:
       "Detect billing anomalies, provider risk, claims leakage, and program-integrity signals with explainable AI built for healthcare payer workflows.",
     builtFor: "Healthcare payers, TPAs, PBMs, and program-integrity teams",
-    image: img("photo-1576091160550-2173dba999ef", 1200),
+    image: "/v5/assets/accel/arqfwa.jpg",
     heroImage: img("photo-1576091160550-2173dba999ef", 1600),
     secondaryImage: img("photo-1517120026326-d87759a7b63b", 1920),
     tertiaryImage: img("photo-1516549655169-df83a0774514", 800),
@@ -120,7 +122,7 @@ export const accelerators: Accelerator[] = [
     summary:
       "Prioritize, route, enrich, and resolve claims faster with decision support that respects policy, evidence, and human authority.",
     builtFor: "Healthcare, insurance, benefits, and claims operations",
-    image: img("photo-1554224155-1696413565d3", 1200),
+    image: "/v5/assets/accel/arqclaims.jpg",
     heroImage: img("photo-1554224155-1696413565d3", 1600),
     secondaryImage: img("photo-1521791055366-0d553872125f", 1920),
     tertiaryImage: img("photo-1619418602850-35ad20aa1700", 800),
@@ -202,7 +204,7 @@ export const accelerators: Accelerator[] = [
     summary:
       "Automate financial-crime workflows with explainable triage, customer risk context, and analyst-ready evidence.",
     builtFor: "Banks, fintechs, credit unions, and financial institutions",
-    image: img("photo-1582139329536-e7284fece509", 1200),
+    image: "/v5/assets/accel/arqbanker.jpg",
     heroImage: img("photo-1582139329536-e7284fece509", 1600),
     secondaryImage: img("photo-1592698765727-387c9464cd7f", 1920),
     tertiaryImage: img("photo-1616803140344-6682afb13cda", 800),
@@ -284,7 +286,7 @@ export const accelerators: Accelerator[] = [
     summary:
       "A modern, AI-governed loyalty engine you adopt without migration risk. It runs in parallel with your existing platform, proves its numbers match penny-for-penny every day, and only then goes live — on your timeline, one capability at a time.",
     builtFor: "Fuel & convenience, hospitality, malls, and any operator running a loyalty program",
-    image: img("photo-1481437156560-3205f6a55735", 1200),
+    image: "/v5/assets/accel/arqloyalty.jpg",
     heroImage: img("photo-1481437156560-3205f6a55735", 1600),
     secondaryImage: img("photo-1483985988355-763728e1935b", 1920),
     tertiaryImage: img("photo-1556742502-ec7c0e9f34b1", 800),
@@ -370,7 +372,7 @@ export const accelerators: Accelerator[] = [
     summary:
       "Accelerate network and service operations by turning telemetry, tickets, runbooks, and history into governed recommendations.",
     builtFor: "Telecom, managed services, enterprise IT, and operations teams",
-    image: img("photo-1558494949-ef010cbdcc31", 1200),
+    image: "/v5/assets/accel/arqtechops.jpg",
     heroImage: img("photo-1558494949-ef010cbdcc31", 1600),
     secondaryImage: img("photo-1544197150-b99a580bb7a8", 1920),
     tertiaryImage: img("photo-1506399558188-acca6f8cbf41", 800),
@@ -452,7 +454,7 @@ export const accelerators: Accelerator[] = [
     summary:
       "Monitor supplier, procurement, logistics, and operational dependency signals so teams can act before disruption becomes a business event.",
     builtFor: "Energy, manufacturing, logistics, and procurement teams",
-    image: img("photo-1494412519320-aa613dfb7738", 1200),
+    image: "/v5/assets/accel/arqlogistics.jpg",
     heroImage: img("photo-1494412519320-aa613dfb7738", 1600),
     secondaryImage: img("photo-1605745341112-85968b19335b", 1920),
     tertiaryImage: img("photo-1493946740644-2d8a1f1a6aff", 800),
@@ -534,7 +536,7 @@ export const accelerators: Accelerator[] = [
     summary:
       "Automate service workflows across ITSM, shared services, knowledge bases, and operating tools while preserving approvals and auditability.",
     builtFor: "Enterprise IT, shared services, HR ops, finance ops, and support teams",
-    image: img("photo-1497366754035-f200968a6e72", 1200),
+    image: "/v5/assets/accel/arqdesk.jpg",
     heroImage: img("photo-1497366754035-f200968a6e72", 1600),
     secondaryImage: img("photo-1556761175-4b46a572b786", 1920),
     tertiaryImage: img("photo-1531973576160-7125cd663d86", 800),
@@ -616,7 +618,7 @@ export const accelerators: Accelerator[] = [
     summary:
       "Help SecOps teams triage alerts, summarize incidents, enrich threat context, recommend response actions, and generate evidence.",
     builtFor: "Cybersecurity, SecOps, GRC, and risk teams",
-    image: img("photo-1550751827-4bd374c3f58b", 1200),
+    image: "/v5/assets/accel/arqsecops.jpg",
     heroImage: img("photo-1550751827-4bd374c3f58b", 1600),
     secondaryImage: img("photo-1526374965328-7f61d4dc18c5", 1920),
     tertiaryImage: img("photo-1510915228340-29c85a43dcfe", 800),

@@ -586,7 +586,12 @@
 .v5-accel-media { position: relative; aspect-ratio: 4 / 3.2; overflow: hidden; }
 .v5-accel-media img { width: 100%; height: 100%; object-fit: cover; transition: transform .55s ease; }
 .v5-accel-card:hover .v5-accel-media img { transform: scale(1.08); }
-.v5-accel-media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(18,24,38,0) 42%, rgba(18,24,38,0.9)); }
+.v5-accel-media::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(10,13,22,0.5), rgba(10,13,22,0) 30%); }
+.v5-accel-media::after { content: ""; position: absolute; inset: 0; z-index: 1; background:
+  radial-gradient(120% 90% at 85% 10%, rgba(208,244,57,0.10), transparent 55%),
+  linear-gradient(180deg, rgba(10,13,22,0) 34%, rgba(10,13,22,0.55) 68%, rgba(10,13,22,0.94));
+}
+.v5-accel-media img { filter: saturate(1.05); }
 .v5-accel-cat { position: absolute; top: 12px; left: 12px; z-index: 2; font-size: 11px; font-weight: 600; padding: 6px 11px; border-radius: 999px; background: rgba(0,0,0,0.42); backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,0.18); color: #fff; max-width: calc(100% - 24px); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .v5-accel-go { position: absolute; bottom: 12px; right: 12px; z-index: 2; width: 36px; height: 36px; border-radius: 50%; background: var(--v5-lime); color: var(--v5-ink); display: inline-flex; align-items: center; justify-content: center; transform: translateY(8px) scale(0.85); opacity: 0; transition: transform .25s ease, opacity .25s ease; }
 .v5-accel-card:hover .v5-accel-go { transform: translateY(0) scale(1); opacity: 1; }
@@ -818,7 +823,10 @@
 
 /* accelerator cover (image bg + name overlay) */
 .v5-acc-cover { position: relative; aspect-ratio: 16 / 10; background-size: cover; background-position: center; display: flex; align-items: flex-end; padding: 18px; }
-.v5-acc-cover::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10,12,30,0.05) 30%, rgba(10,12,30,0.72)); }
+.v5-acc-cover::after { content: ""; position: absolute; inset: 0; background:
+  radial-gradient(120% 90% at 85% 8%, rgba(208,244,57,0.10), transparent 55%),
+  linear-gradient(180deg, rgba(10,12,30,0.12) 26%, rgba(10,12,30,0.5) 62%, rgba(10,12,30,0.88));
+}
 .v5-acc-cover .v5-acc-name { position: relative; z-index: 1; font-family: var(--v5-display); font-weight: 600; font-size: 26px; color: #fff; letter-spacing: -0.01em; }
 .v5-acc-cover .v5-svc-num { top: 14px; left: auto; right: 14px; }
 
