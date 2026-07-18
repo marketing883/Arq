@@ -32,12 +32,12 @@ export function generateMetadata({ params }: AcceleratorPageProps): Metadata {
 
   if (!accelerator) {
     return {
-      title: "Accelerator Not Found | ArqAI Labs",
+      title: "Accelerator Not Found",
     };
   }
 
   return {
-    title: `${accelerator.name} | ArqAI Labs Accelerators`,
+    title: `${accelerator.name} — ${accelerator.category}`,
     description: accelerator.summary,
     alternates: { canonical: `https://thearq.ai/accelerators/${accelerator.id}` },
     openGraph: {

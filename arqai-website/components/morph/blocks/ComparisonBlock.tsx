@@ -237,7 +237,7 @@ export function ComparisonBlock({ customizations }: ComparisonBlockProps) {
           Want to see these capabilities in action?
         </p>
         <a
-          href="/demo"
+          href="/engage-us"
           className="inline-flex items-center gap-2 px-6 py-3 bg-[#0432a5] text-white rounded-lg font-semibold hover:opacity-90 transition-colors"
         >
           Get Started

@@ -580,7 +580,7 @@ export const ALERT_RULES: AlertRule[] = [
       !!profile.canonical_email &&
       !!event &&
       event.source === "page_view" &&
-      (event.page_url?.includes("/demo") || false),
+      (event.page_url?.includes("/demo") || event.page_url?.includes("/engage-us") || false),
     getMessage: (profile) =>
       `${profile.canonical_email} visited demo page - high intent`,
     getSuggestedAction: () => "Send personalized demo scheduling link",

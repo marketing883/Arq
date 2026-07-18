@@ -7,7 +7,7 @@ import { ArrowRight } from "@/components/home-v5/icons";
 import { services } from "@/lib/data/services";
 
 export const metadata: Metadata = {
-  title: "Services | ArqAI Labs",
+  title: "AI Services: Strategy, Buildout, Governance & Managed Operations",
   description:
     "Service lines for production AI workflows: strategy, agentic buildout, integration, governance, vertical acceleration, and managed AI operations.",
   alternates: { canonical: "https://thearq.ai/services" },

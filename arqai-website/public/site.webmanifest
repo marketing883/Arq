@@ -1,11 +1,11 @@
 {
-  "name": "ArqAI - Enterprise AI Governance Platform",
-  "short_name": "ArqAI",
-  "description": "Build, run, and govern your AI workforce with confidence",
+  "name": "ArqAI Labs - Operational AI for Enterprise",
+  "short_name": "ArqAI Labs",
+  "description": "ArqAI Labs designs, builds, deploys, and runs production AI workflows for enterprise operations.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#0033A0",
+  "background_color": "#08080B",
+  "theme_color": "#08080B",
   "icons": [
     {
       "src": "/img/favicon/android-icon-192.png",

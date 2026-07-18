@@ -39,7 +39,7 @@ export const FEATURES = {
   heading: "We Make Operational AI work inside your enterprise",
   seeAllImage: `${A}/seeall-abstract.jpg`,
   sub: "Experience how our AI-powered features simplify workflows, automate routine tasks, and help your team achieve more—so you can focus on growing your business.",
-  cta: { label: "See All Services", href: "/about" },
+  cta: { label: "See All Services", href: "/services" },
   cards: [
     {
       kind: "chat",
@@ -276,7 +276,7 @@ export const CONTACT = {
     role: "Founder & CEO of ArqAI Labs",
     avatar: `${A}/8KKNOMGpz3fVUEZDOXTVXjXkICU.jpg`,
   },
-  cta: { label: "Get Started Now", href: "/demo" },
+  cta: { label: "Get Started Now", href: "/engage-us" },
 };
 
 export const FOOTER = {

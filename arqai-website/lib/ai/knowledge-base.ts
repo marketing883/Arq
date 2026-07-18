@@ -218,7 +218,6 @@ export const PAGE_CONTEXT_PROMPTS: Record<string, string> = {
   "/engage-us": "The user is on the Get Started form. They are ready to act. Help them complete it. A senior on the team will follow up within one business day.",
   "/contact": "The user is on Contact. Route them: engagements/demos -> /engage-us, partnerships -> /partners, press and analyst inquiries -> the contact form, careers -> /careers.",
   "/partners": "The user is on Partners. Help technology alliances, implementation partners, and design partners explain the customer problem and partnership fit before sending the partner intake.",
-  "/demo": "The user is on Book a Demo — the workflow-scoping form (same form as /engage-us). Help them complete it; a senior follows up within one business day.",
   // Legacy paths (still served via redirects, but if any direct hit lands here):
   "/solutions": "Legacy path that now redirects to /industries. If the user lands here, treat as /industries.",
   "/services": "The user is on Services. Help them understand which service line fits the workflow: strategy, buildout, integration, governance, vertical acceleration, or managed AI operations.",
@@ -241,6 +240,5 @@ export const GREETING_MESSAGES: Record<string, string> = {
   "/trust": "Hi. Want me to share the trust posture or pull a control document under NDA?",
   "/about": "Hi. Want to know more about the team or our partnership with ACI Infotech?",
   "/engage-us": "Hi. Tell us what your operation needs and we will tell you what is honestly possible.",
-  "/demo": "Hi. A few structured answers about the workflow and a senior on our team will follow up within one business day. Want help framing it?",
   default: "Hi. ArqAI Labs is an AI engineering studio. What workflow are you trying to get better?",
 };

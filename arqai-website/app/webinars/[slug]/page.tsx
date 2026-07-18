@@ -61,11 +61,11 @@ export async function generateMetadata({ params }: WebinarPageProps): Promise<Me
   const webinar = await getWebinar(params.slug);
 
   if (!webinar) {
-    return { title: "Webinar Not Found | ArqAI Labs" };
+    return { title: "Webinar Not Found" };
   }
 
   return {
-    title: `${webinar.title} | ArqAI Labs Webinars`,
+    title: `${webinar.title} — Webinar`,
     description: webinar.description,
     alternates: { canonical: `https://thearq.ai/webinars/${params.slug}` },
     openGraph: {

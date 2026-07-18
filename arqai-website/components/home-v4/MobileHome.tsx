@@ -13,7 +13,7 @@ export default function MobileHome() {
           We design, build, deploy, and run agentic AI for operations that don&apos;t fit off-the-shelf. Engineering team, not a consulting practice.
         </p>
 
-        <Link href="/demo" className="v4m-cta">Engage us</Link>
+        <Link href="/engage-us" className="v4m-cta">Engage us</Link>
         <Link href="/contact" className="v4m-cta-ghost">Talk to us</Link>
 
         <div className="v4m-section-label">Accelerators</div>
@@ -40,7 +40,7 @@ export default function MobileHome() {
           </Link>
         ))}
 
-        <Link href="/demo" className="v4m-cta" style={{ marginTop: 36 }}>
+        <Link href="/engage-us" className="v4m-cta" style={{ marginTop: 36 }}>
           Bring your workflow
         </Link>
       </div>

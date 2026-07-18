@@ -6,7 +6,7 @@ import { ArrowRight, ArrowUpRight } from "@/components/home-v5/icons";
 import { accelerators } from "@/lib/data/accelerators";
 
 export const metadata: Metadata = {
-  title: "AI Accelerators | ArqAI Labs",
+  title: "AI Accelerators for Enterprise Operations",
   description:
     "Productized AI accelerator patterns for payer operations, claims, financial crime, loyalty, network operations, service workflows, supply chain, and security operations.",
   alternates: { canonical: "https://thearq.ai/accelerators" },

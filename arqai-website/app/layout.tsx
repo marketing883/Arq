@@ -71,11 +71,14 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: "/favicon.ico",
-    shortcut: "/favicon-16x16.png",
-    apple: "/apple-touch-icon.png",
+    shortcut: "/favicon.ico",
+    apple: "/img/favicon/apple-touch-icon.png",
   },
   manifest: "/site.webmanifest",
   metadataBase: new URL("https://thearq.ai"),
+  verification: {
+    google: "XOs-V3gSvkOFaXMEK9fgLgQRdO2pzGsySaK10Ymi0a8",
+  },
 };
 
 export const viewport: Viewport = {

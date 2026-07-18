@@ -3,6 +3,10 @@ import { MetadataRoute } from "next";
 export default function robots(): MetadataRoute.Robots {
   const baseUrl = "https://thearq.ai";
 
+  // AI/answer-engine crawlers get the same full access as search bots —
+  // the blog, case studies, and resource library are citation targets.
+  const aiCrawlers = ["GPTBot", "ChatGPT-User", "Anthropic-AI", "Claude-Web", "PerplexityBot"];
+
   return {
     rules: [
       {
@@ -10,26 +14,11 @@ export default function robots(): MetadataRoute.Robots {
         allow: "/",
         disallow: ["/admin/", "/api/"],
       },
-      {
-        userAgent: "GPTBot",
-        allow: ["/", "/platform", "/solutions", "/demo"],
+      ...aiCrawlers.map((userAgent) => ({
+        userAgent,
+        allow: "/",
         disallow: ["/admin/", "/api/"],
-      },
-      {
-        userAgent: "ChatGPT-User",
-        allow: ["/", "/platform", "/solutions", "/demo"],
-        disallow: ["/admin/", "/api/"],
-      },
-      {
-        userAgent: "Anthropic-AI",
-        allow: ["/", "/platform", "/solutions", "/demo"],
-        disallow: ["/admin/", "/api/"],
-      },
-      {
-        userAgent: "Claude-Web",
-        allow: ["/", "/platform", "/solutions", "/demo"],
-        disallow: ["/admin/", "/api/"],
-      },
+      })),
     ],
     sitemap: `${baseUrl}/sitemap.xml`,
   };

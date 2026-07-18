@@ -6,7 +6,7 @@ import V5CtaSection from "@/components/home-v5/V5CtaSection";
 import { ArrowRight, ArrowUpRight } from "@/components/home-v5/icons";
 
 export const metadata: Metadata = {
-  title: "Industries | ArqAI Labs",
+  title: "Industries: AI for Healthcare Payers, Banking, Insurance, Retail & Manufacturing",
   description:
     "AI workflow systems for healthcare payers, insurance carriers, banking, retail, and manufacturing teams operating in high-stakes, data-rich environments.",
   alternates: { canonical: "https://thearq.ai/industries" },

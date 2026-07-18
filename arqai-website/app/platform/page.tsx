@@ -6,7 +6,7 @@ import V5CtaSection from "@/components/home-v5/V5CtaSection";
 import { ArrowRight, ArrowUpRight } from "@/components/home-v5/icons";
 
 export const metadata: Metadata = {
-  title: "Platform | ArqAI Labs",
+  title: "Platform: The Operating Fabric for Production AI",
   description:
     "The ArqAI Operating Fabric turns models into governed workflow execution across orchestration, integrations, evidence, controls, and managed AI operations.",
   alternates: { canonical: "https://thearq.ai/platform" },

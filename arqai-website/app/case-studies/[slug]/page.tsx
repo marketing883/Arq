@@ -20,21 +20,21 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const supabase = getSupabase();
 
   if (!supabase) {
-    return { title: "Case Study | ArqAI" };
+    return { title: "Case Study" };
   }
 
   const { data: caseStudy } = await supabase
     .from("case_studies")
-    .select("title, overview, industry, client_name, featured_image")
+    .select("title, overview, industry, client_name, hero_image")
     .eq("slug", slug)
     .eq("status", "published")
     .single();
 
   if (!caseStudy) {
-    return { title: "Case Study Not Found | ArqAI" };
+    return { title: "Case Study Not Found" };
   }
 
-  const title = `${caseStudy.title} | ArqAI Case Study`;
+  const title = `${caseStudy.title} — Case Study`;
   const description = caseStudy.overview || `See how ${caseStudy.client_name || "our client"} in ${caseStudy.industry} transformed their operations with ArqAI's governed AI solutions.`;
 
   return {
@@ -45,13 +45,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       description,
       type: "article",
       url: `https://thearq.ai/case-studies/${slug}`,
-      images: caseStudy.featured_image ? [{ url: caseStudy.featured_image, alt: caseStudy.title }] : [],
+      images: caseStudy.hero_image ? [{ url: caseStudy.hero_image, alt: caseStudy.title }] : [],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: caseStudy.featured_image ? [caseStudy.featured_image] : [],
+      images: caseStudy.hero_image ? [caseStudy.hero_image] : [],
       site: "@The_ArqAI",
       creator: "@The_ArqAI",
     },

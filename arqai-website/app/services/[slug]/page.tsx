@@ -29,10 +29,10 @@ export function generateStaticParams() {
 export function generateMetadata({ params }: ServicePageProps): Metadata {
   const service = getService(params.slug);
   if (!service) {
-    return { title: "Service Not Found | ArqAI Labs" };
+    return { title: "Service Not Found" };
   }
   return {
-    title: `${service.title} | ArqAI Labs`,
+    title: service.title,
     description: service.summary,
     alternates: { canonical: `https://thearq.ai/services/${service.slug}` },
     openGraph: {
@@ -115,7 +115,7 @@ export default function ServiceDetailPage({ params }: ServicePageProps) {
             <h1 className="v5-h1">{service.title}</h1>
             <p className="v5-lead">{service.summary}</p>
             <div className="v5-hero-actions">
-              <Link href="/demo" className="v5-btn v5-btn-primary">
+              <Link href="/engage-us" className="v5-btn v5-btn-primary">
                 Get Started <ArrowRight />
               </Link>
               <Link
@@ -187,7 +187,7 @@ export default function ServiceDetailPage({ params }: ServicePageProps) {
             <span className="v5-card-eyebrow" style={{ color: "var(--v5-lime)" }}>Built for production</span>
             <h2 className="v5-h2" style={{ marginTop: 10 }}>{service.promise}</h2>
             <div className="v5-cta-card-actions" style={{ justifyContent: "flex-start", marginTop: 24 }}>
-              <Link href="/demo" className="v5-btn v5-btn-primary">
+              <Link href="/engage-us" className="v5-btn v5-btn-primary">
                 Get Started <ArrowRight />
               </Link>
             </div>
@@ -346,7 +346,7 @@ export default function ServiceDetailPage({ params }: ServicePageProps) {
             <h2 className="v5-h2">{service.cta.heading}</h2>
             <p className="v5-lead">{service.cta.body}</p>
             <div className="v5-cta-card-actions">
-              <Link href="/demo" className="v5-btn v5-btn-primary">
+              <Link href="/engage-us" className="v5-btn v5-btn-primary">
                 Get Started <ArrowRight />
               </Link>
               <Link href="/services" className="v5-btn v5-btn-ghost">

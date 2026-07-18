@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
 
 export const metadata: Metadata = {
-  title: "Terms of Service | ArqAI",
+  title: "Terms of Service",
   description: "ArqAI Terms of Service - Terms and conditions for using our platform.",
   alternates: { canonical: "https://thearq.ai/terms" },
 };

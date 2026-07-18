@@ -513,9 +513,9 @@ export async function wirePageViewEvent(
 
     // Detect signals from page type
     const pageSignals: ScoredSignal[] = [];
-    if (data.pageUrl.includes("/demo") || data.pageUrl.includes("/pricing")) {
+    if (data.pageUrl.includes("/demo") || data.pageUrl.includes("/engage-us") || data.pageUrl.includes("/pricing")) {
       pageSignals.push({
-        type: data.pageUrl.includes("/demo") ? "demo_interest" : "pricing_interest",
+        type: data.pageUrl.includes("/pricing") ? "pricing_interest" : "demo_interest",
         category: "purchase_intent",
         raw_weight: 15,
         confidence: 0.8,

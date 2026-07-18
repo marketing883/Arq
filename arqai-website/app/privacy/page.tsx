@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | ArqAI",
+  title: "Privacy Policy",
   description: "ArqAI Privacy Policy - How we collect, use, and protect your data.",
   alternates: { canonical: "https://thearq.ai/privacy" },
 };

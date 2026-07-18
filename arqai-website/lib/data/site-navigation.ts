@@ -315,5 +315,4 @@ export const coreStaticPaths = [
   "/whitepapers",
   "/webinars",
   "/engage-us",
-  "/demo",
 ];

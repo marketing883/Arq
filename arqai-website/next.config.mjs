@@ -144,11 +144,29 @@ const nextConfig = {
       // v3 IA: how-it-works renamed to how-we-work; the engineering deep-dive
       // remains accessible at /how-it-works for product-page deep-links.
       // No redirect on /how-it-works -- both are valid routes.
+      // /demo and /engage-us were byte-identical duplicate pages, both
+      // indexed. /engage-us is the canonical conversion page; query strings
+      // (industry/accelerator preselects) are preserved by Next automatically.
+      {
+        source: "/demo",
+        destination: "/engage-us",
+        permanent: true,
+      },
       // Legacy static site: /about-us.html is gone, still indexed. Consolidate
       // into the current page instead of leaving a dead result.
       {
         source: "/about-us.html",
         destination: "/about",
+        permanent: true,
+      },
+      {
+        source: "/contact.html",
+        destination: "/contact",
+        permanent: true,
+      },
+      {
+        source: "/index.html",
+        destination: "/",
         permanent: true,
       },
       // Consolidate the www host onto the apex domain -- both currently serve

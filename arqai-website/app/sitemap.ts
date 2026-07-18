@@ -21,6 +21,9 @@ function getSupabase() {
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://thearq.ai";
   const currentDate = new Date().toISOString();
+  // Static pages get NO lastModified: stamping the revalidation time on every
+  // entry teaches crawlers the field is meaningless. Real dates flow through
+  // for CMS content below.
   const industryPaths = ["/industries", ...industryLinks.map((industry) => industry.href)];
 
   const corePriority = (path: string) => {
@@ -33,21 +36,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Core pages with high priority
   const corePages: MetadataRoute.Sitemap = coreStaticPaths.map((path) => ({
     url: path === "/" ? baseUrl : `${baseUrl}${path}`,
-    lastModified: currentDate,
     changeFrequency: path === "/blog" ? "daily" : "weekly",
     priority: corePriority(path),
   }));
 
   const servicePages: MetadataRoute.Sitemap = services.map((service) => ({
     url: `${baseUrl}/services/${service.slug}`,
-    lastModified: currentDate,
     changeFrequency: "monthly",
     priority: 0.8,
   }));
 
   const acceleratorPages: MetadataRoute.Sitemap = accelerators.map((accelerator) => ({
     url: `${baseUrl}/accelerators/${accelerator.id}`,
-    lastModified: currentDate,
     changeFrequency: "monthly",
     priority: 0.8,
   }));
@@ -56,8 +56,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     .filter((path) => !coreStaticPaths.includes(path))
     .map((path) => ({
       url: `${baseUrl}${path}`,
-      lastModified: currentDate,
-      changeFrequency: "monthly",
+        changeFrequency: "monthly",
       priority: path === "/industries" ? 0.8 : 0.7,
     }));
 
@@ -65,14 +64,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const legalPages: MetadataRoute.Sitemap = [
     {
       url: `${baseUrl}/privacy`,
-      lastModified: currentDate,
-      changeFrequency: "monthly",
+        changeFrequency: "monthly",
       priority: 0.3,
     },
     {
       url: `${baseUrl}/terms`,
-      lastModified: currentDate,
-      changeFrequency: "monthly",
+        changeFrequency: "monthly",
       priority: 0.3,
     },
   ];

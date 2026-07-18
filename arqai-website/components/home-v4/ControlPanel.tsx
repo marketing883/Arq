@@ -343,7 +343,7 @@ function ResultModal({ result, config, onClose }: ModalProps) {
         </div>
 
         <div className="v4-modal-actions">
-          <Link href={`/demo?${query}`} className="a-btn a-btn-primary">
+          <Link href={`/engage-us?${query}`} className="a-btn a-btn-primary">
             Take this to a call
           </Link>
           {result.kind === "accelerator" && (
@@ -398,7 +398,7 @@ export default function ControlPanel() {
 
   const takeToCall = () => {
     const query = configToQuery(config);
-    window.location.href = `/demo?${query}`;
+    window.location.href = `/engage-us?${query}`;
   };
 
   return (

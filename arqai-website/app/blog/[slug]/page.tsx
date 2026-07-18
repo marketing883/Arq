@@ -43,10 +43,10 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const post = await getPost(params.slug);
   if (!post) {
-    return { title: "Post Not Found | ArqAI Labs" };
+    return { title: "Post Not Found" };
   }
 
-  const title = `${post.title} | ArqAI Labs`;
+  const title = post.title;
   const description = post.excerpt || `${post.title} — insights on operational AI from ArqAI Labs.`;
   const canonical = `https://thearq.ai/blog/${post.slug}`;
 

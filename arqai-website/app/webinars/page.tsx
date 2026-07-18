@@ -5,7 +5,7 @@ import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
 import { ArrowRight } from "@/components/home-v5/icons";
 
 export const metadata: Metadata = {
-  title: "Webinars | ArqAI Labs",
+  title: "Webinars",
   description:
     "Live and on-demand sessions for teams moving from AI pilots to governed enterprise workflows.",
   alternates: { canonical: "https://thearq.ai/webinars" },

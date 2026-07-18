@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "ArqAI Labs · v4 preview",
   description:
     "Configure your operation. We resolve the fit. A control-panel preview of how ArqAI Labs services and accelerators map to your workflow.",
+  robots: { index: false, follow: false },
 };
 
 function isMobileUA(ua: string): boolean {

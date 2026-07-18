@@ -207,7 +207,7 @@ export default function V5Nav() {
           </ul>
 
           <div className="v5-nav-cta">
-            <a href="/demo" className="v5-nav-demo">Book a Demo</a>
+            <a href="/engage-us" className="v5-nav-demo">Book a Demo</a>
             <button
               type="button"
               className="v5-nav-burger"
@@ -280,7 +280,7 @@ export default function V5Nav() {
             </div>
           );
         })}
-        <a href="/demo" className="v5-cta" onClick={closeMobile} style={{ marginTop: 10 }}>
+        <a href="/engage-us" className="v5-cta" onClick={closeMobile} style={{ marginTop: 10 }}>
           Book a Demo
         </a>
       </div>

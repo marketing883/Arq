@@ -135,7 +135,7 @@ function ThankYouContent() {
 
               <div className="v5-card" style={{ marginTop: 24 }}>
                 <h3 className="v5-h3">What&apos;s Next?</h3>
-                <Link href="/demo" className="v5-card-more" style={{ marginTop: 12 }}>
+                <Link href="/engage-us" className="v5-card-more" style={{ marginTop: 12 }}>
                   Get Started — See ArqAI in action <ArrowRight />
                 </Link>
               </div>

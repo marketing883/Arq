@@ -5,7 +5,7 @@ import V5CtaSection from "@/components/home-v5/V5CtaSection";
 import { ArrowRight } from "@/components/home-v5/icons";
 
 export const metadata: Metadata = {
-  title: "Resources | ArqAI Labs",
+  title: "Resources",
   description:
     "ArqAI Labs resources for enterprise AI leaders: blogs, case studies, whitepapers, webinars, and trust material for production AI workflows.",
   alternates: { canonical: "https://thearq.ai/resources" },
