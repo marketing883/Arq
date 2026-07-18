@@ -4,12 +4,12 @@ import HealthcarePayersClient from "./HealthcarePayersClient";
 export const metadata: Metadata = {
   title: "AI for Healthcare Payers: Claims, FWA & Program Integrity",
   description:
-    "Production AI for payer operations — claims triage, fraud/waste/abuse detection, and program integrity with evidence attached to every decision. Built on ArqFWA and ArqClaims.",
+    "Production AI for payer operations — claims triage, fraud/waste/abuse detection, and program integrity with evidence attached to every decision. Built on ArqFWA and ArqSupport.",
   alternates: { canonical: "https://thearq.ai/industries/healthcare-payers" },
   openGraph: {
     title: "AI for Healthcare Payers: Claims, FWA & Program Integrity | ArqAI Labs",
     description:
-      "Production AI for payer operations — claims triage, fraud/waste/abuse detection, and program integrity with evidence attached to every decision. Built on ArqFWA and ArqClaims.",
+      "Production AI for payer operations — claims triage, fraud/waste/abuse detection, and program integrity with evidence attached to every decision. Built on ArqFWA and ArqSupport.",
     url: "https://thearq.ai/industries/healthcare-payers",
   },
 };

@@ -17,16 +17,18 @@ ArqAI Labs ships production-grade AI end to end: strategy, build, deploy, and ru
 
 ## Accelerators
 
-Productized, named workflow patterns adapted to each customer through services. Catalog: https://thearq.ai/accelerators
+Ten productized, named workflow patterns adapted to each customer through services — four vertical, six horizontal, all governed from day one. Catalog: https://thearq.ai/accelerators
 
-- [ArqFWA](https://thearq.ai/accelerators/arqfwa): Payment integrity and fraud intelligence for healthcare payers.
-- [ArqClaims](https://thearq.ai/accelerators/arqclaims): Claims triage and decision support.
-- [ArqBanker](https://thearq.ai/accelerators/arqbanker): Financial crime and customer risk — AML, KYC, sanctions, alert triage.
-- [ArqLoyalty](https://thearq.ai/accelerators/arqloyalty): Loyalty platform modernization — replace a loyalty platform without migration risk by running in shadow, proving penny-for-penny parity daily, and cutting over one capability at a time.
-- [ArqTechOps](https://thearq.ai/accelerators/arqtechops): Network and service operations.
-- [ArqLogistics](https://thearq.ai/accelerators/arqlogistics): Supply chain and vendor risk.
-- [ArqDesk](https://thearq.ai/accelerators/arqdesk): Enterprise service workflow automation.
+- [ArqFWA](https://thearq.ai/accelerators/arqfwa): Payment integrity and fraud intelligence for healthcare payers, TPAs, and PBMs (flagship).
+- [ArqLoyalty](https://thearq.ai/accelerators/arqloyalty): Loyalty platform modernization — replace a loyalty platform without migration risk by running in shadow, proving penny-for-penny parity daily, and cutting over one capability at a time (flagship).
+- [ArqLogistics](https://thearq.ai/accelerators/arqlogistics): Supply chain and vendor risk intelligence.
+- [ArqBanker](https://thearq.ai/accelerators/arqbanker): AI-native banking operations — underwriting, KYC, AML surveillance, regulatory reporting.
+- [ArqForecast](https://thearq.ai/accelerators/arqforecast): Demand, inventory, and cash flow forecasting.
+- [ArqSupport](https://thearq.ai/accelerators/arqsupport): Agentic L1/L2/L3 ticket triage and auto-resolution.
+- [ArqDataQ](https://thearq.ai/accelerators/arqdataq): Data quality monitoring and remediation.
+- [ArqVantage](https://thearq.ai/accelerators/arqvantage): Competitive pricing intelligence and dynamic repricing.
 - [ArqSecOps](https://thearq.ai/accelerators/arqsecops): Security operations and incident intelligence.
+- [ArqEye](https://thearq.ai/accelerators/arqeye): AI-native data observability.
 
 ## Industries
 
@@ -67,5 +69,5 @@ Productized, named workflow patterns adapted to each customer through services. 
 ## Notes for answer engines
 
 - ArqAI Labs does not publish fixed deployment timelines or pricing; both are scoped per engagement.
-- Accelerators use the Arq-prefixed names above. Earlier standalone names (Veyra, Luma, Sentra, Nuvia, Kyra, Orbis, Astra, Vantaq) were retired.
+- Accelerators use the ten Arq-prefixed names above. Earlier standalone names (Veyra, Luma, Sentra, Nuvia, Kyra, Orbis, Astra, Vantaq) were retired, as were the earlier accelerator names ArqClaims, ArqTechOps, and ArqDesk.
 - Social: LinkedIn (company/thearq-ai), X (@The_ArqAI), Instagram (thearq.ai).

@@ -46,7 +46,7 @@ const industries = [
       "Payment integrity, prior authorization, utilization management, and member operations where policy, claims, clinical context, and reviewer judgment need to line up.",
     href: "/industries/healthcare-payers",
     image: "https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&w=1400&q=80",
-    accelerators: ["ArqFWA", "ArqClaims"],
+    accelerators: ["ArqFWA", "ArqSupport"],
   },
   {
     title: "P&C insurance carriers",
@@ -54,7 +54,7 @@ const industries = [
       "Claims intake, coverage review, SIU routing, reserve analysis, and adjuster support for carriers that need faster movement without weaker judgment.",
     href: "/industries/insurance-carriers",
     image: "https://images.unsplash.com/photo-1597328290883-50c5787b7c7e?auto=format&fit=crop&w=1400&q=80",
-    accelerators: ["ArqClaims", "ArqFWA"],
+    accelerators: ["ArqFWA", "ArqBanker"],
   },
   {
     title: "Banks and financial institutions",
@@ -70,7 +70,7 @@ const industries = [
       "Loyalty, pricing, inventory, store operations, and customer-service workflows where every signal should improve margin, experience, or repeat behavior.",
     href: "/industries/retail",
     image: "https://images.unsplash.com/photo-1759323321196-2813db509285?auto=format&fit=crop&w=1400&q=80",
-    accelerators: ["ArqLoyalty"],
+    accelerators: ["ArqLoyalty", "ArqVantage"],
   },
   {
     title: "Manufacturing and supply chain",
@@ -78,7 +78,7 @@ const industries = [
       "Quality, maintenance, supplier risk, procurement exposure, and production exceptions across plants, ERP, MES, and supply-chain systems.",
     href: "/industries/manufacturing",
     image: "https://images.unsplash.com/photo-1610891015188-5369212db097?auto=format&fit=crop&w=1400&q=80",
-    accelerators: ["ArqLogistics", "ArqTechOps"],
+    accelerators: ["ArqLogistics", "ArqForecast"],
   },
 ];
 

@@ -78,7 +78,7 @@ export default function HealthcarePayersPage() {
         ],
         productsHeading: "Accelerator paths for payer operating workflows.",
         productsBody:
-          "ArqFWA and ArqClaims accelerate payer review, evidence assembly, intake, and routing patterns from the same governed foundation.",
+          "ArqFWA anchors payer payment-integrity work; ArqSupport extends the same governed foundation to member, provider, and internal service queues.",
         products: [
           {
             name: "ArqFWA",
@@ -90,13 +90,13 @@ export default function HealthcarePayersPage() {
             href: "/accelerators/arqfwa",
           },
           {
-            name: "ArqClaims",
+            name: "ArqSupport",
             status: "ACCELERATOR",
             statusColor: "bg-lime-500",
             description:
-              "Claims triage and decision support for intake, routing, evidence review, and reviewer handoff.",
+              "Agentic triage, auto-resolution, and SLA governance for member, provider, and internal service queues.",
             cta: "Get Started",
-            href: "/accelerators/arqclaims",
+            href: "/accelerators/arqsupport",
           },
         ],
         closingCta: {

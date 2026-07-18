@@ -120,6 +120,28 @@ const nextConfig = {
         destination: "/",
         permanent: true,
       },
+      // v6 promoted to the main homepage
+      {
+        source: "/v6",
+        destination: "/",
+        permanent: true,
+      },
+      // Retired accelerators (portfolio consolidated to the canonical ten)
+      {
+        source: "/accelerators/arqclaims",
+        destination: "/accelerators/arqfwa",
+        permanent: true,
+      },
+      {
+        source: "/accelerators/arqtechops",
+        destination: "/accelerators/arqsupport",
+        permanent: true,
+      },
+      {
+        source: "/accelerators/arqdesk",
+        destination: "/accelerators/arqsupport",
+        permanent: true,
+      },
       {
         source: "/agents",
         destination: "/accelerators",
@@ -191,13 +213,13 @@ const nextConfig = {
       // Arq-prefixed names. Keep any indexed/shared links working.
       ...[
         ["veyra", "arqfwa"],
-        ["luma", "arqclaims"],
+        ["luma", "arqfwa"],
         ["sentra", "arqbanker"],
         ["nuvia", "arqloyalty"],
         ["arqretail", "arqloyalty"],
-        ["kyra", "arqtechops"],
+        ["kyra", "arqsupport"],
         ["orbis", "arqlogistics"],
-        ["astra", "arqdesk"],
+        ["astra", "arqsupport"],
         ["vantaq", "arqsecops"],
       ].map(([oldSlug, newSlug]) => ({
         source: `/accelerators/${oldSlug}`,

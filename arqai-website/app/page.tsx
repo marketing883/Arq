@@ -1,41 +1,40 @@
 import type { Metadata } from "next";
-import V5Nav from "@/components/home-v5/V5Nav";
-import Hero from "@/components/home-v5/Hero";
-import Features from "@/components/home-v5/Features";
-import Accelerators from "@/components/home-v5/Accelerators";
-import WhyChooseUs from "@/components/home-v5/WhyChooseUs";
-import Workflow from "@/components/home-v5/Workflow";
-import Integration from "@/components/home-v5/Integration";
-import ProofSpotlight from "@/components/home-v5/ProofSpotlight";
-import FAQ from "@/components/home-v5/FAQ";
-import Blogs from "@/components/home-v5/Blogs";
-import Contact from "@/components/home-v5/Contact";
-import Footer from "@/components/home-v5/Footer";
-import { FAQ as FAQ_DATA, HERO_POSTER, HERO_VIDEO } from "@/components/home-v5/content";
+import V6Nav from "@/components/v6/V6Nav";
+import ForwardDeployed from "@/components/v6/ForwardDeployed";
+import ProofBand from "@/components/v6/ProofBand";
+import AcceleratorShowcase from "@/components/v6/AcceleratorShowcase";
+import CaseStudies from "@/components/v6/CaseStudies";
+import Insights from "@/components/v6/Insights";
+import FaqSection from "@/components/v6/FaqSection";
+import { FAQS } from "@/components/v6/faqs";
+import ClosingCta from "@/components/v6/ClosingCta";
+import V6Footer from "@/components/v6/V6Footer";
+import { LandingAccordionItem } from "@/components/ui/interactive-image-accordion";
 import { accelerators } from "@/lib/data/accelerators";
-import "@/components/home-v5/styles.css";
+import "@/components/v6/v6.css";
 
 const SITE_URL = "https://thearq.ai";
-const PAGE_TITLE =
-  "Operational AI for enterprise — designed, deployed, and run by ArqAI Labs";
+const PAGE_TITLE = "Forward-Deployed AI Engineering, at Scale — ArqAI Labs";
 const PAGE_DESC =
-  "ArqAI Labs is the operational AI partner for mid-market and enterprise teams in healthcare, banking, insurance, retail, and manufacturing. We design, build, deploy, and run production AI agents — with governance attached to every action.";
+  "ArqAI Labs embeds forward-deployed AI engineers in your operation — designing, building, deploying, and running production AI agents for regulated enterprises, with audit-ready proof on every agent action.";
 
 export const metadata: Metadata = {
-  title: PAGE_TITLE,
+  // Absolute: the brand is already in the title, so skip the layout template.
+  title: { absolute: PAGE_TITLE },
   description: PAGE_DESC,
   alternates: { canonical: SITE_URL },
   keywords: [
-    "operational AI",
+    "forward-deployed AI engineering",
+    "forward deployed engineers",
     "production AI for enterprise",
+    "AI accelerators",
     "AI agents for healthcare payers",
     "AI agents for banking",
     "AI agents for insurance carriers",
     "AI workflow automation",
-    "agentic AI platform",
-    "AI accelerators",
+    "agentic AI",
     "AI governance and compliance",
-    "managed AI operations",
+    "AI for regulated enterprises",
     "ArqAI Labs",
   ],
   openGraph: {
@@ -67,7 +66,7 @@ export const metadata: Metadata = {
   },
 };
 
-// Cache the rendered page; Blogs.tsx revalidates from Supabase periodically.
+// Case studies and insights revalidate from the CMS periodically.
 export const revalidate = 300;
 
 function StructuredData() {
@@ -82,7 +81,7 @@ function StructuredData() {
     url: SITE_URL,
     logo: `${SITE_URL}/v5/assets/FEFrVVQtPUn7XSci8TiM5lb74o.png`,
     description:
-      "ArqAI Labs designs, builds, deploys, and runs production AI workflows for enterprise operations across healthcare, banking, insurance, retail, and manufacturing.",
+      "ArqAI Labs embeds forward-deployed AI engineers in enterprise operations — designing, building, deploying, and running production AI workflows across healthcare, banking, insurance, retail, and manufacturing.",
     foundingDate: "2024",
     sameAs: [
       "https://www.linkedin.com/company/thearq-ai",
@@ -90,6 +89,7 @@ function StructuredData() {
       "https://www.instagram.com/thearq.ai",
     ],
     knowsAbout: [
+      "Forward-deployed AI engineering",
       "Operational AI",
       "Agentic AI",
       "AI governance",
@@ -142,7 +142,7 @@ function StructuredData() {
 
   const offerCatalog = {
     "@type": "OfferCatalog",
-    name: "Operational AI Services",
+    name: "Forward-Deployed AI Engineering Services",
     itemListElement: services.map((s) => ({
       "@type": "Offer",
       itemOffered: {
@@ -159,7 +159,7 @@ function StructuredData() {
     "@id": `${SITE_URL}#accelerators`,
     name: "ArqAI Accelerators",
     description:
-      "Production-ready, vertical-tuned AI accelerators that shorten discovery and de-risk enterprise AI delivery.",
+      "Ten production-ready, governed AI accelerators — four vertical, six horizontal — that shorten discovery and de-risk enterprise AI delivery.",
     numberOfItems: accelerators.length,
     itemListElement: accelerators.map((a, i) => ({
       "@type": "ListItem",
@@ -176,10 +176,12 @@ function StructuredData() {
     })),
   };
 
+  // Parity by construction: the same FAQS array renders the visible FAQ
+  // section below, so schema and on-page content cannot drift.
   const faqPage = {
     "@type": "FAQPage",
     "@id": `${SITE_URL}#faq`,
-    mainEntity: FAQ_DATA.items.map((it) => ({
+    mainEntity: FAQS.map((it) => ({
       "@type": "Question",
       name: it.q,
       acceptedAnswer: { "@type": "Answer", text: it.a },
@@ -189,12 +191,12 @@ function StructuredData() {
   const professionalService = {
     "@type": "ProfessionalService",
     "@id": `${SITE_URL}#service`,
-    name: "ArqAI Labs — Operational AI",
+    name: "ArqAI Labs — Forward-Deployed AI Engineering",
     description:
       "End-to-end operational AI partner: workflow assessment, agent buildout, enterprise integration, governance, and managed operations after go-live.",
     url: SITE_URL,
     provider: { "@id": orgId },
-    serviceType: "Operational AI consulting and managed services",
+    serviceType: "Forward-deployed AI engineering and managed AI operations",
     areaServed: { "@type": "Place", name: "Worldwide" },
     audience: {
       "@type": "BusinessAudience",
@@ -226,26 +228,18 @@ function StructuredData() {
 
 export default function HomePage() {
   return (
-    <div className="v5-shell">
-      <link rel="preload" as="image" href={HERO_POSTER} fetchPriority="high" />
-      <link rel="preload" as="video" href={HERO_VIDEO} type="video/mp4" />
-      <link rel="dns-prefetch" href="https://images.unsplash.com" />
+    <main className="w-full">
       <StructuredData />
-
-      <V5Nav />
-      <main>
-        <Hero />
-        <Features />
-        <Accelerators />
-        <WhyChooseUs />
-        <Workflow />
-        <Integration />
-        <ProofSpotlight />
-        <FAQ />
-        <Blogs />
-        <Contact />
-      </main>
-      <Footer />
-    </div>
+      <V6Nav />
+      <LandingAccordionItem />
+      <ForwardDeployed />
+      <ProofBand />
+      <AcceleratorShowcase />
+      <CaseStudies />
+      <Insights />
+      <FaqSection />
+      <ClosingCta />
+      <V6Footer />
+    </main>
   );
 }
