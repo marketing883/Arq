@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 import React, { useEffect, useRef, useState } from "react";
 import {
   ArrowUpRight,
@@ -214,7 +216,7 @@ export default function ForwardDeployed() {
             </div>
 
             <div className="mt-8">
-              <a
+              <Link
                 href="/services"
                 className="group inline-flex items-center gap-1.5 text-[15.5px] font-semibold text-gray-900 transition-colors hover:text-gray-600"
               >
@@ -223,13 +225,13 @@ export default function ForwardDeployed() {
                   size={17}
                   className="text-[#9bbf2e] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                 />
-              </a>
+              </Link>
             </div>
           </Reveal>
 
           {/* Right: detail panel */}
           <Reveal delay={160}>
-            <a
+            <Link
               key={service.num}
               href={service.href}
               className="group/panel relative flex h-full min-h-[420px] flex-col justify-end overflow-hidden rounded-2xl bg-[#0d1226]"
@@ -280,7 +282,7 @@ export default function ForwardDeployed() {
                   />
                 </span>
               </span>
-            </a>
+            </Link>
           </Reveal>
         </div>
       </div>

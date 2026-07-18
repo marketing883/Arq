@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 import React, { useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 
@@ -86,7 +88,7 @@ type AccordionPanelProps = {
 
 function AccordionPanel({ item, isActive, onActivate }: AccordionPanelProps) {
   return (
-    <a
+    <Link
       href={item.href}
       aria-label={`${item.title} — ${item.tag}`}
       className={`
@@ -156,7 +158,43 @@ function AccordionPanel({ item, isActive, onActivate }: AccordionPanelProps) {
           {item.description}
         </span>
       </span>
-    </a>
+    </Link>
+  );
+}
+
+// --- Mobile card (no accordion; every panel shows its full caption) ---
+function MobileAccordionCard({ item, wide }: { item: ImageAccordionItem; wide?: boolean }) {
+  return (
+    <Link
+      href={item.href}
+      aria-label={`${item.title} — ${item.tag}`}
+      className={`relative block h-[200px] overflow-hidden rounded-2xl ${wide ? "col-span-2" : ""}`}
+    >
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={item.imageUrl}
+        alt=""
+        loading="lazy"
+        decoding="async"
+        className="absolute inset-0 h-full w-full object-cover"
+        onError={(e) => {
+          e.currentTarget.onerror = null;
+          e.currentTarget.src = "https://placehold.co/400x450/161f3d/ffffff?text=ArqAI";
+        }}
+      />
+      <div
+        className="absolute inset-0 mix-blend-multiply opacity-75"
+        style={{ background: `linear-gradient(160deg, ${item.duo[0]} 0%, transparent 50%, ${item.duo[1]} 100%)` }}
+        aria-hidden="true"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-black/10" aria-hidden="true" />
+      <span className="absolute inset-x-0 bottom-0 p-4">
+        <span className="block text-[10.5px] font-semibold uppercase tracking-[0.14em] text-[#d0f438]">
+          {item.tag}
+        </span>
+        <span className="mt-1 block font-display text-lg font-semibold text-white">{item.title}</span>
+      </span>
+    </Link>
   );
 }
 
@@ -205,7 +243,7 @@ export function LandingAccordionItem({
         <div className="flex w-full flex-col items-center justify-between gap-12 md:-mt-10 md:flex-row">
           {/* Left Side: Text Content */}
           <div className="w-full text-center md:w-1/2 md:text-left">
-            <h1 className="font-display text-[clamp(26px,3.8vw,52px)] font-semibold text-gray-900 leading-[1.08] tracking-tight whitespace-nowrap">
+            <h1 className="font-display text-[clamp(26px,3.8vw,52px)] font-semibold text-gray-900 leading-[1.08] tracking-tight whitespace-normal md:whitespace-nowrap">
               Forward Deployed AI
               <br />
               Engineering. At Scale.
@@ -219,7 +257,7 @@ export function LandingAccordionItem({
             </p>
 
             <div className="mt-8">
-              <a
+              <Link
                 href="/engage-us"
                 className="group inline-flex items-center gap-2 text-[17px] font-semibold text-gray-900 transition-colors hover:text-gray-600 md:text-lg"
               >
@@ -228,11 +266,11 @@ export function LandingAccordionItem({
                   size={19}
                   className="text-[#9bbf2e] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                 />
-              </a>
+              </Link>
             </div>
 
             {/* Stat strip */}
-            <div className="mt-10 flex items-center justify-center md:justify-start gap-8 md:gap-10">
+            <div className="mt-10 flex flex-wrap items-center justify-center md:justify-start gap-6 sm:gap-8 md:gap-10">
               {[
                 { num: "$3.2M", label: "Waste surfaced in one Blind Spot Assessment" },
                 { num: "70%", label: "Less manual review time in that engagement" },
@@ -248,9 +286,10 @@ export function LandingAccordionItem({
             </div>
           </div>
 
-          {/* Right Side: Image Accordion */}
+          {/* Right Side: Image Accordion (md+) / card grid (mobile) */}
           <div className="w-full md:w-1/2">
-            <div className="flex flex-row items-center justify-center gap-3 md:gap-4 overflow-x-auto p-4">
+            {/* Desktop: hover accordion */}
+            <div className="hidden md:flex flex-row items-center justify-center gap-4 overflow-x-auto p-4">
               {items.map((item, index) => (
                 <AccordionPanel
                   key={item.id}
@@ -260,11 +299,17 @@ export function LandingAccordionItem({
                 />
               ))}
             </div>
+            {/* Mobile: static 2-col card grid so nothing is cut off */}
+            <div className="grid grid-cols-2 gap-3 md:hidden">
+              {items.map((item, i) => (
+                <MobileAccordionCard key={item.id} item={item} wide={i === 0} />
+              ))}
+            </div>
             <p className="text-center text-xs text-gray-500 mt-2">
               Flagship accelerators — part of a growing library.{" "}
-              <a href="/accelerators" className="underline underline-offset-2 hover:text-gray-800">
+              <Link href="/accelerators" className="underline underline-offset-2 hover:text-gray-800">
                 Explore all
-              </a>
+              </Link>
             </p>
           </div>
         </div>

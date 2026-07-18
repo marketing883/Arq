@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 import React, { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { FAQS } from "./faqs";
@@ -28,12 +30,12 @@ export default function FaqSection() {
           </h2>
           <p className="mt-4 max-w-sm text-[14.5px] leading-relaxed text-gray-600">
             The short versions. For anything specific to your operation,{" "}
-            <a
+            <Link
               href="/contact"
               className="font-semibold text-gray-900 underline decoration-[#9bbf2e] decoration-2 underline-offset-4 transition-colors hover:text-gray-600"
             >
               ask us directly
-            </a>
+            </Link>
             .
           </p>
         </div>

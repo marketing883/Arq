@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -113,9 +115,9 @@ export function CookieConsent() {
                   We use cookies to enhance your experience, analyze site traffic, and
                   personalize content. By clicking &ldquo;Accept All&rdquo;, you consent to
                   our use of cookies.{" "}
-                  <a href="/privacy" className="text-[#252e3d] hover:underline">
+                  <Link href="/privacy" className="text-[#252e3d] hover:underline">
                     Learn more
-                  </a>
+                  </Link>
                 </p>
 
                 {/* Quick Actions */}

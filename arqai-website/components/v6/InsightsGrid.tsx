@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 import React, { useState } from "react";
 import { ArrowUpRight, BookOpen, MonitorPlay, Sparkle } from "lucide-react";
 
@@ -70,7 +72,7 @@ function PostCard({
   const href = `/blog/${extractSlug(post.slug)}`;
 
   return (
-    <a
+    <Link
       href={href}
       className="group/post relative block min-h-0 overflow-hidden rounded-2xl bg-[#131722] transition-[flex-grow] duration-700"
       style={{ flexGrow, flexBasis: 0, transitionTimingFunction: EASE }}
@@ -148,7 +150,7 @@ function PostCard({
           <ArrowUpRight size={13} className="text-[#d0f438]" />
         </span>
       </span>
-    </a>
+    </Link>
   );
 }
 
@@ -176,7 +178,7 @@ function LibraryPanel({
   compact: boolean;
 }) {
   return (
-    <a
+    <Link
       href={href}
       className="noise-overlay group/lib relative flex min-h-0 flex-col justify-between overflow-hidden rounded-2xl p-5 transition-[flex-grow] duration-700 md:p-6"
       style={{ flexGrow: compact ? 0.45 : 1, flexBasis: 0, backgroundColor: tint, transitionTimingFunction: EASE }}
@@ -209,7 +211,7 @@ function LibraryPanel({
           className="text-[#d0f438] transition-transform duration-300 group-hover/lib:translate-x-0.5 group-hover/lib:-translate-y-0.5"
         />
       </span>
-    </a>
+    </Link>
   );
 }
 
@@ -241,7 +243,7 @@ export default function InsightsGrid({ posts }: { posts: InsightPost[] }) {
               running AI in production.
             </h2>
           </div>
-          <a
+          <Link
             href="/blog"
             className="group inline-flex shrink-0 items-center gap-1.5 text-[15px] font-semibold text-white transition-colors hover:text-[#d0f438]"
           >
@@ -250,7 +252,7 @@ export default function InsightsGrid({ posts }: { posts: InsightPost[] }) {
               size={16}
               className="text-[#d0f438] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
             />
-          </a>
+          </Link>
         </div>
 
         {/* Bento stage — desktop */}
@@ -310,7 +312,7 @@ export default function InsightsGrid({ posts }: { posts: InsightPost[] }) {
         {/* Mobile / tablet */}
         <div className="mt-10 flex flex-col gap-4 lg:hidden">
           {posts.map((post) => (
-            <a
+            <Link
               key={post.id}
               href={`/blog/${extractSlug(post.slug)}`}
               className="relative overflow-hidden rounded-2xl bg-[#131722] p-5"
@@ -329,17 +331,17 @@ export default function InsightsGrid({ posts }: { posts: InsightPost[] }) {
                 </span>
                 <span className="mt-1 block text-[11px] text-white/50">{formatDate(post.published_at)}</span>
               </span>
-            </a>
+            </Link>
           ))}
           <div className="grid grid-cols-2 gap-4">
-            <a href="/whitepapers" className="noise-overlay rounded-2xl p-5" style={{ backgroundColor: "#26333f" }}>
+            <Link href="/whitepapers" className="noise-overlay rounded-2xl p-5" style={{ backgroundColor: "#26333f" }}>
               <BookOpen size={18} strokeWidth={1.5} className="text-[#d0f438]" />
               <span className="mt-2 block font-display text-[15px] font-semibold text-white">Whitepapers</span>
-            </a>
-            <a href="/webinars" className="noise-overlay rounded-2xl p-5" style={{ backgroundColor: "#333044" }}>
+            </Link>
+            <Link href="/webinars" className="noise-overlay rounded-2xl p-5" style={{ backgroundColor: "#333044" }}>
               <MonitorPlay size={18} strokeWidth={1.5} className="text-[#d0f438]" />
               <span className="mt-2 block font-display text-[15px] font-semibold text-white">Webinars</span>
-            </a>
+            </Link>
           </div>
         </div>
       </div>

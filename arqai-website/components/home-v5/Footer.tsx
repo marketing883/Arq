@@ -1,4 +1,5 @@
 import { LOGO, FOOTER } from "./content";
+import Link from "next/link";
 
 const COLUMNS = [
   {
@@ -62,9 +63,9 @@ export default function Footer() {
     <footer className="v5-footer">
       <div className="v5-footer-inner">
         <div className="v5-footer-brand">
-          <a href="/" className="v5-nav-brand">
+          <Link href="/" className="v5-nav-brand">
             <img src={LOGO} alt="ArqAI Labs" className="v5-nav-logo-img" width="160" height="28" loading="lazy" decoding="async" />
-          </a>
+          </Link>
           <p>Industry-deep AI, built around your operations — designed, deployed, and run in production.</p>
           <div className="v5-footer-socials">
             {SOCIALS.map((s) => (
@@ -84,7 +85,7 @@ export default function Footer() {
               <ul>
                 {col.links.map((l) => (
                   <li key={l.label}>
-                    <a href={l.href}>{l.label}</a>
+                    <Link href={l.href}>{l.label}</Link>
                   </li>
                 ))}
               </ul>
@@ -95,8 +96,8 @@ export default function Footer() {
         <div className="v5-footer-bottom">
           <p>{FOOTER.copyright}</p>
           <div className="v5-footer-legal">
-            <a href="/privacy">Privacy</a>
-            <a href="/terms">Terms</a>
+            <Link href="/privacy">Privacy</Link>
+            <Link href="/terms">Terms</Link>
           </div>
         </div>
       </div>

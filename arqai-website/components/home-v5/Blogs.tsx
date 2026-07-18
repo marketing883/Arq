@@ -1,4 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
+import Link from "next/link";
 import { ArrowRight } from "./icons";
 
 interface BlogPost {
@@ -86,7 +87,7 @@ export default async function Blogs() {
         <div className="v5-blog-grid">
           {posts.length > 0
             ? posts.map((post) => (
-                <a
+                <Link
                   key={post.id}
                   className="v5-blog-card"
                   href={`/blog/${extractSlug(post.slug)}`}
@@ -108,7 +109,7 @@ export default async function Blogs() {
                     <h3 className="v5-h3">{post.title}</h3>
                     <p className="v5-body">{post.excerpt}</p>
                   </div>
-                </a>
+                </Link>
               ))
             : /* fallback skeleton cards while no posts exist */
               [0, 1, 2].map((i) => (
@@ -124,10 +125,10 @@ export default async function Blogs() {
         </div>
 
         <div className="v5-blog-foot">
-          <a href="/blog" className="v5-btn v5-btn-dark">
+          <Link href="/blog" className="v5-btn v5-btn-dark">
             Discover More
             <ArrowRight />
-          </a>
+          </Link>
         </div>
       </div>
     </section>

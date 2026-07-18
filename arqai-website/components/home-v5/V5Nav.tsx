@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 import { useEffect, useRef, useState } from "react";
 import { LOGO } from "./content";
 import { accelerators } from "@/lib/data/accelerators";
@@ -186,9 +188,9 @@ export default function V5Nav() {
         onMouseEnter={cancelClose}
       >
         <div className="v5-nav-inner">
-          <a href="/" className="v5-nav-brand" onClick={() => setMobile(false)}>
+          <Link href="/" className="v5-nav-brand" onClick={() => setMobile(false)}>
             <img src={LOGO} alt="ArqAI Labs" className="v5-nav-logo-img" width="160" height="38" decoding="async" />
-          </a>
+          </Link>
 
           <ul className="v5-nav-links">
             {MENUS.map((m, i) => (
@@ -210,7 +212,7 @@ export default function V5Nav() {
           </ul>
 
           <div className="v5-nav-cta">
-            <a href="/engage-us" className="v5-nav-demo">Book a Demo</a>
+            <Link href="/engage-us" className="v5-nav-demo">Book a Demo</Link>
             <button
               type="button"
               className="v5-nav-burger"
@@ -232,16 +234,16 @@ export default function V5Nav() {
             <div className="v5-mega">
               <div className="v5-mega-links">
                 {MENUS[open].links.map((l) => (
-                  <a key={l.title} href={l.href} className="v5-mega-link" onClick={closeNow}>
+                  <Link key={l.title} href={l.href} className="v5-mega-link" onClick={closeNow}>
                     <span className="v5-mega-ico">{l.icon}</span>
                     <span className="v5-mega-text">
                       <strong>{l.title}</strong>
                       <span>{l.desc}</span>
                     </span>
-                  </a>
+                  </Link>
                 ))}
               </div>
-              <a href={MENUS[open].feature.href} className="v5-mega-feature" onClick={closeNow}>
+              <Link href={MENUS[open].feature.href} className="v5-mega-feature" onClick={closeNow}>
                 <img src={MENUS[open].feature.image} alt="" loading="lazy" decoding="async" />
                 <span className="v5-mega-feature-body">
                   <span className="v5-mega-feature-tag">{MENUS[open].feature.tag}</span>
@@ -250,7 +252,7 @@ export default function V5Nav() {
                     Explore <ArrowUpRight />
                   </span>
                 </span>
-              </a>
+              </Link>
             </div>
           )}
         </div>
@@ -275,17 +277,17 @@ export default function V5Nav() {
               </button>
               <div className="v5-nav-mobile-panel">
                 {m.links.map((l) => (
-                  <a key={l.title} href={l.href} onClick={closeMobile}>
+                  <Link key={l.title} href={l.href} onClick={closeMobile}>
                     {l.title}
-                  </a>
+                  </Link>
                 ))}
               </div>
             </div>
           );
         })}
-        <a href="/engage-us" className="v5-cta" onClick={closeMobile} style={{ marginTop: 10 }}>
+        <Link href="/engage-us" className="v5-cta" onClick={closeMobile} style={{ marginTop: 10 }}>
           Book a Demo
-        </a>
+        </Link>
       </div>
     </>
   );

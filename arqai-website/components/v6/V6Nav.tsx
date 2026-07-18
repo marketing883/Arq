@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 import React, { useEffect, useRef, useState } from "react";
 import {
   ArrowUpRight,
@@ -117,7 +119,7 @@ const MENUS: { key: MenuKey; label: string }[] = [
 
 function MegaLinkItem({ link, index }: { link: MegaLink; index: number }) {
   return (
-    <a
+    <Link
       href={link.href}
       className="group/link flex items-start gap-3.5 rounded-2xl p-3 opacity-0 animate-fade-in-up transition-colors hover:bg-gray-50"
       style={{ animationDelay: `${60 + index * 35}ms` }}
@@ -129,7 +131,7 @@ function MegaLinkItem({ link, index }: { link: MegaLink; index: number }) {
         <span className="font-display text-[15px] font-semibold text-gray-900">{link.label}</span>
         <span className="mt-0.5 block text-[12.5px] leading-snug text-gray-500">{link.desc}</span>
       </span>
-    </a>
+    </Link>
   );
 }
 
@@ -151,7 +153,7 @@ function FeatureTile({
   delay?: number;
 }) {
   return (
-    <a
+    <Link
       href={href}
       className="group/feature relative flex min-h-[230px] flex-col justify-end overflow-hidden rounded-2xl opacity-0 animate-fade-in-up"
       style={{ animationDelay: `${delay}ms` }}
@@ -191,7 +193,7 @@ function FeatureTile({
           />
         </span>
       </span>
-    </a>
+    </Link>
   );
 }
 
@@ -268,7 +270,7 @@ function IndustriesPanel() {
       <ColumnHeading>Built for regulated industries</ColumnHeading>
       <div className="mt-2 grid grid-cols-2 gap-4 lg:grid-cols-5">
         {INDUSTRIES.map((ind, i) => (
-          <a
+          <Link
             key={ind.href}
             href={ind.href}
             className="group/card relative flex h-[190px] flex-col justify-end overflow-hidden rounded-2xl opacity-0 animate-fade-in-up"
@@ -288,7 +290,7 @@ function IndustriesPanel() {
               <span className="mt-0.5 block text-[12px] leading-snug text-white/70">{ind.desc}</span>
             </span>
 
-          </a>
+          </Link>
         ))}
       </div>
     </div>
@@ -395,10 +397,10 @@ export default function V6Nav() {
       >
         <nav className="mx-auto flex h-[72px] max-w-7xl items-center justify-between gap-6 px-4 md:px-8">
           {/* Brand */}
-          <a href="/" className="flex shrink-0 items-center" aria-label="ArqAI Labs home">
+          <Link href="/" className="flex shrink-0 items-center" aria-label="ArqAI Labs home">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={LOGO} alt="ArqAI Labs" className="h-9 w-auto" />
-          </a>
+          </Link>
 
           {/* Desktop menu */}
           <ul className="hidden items-center lg:flex">
@@ -433,7 +435,7 @@ export default function V6Nav() {
 
           {/* Right side */}
           <div className="flex items-center gap-2">
-            <a
+            <Link
               href="/engage-us"
               className="group hidden items-center gap-1.5 text-[15px] font-semibold text-gray-900 transition-colors hover:text-gray-600 lg:inline-flex"
             >
@@ -442,13 +444,13 @@ export default function V6Nav() {
                 size={16}
                 className="text-[#9bbf2e] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
               />
-            </a>
+            </Link>
             <button
               type="button"
               aria-label={mobileOpen ? "Close menu" : "Open menu"}
               aria-expanded={mobileOpen}
               onClick={() => setMobileOpen((v) => !v)}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-gray-900/10 bg-white text-gray-900 lg:hidden"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-gray-900/10 bg-white text-gray-900 lg:hidden"
             >
               {mobileOpen ? <X size={18} /> : <Menu size={18} />}
             </button>
@@ -506,7 +508,7 @@ export default function V6Nav() {
                           ? RESOURCES
                           : COMPANY
                   ).map((link) => (
-                    <a
+                    <Link
                       key={link.href}
                       href={link.href}
                       className="flex items-center gap-3 rounded-lg px-2 py-2.5 text-[15px] text-gray-700 hover:bg-gray-50"
@@ -514,19 +516,19 @@ export default function V6Nav() {
                     >
                       {link.icon && <span className="text-gray-500">{link.icon}</span>}
                       {link.label}
-                    </a>
+                    </Link>
                   ))}
                 </div>
               )}
             </div>
           ))}
-          <a
+          <Link
             href="/engage-us"
             className="group mt-4 flex items-center justify-center gap-1.5 py-3 text-center font-semibold text-gray-900"
           >
             Book a Demo
             <ArrowUpRight size={16} className="text-[#9bbf2e]" />
-          </a>
+          </Link>
         </div>
       )}
     </header>

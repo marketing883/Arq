@@ -1,5 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+// Self-hosted Funnel Display/Sans (woff2 in /public/fonts), font-display: swap.
+// Replaces the render-blocking cross-origin <link> to Google Fonts.
+import "./fonts.css";
 import { ChatWidget } from "@/components/chat/ChatWidget";
 import { ContentMorpher } from "@/components/morph/ContentMorpher";
 import { MorphProvider } from "@/contexts/MorphContext";
@@ -108,16 +111,14 @@ export default function RootLayout({
             __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',functionality_storage:'granted',security_storage:'granted',wait_for_update:500});(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${GTM_ID}');`,
           }}
         />
+        {/* Preload the latin variable woff2 for the two families used above the
+            fold, so the first paint uses the real fonts without a swap flash. */}
+        <link rel="preload" href="/fonts/funneldisplay-1.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+        <link rel="preload" href="/fonts/funnelsans-3.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         <link rel="preconnect" href="https://images.unsplash.com" />
         <link rel="dns-prefetch" href="https://images.unsplash.com" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&family=Funnel+Sans:ital,wght@0,300..800;1,300..800&display=swap"
-          rel="stylesheet"
-        />
       </head>
       <body className="antialiased" suppressHydrationWarning>
         {/* Google Tag Manager (noscript) */}

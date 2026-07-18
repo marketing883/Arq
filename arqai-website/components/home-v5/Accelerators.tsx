@@ -1,4 +1,5 @@
 import { ArrowRight, ArrowUpRight } from "./icons";
+import Link from "next/link";
 import { accelerators } from "@/lib/data/accelerators";
 
 const FEATURED = accelerators.slice(0, 4);
@@ -27,7 +28,7 @@ export default function Accelerators() {
           {FEATURED.map((a, i) => {
             const metric = a.metrics?.[0];
             return (
-              <a
+              <Link
                 key={a.id}
                 href={`/accelerators/${a.id}`}
                 className="v5-accel-card"
@@ -50,17 +51,17 @@ export default function Accelerators() {
                     </div>
                   )}
                 </div>
-              </a>
+              </Link>
             );
           })}
         </div>
 
         <div className="v5-accel-foot">
           <span className="v5-accel-count">{accelerators.length} accelerators and counting</span>
-          <a href="/accelerators" className="v5-btn v5-btn-primary">
+          <Link href="/accelerators" className="v5-btn v5-btn-primary">
             Explore all accelerators
             <ArrowRight />
-          </a>
+          </Link>
         </div>
       </div>
     </section>

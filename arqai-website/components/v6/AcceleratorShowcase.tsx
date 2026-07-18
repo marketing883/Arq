@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowUpRight,
@@ -255,7 +257,7 @@ function MainCard({
       </span>
 
       {/* Active content */}
-      <a
+      <Link
         href={item.href}
         className={`absolute inset-0 flex flex-col justify-end p-6 outline-none transition-all duration-500 md:p-8 ${
           isActive ? "opacity-100 translate-y-0" : "pointer-events-none opacity-0 translate-y-4"
@@ -278,7 +280,7 @@ function MainCard({
             />
           </span>
         </span>
-      </a>
+      </Link>
     </div>
   );
 }
@@ -303,7 +305,7 @@ function SecondaryCard({
   onLeave: () => void;
 }) {
   return (
-    <a
+    <Link
       href={item.href}
       className="noise-overlay group/sec relative flex min-h-0 flex-col overflow-hidden rounded-2xl p-5 transition-[flex-grow] duration-700 md:p-6"
       style={{ flexGrow, flexBasis: 0, backgroundColor: item.tint, transitionTimingFunction: EASE }}
@@ -362,7 +364,7 @@ function SecondaryCard({
           </span>
         </span>
       </span>
-    </a>
+    </Link>
   );
 }
 
@@ -416,7 +418,7 @@ export default function AcceleratorShowcase() {
               from scratch.
             </p>
           </div>
-          <a
+          <Link
             href="/accelerators"
             className="group inline-flex shrink-0 items-center gap-1.5 text-[15px] font-semibold text-white transition-colors hover:text-[#d0f438]"
           >
@@ -425,7 +427,7 @@ export default function AcceleratorShowcase() {
               size={16}
               className="text-[#d0f438] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
             />
-          </a>
+          </Link>
         </div>
 
         {/* Bento stage — desktop */}
@@ -530,16 +532,16 @@ export default function AcceleratorShowcase() {
                 {activeMain === item.id && (
                   <>
                     <p className="mt-2 text-[13.5px] leading-relaxed text-white/80">{item.line}</p>
-                    <a href={item.href} className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-white">
+                    <Link href={item.href} className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-white">
                       Explore {item.name} <ArrowUpRight size={14} className="text-[#d0f438]" />
-                    </a>
+                    </Link>
                   </>
                 )}
               </div>
             </div>
           ))}
           {Object.values(SECONDARIES).map((item) => (
-            <a
+            <Link
               key={item.id}
               href={item.href}
               className="noise-overlay relative overflow-hidden rounded-2xl p-5"
@@ -553,7 +555,7 @@ export default function AcceleratorShowcase() {
                 <span className="font-display text-lg font-semibold text-white">{item.name}</span>
               </span>
               <span className="relative mt-2 block text-[13px] leading-[1.6] text-white/80">{item.tagline}</span>
-            </a>
+            </Link>
           ))}
         </div>
 
@@ -562,12 +564,12 @@ export default function AcceleratorShowcase() {
           <span className="mr-1 text-[11px] uppercase tracking-[0.22em] text-white/50">Plus five more</span>
           {CHIPS.map((m, i) => (
             <span key={m.href} className="flex items-center gap-3">
-              <a
+              <Link
                 href={m.href}
                 className="text-[13.5px] font-medium text-white/75 underline-offset-4 transition-colors hover:text-white hover:underline"
               >
                 {m.name}
-              </a>
+              </Link>
               {i < CHIPS.length - 1 && <span className="text-white/25" aria-hidden="true">·</span>}
             </span>
           ))}

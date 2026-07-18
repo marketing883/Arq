@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 import React, { useEffect, useRef, useState } from "react";
 
 const HERO_VIDEO = "/v5/assets/ufsUXNNTVPKgg5ZhfzY4DHtmrKY.mp4";
@@ -166,12 +168,12 @@ export default function ProofBand() {
           <p className="mt-2 font-display text-[17px] font-semibold leading-snug text-white">
             Measured in production, not in demos.
           </p>
-          <a
+          <Link
             href="/case-studies"
             className="mt-3 inline-block text-[12.5px] font-semibold text-white/70 underline-offset-4 transition-colors hover:text-white hover:underline"
           >
             See the case studies
-          </a>
+          </Link>
         </div>
 
         {/* Vertical hairline after header */}

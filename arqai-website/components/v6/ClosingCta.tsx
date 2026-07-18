@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 const HERO_VIDEO = "/v5/assets/ufsUXNNTVPKgg5ZhfzY4DHtmrKY.mp4";
 const HERO_POSTER = "/v5/assets/pR0DzH2JNZa0vnz4l8WJLxvUKA.jpg";
@@ -40,12 +41,12 @@ export default function ClosingCta() {
           not the platform.
         </h2>
         <div className="mt-10">
-          <a
+          <Link
             href="/engage-us"
             className="inline-block rounded-lg bg-[#d0f438] px-10 py-4 text-[16px] font-semibold text-gray-900 shadow-[0_20px_50px_-20px_rgba(208,244,56,0.6)] transition-all duration-300 hover:-translate-y-0.5 hover:brightness-105"
           >
             Book a Demo
-          </a>
+          </Link>
         </div>
       </div>
     </section>

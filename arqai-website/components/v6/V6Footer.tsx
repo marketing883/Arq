@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
 const LOGO = "/v5/assets/FEFrVVQtPUn7XSci8TiM5lb74o.png";
@@ -86,12 +87,12 @@ function Column({ title, links }: { title: string; links: FooterLink[] }) {
       <ul className="mt-4 space-y-2.5">
         {links.map((link) => (
           <li key={link.href}>
-            <a
+            <Link
               href={link.href}
               className="text-[13.5px] text-white/60 transition-colors duration-200 hover:text-white"
             >
               {link.label}
-            </a>
+            </Link>
           </li>
         ))}
       </ul>
@@ -113,15 +114,15 @@ export default function V6Footer() {
         <div className="grid gap-12 lg:grid-cols-[1.25fr_1fr_1fr_1fr_1fr] lg:gap-10">
           {/* Brand block */}
           <div className="max-w-xs">
-            <a href="/" aria-label="ArqAI Labs home" className="inline-block">
+            <Link href="/" aria-label="ArqAI Labs home" className="inline-block">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={LOGO} alt="ArqAI Labs" className="h-9 w-auto brightness-0 invert" />
-            </a>
+            </Link>
             <p className="mt-5 text-[13.5px] leading-relaxed text-white/60">
               Forward-deployed AI engineering for regulated enterprises.
               Designed, built, and run in production.
             </p>
-            <a
+            <Link
               href="/engage-us"
               className="group mt-6 inline-flex items-center gap-1.5 text-[14.5px] font-semibold text-white transition-colors hover:text-[#d0f438]"
             >
@@ -130,7 +131,7 @@ export default function V6Footer() {
                 size={15}
                 className="text-[#d0f438] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
               />
-            </a>
+            </Link>
             <div className="mt-7 flex gap-2.5">
               {SOCIALS.map((s) => (
                 <a
@@ -139,7 +140,7 @@ export default function V6Footer() {
                   aria-label={s.label}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 text-white/60 transition-all duration-300 hover:border-white/30 hover:bg-white/5 hover:text-white"
+                  className="flex h-11 w-11 items-center justify-center rounded-lg border border-white/10 text-white/60 transition-all duration-300 hover:border-white/30 hover:bg-white/5 hover:text-white"
                 >
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                     <path d={s.path} />
@@ -165,15 +166,15 @@ export default function V6Footer() {
             © 2026 ArqAI Labs. All rights reserved.
           </p>
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-[12.5px]">
-            <a href="/privacy" className="text-white/45 transition-colors hover:text-white">
+            <Link href="/privacy" className="text-white/45 transition-colors hover:text-white">
               Privacy
-            </a>
-            <a href="/terms" className="text-white/45 transition-colors hover:text-white">
+            </Link>
+            <Link href="/terms" className="text-white/45 transition-colors hover:text-white">
               Terms
-            </a>
-            <a href="/trust" className="text-white/45 transition-colors hover:text-white">
+            </Link>
+            <Link href="/trust" className="text-white/45 transition-colors hover:text-white">
               Trust &amp; Security
-            </a>
+            </Link>
             <span className="hidden items-center gap-2 text-white/35 md:inline-flex">
               <span className="h-1.5 w-1.5 rounded-full bg-[#d0f438]/70" aria-hidden="true" />
               Ten accelerators, governed from day one.

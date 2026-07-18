@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 import React, { useEffect, useRef, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 
@@ -120,12 +122,12 @@ export default function CaseStudySpotlight({
             <span className="inline-flex h-2 w-2 rounded-full bg-[#d0f438] shadow-[0_0_0_4px_rgba(208,244,56,0.25)]" />
             Case study — the specifics, not the pitch
           </p>
-          <a
+          <Link
             href="/case-studies"
             className="text-[13px] font-semibold text-white/70 transition-colors hover:text-white"
           >
             All case studies
-          </a>
+          </Link>
         </div>
 
         {/* Narrative left · stats right */}
@@ -169,7 +171,7 @@ export default function CaseStudySpotlight({
               }`}
               style={{ transitionDelay: "340ms" }}
             >
-              <a
+              <Link
                 href={`/case-studies/${study.slug}`}
                 className="group inline-flex items-center gap-1.5 text-[15.5px] font-semibold text-white transition-colors hover:text-[#d0f438]"
               >
@@ -178,22 +180,22 @@ export default function CaseStudySpotlight({
                   size={17}
                   className="text-[#d0f438] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                 />
-              </a>
+              </Link>
               {others.slice(0, 2).map((o) => (
-                <a
+                <Link
                   key={o.slug}
                   href={`/case-studies/${o.slug}`}
                   className="text-[13.5px] font-semibold text-white/65 underline-offset-4 transition-colors hover:text-white hover:underline"
                 >
                   {o.title}
-                </a>
+                </Link>
               ))}
             </div>
           </div>
 
           {/* Stats column */}
           {metrics.length > 0 && (
-            <div className="grid grid-cols-2 content-center gap-x-8 gap-y-7 border-t border-white/10 pt-8 lg:border-l lg:border-t-0 lg:pl-12 lg:pt-0">
+            <div className="grid grid-cols-1 min-[380px]:grid-cols-2 content-center gap-x-8 gap-y-7 border-t border-white/10 pt-8 lg:border-l lg:border-t-0 lg:pl-12 lg:pt-0">
               {metrics.map((m, i) => (
                 <div
                   key={m.label}

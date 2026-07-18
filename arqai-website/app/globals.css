@@ -181,6 +181,7 @@
     background: var(--base);
     color: var(--text-bright);
     font-family: var(--font-sans, "Funnel Sans", sans-serif);
+    overflow-x: hidden;
     font-weight: var(--fw-regular);
     line-height: 1.6;
     transition: background-color var(--anim-medium) ease, color var(--anim-medium) ease;
