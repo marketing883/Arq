@@ -5,7 +5,8 @@ import { ArrowUpRight } from "lucide-react";
 
 // --- Data for the image accordion ---
 // The five accelerators we lead with, each panel linking to its page.
-// Images are the same Unsplash assets used across the accelerator catalog.
+// Panels use Unsplash photography chosen per vertical, tinted by a per-item
+// duotone overlay (plus the dark scrim) so the type always reads.
 export type ImageAccordionItem = {
   id: string;
   title: string;
@@ -13,6 +14,8 @@ export type ImageAccordionItem = {
   description: string;
   imageUrl: string;
   href: string;
+  /** Duotone overlay colors [from, to] that tint the photo toward the brand palette. */
+  duo: [string, string];
 };
 
 const unsplash = (id: string, w = 1200) =>
@@ -28,7 +31,8 @@ export const defaultAccordionItems: ImageAccordionItem[] = [
     tag: "Payment Integrity",
     description:
       "Surfaces the claims most likely to be fraud, waste, or abuse — with evidence investigators can defend.",
-    imageUrl: "/v5/assets/accel/arqfwa.jpg",
+    imageUrl: unsplash("photo-1530026405186-ed1f139313f8"),
+    duo: ["#052e2a", "#0a5c46"],
     href: "/accelerators/arqfwa",
   },
   {
@@ -37,7 +41,8 @@ export const defaultAccordionItems: ImageAccordionItem[] = [
     tag: "Loyalty Modernization",
     description:
       "Replace your loyalty platform with parity proven daily. Zero migration risk at cut-over.",
-    imageUrl: "/v5/assets/accel/arqloyalty.jpg",
+    imageUrl: unsplash("photo-1563245372-f21724e3856d"),
+    duo: ["#4a0f3a", "#7a2f14"],
     href: "/accelerators/arqloyalty",
   },
   {
@@ -46,7 +51,8 @@ export const defaultAccordionItems: ImageAccordionItem[] = [
     tag: "Pricing Intelligence",
     description:
       "Reads why competitor prices moved and reprices within your guardrails, with MAP enforced automatically.",
-    imageUrl: "/v5/assets/accel/arqvantage.jpg",
+    imageUrl: unsplash("photo-1519501025264-65ba15a82390"),
+    duo: ["#1a1040", "#4a1050"],
     href: "/accelerators/arqvantage",
   },
   {
@@ -55,7 +61,8 @@ export const defaultAccordionItems: ImageAccordionItem[] = [
     tag: "Banking Operations",
     description:
       "Underwriting, KYC, AML, and regulatory reporting — with explainable reasoning on every decision.",
-    imageUrl: "/v5/assets/accel/arqbanker.jpg",
+    imageUrl: unsplash("photo-1486406146926-c627a92ad1ab"),
+    duo: ["#0a1230", "#1c1a4e"],
     href: "/accelerators/arqbanker",
   },
   {
@@ -64,7 +71,8 @@ export const defaultAccordionItems: ImageAccordionItem[] = [
     tag: "Service Management",
     description:
       "Agentic L1/L2/L3 ticket triage and auto-resolution, with SLA breaches prevented rather than reported.",
-    imageUrl: "/v5/assets/accel/arqsupport.jpg",
+    imageUrl: unsplash("photo-1451187580459-43490279c0fa"),
+    duo: ["#241a3e", "#31304a"],
     href: "/accelerators/arqsupport",
   },
 ];
@@ -102,6 +110,12 @@ function AccordionPanel({ item, isActive, onActivate }: AccordionPanelProps) {
           e.currentTarget.src =
             "https://placehold.co/400x450/161f3d/ffffff?text=ArqAI";
         }}
+      />
+      {/* Duotone tint toward the accelerator's palette */}
+      <div
+        className="absolute inset-0 mix-blend-multiply opacity-75"
+        style={{ background: `linear-gradient(160deg, ${item.duo[0]} 0%, transparent 50%, ${item.duo[1]} 100%)` }}
+        aria-hidden="true"
       />
       {/* Dark overlay for legibility */}
       <div

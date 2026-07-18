@@ -14,6 +14,9 @@ import {
 // NOTE: `videoSrc` currently points at the brand placeholder reel. Swap each
 // entry with the real screengrab footage of the accelerator in action when
 // the files land (drop them in /public/v6/footage and update the paths).
+// Card backgrounds are Unsplash photography (host allowed in next.config)
+// chosen per vertical, sitting under a per-card duotone + scrim stack for
+// text legibility.
 
 const PLACEHOLDER_VIDEO = "/v5/assets/ufsUXNNTVPKgg5ZhfzY4DHtmrKY.mp4";
 
@@ -29,6 +32,8 @@ type MainItem = {
   href: string;
   videoSrc: string;
   imageUrl: string;
+  /** Duotone overlay colors [from, to] that tint the photo toward the card's palette. */
+  duo: [string, string];
 };
 
 type SecondaryItem = {
@@ -39,6 +44,7 @@ type SecondaryItem = {
   more: string;
   href: string;
   tint: string;
+  imageUrl: string;
   icon: React.ReactNode;
 };
 
@@ -51,7 +57,8 @@ const MAINS: Record<string, MainItem> = {
     stat: { value: "$3.2M", label: "surfaced in one Blind Spot Assessment" },
     href: "/accelerators/arqfwa",
     videoSrc: PLACEHOLDER_VIDEO,
-    imageUrl: "/v5/assets/accel/arqfwa.jpg",
+    imageUrl: unsplash("photo-1530026405186-ed1f139313f8"),
+    duo: ["#052e2a", "#0a5c46"],
   },
   arqloyalty: {
     id: "arqloyalty",
@@ -61,7 +68,8 @@ const MAINS: Record<string, MainItem> = {
     stat: { value: "Zero", label: "migration risk at cut-over" },
     href: "/accelerators/arqloyalty",
     videoSrc: PLACEHOLDER_VIDEO,
-    imageUrl: "/v5/assets/accel/arqloyalty.jpg",
+    imageUrl: unsplash("photo-1563245372-f21724e3856d"),
+    duo: ["#4a0f3a", "#7a2f14"],
   },
   arqvantage: {
     id: "arqvantage",
@@ -71,7 +79,8 @@ const MAINS: Record<string, MainItem> = {
     stat: { value: "<5 min", label: "designed response to a price move" },
     href: "/accelerators/arqvantage",
     videoSrc: PLACEHOLDER_VIDEO,
-    imageUrl: "/v5/assets/accel/arqvantage.jpg",
+    imageUrl: unsplash("photo-1519501025264-65ba15a82390"),
+    duo: ["#1a1040", "#4a1050"],
   },
 };
 
@@ -84,6 +93,7 @@ const SECONDARIES: Record<string, SecondaryItem> = {
     more: "Engineered for faster underwriting, sharply reduced KYC manual review, and higher fraud-detection precision — with explainable reasoning on every decision.",
     href: "/accelerators/arqbanker",
     tint: "#26333f",
+    imageUrl: unsplash("photo-1486406146926-c627a92ad1ab"),
     icon: <Landmark size={18} strokeWidth={1.5} />,
   },
   arqsupport: {
@@ -94,6 +104,7 @@ const SECONDARIES: Record<string, SecondaryItem> = {
     more: "Built to resolve 40–60% of L1 tickets autonomously from your knowledge base — designed to prevent SLA breaches rather than report them.",
     href: "/accelerators/arqsupport",
     tint: "#333044",
+    imageUrl: unsplash("photo-1451187580459-43490279c0fa"),
     icon: <Headset size={18} strokeWidth={1.5} />,
   },
 };
@@ -181,7 +192,12 @@ function MainCard({
         className="kenburns absolute inset-0 h-full w-full object-cover opacity-80 saturate-[1.15]"
       />
       {/* Cinematic layers: base dim, drifting particles, shimmer sweep */}
-      <span className="absolute inset-0 bg-black/30" aria-hidden="true" />
+      <span
+        className="absolute inset-0 mix-blend-multiply opacity-80"
+        style={{ background: `linear-gradient(150deg, ${item.duo[0]} 0%, transparent 48%, ${item.duo[1]} 100%)` }}
+        aria-hidden="true"
+      />
+      <span className="absolute inset-0 bg-black/25" aria-hidden="true" />
       <span className="v6-particles absolute inset-0" aria-hidden="true" />
       <span className="v6-sheen absolute inset-0" aria-hidden="true" />
 
@@ -295,6 +311,22 @@ function SecondaryCard({
       onMouseLeave={onLeave}
       onFocus={onHover}
     >
+      {/* Photo bg under a heavy tint veil so the panel keeps its color voice */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={item.imageUrl}
+        alt=""
+        loading="lazy"
+        decoding="async"
+        className="absolute inset-0 h-full w-full object-cover opacity-45 saturate-[1.1]"
+        aria-hidden="true"
+      />
+      <span className="absolute inset-0" style={{ backgroundColor: item.tint, opacity: 0.82 }} aria-hidden="true" />
+      <span
+        className="absolute inset-0"
+        style={{ background: "linear-gradient(180deg, rgba(0,0,0,0.05), rgba(0,0,0,0.45))" }}
+        aria-hidden="true"
+      />
       {/* Compact: icon only */}
       <span
         className={`absolute inset-0 flex items-center justify-center text-white/70 transition-opacity duration-300 ${
@@ -305,7 +337,7 @@ function SecondaryCard({
         {item.icon}
       </span>
 
-      <span className={`transition-opacity duration-300 ${compact ? "opacity-0" : "opacity-100"}`}>
+      <span className={`relative transition-opacity duration-300 ${compact ? "opacity-0" : "opacity-100"}`}>
         <span className="flex items-center">
           <CardLabel light={false}>{item.track}</CardLabel>
         </span>
@@ -477,8 +509,13 @@ export default function AcceleratorShowcase() {
               onClick={() => setActiveMain(activeMain === item.id ? null : item.id)}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={item.imageUrl} alt="" loading="lazy" decoding="async" className="absolute inset-0 h-full w-full object-cover opacity-80 saturate-[1.15]" />
-              <span className="absolute inset-0 bg-black/30" aria-hidden="true" />
+              <img src={item.imageUrl} alt="" loading="lazy" decoding="async" className="absolute inset-0 h-full w-full object-cover opacity-85 saturate-[1.15]" />
+              <span
+                className="absolute inset-0 mix-blend-multiply opacity-80"
+                style={{ background: `linear-gradient(150deg, ${item.duo[0]} 0%, transparent 48%, ${item.duo[1]} 100%)` }}
+                aria-hidden="true"
+              />
+              <span className="absolute inset-0 bg-black/25" aria-hidden="true" />
               <span className="v6-particles absolute inset-0" aria-hidden="true" />
               <span className="v6-sheen absolute inset-0" aria-hidden="true" />
               {activeMain === item.id && (
@@ -508,11 +545,14 @@ export default function AcceleratorShowcase() {
               className="noise-overlay relative overflow-hidden rounded-2xl p-5"
               style={{ backgroundColor: item.tint }}
             >
-              <span className="flex items-center gap-2.5">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={item.imageUrl} alt="" loading="lazy" decoding="async" className="absolute inset-0 h-full w-full object-cover opacity-45 saturate-[1.1]" aria-hidden="true" />
+              <span className="absolute inset-0" style={{ backgroundColor: item.tint, opacity: 0.82 }} aria-hidden="true" />
+              <span className="relative flex items-center gap-2.5">
                 <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/10 text-[#d0f438]">{item.icon}</span>
                 <span className="font-display text-lg font-semibold text-white">{item.name}</span>
               </span>
-              <span className="mt-2 block text-[13px] leading-[1.6] text-white/80">{item.tagline}</span>
+              <span className="relative mt-2 block text-[13px] leading-[1.6] text-white/80">{item.tagline}</span>
             </a>
           ))}
         </div>
