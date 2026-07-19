@@ -83,6 +83,14 @@ function StructuredData() {
     description:
       "ArqAI Labs embeds forward-deployed AI engineers in enterprise operations — designing, building, deploying, and running production AI workflows across healthcare, banking, insurance, retail, and manufacturing.",
     foundingDate: "2024",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "220 Davidson Ave, 2nd Floor, Suite 209",
+      addressLocality: "Somerset",
+      addressRegion: "NJ",
+      postalCode: "08873",
+      addressCountry: "US",
+    },
     sameAs: [
       "https://www.linkedin.com/company/thearq-ai",
       "https://x.com/The_ArqAI",

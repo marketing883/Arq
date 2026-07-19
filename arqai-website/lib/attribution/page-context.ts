@@ -7,6 +7,37 @@
  * form pages without dragging ~50KB of marketing copy along.
  */
 
+/**
+ * A pointed, clickable qualifying question. "radio" = pick one,
+ * "chips" = pick any. Answers are composed into the submission message —
+ * no free-text typing required from the visitor.
+ */
+export type Qualifier = {
+  id: string;
+  label: string;
+  type: "radio" | "chips";
+  options: string[];
+};
+
+/** Shared "when?" question — asked in every block, mapped to the API's timeline slugs. */
+export const TIMELINE_QUALIFIER: Qualifier = {
+  id: "timeline",
+  label: "When are you looking to move?",
+  type: "radio",
+  options: ["Urgent", "This quarter", "Next 3–6 months", "Just exploring"],
+};
+
+const TIMELINE_SLUGS: Record<string, string> = {
+  Urgent: "now",
+  "This quarter": "quarter",
+  "Next 3–6 months": "half_year",
+  "Just exploring": "exploring",
+};
+
+export function timelineToSlug(label: string | undefined): string {
+  return (label && TIMELINE_SLUGS[label]) || "";
+}
+
 export type PageContext = {
   /** Short name shown in the context banner, e.g. "ArqFWA". */
   shortLabel: string;
@@ -40,6 +71,8 @@ export type PageContext = {
     name: string;
     blurb: string;
   };
+  /** Pointed click-to-answer questions shown instead of open text fields. */
+  qualifiers?: Qualifier[];
 };
 
 const ACCELERATORS: Record<string, PageContext> = {
@@ -59,6 +92,11 @@ const ACCELERATORS: Record<string, PageContext> = {
       blurb:
         "a two-week analysis of a claims sample against 120+ FWA patterns your current rules don't cover",
     },
+    qualifiers: [
+      { id: "volume", label: "Claims volume per month", type: "radio", options: ["Under 25k", "25k–100k", "100k–500k", "500k+"] },
+      { id: "current", label: "What do you use for FWA today?", type: "chips", options: ["Rules engine", "Manual review / SIU", "Vendor tool", "Nothing formal"] },
+      TIMELINE_QUALIFIER,
+    ],
   },
   arqloyalty: {
     shortLabel: "ArqLoyalty",
@@ -76,6 +114,11 @@ const ACCELERATORS: Record<string, PageContext> = {
       blurb:
         "a two-week analysis of your program structure, transaction volume, and data model with a migration sequence recommendation",
     },
+    qualifiers: [
+      { id: "platform", label: "What runs your loyalty program today?", type: "radio", options: ["Custom / in-house", "Legacy vendor platform", "Modern SaaS", "No program yet"] },
+      { id: "members", label: "Program size (members)", type: "radio", options: ["Under 100k", "100k–1M", "1M–10M", "10M+"] },
+      TIMELINE_QUALIFIER,
+    ],
   },
   arqlogistics: {
     shortLabel: "ArqLogistics",
@@ -93,6 +136,11 @@ const ACCELERATORS: Record<string, PageContext> = {
       blurb:
         "a two-week analysis of your top 50 supplier relationships against 12 risk signals you aren't monitoring today",
     },
+    qualifiers: [
+      { id: "suppliers", label: "Active suppliers", type: "radio", options: ["Under 100", "100–500", "500–2,000", "2,000+"] },
+      { id: "worry", label: "What worries you most?", type: "chips", options: ["Single-source dependencies", "Tier-2/3 visibility", "Late disruption warning", "Procurement exposure"] },
+      TIMELINE_QUALIFIER,
+    ],
   },
   arqbanker: {
     shortLabel: "ArqBanker",
@@ -110,6 +158,10 @@ const ACCELERATORS: Record<string, PageContext> = {
       blurb:
         "a two-week diagnostic of underwriting cycle times, onboarding drop-off, AML false-positive rates, and reporting hours",
     },
+    qualifiers: [
+      { id: "area", label: "Which area first?", type: "chips", options: ["Underwriting", "Onboarding / KYC", "AML surveillance", "Regulatory reporting"] },
+      TIMELINE_QUALIFIER,
+    ],
   },
   arqforecast: {
     shortLabel: "ArqForecast",
@@ -127,6 +179,11 @@ const ACCELERATORS: Record<string, PageContext> = {
       blurb:
         "a two-week benchmark of your historical data against the current forecasting method, with an opportunity size estimate",
     },
+    qualifiers: [
+      { id: "what", label: "What are you forecasting?", type: "chips", options: ["Demand", "Inventory", "Cash flow", "Raw materials"] },
+      { id: "how", label: "How is it done today?", type: "radio", options: ["Spreadsheets", "BI tool", "Custom ML", "Vendor tool"] },
+      TIMELINE_QUALIFIER,
+    ],
   },
   arqsupport: {
     shortLabel: "ArqSupport",
@@ -144,6 +201,11 @@ const ACCELERATORS: Record<string, PageContext> = {
       blurb:
         "a two-week review of ticket categories, resolution patterns, and SLA performance showing your L1 auto-resolution opportunity",
     },
+    qualifiers: [
+      { id: "volume", label: "Tickets per month", type: "radio", options: ["Under 1k", "1k–10k", "10k–50k", "50k+"] },
+      { id: "system", label: "Ticketing system", type: "chips", options: ["ServiceNow", "Jira SM", "Zendesk", "Freshservice", "Other"] },
+      TIMELINE_QUALIFIER,
+    ],
   },
   arqdataq: {
     shortLabel: "ArqDataQ",
@@ -161,6 +223,11 @@ const ACCELERATORS: Record<string, PageContext> = {
       blurb:
         "a two-week profiling run across your critical pipelines with top issue categories ranked by business impact",
     },
+    qualifiers: [
+      { id: "stack", label: "Where does your data live?", type: "chips", options: ["Snowflake", "Databricks", "BigQuery", "Redshift", "Other"] },
+      { id: "pain", label: "Biggest pain today", type: "chips", options: ["Users find issues first", "Constant fire-fighting", "No pipeline visibility", "Governance SLAs"] },
+      TIMELINE_QUALIFIER,
+    ],
   },
   arqvantage: {
     shortLabel: "ArqVantage",
@@ -178,6 +245,11 @@ const ACCELERATORS: Record<string, PageContext> = {
       blurb:
         "a 30-day monitor of your top 50 SKUs against the top 10 competitors, with a pricing gap report and opportunity matrix",
     },
+    qualifiers: [
+      { id: "channels", label: "Where do you sell?", type: "chips", options: ["Amazon", "Walmart", "Own site", "Distributor portals"] },
+      { id: "skus", label: "SKUs to monitor", type: "radio", options: ["Under 100", "100–1k", "1k–10k", "10k+"] },
+      TIMELINE_QUALIFIER,
+    ],
   },
   arqsecops: {
     shortLabel: "ArqSecOps",
@@ -195,6 +267,11 @@ const ACCELERATORS: Record<string, PageContext> = {
       blurb:
         "a two-week review of alert volume, tooling integrations, context-assembly time, and evidence practices",
     },
+    qualifiers: [
+      { id: "siem", label: "Core SIEM", type: "chips", options: ["Splunk", "Microsoft Sentinel", "QRadar", "Other"] },
+      { id: "drain", label: "Biggest drain on the team", type: "chips", options: ["Alert volume", "Context assembly", "Shift handoffs", "Compliance evidence"] },
+      TIMELINE_QUALIFIER,
+    ],
   },
   arqeye: {
     shortLabel: "ArqEye",
@@ -212,6 +289,11 @@ const ACCELERATORS: Record<string, PageContext> = {
       blurb:
         "a two-week analysis of recent incidents, detection lag, and SLA compliance with a prioritized roadmap",
     },
+    qualifiers: [
+      { id: "stack", label: "Data platform", type: "chips", options: ["Snowflake", "Databricks", "BigQuery", "Redshift", "Other"] },
+      { id: "pain", label: "Biggest pain today", type: "chips", options: ["Late incident detection", "Unknown blast radius", "Schema drift surprises", "SLAs on paper only"] },
+      TIMELINE_QUALIFIER,
+    ],
   },
 };
 
@@ -221,12 +303,20 @@ const SERVICES: Record<string, PageContext> = {
     label: "our Workflow Strategy service",
     kind: "service",
     contact: { inquiryType: "workflow" },
+    qualifiers: [
+      { id: "goal", label: "What are you trying to figure out?", type: "chips", options: ["Where AI fits", "Business case / ROI", "Roadmap & sequencing", "Build vs buy"] },
+      TIMELINE_QUALIFIER,
+    ],
   },
   "agentic-ai-buildout": {
     shortLabel: "Agentic AI Buildout",
     label: "our Agentic AI Buildout service",
     kind: "service",
     contact: { inquiryType: "demo" },
+    qualifiers: [
+      { id: "stage", label: "Where are you today?", type: "radio", options: ["Idea stage", "Prototype exists", "A pilot that stalled", "Scaling something live"] },
+      TIMELINE_QUALIFIER,
+    ],
   },
   "enterprise-integration": {
     shortLabel: "Enterprise Integration",
@@ -234,6 +324,10 @@ const SERVICES: Record<string, PageContext> = {
     kind: "service",
     contact: { inquiryType: "integration" },
     engage: { workflowArea: "enterprise-integration" },
+    qualifiers: [
+      { id: "systems", label: "What needs connecting?", type: "chips", options: ["CRM", "ERP", "Data warehouse", "Ticketing / ITSM", "Legacy / core systems"] },
+      TIMELINE_QUALIFIER,
+    ],
   },
   "governance-by-design": {
     shortLabel: "Governance by Design",
@@ -241,18 +335,30 @@ const SERVICES: Record<string, PageContext> = {
     kind: "service",
     contact: { inquiryType: "governance" },
     engage: { workflowArea: "governance" },
+    qualifiers: [
+      { id: "driver", label: "What's driving it?", type: "chips", options: ["Upcoming audit", "Regulator expectations", "Board mandate", "Scaling AI safely"] },
+      TIMELINE_QUALIFIER,
+    ],
   },
   "vertical-acceleration": {
     shortLabel: "Vertical Acceleration",
     label: "our Vertical Acceleration service",
     kind: "service",
     contact: { inquiryType: "workflow" },
+    qualifiers: [
+      { id: "domain", label: "Which domain?", type: "chips", options: ["Healthcare claims", "Loyalty", "Supply chain", "Banking ops", "Other"] },
+      TIMELINE_QUALIFIER,
+    ],
   },
   "managed-ai-operations": {
     shortLabel: "Managed AI Operations",
     label: "our Managed AI Operations service",
     kind: "service",
     contact: { inquiryType: "managed_ops" },
+    qualifiers: [
+      { id: "today", label: "What's running today?", type: "radio", options: ["Nothing yet", "A pilot in production", "Several AI workflows", "Inherited / unmanaged AI"] },
+      TIMELINE_QUALIFIER,
+    ],
   },
 };
 
@@ -263,6 +369,10 @@ const INDUSTRIES: Record<string, PageContext> = {
     kind: "industry",
     contact: { inquiryType: "workflow", industry: "Banking" },
     engage: { industry: "banking" },
+    qualifiers: [
+      { id: "area", label: "Which area?", type: "chips", options: ["Underwriting", "KYC / onboarding", "AML & financial crime", "Reporting", "Customer operations"] },
+      TIMELINE_QUALIFIER,
+    ],
   },
   "healthcare-payers": {
     shortLabel: "Healthcare Payers",
@@ -270,6 +380,10 @@ const INDUSTRIES: Record<string, PageContext> = {
     kind: "industry",
     contact: { inquiryType: "workflow", industry: "Healthcare payer" },
     engage: { industry: "healthcare-payers" },
+    qualifiers: [
+      { id: "area", label: "Which area?", type: "chips", options: ["Payment integrity / FWA", "Claims triage", "Member services", "Provider operations"] },
+      TIMELINE_QUALIFIER,
+    ],
   },
   "insurance-carriers": {
     shortLabel: "Insurance Carriers",
@@ -277,6 +391,10 @@ const INDUSTRIES: Record<string, PageContext> = {
     kind: "industry",
     contact: { inquiryType: "workflow", industry: "Insurance carrier" },
     engage: { industry: "insurance-carriers" },
+    qualifiers: [
+      { id: "area", label: "Which area?", type: "chips", options: ["Claims triage", "Fraud / leakage", "Underwriting", "Policy servicing"] },
+      TIMELINE_QUALIFIER,
+    ],
   },
   manufacturing: {
     shortLabel: "Manufacturing",
@@ -284,6 +402,10 @@ const INDUSTRIES: Record<string, PageContext> = {
     kind: "industry",
     contact: { inquiryType: "workflow", industry: "Manufacturing" },
     engage: { industry: "manufacturing" },
+    qualifiers: [
+      { id: "area", label: "Which area?", type: "chips", options: ["Supplier risk", "Demand forecasting", "Procurement", "Quality"] },
+      TIMELINE_QUALIFIER,
+    ],
   },
   retail: {
     shortLabel: "Retail",
@@ -291,6 +413,10 @@ const INDUSTRIES: Record<string, PageContext> = {
     kind: "industry",
     contact: { inquiryType: "workflow", industry: "Retail" },
     engage: { industry: "retail" },
+    qualifiers: [
+      { id: "area", label: "Which area?", type: "chips", options: ["Loyalty", "Pricing", "Demand forecasting", "Customer service"] },
+      TIMELINE_QUALIFIER,
+    ],
   },
 };
 
@@ -314,7 +440,74 @@ export function getPageContext(path: string | null | undefined): PageContext | n
       label: "an engagement similar to the case study you just read",
       kind: "case-study",
       contact: { inquiryType: "workflow" },
+      qualifiers: [
+        { id: "interest", label: "What caught your eye?", type: "chips", options: ["We have a similar problem", "The approach", "The numbers", "Just exploring"] },
+        TIMELINE_QUALIFIER,
+      ],
     };
   }
   return null;
 }
+
+// ============================================================
+// Generic intents — shown when the visitor arrives with no context.
+// One friendly chooser; picking an intent reveals its 1–2 questions.
+// ============================================================
+
+export type GenericIntent = {
+  id: string;
+  label: string;
+  inquiryType: string;
+  workflowArea: string;
+  qualifiers: Qualifier[];
+  /** When set, this intent routes elsewhere instead of showing questions. */
+  routeTo?: { href: string; label: string };
+};
+
+export const genericIntents: GenericIntent[] = [
+  {
+    id: "accelerator",
+    label: "An accelerator I read about",
+    inquiryType: "workflow",
+    workflowArea: "Accelerator interest",
+    qualifiers: [
+      { id: "which", label: "Which one?", type: "chips", options: ["ArqFWA", "ArqLoyalty", "ArqLogistics", "ArqBanker", "ArqForecast", "ArqSupport", "ArqDataQ", "ArqVantage", "ArqSecOps", "ArqEye", "Not sure yet"] },
+      TIMELINE_QUALIFIER,
+    ],
+  },
+  {
+    id: "workflow",
+    label: "Modernizing a workflow",
+    inquiryType: "workflow",
+    workflowArea: "Workflow modernization",
+    qualifiers: [
+      { id: "area", label: "What kind of work?", type: "chips", options: ["Claims / documents", "Fraud & risk", "Customer operations", "Supply chain", "Data & analytics", "Security operations", "Other"] },
+      TIMELINE_QUALIFIER,
+    ],
+  },
+  {
+    id: "governance",
+    label: "AI governance & risk",
+    inquiryType: "governance",
+    workflowArea: "AI governance",
+    qualifiers: [
+      { id: "driver", label: "What's driving it?", type: "chips", options: ["Upcoming audit", "Regulator expectations", "Board mandate", "Scaling AI safely"] },
+      TIMELINE_QUALIFIER,
+    ],
+  },
+  {
+    id: "partnership",
+    label: "Partnership",
+    inquiryType: "general",
+    workflowArea: "Partnership",
+    qualifiers: [],
+    routeTo: { href: "/partners", label: "Use the partner intake — it goes straight to the right team" },
+  },
+  {
+    id: "other",
+    label: "Something else",
+    inquiryType: "general",
+    workflowArea: "General inquiry",
+    qualifiers: [TIMELINE_QUALIFIER],
+  },
+];
