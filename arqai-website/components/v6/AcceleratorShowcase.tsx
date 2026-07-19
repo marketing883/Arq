@@ -22,9 +22,6 @@ import {
 
 const PLACEHOLDER_VIDEO = "/v5/assets/ufsUXNNTVPKgg5ZhfzY4DHtmrKY.mp4";
 
-const unsplash = (id: string, w = 1400) =>
-  `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=80`;
-
 type MainItem = {
   id: string;
   name: string;
@@ -34,7 +31,6 @@ type MainItem = {
   href: string;
   videoSrc: string;
   imageUrl: string;
-  /** Duotone overlay colors [from, to] that tint the photo toward the card's palette. */
   duo: [string, string];
 };
 
@@ -59,8 +55,8 @@ const MAINS: Record<string, MainItem> = {
     stat: { value: "$3.2M", label: "surfaced in one Blind Spot Assessment" },
     href: "/accelerators/arqfwa",
     videoSrc: PLACEHOLDER_VIDEO,
-    imageUrl: unsplash("photo-1530026405186-ed1f139313f8"),
-    duo: ["#052e2a", "#0a5c46"],
+    imageUrl: "/img/accelerators/ArqFWA.webp",
+    duo: ["#041828", "#082838"],
   },
   arqloyalty: {
     id: "arqloyalty",
@@ -70,8 +66,8 @@ const MAINS: Record<string, MainItem> = {
     stat: { value: "Zero", label: "migration risk at cut-over" },
     href: "/accelerators/arqloyalty",
     videoSrc: PLACEHOLDER_VIDEO,
-    imageUrl: unsplash("photo-1563245372-f21724e3856d"),
-    duo: ["#4a0f3a", "#7a2f14"],
+    imageUrl: "/img/accelerators/ArqLoyalty.webp",
+    duo: ["#180828", "#2e1238"],
   },
   arqvantage: {
     id: "arqvantage",
@@ -81,8 +77,8 @@ const MAINS: Record<string, MainItem> = {
     stat: { value: "<5 min", label: "designed response to a price move" },
     href: "/accelerators/arqvantage",
     videoSrc: PLACEHOLDER_VIDEO,
-    imageUrl: unsplash("photo-1519501025264-65ba15a82390"),
-    duo: ["#1a1040", "#4a1050"],
+    imageUrl: "/img/accelerators/ArqVantage.webp",
+    duo: ["#0e0c30", "#201848"],
   },
 };
 
@@ -94,8 +90,8 @@ const SECONDARIES: Record<string, SecondaryItem> = {
     tagline: "AI-native underwriting, onboarding, AML, and compliance.",
     more: "Engineered for faster underwriting, sharply reduced KYC manual review, and higher fraud-detection precision — with explainable reasoning on every decision.",
     href: "/accelerators/arqbanker",
-    tint: "#26333f",
-    imageUrl: unsplash("photo-1486406146926-c627a92ad1ab"),
+    tint: "#1c2838",
+    imageUrl: "/img/accelerators/ArqBanker.webp",
     icon: <Landmark size={18} strokeWidth={1.5} />,
   },
   arqsupport: {
@@ -105,8 +101,8 @@ const SECONDARIES: Record<string, SecondaryItem> = {
     tagline: "Agentic L1/L2/L3 triage and auto-resolution.",
     more: "Built to resolve 40–60% of L1 tickets autonomously from your knowledge base — designed to prevent SLA breaches rather than report them.",
     href: "/accelerators/arqsupport",
-    tint: "#333044",
-    imageUrl: unsplash("photo-1451187580459-43490279c0fa"),
+    tint: "#1e1838",
+    imageUrl: "/img/accelerators/ArqSupport.webp",
     icon: <Headset size={18} strokeWidth={1.5} />,
   },
 };
@@ -193,13 +189,14 @@ function MainCard({
         decoding="async"
         className="kenburns absolute inset-0 h-full w-full object-cover opacity-80 saturate-[1.15]"
       />
-      {/* Cinematic layers: base dim, drifting particles, shimmer sweep */}
+      {/* Cinematic layers: duotone tint, vignette, particles, shimmer */}
       <span
-        className="absolute inset-0 mix-blend-multiply opacity-80"
-        style={{ background: `linear-gradient(150deg, ${item.duo[0]} 0%, transparent 48%, ${item.duo[1]} 100%)` }}
+        className="absolute inset-0 mix-blend-multiply opacity-85"
+        style={{ background: `linear-gradient(150deg, ${item.duo[0]} 0%, transparent 42%, ${item.duo[1]} 100%)` }}
         aria-hidden="true"
       />
-      <span className="absolute inset-0 bg-black/25" aria-hidden="true" />
+      <span className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_25%,transparent_15%,rgba(0,0,0,0.5)_100%)]" aria-hidden="true" />
+      <span className="absolute inset-0 bg-black/20" aria-hidden="true" />
       <span className="v6-particles absolute inset-0" aria-hidden="true" />
       <span className="v6-sheen absolute inset-0" aria-hidden="true" />
 
@@ -513,11 +510,12 @@ export default function AcceleratorShowcase() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={item.imageUrl} alt="" loading="lazy" decoding="async" className="absolute inset-0 h-full w-full object-cover opacity-85 saturate-[1.15]" />
               <span
-                className="absolute inset-0 mix-blend-multiply opacity-80"
-                style={{ background: `linear-gradient(150deg, ${item.duo[0]} 0%, transparent 48%, ${item.duo[1]} 100%)` }}
+                className="absolute inset-0 mix-blend-multiply opacity-85"
+                style={{ background: `linear-gradient(150deg, ${item.duo[0]} 0%, transparent 42%, ${item.duo[1]} 100%)` }}
                 aria-hidden="true"
               />
-              <span className="absolute inset-0 bg-black/25" aria-hidden="true" />
+              <span className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_25%,transparent_15%,rgba(0,0,0,0.45)_100%)]" aria-hidden="true" />
+              <span className="absolute inset-0 bg-black/20" aria-hidden="true" />
               <span className="v6-particles absolute inset-0" aria-hidden="true" />
               <span className="v6-sheen absolute inset-0" aria-hidden="true" />
               {activeMain === item.id && (

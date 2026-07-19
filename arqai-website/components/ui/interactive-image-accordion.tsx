@@ -20,9 +20,6 @@ export type ImageAccordionItem = {
   duo: [string, string];
 };
 
-const unsplash = (id: string, w = 1200) =>
-  `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=80`;
-
 const HERO_VIDEO = "/v5/assets/ufsUXNNTVPKgg5ZhfzY4DHtmrKY.mp4";
 const HERO_POSTER = "/v5/assets/pR0DzH2JNZa0vnz4l8WJLxvUKA.jpg";
 
@@ -33,8 +30,8 @@ export const defaultAccordionItems: ImageAccordionItem[] = [
     tag: "Payment Integrity",
     description:
       "Surfaces the claims most likely to be fraud, waste, or abuse — with evidence investigators can defend.",
-    imageUrl: unsplash("photo-1530026405186-ed1f139313f8"),
-    duo: ["#052e2a", "#0a5c46"],
+    imageUrl: "/img/accelerators/ArqFWA.webp",
+    duo: ["#041828", "#082838"],
     href: "/accelerators/arqfwa",
   },
   {
@@ -43,8 +40,8 @@ export const defaultAccordionItems: ImageAccordionItem[] = [
     tag: "Loyalty Modernization",
     description:
       "Replace your loyalty platform with parity proven daily. Zero migration risk at cut-over.",
-    imageUrl: unsplash("photo-1563245372-f21724e3856d"),
-    duo: ["#4a0f3a", "#7a2f14"],
+    imageUrl: "/img/accelerators/ArqLoyalty.webp",
+    duo: ["#180828", "#2e1238"],
     href: "/accelerators/arqloyalty",
   },
   {
@@ -53,8 +50,8 @@ export const defaultAccordionItems: ImageAccordionItem[] = [
     tag: "Pricing Intelligence",
     description:
       "Reads why competitor prices moved and reprices within your guardrails, with MAP enforced automatically.",
-    imageUrl: unsplash("photo-1519501025264-65ba15a82390"),
-    duo: ["#1a1040", "#4a1050"],
+    imageUrl: "/img/accelerators/ArqVantage.webp",
+    duo: ["#0e0c30", "#201848"],
     href: "/accelerators/arqvantage",
   },
   {
@@ -63,8 +60,8 @@ export const defaultAccordionItems: ImageAccordionItem[] = [
     tag: "Banking Operations",
     description:
       "Underwriting, KYC, AML, and regulatory reporting — with explainable reasoning on every decision.",
-    imageUrl: unsplash("photo-1486406146926-c627a92ad1ab"),
-    duo: ["#0a1230", "#1c1a4e"],
+    imageUrl: "/img/accelerators/ArqBanker.webp",
+    duo: ["#0a1430", "#162040"],
     href: "/accelerators/arqbanker",
   },
   {
@@ -73,8 +70,8 @@ export const defaultAccordionItems: ImageAccordionItem[] = [
     tag: "Service Management",
     description:
       "Agentic L1/L2/L3 ticket triage and auto-resolution, with SLA breaches prevented rather than reported.",
-    imageUrl: unsplash("photo-1451187580459-43490279c0fa"),
-    duo: ["#241a3e", "#31304a"],
+    imageUrl: "/img/accelerators/ArqSupport.webp",
+    duo: ["#120e30", "#1e1840"],
     href: "/accelerators/arqsupport",
   },
 ];
@@ -115,16 +112,21 @@ function AccordionPanel({ item, isActive, onActivate }: AccordionPanelProps) {
       />
       {/* Duotone tint toward the accelerator's palette */}
       <div
-        className="absolute inset-0 mix-blend-multiply opacity-75"
-        style={{ background: `linear-gradient(160deg, ${item.duo[0]} 0%, transparent 50%, ${item.duo[1]} 100%)` }}
+        className="absolute inset-0 mix-blend-multiply opacity-80"
+        style={{ background: `linear-gradient(160deg, ${item.duo[0]} 0%, transparent 45%, ${item.duo[1]} 100%)` }}
+        aria-hidden="true"
+      />
+      {/* Radial vignette for depth */}
+      <div
+        className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_30%,transparent_20%,rgba(0,0,0,0.5)_100%)]"
         aria-hidden="true"
       />
       {/* Dark overlay for legibility */}
       <div
         className={`absolute inset-0 transition-colors duration-700 ${
           isActive
-            ? "bg-gradient-to-t from-black/80 via-black/25 to-black/10"
-            : "bg-black/45"
+            ? "bg-gradient-to-t from-black/85 via-black/30 to-black/10"
+            : "bg-black/50"
         }`}
       />
 
@@ -183,11 +185,12 @@ function MobileAccordionCard({ item, wide }: { item: ImageAccordionItem; wide?: 
         }}
       />
       <div
-        className="absolute inset-0 mix-blend-multiply opacity-75"
-        style={{ background: `linear-gradient(160deg, ${item.duo[0]} 0%, transparent 50%, ${item.duo[1]} 100%)` }}
+        className="absolute inset-0 mix-blend-multiply opacity-80"
+        style={{ background: `linear-gradient(160deg, ${item.duo[0]} 0%, transparent 45%, ${item.duo[1]} 100%)` }}
         aria-hidden="true"
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-black/10" aria-hidden="true" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_30%,transparent_20%,rgba(0,0,0,0.45)_100%)]" aria-hidden="true" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/10" aria-hidden="true" />
       <span className="absolute inset-x-0 bottom-0 p-4">
         <span className="block text-[10.5px] font-semibold uppercase tracking-[0.14em] text-[#d0f438]">
           {item.tag}
