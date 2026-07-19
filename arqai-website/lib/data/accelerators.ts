@@ -57,8 +57,8 @@ export const accelerators: Accelerator[] = [
     summary:
       "ArqFWA is a payment-integrity intelligence layer for healthcare payers. It correlates claims, provider, policy, and member signals to surface high-value fraud, waste, and abuse cases — each with the evidence trail investigators need to act and defend.",
     builtFor: "Healthcare payers, TPAs, PBMs, and program-integrity teams",
-    image: "/v5/assets/accel/arqfwa.jpg",
-    heroImage: img("photo-1576091160550-2173dba999ef", 1600),
+    image: "/img/accelerators/ArqFWA.webp",
+    heroImage: "/img/accelerators/ArqFWA.webp",
     secondaryImage: img("photo-1517120026326-d87759a7b63b", 1920),
     tertiaryImage: img("photo-1516549655169-df83a0774514", 800),
     overview:
@@ -188,8 +188,8 @@ export const accelerators: Accelerator[] = [
     summary:
       "ArqLoyalty is a modern AI-governed loyalty engine adopted without migration risk: it runs in shadow beside your incumbent system, proves penny-for-penny parity every day, and cuts over one capability at a time on your timeline.",
     builtFor: "Fuel & convenience, hospitality, malls, and any loyalty operator",
-    image: "/v5/assets/accel/arqloyalty.jpg",
-    heroImage: img("photo-1481437156560-3205f6a55735", 1600),
+    image: "/img/accelerators/ArqLoyalty.webp",
+    heroImage: "/img/accelerators/ArqLoyalty.webp",
     secondaryImage: img("photo-1483985988355-763728e1935b", 1920),
     tertiaryImage: img("photo-1556742502-ec7c0e9f34b1", 800),
     overview:
@@ -443,8 +443,8 @@ export const accelerators: Accelerator[] = [
     summary:
       "ArqBanker is an AI-native operations layer for banking institutions that automates underwriting, customer onboarding, AML surveillance, and regulatory reporting — with explainable reasoning on every decision.",
     builtFor: "Retail banks, credit unions, digital lenders, neo-banks, and insurance carriers",
-    image: "/v5/assets/accel/arqbanker.jpg",
-    heroImage: img("photo-1582139329536-e7284fece509", 1600),
+    image: "/img/accelerators/ArqBanker.webp",
+    heroImage: "/img/accelerators/ArqBanker.webp",
     secondaryImage: img("photo-1592698765727-387c9464cd7f", 1920),
     tertiaryImage: img("photo-1616803140344-6682afb13cda", 800),
     overview:
@@ -703,8 +703,8 @@ export const accelerators: Accelerator[] = [
     summary:
       "ArqSupport is a multi-agent platform for intelligent ticket triage, automated resolution, and proactive SLA management — resolving L1 tickets autonomously, assisting L2 with drafts and context, and escalating L3 with full context assembled.",
     builtFor: "IT operations, shared services, HR ops, finance ops, and any support team",
-    image: "/v5/assets/accel/arqsupport.jpg",
-    heroImage: img("photo-1497366754035-f200968a6e72", 1600),
+    image: "/img/accelerators/ArqSupport.webp",
+    heroImage: "/img/accelerators/ArqSupport.webp",
     secondaryImage: img("photo-1556761175-4b46a572b786", 1920),
     tertiaryImage: img("photo-1531973576160-7125cd663d86", 800),
     overview:
@@ -957,8 +957,8 @@ export const accelerators: Accelerator[] = [
     summary:
       "ArqVantage monitors competitor SKUs in real time, interprets why prices moved using LLM reasoning, and reprices within governance guardrails — with MAP compliance enforced automatically and a full audit trail on every pricing decision.",
     builtFor: "E-commerce brands, manufacturers, revenue management teams, and marketplace sellers",
-    image: "/v5/assets/accel/arqvantage.jpg",
-    heroImage: img("photo-1460925895917-afdab827c52f", 1600),
+    image: "/img/accelerators/ArqVantage.webp",
+    heroImage: "/img/accelerators/ArqVantage.webp",
     secondaryImage: img("photo-1551288049-bebda4e38f71", 1920),
     tertiaryImage: img("photo-1543286386-713bdd548da4", 800),
     overview:
