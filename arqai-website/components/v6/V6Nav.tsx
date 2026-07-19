@@ -388,10 +388,10 @@ export default function V6Nav() {
     >
       {/* Bar */}
       <div
-        className={`w-full border-b transition-all duration-300 ${
+        className={`w-full border-b transition-all duration-300 backdrop-blur-xl ${
           solid
-            ? "border-gray-900/10 bg-white/95 shadow-[0_18px_50px_-32px_rgba(22,31,61,0.4)] backdrop-blur-xl"
-            : "border-transparent bg-transparent"
+            ? "border-gray-900/10 bg-white/95 shadow-[0_18px_50px_-32px_rgba(22,31,61,0.4)]"
+            : "border-transparent bg-white/80"
         }`}
         onMouseEnter={cancelClose}
       >
