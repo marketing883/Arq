@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
-import V5CtaSection from "@/components/home-v5/V5CtaSection";
-import { ArrowRight } from "@/components/home-v5/icons";
+import ClosingCta from "@/components/v6/ClosingCta";
 
 export const metadata: Metadata = {
   title: "How We Work",
@@ -108,17 +106,11 @@ export default function HowWeWorkPage() {
       </section>
 
       {/* CTA band */}
-      <V5CtaSection>
-            <h2 className="v5-h2">Tell us what your operation needs.</h2>
-            <p className="v5-lead">
-              We&apos;ll tell you what&apos;s honestly possible. In plain language. Without a deck.
-            </p>
-            <div className="v5-cta-card-actions">
-              <Link href="/engage-us" className="v5-btn v5-btn-primary">
-                Get Started <ArrowRight />
-              </Link>
-            </div>
-      </V5CtaSection>
+      <ClosingCta
+        heading="Tell us what your operation needs."
+        sub="We'll tell you what's honestly possible. In plain language. Without a deck."
+        ctaLabel="Get Started"
+      />
     </V5SiteLayout>
   );
 }

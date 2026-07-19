@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Metadata } from "next";
 import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
-import V5CtaSection from "@/components/home-v5/V5CtaSection";
+import ClosingCta from "@/components/v6/ClosingCta";
 import { ArrowRight } from "@/components/home-v5/icons";
 
 export const metadata: Metadata = {
@@ -130,18 +130,11 @@ export default function ResourcesPage() {
       </section>
 
       {/* CTA band */}
-      <V5CtaSection>
-            <h2 className="v5-h2">Want a sharper point of view for your workflow?</h2>
-            <p className="v5-lead">
-              Bring us the workflow, the systems involved, and the decision your team wants to improve. We will help
-              turn the question into a buildable path.
-            </p>
-            <div className="v5-cta-card-actions">
-              <Link href="/engage-us" className="v5-btn v5-btn-primary">
-                Get Started <ArrowRight />
-              </Link>
-            </div>
-      </V5CtaSection>
+      <ClosingCta
+        heading="Want a sharper point of view for your workflow?"
+        sub="Bring us the workflow, the systems involved, and the decision your team wants to improve. We will help turn the question into a buildable path."
+        ctaLabel="Get Started"
+      />
     </V5SiteLayout>
   );
 }

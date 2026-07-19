@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Metadata } from "next";
 import { PlatformStructuredData } from "@/components/seo/StructuredData";
 import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
-import V5CtaSection from "@/components/home-v5/V5CtaSection";
+import ClosingCta from "@/components/v6/ClosingCta";
 import FAQStatic from "@/components/home-v5/FAQStatic";
 import { ArrowRight, ArrowUpRight } from "@/components/home-v5/icons";
 
@@ -236,21 +236,12 @@ export default function PlatformPage() {
       />
 
       {/* CTA band */}
-      <V5CtaSection>
-            <h2 className="v5-h2">Bring us the workflow that should be operating differently.</h2>
-            <p className="v5-lead">
-              We will map the operating fabric around it: the systems, evidence, risk
-              boundaries, users, approvals, integrations, and first release path.
-            </p>
-            <div className="v5-cta-card-actions">
-              <Link href="/engage-us" className="v5-btn v5-btn-primary">
-                Get Started <ArrowRight />
-              </Link>
-              <Link href="/services" className="v5-btn v5-btn-ghost">
-                View services
-              </Link>
-            </div>
-      </V5CtaSection>
+      <ClosingCta
+        heading={<>Bring us the workflow that should be operating differently.</>}
+        sub="We will map the operating fabric around it: the systems, evidence, risk boundaries, users, approvals, integrations, and first release path."
+        secondaryLabel="View services"
+        secondaryHref="/services"
+      />
     </V5SiteLayout>
   );
 }

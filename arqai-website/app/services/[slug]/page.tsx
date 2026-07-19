@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
-import V5CtaSection from "@/components/home-v5/V5CtaSection";
+import ClosingCta from "@/components/v6/ClosingCta";
 import { ArrowRight, SparkIcon, ShieldIcon, InsightIcon, DocIcon, ChatIcon } from "@/components/home-v5/icons";
 import { getService, services } from "@/lib/data/services";
 import { generateServiceSchema, generateBreadcrumbSchema } from "@/lib/seo/structured-data";
@@ -343,18 +343,12 @@ export default function ServiceDetailPage({ params }: ServicePageProps) {
       </section>
 
       {/* CTA band */}
-      <V5CtaSection>
-            <h2 className="v5-h2">{service.cta.heading}</h2>
-            <p className="v5-lead">{service.cta.body}</p>
-            <div className="v5-cta-card-actions">
-              <Link href="/engage-us" className="v5-btn v5-btn-primary">
-                Get Started <ArrowRight />
-              </Link>
-              <Link href="/services" className="v5-btn v5-btn-ghost">
-                All services
-              </Link>
-            </div>
-      </V5CtaSection>
+      <ClosingCta
+        heading={<>{service.cta.heading}</>}
+        sub={service.cta.body}
+        secondaryLabel="All services"
+        secondaryHref="/services"
+      />
     </V5SiteLayout>
   );
 }

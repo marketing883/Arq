@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Metadata } from "next";
 import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
-import V5CtaSection from "@/components/home-v5/V5CtaSection";
+import ClosingCta from "@/components/v6/ClosingCta";
 import { ArrowRight, ArrowUpRight } from "@/components/home-v5/icons";
 import {
   accelerators,
@@ -273,20 +273,11 @@ export default function AcceleratorsPage() {
         </div>
       </section>
 
-      {/* CTA band */}
-      <V5CtaSection>
-            <h2 className="v5-h2">Put an accelerator to work.</h2>
-            <p className="v5-lead">
-              Start with a fit check. We compare your workflow, data, and controls against the
-              accelerator before recommending a rollout path — and show where bespoke
-              engineering is the better answer.
-            </p>
-            <div className="v5-cta-card-actions">
-              <Link href="/engage-us" className="v5-btn v5-btn-primary">
-                Book a fit check <ArrowRight />
-              </Link>
-            </div>
-      </V5CtaSection>
+      <ClosingCta
+        heading="Put an accelerator to work."
+        sub="Start with a fit check. We compare your workflow, data, and controls against the accelerator before recommending a rollout path — and show where bespoke engineering is the better answer."
+        ctaLabel="Book a fit check"
+      />
     </V5SiteLayout>
   );
 }

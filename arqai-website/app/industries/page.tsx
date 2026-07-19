@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
 import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
-import V5CtaSection from "@/components/home-v5/V5CtaSection";
+import ClosingCta from "@/components/v6/ClosingCta";
 import FAQStatic from "@/components/home-v5/FAQStatic";
 import { SolutionsStructuredData } from "@/components/seo/StructuredData";
 
@@ -219,21 +219,13 @@ export default function IndustriesPage() {
         withSchema={false}
       />
 
-      <V5CtaSection>
-            <h2 className="v5-h2">Tell us how the work really runs in your industry.</h2>
-            <p className="v5-lead">
-              We will map the workflow, the systems, the evidence, and the review paths, then
-              shape governed AI around the operating terrain you already know.
-            </p>
-            <div className="v5-cta-card-actions">
-              <Link href="/engage-us" className="v5-btn v5-btn-primary">
-                Get Started <ArrowRight />
-              </Link>
-              <Link href="/accelerators" className="v5-btn v5-btn-ghost">
-                View accelerators
-              </Link>
-            </div>
-      </V5CtaSection>
+      <ClosingCta
+        heading="Tell us how the work really runs in your industry."
+        sub="We will map the workflow, the systems, the evidence, and the review paths, then shape governed AI around the operating terrain you already know."
+        ctaLabel="Get Started"
+        secondaryLabel="View accelerators"
+        secondaryHref="/accelerators"
+      />
     </V5SiteLayout>
   );
 }

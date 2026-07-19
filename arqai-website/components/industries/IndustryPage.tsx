@@ -1,9 +1,10 @@
 import Link from "next/link";
-import V5Nav from "@/components/home-v5/V5Nav";
-import Footer from "@/components/home-v5/Footer";
-import V5CtaSection from "@/components/home-v5/V5CtaSection";
+import V6Nav from "@/components/v6/V6Nav";
+import V6Footer from "@/components/v6/V6Footer";
+import ClosingCta from "@/components/v6/ClosingCta";
 import { ArrowRight } from "@/components/home-v5/icons";
 import { getAccelerator } from "@/lib/data/accelerators";
+import "@/components/v6/v6.css";
 import "@/components/home-v5/styles.css";
 
 // Serve big decorative images straight from the Unsplash CDN.
@@ -65,7 +66,7 @@ export function IndustryPage({ data }: { data: IndustryPageData }) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         {...({ imageSrcSet: cdnSrcSet(data.heroImage, [960, 1280, 1600, 1920]), imageSizes: "100vw", fetchPriority: "high" } as any)}
       />
-      <V5Nav />
+      <V6Nav />
       <main>
         {/* Hero — full-bleed image, animated overlay, content on top */}
         <section className="v5-acc-hero">
@@ -238,18 +239,14 @@ export function IndustryPage({ data }: { data: IndustryPageData }) {
           </section>
         ) : null}
 
-        {/* Closing CTA */}
-        <V5CtaSection>
-              <h2 className="v5-h2">{data.closingCta.headline}</h2>
-              <p className="v5-lead">{data.closingCta.body}</p>
-              <div className="v5-cta-card-actions">
-                <Link href={contactHref} className="v5-btn v5-btn-primary">
-                  {ctaLabel} <ArrowRight />
-                </Link>
-              </div>
-        </V5CtaSection>
+        <ClosingCta
+          heading={data.closingCta.headline}
+          sub={data.closingCta.body}
+          ctaLabel={ctaLabel}
+          ctaHref={contactHref}
+        />
       </main>
-      <Footer />
+      <V6Footer />
     </div>
   );
 }

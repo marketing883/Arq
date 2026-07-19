@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
-import V5CtaSection from "@/components/home-v5/V5CtaSection";
-import { ArrowRight } from "@/components/home-v5/icons";
+import ClosingCta from "@/components/v6/ClosingCta";
 
 export const metadata: Metadata = {
   title: "Trust",
@@ -146,15 +144,12 @@ export default function TrustPage() {
       </section>
 
       {/* CTA band */}
-      <V5CtaSection>
-            <h2 className="v5-h2">Request control documentation.</h2>
-            <p className="v5-lead">Detailed control documentation is shared under NDA.</p>
-            <div className="v5-cta-card-actions">
-              <Link href="/contact" className="v5-btn v5-btn-primary">
-                Request documentation <ArrowRight />
-              </Link>
-            </div>
-      </V5CtaSection>
+      <ClosingCta
+        heading="Request control documentation."
+        sub="Detailed control documentation is shared under NDA."
+        ctaLabel="Request documentation"
+        ctaHref="/contact"
+      />
     </V5SiteLayout>
   );
 }

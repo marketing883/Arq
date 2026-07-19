@@ -3,9 +3,10 @@
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import V5Nav from "@/components/home-v5/V5Nav";
-import Footer from "@/components/home-v5/Footer";
+import V6Nav from "@/components/v6/V6Nav";
+import V6Footer from "@/components/v6/V6Footer";
 import { ArrowRight } from "@/components/home-v5/icons";
+import "@/components/v6/v6.css";
 import "@/components/home-v5/styles.css";
 
 interface DownloadInfo {
@@ -19,7 +20,7 @@ interface DownloadInfo {
 function Loader() {
   return (
     <div className="v5-shell">
-      <V5Nav />
+      <V6Nav />
       <main>
         <section className="v5-section v5-bg-grey">
           <div className="v5-container">
@@ -29,7 +30,7 @@ function Loader() {
           </div>
         </section>
       </main>
-      <Footer />
+      <V6Footer />
     </div>
   );
 }
@@ -77,7 +78,7 @@ function ThankYouContent() {
   if (error) {
     return (
       <div className="v5-shell">
-        <V5Nav />
+        <V6Nav />
         <main>
           <section className="v5-section v5-bg-grey">
             <div className="v5-container">
@@ -93,14 +94,14 @@ function ThankYouContent() {
             </div>
           </section>
         </main>
-        <Footer />
+        <V6Footer />
       </div>
     );
   }
 
   return (
     <div className="v5-shell">
-      <V5Nav />
+      <V6Nav />
       <main>
         <section className="v5-section v5-bg-grey">
           <div className="v5-container">
@@ -143,7 +144,7 @@ function ThankYouContent() {
           </div>
         </section>
       </main>
-      <Footer />
+      <V6Footer />
     </div>
   );
 }

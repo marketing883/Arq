@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Metadata } from "next";
 import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
 import { ArrowRight } from "@/components/home-v5/icons";
-import V5CtaStandard from "@/components/home-v5/V5CtaStandard";
+import ClosingCta from "@/components/v6/ClosingCta";
 
 export const metadata: Metadata = {
   title: "Webinars",
@@ -229,7 +229,7 @@ export default async function WebinarsPage() {
           </div>
         </section>
       ) : null}
-      <V5CtaStandard
+      <ClosingCta
         heading="Prefer a conversation to a replay?"
         sub="Skip the queue — tell us about the workflow you are trying to change and a senior member of the team will follow up within one business day."
       />

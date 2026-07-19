@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { createClient } from "@supabase/supabase-js";
-import V5Nav from "@/components/home-v5/V5Nav";
-import Footer from "@/components/home-v5/Footer";
+import V6Nav from "@/components/v6/V6Nav";
+import V6Footer from "@/components/v6/V6Footer";
+import ClosingCta from "@/components/v6/ClosingCta";
 import { ArrowRight } from "@/components/home-v5/icons";
+import "@/components/v6/v6.css";
 import "@/components/home-v5/styles.css";
-import V5CtaStandard from "@/components/home-v5/V5CtaStandard";
 
 // Server-rendered so the proof section of the site is visible to crawlers
 // and answer engines (which do not execute JavaScript).
@@ -75,7 +76,7 @@ export default async function CaseStudiesPage() {
 
   return (
     <div className="v5-shell">
-      <V5Nav />
+      <V6Nav />
       <main>
         {/* Hero */}
         <section className="v5-page-hero">
@@ -139,12 +140,12 @@ export default async function CaseStudiesPage() {
             </div>
           </div>
         </section>
-        <V5CtaStandard
+        <ClosingCta
           heading="What would an assessment find in your operation?"
           sub="One engagement surfaced $3.2M a compliant-rated program had missed. Tell us about your workflow and we will scope what to look for."
         />
       </main>
-      <Footer />
+      <V6Footer />
     </div>
   );
 }

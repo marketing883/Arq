@@ -3,8 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
 import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
-import V5CtaSection from "@/components/home-v5/V5CtaSection";
-import { ArrowRight } from "@/components/home-v5/icons";
+import ClosingCta from "@/components/v6/ClosingCta";
 import { generateCaseStudySchema, generateBreadcrumbSchema } from "@/lib/seo/structured-data";
 
 function getSupabase() {
@@ -250,21 +249,14 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
       )}
 
       {/* CTA Section */}
-      <V5CtaSection>
-            <h2 className="v5-h2">Ready to Transform Your Business?</h2>
-            <p className="v5-lead">
-              See how ArqAI can help you achieve similar results with governed AI solutions.
-            </p>
-            <div className="v5-cta-card-actions">
-              <Link href="/contact" className="v5-btn v5-btn-primary">
-                Get Started
-                <ArrowRight />
-              </Link>
-              <Link href="/case-studies" className="v5-btn v5-btn-ghost">
-                View More Case Studies
-              </Link>
-            </div>
-      </V5CtaSection>
+      <ClosingCta
+        heading="Ready to Transform Your Business?"
+        sub="See how ArqAI can help you achieve similar results with governed AI solutions."
+        ctaLabel="Get Started"
+        ctaHref="/contact"
+        secondaryLabel="View More Case Studies"
+        secondaryHref="/case-studies"
+      />
     </V5SiteLayout>
   );
 }

@@ -3,11 +3,12 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import V5Nav from "@/components/home-v5/V5Nav";
-import Footer from "@/components/home-v5/Footer";
+import V6Nav from "@/components/v6/V6Nav";
+import V6Footer from "@/components/v6/V6Footer";
+import ClosingCta from "@/components/v6/ClosingCta";
 import { ArrowRight } from "@/components/home-v5/icons";
+import "@/components/v6/v6.css";
 import "@/components/home-v5/styles.css";
-import V5CtaStandard from "@/components/home-v5/V5CtaStandard";
 
 interface Whitepaper {
   id: string;
@@ -100,7 +101,7 @@ export default function WhitepapersPage() {
 
   return (
     <div className="v5-shell">
-      <V5Nav />
+      <V6Nav />
       <main>
         {/* Hero */}
         <section className="v5-page-hero">
@@ -186,7 +187,7 @@ export default function WhitepapersPage() {
             )}
           </div>
         </section>
-        <V5CtaStandard
+        <ClosingCta
           heading="Want the thinking applied, not just written down?"
           sub="Tell us which workflow should run differently and we will scope the path to production."
         />
@@ -283,7 +284,7 @@ export default function WhitepapersPage() {
         </div>
       )}
 
-      <Footer />
+      <V6Footer />
     </div>
   );
 }

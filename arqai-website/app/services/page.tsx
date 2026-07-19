@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
 import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
-import V5CtaSection from "@/components/home-v5/V5CtaSection";
+import ClosingCta from "@/components/v6/ClosingCta";
 import { ArrowRight } from "@/components/home-v5/icons";
 import { services } from "@/lib/data/services";
 
@@ -137,22 +137,12 @@ export default function ServicesPage() {
       </section>
 
       {/* CTA band */}
-      <V5CtaSection>
-            <h2 className="v5-h2">Start with the workflow that needs to change.</h2>
-            <p className="v5-lead">
-              We will help decide whether the right path is a strategy sprint, a bespoke
-              agentic build, an accelerator, or managed operations around an existing
-              production workflow.
-            </p>
-            <div className="v5-cta-card-actions">
-              <Link href="/engage-us" className="v5-btn v5-btn-primary">
-                Get Started <ArrowRight />
-              </Link>
-              <Link href="/accelerators" className="v5-btn v5-btn-ghost">
-                Explore accelerators
-              </Link>
-            </div>
-      </V5CtaSection>
+      <ClosingCta
+        heading={<>Start with the workflow that needs to change.</>}
+        sub="We will help decide whether the right path is a strategy sprint, a bespoke agentic build, an accelerator, or managed operations around an existing production workflow."
+        secondaryLabel="Explore accelerators"
+        secondaryHref="/accelerators"
+      />
     </V5SiteLayout>
   );
 }

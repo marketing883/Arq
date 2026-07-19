@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import V5Nav from "@/components/home-v5/V5Nav";
-import Footer from "@/components/home-v5/Footer";
+import V6Nav from "@/components/v6/V6Nav";
+import V6Footer from "@/components/v6/V6Footer";
+import ClosingCta from "@/components/v6/ClosingCta";
 import { trackGenerateLead } from "@/lib/analytics/gtm-events";
+import "@/components/v6/v6.css";
 import "@/components/home-v5/styles.css";
-import V5CtaStandard from "@/components/home-v5/V5CtaStandard";
 
 const partnerModels = [
   {
@@ -136,7 +137,7 @@ export default function PartnersPage() {
 
   return (
     <div className="v5-shell">
-      <V5Nav />
+      <V6Nav />
       <main>
         {/* Hero */}
         <section className="v5-page-hero">
@@ -354,12 +355,12 @@ export default function PartnersPage() {
             </div>
           </div>
         </section>
-        <V5CtaStandard
+        <ClosingCta
           heading="Rather engage us directly?"
           sub="If a partnership isn't the right shape yet, bring us the workflow instead — a senior member of the team follows up within one business day."
         />
       </main>
-      <Footer />
+      <V6Footer />
     </div>
   );
 }

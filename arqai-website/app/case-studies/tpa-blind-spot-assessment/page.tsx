@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
-import V5CtaSection from "@/components/home-v5/V5CtaSection";
+import ClosingCta from "@/components/v6/ClosingCta";
 import { ArrowRight } from "@/components/home-v5/icons";
 import { generateBreadcrumbSchema } from "@/lib/seo/structured-data";
 
@@ -268,22 +268,13 @@ export default function TpaBlindSpotCaseStudy() {
       </section>
 
       {/* CTA */}
-      <V5CtaSection>
-        <h2 className="v5-h2">What would an assessment find in your claims data?</h2>
-        <p className="v5-lead">
-          If your payment-integrity program has been running on the same rules for
-          years, the honest answer is: nobody knows yet. A Blind Spot Assessment is
-          the fastest way to find out.
-        </p>
-        <div className="v5-cta-card-actions">
-          <Link href="/engage-us" className="v5-btn v5-btn-primary">
-            Request an assessment <ArrowRight />
-          </Link>
-          <Link href="/accelerators/arqfwa" className="v5-btn v5-btn-ghost">
-            Explore ArqFWA
-          </Link>
-        </div>
-      </V5CtaSection>
+      <ClosingCta
+        heading="What would an assessment find in your claims data?"
+        sub="If your payment-integrity program has been running on the same rules for years, the honest answer is: nobody knows yet. A Blind Spot Assessment is the fastest way to find out."
+        ctaLabel="Request an assessment"
+        secondaryLabel="Explore ArqFWA"
+        secondaryHref="/accelerators/arqfwa"
+      />
     </V5SiteLayout>
   );
 }

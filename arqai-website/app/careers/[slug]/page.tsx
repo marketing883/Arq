@@ -2,10 +2,11 @@
 
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
-import V5Nav from "@/components/home-v5/V5Nav";
-import Footer from "@/components/home-v5/Footer";
+import V6Nav from "@/components/v6/V6Nav";
+import V6Footer from "@/components/v6/V6Footer";
 import { ArrowRight } from "@/components/home-v5/icons";
 import { trackJobApplication } from "@/lib/analytics/gtm-events";
+import "@/components/v6/v6.css";
 import "@/components/home-v5/styles.css";
 
 type Job = {
@@ -314,7 +315,7 @@ export default function JobDetailPage({ params }: { params: { slug: string } }) 
   if (loading) {
     return (
       <div className="v5-shell">
-        <V5Nav />
+        <V6Nav />
         <main>
           <section className="v5-page-hero">
             <div className="v5-container">
@@ -322,7 +323,7 @@ export default function JobDetailPage({ params }: { params: { slug: string } }) 
             </div>
           </section>
         </main>
-        <Footer />
+        <V6Footer />
       </div>
     );
   }
@@ -330,7 +331,7 @@ export default function JobDetailPage({ params }: { params: { slug: string } }) 
   if (missing) {
     return (
       <div className="v5-shell">
-        <V5Nav />
+        <V6Nav />
         <main>
           <section className="v5-page-hero">
             <div className="v5-container">
@@ -344,7 +345,7 @@ export default function JobDetailPage({ params }: { params: { slug: string } }) 
             </div>
           </section>
         </main>
-        <Footer />
+        <V6Footer />
       </div>
     );
   }
@@ -360,7 +361,7 @@ export default function JobDetailPage({ params }: { params: { slug: string } }) 
 
   return (
     <div className="v5-shell">
-      <V5Nav />
+      <V6Nav />
       <main>
         {/* Hero */}
         <section className="v5-page-hero">
@@ -621,7 +622,7 @@ export default function JobDetailPage({ params }: { params: { slug: string } }) 
           </div>
         </section>
       </main>
-      <Footer />
+      <V6Footer />
     </div>
   );
 }

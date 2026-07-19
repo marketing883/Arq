@@ -4,7 +4,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
 import { ArrowRight } from "@/components/home-v5/icons";
-import V5CtaStandard from "@/components/home-v5/V5CtaStandard";
+import ClosingCta from "@/components/v6/ClosingCta";
 
 type WebinarPageProps = {
   params: {
@@ -289,7 +289,7 @@ export default async function WebinarPage({ params }: WebinarPageProps) {
           </div>
         </div>
       </section>
-      <V5CtaStandard
+      <ClosingCta
         heading="Prefer a conversation to a replay?"
         sub="Skip the queue — tell us about the workflow you are trying to change and a senior member of the team will follow up within one business day."
       />

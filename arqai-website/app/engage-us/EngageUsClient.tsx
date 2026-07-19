@@ -3,11 +3,12 @@
 import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import V5Nav from "@/components/home-v5/V5Nav";
-import Footer from "@/components/home-v5/Footer";
+import V6Nav from "@/components/v6/V6Nav";
+import V6Footer from "@/components/v6/V6Footer";
 import { trackGenerateLead } from "@/lib/analytics/gtm-events";
 import FAQStatic from "@/components/home-v5/FAQStatic";
 import { engageFaqs } from "./faqs";
+import "@/components/v6/v6.css";
 import "@/components/home-v5/styles.css";
 
 const V4_INDUSTRY_MAP: Record<string, string> = {
@@ -316,7 +317,7 @@ function EngageUsPageInner() {
 
   return (
     <div className="v5-shell">
-      <V5Nav />
+      <V6Nav />
       <main>
         <section className="v5-page-hero">
           <div className="v5-container">
@@ -546,7 +547,7 @@ function EngageUsPageInner() {
           withSchema={false}
         />
       </main>
-      <Footer />
+      <V6Footer />
     </div>
   );
 }

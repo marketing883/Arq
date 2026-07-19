@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import V5Nav from "@/components/home-v5/V5Nav";
-import Footer from "@/components/home-v5/Footer";
-import V5CtaSection from "@/components/home-v5/V5CtaSection";
-import { ArrowRight } from "@/components/home-v5/icons";
+import V6Nav from "@/components/v6/V6Nav";
+import V6Footer from "@/components/v6/V6Footer";
+import ClosingCta from "@/components/v6/ClosingCta";
+import "@/components/v6/v6.css";
 import "@/components/home-v5/styles.css";
 
 const useCases: { tag: string; title: string; body: string }[] = [
@@ -78,7 +78,7 @@ const useCases: { tag: string; title: string; body: string }[] = [
 export default function UseCasesPage() {
   return (
     <div className="v5-shell">
-      <V5Nav />
+      <V6Nav />
       <main>
         {/* Hero */}
         <section className="v5-page-hero">
@@ -113,20 +113,13 @@ export default function UseCasesPage() {
           </div>
         </section>
 
-        {/* Don't see your use case */}
-        <V5CtaSection>
-              <h2 className="v5-h2">Don&apos;t see your use case?</h2>
-              <p className="v5-lead">
-                We don&apos;t ship templates. Most of the engagements we run weren&apos;t on a public page when they started. Tell us what your operation needs. We&apos;ll tell you what&apos;s honestly possible.
-              </p>
-              <div className="v5-cta-card-actions">
-                <Link href="/engage-us" className="v5-btn v5-btn-primary">
-                  Get Started <ArrowRight />
-                </Link>
-              </div>
-        </V5CtaSection>
+        <ClosingCta
+          heading="Don't see your use case?"
+          sub="We don't ship templates. Most of the engagements we run weren't on a public page when they started. Tell us what your operation needs. We'll tell you what's honestly possible."
+          ctaLabel="Get Started"
+        />
       </main>
-      <Footer />
+      <V6Footer />
     </div>
   );
 }

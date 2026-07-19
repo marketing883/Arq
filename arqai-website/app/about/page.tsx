@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
-import V5CtaSection from "@/components/home-v5/V5CtaSection";
-import { ArrowRight } from "@/components/home-v5/icons";
+import ClosingCta from "@/components/v6/ClosingCta";
 import {
   generateOrganizationSchema,
   generateBreadcrumbSchema,
@@ -167,21 +166,12 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* CTA band */}
-      <V5CtaSection>
-            <h2 className="v5-h2">Want to work with us, build with us, or sell with us?</h2>
-            <div className="v5-cta-card-actions">
-              <Link href="/engage-us" className="v5-btn v5-btn-primary">
-                Get Started <ArrowRight />
-              </Link>
-              <Link href="/careers" className="v5-btn v5-btn-ghost">
-                See open roles
-              </Link>
-              <Link href="/contact" className="v5-btn v5-btn-ghost">
-                Become a partner
-              </Link>
-            </div>
-      </V5CtaSection>
+      <ClosingCta
+        heading="Want to work with us, build with us, or sell with us?"
+        ctaLabel="Get Started"
+        secondaryLabel="See open roles"
+        secondaryHref="/careers"
+      />
     </V5SiteLayout>
   );
 }

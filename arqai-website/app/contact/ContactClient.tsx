@@ -3,12 +3,13 @@
 import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import V5Nav from "@/components/home-v5/V5Nav";
-import Footer from "@/components/home-v5/Footer";
+import V6Nav from "@/components/v6/V6Nav";
+import V6Footer from "@/components/v6/V6Footer";
 import { ArrowUpRight } from "@/components/home-v5/icons";
 import { trackGenerateLead } from "@/lib/analytics/gtm-events";
 import FAQStatic from "@/components/home-v5/FAQStatic";
 import { contactFaqs } from "./faqs";
+import "@/components/v6/v6.css";
 import "@/components/home-v5/styles.css";
 
 const inquiryTypes = [
@@ -170,7 +171,7 @@ function ContactPageInner() {
 
   return (
     <div className="v5-shell">
-      <V5Nav />
+      <V6Nav />
       <main>
         {/* Hero */}
         <section className="v5-page-hero">
@@ -351,7 +352,7 @@ function ContactPageInner() {
           withSchema={false}
         />
       </main>
-      <Footer />
+      <V6Footer />
     </div>
   );
 }
