@@ -9,6 +9,9 @@ the forms/lead-capture flows.
   - [ ] trigger snippet / `supabase-content-schema.sql` (re-runnable now)
   - [ ] `supabase-lead-capture-schema.sql` — newsletter (table never existed) + resource_leads
   - [ ] `supabase-contact-partner-intake-migration.sql` — contact + partner columns
+  - [ ] `supabase-contact-attribution-migration.sql` — visitor journey / UTM / session
+        attribution columns on contact_submissions (the API degrades gracefully and
+        retries the insert without these columns until the migration is run)
   - [ ] `supabase-careers-applications-repair.sql` — careers columns + FK
 - [ ] Redeploy `claude/epic-brahmagupta-jLOsJ` (several fixes landed since last deploy)
 - [ ] Confirm env vars in the HOSTING runtime: `SUPABASE_SERVICE_ROLE_KEY`,

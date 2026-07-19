@@ -3,6 +3,7 @@
 import Link from "next/link";
 
 import React, { useEffect, useRef, useState } from "react";
+import SourceLink from "@/components/common/SourceLink";
 import {
   ArrowUpRight,
   BadgePercent,
@@ -435,7 +436,7 @@ export default function V6Nav() {
 
           {/* Right side */}
           <div className="flex items-center gap-2">
-            <Link
+            <SourceLink
               href="/engage-us"
               className="group hidden items-center gap-1.5 text-[15px] font-semibold text-gray-900 transition-colors hover:text-gray-600 lg:inline-flex"
             >
@@ -444,7 +445,7 @@ export default function V6Nav() {
                 size={16}
                 className="text-[#9bbf2e] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
               />
-            </Link>
+            </SourceLink>
             <button
               type="button"
               aria-label={mobileOpen ? "Close menu" : "Open menu"}
@@ -522,13 +523,13 @@ export default function V6Nav() {
               )}
             </div>
           ))}
-          <Link
+          <SourceLink
             href="/engage-us"
             className="group mt-4 flex items-center justify-center gap-1.5 py-3 text-center font-semibold text-gray-900"
           >
             Book a Demo
             <ArrowUpRight size={16} className="text-[#9bbf2e]" />
-          </Link>
+          </SourceLink>
         </div>
       )}
     </header>

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { trackGenerateLead } from "@/lib/analytics/gtm-events";
+import { getAttribution } from "@/lib/attribution/visitor-context";
 
 type Props = {
   acceleratorName: string;
@@ -55,6 +56,13 @@ export default function AcceleratorForm({ acceleratorName, acceleratorCategory }
           workflowArea: `${acceleratorName} accelerator`,
           website_url: website,
           _formLoadedAt: formLoadedAt,
+          attribution: {
+            ...getAttribution(),
+            // The form lives on the accelerator page itself — that IS the source.
+            sourcePage:
+              typeof window !== "undefined" ? window.location.pathname : "",
+            sourceContext: acceleratorName,
+          },
         }),
       });
       const body = await res.json().catch(() => null);

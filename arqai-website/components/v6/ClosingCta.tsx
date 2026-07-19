@@ -1,5 +1,5 @@
 import React from "react";
-import Link from "next/link";
+import SourceLink from "@/components/common/SourceLink";
 
 const HERO_VIDEO = "/v5/assets/ufsUXNNTVPKgg5ZhfzY4DHtmrKY.mp4";
 const HERO_POSTER = "/v5/assets/pR0DzH2JNZa0vnz4l8WJLxvUKA.jpg";
@@ -49,19 +49,19 @@ export default function ClosingCta({
           <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-white/70">{sub}</p>
         )}
         <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-          <Link
+          <SourceLink
             href={ctaHref}
             className="inline-block rounded-lg bg-[#d0f438] px-10 py-4 text-[16px] font-semibold text-gray-900 shadow-[0_20px_50px_-20px_rgba(208,244,56,0.6)] transition-all duration-300 hover:-translate-y-0.5 hover:brightness-105"
           >
             {ctaLabel}
-          </Link>
+          </SourceLink>
           {secondaryLabel && secondaryHref && (
-            <Link
+            <SourceLink
               href={secondaryHref}
               className="inline-block rounded-lg border border-white/20 px-10 py-4 text-[16px] font-semibold text-white transition-all duration-300 hover:border-white/40 hover:bg-white/5"
             >
               {secondaryLabel}
-            </Link>
+            </SourceLink>
           )}
         </div>
       </div>

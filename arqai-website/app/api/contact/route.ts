@@ -5,6 +5,7 @@ import { applyRateLimit } from "@/lib/security/rate-limiter";
 import { validateAntiSpam } from "@/lib/security/anti-spam";
 import { analyzeLeadIntel, getIntentBasedEmailContent } from "@/lib/ai/lead-intel";
 import { getOrCreateLeadProfile, recordTouchpointEvent } from "@/lib/lead/lead-profile-service";
+import { sanitizeAttribution, describeAttribution } from "@/lib/attribution/server";
 
 // Lazy initialize Supabase client
 let supabase: SupabaseClient | null = null;
@@ -51,7 +52,11 @@ export async function POST(request: NextRequest) {
       currentSystems,
       website_url,
       _formLoadedAt,
+      attribution,
     } = body;
+
+    // Visitor journey / campaign attribution (untrusted client input — sanitized)
+    const attr = sanitizeAttribution(attribution);
 
     // Validate required fields
     if (!name || !email || !company || !jobTitle || !workflowArea || !message) {
@@ -88,9 +93,16 @@ export async function POST(request: NextRequest) {
       budgetRange ? `Budget range: ${budgetRange}` : null,
       currentSystems ? `Systems involved: ${currentSystems}` : null,
     ].filter(Boolean);
-    const enrichedMessage = intakeDetails.length > 0
+    let enrichedMessage = intakeDetails.length > 0
       ? `${message}\n\nIntake context:\n${intakeDetails.join("\n")}`
       : message;
+
+    // Append the visitor journey so the AI analysis and team notification see
+    // where the lead came from and what they engaged with before submitting.
+    const attributionBlock = attr ? describeAttribution(attr) : "";
+    if (attributionBlock) {
+      enrichedMessage = `${enrichedMessage}\n\nVisitor journey:\n${attributionBlock}`;
+    }
 
     // Run AI analysis on the lead (non-blocking if it fails)
     let aiIntel = null;
@@ -111,34 +123,68 @@ export async function POST(request: NextRequest) {
     // Store the contact submission if Supabase is configured
     const client = getSupabaseClient();
     if (client) {
-      const { error: dbError } = await client
+      const baseRow = {
+        name,
+        email,
+        company,
+        job_title: jobTitle,
+        phone: phone || null,
+        message,
+        inquiry_type: inquiryType || "general",
+        company_size: companySize || null,
+        industry: industry || null,
+        workflow_area: workflowArea || null,
+        timeline: timeline || null,
+        budget_range: budgetRange || null,
+        current_systems: currentSystems || null,
+        status: "new",
+        // AI Intel fields
+        ai_detected_intent: aiIntel?.detectedIntent || null,
+        ai_urgency: aiIntel?.urgency || null,
+        ai_company_industry: aiIntel?.companyIntel?.likelyIndustry || null,
+        ai_company_size: aiIntel?.companyIntel?.estimatedSize || null,
+        ai_contact_seniority: aiIntel?.contactIntel?.seniority || null,
+        ai_contact_department: aiIntel?.contactIntel?.department || null,
+        ai_decision_maker: aiIntel?.contactIntel?.decisionMaker || null,
+        ai_summary: aiIntel?.summary || null,
+        ai_intel_json: aiIntel ? JSON.stringify(aiIntel) : null,
+      };
+      // Attribution fields (visitor journey + campaign) — requires
+      // supabase-contact-attribution-migration.sql to have been run.
+      const attributionRow = attr
+        ? {
+            session_id: attr.sessionId || null,
+            source_page: attr.sourcePage || null,
+            source_context: attr.sourceContext || null,
+            landing_page: attr.landingPage || null,
+            referrer: attr.referrer || null,
+            utm_source: attr.utmSource || null,
+            utm_medium: attr.utmMedium || null,
+            utm_campaign: attr.utmCampaign || null,
+            utm_term: attr.utmTerm || null,
+            utm_content: attr.utmContent || null,
+            journey: attr.journey.length ? JSON.stringify(attr.journey) : null,
+            visit_started_at: attr.visitStartedAt
+              ? new Date(attr.visitStartedAt).toISOString()
+              : null,
+          }
+        : {};
+
+      let { error: dbError } = await client
         .from("contact_submissions")
-        .insert({
-          name,
-          email,
-          company,
-          job_title: jobTitle,
-          phone: phone || null,
-          message,
-          inquiry_type: inquiryType || "general",
-          company_size: companySize || null,
-          industry: industry || null,
-          workflow_area: workflowArea || null,
-          timeline: timeline || null,
-          budget_range: budgetRange || null,
-          current_systems: currentSystems || null,
-          status: "new",
-          // AI Intel fields
-          ai_detected_intent: aiIntel?.detectedIntent || null,
-          ai_urgency: aiIntel?.urgency || null,
-          ai_company_industry: aiIntel?.companyIntel?.likelyIndustry || null,
-          ai_company_size: aiIntel?.companyIntel?.estimatedSize || null,
-          ai_contact_seniority: aiIntel?.contactIntel?.seniority || null,
-          ai_contact_department: aiIntel?.contactIntel?.department || null,
-          ai_decision_maker: aiIntel?.contactIntel?.decisionMaker || null,
-          ai_summary: aiIntel?.summary || null,
-          ai_intel_json: aiIntel ? JSON.stringify(aiIntel) : null,
-        });
+        .insert({ ...baseRow, ...attributionRow });
+
+      // If the attribution migration hasn't been applied yet, the unknown
+      // columns fail the whole insert — retry without them rather than
+      // silently losing the lead.
+      if (dbError && attr) {
+        console.error(
+          "Insert with attribution columns failed (run supabase-contact-attribution-migration.sql):",
+          dbError.message
+        );
+        const retry = await client.from("contact_submissions").insert(baseRow);
+        dbError = retry.error;
+      }
 
       if (dbError) {
         console.error("Database error:", dbError);
@@ -148,8 +194,10 @@ export async function POST(request: NextRequest) {
       console.log("Supabase not configured - skipping database storage");
     }
 
-    // Process for V2 lead intelligence (non-blocking)
-    getOrCreateLeadProfile(email, undefined, undefined)
+    // Process for V2 lead intelligence (non-blocking).
+    // Passing the analytics session id links the anonymous browsing history
+    // to the lead profile the moment the visitor identifies themselves.
+    getOrCreateLeadProfile(email, attr?.sessionId || undefined, undefined)
       .then(async (profile) => {
         if (profile) {
           // Record contact form touchpoint
@@ -172,6 +220,10 @@ export async function POST(request: NextRequest) {
               ai_detected_intent: aiIntel?.detectedIntent,
               ai_urgency: aiIntel?.urgency,
               ai_company_size: aiIntel?.companyIntel?.estimatedSize,
+              source_page: attr?.sourcePage,
+              source_context: attr?.sourceContext,
+              utm_source: attr?.utmSource,
+              utm_campaign: attr?.utmCampaign,
             },
             enrichedMessage // Content for signal detection
           );

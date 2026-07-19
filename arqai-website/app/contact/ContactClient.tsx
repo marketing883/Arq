@@ -7,6 +7,8 @@ import V6Nav from "@/components/v6/V6Nav";
 import V6Footer from "@/components/v6/V6Footer";
 import { ArrowUpRight } from "@/components/home-v5/icons";
 import { trackGenerateLead } from "@/lib/analytics/gtm-events";
+import { getAttribution, getPreviousPage } from "@/lib/attribution/visitor-context";
+import { getPageContext, type PageContext } from "@/lib/attribution/page-context";
 import FAQStatic from "@/components/home-v5/FAQStatic";
 import { contactFaqs } from "./faqs";
 import "@/components/v6/v6.css";
@@ -92,6 +94,9 @@ function ContactPageInner() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
   const [formLoadedAt, setFormLoadedAt] = useState(0);
+  const [pageContext, setPageContext] = useState<PageContext | null>(null);
+  const [sourcePage, setSourcePage] = useState("");
+  const [contextDismissed, setContextDismissed] = useState(false);
 
   useEffect(() => {
     setFormLoadedAt(Date.now());
@@ -107,6 +112,23 @@ function ContactPageInner() {
         workflowArea: workflow ?? prev.workflowArea,
         inquiryType: inquiry ?? prev.inquiryType,
       }));
+    }
+
+    // Context-aware pre-fill: ?source=<path> set by CTAs, falling back to the
+    // previous page in the visitor's journey trail.
+    const source = params.get("source") || getPreviousPage("/contact");
+    if (source) setSourcePage(source);
+    const ctx = getPageContext(source);
+    if (ctx) {
+      setPageContext(ctx);
+      // Only fill fields the deep-link params didn't already set.
+      setFormData((prev) => {
+        const next = { ...prev };
+        if (!inquiry && ctx.contact?.inquiryType) next.inquiryType = ctx.contact.inquiryType;
+        if (!industry && !prev.industry && ctx.contact?.industry) next.industry = ctx.contact.industry;
+        if (!workflow && !prev.workflowArea && ctx.contact?.workflowArea) next.workflowArea = ctx.contact.workflowArea;
+        return next;
+      });
     }
   }, [params]);
 
@@ -135,6 +157,11 @@ function ContactPageInner() {
           message: formData.message,
           website_url: formData.website_url,
           _formLoadedAt: formLoadedAt,
+          attribution: {
+            ...getAttribution("/contact"),
+            ...(sourcePage ? { sourcePage } : {}),
+            sourceContext: pageContext?.shortLabel || "",
+          },
         }),
       });
 
@@ -229,6 +256,53 @@ function ContactPageInner() {
                     <div className="v5-honeypot" aria-hidden="true">
                       <input type="text" name="website_url" value={formData.website_url} onChange={handleChange} tabIndex={-1} autoComplete="off" />
                     </div>
+
+                    {pageContext && !contextDismissed && (
+                      <div className="v5-prefill">
+                        <div className="v5-prefill-label">
+                          ✓ You&apos;re asking about {pageContext.shortLabel}
+                        </div>
+                        <div className="v5-prefill-note">
+                          We noticed you were reading about {pageContext.label}. We&apos;ve
+                          pre-filled a few details and will route this to the right senior
+                          owner — edit anything that&apos;s off.{" "}
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setContextDismissed(true);
+                              // Undo the context-derived pre-fills the visitor didn't type.
+                              setFormData((prev) => ({
+                                ...prev,
+                                inquiryType:
+                                  prev.inquiryType === pageContext.contact?.inquiryType
+                                    ? emptyForm.inquiryType
+                                    : prev.inquiryType,
+                                industry:
+                                  prev.industry === pageContext.contact?.industry
+                                    ? ""
+                                    : prev.industry,
+                                workflowArea:
+                                  prev.workflowArea === pageContext.contact?.workflowArea
+                                    ? ""
+                                    : prev.workflowArea,
+                              }));
+                              setPageContext(null);
+                            }}
+                            style={{
+                              background: "none",
+                              border: "none",
+                              padding: 0,
+                              font: "inherit",
+                              textDecoration: "underline",
+                              cursor: "pointer",
+                              color: "inherit",
+                            }}
+                          >
+                            Not what you&apos;re here for?
+                          </button>
+                        </div>
+                      </div>
+                    )}
 
                     <div className="v5-form-grid two">
                       <Field label="Full name" required>

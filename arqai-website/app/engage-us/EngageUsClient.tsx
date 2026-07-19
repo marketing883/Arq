@@ -6,6 +6,8 @@ import { useSearchParams } from "next/navigation";
 import V6Nav from "@/components/v6/V6Nav";
 import V6Footer from "@/components/v6/V6Footer";
 import { trackGenerateLead } from "@/lib/analytics/gtm-events";
+import { getAttribution, getPreviousPage } from "@/lib/attribution/visitor-context";
+import { getPageContext, type PageContext } from "@/lib/attribution/page-context";
 import FAQStatic from "@/components/home-v5/FAQStatic";
 import { engageFaqs } from "./faqs";
 import "@/components/v6/v6.css";
@@ -202,10 +204,28 @@ function EngageUsPageInner() {
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
   const [formLoadedAt, setFormLoadedAt] = useState(0);
   const [v4Brief, setV4Brief] = useState<string>("");
+  const [pageContext, setPageContext] = useState<PageContext | null>(null);
+  const [sourcePage, setSourcePage] = useState("");
 
   useEffect(() => {
     setFormLoadedAt(Date.now());
     if (!params) return;
+
+    // Context-aware pre-fill: ?source=<path> set by CTAs, falling back to the
+    // previous page in the visitor's journey trail.
+    const source = params.get("source") || getPreviousPage("/engage-us");
+    if (source) setSourcePage(source);
+    const ctx = getPageContext(source);
+    if (ctx) {
+      setPageContext(ctx);
+      setFormData((prev) => {
+        const next = { ...prev };
+        if (!prev.industry && ctx.engage?.industry) next.industry = ctx.engage.industry;
+        if (!prev.workflowArea && ctx.engage?.workflowArea) next.workflowArea = ctx.engage.workflowArea;
+        return next;
+      });
+    }
+
     const industry = params.get("industry");
     const workflowsParam = params.get("workflows");
     const approach = params.get("approach");
@@ -274,6 +294,11 @@ function EngageUsPageInner() {
           currentSystems: systems,
           website_url: formData.website_url,
           _formLoadedAt: formLoadedAt,
+          attribution: {
+            ...getAttribution("/engage-us"),
+            ...(sourcePage ? { sourcePage } : {}),
+            sourceContext: pageContext?.shortLabel || "",
+          },
         }),
       });
 
@@ -385,6 +410,18 @@ function EngageUsPageInner() {
                         <pre>{v4Brief}</pre>
                         <div className="v5-prefill-note">
                           Your selections have prefilled the form below. Edit any field that&apos;s off.
+                        </div>
+                      </div>
+                    )}
+
+                    {!v4Brief && pageContext && (
+                      <div className="v5-prefill">
+                        <div className="v5-prefill-label">
+                          ✓ Continuing from {pageContext.shortLabel}
+                        </div>
+                        <div className="v5-prefill-note">
+                          You were reading about {pageContext.label} — we&apos;ve pre-selected
+                          the matching fields below. Edit anything that&apos;s off.
                         </div>
                       </div>
                     )}

@@ -13,6 +13,7 @@
 
 import { useEffect, useRef, useCallback } from "react";
 import { usePathname } from "next/navigation";
+import { captureFirstTouch, recordPageVisit } from "@/lib/attribution/visitor-context";
 
 // ============================================
 // CONFIGURATION
@@ -118,6 +119,10 @@ export function Tracker({ enabled = true }: TrackerProps) {
   // Track page view on route change
   useEffect(() => {
     if (!enabled || !sessionId.current) return;
+
+    // Record first-touch attribution + journey trail (read by lead forms)
+    captureFirstTouch();
+    recordPageVisit(pathname);
 
     // Reset tracking state for new page
     startTime.current = Date.now();
