@@ -8,6 +8,7 @@ import V6Footer from "@/components/v6/V6Footer";
 import { trackGenerateLead } from "@/lib/analytics/gtm-events";
 import { getAttribution, getPreviousPage } from "@/lib/attribution/visitor-context";
 import { getPageContext, type PageContext } from "@/lib/attribution/page-context";
+import { inferCompanyFromEmail, getReturningVisitor } from "@/lib/attribution/smart-prefill";
 import FAQStatic from "@/components/home-v5/FAQStatic";
 import { engageFaqs } from "./faqs";
 import "@/components/v6/v6.css";
@@ -206,6 +207,25 @@ function EngageUsPageInner() {
   const [v4Brief, setV4Brief] = useState<string>("");
   const [pageContext, setPageContext] = useState<PageContext | null>(null);
   const [sourcePage, setSourcePage] = useState("");
+  const [wantsEntryPoint, setWantsEntryPoint] = useState(false);
+  const [welcomeBack, setWelcomeBack] = useState("");
+
+  // Returning-visitor memory: pre-fill identity fields the visitor already
+  // shared with the chat widget.
+  useEffect(() => {
+    const visitor = getReturningVisitor();
+    if (!visitor) return;
+    setFormData((prev) => {
+      if (prev.fullName || prev.email) return prev;
+      return {
+        ...prev,
+        fullName: visitor.name,
+        email: visitor.email,
+        company: prev.company || visitor.company,
+      };
+    });
+    if (visitor.name) setWelcomeBack(visitor.name.split(" ")[0]);
+  }, []);
 
   useEffect(() => {
     setFormLoadedAt(Date.now());
@@ -263,7 +283,9 @@ function EngageUsPageInner() {
     setSubmitStatus("idle");
 
     const systems = [...selectedSystems, formData.otherSystems].filter(Boolean).join(", ");
+    const entryPoint = wantsEntryPoint && pageContext?.entryPoint ? pageContext.entryPoint : null;
     const message = [
+      entryPoint ? `Requested entry point: ${entryPoint.name}.` : null,
       `Primary workflow: ${formData.workflowArea}`,
       `Data readiness: ${formData.dataReadiness || "not provided"}`,
       `Deployment environment: ${formData.deploymentModel || "not provided"}`,
@@ -317,6 +339,7 @@ function EngageUsPageInner() {
         setSubmitStatus("success");
         setFormData(emptyForm);
         setSelectedSystems([]);
+        setWantsEntryPoint(false);
         setFormLoadedAt(Date.now());
       } else {
         setSubmitStatus("error");
@@ -423,7 +446,43 @@ function EngageUsPageInner() {
                           You were reading about {pageContext.label} — we&apos;ve pre-selected
                           the matching fields below. Edit anything that&apos;s off.
                         </div>
+                        {pageContext.entryPoint && (
+                          <label
+                            style={{
+                              display: "flex",
+                              alignItems: "flex-start",
+                              gap: 10,
+                              marginTop: 12,
+                              padding: "10px 12px",
+                              background: "#fff",
+                              border: "1px solid #e3eeba",
+                              borderRadius: 10,
+                              cursor: "pointer",
+                              fontSize: 13,
+                              lineHeight: 1.5,
+                            }}
+                          >
+                            <input
+                              type="checkbox"
+                              checked={wantsEntryPoint}
+                              onChange={(e) => setWantsEntryPoint(e.target.checked)}
+                              style={{ marginTop: 3 }}
+                            />
+                            <span>
+                              <strong>Start with the {pageContext.entryPoint.name}</strong> —{" "}
+                              {pageContext.entryPoint.blurb}. The usual first step, with no
+                              build commitment.
+                            </span>
+                          </label>
+                        )}
                       </div>
+                    )}
+
+                    {welcomeBack && (
+                      <p className="v5-form-note" style={{ marginTop: 0 }}>
+                        Welcome back, {welcomeBack} — we&apos;ve filled in what you shared with
+                        us earlier.
+                      </p>
                     )}
 
                     <FormSection eyebrow="01" title="Who should we speak with?">
@@ -432,7 +491,23 @@ function EngageUsPageInner() {
                           <input type="text" name="fullName" required value={formData.fullName} onChange={handleChange} className="v5-input" autoComplete="name" />
                         </Field>
                         <Field label="Work email" required>
-                          <input type="email" name="email" required value={formData.email} onChange={handleChange} className="v5-input" autoComplete="email" />
+                          <input
+                            type="email"
+                            name="email"
+                            required
+                            value={formData.email}
+                            onChange={handleChange}
+                            onBlur={() => {
+                              if (formData.company || !formData.email) return;
+                              const inferred = inferCompanyFromEmail(formData.email);
+                              if (inferred)
+                                setFormData((prev) =>
+                                  prev.company ? prev : { ...prev, company: inferred }
+                                );
+                            }}
+                            className="v5-input"
+                            autoComplete="email"
+                          />
                         </Field>
                       </div>
                       <div className="v5-form-grid two">

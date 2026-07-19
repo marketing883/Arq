@@ -2,8 +2,11 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { trackGenerateLead } from "@/lib/analytics/gtm-events";
 import { getAttribution } from "@/lib/attribution/visitor-context";
+import { getPageContext } from "@/lib/attribution/page-context";
+import { inferCompanyFromEmail, getReturningVisitor } from "@/lib/attribution/smart-prefill";
 
 type Props = {
   acceleratorName: string;
@@ -11,6 +14,8 @@ type Props = {
 };
 
 export default function AcceleratorForm({ acceleratorName, acceleratorCategory }: Props) {
+  const pathname = usePathname();
+  const pageContext = getPageContext(pathname);
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [company, setCompany] = useState("");
@@ -22,9 +27,20 @@ export default function AcceleratorForm({ acceleratorName, acceleratorCategory }
   const [submitting, setSubmitting] = useState(false);
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
   const [error, setError] = useState<string | null>(null);
+  const [wantsEntryPoint, setWantsEntryPoint] = useState(false);
+  const [welcomeBack, setWelcomeBack] = useState("");
 
   useEffect(() => {
     setFormLoadedAt(Date.now());
+    // Returning-visitor memory: pre-fill identity fields the visitor already
+    // shared with the chat widget.
+    const visitor = getReturningVisitor();
+    if (visitor) {
+      setFullName((prev) => prev || visitor.name);
+      setEmail((prev) => prev || visitor.email);
+      setCompany((prev) => prev || visitor.company);
+      if (visitor.name) setWelcomeBack(visitor.name.split(" ")[0]);
+    }
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -38,6 +54,9 @@ export default function AcceleratorForm({ acceleratorName, acceleratorCategory }
 
     const composedMessage = [
       `Accelerator interest: ${acceleratorName} (${acceleratorCategory}).`,
+      wantsEntryPoint && pageContext?.entryPoint
+        ? `\nRequested entry point: ${pageContext.entryPoint.name}.`
+        : "",
       message.trim() ? `\nWhat they want to improve:\n${message.trim()}` : "",
     ].join("");
 
@@ -81,6 +100,7 @@ export default function AcceleratorForm({ acceleratorName, acceleratorCategory }
         setJobTitle("");
         setPhone("");
         setMessage("");
+        setWantsEntryPoint(false);
       } else {
         setStatus("error");
         setError(body?.error || "Could not send. Please try again.");
@@ -130,7 +150,19 @@ export default function AcceleratorForm({ acceleratorName, acceleratorCategory }
         </label>
         <label className="v5-field">
           <span className="v5-field-label">Work email <span className="req">*</span></span>
-          <input className="v5-input" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="email" />
+          <input
+            className="v5-input"
+            type="email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            onBlur={() => {
+              if (company || !email) return;
+              const inferred = inferCompanyFromEmail(email);
+              if (inferred) setCompany((prev) => prev || inferred);
+            }}
+            autoComplete="email"
+          />
         </label>
       </div>
 
@@ -151,15 +183,54 @@ export default function AcceleratorForm({ acceleratorName, acceleratorCategory }
       </label>
 
       <label className="v5-field">
-        <span className="v5-field-label">What workflow are you trying to improve?</span>
+        <span className="v5-field-label">
+          {pageContext?.question?.label ?? "What workflow are you trying to improve?"}
+        </span>
         <textarea
           className="v5-input"
           rows={4}
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          placeholder={`Tell us about the queue, volume, systems, or metric you want ${acceleratorName} to move.`}
+          placeholder={
+            pageContext?.question?.placeholder ??
+            `Tell us about the queue, volume, systems, or metric you want ${acceleratorName} to move.`
+          }
         />
       </label>
+
+      {pageContext?.entryPoint && (
+        <label
+          style={{
+            display: "flex",
+            alignItems: "flex-start",
+            gap: 10,
+            padding: "10px 12px",
+            background: "#f5f8ec",
+            border: "1px solid #e3eeba",
+            borderRadius: 10,
+            cursor: "pointer",
+            fontSize: 13,
+            lineHeight: 1.5,
+          }}
+        >
+          <input
+            type="checkbox"
+            checked={wantsEntryPoint}
+            onChange={(e) => setWantsEntryPoint(e.target.checked)}
+            style={{ marginTop: 3 }}
+          />
+          <span>
+            <strong>Start with the {pageContext.entryPoint.name}</strong> —{" "}
+            {pageContext.entryPoint.blurb}. The usual first step, with no build commitment.
+          </span>
+        </label>
+      )}
+
+      {welcomeBack && (
+        <p className="v5-form-note" style={{ marginTop: 0 }}>
+          Welcome back, {welcomeBack} — we&apos;ve filled in what you shared with us earlier.
+        </p>
+      )}
 
       {status === "error" && error && <div className="v5-form-error">{error}</div>}
 

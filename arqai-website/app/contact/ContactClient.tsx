@@ -9,6 +9,7 @@ import { ArrowUpRight } from "@/components/home-v5/icons";
 import { trackGenerateLead } from "@/lib/analytics/gtm-events";
 import { getAttribution, getPreviousPage } from "@/lib/attribution/visitor-context";
 import { getPageContext, type PageContext } from "@/lib/attribution/page-context";
+import { inferCompanyFromEmail, getReturningVisitor } from "@/lib/attribution/smart-prefill";
 import FAQStatic from "@/components/home-v5/FAQStatic";
 import { contactFaqs } from "./faqs";
 import "@/components/v6/v6.css";
@@ -97,6 +98,25 @@ function ContactPageInner() {
   const [pageContext, setPageContext] = useState<PageContext | null>(null);
   const [sourcePage, setSourcePage] = useState("");
   const [contextDismissed, setContextDismissed] = useState(false);
+  const [wantsEntryPoint, setWantsEntryPoint] = useState(false);
+  const [welcomeBack, setWelcomeBack] = useState("");
+
+  // Returning-visitor memory: pre-fill identity fields the visitor already
+  // shared with the chat widget.
+  useEffect(() => {
+    const visitor = getReturningVisitor();
+    if (!visitor) return;
+    setFormData((prev) => {
+      if (prev.fullName || prev.email) return prev;
+      return {
+        ...prev,
+        fullName: visitor.name,
+        email: visitor.email,
+        company: prev.company || visitor.company,
+      };
+    });
+    if (visitor.name) setWelcomeBack(visitor.name.split(" ")[0]);
+  }, []);
 
   useEffect(() => {
     setFormLoadedAt(Date.now());
@@ -132,10 +152,23 @@ function ContactPageInner() {
     }
   }, [params]);
 
+  // When the visitor gives a work email, derive the company name from the
+  // domain so they don't have to type it.
+  const handleEmailBlur = () => {
+    if (formData.company || !formData.email) return;
+    const inferred = inferCompanyFromEmail(formData.email);
+    if (inferred) setFormData((prev) => (prev.company ? prev : { ...prev, company: inferred }));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus("idle");
+
+    const entryPoint = wantsEntryPoint && pageContext?.entryPoint ? pageContext.entryPoint : null;
+    const message = entryPoint
+      ? `Requested entry point: ${entryPoint.name}.\n\n${formData.message}`
+      : formData.message;
 
     try {
       const response = await fetch("/api/contact", {
@@ -154,7 +187,7 @@ function ContactPageInner() {
           timeline: formData.timeline,
           budgetRange: formData.budgetRange,
           currentSystems: formData.currentSystems,
-          message: formData.message,
+          message,
           website_url: formData.website_url,
           _formLoadedAt: formLoadedAt,
           attribution: {
@@ -179,6 +212,7 @@ function ContactPageInner() {
         });
         setSubmitStatus("success");
         setFormData(emptyForm);
+        setWantsEntryPoint(false);
         setFormLoadedAt(Date.now());
       } else {
         setSubmitStatus("error");
@@ -287,6 +321,7 @@ function ContactPageInner() {
                                     : prev.workflowArea,
                               }));
                               setPageContext(null);
+                              setWantsEntryPoint(false);
                             }}
                             style={{
                               background: "none",
@@ -301,7 +336,43 @@ function ContactPageInner() {
                             Not what you&apos;re here for?
                           </button>
                         </div>
+                        {pageContext.entryPoint && (
+                          <label
+                            style={{
+                              display: "flex",
+                              alignItems: "flex-start",
+                              gap: 10,
+                              marginTop: 12,
+                              padding: "10px 12px",
+                              background: "#fff",
+                              border: "1px solid #e3eeba",
+                              borderRadius: 10,
+                              cursor: "pointer",
+                              fontSize: 13,
+                              lineHeight: 1.5,
+                            }}
+                          >
+                            <input
+                              type="checkbox"
+                              checked={wantsEntryPoint}
+                              onChange={(e) => setWantsEntryPoint(e.target.checked)}
+                              style={{ marginTop: 3 }}
+                            />
+                            <span>
+                              <strong>Start with the {pageContext.entryPoint.name}</strong> —{" "}
+                              {pageContext.entryPoint.blurb}. The usual first step, with no build
+                              commitment.
+                            </span>
+                          </label>
+                        )}
                       </div>
+                    )}
+
+                    {welcomeBack && (
+                      <p className="v5-form-note" style={{ marginTop: 0 }}>
+                        Welcome back, {welcomeBack} — we&apos;ve filled in what you shared with
+                        us earlier.
+                      </p>
                     )}
 
                     <div className="v5-form-grid two">
@@ -309,7 +380,7 @@ function ContactPageInner() {
                         <input type="text" name="fullName" required value={formData.fullName} onChange={handleChange} className="v5-input" />
                       </Field>
                       <Field label="Work email" required>
-                        <input type="email" name="email" required value={formData.email} onChange={handleChange} className="v5-input" />
+                        <input type="email" name="email" required value={formData.email} onChange={handleChange} onBlur={handleEmailBlur} className="v5-input" />
                       </Field>
                     </div>
 
@@ -390,14 +461,20 @@ function ContactPageInner() {
                       />
                     </Field>
 
-                    <Field label="What should change first?" required>
+                    <Field
+                      label={pageContext?.question?.label ?? "What should change first?"}
+                      required
+                    >
                       <textarea
                         name="message"
                         rows={5}
                         required
                         value={formData.message}
                         onChange={handleChange}
-                        placeholder="Describe the bottleneck, desired outcome, constraints, and what success would look like."
+                        placeholder={
+                          pageContext?.question?.placeholder ??
+                          "Describe the bottleneck, desired outcome, constraints, and what success would look like."
+                        }
                         className="v5-input"
                       />
                     </Field>
