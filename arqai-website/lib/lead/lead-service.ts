@@ -8,6 +8,12 @@ import { addSubscriber, getIntentTags } from "@/lib/email/mailchimp";
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Database = any;
 
+// V2 lead intelligence is the canonical path for team notifications (smart
+// alerts fire on real intent/journey changes, not on every chat message).
+// V1's per-message lead email is disabled to stop double-notifying. Flip to
+// true only if V2 alerting is intentionally turned off.
+const V1_LEAD_EMAILS_ENABLED = false;
+
 // Lazy-initialized Supabase client for server-side operations
 let supabaseClient: SupabaseClient<Database> | null = null;
 
@@ -257,8 +263,9 @@ export async function processMessageForIntelligence(
     // Determine priority tier
     const priorityTier = getLeadPriorityTier(intelligence);
 
-    // Send notifications for all leads with email (non-blocking)
-    if (userInfo.email) {
+    // Send notifications for all leads with email (non-blocking).
+    // Disabled by default — V2 smart alerts are the canonical team notification.
+    if (V1_LEAD_EMAILS_ENABLED && userInfo.email) {
       sendLeadNotification({
         name: userInfo.name,
         email: userInfo.email,

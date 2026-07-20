@@ -21,7 +21,6 @@ import {
   ScoredSignal,
   CompanyIntelligence,
   DomainIntelligence,
-  LeadDashboardItem,
   ActiveAlert,
   AggregatedTouchpoints,
   TouchpointSource,
@@ -49,6 +48,19 @@ import {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Database = any;
+
+// Signal categories that indicate buying intent (vs. mere engagement), used to
+// derive the intent_score sub-score shown on the dashboard.
+const INTENT_SIGNAL_CATEGORIES = new Set([
+  "purchase_intent",
+  "timeline",
+  "authority",
+  "compliance",
+  "technical",
+  "competitive",
+  "pain",
+  "product",
+]);
 
 // Lazy-initialized Supabase client
 let supabaseClient: SupabaseClient<Database> | null = null;
@@ -242,7 +254,25 @@ export async function updateLeadProfile(
       .select()
       .single();
 
-    if (error) throw error;
+    if (error) {
+      // If the intent/engagement sub-score columns aren't present yet
+      // (supabase-lead-scores-migration.sql not run), retry without them so
+      // the rest of the score update still persists.
+      if (updates.intent_score !== undefined || updates.engagement_score !== undefined) {
+        const { intent_score, engagement_score, ...rest } = updates;
+        void intent_score;
+        void engagement_score;
+        const retry = await supabase
+          .from("lead_profiles")
+          .update({ ...rest, updated_at: new Date().toISOString() })
+          .eq("id", profileId)
+          .select()
+          .single();
+        if (retry.error) throw retry.error;
+        return retry.data as LeadProfile;
+      }
+      throw error;
+    }
     return data as LeadProfile;
   } catch (error) {
     console.error("Error updating lead profile:", error);
@@ -357,6 +387,22 @@ export async function recalculateProfileScores(profileId: string): Promise<LeadP
     const icpFitScore = calculateICPFit(profile.company_intel || {});
     const compositeScore = calculateCompositeScore(decayedScore, velocityBonus, icpFitScore);
 
+    // Sub-scores for the dashboard breakdown. Intent = decayed strength of
+    // buying-signal categories; engagement = engagement-signal strength plus
+    // recent velocity and touchpoint breadth. Both reuse the decay math so
+    // they read on the same 0-100 scale as the composite.
+    const intentSignals = allSignals.filter((s) => INTENT_SIGNAL_CATEGORIES.has(s.category));
+    const engagementSignals = allSignals.filter((s) => s.category === "engagement");
+    const intentScore = Math.round(calculateDecayedScore(intentSignals));
+    const engagementScore = Math.round(
+      Math.min(
+        100,
+        calculateDecayedScore(engagementSignals) +
+          velocityBonus +
+          Math.min(events.length, 10) * 4
+      )
+    );
+
     // Calculate priority tier
     const priorityTier = calculatePriorityTier(
       compositeScore,
@@ -383,6 +429,8 @@ export async function recalculateProfileScores(profileId: string): Promise<LeadP
       decay_adjusted_score: decayedScore,
       engagement_velocity: velocityBonus,
       icp_fit_score: icpFitScore,
+      intent_score: intentScore,
+      engagement_score: engagementScore,
       composite_score: compositeScore,
       priority_tier: priorityTier,
       recommended_action: insights.recommended_action,
@@ -719,23 +767,46 @@ export async function upsertDomainIntelligence(
 // DASHBOARD & REPORTING
 // ============================================
 
+/** Row shape the V2 admin dashboard renders. */
+export interface LeadDashboardRow {
+  id: string;
+  canonical_email?: string;
+  company?: string;
+  journey_stage: JourneyStage;
+  priority_tier: string;
+  composite_score: number;
+  intent_score: number;
+  engagement_score: number;
+  icp_fit_score: number;
+  total_touchpoints: number;
+  last_touch: string;
+  recommended_action?: string;
+  days_since_last_touch?: number;
+  /** Alias of composite_score kept for older consumers. */
+  score: number;
+}
+
 /**
- * Get leads for dashboard
+ * Get leads for the V2 dashboard. Reads lead_profiles directly (the
+ * v_lead_dashboard view joined users/lead_intelligence on user_id, which
+ * form/chat-created profiles never set — so name, email, and scores came back
+ * null). Uses select("*") so it degrades gracefully before the sub-score
+ * migration is applied.
  */
 export async function getLeadDashboard(filters?: {
   journey_stage?: JourneyStage;
   priority_tier?: string;
   min_score?: number;
   limit?: number;
-}): Promise<LeadDashboardItem[]> {
+}): Promise<LeadDashboardRow[]> {
   const supabase = getSupabaseClient();
   if (!supabase) return [];
 
   try {
     let query = supabase
-      .from("v_lead_dashboard")
+      .from("lead_profiles")
       .select("*")
-      .order("score", { ascending: false });
+      .order("composite_score", { ascending: false });
 
     if (filters?.journey_stage) {
       query = query.eq("journey_stage", filters.journey_stage);
@@ -744,45 +815,68 @@ export async function getLeadDashboard(filters?: {
       query = query.eq("priority_tier", filters.priority_tier);
     }
     if (filters?.min_score) {
-      query = query.gte("score", filters.min_score);
+      query = query.gte("composite_score", filters.min_score);
     }
 
-    const limit = filters?.limit || 100;
-    query = query.limit(limit);
+    query = query.limit(filters?.limit || 100);
 
     const { data, error } = await query;
-
     if (error) throw error;
-    return (data || []) as LeadDashboardItem[];
+
+    return (data || []).map((p: LeadProfile) => mapProfileToDashboardRow(p));
   } catch (error) {
     console.error("Error getting lead dashboard:", error);
     return [];
   }
 }
 
+/** Shape a lead profile into the row the V2 dashboard renders. */
+export function mapProfileToDashboardRow(p: LeadProfile): LeadDashboardRow {
+  return {
+    id: p.id,
+    canonical_email: p.canonical_email,
+    company: p.company_intel?.company_name,
+    journey_stage: p.journey_stage,
+    priority_tier: p.priority_tier,
+    composite_score: Math.round(p.composite_score || 0),
+    intent_score: Math.round(p.intent_score || 0),
+    engagement_score: Math.round(p.engagement_score || 0),
+    icp_fit_score: Math.round(p.icp_fit_score || 0),
+    total_touchpoints: p.total_touchpoints || 0,
+    last_touch: p.last_touch,
+    recommended_action: p.recommended_action,
+    days_since_last_touch: p.days_since_last_touch,
+    score: Math.round(p.composite_score || 0),
+  };
+}
+
+export interface LeadProfileStats {
+  total_profiles: number;
+  by_journey_stage: Record<JourneyStage, number>;
+  by_priority_tier: Record<string, number>;
+  avg_composite_score: number;
+  high_intent_count: number;
+  recent_alerts: number;
+}
+
 /**
- * Get lead statistics
+ * Get lead statistics, shaped for the V2 dashboard.
  */
-export async function getLeadProfileStats(): Promise<{
-  total: number;
-  byStage: Record<JourneyStage, number>;
-  byPriority: Record<string, number>;
-  avgScore: number;
-  recentAlerts: number;
-}> {
+export async function getLeadProfileStats(): Promise<LeadProfileStats> {
   const supabase = getSupabaseClient();
-  const defaultStats = {
-    total: 0,
-    byStage: {
+  const defaultStats: LeadProfileStats = {
+    total_profiles: 0,
+    by_journey_stage: {
       anonymous: 0,
       identified: 0,
       engaged: 0,
       qualified: 0,
       opportunity: 0,
     },
-    byPriority: { P1: 0, P2: 0, P3: 0, P4: 0 },
-    avgScore: 0,
-    recentAlerts: 0,
+    by_priority_tier: { P1: 0, P2: 0, P3: 0, P4: 0 },
+    avg_composite_score: 0,
+    high_intent_count: 0,
+    recent_alerts: 0,
   };
 
   if (!supabase) return defaultStats;
@@ -806,10 +900,17 @@ export async function getLeadProfileStats(): Promise<{
     const byPriority: Record<string, number> = { P1: 0, P2: 0, P3: 0, P4: 0 };
 
     let totalScore = 0;
+    let highIntent = 0;
     for (const profile of profiles) {
-      byStage[profile.journey_stage as JourneyStage]++;
-      byPriority[profile.priority_tier]++;
-      totalScore += profile.composite_score || 0;
+      if (byStage[profile.journey_stage as JourneyStage] !== undefined) {
+        byStage[profile.journey_stage as JourneyStage]++;
+      }
+      if (byPriority[profile.priority_tier] !== undefined) {
+        byPriority[profile.priority_tier]++;
+      }
+      const score = profile.composite_score || 0;
+      totalScore += score;
+      if (score >= 60) highIntent++;
     }
 
     // Get recent alerts count
@@ -820,11 +921,12 @@ export async function getLeadProfileStats(): Promise<{
       .gte("created_at", new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString());
 
     return {
-      total: profiles.length,
-      byStage,
-      byPriority,
-      avgScore: profiles.length > 0 ? Math.round(totalScore / profiles.length) : 0,
-      recentAlerts: recentAlerts || 0,
+      total_profiles: profiles.length,
+      by_journey_stage: byStage,
+      by_priority_tier: byPriority,
+      avg_composite_score: profiles.length > 0 ? Math.round(totalScore / profiles.length) : 0,
+      high_intent_count: highIntent,
+      recent_alerts: recentAlerts || 0,
     };
   } catch (error) {
     console.error("Error getting lead profile stats:", error);
