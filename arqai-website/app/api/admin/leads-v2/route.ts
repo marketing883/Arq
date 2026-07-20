@@ -19,6 +19,7 @@ import {
   promoteLeadStage,
   migrateExistingLeads,
 } from "@/lib/lead/lead-profile-service";
+import { getPageViewsForSessions } from "@/lib/analytics/tracking-service";
 import type { JourneyStage } from "@/types/lead-intelligence-v2";
 
 export async function GET(request: NextRequest) {
@@ -51,10 +52,14 @@ export async function GET(request: NextRequest) {
           return NextResponse.json({ error: "Profile not found" }, { status: 404 });
         }
 
+        // The visitor's anonymous browsing history, joined by shared session ids.
+        const pageJourney = await getPageViewsForSessions(profile.session_ids || []);
+
         return NextResponse.json({
           profile,
           touchpoint_events: events,
           journey_history: journey,
+          page_journey: pageJourney,
         });
       }
 

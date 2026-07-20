@@ -42,6 +42,10 @@ import {
   updateProfileScores,
   DEFAULT_SCORING_CONFIG,
 } from "./lead-intelligence-v2";
+import {
+  linkSessionToLeadProfile,
+  getPageViewsForSessions,
+} from "@/lib/analytics/tracking-service";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Database = any;
@@ -102,6 +106,9 @@ export async function getOrCreateLeadProfile(
           })
           .eq("id", existing.id);
 
+        // Join the anonymous browsing history for this session to the profile.
+        await linkSessionToLeadProfile(sessionId, existing.id);
+
         return { ...existing, session_ids: updatedSessionIds };
       }
       return existing as LeadProfile;
@@ -157,6 +164,12 @@ export async function getOrCreateLeadProfile(
       .single();
 
     if (error) throw error;
+
+    // Join any anonymous browsing history for this session to the new profile.
+    if (sessionId && data?.id) {
+      await linkSessionToLeadProfile(sessionId, data.id);
+    }
+
     return data as LeadProfile;
   } catch (error) {
     console.error("Error getting/creating lead profile:", error);

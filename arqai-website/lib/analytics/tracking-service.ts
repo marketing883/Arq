@@ -156,6 +156,64 @@ export async function updateTimeOnPage(
   }
 }
 
+/**
+ * Backfill a lead profile id onto the anonymous browsing history for a
+ * session. Called once a visitor identifies themselves (form or chat) so the
+ * page views they generated *before* identifying join to their lead profile.
+ * Only stamps rows that are still unattributed.
+ */
+export async function linkSessionToLeadProfile(
+  session_id: string,
+  lead_profile_id: string
+): Promise<void> {
+  if (!session_id || !lead_profile_id) return;
+  try {
+    const supabase = await createServiceClient();
+    await supabase
+      .from("page_views")
+      .update({ lead_profile_id })
+      .eq("session_id", session_id)
+      .is("lead_profile_id", null);
+    await supabase
+      .from("active_sessions")
+      .update({ lead_profile_id })
+      .eq("session_id", session_id)
+      .is("lead_profile_id", null);
+  } catch (error) {
+    console.error("Failed to link session to lead profile:", error);
+  }
+}
+
+/**
+ * Return the page-view journey for a set of sessions, oldest first. Used by the
+ * admin lead detail to show what a lead browsed across their sessions.
+ */
+export async function getPageViewsForSessions(
+  session_ids: string[]
+): Promise<PageView[]> {
+  if (!session_ids || session_ids.length === 0) return [];
+  try {
+    const supabase = await createServiceClient();
+    const { data, error } = await supabase
+      .from("page_views")
+      .select(
+        "session_id, page_path, page_title, referrer, utm_source, utm_medium, utm_campaign, device_type, country, region, city, scroll_depth_percent, time_on_page_seconds, created_at"
+      )
+      .in("session_id", session_ids)
+      .order("created_at", { ascending: true })
+      .limit(300);
+
+    if (error) {
+      console.error("Failed to load page views for sessions:", error);
+      return [];
+    }
+    return (data as PageView[]) || [];
+  } catch (error) {
+    console.error("Page views for sessions error:", error);
+    return [];
+  }
+}
+
 // ============================================
 // SESSION MANAGEMENT
 // ============================================

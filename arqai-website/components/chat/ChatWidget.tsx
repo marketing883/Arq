@@ -10,6 +10,7 @@ import { LogoIcon } from "@/components/layout/Logo";
 import { MinimizeIcon } from "@/components/ui/Icons";
 import { resolveGreeting } from "@/lib/ai/greetings";
 import { trackChatMessage, trackChatOpen, trackGenerateLead } from "@/lib/analytics/gtm-events";
+import { getAttribution } from "@/lib/attribution/visitor-context";
 
 interface Message {
   id: string;
@@ -192,6 +193,10 @@ export function ChatWidget() {
       content: m.content,
     }));
 
+    // The analytics session id (shared with page-view tracking and forms) lets
+    // the server tie chat leads to the same browsing journey as everything else.
+    const attribution = getAttribution(pathname);
+
     try {
       const response = await fetch("/api/chat", {
         method: "POST",
@@ -201,6 +206,7 @@ export function ChatWidget() {
         body: JSON.stringify({
           message: content,
           sessionId,
+          analyticsSessionId: attribution.sessionId,
           userContext,
           conversationHistory,
           context: {
@@ -352,7 +358,30 @@ export function ChatWidget() {
 
                 {showFallbackForm && (
                   <FallbackForm
-                    onSubmit={(data) => {
+                    onSubmit={async (data) => {
+                      // Persist as a real lead (chat assistant was unavailable),
+                      // carrying the same attribution as the site forms.
+                      const attribution = getAttribution(pathname);
+                      const res = await fetch("/api/contact", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                          name: data.name,
+                          email: data.email,
+                          company: data.company || "Not provided",
+                          jobTitle: "Not provided",
+                          workflowArea: "Chat inquiry",
+                          message:
+                            "Requested a callback via the site chat (the assistant was temporarily unavailable).",
+                          inquiryType: "chat",
+                          attribution: { ...attribution, sourceContext: "Chat fallback" },
+                        }),
+                      });
+                      const body = await res.json().catch(() => null);
+                      if (!res.ok || !body?.success) {
+                        throw new Error(body?.error || "Could not send. Please try again.");
+                      }
+
                       setUserInfo((prev) => ({ ...prev, ...data }));
                       trackGenerateLead({
                         form_name: "chat_fallback",

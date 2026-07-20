@@ -266,8 +266,14 @@ export async function POST(request: NextRequest) {
         console.error("Lead intelligence processing error:", error instanceof Error ? error.message : "Unknown");
       });
 
-    // Process message for V2 lead intelligence (non-blocking, runs alongside V1)
-    processMessageForV2Intelligence(sessionId, message, leadUserInfo, currentPage)
+    // Process message for V2 lead intelligence (non-blocking, runs alongside V1).
+    // Prefer the analytics session id (shared with page-view tracking and forms)
+    // so a chat lead joins the same browsing journey as everything else.
+    const analyticsSessionId =
+      typeof body.analyticsSessionId === "string" && body.analyticsSessionId
+        ? body.analyticsSessionId
+        : sessionId;
+    processMessageForV2Intelligence(analyticsSessionId, message, leadUserInfo, currentPage)
       .then(({ profile, alerts, journeyChanged }) => {
         if (profile && profile.priority_tier === "P1") {
           console.log(`[LEAD V2] P1 lead: ${profile.canonical_email}, score: ${profile.composite_score}`);

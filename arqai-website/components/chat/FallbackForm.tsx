@@ -5,7 +5,8 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/Button";
 
 interface FallbackFormProps {
-  onSubmit: (data: { name: string; email: string; company?: string }) => void;
+  /** Persists the lead. Throw to signal failure (e.g. work-email required). */
+  onSubmit: (data: { name: string; email: string; company?: string }) => Promise<void>;
   onCancel: () => void;
 }
 
@@ -16,6 +17,8 @@ export function FallbackForm({ onSubmit, onCancel }: FallbackFormProps) {
     company: "",
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const validate = () => {
     const newErrors: Record<string, string> = {};
@@ -34,10 +37,17 @@ export function FallbackForm({ onSubmit, onCancel }: FallbackFormProps) {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (validate()) {
-      onSubmit(formData);
+    if (!validate()) return;
+    setSubmitting(true);
+    setSubmitError(null);
+    try {
+      await onSubmit(formData);
+    } catch (err) {
+      setSubmitError(err instanceof Error ? err.message : "Could not send. Please try again.");
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -102,15 +112,20 @@ export function FallbackForm({ onSubmit, onCancel }: FallbackFormProps) {
           />
         </div>
 
+        {submitError && (
+          <p className="text-xs text-red-500">{submitError}</p>
+        )}
+
         <div className="flex gap-2 pt-2">
-          <Button type="submit" size="sm" className="flex-1">
-            Submit
+          <Button type="submit" size="sm" className="flex-1" disabled={submitting}>
+            {submitting ? "Sending..." : "Submit"}
           </Button>
           <Button
             type="button"
             variant="ghost"
             size="sm"
             onClick={onCancel}
+            disabled={submitting}
           >
             Cancel
           </Button>
