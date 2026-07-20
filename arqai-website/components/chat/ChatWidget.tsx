@@ -8,7 +8,7 @@ import { ChatInput } from "./ChatInput";
 import { FallbackForm } from "./FallbackForm";
 import { LogoIcon } from "@/components/layout/Logo";
 import { MinimizeIcon } from "@/components/ui/Icons";
-import { GREETING_MESSAGES } from "@/lib/ai/knowledge-base";
+import { resolveGreeting } from "@/lib/ai/greetings";
 import { trackChatMessage, trackChatOpen, trackGenerateLead } from "@/lib/analytics/gtm-events";
 
 interface Message {
@@ -139,7 +139,7 @@ export function ChatWidget() {
   useEffect(() => {
     if (!isExpanded || hasGreeted) return;
 
-    const greeting = GREETING_MESSAGES[pathname] || GREETING_MESSAGES.default;
+    const greeting = resolveGreeting(pathname);
 
     const greetingMessage: Message = {
       id: `greeting-${Date.now()}`,

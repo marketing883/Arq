@@ -200,7 +200,7 @@ export async function POST(request: NextRequest) {
         console.error("OpenAI fallback also failed:", openaiError);
         return NextResponse.json({
           response:
-            "I apologize, but I'm having trouble connecting right now. Please try again in a moment, or feel free to email us at habib@thearq.ai for immediate assistance.",
+            "I apologize, but I'm having trouble connecting right now. Please try again in a moment, or feel free to email us at engage@thearq.ai for immediate assistance.",
           morphTrigger: null,
           extractedInfo: {},
           error: true,

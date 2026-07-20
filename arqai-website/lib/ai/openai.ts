@@ -1,5 +1,5 @@
 import OpenAI from "openai";
-import { SYSTEM_PROMPT, PAGE_CONTEXT_PROMPTS } from "./knowledge-base";
+import { SYSTEM_PROMPT, resolvePageContextPrompt } from "./knowledge-base";
 import type { ChatMessage, ChatContext } from "./anthropic";
 
 // Lazy initialization to prevent build-time errors
@@ -28,7 +28,7 @@ export async function generateChatResponseOpenAI(
   context: ChatContext
 ): Promise<string> {
   const openai = getOpenAIClient();
-  const pageContext = PAGE_CONTEXT_PROMPTS[context.currentPage] || PAGE_CONTEXT_PROMPTS["/"];
+  const pageContext = resolvePageContextPrompt(context.currentPage);
 
   // Build context-aware system prompt
   let systemPrompt = SYSTEM_PROMPT;

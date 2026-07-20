@@ -1,5 +1,5 @@
 import Anthropic from "@anthropic-ai/sdk";
-import { SYSTEM_PROMPT, PAGE_CONTEXT_PROMPTS } from "./knowledge-base";
+import { SYSTEM_PROMPT, resolvePageContextPrompt } from "./knowledge-base";
 
 // Lazy initialization to prevent build-time errors
 let anthropicClient: Anthropic | null = null;
@@ -40,7 +40,7 @@ export async function generateChatResponse(
   context: ChatContext
 ): Promise<string> {
   const anthropic = getAnthropicClient();
-  const pageContext = PAGE_CONTEXT_PROMPTS[context.currentPage] || PAGE_CONTEXT_PROMPTS["/"];
+  const pageContext = resolvePageContextPrompt(context.currentPage);
 
   // Build context-aware system prompt
   let systemPrompt = SYSTEM_PROMPT;
