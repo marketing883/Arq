@@ -38,7 +38,6 @@ import {
   generatePredictiveInsights,
   inferFromDomain,
   createEmptyTouchpoints,
-  updateProfileScores,
   DEFAULT_SCORING_CONFIG,
 } from "./lead-intelligence-v2";
 import {

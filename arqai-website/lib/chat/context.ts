@@ -108,32 +108,6 @@ export function mergeEntitiesIntoContext(
   return updateContext(context, updates);
 }
 
-// Calculate context completeness score
-export function getContextCompleteness(context: UserContext): number {
-  let score = 0;
-  const weights = {
-    industry: 20,
-    companySize: 10,
-    painPoints: 25,
-    complianceFrameworks: 15,
-    useCases: 15,
-    hasExistingAI: 5,
-    aiAgentCount: 5,
-    email: 5,
-  };
-
-  if (context.industry) score += weights.industry;
-  if (context.companySize) score += weights.companySize;
-  if (context.painPoints.length > 0) score += weights.painPoints;
-  if (context.complianceFrameworks.length > 0) score += weights.complianceFrameworks;
-  if (context.useCases.length > 0) score += weights.useCases;
-  if (context.hasExistingAI !== null) score += weights.hasExistingAI;
-  if (context.aiAgentCount !== null) score += weights.aiAgentCount;
-  if (context.email) score += weights.email;
-
-  return score;
-}
-
 // Determine engagement level based on interaction patterns
 export function calculateEngagementLevel(
   context: UserContext,

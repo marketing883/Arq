@@ -375,18 +375,6 @@ function painPointToFeature(painPoint: PainPoint): string {
   return mapping[painPoint] || "features";
 }
 
-// Map industry to most relevant case study
-function mapIndustryToCaseStudy(industry: Industry | undefined): string {
-  if (!industry) return "financial";
-
-  const mapping: Partial<Record<NonNullable<Industry>, string>> = {
-    healthcare: "healthcare",
-    financial_services: "financial",
-    insurance: "insurance",
-  };
-  return mapping[industry] || "financial";
-}
-
 // Infer compliance risk level from context
 function inferComplianceRisk(
   context: UserContext

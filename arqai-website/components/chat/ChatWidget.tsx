@@ -218,11 +218,25 @@ export function ChatWidget() {
         }),
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to get response");
+      // Rate limited — a distinct, non-fatal state. Don't count it toward the
+      // fallback-form threshold; just ask the user to slow down.
+      if (response.status === 429) {
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: `rl-${Date.now()}`,
+            role: "assistant",
+            content: "You're sending messages quickly — give me a few seconds and try again.",
+            timestamp: new Date(),
+          },
+        ]);
+        return;
       }
 
-      const data = await response.json();
+      const data = response.ok ? await response.json().catch(() => null) : null;
+      if (!data) {
+        throw new Error("Failed to get response");
+      }
 
       // Update session ID if provided
       if (data.sessionId && !sessionId) {
@@ -271,6 +285,17 @@ export function ChatWidget() {
             },
           })
         );
+
+        // Surface the personalized follow-up that accompanies the card.
+        if (data.cardFollowUp) {
+          const followUp: Message = {
+            id: `followup-${Date.now()}`,
+            role: "assistant",
+            content: data.cardFollowUp,
+            timestamp: new Date(),
+          };
+          setMessages((prev) => [...prev, followUp]);
+        }
       }
     } catch (error) {
       console.error("Chat error:", error);

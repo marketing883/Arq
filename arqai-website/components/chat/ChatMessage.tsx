@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { LogoIcon } from "@/components/layout/Logo";
+import { linkify } from "./linkify";
 
 interface Message {
   id: string;
@@ -40,7 +41,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
       >
         <p className={`text-sm leading-relaxed whitespace-pre-wrap ${
           isUser ? "text-white" : "text-gray-900"
-        }`}>{message.content}</p>
+        }`}>{isUser ? message.content : linkify(message.content)}</p>
         <p
           className={`text-xs mt-1 ${
             isUser ? "text-white/70" : "text-gray-500"
