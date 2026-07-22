@@ -52,7 +52,7 @@ const MAINS: Record<string, MainItem> = {
     name: "ArqFWA",
     track: "Vertical · Healthcare Payers",
     line: "Surfaces the cases most likely to be fraud, waste, or abuse before payment leaves the door — with evidence investigators can defend.",
-    stat: { value: "$3.2M", label: "surfaced in one Blind Spot Assessment" },
+    stat: { value: "Proven", label: "waste surfaced in a live Blind Spot Assessment" },
     href: "/accelerators/arqfwa",
     videoSrc: PLACEHOLDER_VIDEO,
     imageUrl: "/img/accelerators/ArqFWA.webp",

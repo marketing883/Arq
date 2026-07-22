@@ -57,15 +57,15 @@ async function getCaseStudies(): Promise<CaseStudy[]> {
 // the top of the listing so the proof section is never empty.
 const pinned: CaseStudy = {
   id: "tpa-blind-spot-assessment",
-  title: "$3.2M in Undetected Waste Found at a Mid-Size TPA",
+  title: "Undetected Waste Found at a Mid-Size TPA Rated Fully Compliant",
   slug: "tpa-blind-spot-assessment",
   client_name: "Mid-size third-party administrator",
   industry: "Healthcare Payers",
   overview:
-    "Rated fully compliant by its payment-integrity vendor, one ArqAI Blind Spot Assessment still surfaced roughly $3.2M in undetected waste — and cut manual claims-review time by about 70%.",
+    "Rated fully compliant by its payment-integrity vendor, one ArqAI Blind Spot Assessment still surfaced significant undetected waste — and sharply cut manual claims-review time.",
   metrics: [
-    { label: "Undetected waste surfaced", value: "$3.2M" },
-    { label: "Less manual review time", value: "70%" },
+    { label: "Undetected waste", value: "Surfaced" },
+    { label: "Manual review time", value: "Cut" },
     { label: "Assessment engagement", value: "1" },
   ],
 };
@@ -142,7 +142,7 @@ export default async function CaseStudiesPage() {
         </section>
         <ClosingCta
           heading="What would an assessment find in your operation?"
-          sub="One engagement surfaced $3.2M a compliant-rated program had missed. Tell us about your workflow and we will scope what to look for."
+          sub="One engagement surfaced undetected waste a compliant-rated program had missed. Tell us about your workflow and we will scope what to look for."
         />
       </main>
       <V6Footer />

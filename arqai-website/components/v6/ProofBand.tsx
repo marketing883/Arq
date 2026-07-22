@@ -20,29 +20,25 @@ type Stat = {
 
 const STATS: Stat[] = [
   {
-    prefix: "$",
-    target: 3.2,
-    decimals: 1,
-    suffix: "M",
-    label: "hidden waste, one assessment",
-    detail: "Surfaced at a single TPA its vendor rated fully compliant",
-  },
-  {
-    target: 70,
-    suffix: "%",
-    label: "less manual review time",
-    detail: "Same engagement — flagged cases arrived with the evidence assembled",
-  },
-  {
     target: 10,
     suffix: "",
     label: "production-ready accelerators",
     detail: "Reusable workflow patterns, configured to your systems and policies",
   },
+];
+
+// Qualitative proof — the results story without client-specific figures.
+const CLAIMS: { title: string; detail: string }[] = [
   {
-    target: 100,
-    suffix: "%",
-    label: "audit-ready proof",
+    title: "Undetected waste, surfaced",
+    detail: "Found at a TPA its own payment-integrity vendor had rated fully compliant",
+  },
+  {
+    title: "Manual review time, cut",
+    detail: "Flagged cases arrive with the evidence already assembled",
+  },
+  {
+    title: "Audit-ready proof, always",
     detail: "Every agent action carries trigger, reasoning, and outcome",
   },
 ];
@@ -123,6 +119,26 @@ function StatBlock({ stat, index, start }: { stat: Stat; index: number; start: b
   );
 }
 
+function ClaimBlock({ claim, index, start }: { claim: { title: string; detail: string }; index: number; start: boolean }) {
+  return (
+    <div
+      className={`group/stat relative flex-1 px-6 py-1 transition-all duration-700 ease-out first:pl-0 last:pr-0 md:px-8 ${
+        start ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
+      }`}
+      style={{ transitionDelay: `${140 + index * 110}ms` }}
+    >
+      <p className="font-display text-[18px] font-semibold leading-snug tracking-tight text-white md:text-[20px]">
+        {claim.title}
+      </p>
+      <p className="mt-1.5 text-[12px] leading-snug text-white/55">{claim.detail}</p>
+      <span
+        className="absolute right-0 top-1/2 hidden h-14 w-px -translate-y-1/2 rotate-[16deg] bg-white/15 group-last/stat:hidden md:block"
+        aria-hidden="true"
+      />
+    </div>
+  );
+}
+
 export default function ProofBand() {
   const { ref, inView } = useInView<HTMLDivElement>(0.35);
 
@@ -179,10 +195,13 @@ export default function ProofBand() {
         {/* Vertical hairline after header */}
         <span className="hidden h-16 w-px shrink-0 rotate-[16deg] bg-white/15 md:block" aria-hidden="true" />
 
-        {/* Stats row */}
+        {/* Stats row — one featured number, then qualitative proof */}
         <div className="flex flex-1 flex-col gap-6 sm:grid sm:grid-cols-2 md:flex md:flex-row md:items-center md:gap-0">
           {STATS.map((stat, i) => (
             <StatBlock key={stat.label} stat={stat} index={i} start={inView} />
+          ))}
+          {CLAIMS.map((claim, i) => (
+            <ClaimBlock key={claim.title} claim={claim} index={STATS.length + i} start={inView} />
           ))}
         </div>
       </div>

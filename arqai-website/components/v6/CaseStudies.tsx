@@ -38,20 +38,20 @@ async function getCaseStudies(): Promise<SpotlightStudy[]> {
 // /case-studies/tpa-blind-spot-assessment — always leads the spotlight so
 // the proof band never renders empty, whatever the CMS holds.
 const pinned: SpotlightStudy = {
-  title: "$3.2M in Undetected Waste Found at a Mid-Size TPA",
+  title: "Undetected Waste Found at a Mid-Size TPA Rated Fully Compliant",
   slug: "tpa-blind-spot-assessment",
   client_name: "Mid-size third-party administrator",
   industry: "Healthcare Payers",
   hero_image: "/v5/assets/accel/arqfwa.jpg",
   overview:
-    "Rated fully compliant by its payment-integrity vendor, one ArqAI Blind Spot Assessment still surfaced roughly $3.2M in undetected waste — and cut manual claims-review time by about 70%.",
+    "Rated fully compliant by its payment-integrity vendor, one ArqAI Blind Spot Assessment still surfaced significant undetected waste — and sharply cut manual claims-review time.",
   impact_summary:
-    "One Blind Spot Assessment surfaced roughly $3.2M in waste a compliant-rated program had missed.",
+    "One Blind Spot Assessment surfaced undetected waste a compliant-rated program had missed.",
   metrics: [
-    { label: "Undetected waste surfaced", value: "$3.2M" },
-    { label: "Less manual review time", value: "70%" },
+    { label: "Undetected waste", value: "Surfaced" },
+    { label: "Manual review time", value: "Cut" },
     { label: "Assessment engagement", value: "1" },
-    { label: "Findings with reviewable evidence", value: "100%" },
+    { label: "Every finding", value: "Evidenced" },
   ],
 };
 

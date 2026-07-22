@@ -50,7 +50,7 @@ function useInView<T extends HTMLElement>(threshold = 0.3) {
   return { ref, inView };
 }
 
-/** Parse "30%+", "$3.2M", "100%", "2x" into count-up parts; null when non-numeric. */
+/** Parse "30%+", "$1M", "2x", "45%" into count-up parts; null when non-numeric. */
 function parseValue(value: string) {
   const match = value.match(/^([^0-9]*)([0-9]+(?:\.[0-9]+)?)(.*)$/);
   if (!match) return null;

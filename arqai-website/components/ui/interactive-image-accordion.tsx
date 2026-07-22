@@ -25,6 +25,16 @@ const HERO_POSTER = "/v5/assets/pR0DzH2JNZa0vnz4l8WJLxvUKA.jpg";
 
 export const defaultAccordionItems: ImageAccordionItem[] = [
   {
+    id: "arqvantage",
+    title: "ArqVantage",
+    tag: "Pricing Intelligence",
+    description:
+      "Reads why competitor prices moved and reprices within your guardrails, with MAP enforced automatically.",
+    imageUrl: "/img/accelerators/ArqVantage.webp",
+    duo: ["#0e0c30", "#201848"],
+    href: "/accelerators/arqvantage",
+  },
+  {
     id: "arqfwa",
     title: "ArqFWA",
     tag: "Payment Integrity",
@@ -43,16 +53,6 @@ export const defaultAccordionItems: ImageAccordionItem[] = [
     imageUrl: "/img/accelerators/ArqLoyalty.webp",
     duo: ["#180828", "#2e1238"],
     href: "/accelerators/arqloyalty",
-  },
-  {
-    id: "arqvantage",
-    title: "ArqVantage",
-    tag: "Pricing Intelligence",
-    description:
-      "Reads why competitor prices moved and reprices within your guardrails, with MAP enforced automatically.",
-    imageUrl: "/img/accelerators/ArqVantage.webp",
-    duo: ["#0e0c30", "#201848"],
-    href: "/accelerators/arqvantage",
   },
   {
     id: "arqbanker",
@@ -272,19 +272,17 @@ export function LandingAccordionItem({
               </Link>
             </div>
 
-            {/* Stat strip */}
-            <div className="mt-10 flex flex-wrap items-center justify-center md:justify-start gap-6 sm:gap-8 md:gap-10">
+            {/* Proof strip — qualitative, no client-specific figures */}
+            <div className="mt-10 flex flex-wrap items-center justify-center md:justify-start gap-x-6 gap-y-2 text-xs text-gray-500">
               {[
-                { num: "$3.2M", label: "Waste surfaced in one Blind Spot Assessment" },
-                { num: "70%", label: "Less manual review time in that engagement" },
-                { num: "100%", label: "Agent actions with audit-ready proof" },
-              ].map((s) => (
-                <div key={s.num} className="text-left max-w-[130px]">
-                  <div className="font-display text-2xl md:text-3xl font-semibold text-gray-900">
-                    {s.num}
-                  </div>
-                  <div className="mt-1 text-xs text-gray-500 leading-snug">{s.label}</div>
-                </div>
+                "Waste surfaced where a vendor saw none",
+                "Sharply less manual review time",
+                "Audit-ready proof on every agent action",
+              ].map((s, i) => (
+                <span key={s} className="inline-flex items-center gap-2">
+                  {i > 0 && <span className="hidden h-1 w-1 rounded-full bg-gray-300 sm:inline-block" aria-hidden="true" />}
+                  {s}
+                </span>
               ))}
             </div>
           </div>

@@ -16,16 +16,16 @@ import { industryNames, painPointNames } from "./context";
 const realCaseStudy = {
   industry: "Healthcare Payers",
   badge: "Mid-Size TPA",
-  title: "$3.2M in Undetected Waste Found in One Blind Spot Assessment",
+  title: "Undetected Waste Found in One Blind Spot Assessment",
   challenge:
     "A mid-size third-party administrator had been rated fully compliant by its payment-integrity vendor — a rating that reflected what the incumbent tooling was designed to look for, not what pattern-level analysis could still find.",
   solution:
     "A single ArqAI Blind Spot Assessment ran ArqFWA's cross-signal analysis over historical claims the incumbent tools had already cleared, and delivered every flagged case with the evidence a reviewer needs to act.",
   results: [
-    { metric: "$3.2M", label: "Undetected waste surfaced" },
-    { metric: "70%", label: "Less manual review time" },
+    { metric: "Surfaced", label: "Undetected waste" },
+    { metric: "Cut", label: "Manual review time" },
     { metric: "1", label: "Assessment engagement" },
-    { metric: "100%", label: "Findings with reviewable evidence" },
+    { metric: "Evidenced", label: "Every finding" },
   ],
   quote: "",
   quoteAuthor: "",

@@ -125,7 +125,7 @@ export const accelerators: Accelerator[] = [
     promise:
       "ArqFWA prioritizes the cases worth human attention, explains why they matter, and keeps the evidence trail clean enough for downstream recovery and audit.",
     proof:
-      "Proven in the field: a single ArqFWA-powered Blind Spot Assessment surfaced roughly $3.2M in undetected waste for a mid-size TPA whose prior vendor had rated it fully compliant — while cutting manual review time by about 70%. Full story: /case-studies/tpa-blind-spot-assessment",
+      "Proven in the field: a single ArqFWA-powered Blind Spot Assessment surfaced significant undetected waste for a mid-size TPA whose prior vendor had rated it fully compliant — while sharply cutting manual review time. Full story: /case-studies/tpa-blind-spot-assessment",
     rollout: [
       "Load a sample claims and provider-history slice; calibrate signals against known leakage patterns and past investigation outcomes.",
       "Deploy the reviewer workbench with explanations, evidence packages, and routing alongside the existing process.",

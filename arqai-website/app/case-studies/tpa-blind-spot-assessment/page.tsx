@@ -10,9 +10,9 @@ import { generateBreadcrumbSchema } from "@/lib/seo/structured-data";
 // the site's canonical proof exists independent of database state.
 
 const CANONICAL = "https://thearq.ai/case-studies/tpa-blind-spot-assessment";
-const TITLE = "Case Study: $3.2M in Undetected Waste Found at a Mid-Size TPA";
+const TITLE = "Case Study: Undetected Waste Found at a Mid-Size TPA Rated Fully Compliant";
 const DESCRIPTION =
-  "A mid-size third-party administrator rated fully compliant by its payment-integrity vendor ran one ArqAI Blind Spot Assessment. It surfaced ~$3.2M in undetected waste and cut manual claims-review time by roughly 70%.";
+  "A mid-size third-party administrator rated fully compliant by its payment-integrity vendor ran one ArqAI Blind Spot Assessment. It surfaced significant undetected waste and sharply cut manual claims-review time.";
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -35,16 +35,16 @@ export const metadata: Metadata = {
 
 const results = [
   {
-    value: "$3.2M",
-    label: "Undetected waste surfaced",
+    value: "Surfaced",
+    label: "Undetected waste",
     detail:
       "Fraud, waste, abuse, and claims-leakage signals across historical claims the incumbent tooling had already cleared.",
   },
   {
-    value: "70%",
-    label: "Less manual review time",
+    value: "Cut",
+    label: "Manual review time",
     detail:
-      "The claims team spent roughly 70% less time on manual review, because flagged cases arrived with the evidence already assembled.",
+      "The claims team spent far less time on manual review, because flagged cases arrived with the evidence already assembled.",
   },
   {
     value: "1",
@@ -130,13 +130,13 @@ export default function TpaBlindSpotCaseStudy() {
               Healthcare Payers · Payment Integrity
             </span>
             <h1 className="v5-h1">
-              Rated fully compliant. $3.2M in waste still on the table.
+              Rated fully compliant. Significant waste still on the table.
             </h1>
             <p className="v5-lead">
               A mid-size third-party administrator ran a single ArqAI Blind Spot
               Assessment over claims its payment-integrity vendor had already cleared.
-              The assessment surfaced roughly $3.2M in undetected waste — and cut the
-              team&apos;s manual review time by about 70% while doing it.
+              The assessment surfaced significant undetected waste — and sharply cut the
+              team&apos;s manual review time while doing it.
             </p>
           </div>
         </div>
@@ -198,8 +198,8 @@ export default function TpaBlindSpotCaseStudy() {
                 <li>Prior state: rated fully compliant by the incumbent payment-integrity vendor</li>
                 <li>Scope: one ArqAI Blind Spot Assessment over historical claims data</li>
                 <li>Engine: ArqFWA cross-signal analysis and explainable case scoring</li>
-                <li>Findings: ~$3.2M in undetected waste and claims leakage</li>
-                <li>Side effect: ~70% reduction in manual claims-review time</li>
+                <li>Findings: significant undetected waste and claims leakage</li>
+                <li>Side effect: a sharp reduction in manual claims-review time</li>
               </ul>
             </div>
           </div>
@@ -234,7 +234,7 @@ export default function TpaBlindSpotCaseStudy() {
         <div className="v5-container">
           <div className="v5-split">
             <div className="v5-split-copy">
-              <span className="v5-eyebrow">The 70%</span>
+              <span className="v5-eyebrow">Less review, more findings</span>
               <h2 className="v5-h2">Why review time fell while findings went up.</h2>
               <p className="v5-body">
                 Traditional payment-integrity tooling produces thousands of isolated
@@ -243,7 +243,7 @@ export default function TpaBlindSpotCaseStudy() {
                 team received fewer, better cases — each one already carrying the
                 evidence, peer comparisons, and policy references a reviewer needs to
                 make a defensible decision. Less time hunting for context, more time
-                acting on cases that matter. That is where the roughly 70% reduction in
+                acting on cases that matter. That is where the sharp reduction in
                 manual review time came from.
               </p>
             </div>

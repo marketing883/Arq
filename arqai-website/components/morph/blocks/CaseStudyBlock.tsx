@@ -14,16 +14,16 @@ interface CaseStudyBlockProps {
 const study = {
   industry: "Healthcare Payers",
   badge: "Mid-Size TPA",
-  title: "$3.2M in Undetected Waste Found in One Blind Spot Assessment",
+  title: "Undetected Waste Found in One Blind Spot Assessment",
   challenge:
     "A mid-size third-party administrator had been rated fully compliant by its payment-integrity vendor. The rating reflected what the incumbent tooling was designed to look for — isolated claims scored against generic payer rules — not what pattern-level analysis could still find.",
   solution:
     "A single ArqAI Blind Spot Assessment ran ArqFWA's cross-signal analysis over historical claims the incumbent tools had already cleared, correlating billing patterns, provider behavior, and member history into one risk picture — with every flagged case carrying the evidence a reviewer needs to act.",
   results: [
-    { metric: "$3.2M", label: "Undetected waste surfaced" },
-    { metric: "70%", label: "Less manual review time" },
+    { metric: "Surfaced", label: "Undetected waste" },
+    { metric: "Cut", label: "Manual review time" },
     { metric: "1", label: "Assessment engagement" },
-    { metric: "100%", label: "Findings with reviewable evidence" },
+    { metric: "Evidenced", label: "Every finding" },
   ],
   outcomes: [
     "Waste and leakage surfaced in claims already rated compliant",

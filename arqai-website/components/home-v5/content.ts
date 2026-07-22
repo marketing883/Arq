@@ -14,9 +14,9 @@ export const HERO = {
   // Real proof only: the TPA Blind Spot Assessment engagement and the
   // shipped accelerator catalog. No template numbers.
   metrics: [
-    { num: "$3.2", suffix: "M", label: "Undetected waste surfaced in one assessment" },
-    { num: "70", suffix: "%", label: "Less manual review time in that engagement" },
-    { num: "8", suffix: "", label: "Production-ready accelerator lines" },
+    { num: "Waste", suffix: "", label: "surfaced in one Blind Spot Assessment" },
+    { num: "Less", suffix: "", label: "manual review time in that engagement" },
+    { num: "10", suffix: "", label: "Production-ready accelerator lines" },
   ],
 };
 
@@ -75,17 +75,17 @@ export const WHY = {
     body: "ArqFWA draws on a library of 120+ TPA-specific fraud, waste, and abuse patterns that generic payer tools were never designed to find.",
   },
   reuse: {
-    num: "70%",
+    num: "Less",
     title: "Review Time Saved",
-    body: "The same Blind Spot Assessment cut manual claims-review time by roughly 70% for the team running it.",
+    body: "The same Blind Spot Assessment sharply cut manual claims-review time for the team running it.",
   },
   governance: {
-    num: "100%",
+    num: "Every",
     title: "Governance Built In",
     body: "Every agent we deploy generates encrypted, audit-ready proof of its actions. Compliance architecture is never an afterthought.",
   },
   waste: {
-    num: "$3.2M",
+    num: "Waste",
     title: "Undetected Waste Found",
     body: "Identified in a single Blind Spot Assessment for a mid-size TPA whose current vendor rated them fully compliant.",
   },
@@ -144,12 +144,12 @@ export const INTEGRATION = {
 // clients, no fabricated quotes.
 export const PROOF = {
   eyebrow: "Proof",
-  heading: "One assessment. $3.2M surfaced.",
+  heading: "One assessment. Waste surfaced.",
   sub: "A mid-size third-party administrator came to us rated fully compliant by its payment-integrity vendor. One ArqAI Blind Spot Assessment later, the picture looked different.",
   stats: [
-    { num: "$3.2M", label: "Undetected waste and claims leakage surfaced" },
-    { num: "70%", label: "Less manual review time for the claims team" },
-    { num: "100%", label: "Findings delivered with reviewable evidence" },
+    { num: "Surfaced", label: "Undetected waste and claims leakage" },
+    { num: "Cut", label: "Manual review time for the claims team" },
+    { num: "Evidenced", label: "Every finding delivered with reviewable proof" },
   ],
   body: "The assessment ran ArqFWA's cross-signal analysis across historical claims the incumbent tools had already cleared — correlating billing patterns, provider behavior, and member history that rule-based reviews score in isolation. Every flagged case carried the evidence an investigator needed to act on it.",
   cta: { label: "Read the case study", href: "/case-studies/tpa-blind-spot-assessment" },
