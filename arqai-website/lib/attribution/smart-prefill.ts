@@ -5,7 +5,7 @@
  */
 
 /** Domains that never imply a company (submissions from these are rejected
- * later by the work-email check anyway — never infer from them). */
+ * later by the work-email check anyway, so never infer from them). */
 const FREE_EMAIL_DOMAINS = new Set([
   "gmail.com",
   "googlemail.com",

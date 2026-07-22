@@ -27,19 +27,19 @@ const STATS: Stat[] = [
   },
 ];
 
-// Qualitative proof — the results story without client-specific figures.
+// Qualitative proof: the results story without client-specific figures.
 const CLAIMS: { title: string; detail: string }[] = [
   {
     title: "Compliant-rated. Waste still found.",
     detail: "One Blind Spot Assessment, over claims the incumbent tooling had already cleared",
   },
   {
-    title: "Fewer, better cases — not more alerts.",
+    title: "Fewer, better cases, not more alerts.",
     detail: "Each flagged case arrives with the evidence already assembled",
   },
   {
     title: "Proof on every agent action.",
-    detail: "Trigger, reasoning, and outcome — captured for audit",
+    detail: "Trigger, reasoning, and outcome, captured for audit",
   },
 ];
 
@@ -105,7 +105,7 @@ function StatBlock({ stat, index, start }: { stat: Stat; index: number; start: b
           {stat.label}
         </span>
       </div>
-      {/* Context line — dormant until hover */}
+      {/* Context line: dormant until hover */}
       <p className="mt-2 max-h-0 overflow-hidden text-[12px] leading-snug text-white/55 opacity-0 transition-all duration-500 group-hover/stat:max-h-10 group-hover/stat:opacity-100">
         {stat.detail}
       </p>
@@ -195,7 +195,7 @@ export default function ProofBand() {
         {/* Vertical hairline after header */}
         <span className="hidden h-16 w-px shrink-0 rotate-[16deg] bg-white/15 md:block" aria-hidden="true" />
 
-        {/* Stats row — one featured number, then qualitative proof */}
+        {/* Stats row: one featured number, then qualitative proof */}
         <div className="flex flex-1 flex-col gap-6 sm:grid sm:grid-cols-2 md:flex md:flex-row md:items-center md:gap-0">
           {STATS.map((stat, i) => (
             <StatBlock key={stat.label} stat={stat} index={i} start={inView} />

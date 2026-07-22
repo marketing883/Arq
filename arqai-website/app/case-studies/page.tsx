@@ -62,7 +62,7 @@ const pinned: CaseStudy = {
   client_name: "Mid-size third-party administrator",
   industry: "Healthcare Payers",
   overview:
-    "Rated fully compliant by its payment-integrity vendor, one ArqAI Blind Spot Assessment still surfaced significant undetected waste — and sharply cut manual claims-review time.",
+    "Rated fully compliant by its payment-integrity vendor, one ArqAI Blind Spot Assessment still surfaced significant undetected waste, and sharply cut manual claims-review time.",
   metrics: [
     { label: "Undetected waste", value: "Surfaced" },
     { label: "Manual review time", value: "Cut" },

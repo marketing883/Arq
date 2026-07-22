@@ -9,16 +9,16 @@ interface CaseStudyBlockProps {
 }
 
 // The one real, publishable engagement. This block intentionally ignores
-// AI-personalized case-study content — proof is never generated at runtime.
+// AI-personalized case-study content: proof is never generated at runtime.
 // Full narrative: /case-studies/tpa-blind-spot-assessment
 const study = {
   industry: "Healthcare Payers",
   badge: "Mid-Size TPA",
   title: "Undetected Waste Found in One Blind Spot Assessment",
   challenge:
-    "A mid-size third-party administrator had been rated fully compliant by its payment-integrity vendor. The rating reflected what the incumbent tooling was designed to look for — isolated claims scored against generic payer rules — not what pattern-level analysis could still find.",
+    "A mid-size third-party administrator had been rated fully compliant by its payment-integrity vendor. The rating reflected what the incumbent tooling was designed to look for: isolated claims scored against generic payer rules, not what pattern-level analysis could still find.",
   solution:
-    "A single ArqAI Blind Spot Assessment ran ArqFWA's cross-signal analysis over historical claims the incumbent tools had already cleared, correlating billing patterns, provider behavior, and member history into one risk picture — with every flagged case carrying the evidence a reviewer needs to act.",
+    "A single ArqAI Blind Spot Assessment ran ArqFWA's cross-signal analysis over historical claims the incumbent tools had already cleared, correlating billing patterns, provider behavior, and member history into one risk picture, with every flagged case carrying the evidence a reviewer needs to act.",
   results: [
     { metric: "Surfaced", label: "Undetected waste" },
     { metric: "Cut", label: "Manual review time" },
@@ -29,14 +29,14 @@ const study = {
     "Waste and leakage surfaced in claims already rated compliant",
     "Fewer, better cases instead of thousands of isolated rule hits",
     "Evidence, peer comparisons, and policy references on every finding",
-    "No rip-and-replace — ran on data the operation already had",
+    "No rip-and-replace, ran on data the operation already had",
   ],
 };
 
 export function CaseStudyBlock({ customizations }: CaseStudyBlockProps) {
   const introText =
     customizations?.subheadline ||
-    "One real engagement, told straight — what a single ArqAI Blind Spot Assessment found at a mid-size TPA.";
+    "One real engagement, told straight: what a single ArqAI Blind Spot Assessment found at a mid-size TPA.";
 
   return (
     <div className="space-y-8">

@@ -22,7 +22,7 @@ export const HQ_ADDRESS =
 type Props = {
   /** GTM form identifier, e.g. "contact_form" or "engagement_form". */
   formName: string;
-  /** The route this form lives on — used for attribution. */
+  /** The route this form lives on, used for attribution. */
   formPath: "/contact" | "/engage-us";
   /** Heading when we don't know what the visitor is here for. */
   defaultHeading: string;
@@ -118,7 +118,7 @@ function SmartLeadFormInner({
   const heading = headingFor(ctx, defaultHeading);
   const sub = ctx
     ? "A few quick questions and we'll come back within one business day."
-    : "Tell us a little about you — we'll come back within one business day.";
+    : "Tell us a little about you, and we'll come back within one business day.";
 
   const pick = (q: Qualifier, option: string) => {
     setAnswers((prev) => {
@@ -236,7 +236,7 @@ function SmartLeadFormInner({
 
   return (
     <>
-      {/* Heading — short, human, intent-aware, deliberately smaller than v5-h1 */}
+      {/* Heading: short, human, intent-aware, deliberately smaller than v5-h1 */}
       <section className="v5-page-hero" style={{ paddingBottom: 8 }}>
         <div className="v5-container" style={{ maxWidth: 820 }}>
           <h1
@@ -281,12 +281,12 @@ function SmartLeadFormInner({
 
               {welcomeBack && (
                 <p className="v5-form-note" style={{ marginTop: 0 }}>
-                  Welcome back, {welcomeBack} — we&apos;ve filled in what you shared with us
+                  Welcome back, {welcomeBack}. We&apos;ve filled in what you shared with us
                   earlier.
                 </p>
               )}
 
-              {/* Who you are — the only typing */}
+              {/* Who you are: the only typing */}
               <div className="v5-form-grid two">
                 <Field label="Full name" required>
                   <input className="v5-input" type="text" required value={fullName} onChange={(e) => setFullName(e.target.value)} autoComplete="name" />
@@ -307,7 +307,7 @@ function SmartLeadFormInner({
                 <input className="v5-input" type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} autoComplete="tel" />
               </Field>
 
-              {/* About your situation — all clicks, no typing */}
+              {/* About your situation: all clicks, no typing */}
               {ctx ? (
                 <div style={{ marginTop: 6 }}>
                   <p className="v5-form-note" style={{ marginTop: 0, marginBottom: 14 }}>
@@ -392,7 +392,7 @@ function SmartLeadFormInner({
                     style={{ marginTop: 3 }}
                   />
                   <span>
-                    <strong>Start with the {ctx.entryPoint.name}</strong> — {ctx.entryPoint.blurb}.
+                    <strong>Start with the {ctx.entryPoint.name}:</strong> {ctx.entryPoint.blurb}.
                     The usual first step, with no build commitment.
                   </span>
                 </label>
@@ -422,7 +422,7 @@ function SmartLeadFormInner({
 
           {/* Quiet strip: HQ + misroute links. One line each, no panels. */}
           <div style={{ marginTop: 22, fontSize: 13, color: "var(--v5-ink-soft)", lineHeight: 1.8 }}>
-            <p style={{ margin: 0 }}>ArqAI Labs HQ — {HQ_ADDRESS}</p>
+            <p style={{ margin: 0 }}>ArqAI Labs HQ: {HQ_ADDRESS}</p>
             <p style={{ margin: 0 }}>
               Partnerships? <Link href="/partners" style={{ textDecoration: "underline" }}>Use the partner intake</Link>.
               {"  "}Careers? <Link href="/careers" style={{ textDecoration: "underline" }}>See open roles</Link>.
@@ -442,7 +442,7 @@ function Field({
 }: {
   label: string;
   required?: boolean;
-  /** Render as a div — required when children contain their own labels (chips). */
+  /** Render as a div, required when children contain their own labels (chips). */
   group?: boolean;
   children: React.ReactNode;
 }) {

@@ -50,14 +50,14 @@ const results = [
     value: "1",
     label: "Assessment engagement",
     detail:
-      "The findings came from a single Blind Spot Assessment — not a multi-year platform rollout.",
+      "The findings came from a single Blind Spot Assessment, not a multi-year platform rollout.",
   },
 ];
 
 const steps = [
   {
     title: "Ingest what already exists",
-    body: "The assessment runs on historical claims, provider, policy, and member data the TPA already has — no new pipelines, no system migration, no disruption to live operations.",
+    body: "The assessment runs on historical claims, provider, policy, and member data the TPA already has, with no new pipelines, no system migration, and no disruption to live operations.",
   },
   {
     title: "Correlate signals rule engines score in isolation",
@@ -65,11 +65,11 @@ const steps = [
   },
   {
     title: "Score against a payer-specific pattern library",
-    body: "The analysis draws on a library of 120+ TPA-specific fraud, waste, and abuse patterns — the operating patterns of payer work that generic tools were never designed to look for.",
+    body: "The analysis draws on a library of 120+ TPA-specific fraud, waste, and abuse patterns, the operating patterns of payer work that generic tools were never designed to look for.",
   },
   {
     title: "Deliver findings a reviewer can defend",
-    body: "Every flagged case carries the evidence, peer comparisons, and policy references an investigator needs to act — no black-box scores, nothing the team has to take on faith.",
+    body: "Every flagged case carries the evidence, peer comparisons, and policy references an investigator needs to act, with no black-box scores and nothing the team has to take on faith.",
   },
 ];
 
@@ -135,7 +135,7 @@ export default function TpaBlindSpotCaseStudy() {
             <p className="v5-lead">
               A mid-size third-party administrator ran a single ArqAI Blind Spot
               Assessment over claims its payment-integrity vendor had already cleared.
-              The assessment surfaced significant undetected waste — and sharply cut the
+              The assessment surfaced significant undetected waste, and sharply cut the
               team&apos;s manual review time while doing it.
             </p>
           </div>
@@ -185,7 +185,7 @@ export default function TpaBlindSpotCaseStudy() {
               <p className="v5-body" style={{ marginTop: 16 }}>
                 That rating reflected what the incumbent tooling was designed to look
                 for: individual claims scored against generic payer rules. What it could
-                not see was the pattern-level picture — billing behavior that only looks
+                not see was the pattern-level picture: billing behavior that only looks
                 anomalous when you correlate it across providers, members, and time.
                 That gap between &ldquo;passed the rules&rdquo; and &ldquo;nothing left to
                 find&rdquo; is exactly what a Blind Spot Assessment exists to measure.
@@ -240,7 +240,7 @@ export default function TpaBlindSpotCaseStudy() {
                 Traditional payment-integrity tooling produces thousands of isolated
                 rule hits, and the claims team pays for every false positive with
                 review hours. The assessment inverted that: instead of more alerts, the
-                team received fewer, better cases — each one already carrying the
+                team received fewer, better cases, each one already carrying the
                 evidence, peer comparisons, and policy references a reviewer needs to
                 make a defensible decision. Less time hunting for context, more time
                 acting on cases that matter. That is where the sharp reduction in

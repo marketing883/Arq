@@ -264,7 +264,7 @@ export async function processMessageForIntelligence(
     const priorityTier = getLeadPriorityTier(intelligence);
 
     // Send notifications for all leads with email (non-blocking).
-    // Disabled by default — V2 smart alerts are the canonical team notification.
+    // Disabled by default: V2 smart alerts are the canonical team notification.
     if (V1_LEAD_EMAILS_ENABLED && userInfo.email) {
       sendLeadNotification({
         name: userInfo.name,

@@ -218,7 +218,7 @@ export function ChatWidget() {
         }),
       });
 
-      // Rate limited — a distinct, non-fatal state. Don't count it toward the
+      // Rate limited: a distinct, non-fatal state. Don't count it toward the
       // fallback-form threshold; just ask the user to slow down.
       if (response.status === 429) {
         setMessages((prev) => [
@@ -226,7 +226,7 @@ export function ChatWidget() {
           {
             id: `rl-${Date.now()}`,
             role: "assistant",
-            content: "You're sending messages quickly — give me a few seconds and try again.",
+            content: "You're sending messages quickly. Give me a few seconds and try again.",
             timestamp: new Date(),
           },
         ]);

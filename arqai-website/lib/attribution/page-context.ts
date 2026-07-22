@@ -1,5 +1,5 @@
 /**
- * Page context — maps a site path to the topic the visitor was engaging
+ * Page context: maps a site path to the topic the visitor was engaging
  * with, plus sensible form pre-fills for /contact and /engage-us.
  *
  * Kept as a lightweight hand-maintained map (rather than importing the full
@@ -9,7 +9,7 @@
 
 /**
  * A pointed, clickable qualifying question. "radio" = pick one,
- * "chips" = pick any. Answers are composed into the submission message —
+ * "chips" = pick any. Answers are composed into the submission message,
  * no free-text typing required from the visitor.
  */
 export type Qualifier = {
@@ -19,18 +19,18 @@ export type Qualifier = {
   options: string[];
 };
 
-/** Shared "when?" question — asked in every block, mapped to the API's timeline slugs. */
+/** Shared "when?" question, asked in every block, mapped to the API's timeline slugs. */
 export const TIMELINE_QUALIFIER: Qualifier = {
   id: "timeline",
   label: "When are you looking to move?",
   type: "radio",
-  options: ["Urgent", "This quarter", "Next 3–6 months", "Just exploring"],
+  options: ["Urgent", "This quarter", "Next 3-6 months", "Just exploring"],
 };
 
 const TIMELINE_SLUGS: Record<string, string> = {
   Urgent: "now",
   "This quarter": "quarter",
-  "Next 3–6 months": "half_year",
+  "Next 3-6 months": "half_year",
   "Just exploring": "exploring",
 };
 
@@ -93,7 +93,7 @@ const ACCELERATORS: Record<string, PageContext> = {
         "a two-week analysis of a claims sample against 120+ FWA patterns your current rules don't cover",
     },
     qualifiers: [
-      { id: "volume", label: "Claims volume per month", type: "radio", options: ["Under 25k", "25k–100k", "100k–500k", "500k+"] },
+      { id: "volume", label: "Claims volume per month", type: "radio", options: ["Under 25k", "25k-100k", "100k-500k", "500k+"] },
       { id: "current", label: "What do you use for FWA today?", type: "chips", options: ["Rules engine", "Manual review / SIU", "Vendor tool", "Nothing formal"] },
       TIMELINE_QUALIFIER,
     ],
@@ -116,7 +116,7 @@ const ACCELERATORS: Record<string, PageContext> = {
     },
     qualifiers: [
       { id: "platform", label: "What runs your loyalty program today?", type: "radio", options: ["Custom / in-house", "Legacy vendor platform", "Modern SaaS", "No program yet"] },
-      { id: "members", label: "Program size (members)", type: "radio", options: ["Under 100k", "100k–1M", "1M–10M", "10M+"] },
+      { id: "members", label: "Program size (members)", type: "radio", options: ["Under 100k", "100k-1M", "1M-10M", "10M+"] },
       TIMELINE_QUALIFIER,
     ],
   },
@@ -137,21 +137,21 @@ const ACCELERATORS: Record<string, PageContext> = {
         "a two-week analysis of your top 50 supplier relationships against 12 risk signals you aren't monitoring today",
     },
     qualifiers: [
-      { id: "suppliers", label: "Active suppliers", type: "radio", options: ["Under 100", "100–500", "500–2,000", "2,000+"] },
+      { id: "suppliers", label: "Active suppliers", type: "radio", options: ["Under 100", "100-500", "500-2,000", "2,000+"] },
       { id: "worry", label: "What worries you most?", type: "chips", options: ["Single-source dependencies", "Tier-2/3 visibility", "Late disruption warning", "Procurement exposure"] },
       TIMELINE_QUALIFIER,
     ],
   },
   arqbanker: {
     shortLabel: "ArqBanker",
-    label: "banking operations — underwriting, KYC, AML, and reporting",
+    label: "banking operations: underwriting, KYC, AML, and reporting",
     kind: "accelerator",
-    contact: { inquiryType: "workflow", industry: "Banking", workflowArea: "Banking operations — underwriting, KYC, AML (ArqBanker)" },
+    contact: { inquiryType: "workflow", industry: "Banking", workflowArea: "Banking operations: underwriting, KYC, AML (ArqBanker)" },
     engage: { industry: "banking", workflowArea: "financial-crime" },
     question: {
       label: "Which banking workflow hurts most today?",
       placeholder:
-        "Underwriting, onboarding/KYC, AML surveillance, or regulatory reporting — with rough volumes and cycle times.",
+        "Underwriting, onboarding/KYC, AML surveillance, or regulatory reporting, with rough volumes and cycle times.",
     },
     entryPoint: {
       name: "Banking Operations Efficiency Assessment",
@@ -202,7 +202,7 @@ const ACCELERATORS: Record<string, PageContext> = {
         "a two-week review of ticket categories, resolution patterns, and SLA performance showing your L1 auto-resolution opportunity",
     },
     qualifiers: [
-      { id: "volume", label: "Tickets per month", type: "radio", options: ["Under 1k", "1k–10k", "10k–50k", "50k+"] },
+      { id: "volume", label: "Tickets per month", type: "radio", options: ["Under 1k", "1k-10k", "10k-50k", "50k+"] },
       { id: "system", label: "Ticketing system", type: "chips", options: ["ServiceNow", "Jira SM", "Zendesk", "Freshservice", "Other"] },
       TIMELINE_QUALIFIER,
     ],
@@ -247,7 +247,7 @@ const ACCELERATORS: Record<string, PageContext> = {
     },
     qualifiers: [
       { id: "channels", label: "Where do you sell?", type: "chips", options: ["Amazon", "Walmart", "Own site", "Distributor portals"] },
-      { id: "skus", label: "SKUs to monitor", type: "radio", options: ["Under 100", "100–1k", "1k–10k", "10k+"] },
+      { id: "skus", label: "SKUs to monitor", type: "radio", options: ["Under 100", "100-1k", "1k-10k", "10k+"] },
       TIMELINE_QUALIFIER,
     ],
   },
@@ -450,8 +450,8 @@ export function getPageContext(path: string | null | undefined): PageContext | n
 }
 
 // ============================================================
-// Generic intents — shown when the visitor arrives with no context.
-// One friendly chooser; picking an intent reveals its 1–2 questions.
+// Generic intents: shown when the visitor arrives with no context.
+// One friendly chooser; picking an intent reveals its 1-2 questions.
 // ============================================================
 
 export type GenericIntent = {
@@ -501,7 +501,7 @@ export const genericIntents: GenericIntent[] = [
     inquiryType: "general",
     workflowArea: "Partnership",
     qualifiers: [],
-    routeTo: { href: "/partners", label: "Use the partner intake — it goes straight to the right team" },
+    routeTo: { href: "/partners", label: "Use the partner intake, which goes straight to the right team" },
   },
   {
     id: "other",

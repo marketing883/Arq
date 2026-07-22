@@ -39,7 +39,7 @@ export const defaultAccordionItems: ImageAccordionItem[] = [
     title: "ArqFWA",
     tag: "Payment Integrity",
     description:
-      "Surfaces the claims most likely to be fraud, waste, or abuse — with evidence investigators can defend.",
+      "Surfaces the claims most likely to be fraud, waste, or abuse, with evidence investigators can defend.",
     imageUrl: "/img/accelerators/ArqFWA.webp",
     duo: ["#041828", "#082838"],
     href: "/accelerators/arqfwa",
@@ -59,7 +59,7 @@ export const defaultAccordionItems: ImageAccordionItem[] = [
     title: "ArqBanker",
     tag: "Banking Operations",
     description:
-      "Underwriting, KYC, AML, and regulatory reporting — with explainable reasoning on every decision.",
+      "Underwriting, KYC, AML, and regulatory reporting, with explainable reasoning on every decision.",
     imageUrl: "/img/accelerators/ArqBanker.webp",
     duo: ["#0a1430", "#162040"],
     href: "/accelerators/arqbanker",
@@ -87,7 +87,7 @@ function AccordionPanel({ item, isActive, onActivate }: AccordionPanelProps) {
   return (
     <Link
       href={item.href}
-      aria-label={`${item.title} — ${item.tag}`}
+      aria-label={`${item.title}, ${item.tag}`}
       className={`
         relative block h-[360px] md:h-[470px] rounded-2xl overflow-hidden cursor-pointer
         outline-none transition-all duration-700 ease-in-out
@@ -130,7 +130,7 @@ function AccordionPanel({ item, isActive, onActivate }: AccordionPanelProps) {
         }`}
       />
 
-      {/* Collapsed caption — rotated name */}
+      {/* Collapsed caption, rotated name */}
       <span
         className={`
           absolute bottom-20 left-1/2 -translate-x-1/2 rotate-90 whitespace-nowrap
@@ -143,7 +143,7 @@ function AccordionPanel({ item, isActive, onActivate }: AccordionPanelProps) {
         {item.title}
       </span>
 
-      {/* Active caption — name, tag, description */}
+      {/* Active caption, name, tag, description */}
       <span
         className={`
           absolute inset-x-0 bottom-0 p-5 transition-all duration-500 ease-out
@@ -169,7 +169,7 @@ function MobileAccordionCard({ item, wide }: { item: ImageAccordionItem; wide?: 
   return (
     <Link
       href={item.href}
-      aria-label={`${item.title} — ${item.tag}`}
+      aria-label={`${item.title}, ${item.tag}`}
       className={`relative block h-[200px] overflow-hidden rounded-2xl ${wide ? "col-span-2" : ""}`}
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -272,7 +272,7 @@ export function LandingAccordionItem({
               </Link>
             </div>
 
-            {/* Positioning pillars — confident proof without client figures */}
+            {/* Positioning pillars: confident proof without client figures */}
             <div className="mt-9 flex flex-col items-center gap-2.5 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-x-6 sm:gap-y-2 md:justify-start">
               {[
                 "Production, not pilots",
@@ -321,7 +321,7 @@ export function LandingAccordionItem({
               ))}
             </div>
             <p className="text-center text-xs text-gray-500 mt-2">
-              Flagship accelerators — part of a growing library.{" "}
+              Flagship accelerators, part of a growing library.{" "}
               <Link href="/accelerators" className="underline underline-offset-2 hover:text-gray-800">
                 Explore all
               </Link>

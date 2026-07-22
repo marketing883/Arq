@@ -55,7 +55,7 @@ export async function POST(request: NextRequest) {
       attribution,
     } = body;
 
-    // Visitor journey / campaign attribution (untrusted client input — sanitized)
+    // Visitor journey / campaign attribution (untrusted client input, sanitized)
     const attr = sanitizeAttribution(attribution);
 
     // Validate required fields
@@ -149,7 +149,7 @@ export async function POST(request: NextRequest) {
         ai_summary: aiIntel?.summary || null,
         ai_intel_json: aiIntel ? JSON.stringify(aiIntel) : null,
       };
-      // Attribution fields (visitor journey + campaign) — requires
+      // Attribution fields (visitor journey + campaign), requires
       // supabase-contact-attribution-migration.sql to have been run.
       const attributionRow = attr
         ? {
@@ -175,7 +175,7 @@ export async function POST(request: NextRequest) {
         .insert({ ...baseRow, ...attributionRow });
 
       // If the attribution migration hasn't been applied yet, the unknown
-      // columns fail the whole insert — retry without them rather than
+      // columns fail the whole insert, so retry without them rather than
       // silently losing the lead.
       if (dbError && attr) {
         console.error(

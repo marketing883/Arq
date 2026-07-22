@@ -21,7 +21,7 @@ export type SpotlightStudy = {
   overview?: string | null;
   metrics?: SpotlightMetric[] | null;
   /** Qualitative proof points. Rendered as a checklist when present, in place
-   *  of the numeric stat grid — for studies whose proof isn't a figure. */
+   *  of the numeric stat grid, for studies whose proof isn't a figure. */
   highlights?: string[] | null;
   testimonial_quote?: string | null;
   testimonial_author_name?: string | null;
@@ -124,7 +124,7 @@ export default function CaseStudySpotlight({
         >
           <p className="flex items-center gap-2.5 text-[11px] font-bold uppercase tracking-[0.22em] text-white/80">
             <span className="inline-flex h-2 w-2 rounded-full bg-[#d0f438] shadow-[0_0_0_4px_rgba(208,244,56,0.25)]" />
-            Case study — the specifics, not the pitch
+            Case study: the specifics, not the pitch
           </p>
           <Link
             href="/case-studies"
@@ -197,7 +197,7 @@ export default function CaseStudySpotlight({
             </div>
           </div>
 
-          {/* Proof column — a scannable checklist when the proof is
+          {/* Proof column: a scannable checklist when the proof is
               qualitative, or the numeric stat grid when metrics carry figures. */}
           {highlights.length > 0 ? (
             <ul className="flex flex-col justify-center gap-4 border-t border-white/10 pt-8 lg:border-l lg:border-t-0 lg:pl-12 lg:pt-0">

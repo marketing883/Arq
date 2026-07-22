@@ -51,7 +51,7 @@ const MAINS: Record<string, MainItem> = {
     id: "arqfwa",
     name: "ArqFWA",
     track: "Vertical · Healthcare Payers",
-    line: "Surfaces the cases most likely to be fraud, waste, or abuse before payment leaves the door — with evidence investigators can defend.",
+    line: "Surfaces the cases most likely to be fraud, waste, or abuse before payment leaves the door, with evidence investigators can defend.",
     stat: { value: "Proven", label: "waste surfaced in a live Blind Spot Assessment" },
     href: "/accelerators/arqfwa",
     videoSrc: PLACEHOLDER_VIDEO,
@@ -73,7 +73,7 @@ const MAINS: Record<string, MainItem> = {
     id: "arqvantage",
     name: "ArqVantage",
     track: "Horizontal · Cross-Industry",
-    line: "Reads why competitor prices moved — and responds in minutes within your guardrails, with MAP compliance enforced automatically.",
+    line: "Reads why competitor prices moved, and responds in minutes within your guardrails, with MAP compliance enforced automatically.",
     stat: { value: "<5 min", label: "designed response to a price move" },
     href: "/accelerators/arqvantage",
     videoSrc: PLACEHOLDER_VIDEO,
@@ -88,7 +88,7 @@ const SECONDARIES: Record<string, SecondaryItem> = {
     name: "ArqBanker",
     track: "Vertical · Banking",
     tagline: "AI-native underwriting, onboarding, AML, and compliance.",
-    more: "Engineered for faster underwriting, sharply reduced KYC manual review, and higher fraud-detection precision — with explainable reasoning on every decision.",
+    more: "Engineered for faster underwriting, sharply reduced KYC manual review, and higher fraud-detection precision, with explainable reasoning on every decision.",
     href: "/accelerators/arqbanker",
     tint: "#1c2838",
     imageUrl: "/img/accelerators/ArqBanker.webp",
@@ -99,7 +99,7 @@ const SECONDARIES: Record<string, SecondaryItem> = {
     name: "ArqSupport",
     track: "Horizontal · Shared Services",
     tagline: "Agentic L1/L2/L3 triage and auto-resolution.",
-    more: "Built to resolve 40–60% of L1 tickets autonomously from your knowledge base — designed to prevent SLA breaches rather than report them.",
+    more: "Built to resolve 40-60% of L1 tickets autonomously from your knowledge base, designed to prevent SLA breaches rather than report them.",
     href: "/accelerators/arqsupport",
     tint: "#1e1838",
     imageUrl: "/img/accelerators/ArqSupport.webp",
@@ -180,7 +180,7 @@ function MainCard({
       onMouseEnter={onActivate}
       onFocus={onActivate}
     >
-      {/* Idle imagery — vibrant abstract with a slow drift, dimmed for legibility */}
+      {/* Idle imagery, vibrant abstract with a slow drift, dimmed for legibility */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={item.imageUrl}
@@ -200,7 +200,7 @@ function MainCard({
       <span className="v6-particles absolute inset-0" aria-hidden="true" />
       <span className="v6-sheen absolute inset-0" aria-hidden="true" />
 
-      {/* Screengrab footage — fades in when the card takes the stage */}
+      {/* Screengrab footage, fades in when the card takes the stage */}
       <video
         ref={videoRef}
         className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
@@ -410,8 +410,7 @@ export default function AcceleratorShowcase() {
             </h2>
             <p className="mt-4 max-w-3xl text-sm leading-[1.6] text-white/60 md:text-[15px]">
               An accelerator is a proven pattern of agents, integrations, and
-              governance controls for a recurring enterprise problem —
-              configured to your systems and policies rather than designed
+              governance controls for a recurring enterprise problem, configured to your systems and policies rather than designed
               from scratch.
             </p>
           </div>
@@ -427,7 +426,7 @@ export default function AcceleratorShowcase() {
           </Link>
         </div>
 
-        {/* Bento stage — desktop */}
+        {/* Bento stage, desktop */}
         <div
           className="mt-12 hidden h-[620px] gap-4 md:gap-5 lg:flex"
           onMouseLeave={() => {
@@ -435,7 +434,7 @@ export default function AcceleratorShowcase() {
             setHoverSec(null);
           }}
         >
-          {/* Column 1 — ArqFWA */}
+          {/* Column 1, ArqFWA */}
           <div
             className="flex min-w-0 flex-col gap-4 transition-[flex-grow] duration-700 md:gap-5"
             style={{ flexGrow: colFlex(0), flexBasis: 0, transitionTimingFunction: EASE }}
@@ -448,7 +447,7 @@ export default function AcceleratorShowcase() {
             />
           </div>
 
-          {/* Column 2 — ArqBanker (secondary) + ArqLoyalty (main) */}
+          {/* Column 2, ArqBanker (secondary) + ArqLoyalty (main) */}
           <div
             className="flex min-w-0 flex-col gap-4 transition-[flex-grow] duration-700 md:gap-5"
             style={{ flexGrow: colFlex(1), flexBasis: 0, transitionTimingFunction: EASE }}
@@ -472,7 +471,7 @@ export default function AcceleratorShowcase() {
             />
           </div>
 
-          {/* Column 3 — ArqVantage (main) + ArqSupport (secondary) */}
+          {/* Column 3, ArqVantage (main) + ArqSupport (secondary) */}
           <div
             className="flex min-w-0 flex-col gap-4 transition-[flex-grow] duration-700 md:gap-5"
             style={{ flexGrow: colFlex(2), flexBasis: 0, transitionTimingFunction: EASE }}

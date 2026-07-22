@@ -39,7 +39,7 @@ function trimTrailing(url: string): { url: string; trail: string } {
 
 /**
  * Render text with internal paths and URLs as clickable links. Safe by
- * construction — links are built from matched substrings as React elements,
+ * construction: links are built from matched substrings as React elements,
  * never via dangerouslySetInnerHTML.
  */
 export function linkify(text: string): React.ReactNode[] {

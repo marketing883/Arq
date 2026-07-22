@@ -788,7 +788,7 @@ export interface LeadDashboardRow {
 /**
  * Get leads for the V2 dashboard. Reads lead_profiles directly (the
  * v_lead_dashboard view joined users/lead_intelligence on user_id, which
- * form/chat-created profiles never set — so name, email, and scores came back
+ * form/chat-created profiles never set, so name, email, and scores came back
  * null). Uses select("*") so it degrades gracefully before the sub-score
  * migration is applied.
  */

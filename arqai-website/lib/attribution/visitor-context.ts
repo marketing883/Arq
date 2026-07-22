@@ -1,5 +1,5 @@
 /**
- * Visitor context — first-party journey + attribution capture.
+ * Visitor context: first-party journey and attribution capture.
  *
  * Records, in sessionStorage, what the visitor did before reaching a form:
  * the pages they visited (journey trail), where they entered (landing page),
@@ -65,7 +65,7 @@ function safeWrite(key: string, value: unknown) {
   try {
     sessionStorage.setItem(key, JSON.stringify(value));
   } catch {
-    // Storage full or blocked — attribution is best-effort.
+    // Storage full or blocked; attribution is best-effort.
   }
 }
 
@@ -93,7 +93,7 @@ export function captureFirstTouch() {
 /**
  * Append a page to the journey trail. Consecutive duplicates are collapsed;
  * the trail is capped at MAX_JOURNEY_STEPS (oldest dropped first, but the
- * landing page — step 0 — is always kept).
+ * landing page (step 0) is always kept).
  */
 export function recordPageVisit(path: string) {
   if (typeof window === "undefined" || !path) return;

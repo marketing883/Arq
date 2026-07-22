@@ -10,7 +10,7 @@ import {
 } from "./types";
 import { industryNames, painPointNames } from "./context";
 
-// The one real, publishable engagement. All industry keys resolve to it —
+// The one real, publishable engagement. All industry keys resolve to it,
 // proof content is never invented or personalized per-industry.
 // Full narrative: /case-studies/tpa-blind-spot-assessment
 const realCaseStudy = {
@@ -18,7 +18,7 @@ const realCaseStudy = {
   badge: "Mid-Size TPA",
   title: "Undetected Waste Found in One Blind Spot Assessment",
   challenge:
-    "A mid-size third-party administrator had been rated fully compliant by its payment-integrity vendor — a rating that reflected what the incumbent tooling was designed to look for, not what pattern-level analysis could still find.",
+    "A mid-size third-party administrator had been rated fully compliant by its payment-integrity vendor, a rating that reflected what the incumbent tooling was designed to look for, not what pattern-level analysis could still find.",
   solution:
     "A single ArqAI Blind Spot Assessment ran ArqFWA's cross-signal analysis over historical claims the incumbent tools had already cleared, and delivered every flagged case with the evidence a reviewer needs to act.",
   results: [
