@@ -30,16 +30,16 @@ const STATS: Stat[] = [
 // Qualitative proof — the results story without client-specific figures.
 const CLAIMS: { title: string; detail: string }[] = [
   {
-    title: "Undetected waste, surfaced",
-    detail: "Found at a TPA its own payment-integrity vendor had rated fully compliant",
+    title: "Compliant-rated. Waste still found.",
+    detail: "One Blind Spot Assessment, over claims the incumbent tooling had already cleared",
   },
   {
-    title: "Manual review time, cut",
-    detail: "Flagged cases arrive with the evidence already assembled",
+    title: "Fewer, better cases — not more alerts.",
+    detail: "Each flagged case arrives with the evidence already assembled",
   },
   {
-    title: "Audit-ready proof, always",
-    detail: "Every agent action carries trigger, reasoning, and outcome",
+    title: "Proof on every agent action.",
+    detail: "Trigger, reasoning, and outcome — captured for audit",
   },
 ];
 

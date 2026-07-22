@@ -20,6 +20,9 @@ export type SpotlightStudy = {
   impact_summary?: string | null;
   overview?: string | null;
   metrics?: SpotlightMetric[] | null;
+  /** Qualitative proof points. Rendered as a checklist when present, in place
+   *  of the numeric stat grid — for studies whose proof isn't a figure. */
+  highlights?: string[] | null;
   testimonial_quote?: string | null;
   testimonial_author_name?: string | null;
   testimonial_author_title?: string | null;
@@ -89,6 +92,7 @@ export default function CaseStudySpotlight({
   others: SpotlightStudy[];
 }) {
   const { ref, inView } = useInView<HTMLElement>(0.25);
+  const highlights = (study.highlights ?? []).filter(Boolean).slice(0, 4);
   const metrics = (study.metrics ?? []).slice(0, 4);
   const bg = study.hero_image || FALLBACK_BG;
   const rawSummary = study.impact_summary || study.overview || "";
@@ -193,8 +197,28 @@ export default function CaseStudySpotlight({
             </div>
           </div>
 
-          {/* Stats column */}
-          {metrics.length > 0 && (
+          {/* Proof column — a scannable checklist when the proof is
+              qualitative, or the numeric stat grid when metrics carry figures. */}
+          {highlights.length > 0 ? (
+            <ul className="flex flex-col justify-center gap-4 border-t border-white/10 pt-8 lg:border-l lg:border-t-0 lg:pl-12 lg:pt-0">
+              {highlights.map((h, i) => (
+                <li
+                  key={h}
+                  className={`flex items-start gap-3 transition-all duration-700 ease-out ${
+                    inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+                  }`}
+                  style={{ transitionDelay: `${420 + i * 110}ms` }}
+                >
+                  <span className="mt-0.5 inline-flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-[#d0f438]/15">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#d0f438" strokeWidth={3}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                  </span>
+                  <span className="text-[15px] font-medium leading-snug text-white/85">{h}</span>
+                </li>
+              ))}
+            </ul>
+          ) : metrics.length > 0 ? (
             <div className="grid grid-cols-1 min-[380px]:grid-cols-2 content-center gap-x-8 gap-y-7 border-t border-white/10 pt-8 lg:border-l lg:border-t-0 lg:pl-12 lg:pt-0">
               {metrics.map((m, i) => (
                 <div
@@ -216,7 +240,7 @@ export default function CaseStudySpotlight({
                 </div>
               ))}
             </div>
-          )}
+          ) : null}
         </div>
       </div>
     </section>

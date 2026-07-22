@@ -47,11 +47,11 @@ const pinned: SpotlightStudy = {
     "Rated fully compliant by its payment-integrity vendor, one ArqAI Blind Spot Assessment still surfaced significant undetected waste — and sharply cut manual claims-review time.",
   impact_summary:
     "One Blind Spot Assessment surfaced undetected waste a compliant-rated program had missed.",
-  metrics: [
-    { label: "Undetected waste", value: "Surfaced" },
-    { label: "Manual review time", value: "Cut" },
-    { label: "Assessment engagement", value: "1" },
-    { label: "Every finding", value: "Evidenced" },
+  highlights: [
+    "Undetected waste surfaced across claims the incumbent tooling had already cleared",
+    "Manual review time sharply cut — cases arrive with the evidence already assembled",
+    "Every finding delivered with reviewable evidence an investigator can defend",
+    "All from a single Blind Spot Assessment — no platform rollout, no migration",
   ],
 };
 

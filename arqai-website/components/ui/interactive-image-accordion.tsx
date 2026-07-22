@@ -272,15 +272,29 @@ export function LandingAccordionItem({
               </Link>
             </div>
 
-            {/* Proof strip — qualitative, no client-specific figures */}
-            <div className="mt-10 flex flex-wrap items-center justify-center md:justify-start gap-x-6 gap-y-2 text-xs text-gray-500">
+            {/* Positioning pillars — confident proof without client figures */}
+            <div className="mt-9 flex flex-col items-center gap-2.5 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-x-6 sm:gap-y-2 md:justify-start">
               {[
-                "Waste surfaced where a vendor saw none",
-                "Sharply less manual review time",
-                "Audit-ready proof on every agent action",
-              ].map((s, i) => (
-                <span key={s} className="inline-flex items-center gap-2">
-                  {i > 0 && <span className="hidden h-1 w-1 rounded-full bg-gray-300 sm:inline-block" aria-hidden="true" />}
+                "Production, not pilots",
+                "Governed from day one",
+                "Audit-ready proof on every action",
+              ].map((s) => (
+                <span
+                  key={s}
+                  className="inline-flex items-center gap-2 text-[13px] font-semibold text-gray-800"
+                >
+                  <svg
+                    width="15"
+                    height="15"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#9bbf2e"
+                    strokeWidth={3}
+                    className="flex-shrink-0"
+                    aria-hidden="true"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                  </svg>
                   {s}
                 </span>
               ))}
