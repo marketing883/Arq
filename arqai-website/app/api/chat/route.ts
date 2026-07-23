@@ -1,6 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
-import { generateChatResponse, extractLeadInfo } from "@/lib/ai/anthropic";
+import {
+  generateChatResponse,
+  streamChatResponse,
+  extractLeadInfo,
+  parseMetaBlock,
+  META_MARKER,
+  type ChatMeta,
+} from "@/lib/ai/anthropic";
 import { generateChatResponseOpenAI } from "@/lib/ai/openai";
+import { getRelevantContentBlock } from "@/lib/ai/content-retrieval";
+import type { Industry } from "@/lib/chat/types";
 import { persistChatConversation, recordSession } from "@/lib/lead/lead-service";
 import { processMessageForV2Intelligence } from "@/lib/lead/lead-profile-service";
 import { v4 as uuidv4 } from "uuid";
@@ -176,6 +185,12 @@ export async function POST(request: NextRequest) {
     const forwardedFor = request.headers.get("x-forwarded-for");
     const ipAddress = forwardedFor?.split(",")[0].trim();
 
+    // Ground the model in relevant published content (RAG-lite over the CMS).
+    const retrievalBlock = await getRelevantContentBlock(
+      message,
+      userContext.topicsDiscussed.slice(-3)
+    ).catch(() => "");
+
     // Build enhanced context for AI response
     const enhancedContext = {
       currentPage,
@@ -183,18 +198,256 @@ export async function POST(request: NextRequest) {
       userEmail: userContext.email || userEmail,
       userCompany: userContext.companyName || userCompany,
       conversationHistory,
+      extraContext: retrievalBlock,
     };
 
-    let response: string;
+    /**
+     * Everything that happens after the model text exists: merge LLM-extracted
+     * entities, morph cards, profiling cadence, persistence, V2 intelligence.
+     * Shared by the streaming and JSON paths.
+     */
+    const finalize = (responseText: string, meta: ChatMeta | null) => {
+      let response = responseText;
+
+      // Merge structured extraction from the model (more reliable than regex)
+      // on top of the regex fallback.
+      if (meta?.extracted) {
+        const x = meta.extracted;
+        if (x.email && !extractedInfo.email) extractedInfo.email = x.email.toLowerCase();
+        if (x.name && !extractedInfo.name) extractedInfo.name = x.name;
+        if (x.company && !extractedInfo.company) extractedInfo.company = x.company;
+        if (x.job_title && !extractedInfo.jobTitle) extractedInfo.jobTitle = x.job_title;
+        if (x.phone && !extractedInfo.phone) extractedInfo.phone = x.phone;
+
+        if (extractedInfo.email && !userContext.email) {
+          userContext = updateContext(userContext, { email: extractedInfo.email });
+        }
+        if (extractedInfo.name && !userContext.name) {
+          userContext = updateContext(userContext, { name: extractedInfo.name });
+        }
+        if (extractedInfo.company && !userContext.companyName) {
+          userContext = updateContext(userContext, { companyName: extractedInfo.company });
+        }
+        if (x.industry && !userContext.industry) {
+          userContext = updateContext(userContext, {
+            industry: mapIndustry(x.industry),
+          });
+        }
+        const extraTopics = [x.workflow, x.timeline, x.systems]
+          .filter((v): v is string => !!v)
+          .map((v) => v.toLowerCase().slice(0, 60));
+        if (extraTopics.length > 0) {
+          userContext = updateContext(userContext, { topicsDiscussed: extraTopics });
+        }
+      }
+
+      // Detect if the response should trigger content morphing
+      const morphTrigger: CardTrigger | null = detectCardTrigger(
+        message,
+        userContext,
+        conversationHistory.map((m: ConversationMessage) => m.content)
+      );
+
+      let cardCustomizations = null;
+      let cardFollowUp = null;
+      if (morphTrigger && morphTrigger.confidence >= 0.7) {
+        cardCustomizations = generateCardCustomizations(morphTrigger.cardType, userContext);
+        cardFollowUp = getCardFollowUp(morphTrigger.cardType, userContext);
+        userContext = updateContext(userContext, {
+          cardsShown: [morphTrigger.cardType],
+        });
+      }
+
+      // Deterministic profiling cadence (skipped when the model already asked
+      // a question, a card is showing, or the model made a conversion move).
+      let profilingSuffix = "";
+      const madeConversionMove = !!meta?.actions?.some((a) => a.type === "ask_email");
+      const recentMessages: ConversationMessage[] = conversationHistory.slice(-6);
+      if (
+        !morphTrigger &&
+        !madeConversionMove &&
+        shouldAskProfilingQuestion(userContext, conversationHistory.length, response)
+      ) {
+        const profilingQuestion = getNextProfilingQuestion(userContext, recentMessages);
+        if (profilingQuestion) {
+          profilingSuffix = "\n\n" + profilingQuestion.question;
+          response = response + profilingSuffix;
+          userContext = updateContext(userContext, {
+            questionsAsked: [...userContext.questionsAsked, profilingQuestion.id],
+          });
+        }
+      }
+
+      const leadUserInfo = {
+        name: userContext.name || extractedInfo.name,
+        email: userContext.email || extractedInfo.email,
+        company: userContext.companyName || extractedInfo.company,
+        jobTitle: extractedInfo.jobTitle,
+      };
+
+      // Persist the transcript server-side (non-blocking).
+      persistChatConversation(
+        sessionId,
+        [
+          ...conversationHistory,
+          { role: "user", content: message },
+          { role: "assistant", content: response },
+        ],
+        leadUserInfo,
+        currentPage
+      ).catch((error) => {
+        console.error(
+          "Chat transcript persistence error:",
+          error instanceof Error ? error.message : "Unknown"
+        );
+      });
+
+      // V2 lead intelligence (non-blocking). Uses the analytics session id so
+      // the chat lead joins the same browsing journey as forms and pages.
+      const analyticsSessionId =
+        typeof body.analyticsSessionId === "string" && body.analyticsSessionId
+          ? body.analyticsSessionId
+          : sessionId;
+      processMessageForV2Intelligence(analyticsSessionId, message, leadUserInfo, currentPage)
+        .then(({ profile, alerts, journeyChanged }) => {
+          if (profile && profile.priority_tier === "P1") {
+            console.log(`[LEAD V2] P1 lead: ${profile.canonical_email}, score: ${profile.composite_score}`);
+          }
+          if (journeyChanged && profile) {
+            console.log(`[LEAD V2] Journey change: ${profile.journey_stage} for ${profile.canonical_email}`);
+          }
+          if (alerts.length > 0) {
+            console.log(`[LEAD V2] ${alerts.length} alerts triggered for session ${sessionId}`);
+          }
+        })
+        .catch((error) => {
+          console.error("Lead V2 intelligence error:", error instanceof Error ? error.message : "Unknown");
+        });
+
+      recordSession(sessionId, { ipAddress, userAgent, currentPage }).catch((error) => {
+        console.error("Session recording error:", error instanceof Error ? error.message : "Unknown");
+      });
+
+      return {
+        response,
+        profilingSuffix,
+        payload: {
+          morphTrigger: morphTrigger
+            ? {
+                type: morphTrigger.cardType,
+                confidence: morphTrigger.confidence,
+                reason: morphTrigger.reason,
+                customizations: cardCustomizations,
+              }
+            : null,
+          cardFollowUp,
+          actions: meta?.actions || [],
+          extractedInfo,
+          sessionId,
+          userContext: serializeContext(userContext),
+          contextSummary: {
+            industry: userContext.industry,
+            painPoints: userContext.painPoints,
+            complianceFrameworks: userContext.complianceFrameworks,
+            engagementLevel: userContext.engagementLevel,
+            completeness: getContextCompleteness(userContext),
+          },
+        },
+      };
+    };
+
+    // ============================================
+    // STREAMING PATH (SSE-style over fetch)
+    // ============================================
+    if (body.stream === true) {
+      const encoder = new TextEncoder();
+      const stream = new ReadableStream({
+        async start(controller) {
+          const send = (event: Record<string, unknown>) => {
+            controller.enqueue(encoder.encode(`data: ${JSON.stringify(event)}\n\n`));
+          };
+
+          try {
+            const anthropicStream = streamChatResponse(message, enhancedContext);
+
+            // Forward text deltas while holding back the trailing [[META ...]]
+            // machine block (and any partial marker) from the visitor.
+            let raw = "";
+            let emitted = 0;
+            const HOLDBACK = META_MARKER.length;
+
+            anthropicStream.on("text", (delta: string) => {
+              raw += delta;
+              const markerAt = raw.indexOf(META_MARKER);
+              const safeEnd =
+                markerAt !== -1 ? markerAt : Math.max(0, raw.length - HOLDBACK);
+              if (safeEnd > emitted) {
+                send({ type: "text", delta: raw.slice(emitted, safeEnd) });
+                emitted = safeEnd;
+              }
+            });
+
+            await anthropicStream.finalMessage();
+
+            const { text, meta } = parseMetaBlock(raw);
+            // Emit any clean text the holdback kept behind.
+            if (text.length > emitted) {
+              send({ type: "text", delta: text.slice(emitted) });
+            }
+
+            const { profilingSuffix, payload } = finalize(text, meta);
+            if (profilingSuffix) send({ type: "text", delta: profilingSuffix });
+            send({ type: "meta", payload });
+            send({ type: "done" });
+          } catch (streamError) {
+            console.error("Streaming failed, OpenAI fallback:", streamError);
+            try {
+              const fallbackText = await generateChatResponseOpenAI(message, enhancedContext);
+              const { text, meta } = parseMetaBlock(fallbackText);
+              send({ type: "text", delta: text });
+              const { profilingSuffix, payload } = finalize(text, meta);
+              if (profilingSuffix) send({ type: "text", delta: profilingSuffix });
+              send({ type: "meta", payload: { ...payload, usedFallback: true } });
+              send({ type: "done" });
+            } catch (fallbackError) {
+              console.error("OpenAI fallback also failed:", fallbackError);
+              send({
+                type: "text",
+                delta:
+                  "I apologize, but I'm having trouble connecting right now. Please try again in a moment, or email us at engage@thearq.ai.",
+              });
+              send({ type: "meta", payload: { sessionId, error: true } });
+              send({ type: "done" });
+            }
+          } finally {
+            controller.close();
+          }
+        },
+      });
+
+      return new Response(stream, {
+        headers: {
+          "Content-Type": "text/event-stream",
+          "Cache-Control": "no-cache, no-transform",
+          Connection: "keep-alive",
+          ...rateLimitResult.headers,
+        },
+      });
+    }
+
+    // ============================================
+    // JSON PATH (legacy clients and non-stream fallback)
+    // ============================================
+    let generation: { text: string; meta: ChatMeta | null };
     let usedFallback = false;
 
-    // Try Anthropic first, fall back to OpenAI
     try {
-      response = await generateChatResponse(message, enhancedContext);
+      generation = await generateChatResponse(message, enhancedContext);
     } catch (anthropicError) {
       console.error("Anthropic failed, trying OpenAI fallback:", anthropicError);
       try {
-        response = await generateChatResponseOpenAI(message, enhancedContext);
+        const fallbackText = await generateChatResponseOpenAI(message, enhancedContext);
+        generation = parseMetaBlock(fallbackText);
         usedFallback = true;
       } catch (openaiError) {
         console.error("OpenAI fallback also failed:", openaiError);
@@ -210,126 +463,10 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Detect if the response should trigger content morphing
-    let morphTrigger: CardTrigger | null = detectCardTrigger(
-      message,
-      userContext,
-      conversationHistory.map((m: ConversationMessage) => m.content)
-    );
-
-    // If a card is triggered, add customizations and follow-up
-    let cardCustomizations = null;
-    let cardFollowUp = null;
-    if (morphTrigger && morphTrigger.confidence >= 0.7) {
-      cardCustomizations = generateCardCustomizations(
-        morphTrigger.cardType,
-        userContext
-      );
-      cardFollowUp = getCardFollowUp(morphTrigger.cardType, userContext);
-
-      // Track that we showed this card
-      userContext = updateContext(userContext, {
-        cardsShown: [morphTrigger.cardType],
-      });
-    }
-
-    // Check if we should add a profiling question
-    const recentMessages: ConversationMessage[] = conversationHistory.slice(-6);
-    if (
-      shouldAskProfilingQuestion(userContext, conversationHistory.length, response) &&
-      !morphTrigger // Don't add question if showing a card
-    ) {
-      const profilingQuestion = getNextProfilingQuestion(userContext, recentMessages);
-      if (profilingQuestion) {
-        response = response + "\n\n" + profilingQuestion.question;
-        userContext = updateContext(userContext, {
-          questionsAsked: [...userContext.questionsAsked, profilingQuestion.id],
-        });
-      }
-    }
-
-    // Process message for lead intelligence (non-blocking)
-    const leadUserInfo = {
-      name: userContext.name || extractedInfo.name,
-      email: userContext.email || extractedInfo.email,
-      company: userContext.companyName || extractedInfo.company,
-      jobTitle: extractedInfo.jobTitle,
-    };
-
-    // Persist the transcript server-side (non-blocking). V2 below is the only
-    // scoring pipeline; the old V1 per-message scoring was retired.
-    persistChatConversation(
-      sessionId,
-      [
-        ...conversationHistory,
-        { role: "user", content: message },
-        { role: "assistant", content: response },
-      ],
-      leadUserInfo,
-      currentPage
-    ).catch((error) => {
-      console.error(
-        "Chat transcript persistence error:",
-        error instanceof Error ? error.message : "Unknown"
-      );
-    });
-
-    // Process message for V2 lead intelligence (non-blocking, runs alongside V1).
-    // Prefer the analytics session id (shared with page-view tracking and forms)
-    // so a chat lead joins the same browsing journey as everything else.
-    const analyticsSessionId =
-      typeof body.analyticsSessionId === "string" && body.analyticsSessionId
-        ? body.analyticsSessionId
-        : sessionId;
-    processMessageForV2Intelligence(analyticsSessionId, message, leadUserInfo, currentPage)
-      .then(({ profile, alerts, journeyChanged }) => {
-        if (profile && profile.priority_tier === "P1") {
-          console.log(`[LEAD V2] P1 lead: ${profile.canonical_email}, score: ${profile.composite_score}`);
-        }
-        if (journeyChanged && profile) {
-          console.log(`[LEAD V2] Journey change: ${profile.journey_stage} for ${profile.canonical_email}`);
-        }
-        if (alerts.length > 0) {
-          console.log(`[LEAD V2] ${alerts.length} alerts triggered for session ${sessionId}`);
-        }
-      })
-      .catch((error) => {
-        console.error("Lead V2 intelligence error:", error instanceof Error ? error.message : "Unknown");
-      });
-
-    // Record session activity (non-blocking)
-    recordSession(sessionId, {
-      ipAddress,
-      userAgent,
-      currentPage,
-    }).catch((error) => {
-      console.error("Session recording error:", error instanceof Error ? error.message : "Unknown");
-    });
+    const { response, payload } = finalize(generation.text, generation.meta);
 
     return NextResponse.json(
-      {
-        response,
-        morphTrigger: morphTrigger
-          ? {
-              type: morphTrigger.cardType,
-              confidence: morphTrigger.confidence,
-              reason: morphTrigger.reason,
-              customizations: cardCustomizations,
-            }
-          : null,
-        cardFollowUp,
-        extractedInfo,
-        usedFallback,
-        sessionId,
-        userContext: serializeContext(userContext),
-        contextSummary: {
-          industry: userContext.industry,
-          painPoints: userContext.painPoints,
-          complianceFrameworks: userContext.complianceFrameworks,
-          engagementLevel: userContext.engagementLevel,
-          completeness: getContextCompleteness(userContext),
-        },
-      },
+      { response, usedFallback, ...payload },
       { headers: rateLimitResult.headers }
     );
   } catch (error) {
@@ -339,6 +476,21 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
+}
+
+/** Map a free-text industry mention onto the typed Industry union. */
+function mapIndustry(value: string): Industry {
+  const v = value.toLowerCase();
+  if (/health|payer|hospital|pbm|tpa/.test(v)) return "healthcare";
+  if (/insur|carrier|underwrit/.test(v)) return "insurance";
+  if (/bank|financ|fintech|credit|lend/.test(v)) return "financial_services";
+  if (/manufactur|industrial|factory/.test(v)) return "manufacturing";
+  if (/retail|ecommerce|e-commerce|commerce|loyalty/.test(v)) return "retail";
+  if (/tech|software|saas/.test(v)) return "technology";
+  if (/government|public sector|federal/.test(v)) return "government";
+  if (/energy|utilit|oil|gas/.test(v)) return "energy";
+  if (/telecom/.test(v)) return "telecom";
+  return "other";
 }
 
 // Helper to calculate context completeness

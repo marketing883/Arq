@@ -131,46 +131,54 @@ export function calculateEngagementLevel(
   return "low";
 }
 
-// Profiling questions - ordered by priority and context
+// Profiling questions, current positioning: forward-deployed engineering,
+// workflow-first discovery that maps answers onto accelerators. Ordered by
+// priority; each fills a gap in the context the model uses to convert.
 export const profilingQuestions: ProfilingQuestion[] = [
   {
-    id: "industry_regulated",
+    id: "workflow_focus",
     question:
-      "To show you the most relevant examples, are you working in a regulated industry like healthcare, finance, or insurance?",
-    contextKey: "industry",
+      "Which workflow are you trying to improve: claims, underwriting, support tickets, forecasting, pricing, loyalty, supplier risk, or something else?",
+    contextKey: "useCases",
     priority: 1,
+    condition: (ctx) => ctx.useCases.length === 0 && ctx.painPoints.length === 0,
+  },
+  {
+    id: "industry",
+    question:
+      "Which industry are you in? It changes which accelerator I would point you to.",
+    contextKey: "industry",
+    priority: 2,
     condition: (ctx) => !ctx.industry,
   },
   {
-    id: "compliance_specific",
+    id: "whats_breaking",
     question:
-      "Are there specific compliance requirements you're working with? (HIPAA, SOX, GDPR, etc.)",
-    contextKey: "complianceFrameworks",
-    priority: 2,
-    condition: (ctx) => ctx.industry !== null && ctx.complianceFrameworks.length === 0,
+      "What breaks today in that workflow: volume, accuracy, audit pressure, or cycle time?",
+    contextKey: "painPoints",
+    priority: 3,
+    condition: (ctx) =>
+      (ctx.useCases.length > 0 || ctx.industry !== null) && ctx.painPoints.length === 0,
   },
   {
     id: "current_ai",
     question:
-      "Are you currently running AI agents or workflows in production, or exploring how to get started?",
+      "Is anything AI-driven running in that workflow today, or would this be the first production piece?",
     contextKey: "hasExistingAI",
-    priority: 3,
+    priority: 4,
     condition: (ctx) => ctx.hasExistingAI === null,
   },
   {
-    id: "agent_count",
-    question: "Roughly how many AI agents or workflows are you looking to manage?",
-    contextKey: "aiAgentCount",
-    priority: 4,
-    condition: (ctx) => ctx.hasExistingAI === true && ctx.aiAgentCount === null,
-  },
-  {
-    id: "main_challenge",
+    id: "compliance_specific",
     question:
-      "What's the biggest challenge you're facing with AI governance right now?",
-    contextKey: "painPoints",
+      "Any compliance regimes in play I should account for (HIPAA, SOX, GDPR, model risk)?",
+    contextKey: "complianceFrameworks",
     priority: 5,
-    condition: (ctx) => ctx.painPoints.length === 0,
+    condition: (ctx) =>
+      (ctx.industry === "healthcare" ||
+        ctx.industry === "financial_services" ||
+        ctx.industry === "insurance") &&
+      ctx.complianceFrameworks.length === 0,
   },
 ];
 
@@ -196,24 +204,21 @@ export function getNextProfilingQuestion(
   return availableQuestions[0] || null;
 }
 
-// Determine if we should ask a profiling question now
+// Determine if we should ask a profiling question now. Deterministic:
+// conversion cadence should never be a coin flip.
 export function shouldAskProfilingQuestion(
   context: UserContext,
   messageCount: number,
   lastAssistantMessage: string
 ): boolean {
-  // Don't profile in first 2 messages - let user engage first
+  // Let the visitor engage first.
   if (messageCount < 2) return false;
 
-  // Don't ask if we already asked a question
+  // The model already ended with a question; don't stack another.
   if (lastAssistantMessage.includes("?")) return false;
 
-  // Profile more aggressively at certain message counts
-  const profileCheckpoints = [3, 6, 10];
-  if (profileCheckpoints.includes(messageCount)) return true;
-
-  // Otherwise, 30% chance to naturally weave in a question
-  return Math.random() < 0.3;
+  // Fixed checkpoints through the conversation arc.
+  return [2, 4, 7, 11].includes(messageCount);
 }
 
 // Industry display names

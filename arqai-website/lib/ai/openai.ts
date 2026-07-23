@@ -56,7 +56,7 @@ export async function generateChatResponseOpenAI(
   try {
     const response = await openai.chat.completions.create({
       model: "gpt-4-turbo-preview",
-      max_tokens: 300,
+      max_tokens: 500,
       messages: messages,
     });
 
