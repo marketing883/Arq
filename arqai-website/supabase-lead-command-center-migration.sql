@@ -109,12 +109,16 @@ CREATE INDEX IF NOT EXISTS idx_lead_activities_due
   ON public.lead_activities (due_at) WHERE completed_at IS NULL;
 
 -- ============================================
--- 5. Permissions (match the V2 schema: service_role writes, RLS disabled)
+-- 5. Permissions
+-- These tables hold sensitive lead intelligence (dossiers, notes, research
+-- runs) and are only ever read or written server-side via the service-role
+-- key. Enable RLS with no policies so the public anon and authenticated keys
+-- cannot reach them; the service-role key bypasses RLS and keeps working.
 -- ============================================
-ALTER TABLE public.agent_runs DISABLE ROW LEVEL SECURITY;
-ALTER TABLE public.lead_dossiers DISABLE ROW LEVEL SECURITY;
-ALTER TABLE public.lead_activities DISABLE ROW LEVEL SECURITY;
+ALTER TABLE public.agent_runs ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.lead_dossiers ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.lead_activities ENABLE ROW LEVEL SECURITY;
 
-GRANT ALL ON public.agent_runs TO anon, authenticated, service_role;
-GRANT ALL ON public.lead_dossiers TO anon, authenticated, service_role;
-GRANT ALL ON public.lead_activities TO anon, authenticated, service_role;
+GRANT ALL ON public.agent_runs TO service_role;
+GRANT ALL ON public.lead_dossiers TO service_role;
+GRANT ALL ON public.lead_activities TO service_role;
