@@ -1,6 +1,7 @@
 // Anthropic Claude API Client
 
 import Anthropic from "@anthropic-ai/sdk";
+import { LEAD_INTEL_MODEL } from "./models";
 
 let anthropicClient: Anthropic | null = null;
 
@@ -17,7 +18,6 @@ export function getAnthropicClient(): Anthropic {
 
 export interface GenerationOptions {
   maxTokens?: number;
-  temperature?: number;
 }
 
 export async function generateWithClaude(
@@ -28,9 +28,8 @@ export async function generateWithClaude(
   const client = getAnthropicClient();
 
   const response = await client.messages.create({
-    model: "claude-sonnet-4-20250514",
+    model: LEAD_INTEL_MODEL,
     max_tokens: options.maxTokens || 4096,
-    temperature: options.temperature || 0.7,
     system: systemPrompt,
     messages: [{ role: "user", content: userPrompt }],
   });

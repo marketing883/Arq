@@ -1,5 +1,6 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { SYSTEM_PROMPT, resolvePageContextPrompt } from "./knowledge-base";
+import { LEAD_INTEL_MODEL } from "./models";
 
 // Lazy initialization to prevent build-time errors
 let anthropicClient: Anthropic | null = null;
@@ -69,7 +70,7 @@ export async function generateChatResponse(
 
   try {
     const response = await anthropic.messages.create({
-      model: "claude-sonnet-4-20250514",
+      model: LEAD_INTEL_MODEL,
       max_tokens: 300,
       system: systemPrompt,
       messages: messages,

@@ -11,7 +11,7 @@
     "deploy": "npm run setup-env && npm run build"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.24.0",
+    "@anthropic-ai/sdk": "^0.113.0",
     "@mailchimp/mailchimp_marketing": "^3.0.80",
     "@next/third-parties": "^16.1.6",
     "@supabase/ssr": "^0.8.0",
@@ -23,6 +23,7 @@
     "@tiptap/pm": "^3.14.0",
     "@tiptap/react": "^3.14.0",
     "@tiptap/starter-kit": "^3.14.0",
+    "@vercel/functions": "^3.7.5",
     "bcryptjs": "^2.4.3",
     "dompurify": "^3.3.1",
     "framer-motion": "^11.0.0",

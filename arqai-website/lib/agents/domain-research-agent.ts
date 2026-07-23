@@ -10,6 +10,7 @@
  */
 
 import Anthropic from "@anthropic-ai/sdk";
+import { LEAD_INTEL_MODEL } from "@/lib/ai/models";
 import type {
   ResearchJob,
   ResearchJobStatus,
@@ -353,7 +354,7 @@ export class DomainResearchAgent {
       const prompt = this.buildSynthesisPrompt(domain, findings);
 
       const response = await this.anthropic.messages.create({
-        model: "claude-sonnet-4-20250514",
+        model: LEAD_INTEL_MODEL,
         max_tokens: 2000,
         messages: [
           {

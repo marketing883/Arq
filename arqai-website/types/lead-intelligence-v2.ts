@@ -38,6 +38,16 @@ export type TouchpointSource =
 
 export type RecommendedChannel = "phone" | "email" | "chat" | "meeting";
 
+export type PipelineStatus =
+  | "new"
+  | "researching"
+  | "contacted"
+  | "in_conversation"
+  | "meeting_booked"
+  | "won"
+  | "lost"
+  | "nurture";
+
 // ============================================
 // SIGNAL TYPES
 // ============================================
@@ -211,6 +221,14 @@ export interface LeadProfile {
 
   // Priority and qualification
   priority_tier: PriorityTier;
+  /** Manual override of the computed priority_tier, set by an admin. */
+  priority_tier_override?: PriorityTier;
+
+  // Pipeline movement (Lead Command Center)
+  pipeline_status?: PipelineStatus;
+  next_step?: string;
+  next_step_due_at?: string;
+  last_contacted_at?: string;
 
   // Predictive insights
   recommended_action?: string;
@@ -405,4 +423,169 @@ export interface EventProcessingResult {
   profile?: LeadProfile;
   processed_event?: ProcessedEvent;
   error?: string;
+}
+
+// ============================================
+// LEAD INTELLIGENCE AGENT TYPES
+// ============================================
+
+export type AgentRunTriggerSource =
+  | "contact_form"
+  | "partner_form"
+  | "resource_download"
+  | "chat_identified"
+  | "manual_rerun";
+
+export type AgentRunStatus =
+  | "queued"
+  | "running"
+  | "completed"
+  | "failed"
+  | "skipped";
+
+export interface AgentRun {
+  id: string;
+  lead_profile_id: string;
+  trigger_source: AgentRunTriggerSource;
+  trigger_details: Record<string, unknown>;
+  status: AgentRunStatus;
+  attempts: number;
+  error_message?: string;
+  started_at?: string;
+  completed_at?: string;
+  duration_ms?: number;
+  model_used?: string;
+  web_search_used?: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+/** A sales objection paired with a suggested response. */
+export interface DossierObjection {
+  objection: string;
+  response: string;
+}
+
+export interface DossierPerson {
+  seniority?: string;
+  role?: string;
+  responsibilities?: string;
+  decision_maker?: boolean;
+  notes?: string;
+}
+
+export interface DossierCompany {
+  name?: string;
+  size?: string;
+  industry?: string;
+  description?: string;
+  tech_stack?: string[];
+  compliance?: string[];
+  recent_news?: string;
+}
+
+export interface DossierIndustry {
+  dynamics?: string;
+  regulatory_pressure?: string;
+  ai_adoption?: string;
+}
+
+export interface DossierIntent {
+  classified_intent?: string;
+  urgency?: "high" | "medium" | "low";
+  evidence?: string[];
+}
+
+export interface DossierSalesApproach {
+  angle?: string;
+  talking_points?: string[];
+  objections?: DossierObjection[];
+  recommended_channel?: RecommendedChannel | string;
+  next_step?: string;
+}
+
+export type DraftEmailStatus = "draft" | "sent" | "discarded";
+
+export interface DossierDraftEmail {
+  subject?: string;
+  body?: string;
+  status?: DraftEmailStatus;
+  sent_at?: string;
+}
+
+export interface LeadDossier {
+  id: string;
+  lead_profile_id: string;
+  agent_run_id?: string;
+  person: DossierPerson;
+  company: DossierCompany;
+  industry: DossierIndustry;
+  intent: DossierIntent;
+  sales_approach: DossierSalesApproach;
+  draft_email: DossierDraftEmail;
+  summary?: string;
+  confidence?: number;
+  sources?: string[];
+  created_at: string;
+}
+
+export type LeadActivityType =
+  | "note"
+  | "stage_change"
+  | "status_change"
+  | "contacted"
+  | "task"
+  | "task_completed"
+  | "email_draft_sent"
+  | "research_rerun"
+  | "priority_change";
+
+export interface LeadActivity {
+  id: string;
+  lead_profile_id: string;
+  activity_type: LeadActivityType;
+  body?: string;
+  metadata: Record<string, unknown>;
+  due_at?: string;
+  completed_at?: string;
+  created_by: string;
+  created_at: string;
+}
+
+// ============================================
+// UNIFIED JOURNEY TYPES
+// ============================================
+
+export type JourneyEventKind =
+  | "page_view"
+  | "touchpoint"
+  | "form_submission"
+  | "chat_message"
+  | "journey_transition"
+  | "agent_run"
+  | "activity"
+  | "email";
+
+export interface UnifiedJourneyEvent {
+  id: string;
+  kind: JourneyEventKind;
+  occurred_at: string;
+  session_id?: string;
+  title: string;
+  detail?: string;
+  meta?: Record<string, unknown>;
+}
+
+export interface JourneyVisit {
+  visit_number: number;
+  session_id?: string;
+  started_at: string;
+  ended_at: string;
+  source?: string;
+  events: UnifiedJourneyEvent[];
+}
+
+export interface UnifiedJourney {
+  visits: JourneyVisit[];
+  events: UnifiedJourneyEvent[];
 }

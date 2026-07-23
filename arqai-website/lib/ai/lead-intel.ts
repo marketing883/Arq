@@ -1,4 +1,5 @@
 import Anthropic from "@anthropic-ai/sdk";
+import { LEAD_INTEL_MODEL } from "./models";
 
 // Lazy initialization
 let anthropicClient: Anthropic | null = null;
@@ -107,7 +108,7 @@ Respond in this exact JSON format:
 }`;
 
     const response = await anthropic.messages.create({
-      model: "claude-sonnet-4-20250514",
+      model: LEAD_INTEL_MODEL,
       max_tokens: 1000,
       messages: [{ role: "user", content: prompt }],
     });

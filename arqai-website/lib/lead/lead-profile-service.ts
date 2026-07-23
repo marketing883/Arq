@@ -402,12 +402,15 @@ export async function recalculateProfileScores(profileId: string): Promise<LeadP
       )
     );
 
-    // Calculate priority tier
-    const priorityTier = calculatePriorityTier(
-      compositeScore,
-      profile.company_intel?.size,
-      profile.journey_stage
-    );
+    // Calculate priority tier. An admin override, when present, wins over the
+    // computed tier so manual triage isn't overwritten by the nightly recalc.
+    const priorityTier =
+      profile.priority_tier_override ||
+      calculatePriorityTier(
+        compositeScore,
+        profile.company_intel?.size,
+        profile.journey_stage
+      );
 
     // Calculate time-based metrics
     const now = new Date();
@@ -781,6 +784,9 @@ export interface LeadDashboardRow {
   last_touch: string;
   recommended_action?: string;
   days_since_last_touch?: number;
+  pipeline_status?: string;
+  last_contacted_at?: string;
+  next_step?: string;
   /** Alias of composite_score kept for older consumers. */
   score: number;
 }
@@ -845,6 +851,9 @@ export function mapProfileToDashboardRow(p: LeadProfile): LeadDashboardRow {
     last_touch: p.last_touch,
     recommended_action: p.recommended_action,
     days_since_last_touch: p.days_since_last_touch,
+    pipeline_status: p.pipeline_status,
+    last_contacted_at: p.last_contacted_at,
+    next_step: p.next_step,
     score: Math.round(p.composite_score || 0),
   };
 }
@@ -1154,6 +1163,20 @@ export async function processMessageForV2Intelligence(
 
     // Get updated profile
     const updatedProfile = await getLeadProfile(profile.id);
+
+    // Kick off deep intelligence research now that the chat visitor has
+    // identified themselves. Dedupe (24h) absorbs repeat messages, so this is
+    // safe to call on every identified chat turn. Dynamic import avoids a
+    // circular dependency with the agent module; kept non-blocking so chat
+    // latency is unaffected.
+    import("@/lib/agents/lead-intel-agent")
+      .then(async ({ enqueueLeadIntelRun, kickLeadIntelRun }) => {
+        const run = await enqueueLeadIntelRun(profile.id, "chat_identified", {
+          page_url: pageUrl,
+        });
+        kickLeadIntelRun(run);
+      })
+      .catch((err) => console.error("Chat lead intel enqueue failed:", err));
 
     // Check for journey changes
     const journeyChanged = updatedProfile?.journey_stage !== profile.journey_stage;
