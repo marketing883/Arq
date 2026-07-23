@@ -216,6 +216,50 @@ export async function upsertLeadIntelligence(
 /**
  * Process a chat message and update lead intelligence
  */
+/**
+ * Persist the chat conversation server-side: the transcript store that powers
+ * the lead journey timeline, the research agent's context, and the admin
+ * Chats browser. Replaces the retired V1 scoring pipeline as the only chat
+ * write path into users/conversations.
+ */
+export async function persistChatConversation(
+  sessionId: string,
+  messages: Array<{ role: string; content: string }>,
+  userInfo: {
+    name?: string;
+    email?: string;
+    company?: string;
+    jobTitle?: string;
+  },
+  currentPage?: string
+): Promise<void> {
+  try {
+    const user = await upsertUser(sessionId, {
+      name: userInfo.name,
+      email: userInfo.email,
+      company: userInfo.company,
+      job_title: userInfo.jobTitle,
+    });
+    if (!user) return;
+
+    const normalized: Message[] = messages
+      .filter((m) => m.role === "user" || m.role === "assistant")
+      .map((m) => ({
+        role: m.role as "user" | "assistant",
+        content: String(m.content || "").slice(0, 4000),
+      }));
+
+    await upsertConversation(
+      user.id,
+      sessionId,
+      normalized,
+      currentPage ? { current_page: currentPage } : undefined
+    );
+  } catch (error) {
+    console.error("Persist chat conversation error:", error);
+  }
+}
+
 export async function processMessageForIntelligence(
   sessionId: string,
   userMessage: string,

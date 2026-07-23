@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { generateChatResponse, extractLeadInfo } from "@/lib/ai/anthropic";
 import { generateChatResponseOpenAI } from "@/lib/ai/openai";
-import { processMessageForIntelligence, recordSession } from "@/lib/lead/lead-service";
+import { persistChatConversation, recordSession } from "@/lib/lead/lead-service";
 import { processMessageForV2Intelligence } from "@/lib/lead/lead-profile-service";
 import { v4 as uuidv4 } from "uuid";
 import {
@@ -256,15 +256,23 @@ export async function POST(request: NextRequest) {
       jobTitle: extractedInfo.jobTitle,
     };
 
-    processMessageForIntelligence(sessionId, message, leadUserInfo, conversationHistory)
-      .then(({ priorityTier }) => {
-        if (priorityTier === "tier1") {
-          console.log(`[LEAD ALERT] Hot lead detected in session ${sessionId}`);
-        }
-      })
-      .catch((error) => {
-        console.error("Lead intelligence processing error:", error instanceof Error ? error.message : "Unknown");
-      });
+    // Persist the transcript server-side (non-blocking). V2 below is the only
+    // scoring pipeline; the old V1 per-message scoring was retired.
+    persistChatConversation(
+      sessionId,
+      [
+        ...conversationHistory,
+        { role: "user", content: message },
+        { role: "assistant", content: response },
+      ],
+      leadUserInfo,
+      currentPage
+    ).catch((error) => {
+      console.error(
+        "Chat transcript persistence error:",
+        error instanceof Error ? error.message : "Unknown"
+      );
+    });
 
     // Process message for V2 lead intelligence (non-blocking, runs alongside V1).
     // Prefer the analytics session id (shared with page-view tracking and forms)

@@ -22,6 +22,7 @@ const SECTIONS: Record<string, { label: string; tabs: SectionTab[] }> = {
     tabs: [
       { name: "Pipeline", href: "/admin/leads-v2" },
       { name: "Alerts", href: "/admin/alerts" },
+      { name: "Chats", href: "/admin/chats" },
     ],
   },
   inbox: {
