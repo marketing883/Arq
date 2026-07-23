@@ -34,6 +34,8 @@ import {
   detectCardTrigger,
   detectBuyingSignals,
 } from "@/lib/chat/intents";
+import { getConversionMove } from "@/lib/chat/conversion";
+import type { ChatAction } from "@/lib/ai/anthropic";
 import {
   generateCardCustomizations,
   getCardFollowUp,
@@ -180,6 +182,18 @@ export async function POST(request: NextRequest) {
       userContext = updateContext(userContext, { name: extractedInfo.name });
     }
 
+    // Identity the client already knows (prior capture, forms) counts too, so
+    // the capture ladder never asks for something we have.
+    if (userName && !userContext.name) {
+      userContext = updateContext(userContext, { name: userName });
+    }
+    if (userEmail && !userContext.email) {
+      userContext = updateContext(userContext, { email: userEmail.toLowerCase() });
+    }
+    if (userCompany && !userContext.companyName) {
+      userContext = updateContext(userContext, { companyName: userCompany });
+    }
+
     // Get request metadata for session tracking
     const userAgent = request.headers.get("user-agent") || undefined;
     const forwardedFor = request.headers.get("x-forwarded-for");
@@ -194,6 +208,12 @@ export async function POST(request: NextRequest) {
     // Known visitor context: everything the conversation has established so
     // far, so the model builds on it instead of re-asking or restarting.
     const knownLines: string[] = [];
+    if (userContext.name)
+      knownLines.push(`- Name: ${userContext.name} (use it naturally, never re-ask)`);
+    if (userContext.email)
+      knownLines.push(`- Email: already captured (never ask for it again)`);
+    if (userContext.companyName)
+      knownLines.push(`- Company: ${userContext.companyName}`);
     if (userContext.industry) knownLines.push(`- Industry: ${userContext.industry}`);
     if (userContext.useCases.length > 0)
       knownLines.push(`- Workflows of interest: ${userContext.useCases.join(", ")}`);
@@ -227,7 +247,11 @@ export async function POST(request: NextRequest) {
       ? "## Input method\nThe visitor's latest message is a TAP on one of the quick replies you offered in your previous message. Interpret it strictly as that selection, in that context."
       : "";
 
-    const extraContext = [knownBlock, tapBlock, retrievalBlock]
+    // Contact-capture ladder: at most one capture move per turn, issued as an
+    // imperative directive and enforced in finalize() if the model skips it.
+    const conversionMove = getConversionMove(userContext, conversationHistory.length);
+
+    const extraContext = [knownBlock, tapBlock, conversionMove?.block || "", retrievalBlock]
       .filter(Boolean)
       .join("\n\n");
 
@@ -298,20 +322,69 @@ export async function POST(request: NextRequest) {
         });
       }
 
+      // Server-enforced contact capture. The directive told the model what to
+      // do this turn; if it skipped the move, apply it here so a capture step
+      // never silently drops. appendedText also feeds the streaming path.
+      let appendedText = "";
+      const actions: ChatAction[] = meta?.actions ? [...meta.actions] : [];
+      const append = (line: string) => {
+        appendedText += line;
+        response += line;
+      };
+      const markAsked = (id: string) => {
+        userContext = updateContext(userContext, {
+          questionsAsked: [...userContext.questionsAsked, id],
+        });
+      };
+      if (conversionMove) {
+        if (conversionMove.id === "ask_email") {
+          if (!actions.some((a) => a.type === "ask_email")) {
+            actions.push({ type: "ask_email" });
+          }
+          if (!/email/i.test(response)) {
+            append(
+              "\n\nWant me to send you the details by email? Add yours below and it goes straight to our lead."
+            );
+          }
+          markAsked(conversionMove.trackId);
+        } else if (conversionMove.id === "ask_name") {
+          const askedInReply =
+            /(first name|your name|who am i (chatting|speaking)|what should i call you|catch your name)/i.test(
+              response
+            );
+          if (askedInReply) {
+            markAsked(conversionMove.trackId);
+          } else if (!response.includes("?")) {
+            append("\n\nBy the way, who am I chatting with? First name is fine.");
+            markAsked(conversionMove.trackId);
+          }
+          // Model asked a different question instead: leave unmarked so the
+          // move re-arms next turn rather than stacking two questions now.
+        } else if (conversionMove.id === "ask_company") {
+          const askedInReply =
+            /(company|organization|operation are you|who do you work|what team)/i.test(response);
+          if (askedInReply) {
+            markAsked(conversionMove.trackId);
+          } else if (!response.includes("?")) {
+            append("\n\nAnd what company or kind of operation are you with?");
+            markAsked(conversionMove.trackId);
+          }
+        }
+      }
+
       // Deterministic profiling cadence (skipped when the model already asked
-      // a question, a card is showing, or the model made a conversion move).
-      let profilingSuffix = "";
-      const madeConversionMove = !!meta?.actions?.some((a) => a.type === "ask_email");
+      // a question, a card is showing, or a conversion move happened).
+      const madeConversionMove = actions.some((a) => a.type === "ask_email");
       const recentMessages: ConversationMessage[] = conversationHistory.slice(-6);
       if (
         !morphTrigger &&
+        !conversionMove &&
         !madeConversionMove &&
         shouldAskProfilingQuestion(userContext, conversationHistory.length, response)
       ) {
         const profilingQuestion = getNextProfilingQuestion(userContext, recentMessages);
         if (profilingQuestion) {
-          profilingSuffix = "\n\n" + profilingQuestion.question;
-          response = response + profilingSuffix;
+          append("\n\n" + profilingQuestion.question);
           userContext = updateContext(userContext, {
             questionsAsked: [...userContext.questionsAsked, profilingQuestion.id],
           });
@@ -370,7 +443,7 @@ export async function POST(request: NextRequest) {
 
       return {
         response,
-        profilingSuffix,
+        appendedText,
         payload: {
           morphTrigger: morphTrigger
             ? {
@@ -381,7 +454,7 @@ export async function POST(request: NextRequest) {
               }
             : null,
           cardFollowUp,
-          actions: meta?.actions || [],
+          actions,
           extractedInfo,
           sessionId,
           userContext: serializeContext(userContext),
@@ -435,8 +508,8 @@ export async function POST(request: NextRequest) {
               send({ type: "text", delta: text.slice(emitted) });
             }
 
-            const { profilingSuffix, payload } = finalize(text, meta);
-            if (profilingSuffix) send({ type: "text", delta: profilingSuffix });
+            const { appendedText, payload } = finalize(text, meta);
+            if (appendedText) send({ type: "text", delta: appendedText });
             send({ type: "meta", payload });
             send({ type: "done" });
           } catch (streamError) {
@@ -445,8 +518,8 @@ export async function POST(request: NextRequest) {
               const fallbackText = await generateChatResponseOpenAI(message, enhancedContext);
               const { text, meta } = parseMetaBlock(fallbackText);
               send({ type: "text", delta: text });
-              const { profilingSuffix, payload } = finalize(text, meta);
-              if (profilingSuffix) send({ type: "text", delta: profilingSuffix });
+              const { appendedText, payload } = finalize(text, meta);
+              if (appendedText) send({ type: "text", delta: appendedText });
               send({ type: "meta", payload: { ...payload, usedFallback: true } });
               send({ type: "done" });
             } catch (fallbackError) {
