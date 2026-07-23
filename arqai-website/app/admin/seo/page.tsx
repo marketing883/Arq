@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 
 interface SEOIssue {
@@ -334,7 +334,8 @@ export default function SEODashboardPage() {
               </thead>
               <tbody className="divide-y divide-gray-200">
                 {filteredContent.map(item => (
-                  <tr key={`${item.type}-${item.id}`} className="hover:bg-gray-50">
+                  <React.Fragment key={`${item.type}-${item.id}`}>
+                  <tr className={expandedItem === `${item.type}-${item.id}` ? "bg-slate-50" : "hover:bg-gray-50"}>
                     <td className="px-6 py-4">
                       <div className="max-w-xs">
                         <p className="font-medium text-gray-900 truncate">{item.title}</p>
@@ -399,6 +400,38 @@ export default function SEODashboardPage() {
                       </Link>
                     </td>
                   </tr>
+                  {/* Issues expand inline, right under the clicked row */}
+                  {expandedItem === `${item.type}-${item.id}` && (
+                    <tr className="bg-slate-50">
+                      <td colSpan={6} className="px-6 pb-4 pt-1">
+                        {item.issues.length === 0 ? (
+                          <p className="text-sm text-gray-500">No issues found for this page.</p>
+                        ) : (
+                          <div className="space-y-2">
+                            {item.issues.map((issue, idx) => (
+                              <div
+                                key={idx}
+                                className={`flex items-start gap-3 p-3 rounded-md ${
+                                  issue.type === "error"
+                                    ? "bg-red-50"
+                                    : issue.type === "warning"
+                                    ? "bg-yellow-50"
+                                    : "bg-blue-50"
+                                }`}
+                              >
+                                <IssueIcon type={issue.type} />
+                                <div>
+                                  <p className="text-sm font-medium text-gray-900">{issue.message}</p>
+                                  <p className="text-xs text-gray-600 mt-0.5">{issue.recommendation}</p>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </td>
+                    </tr>
+                  )}
+                  </React.Fragment>
                 ))}
                 {filteredContent.length === 0 && (
                   <tr>
@@ -411,37 +444,6 @@ export default function SEODashboardPage() {
             </table>
           </div>
         </div>
-
-        {/* Expanded Issues Panel */}
-        {expandedItem && (
-          <div className="mt-4 bg-white rounded-md shadow-sm border border-gray-200 p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">
-              SEO Recommendations for: {filteredContent.find(c => `${c.type}-${c.id}` === expandedItem)?.title}
-            </h3>
-            <div className="space-y-4">
-              {filteredContent
-                .find(c => `${c.type}-${c.id}` === expandedItem)
-                ?.issues.map((issue, idx) => (
-                  <div
-                    key={idx}
-                    className={`flex items-start gap-3 p-4 rounded-md ${
-                      issue.type === "error"
-                        ? "bg-red-50"
-                        : issue.type === "warning"
-                        ? "bg-yellow-50"
-                        : "bg-blue-50"
-                    }`}
-                  >
-                    <IssueIcon type={issue.type} />
-                    <div>
-                      <p className="font-medium text-gray-900">{issue.message}</p>
-                      <p className="text-sm text-gray-600 mt-1">{issue.recommendation}</p>
-                    </div>
-                  </div>
-                ))}
-            </div>
-          </div>
-        )}
 
         {/* Back Link */}
         <div className="mt-8">
