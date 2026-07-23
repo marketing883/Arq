@@ -1,5 +1,6 @@
 import OpenAI from "openai";
 import { SYSTEM_PROMPT, resolvePageContextPrompt } from "./knowledge-base";
+import { OPENAI_FAST_MODEL } from "./models";
 import type { ChatMessage, ChatContext } from "./anthropic";
 
 // Lazy initialization to prevent build-time errors
@@ -55,7 +56,7 @@ export async function generateChatResponseOpenAI(
 
   try {
     const response = await openai.chat.completions.create({
-      model: "gpt-4-turbo-preview",
+      model: OPENAI_FAST_MODEL,
       max_tokens: 500,
       messages: messages,
     });

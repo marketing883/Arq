@@ -15,7 +15,7 @@
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
 import Anthropic from "@anthropic-ai/sdk";
 import OpenAI from "openai";
-import { LEAD_INTEL_MODEL } from "@/lib/ai/models";
+import { RESEARCH_MODEL, OPENAI_QUALITY_MODEL } from "@/lib/ai/models";
 import { isWorkEmail } from "@/lib/security/anti-spam";
 import { researchDomain } from "./domain-research-agent";
 import {
@@ -383,7 +383,7 @@ async function synthesize(context: string): Promise<SynthesizedDossier> {
     try {
       const { text, webSearchUsed } = await callAnthropic(prompt, true);
       const parsed = parseDossier(text);
-      if (parsed) return { ...parsed, modelUsed: LEAD_INTEL_MODEL, webSearchUsed };
+      if (parsed) return { ...parsed, modelUsed: RESEARCH_MODEL, webSearchUsed };
       errors.push("Anthropic (web search) returned unparseable output");
     } catch (err) {
       const message = err instanceof Error ? err.message : String(err);
@@ -393,7 +393,7 @@ async function synthesize(context: string): Promise<SynthesizedDossier> {
       try {
         const { text } = await callAnthropic(prompt, false);
         const parsed = parseDossier(text);
-        if (parsed) return { ...parsed, modelUsed: LEAD_INTEL_MODEL, webSearchUsed: false };
+        if (parsed) return { ...parsed, modelUsed: RESEARCH_MODEL, webSearchUsed: false };
         errors.push("Anthropic (inference-only) returned unparseable output");
       } catch (err2) {
         const message2 = err2 instanceof Error ? err2.message : String(err2);
@@ -410,7 +410,7 @@ async function synthesize(context: string): Promise<SynthesizedDossier> {
     try {
       const text = await callOpenAI(prompt);
       const parsed = parseDossier(text);
-      if (parsed) return { ...parsed, modelUsed: "gpt-4-turbo-preview", webSearchUsed: false };
+      if (parsed) return { ...parsed, modelUsed: OPENAI_QUALITY_MODEL, webSearchUsed: false };
       errors.push("OpenAI returned unparseable output");
     } catch (err) {
       const message = err instanceof Error ? err.message : String(err);
@@ -447,7 +447,7 @@ async function callAnthropic(
   const messages: any[] = [{ role: "user", content: prompt }];
 
   let response = await anthropic.messages.create({
-    model: LEAD_INTEL_MODEL,
+    model: RESEARCH_MODEL,
     max_tokens: 8000,
     ...(tools.length ? { tools } : {}),
     messages,
@@ -458,7 +458,7 @@ async function callAnthropic(
   while (response.stop_reason === "pause_turn" && guard < 5) {
     messages.push({ role: "assistant", content: response.content });
     response = await anthropic.messages.create({
-      model: LEAD_INTEL_MODEL,
+      model: RESEARCH_MODEL,
       max_tokens: 8000,
       ...(tools.length ? { tools } : {}),
       messages,
@@ -481,7 +481,7 @@ async function callAnthropic(
 async function callOpenAI(prompt: string): Promise<string> {
   const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
   const response = await openai.chat.completions.create({
-    model: "gpt-4-turbo-preview",
+    model: OPENAI_QUALITY_MODEL,
     max_tokens: 2500,
     response_format: { type: "json_object" },
     messages: [

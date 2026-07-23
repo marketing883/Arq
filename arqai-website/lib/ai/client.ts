@@ -1,7 +1,7 @@
 // Anthropic Claude API Client
 
 import Anthropic from "@anthropic-ai/sdk";
-import { LEAD_INTEL_MODEL } from "./models";
+import { CONTENT_MODEL } from "./models";
 
 let anthropicClient: Anthropic | null = null;
 
@@ -28,7 +28,7 @@ export async function generateWithClaude(
   const client = getAnthropicClient();
 
   const response = await client.messages.create({
-    model: LEAD_INTEL_MODEL,
+    model: CONTENT_MODEL,
     max_tokens: options.maxTokens || 4096,
     system: systemPrompt,
     messages: [{ role: "user", content: userPrompt }],

@@ -16,7 +16,7 @@
 
 import Anthropic from "@anthropic-ai/sdk";
 import OpenAI from "openai";
-import { LEAD_INTEL_MODEL } from "@/lib/ai/models";
+import { RESEARCH_MODEL, OPENAI_QUALITY_MODEL } from "@/lib/ai/models";
 import { getLeadProfile, getTouchpointEvents } from "@/lib/lead/lead-profile-service";
 import { getLatestDossier, getLeadEmails } from "@/lib/lead/lead-actions-service";
 import type { LeadDossier, LeadProfile, LeadEmail } from "@/types/lead-intelligence-v2";
@@ -57,7 +57,7 @@ export async function generateLeadEmail(
     try {
       const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
       const response = await anthropic.messages.create({
-        model: LEAD_INTEL_MODEL,
+        model: RESEARCH_MODEL,
         max_tokens: 1500,
         messages: [{ role: "user", content: prompt }],
       });
@@ -66,7 +66,7 @@ export async function generateLeadEmail(
         .map((b) => b.text)
         .join("\n");
       const parsed = parseEmail(text);
-      if (parsed) return { ...parsed, modelUsed: LEAD_INTEL_MODEL };
+      if (parsed) return { ...parsed, modelUsed: RESEARCH_MODEL };
       errors.push("Anthropic returned unparseable output");
     } catch (err) {
       const message = err instanceof Error ? err.message : String(err);
@@ -81,7 +81,7 @@ export async function generateLeadEmail(
     try {
       const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
       const response = await openai.chat.completions.create({
-        model: "gpt-4-turbo-preview",
+        model: OPENAI_QUALITY_MODEL,
         max_tokens: 1200,
         response_format: { type: "json_object" },
         messages: [
@@ -94,7 +94,7 @@ export async function generateLeadEmail(
         ],
       });
       const parsed = parseEmail(response.choices[0]?.message?.content || "");
-      if (parsed) return { ...parsed, modelUsed: "gpt-4-turbo-preview" };
+      if (parsed) return { ...parsed, modelUsed: OPENAI_QUALITY_MODEL };
       errors.push("OpenAI returned unparseable output");
     } catch (err) {
       const message = err instanceof Error ? err.message : String(err);

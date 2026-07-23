@@ -191,6 +191,46 @@ export async function POST(request: NextRequest) {
       userContext.topicsDiscussed.slice(-3)
     ).catch(() => "");
 
+    // Known visitor context: everything the conversation has established so
+    // far, so the model builds on it instead of re-asking or restarting.
+    const knownLines: string[] = [];
+    if (userContext.industry) knownLines.push(`- Industry: ${userContext.industry}`);
+    if (userContext.useCases.length > 0)
+      knownLines.push(`- Workflows of interest: ${userContext.useCases.join(", ")}`);
+    if (userContext.painPoints.length > 0)
+      knownLines.push(`- Pain points: ${userContext.painPoints.join(", ")}`);
+    if (userContext.complianceFrameworks.length > 0)
+      knownLines.push(`- Compliance: ${userContext.complianceFrameworks.join(", ")}`);
+    if (userContext.hasExistingAI !== null)
+      knownLines.push(`- Has AI in production: ${userContext.hasExistingAI ? "yes" : "no"}`);
+    if (userContext.buyingSignals.length > 0)
+      knownLines.push(
+        `- Buying signals shown: ${Array.from(new Set(userContext.buyingSignals)).slice(-4).join(", ")}`
+      );
+    if (userContext.topicsDiscussed.length > 0)
+      knownLines.push(
+        `- Topics discussed: ${Array.from(new Set(userContext.topicsDiscussed)).slice(-6).join(", ")}`
+      );
+    if (userContext.questionsAsked.length > 0)
+      knownLines.push(
+        `- Questions already asked (never repeat): ${userContext.questionsAsked.join(", ")}`
+      );
+    const knownBlock =
+      knownLines.length > 0
+        ? `## Known visitor context (established earlier; build on it, never re-ask)\n${knownLines.join("\n")}`
+        : "";
+
+    // Quick-reply taps arrive marked so the model resolves them against its
+    // own previous message instead of treating them as a new topic.
+    const viaQuickReply = body.via === "quick_reply";
+    const tapBlock = viaQuickReply
+      ? "## Input method\nThe visitor's latest message is a TAP on one of the quick replies you offered in your previous message. Interpret it strictly as that selection, in that context."
+      : "";
+
+    const extraContext = [knownBlock, tapBlock, retrievalBlock]
+      .filter(Boolean)
+      .join("\n\n");
+
     // Build enhanced context for AI response
     const enhancedContext = {
       currentPage,
@@ -198,7 +238,7 @@ export async function POST(request: NextRequest) {
       userEmail: userContext.email || userEmail,
       userCompany: userContext.companyName || userCompany,
       conversationHistory,
-      extraContext: retrievalBlock,
+      extraContext,
     };
 
     /**

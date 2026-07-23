@@ -285,7 +285,10 @@ export function ChatWidget() {
   }, []);
 
   // Send message to API (streaming with JSON fallback)
-  const sendMessage = async (content: string) => {
+  const sendMessage = async (
+    content: string,
+    options: { via?: "quick_reply" | "email_capture" } = {}
+  ) => {
     if (!content.trim() || isTyping) return;
 
     const userMessage: Message = {
@@ -309,6 +312,7 @@ export function ChatWidget() {
         body: JSON.stringify({
           message: content,
           stream: true,
+          via: options.via,
           sessionId,
           analyticsSessionId: attribution.sessionId,
           userContext,
@@ -512,12 +516,12 @@ export function ChatWidget() {
       {!isTyping && actions.length > 0 && !showFallbackForm && (
         <ActionBar
           actions={actions}
-          onQuickReply={(text) => sendMessage(text)}
+          onQuickReply={(text) => sendMessage(text, { via: "quick_reply" })}
           onLink={(href) => {
             if (isMobile) setIsExpanded(false);
             router.push(href);
           }}
-          onEmail={(email) => sendMessage(`My email is ${email}`)}
+          onEmail={(email) => sendMessage(`My email is ${email}`, { via: "email_capture" })}
           hasEmail={!!userInfo.email}
         />
       )}
