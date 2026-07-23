@@ -10,6 +10,7 @@ import ClosingCta from "@/components/v6/ClosingCta";
 import { ArrowRight } from "@/components/home-v5/icons";
 import { sanitizeHtml } from "@/lib/security/sanitize";
 import { trackResourceDownload } from "@/lib/analytics/gtm-events";
+import { getAttribution } from "@/lib/attribution/visitor-context";
 import "@/components/v6/v6.css";
 import "@/components/home-v5/styles.css";
 
@@ -93,6 +94,7 @@ export default function WhitepaperDetailPage() {
           resource_id: whitepaper.id,
           resource_type: "whitepaper",
           _formLoadedAt: formLoadedAt,
+          sessionId: getAttribution().sessionId,
         }),
       });
 

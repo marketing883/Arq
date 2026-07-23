@@ -7,6 +7,7 @@ import V6Nav from "@/components/v6/V6Nav";
 import V6Footer from "@/components/v6/V6Footer";
 import ClosingCta from "@/components/v6/ClosingCta";
 import { ArrowRight } from "@/components/home-v5/icons";
+import { getAttribution } from "@/lib/attribution/visitor-context";
 import "@/components/v6/v6.css";
 import "@/components/home-v5/styles.css";
 
@@ -76,6 +77,7 @@ export default function WhitepapersPage() {
           ...formData,
           resource_id: selectedWhitepaper.id,
           resource_type: "whitepaper",
+          sessionId: getAttribution().sessionId,
         }),
       });
 

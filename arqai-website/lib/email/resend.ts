@@ -51,6 +51,16 @@ interface MeetingBookedData {
 const FROM_EMAIL = "ArqAI <no-reply@thearq.ai>";
 const TEAM_EMAIL = "habib@thearq.ai";
 
+/** Escape a string for safe interpolation into email HTML. */
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 /**
  * Send lead notification to team
  */
@@ -890,6 +900,198 @@ export async function sendSmartAlertNotification(
     return true;
   } catch (error) {
     console.error("Failed to send smart alert notification:", error);
+    return false;
+  }
+}
+
+/**
+ * Agent Dossier Notification Data
+ * Sent to the team when the Lead Intelligence Agent finishes researching a
+ * high-value lead, so they can act on the playbook without opening the app.
+ */
+interface AgentDossierNotificationData {
+  profileId: string;
+  leadEmail?: string;
+  leadName?: string;
+  company?: string;
+  priorityTier?: string;
+  journeyStage?: string;
+  summary?: string;
+  angle?: string;
+  nextStep?: string;
+  recommendedChannel?: string;
+}
+
+/**
+ * Notify the team that a fresh intelligence dossier is ready for a lead.
+ */
+export async function sendAgentDossierNotification(
+  data: AgentDossierNotificationData
+): Promise<boolean> {
+  const resend = getResendClient();
+  if (!resend) return false;
+
+  try {
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://thearq.ai";
+    const commandCenterUrl = `${siteUrl}/admin/leads-v2/${data.profileId}`;
+    const who = data.leadName || data.leadEmail || "New lead";
+    const subject = `🧠 Intelligence ready: ${who}${data.company ? ` @ ${data.company}` : ""}`;
+
+    const html = `
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <meta charset="utf-8">
+          <style>
+            body { font-family: 'Inter', -apple-system, sans-serif; margin: 0; padding: 0; background: #f5f7fa; }
+            .container { max-width: 600px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; }
+            .header { background: linear-gradient(135deg, #0432a5 0%, #02256f 100%); color: white; padding: 24px 32px; }
+            .header h1 { margin: 0; font-size: 20px; font-weight: 600; }
+            .header .subtitle { opacity: 0.9; font-size: 14px; margin-top: 4px; }
+            .content { padding: 32px; }
+            .summary { font-size: 15px; color: #1f2937; line-height: 1.6; padding: 16px; background: #f9fafb; border-radius: 8px; border-left: 4px solid #0432a5; margin-bottom: 24px; }
+            .section { margin-bottom: 20px; }
+            .label { font-size: 11px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+            .value { font-weight: 600; color: #1f2937; font-size: 14px; }
+            .cta { text-align: center; margin-top: 24px; }
+            .cta a { display: inline-block; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 14px; background: #0432a5; color: white; }
+            .footer { padding: 20px 32px; text-align: center; color: #6b7280; font-size: 12px; background: #f9fafb; }
+          </style>
+        </head>
+        <body>
+          <div style="padding: 20px; background: #f5f7fa;">
+            <div class="container">
+              <div class="header">
+                <h1>🧠 Lead Intelligence Ready</h1>
+                <div class="subtitle">${escapeHtml(who)}${data.company ? ` • ${escapeHtml(data.company)}` : ""}${data.priorityTier ? ` • ${escapeHtml(data.priorityTier)}` : ""}</div>
+              </div>
+              <div class="content">
+                ${data.summary ? `<div class="summary">${escapeHtml(data.summary)}</div>` : ""}
+                ${data.angle ? `<div class="section"><div class="label">Recommended Angle</div><div class="value">${escapeHtml(data.angle)}</div></div>` : ""}
+                ${data.nextStep ? `<div class="section"><div class="label">Next Step</div><div class="value">${escapeHtml(data.nextStep)}${data.recommendedChannel ? ` (via ${escapeHtml(data.recommendedChannel)})` : ""}</div></div>` : ""}
+                <div class="cta">
+                  <a href="${commandCenterUrl}">Open Command Center</a>
+                </div>
+              </div>
+              <div class="footer">
+                ArqAI Lead Intelligence Agent
+              </div>
+            </div>
+          </div>
+        </body>
+      </html>
+    `;
+
+    await resend.emails.send({
+      from: FROM_EMAIL,
+      to: TEAM_EMAIL,
+      subject,
+      html,
+      reply_to: data.leadEmail || undefined,
+    });
+
+    console.log(`Agent dossier notification sent for ${who}`);
+    return true;
+  } catch (error) {
+    console.error("Failed to send agent dossier notification:", error);
+    return false;
+  }
+}
+
+/**
+ * Sales Follow-up Email Data
+ * A human-reviewed follow-up email sent to a prospect from the Command Center.
+ */
+interface SalesFollowUpEmailData {
+  to: string;
+  subject: string;
+  body: string;
+}
+
+/**
+ * Send a plain, personal-style follow-up email to a prospect. The subject and
+ * body are reviewed and editable by a human in the Command Center before this
+ * is called, so the content is never unattended LLM output.
+ */
+export async function sendSalesFollowUpEmail(
+  data: SalesFollowUpEmailData
+): Promise<boolean> {
+  const resend = getResendClient();
+  if (!resend) return false;
+
+  try {
+    // Render the plain-text body as simple paragraphs so it reads like a
+    // personal email rather than a marketing template.
+    const paragraphs = data.body
+      .split(/\n{2,}/)
+      .map((p) => `<p style="margin: 0 0 16px 0;">${escapeHtml(p).replace(/\n/g, "<br>")}</p>`)
+      .join("");
+
+    const html = `
+      <!DOCTYPE html>
+      <html>
+        <head><meta charset="utf-8"></head>
+        <body style="font-family: -apple-system, 'Segoe UI', Roboto, sans-serif; color: #1f2937; font-size: 15px; line-height: 1.7;">
+          <div style="max-width: 560px; margin: 0 auto; padding: 24px;">
+            ${paragraphs}
+          </div>
+        </body>
+      </html>
+    `;
+
+    await resend.emails.send({
+      from: FROM_EMAIL,
+      to: data.to,
+      reply_to: TEAM_EMAIL,
+      subject: data.subject,
+      html,
+    });
+
+    console.log(`Sales follow-up email sent to ${data.to}`);
+    return true;
+  } catch (error) {
+    console.error("Failed to send sales follow-up email:", error);
+    return false;
+  }
+}
+
+/**
+ * System Error Notification Data
+ */
+interface SystemErrorNotificationData {
+  context: string;
+  message: string;
+  details?: string;
+}
+
+/**
+ * Alert the team to a silent backend failure (e.g. a swallowed DB insert error)
+ * so data loss is visible rather than hidden behind a success response.
+ */
+export async function sendSystemErrorNotification(
+  data: SystemErrorNotificationData
+): Promise<boolean> {
+  const resend = getResendClient();
+  if (!resend) return false;
+
+  try {
+    await resend.emails.send({
+      from: FROM_EMAIL,
+      to: TEAM_EMAIL,
+      subject: `⚠️ ArqAI system error: ${data.context}`,
+      html: `
+        <div style="font-family: -apple-system, sans-serif; color: #1f2937;">
+          <h2 style="color: #dc2626;">System Error</h2>
+          <p><strong>Context:</strong> ${escapeHtml(data.context)}</p>
+          <p><strong>Message:</strong> ${escapeHtml(data.message)}</p>
+          ${data.details ? `<pre style="background: #f3f4f6; padding: 12px; border-radius: 8px; white-space: pre-wrap;">${escapeHtml(data.details)}</pre>` : ""}
+          <p style="color: #6b7280; font-size: 12px;">${new Date().toISOString()}</p>
+        </div>
+      `,
+    });
+    return true;
+  } catch (error) {
+    console.error("Failed to send system error notification:", error);
     return false;
   }
 }

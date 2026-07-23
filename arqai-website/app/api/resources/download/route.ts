@@ -4,6 +4,8 @@ import crypto from "crypto";
 import { applyRateLimit } from "@/lib/security/rate-limiter";
 import { validateAntiSpam } from "@/lib/security/anti-spam";
 import { getOrCreateLeadProfile, recordTouchpointEvent } from "@/lib/lead/lead-profile-service";
+import { enqueueLeadIntelRun, kickLeadIntelRun } from "@/lib/agents/lead-intel-agent";
+import { sendSystemErrorNotification } from "@/lib/email/resend";
 
 function getSupabase() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -28,7 +30,8 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { name, email, company, job_title, resource_id, resource_type, website_url, _formLoadedAt } = body;
+    const { name, email, company, job_title, resource_id, resource_type, website_url, _formLoadedAt, sessionId } = body;
+    const cleanSessionId = typeof sessionId === "string" && sessionId.length <= 80 ? sessionId : undefined;
 
     if (!name || !email || !resource_id || !resource_type) {
       return NextResponse.json({ error: "Name, email, resource ID, and resource type are required" }, { status: 400 });
@@ -70,6 +73,13 @@ export async function POST(request: NextRequest) {
 
       if (insertError) {
         console.error("Error inserting lead:", insertError);
+        // The download token is returned to the visitor regardless, but a
+        // failed insert means the token can't be validated later, so surface it.
+        void sendSystemErrorNotification({
+          context: "resource_leads insert",
+          message: insertError.message,
+          details: `Resource: ${resource_type}/${resource_id} for ${email}`,
+        }).catch(() => {});
       }
 
       // Get resource title for V2 tracking
@@ -82,8 +92,9 @@ export async function POST(request: NextRequest) {
         resourceTitle = wb?.title || resource_type;
       }
 
-      // Process for V2 lead intelligence (non-blocking)
-      getOrCreateLeadProfile(email)
+      // Process for V2 lead intelligence (non-blocking). Passing the analytics
+      // session id links the anonymous browsing history to this lead profile.
+      getOrCreateLeadProfile(email, cleanSessionId)
         .then(async (profile) => {
           if (profile) {
             await recordTouchpointEvent(
@@ -97,9 +108,18 @@ export async function POST(request: NextRequest) {
                 name,
                 company: company || null,
                 job_title: job_title || null,
-              }
+              },
+              undefined,
+              undefined,
+              cleanSessionId
             );
             console.log(`[LEAD V2] Resource download recorded: ${resourceTitle} for ${email}`);
+
+            const run = await enqueueLeadIntelRun(profile.id, "resource_download", {
+              resource_type,
+              resource_title: resourceTitle,
+            });
+            kickLeadIntelRun(run);
           }
         })
         .catch((error) => {

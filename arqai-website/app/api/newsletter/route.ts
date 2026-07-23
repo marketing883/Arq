@@ -4,6 +4,7 @@ import { getAdminSession } from "@/lib/auth/admin-auth";
 import { applyRateLimit } from "@/lib/security/rate-limiter";
 import { validateAntiSpam } from "@/lib/security/anti-spam";
 import { getOrCreateLeadProfile, recordTouchpointEvent } from "@/lib/lead/lead-profile-service";
+import { sendSystemErrorNotification } from "@/lib/email/resend";
 
 // Lazy initialize Supabase client
 let supabase: SupabaseClient | null = null;
@@ -102,8 +103,12 @@ export async function POST(request: NextRequest) {
 
         if (dbError) {
           console.error("Database error:", dbError);
-          // If table doesn't exist, still return success for UX
-          // The form works, we just can't store yet
+          // Still return success for UX, but surface the data loss to the team.
+          void sendSystemErrorNotification({
+            context: "newsletter_subscriptions insert",
+            message: dbError.message,
+            details: `Email: ${email.toLowerCase()} (source: ${source})`,
+          }).catch(() => {});
         }
       }
     } else {

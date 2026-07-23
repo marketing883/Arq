@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
-import { sendContactFormNotification, sendUserConfirmation } from "@/lib/email/resend";
+import { sendContactFormNotification, sendUserConfirmation, sendSystemErrorNotification } from "@/lib/email/resend";
 import { applyRateLimit } from "@/lib/security/rate-limiter";
 import { validateAntiSpam } from "@/lib/security/anti-spam";
 import { analyzeLeadIntel, getIntentBasedEmailContent } from "@/lib/ai/lead-intel";
 import { getOrCreateLeadProfile, recordTouchpointEvent } from "@/lib/lead/lead-profile-service";
+import { enqueueLeadIntelRun, kickLeadIntelRun } from "@/lib/agents/lead-intel-agent";
 import { sanitizeAttribution, describeAttribution } from "@/lib/attribution/server";
 
 // Lazy initialize Supabase client
@@ -188,7 +189,13 @@ export async function POST(request: NextRequest) {
 
       if (dbError) {
         console.error("Database error:", dbError);
-        // Don't fail if DB insert fails - we might not have the table yet
+        // Don't fail the visitor's request, but surface the data loss to the
+        // team so a swallowed insert doesn't hide a real lead going missing.
+        void sendSystemErrorNotification({
+          context: "contact_submissions insert",
+          message: dbError.message,
+          details: `Lead: ${email} (${company || "no company"})`,
+        }).catch(() => {});
       }
     } else {
       console.log("Supabase not configured - skipping database storage");
@@ -228,6 +235,13 @@ export async function POST(request: NextRequest) {
             enrichedMessage // Content for signal detection
           );
           console.log(`[LEAD V2] Contact form recorded for ${email}, profile: ${profile.id}`);
+
+          // Kick off deep intelligence research for this lead.
+          const run = await enqueueLeadIntelRun(profile.id, "contact_form", {
+            inquiry_type: inquiryType || "general",
+            source_page: attr?.sourcePage,
+          });
+          kickLeadIntelRun(run);
         }
       })
       .catch((error) => {

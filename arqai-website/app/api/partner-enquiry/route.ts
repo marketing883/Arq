@@ -1,10 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
-import { sendPartnerEnquiryNotification } from "@/lib/email/resend";
+import { sendPartnerEnquiryNotification, sendSystemErrorNotification } from "@/lib/email/resend";
 import { applyRateLimit } from "@/lib/security/rate-limiter";
 import { validateAntiSpam } from "@/lib/security/anti-spam";
 import { analyzeLeadIntel } from "@/lib/ai/lead-intel";
 import { getOrCreateLeadProfile, recordTouchpointEvent } from "@/lib/lead/lead-profile-service";
+import { enqueueLeadIntelRun, kickLeadIntelRun } from "@/lib/agents/lead-intel-agent";
+import { sanitizeAttribution } from "@/lib/attribution/server";
 
 // Lazy initialize Supabase client
 let supabase: SupabaseClient | null = null;
@@ -54,7 +56,11 @@ export async function POST(request: NextRequest) {
       proposedOpportunity,
       website_url,
       _formLoadedAt,
+      attribution,
     } = body;
+
+    // Visitor journey / attribution (untrusted client input, sanitized).
+    const attr = sanitizeAttribution(attribution);
 
     // Validate required fields
     if (!name || !email || !company || !jobTitle || !partnershipType || !proposedOpportunity) {
@@ -155,13 +161,18 @@ export async function POST(request: NextRequest) {
 
       if (dbError) {
         console.error("Database error:", dbError);
-        // Don't fail if DB insert fails - we might not have the table yet
+        // Surface the swallowed insert failure so a lost partner lead is visible.
+        void sendSystemErrorNotification({
+          context: "partner_enquiries insert",
+          message: dbError.message,
+          details: `Partner: ${email} (${company || "no company"})`,
+        }).catch(() => {});
       }
     } else {
       console.log("Supabase not configured - skipping database storage");
     }
 
-    getOrCreateLeadProfile(email, undefined, undefined)
+    getOrCreateLeadProfile(email, attr?.sessionId || undefined, undefined)
       .then(async (profile) => {
         if (profile) {
           await recordTouchpointEvent(
@@ -187,9 +198,15 @@ export async function POST(request: NextRequest) {
               ai_urgency: aiIntel?.urgency,
             },
             enrichedMessage,
-            "/partners"
+            "/partners",
+            attr?.sessionId || undefined
           );
           console.log(`[LEAD V2] Partner enquiry recorded for ${email}, profile: ${profile.id}`);
+
+          const run = await enqueueLeadIntelRun(profile.id, "partner_form", {
+            partnership_type: partnershipType || "general",
+          });
+          kickLeadIntelRun(run);
         }
       })
       .catch((error) => {
