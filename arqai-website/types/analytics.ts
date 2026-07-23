@@ -285,8 +285,19 @@ export interface RealTimeStats {
   active_sessions: ActiveSessionSummary[];
   pages_being_viewed: PageViewCount[];
   recent_events: RecentEvent[];
+  /** Known leads on the site within the active window right now. */
+  identified_active: IdentifiedActiveVisitor[];
   geo_distribution: GeoData[];
   timestamp: string;
+}
+
+export interface IdentifiedActiveVisitor {
+  lead_profile_id: string;
+  email?: string;
+  name?: string;
+  company?: string;
+  priority_tier?: string;
+  current_page?: string;
 }
 
 export interface ActiveSessionSummary {

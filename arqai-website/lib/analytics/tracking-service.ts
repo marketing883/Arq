@@ -9,6 +9,7 @@
  */
 
 import { createServiceClient } from "@/lib/supabase/server";
+import { classifySource } from "@/lib/analytics/channels";
 import type {
   PageView,
   ActiveSession,
@@ -39,6 +40,24 @@ const TRACKING_CONFIG: TrackingConfig = {
 // Session timeout in minutes
 const SESSION_TIMEOUT_MINUTES = 30;
 
+/** A visitor counts as "on the site right now" with activity in this window. */
+const ACTIVE_NOW_MINUTES = 5;
+
+/**
+ * Internal traffic that must never enter analytics. The client tracker also
+ * excludes these, but the server guard makes the rule hold even for stale
+ * clients and direct API calls.
+ */
+const EXCLUDED_PATH_PREFIXES = ["/admin", "/api"];
+
+export function isExcludedAnalyticsPath(path: string | undefined | null): boolean {
+  if (!path) return false;
+  return EXCLUDED_PATH_PREFIXES.some((p) => path === p || path.startsWith(`${p}/`));
+}
+
+/** Cap a single session's duration so one forgotten tab cannot skew averages. */
+const MAX_SESSION_DURATION_SECONDS = 2 * 60 * 60;
+
 // ============================================
 // PAGE VIEW TRACKING
 // ============================================
@@ -66,6 +85,7 @@ export interface TrackPageViewInput {
  * Track a page view
  */
 export async function trackPageView(input: TrackPageViewInput): Promise<PageView | null> {
+  if (isExcludedAnalyticsPath(input.page_path)) return null;
   try {
     const supabase = await createServiceClient();
 
@@ -338,7 +358,12 @@ export async function getRealTimeStats(): Promise<RealTimeStats> {
   try {
     const supabase = await createServiceClient();
 
-    // Get active sessions
+    // "Right now" means real activity in the last few minutes, judged by
+    // last_activity itself. The is_active flag alone is unreliable: it only
+    // flips on an unload beacon, so stale sessions linger as "active".
+    const activeCutoff = new Date(
+      Date.now() - ACTIVE_NOW_MINUTES * 60 * 1000
+    ).toISOString();
     const { data: sessions } = await supabase
       .from("active_sessions")
       .select(`
@@ -348,7 +373,7 @@ export async function getRealTimeStats(): Promise<RealTimeStats> {
         pages_viewed,
         time_on_site_seconds
       `)
-      .eq("is_active", true)
+      .gte("last_activity", activeCutoff)
       .order("last_activity", { ascending: false })
       .limit(100);
 
@@ -359,13 +384,43 @@ export async function getRealTimeStats(): Promise<RealTimeStats> {
       .select("country")
       .gte("created_at", fifteenMinutesAgo);
 
-    // Count pages being viewed
+    // Count pages being viewed (internal pages excluded)
     const pageCounts = new Map<string, number>();
     for (const session of sessions ?? []) {
       const page = session.current_page;
-      if (page) {
+      if (page && !isExcludedAnalyticsPath(page)) {
         pageCounts.set(page, (pageCounts.get(page) ?? 0) + 1);
       }
+    }
+
+    // Known leads browsing right now: the moment to reach out.
+    const identifiedIds = Array.from(
+      new Set(
+        (sessions ?? [])
+          .map((s) => s.lead_profile_id)
+          .filter((id): id is string => !!id)
+      )
+    );
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let identifiedActive: any[] = [];
+    if (identifiedIds.length > 0) {
+      const { data: profiles } = await supabase
+        .from("lead_profiles")
+        .select("id, canonical_email, first_name, last_name, company, priority_tier")
+        .in("id", identifiedIds.slice(0, 20));
+      const bySession = new Map(
+        (sessions ?? [])
+          .filter((s) => s.lead_profile_id)
+          .map((s) => [s.lead_profile_id as string, s.current_page])
+      );
+      identifiedActive = (profiles || []).map((p) => ({
+        lead_profile_id: p.id,
+        email: p.canonical_email,
+        name: [p.first_name, p.last_name].filter(Boolean).join(" ") || undefined,
+        company: p.company,
+        priority_tier: p.priority_tier,
+        current_page: bySession.get(p.id),
+      }));
     }
 
     // Count geo distribution
@@ -390,6 +445,7 @@ export async function getRealTimeStats(): Promise<RealTimeStats> {
         .sort((a, b) => b.active_viewers - a.active_viewers)
         .slice(0, 10),
       recent_events: [],
+      identified_active: identifiedActive,
       geo_distribution: Array.from(geoCounts.entries())
         .map(([country, visitors]) => ({ country, visitors, sessions: visitors }))
         .sort((a, b) => b.visitors - a.visitors)
@@ -403,6 +459,7 @@ export async function getRealTimeStats(): Promise<RealTimeStats> {
       active_sessions: [],
       pages_being_viewed: [],
       recent_events: [],
+      identified_active: [],
       geo_distribution: [],
       timestamp: new Date().toISOString(),
     };
@@ -414,6 +471,45 @@ export async function getRealTimeStats(): Promise<RealTimeStats> {
 // ============================================
 
 /**
+ * Fetch page views for a range in batches (PostgREST caps a single select at
+ * 1000 rows, which silently truncates busy periods), excluding internal
+ * paths. Bounded at 20k rows per call.
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function fetchAllPageViews(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  supabase: any,
+  columns: string,
+  startDate: string,
+  endDate: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+): Promise<any[]> {
+  const BATCH = 1000;
+  const MAX_ROWS = 20000;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const all: any[] = [];
+  for (let from = 0; from < MAX_ROWS; from += BATCH) {
+    const { data, error } = await supabase
+      .from("page_views")
+      .select(columns)
+      .gte("created_at", startDate)
+      .lte("created_at", endDate)
+      .not("page_path", "like", "/admin%")
+      .not("page_path", "like", "/api%")
+      .order("created_at", { ascending: true })
+      .range(from, from + BATCH - 1);
+    if (error) {
+      console.error("fetchAllPageViews error:", error);
+      break;
+    }
+    if (!data || data.length === 0) break;
+    all.push(...data);
+    if (data.length < BATCH) break;
+  }
+  return all;
+}
+
+/**
  * Get engagement metrics for a date range
  */
 export async function getEngagementMetrics(
@@ -423,13 +519,14 @@ export async function getEngagementMetrics(
   try {
     const supabase = await createServiceClient();
 
-    const { data: pageViews } = await supabase
-      .from("page_views")
-      .select("session_id, lead_profile_id, time_on_page_seconds")
-      .gte("created_at", startDate)
-      .lte("created_at", endDate);
+    const pageViews = await fetchAllPageViews(
+      supabase,
+      "session_id, lead_profile_id, time_on_page_seconds, created_at",
+      startDate,
+      endDate
+    );
 
-    if (!pageViews || pageViews.length === 0) {
+    if (pageViews.length === 0) {
       return {
         total_page_views: 0,
         unique_visitors: 0,
@@ -446,38 +543,76 @@ export async function getEngagementMetrics(
       pageViews.map(pv => pv.lead_profile_id ?? pv.session_id)
     );
 
-    // Calculate pages per session
+    // Pages per session + honest per-session duration: last activity minus
+    // first view (plus dwell on single-page sessions), capped so one
+    // forgotten tab cannot skew the average.
     const sessionPageCounts = new Map<string, number>();
+    const sessionSpans = new Map<string, { first: number; last: number; dwell: number }>();
     for (const pv of pageViews) {
       sessionPageCounts.set(
         pv.session_id,
         (sessionPageCounts.get(pv.session_id) ?? 0) + 1
       );
+      const t = new Date(pv.created_at as string).getTime();
+      const dwell = Math.min(Number(pv.time_on_page_seconds) || 0, 1800);
+      const span = sessionSpans.get(pv.session_id);
+      if (!span) {
+        sessionSpans.set(pv.session_id, { first: t, last: t, dwell });
+      } else {
+        span.first = Math.min(span.first, t);
+        span.last = Math.max(span.last, t);
+        span.dwell = Math.max(span.dwell, dwell);
+      }
     }
+
+    const durations = Array.from(sessionSpans.values()).map((s) => {
+      const spanSeconds = Math.max(0, (s.last - s.first) / 1000);
+      // Single-view sessions have no span; their dwell time is the duration.
+      const duration = spanSeconds > 0 ? spanSeconds + Math.min(s.dwell, 600) : s.dwell;
+      return Math.min(duration, MAX_SESSION_DURATION_SECONDS);
+    });
+    const avgSessionDuration =
+      durations.length > 0
+        ? durations.reduce((a, b) => a + b, 0) / durations.length
+        : 0;
 
     const avgPagesPerSession = Array.from(sessionPageCounts.values()).reduce((a, b) => a + b, 0) /
       sessionPageCounts.size;
 
-    // Calculate bounce rate (sessions with only 1 page view)
+    // Bounce rate: sessions with only 1 page view
     const bouncedSessions = Array.from(sessionPageCounts.values()).filter(c => c === 1).length;
     const bounceRate = bouncedSessions / sessionPageCounts.size;
 
-    // Calculate avg time on page
-    const timesOnPage = pageViews
-      .filter(pv => pv.time_on_page_seconds != null)
-      .map(pv => pv.time_on_page_seconds as number);
-    const avgTimeOnPage = timesOnPage.length > 0
-      ? timesOnPage.reduce((a, b) => a + b, 0) / timesOnPage.length
-      : 0;
+    // Return visitors: identified visitors in this period who were already
+    // browsing before it started. Honest but partial (anonymous visitors
+    // cannot be recognized across sessions without a persistent cookie).
+    let returnVisitorRate = 0;
+    const identifiedIds = Array.from(
+      new Set(
+        pageViews.map((pv) => pv.lead_profile_id).filter((id): id is string => !!id)
+      )
+    );
+    if (identifiedIds.length > 0) {
+      const { data: earlier } = await supabase
+        .from("page_views")
+        .select("lead_profile_id")
+        .in("lead_profile_id", identifiedIds.slice(0, 200))
+        .lt("created_at", startDate)
+        .limit(1000);
+      const returning = new Set(
+        (earlier || []).map((r) => r.lead_profile_id).filter(Boolean)
+      );
+      returnVisitorRate = returning.size / uniqueVisitors.size;
+    }
 
     return {
       total_page_views: pageViews.length,
       unique_visitors: uniqueVisitors.size,
       unique_sessions: uniqueSessions.size,
-      avg_session_duration_seconds: avgTimeOnPage * avgPagesPerSession,
+      avg_session_duration_seconds: avgSessionDuration,
       avg_pages_per_session: avgPagesPerSession,
       bounce_rate: bounceRate,
-      return_visitor_rate: 0, // Would need historical data
+      return_visitor_rate: returnVisitorRate,
     };
   } catch (error) {
     console.error("Engagement metrics error:", error);
@@ -496,13 +631,14 @@ export async function getPageEngagement(
   try {
     const supabase = await createServiceClient();
 
-    const { data: pageViews } = await supabase
-      .from("page_views")
-      .select("page_path, page_title, session_id, lead_profile_id, time_on_page_seconds, scroll_depth_percent")
-      .gte("created_at", startDate)
-      .lte("created_at", endDate);
+    const pageViews = await fetchAllPageViews(
+      supabase,
+      "page_path, page_title, session_id, lead_profile_id, time_on_page_seconds, scroll_depth_percent",
+      startDate,
+      endDate
+    );
 
-    if (!pageViews || pageViews.length === 0) {
+    if (pageViews.length === 0) {
       return [];
     }
 
@@ -586,16 +722,29 @@ export async function updateDailyAnalytics(date: Date): Promise<void> {
     const metrics = await getEngagementMetrics(startOfDay, endOfDay);
     const topPages = await getPageEngagement(startOfDay, endOfDay, 10);
 
-    // Get traffic sources
-    const { data: sourceData } = await supabase
-      .from("page_views")
-      .select("utm_source, utm_medium")
-      .gte("created_at", startOfDay)
-      .lte("created_at", endOfDay);
+    // Traffic sources: referrer-aware channel classification (UTM wins when
+    // present), counted once per session using the session's first view.
+    const sourceData = await fetchAllPageViews(
+      supabase,
+      "session_id, referrer, utm_source, utm_medium, created_at",
+      startOfDay,
+      endOfDay
+    );
+
+    const firstBySession = new Map<
+      string,
+      { referrer?: string; utm_source?: string; utm_medium?: string }
+    >();
+    for (const view of sourceData) {
+      if (!firstBySession.has(view.session_id)) {
+        firstBySession.set(view.session_id, view);
+      }
+    }
 
     const sourceCounts = new Map<string, number>();
-    for (const view of sourceData ?? []) {
-      const key = `${view.utm_source ?? "direct"}|${view.utm_medium ?? "none"}`;
+    for (const first of Array.from(firstBySession.values())) {
+      const { channel, source } = classifySource(first);
+      const key = `${source}|${channel}`;
       sourceCounts.set(key, (sourceCounts.get(key) ?? 0) + 1);
     }
 

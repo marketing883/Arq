@@ -102,7 +102,12 @@ export async function POST(request: NextRequest) {
     const { device_type, browser, os } = parseUserAgent(userAgent);
 
     // Get geo from Vercel headers (if available)
-    const country = request.headers.get("x-vercel-ip-country") ?? undefined;
+    // Geo: Vercel headers on Vercel, Cloudflare's when the VPS sits behind CF.
+    // Absent both, geo stays empty and the dashboard hides the geo panel.
+    const country =
+      request.headers.get("x-vercel-ip-country") ??
+      request.headers.get("cf-ipcountry") ??
+      undefined;
     const region = request.headers.get("x-vercel-ip-country-region") ?? undefined;
     const city = request.headers.get("x-vercel-ip-city") ?? undefined;
 

@@ -15,6 +15,7 @@ import {
   getEngagementMetrics,
   getPageEngagement,
 } from "@/lib/analytics/tracking-service";
+import { getMarketingInsights } from "@/lib/analytics/marketing-insights";
 import { createServiceClient } from "@/lib/supabase/server";
 
 // ============================================
@@ -65,6 +66,14 @@ export async function GET(request: NextRequest) {
       case "realtime": {
         const stats = await getRealTimeStats();
         return NextResponse.json(stats);
+      }
+
+      case "marketing": {
+        // The Insights payload: KPIs with deltas, channels-to-leads funnel,
+        // content that converts, campaigns, daily trend, tracking health.
+        const days = range === "30d" ? 30 : range === "90d" ? 90 : 7;
+        const insights = await getMarketingInsights(days);
+        return NextResponse.json(insights);
       }
 
       case "pages": {

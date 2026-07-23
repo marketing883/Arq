@@ -14,6 +14,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { sweepAgentRuns } from "@/lib/agents/lead-intel-agent";
+import { cleanupInactiveSessions } from "@/lib/analytics/tracking-service";
 
 export const runtime = "nodejs";
 export const maxDuration = 300; // 5 minutes; agent runs can be slow
@@ -31,11 +32,19 @@ export async function GET(request: NextRequest) {
 
     const result = await sweepAgentRuns(5);
 
+    // Piggyback analytics hygiene on the same cadence: close sessions with no
+    // activity for 30+ minutes so "active visitors" stays honest.
+    const closedSessions = await cleanupInactiveSessions().catch((err) => {
+      console.error("Session cleanup failed:", err);
+      return 0;
+    });
+
     return NextResponse.json({
       success: true,
       timestamp: new Date().toISOString(),
       picked: result.picked,
       completed: result.completed,
+      closed_sessions: closedSessions,
     });
   } catch (error) {
     console.error("Agent-runs cron failed:", error);

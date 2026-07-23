@@ -103,8 +103,17 @@ interface TrackerProps {
   enabled?: boolean;
 }
 
-export function Tracker({ enabled = true }: TrackerProps) {
+/**
+ * Paths that must never be tracked: the team's own admin browsing would
+ * pollute visitor counts, top pages, durations, and bounce rates.
+ */
+function isExcludedPath(pathname: string): boolean {
+  return pathname.startsWith("/admin");
+}
+
+export function Tracker({ enabled: enabledProp = true }: TrackerProps) {
   const pathname = usePathname();
+  const enabled = enabledProp && !isExcludedPath(pathname || "");
   const sessionId = useRef<string>("");
   const startTime = useRef<number>(0);
   const maxScrollDepth = useRef<number>(0);
