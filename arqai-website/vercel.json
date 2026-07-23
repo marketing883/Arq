@@ -3,6 +3,10 @@
     {
       "path": "/api/cron/recalculate-scores",
       "schedule": "0 3 * * *"
+    },
+    {
+      "path": "/api/cron/agent-runs",
+      "schedule": "*/5 * * * *"
     }
   ]
 }
