@@ -374,8 +374,9 @@ async function buildDossier(profileId: string): Promise<SynthesizedDossier | nul
  * Call the LLM to produce the structured dossier. Prefers Anthropic with the
  * web_search server tool; degrades to inference-only, then to OpenAI.
  */
-async function synthesize(context: string): Promise<SynthesizedDossier | null> {
+async function synthesize(context: string): Promise<SynthesizedDossier> {
   const prompt = buildSynthesisPrompt(context);
+  const errors: string[] = [];
 
   // 1) Anthropic with web search.
   if (process.env.ANTHROPIC_API_KEY) {
@@ -383,21 +384,25 @@ async function synthesize(context: string): Promise<SynthesizedDossier | null> {
       const { text, webSearchUsed } = await callAnthropic(prompt, true);
       const parsed = parseDossier(text);
       if (parsed) return { ...parsed, modelUsed: LEAD_INTEL_MODEL, webSearchUsed };
+      errors.push("Anthropic (web search) returned unparseable output");
     } catch (err) {
       const message = err instanceof Error ? err.message : String(err);
       console.error("Anthropic dossier (with tools) failed:", message);
+      errors.push(`Anthropic (web search): ${message}`);
       // 2) Retry inference-only if the tool was the problem.
       try {
         const { text } = await callAnthropic(prompt, false);
         const parsed = parseDossier(text);
         if (parsed) return { ...parsed, modelUsed: LEAD_INTEL_MODEL, webSearchUsed: false };
+        errors.push("Anthropic (inference-only) returned unparseable output");
       } catch (err2) {
-        console.error(
-          "Anthropic dossier (inference-only) failed:",
-          err2 instanceof Error ? err2.message : err2
-        );
+        const message2 = err2 instanceof Error ? err2.message : String(err2);
+        console.error("Anthropic dossier (inference-only) failed:", message2);
+        errors.push(`Anthropic (inference-only): ${message2}`);
       }
     }
+  } else {
+    errors.push("ANTHROPIC_API_KEY not set");
   }
 
   // 3) OpenAI fallback.
@@ -406,12 +411,18 @@ async function synthesize(context: string): Promise<SynthesizedDossier | null> {
       const text = await callOpenAI(prompt);
       const parsed = parseDossier(text);
       if (parsed) return { ...parsed, modelUsed: "gpt-4-turbo-preview", webSearchUsed: false };
+      errors.push("OpenAI returned unparseable output");
     } catch (err) {
-      console.error("OpenAI dossier fallback failed:", err instanceof Error ? err.message : err);
+      const message = err instanceof Error ? err.message : String(err);
+      console.error("OpenAI dossier fallback failed:", message);
+      errors.push(`OpenAI: ${message}`);
     }
+  } else {
+    errors.push("OPENAI_API_KEY not set");
   }
 
-  return null;
+  // Surface the real reason so it lands in agent_runs.error_message and the UI.
+  throw new Error(errors.join(" | ") || "No LLM provider configured");
 }
 
 let anthropicClient: Anthropic | null = null;
@@ -437,7 +448,7 @@ async function callAnthropic(
 
   let response = await anthropic.messages.create({
     model: LEAD_INTEL_MODEL,
-    max_tokens: 4000,
+    max_tokens: 8000,
     ...(tools.length ? { tools } : {}),
     messages,
   });
@@ -448,7 +459,7 @@ async function callAnthropic(
     messages.push({ role: "assistant", content: response.content });
     response = await anthropic.messages.create({
       model: LEAD_INTEL_MODEL,
-      max_tokens: 4000,
+      max_tokens: 8000,
       ...(tools.length ? { tools } : {}),
       messages,
     });
