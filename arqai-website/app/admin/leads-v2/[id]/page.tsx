@@ -4,20 +4,24 @@ import { useState, useEffect, useCallback } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import AdminHeader from "@/components/admin/AdminHeader";
+import EmailComposer from "@/components/admin/leads/EmailComposer";
 import {
   JOURNEY_STAGES,
   STAGE_LABELS,
   STAGE_COLORS,
   PRIORITY_COLORS,
+  PRIORITY_ACTIONS,
   PIPELINE_STATUS_LABELS,
   PIPELINE_STATUSES,
   getTimeAgo,
   formatDateTime,
+  humanizeSignal,
 } from "@/components/admin/leads/leadUi";
 import type {
   LeadProfile,
   LeadDossier,
   LeadActivity,
+  LeadEmail,
   AgentRun,
   UnifiedJourney,
   UnifiedJourneyEvent,
@@ -34,6 +38,7 @@ interface CommandCenterData {
   activities: LeadActivity[];
   open_tasks: LeadActivity[];
   alerts: ActiveAlert[];
+  emails: LeadEmail[];
 }
 
 const CHANNELS = ["email", "phone", "meeting", "chat"];
@@ -47,6 +52,14 @@ export default function LeadCommandCenterPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
+  const [composerOpen, setComposerOpen] = useState(false);
+
+  // Deep link: /admin/leads-v2/[id]?compose=1 opens the email composer.
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.location.search.includes("compose=1")) {
+      setComposerOpen(true);
+    }
+  }, []);
 
   const fetchData = useCallback(async () => {
     try {
@@ -117,7 +130,7 @@ export default function LeadCommandCenterPage() {
     );
   }
 
-  const { profile, dossier, agent_runs, journey, activities, open_tasks, alerts } = data;
+  const { profile, dossier, agent_runs, journey, activities, open_tasks, alerts, emails } = data;
   const name = profile.first_name
     ? `${profile.first_name} ${profile.last_name || ""}`.trim()
     : profile.canonical_email || "Anonymous lead";
@@ -143,20 +156,21 @@ export default function LeadCommandCenterPage() {
 
         <LeadHeaderCard profile={profile} name={name} onPost={post} busy={busy} />
 
+        <NextMoveStrip
+          profile={profile}
+          dossier={dossier}
+          onEmail={() => setComposerOpen(true)}
+          onContacted={() => post({ action: "mark_contacted", channel: "email" })}
+          busy={busy}
+        />
+
         <div className="grid lg:grid-cols-3 gap-4 mt-4">
           {/* Left: dossier + journey + runs */}
           <div className="lg:col-span-2 space-y-4">
             <DossierPanel
               dossier={dossier}
               onRerun={() => post({ action: "rerun_research" })}
-              onSend={(subject, emailBody) =>
-                post({
-                  action: "send_draft_email",
-                  dossier_id: dossier?.id,
-                  subject,
-                  email_body: emailBody,
-                })
-              }
+              onOpenComposer={() => setComposerOpen(true)}
               busy={busy}
             />
             <JourneyTimeline journey={journey} />
@@ -165,7 +179,12 @@ export default function LeadCommandCenterPage() {
 
           {/* Right: actions */}
           <div className="space-y-4">
-            <ActionsPanel profile={profile} onPost={post} busy={busy} />
+            <ActionsPanel
+              profile={profile}
+              onPost={post}
+              onEmail={() => setComposerOpen(true)}
+              busy={busy}
+            />
             <NextStepCard profile={profile} onPost={post} busy={busy} />
             <TasksCard tasks={open_tasks} onComplete={(id) => post({ action: "complete_task", activity_id: id })} />
             <AlertsCard alerts={alerts} />
@@ -173,7 +192,98 @@ export default function LeadCommandCenterPage() {
           </div>
         </div>
       </div>
+
+      <EmailComposer
+        open={composerOpen}
+        onClose={() => setComposerOpen(false)}
+        profile={profile}
+        dossier={dossier}
+        emails={emails || []}
+        onChanged={fetchData}
+      />
     </div>
+  );
+}
+
+// ============================================
+// NEXT MOVE
+// ============================================
+
+/**
+ * The single most useful thing on the page: what should the team do with this
+ * lead right now. Pulled from the dossier's playbook when available, with a
+ * priority-based fallback, and one-click buttons to actually do it.
+ */
+function NextMoveStrip({
+  profile,
+  dossier,
+  onEmail,
+  onContacted,
+  busy,
+}: {
+  profile: LeadProfile;
+  dossier: LeadDossier | null;
+  onEmail: () => void;
+  onContacted: () => void;
+  busy: boolean;
+}) {
+  const sa = dossier?.sales_approach;
+  const move =
+    sa?.next_step ||
+    profile.recommended_action ||
+    PRIORITY_ACTIONS[profile.priority_tier] ||
+    "Review this lead's journey";
+  const channel = sa?.recommended_channel;
+  const topSignals = [...(profile.scored_signals || [])]
+    .sort((a, b) => (b.decayed_score ?? b.raw_weight ?? 0) - (a.decayed_score ?? a.raw_weight ?? 0))
+    .map((s) => s.type)
+    .filter((t, i, arr) => t && arr.indexOf(t) === i)
+    .slice(0, 2);
+  const neverContacted = !profile.last_contacted_at;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="mt-4 bg-slate-900 text-white rounded-md p-4 flex flex-col sm:flex-row sm:items-center gap-3"
+    >
+      <div className="flex-1 min-w-0">
+        <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider mb-0.5">
+          Your next move
+        </p>
+        <p className="text-sm font-medium">
+          {move}
+          {channel ? <span className="text-slate-400"> via {channel}</span> : null}
+        </p>
+        <p className="text-[11px] text-slate-400 mt-0.5 truncate">
+          {topSignals.length > 0
+            ? `Why: ${topSignals.map(humanizeSignal).join(" + ")}`
+            : dossier?.summary
+              ? dossier.summary.slice(0, 120)
+              : "Signals will appear as this lead engages"}
+          {neverContacted ? " · never contacted" : ""}
+        </p>
+      </div>
+      <div className="flex items-center gap-2 flex-shrink-0">
+        {profile.canonical_email && (
+          <button
+            onClick={onEmail}
+            className="px-4 py-2 bg-white text-slate-900 text-xs font-semibold rounded hover:bg-slate-100"
+          >
+            Write email
+          </button>
+        )}
+        {neverContacted && (
+          <button
+            onClick={onContacted}
+            disabled={busy}
+            className="px-4 py-2 bg-white/10 text-white text-xs font-medium rounded hover:bg-white/20 disabled:opacity-50"
+          >
+            Mark contacted
+          </button>
+        )}
+      </div>
+    </motion.div>
   );
 }
 
@@ -308,12 +418,12 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 function DossierPanel({
   dossier,
   onRerun,
-  onSend,
+  onOpenComposer,
   busy,
 }: {
   dossier: LeadDossier | null;
   onRerun: () => void;
-  onSend: (subject: string, body: string) => Promise<unknown>;
+  onOpenComposer: () => void;
   busy: boolean;
 }) {
   if (!dossier) {
@@ -452,7 +562,7 @@ function DossierPanel({
         </div>
       </div>
 
-      <DraftEmailCard dossier={dossier} onSend={onSend} busy={busy} />
+      <DraftEmailCard dossier={dossier} onOpenComposer={onOpenComposer} />
 
       {!!dossier.sources?.length && (
         <Section title="Sources">
@@ -469,17 +579,16 @@ function DossierPanel({
 
 function DraftEmailCard({
   dossier,
-  onSend,
-  busy,
+  onOpenComposer,
 }: {
   dossier: LeadDossier;
-  onSend: (subject: string, body: string) => Promise<unknown>;
-  busy: boolean;
+  onOpenComposer: () => void;
 }) {
-  const [subject, setSubject] = useState(dossier.draft_email?.subject || "");
-  const [body, setBody] = useState(dossier.draft_email?.body || "");
   const [copied, setCopied] = useState(false);
+  const subject = dossier.draft_email?.subject || "";
+  const body = dossier.draft_email?.body || "";
   const sent = dossier.draft_email?.status === "sent";
+  if (!subject && !body) return null;
 
   const copy = async () => {
     await navigator.clipboard.writeText(`Subject: ${subject}\n\n${body}`);
@@ -490,41 +599,29 @@ function DraftEmailCard({
   return (
     <div className="border border-slate-200 rounded p-4 space-y-2">
       <div className="flex items-center justify-between">
-        <h4 className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Draft Follow-up Email</h4>
+        <h4 className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
+          Agent&apos;s Suggested Email
+        </h4>
         {sent && <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-600">Sent</span>}
       </div>
-      <input
-        value={subject}
-        onChange={(e) => setSubject(e.target.value)}
-        placeholder="Subject"
-        className="w-full px-2.5 py-1.5 text-xs border border-slate-200 rounded focus:outline-none focus:ring-1 focus:ring-slate-400"
-      />
-      <textarea
-        value={body}
-        onChange={(e) => setBody(e.target.value)}
-        rows={6}
-        placeholder="Email body"
-        className="w-full px-2.5 py-1.5 text-xs border border-slate-200 rounded focus:outline-none focus:ring-1 focus:ring-slate-400 resize-y"
-      />
-      <div className="flex items-center gap-2">
+      <p className="text-xs font-medium text-slate-800">{subject}</p>
+      <p className="text-xs text-slate-600 whitespace-pre-line line-clamp-6">{body}</p>
+      <div className="flex items-center gap-2 pt-1">
+        <button
+          onClick={onOpenComposer}
+          className="px-3 py-1.5 bg-slate-900 text-white text-xs font-medium rounded hover:bg-slate-800"
+        >
+          Edit &amp; send in composer
+        </button>
         <button
           onClick={copy}
           className="px-3 py-1.5 bg-slate-100 text-slate-700 text-xs font-medium rounded hover:bg-slate-200"
         >
           {copied ? "Copied" : "Copy"}
         </button>
-        <button
-          onClick={() => {
-            if (confirm("Send this email to the lead?")) onSend(subject, body);
-          }}
-          disabled={busy || !subject || !body}
-          className="px-3 py-1.5 bg-slate-900 text-white text-xs font-medium rounded hover:bg-slate-800 disabled:opacity-50"
-        >
-          Send email
-        </button>
       </div>
       <p className="text-[10px] text-slate-400">
-        Review and edit before sending. This email is drafted by the research agent for a human to approve.
+        Drafted by the research agent. Open the composer to refine with AI and send.
       </p>
     </div>
   );
@@ -686,10 +783,12 @@ function AgentRunsList({ runs }: { runs: AgentRun[] }) {
 function ActionsPanel({
   profile,
   onPost,
+  onEmail,
   busy,
 }: {
   profile: LeadProfile;
   onPost: (body: Record<string, unknown>) => Promise<unknown>;
+  onEmail: () => void;
   busy: boolean;
 }) {
   const [channel, setChannel] = useState("email");
@@ -724,12 +823,12 @@ function ActionsPanel({
 
       <div className="grid grid-cols-2 gap-2">
         {profile.canonical_email && (
-          <a
-            href={`mailto:${profile.canonical_email}?subject=Following up on your ArqAI inquiry`}
+          <button
+            onClick={onEmail}
             className="px-3 py-1.5 bg-slate-100 text-slate-700 text-xs font-medium rounded hover:bg-slate-200 text-center"
           >
-            Email
-          </a>
+            Write email
+          </button>
         )}
         <button
           onClick={() => onPost({ action: "rerun_research" })}

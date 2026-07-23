@@ -38,7 +38,12 @@ import {
   setPipelineStatus,
   setPriorityOverride,
   markDraftEmailSent,
+  getResearchHealth,
+  getLeadEmails,
+  saveLeadEmailDraft,
+  markLeadEmailSent,
 } from "@/lib/lead/lead-actions-service";
+import { generateLeadEmail } from "@/lib/ai/email-composer";
 import { buildUnifiedJourney } from "@/lib/lead/journey";
 import { enqueueLeadIntelRun, kickLeadIntelRun } from "@/lib/agents/lead-intel-agent";
 import { sendSalesFollowUpEmail } from "@/lib/email/resend";
@@ -105,6 +110,7 @@ export async function GET(request: NextRequest) {
           activities,
           openTasks,
           alerts,
+          emails,
         ] = await Promise.all([
           getLatestDossier(profileId),
           getDossierHistory(profileId),
@@ -113,6 +119,7 @@ export async function GET(request: NextRequest) {
           getActivities(profileId),
           getOpenTasks(profileId),
           getActiveAlerts(200),
+          getLeadEmails(profileId),
         ]);
 
         return NextResponse.json({
@@ -124,6 +131,7 @@ export async function GET(request: NextRequest) {
           activities,
           open_tasks: openTasks,
           alerts: alerts.filter((a) => a.lead_profile_id === profileId),
+          emails,
         });
       }
 
@@ -161,12 +169,13 @@ export async function GET(request: NextRequest) {
         const limit = searchParams.get("limit");
         if (limit) filters.limit = parseInt(limit, 10);
 
-        const [leads, stats] = await Promise.all([
+        const [leads, stats, research] = await Promise.all([
           getLeadDashboard(filters),
           getLeadProfileStats(),
+          getResearchHealth(),
         ]);
 
-        return NextResponse.json({ leads, stats });
+        return NextResponse.json({ leads, stats, research });
       }
     }
   } catch (error) {
@@ -270,6 +279,97 @@ export async function POST(request: NextRequest) {
           metadata: { run_id: run?.id },
         });
         return NextResponse.json({ success: true, run });
+      }
+
+      case "generate_email": {
+        const { instruction, current_subject, current_body } = body;
+        try {
+          const generated = await generateLeadEmail(profile_id, {
+            instruction,
+            currentSubject: current_subject,
+            currentBody: current_body,
+          });
+          if (!generated) {
+            return NextResponse.json({ error: "Lead not found" }, { status: 404 });
+          }
+          return NextResponse.json({ success: true, email: generated });
+        } catch (err) {
+          const message = err instanceof Error ? err.message : "Generation failed";
+          return NextResponse.json({ error: message }, { status: 502 });
+        }
+      }
+
+      case "save_email_draft": {
+        const { email_id, subject, email_body, generated_by, instruction, dossier_id } = body;
+        if (!subject && !email_body) {
+          return NextResponse.json(
+            { error: "subject or email_body is required" },
+            { status: 400 }
+          );
+        }
+        const saved = await saveLeadEmailDraft(profile_id, {
+          emailId: email_id,
+          subject: subject || "",
+          body: email_body || "",
+          generatedBy: generated_by,
+          instruction,
+          dossierId: dossier_id,
+        });
+        if (!saved) {
+          return NextResponse.json({ error: "Failed to save draft" }, { status: 500 });
+        }
+        return NextResponse.json({ success: true, email: saved });
+      }
+
+      case "send_email": {
+        const { email_id, subject, email_body } = body;
+        if (!subject || !email_body) {
+          return NextResponse.json(
+            { error: "subject and email_body are required" },
+            { status: 400 }
+          );
+        }
+        const profile = await getLeadProfile(profile_id);
+        if (!profile?.canonical_email) {
+          return NextResponse.json({ error: "Lead has no email" }, { status: 400 });
+        }
+
+        // Persist first so a failed send still leaves an auditable row.
+        let emailRow = null;
+        if (email_id) {
+          emailRow = await saveLeadEmailDraft(profile_id, {
+            emailId: email_id,
+            subject,
+            body: email_body,
+          });
+        }
+        if (!emailRow) {
+          emailRow = await saveLeadEmailDraft(profile_id, {
+            subject,
+            body: email_body,
+            generatedBy: "human",
+          });
+        }
+
+        const sent = await sendSalesFollowUpEmail({
+          to: profile.canonical_email,
+          subject,
+          body: email_body,
+        });
+
+        if (emailRow) {
+          await markLeadEmailSent(emailRow.id, { ok: sent, subject, body: email_body });
+        }
+        if (!sent) {
+          return NextResponse.json({ error: "Failed to send email" }, { status: 500 });
+        }
+
+        await markContacted(profile_id, "email", `Sent: ${subject}`);
+        await addActivity(profile_id, "email_draft_sent", {
+          body: subject,
+          metadata: { email_id: emailRow?.id },
+        });
+        return NextResponse.json({ success: true, email_id: emailRow?.id });
       }
 
       case "send_draft_email": {

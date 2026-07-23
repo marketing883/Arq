@@ -62,6 +62,46 @@ export const PIPELINE_STATUS_LABELS: Record<string, string> = {
 
 export const PIPELINE_STATUSES = Object.keys(PIPELINE_STATUS_LABELS);
 
+/**
+ * Plain-language labels for scored signal types, so the team reads
+ * "Asked for a demo" instead of "demo_request (weight 40)".
+ */
+export const SIGNAL_LABELS: Record<string, string> = {
+  demo_request: "Asked for a demo",
+  pricing_interest: "Asked about pricing",
+  immediate_urgency: "Signalled urgency",
+  timeline_mention: "Mentioned a timeline",
+  decision_maker: "Is a decision maker",
+  compliance_mention: "Raised compliance needs",
+  integration_question: "Asked about integrations",
+  competitor_mention: "Mentioned a competitor",
+  pain_point: "Described a pain point",
+  no_budget: "Said budget is a blocker",
+  contact_form: "Filled the contact form",
+  resource_download: "Downloaded a resource",
+  newsletter: "Subscribed to the newsletter",
+  partner_intake: "Submitted a partner enquiry",
+};
+
+/** Human phrase for a signal type; falls back to de-snake-cased text. */
+export function humanizeSignal(type: string): string {
+  return SIGNAL_LABELS[type] || type.replace(/_/g, " ");
+}
+
+/** One-line, plain-English reason this lead matters. */
+export function whyLine(topSignals?: string[], recommendedAction?: string): string {
+  if (topSignals && topSignals.length > 0) {
+    return topSignals.slice(0, 2).map(humanizeSignal).join(" + ");
+  }
+  return recommendedAction || "Browsing, no strong signals yet";
+}
+
+/** True when a follow-up is due in the past and presumably not done. */
+export function isOverdue(dueAt?: string): boolean {
+  if (!dueAt) return false;
+  return new Date(dueAt).getTime() < Date.now();
+}
+
 export function getTimeAgo(date: string | Date): string {
   const now = new Date();
   const then = new Date(date);

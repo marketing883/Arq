@@ -787,6 +787,12 @@ export interface LeadDashboardRow {
   pipeline_status?: string;
   last_contacted_at?: string;
   next_step?: string;
+  next_step_due_at?: string;
+  /** Full name when known (backfilled by the research agent or forms). */
+  name?: string;
+  first_touch?: string;
+  /** Top scored signal types, strongest first, for plain-language display. */
+  top_signals?: string[];
   /** Alias of composite_score kept for older consumers. */
   score: number;
 }
@@ -837,10 +843,23 @@ export async function getLeadDashboard(filters?: {
 
 /** Shape a lead profile into the row the V2 dashboard renders. */
 export function mapProfileToDashboardRow(p: LeadProfile): LeadDashboardRow {
+  // Strongest signals first: what actually made this lead score.
+  const topSignals = [...(p.scored_signals || [])]
+    .sort(
+      (a, b) =>
+        (b.decayed_score ?? b.raw_weight ?? 0) - (a.decayed_score ?? a.raw_weight ?? 0)
+    )
+    .map((s) => s.type)
+    .filter((t, i, arr) => t && arr.indexOf(t) === i)
+    .slice(0, 3);
+
+  const name = [p.first_name, p.last_name].filter(Boolean).join(" ") || undefined;
+
   return {
     id: p.id,
     canonical_email: p.canonical_email,
-    company: p.company_intel?.company_name,
+    name,
+    company: p.company || p.company_intel?.company_name,
     journey_stage: p.journey_stage,
     priority_tier: p.priority_tier,
     composite_score: Math.round(p.composite_score || 0),
@@ -854,6 +873,9 @@ export function mapProfileToDashboardRow(p: LeadProfile): LeadDashboardRow {
     pipeline_status: p.pipeline_status,
     last_contacted_at: p.last_contacted_at,
     next_step: p.next_step,
+    next_step_due_at: p.next_step_due_at,
+    first_touch: p.first_touch,
+    top_signals: topSignals,
     score: Math.round(p.composite_score || 0),
   };
 }

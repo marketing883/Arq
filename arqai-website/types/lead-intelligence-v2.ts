@@ -589,3 +589,27 @@ export interface UnifiedJourney {
   visits: JourneyVisit[];
   events: UnifiedJourneyEvent[];
 }
+
+// ============================================
+// LEAD EMAILS (AI-assisted composer)
+// ============================================
+
+export type LeadEmailStatus = "draft" | "sent" | "failed";
+export type LeadEmailAuthor = "ai" | "human" | "ai_edited";
+
+export interface LeadEmail {
+  id: string;
+  lead_profile_id: string;
+  dossier_id?: string | null;
+  direction: "outbound";
+  status: LeadEmailStatus;
+  subject: string;
+  body: string;
+  generated_by: LeadEmailAuthor;
+  /** The instruction the admin gave the AI when this draft was generated. */
+  instruction?: string | null;
+  resend_id?: string | null;
+  sent_at?: string | null;
+  created_at: string;
+  updated_at: string;
+}
