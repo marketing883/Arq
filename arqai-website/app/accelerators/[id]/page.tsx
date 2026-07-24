@@ -10,6 +10,7 @@ import {
   generateFAQSchema,
 } from "@/lib/seo/structured-data";
 import AcceleratorForm from "@/components/accelerators/AcceleratorForm";
+import { getPageContext } from "@/lib/attribution/page-context";
 
 const CAP_ICONS = [SparkIcon, InsightIcon, ShieldIcon, DocIcon, ChatIcon];
 
@@ -73,6 +74,7 @@ export function generateMetadata({ params }: AcceleratorPageProps): Metadata {
 
 export default function AcceleratorDetailPage({ params }: AcceleratorPageProps) {
   const accelerator = getAccelerator(params.id);
+  const demoReady = !!getPageContext(`/accelerators/${params.id}`)?.demoReady;
 
   if (!accelerator) {
     notFound();
@@ -185,7 +187,7 @@ export default function AcceleratorDetailPage({ params }: AcceleratorPageProps) 
             <p className="v5-lead">{accelerator.tagline}</p>
             <div className="v5-hero-actions">
               <Link href="#get-started" className="v5-btn v5-btn-primary">
-                Request a walkthrough <ArrowRight />
+                {demoReady ? "Book a live demo" : "Request a walkthrough"} <ArrowRight />
               </Link>
             </div>
           </div>
@@ -474,10 +476,21 @@ export default function AcceleratorDetailPage({ params }: AcceleratorPageProps) 
                 Put {accelerator.name} to work on your workflow.
               </h2>
               <p className="v5-lead" style={{ marginTop: 16 }}>
-                Start with the {accelerator.entryPoint.name}, or tell us about the workflow.
-                We&apos;ll show where {accelerator.name} fits, what must be configured for your
-                environment, and the fastest path to a measurable first release — not a
-                generic demo.
+                {demoReady ? (
+                  <>
+                    See {accelerator.name} live on a real workflow, or start with the{" "}
+                    {accelerator.entryPoint.name}. Either way we&apos;ll show where{" "}
+                    {accelerator.name} fits, what must be configured for your environment,
+                    and the fastest path to a measurable first release.
+                  </>
+                ) : (
+                  <>
+                    Start with the {accelerator.entryPoint.name}, or tell us about the
+                    workflow. We&apos;ll show where {accelerator.name} fits, what must be
+                    configured for your environment, and the fastest path to a measurable
+                    first release, not a generic walkthrough.
+                  </>
+                )}
               </p>
               <ul className="v5-list">
                 <li>Fit check against your data, systems, and controls</li>

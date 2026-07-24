@@ -9,6 +9,7 @@ import {
   getPageContext,
   genericIntents,
   timelineToSlug,
+  ACCELERATOR_CHOICES,
   TIMELINE_QUALIFIER,
   type PageContext,
   type Qualifier,
@@ -73,6 +74,8 @@ function SmartLeadFormInner({
   const [ctx, setCtx] = useState<PageContext | null>(null);
   const [sourcePage, setSourcePage] = useState("");
   const [intentId, setIntentId] = useState("");
+  // Book a Demo only: which accelerator they want to see ("unsure" allowed).
+  const [demoAccelerator, setDemoAccelerator] = useState("");
   const [answers, setAnswers] = useState<Record<string, string | string[]>>({});
   const [wantsEntryPoint, setWantsEntryPoint] = useState(false);
   const [note, setNote] = useState("");
@@ -101,6 +104,13 @@ function SmartLeadFormInner({
     if (source) setSourcePage(source);
     const resolved = getPageContext(source);
     if (resolved) setCtx(resolved);
+    // Came from an accelerator page: pre-select it in the demo dropdown.
+    if (resolved?.kind === "accelerator" && source) {
+      const slug = source.split(/[?#]/)[0].split("/").filter(Boolean)[1];
+      if (slug && ACCELERATOR_CHOICES.some((a) => a.slug === slug)) {
+        setDemoAccelerator((prev) => prev || slug);
+      }
+    }
   }, [params, formPath]);
 
   const intent: GenericIntent | null = useMemo(
@@ -108,12 +118,15 @@ function SmartLeadFormInner({
     [intentId]
   );
 
+  const isDemoPage = formPath === "/engage-us";
+
   // The questions currently on screen.
   const activeQualifiers: Qualifier[] = useMemo(() => {
     if (ctx) return ctx.qualifiers ?? [TIMELINE_QUALIFIER];
+    if (isDemoPage) return [TIMELINE_QUALIFIER];
     if (intent && !intent.routeTo) return intent.qualifiers;
     return [];
-  }, [ctx, intent]);
+  }, [ctx, intent, isDemoPage]);
 
   const heading = headingFor(ctx, defaultHeading);
   const sub = ctx
@@ -156,8 +169,14 @@ function SmartLeadFormInner({
       setError("Please complete the required fields.");
       return;
     }
+    if (isDemoPage && !demoAccelerator) {
+      setError("Pick the accelerator you'd like to see, or choose Not sure yet.");
+      return;
+    }
     setSubmitting(true);
     setError(null);
+
+    const demoChoice = ACCELERATOR_CHOICES.find((a) => a.slug === demoAccelerator) || null;
 
     const timelineAnswer = typeof answers.timeline === "string" ? answers.timeline : undefined;
     const answerLines = activeQualifiers
@@ -170,6 +189,13 @@ function SmartLeadFormInner({
 
     const message =
       [
+        isDemoPage
+          ? demoChoice
+            ? `Demo requested: ${demoChoice.name}`
+            : demoAccelerator === "unsure"
+              ? "Demo requested: not sure which accelerator yet, wants help picking"
+              : null
+          : null,
         ctx ? `Interest: ${ctx.shortLabel}` : intent ? `Interest: ${intent.label}` : null,
         wantsEntryPoint && ctx?.entryPoint
           ? `Requested entry point: ${ctx.entryPoint.name}.`
@@ -180,10 +206,12 @@ function SmartLeadFormInner({
         .filter(Boolean)
         .join("\n") || "Submitted via contact form.";
 
-    const inquiryType =
-      ctx?.contact?.inquiryType ?? intent?.inquiryType ?? defaultInquiryType;
+    const inquiryType = isDemoPage
+      ? "demo"
+      : ctx?.contact?.inquiryType ?? intent?.inquiryType ?? defaultInquiryType;
     const workflowArea =
       ctx?.contact?.workflowArea ??
+      (demoChoice ? `${demoChoice.name} demo` : null) ??
       (ctx ? `${ctx.shortLabel} inquiry` : intent?.workflowArea) ??
       "General inquiry";
 
@@ -219,6 +247,8 @@ function SmartLeadFormInner({
           industry: ctx?.contact?.industry || "",
           timeline: timelineToSlug(timelineAnswer),
           workflow_area: workflowArea,
+          accelerator_name:
+            demoChoice?.name || (ctx?.kind === "accelerator" ? ctx.shortLabel : undefined),
           value: company ? 100 : 50,
         });
         setStatus("success");
@@ -307,6 +337,29 @@ function SmartLeadFormInner({
                 <input className="v5-input" type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} autoComplete="tel" />
               </Field>
 
+              {/* Book a Demo: which accelerator do they want to see? */}
+              {isDemoPage && (
+                <Field label="Which accelerator would you like a demo of?" required>
+                  <select
+                    className="v5-input"
+                    required
+                    value={demoAccelerator}
+                    onChange={(e) => setDemoAccelerator(e.target.value)}
+                    style={{ appearance: "auto", cursor: "pointer" }}
+                  >
+                    <option value="" disabled>
+                      Select an accelerator
+                    </option>
+                    {ACCELERATOR_CHOICES.map((a) => (
+                      <option key={a.slug} value={a.slug}>
+                        {a.name}
+                      </option>
+                    ))}
+                    <option value="unsure">Not sure yet, help me pick</option>
+                  </select>
+                </Field>
+              )}
+
               {/* About your situation: all clicks, no typing */}
               {ctx ? (
                 <div style={{ marginTop: 6 }}>
@@ -321,7 +374,7 @@ function SmartLeadFormInner({
                     </button>
                   </p>
                 </div>
-              ) : (
+              ) : isDemoPage ? null : (
                 <Field label="What brings you in?" group>
                   <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
                     {genericIntents.map((i) => (

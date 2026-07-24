@@ -13,9 +13,13 @@ type Props = {
   acceleratorCategory: string;
 };
 
+type StartMode = "" | "demo" | "assessment" | "both";
+
 export default function AcceleratorForm({ acceleratorName, acceleratorCategory }: Props) {
   const pathname = usePathname();
   const pageContext = getPageContext(pathname);
+  const demoReady = !!pageContext?.demoReady;
+  const [startMode, setStartMode] = useState<StartMode>("");
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [company, setCompany] = useState("");
@@ -49,12 +53,21 @@ export default function AcceleratorForm({ acceleratorName, acceleratorCategory }
       setError("Please complete the required fields.");
       return;
     }
+    if (demoReady && !startMode) {
+      setError("Choose how you'd like to start.");
+      return;
+    }
     setSubmitting(true);
     setError(null);
 
+    const wantsDemo = startMode === "demo" || startMode === "both";
+    const wantsAssessment = demoReady
+      ? startMode === "assessment" || startMode === "both"
+      : wantsEntryPoint;
     const composedMessage = [
       `Accelerator interest: ${acceleratorName} (${acceleratorCategory}).`,
-      wantsEntryPoint && pageContext?.entryPoint
+      wantsDemo ? `\nRequested: live demo of ${acceleratorName}.` : "",
+      wantsAssessment && pageContext?.entryPoint
         ? `\nRequested entry point: ${pageContext.entryPoint.name}.`
         : "",
       message.trim() ? `\nWhat they want to improve:\n${message.trim()}` : "",
@@ -71,7 +84,7 @@ export default function AcceleratorForm({ acceleratorName, acceleratorCategory }
           jobTitle,
           phone: phone || undefined,
           message: composedMessage,
-          inquiryType: "accelerator",
+          inquiryType: wantsDemo ? "demo" : "accelerator",
           workflowArea: `${acceleratorName} accelerator`,
           website_url: website,
           _formLoadedAt: formLoadedAt,
@@ -88,7 +101,7 @@ export default function AcceleratorForm({ acceleratorName, acceleratorCategory }
       if (res.ok && body?.success) {
         trackGenerateLead({
           form_name: "accelerator_form",
-          inquiry_type: "accelerator",
+          inquiry_type: wantsDemo ? "demo" : "accelerator",
           accelerator_name: acceleratorName,
           workflow_area: `${acceleratorName} accelerator`,
           value: company ? 100 : 50,
@@ -101,6 +114,7 @@ export default function AcceleratorForm({ acceleratorName, acceleratorCategory }
         setPhone("");
         setMessage("");
         setWantsEntryPoint(false);
+        setStartMode("");
       } else {
         setStatus("error");
         setError(body?.error || "Could not send. Please try again.");
@@ -121,7 +135,7 @@ export default function AcceleratorForm({ acceleratorName, acceleratorCategory }
             <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        <h3 className="v5-h3">Thanks — we&apos;ve got it.</h3>
+        <h3 className="v5-h3">Thanks. We&apos;ve got it.</h3>
         <p className="v5-body" style={{ marginTop: 8 }}>
           A confirmation is on its way to your inbox, and a senior member of our team will
           reach out within one business day to scope {acceleratorName} against your workflow.
@@ -198,44 +212,108 @@ export default function AcceleratorForm({ acceleratorName, acceleratorCategory }
         />
       </label>
 
-      {pageContext?.entryPoint && (
-        <label
-          style={{
-            display: "flex",
-            alignItems: "flex-start",
-            gap: 10,
-            padding: "10px 12px",
-            background: "#f5f8ec",
-            border: "1px solid #e3eeba",
-            borderRadius: 10,
-            cursor: "pointer",
-            fontSize: 13,
-            lineHeight: 1.5,
-          }}
-        >
-          <input
-            type="checkbox"
-            checked={wantsEntryPoint}
-            onChange={(e) => setWantsEntryPoint(e.target.checked)}
-            style={{ marginTop: 3 }}
-          />
-          <span>
-            <strong>Start with the {pageContext.entryPoint.name}</strong> —{" "}
-            {pageContext.entryPoint.blurb}. The usual first step, with no build commitment.
+      {demoReady && pageContext?.entryPoint ? (
+        <div className="v5-field" role="group" aria-label="How would you like to start?">
+          <span className="v5-field-label">
+            How would you like to start? <span className="req">*</span>
           </span>
-        </label>
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            {(
+              [
+                {
+                  value: "demo" as const,
+                  title: `See a live ${acceleratorName} demo`,
+                  blurb: "a walkthrough of the product on a real workflow, with your questions answered live",
+                },
+                {
+                  value: "assessment" as const,
+                  title: `Start with the ${pageContext.entryPoint.name}`,
+                  blurb: `${pageContext.entryPoint.blurb}. No build commitment`,
+                },
+                {
+                  value: "both" as const,
+                  title: "Both: demo first, then the assessment",
+                  blurb: "see it live, then put it to work on your own data",
+                },
+              ]
+            ).map((opt) => (
+              <label
+                key={opt.value}
+                style={{
+                  display: "flex",
+                  alignItems: "flex-start",
+                  gap: 10,
+                  padding: "10px 12px",
+                  background: startMode === opt.value ? "#f5f8ec" : "var(--v5-white)",
+                  border: `1px solid ${startMode === opt.value ? "#e3eeba" : "#e2e2e2"}`,
+                  borderRadius: 10,
+                  cursor: "pointer",
+                  fontSize: 13,
+                  lineHeight: 1.5,
+                }}
+              >
+                <input
+                  type="radio"
+                  name="start_mode"
+                  checked={startMode === opt.value}
+                  onChange={() => setStartMode(opt.value)}
+                  style={{ marginTop: 3, accentColor: "var(--v5-ink)" }}
+                />
+                <span>
+                  <strong>{opt.title}:</strong> {opt.blurb}.
+                </span>
+              </label>
+            ))}
+          </div>
+        </div>
+      ) : (
+        pageContext?.entryPoint && (
+          <label
+            style={{
+              display: "flex",
+              alignItems: "flex-start",
+              gap: 10,
+              padding: "10px 12px",
+              background: "#f5f8ec",
+              border: "1px solid #e3eeba",
+              borderRadius: 10,
+              cursor: "pointer",
+              fontSize: 13,
+              lineHeight: 1.5,
+            }}
+          >
+            <input
+              type="checkbox"
+              checked={wantsEntryPoint}
+              onChange={(e) => setWantsEntryPoint(e.target.checked)}
+              style={{ marginTop: 3 }}
+            />
+            <span>
+              <strong>Start with the {pageContext.entryPoint.name}:</strong>{" "}
+              {pageContext.entryPoint.blurb}. The usual first step, with no build commitment.
+            </span>
+          </label>
+        )
       )}
 
       {welcomeBack && (
         <p className="v5-form-note" style={{ marginTop: 0 }}>
-          Welcome back, {welcomeBack} — we&apos;ve filled in what you shared with us earlier.
+          Welcome back, {welcomeBack}. We&apos;ve filled in what you shared with us earlier.
         </p>
       )}
 
       {status === "error" && error && <div className="v5-form-error">{error}</div>}
 
       <button type="submit" disabled={submitting} className="v5-btn v5-btn-primary v5-form-submit">
-        {submitting ? "Sending..." : `Request a ${acceleratorName} walkthrough`}
+        {submitting
+          ? "Sending..."
+          : demoReady
+            ? startMode === "assessment"
+              ? "Request the assessment"
+              : startMode === "both"
+                ? "Book the demo + assessment"
+                : `Book a ${acceleratorName} demo`
+            : `Request a ${acceleratorName} walkthrough`}
       </button>
 
       <p className="v5-form-note">

@@ -73,10 +73,17 @@ export type PageContext = {
   };
   /** Pointed click-to-answer questions shown instead of open text fields. */
   qualifiers?: Qualifier[];
+  /**
+   * True when a live product demo exists for this accelerator. Drives the
+   * "See a live demo" option on the accelerator page form. Flip this flag
+   * when an accelerator becomes demo ready and every form picks it up.
+   */
+  demoReady?: boolean;
 };
 
 const ACCELERATORS: Record<string, PageContext> = {
   arqfwa: {
+    demoReady: true,
     shortLabel: "ArqFWA",
     label: "payment integrity and FWA detection for healthcare payers",
     kind: "accelerator",
@@ -99,6 +106,7 @@ const ACCELERATORS: Record<string, PageContext> = {
     ],
   },
   arqloyalty: {
+    demoReady: true,
     shortLabel: "ArqLoyalty",
     label: "loyalty platform modernization without migration risk",
     kind: "accelerator",
@@ -230,6 +238,7 @@ const ACCELERATORS: Record<string, PageContext> = {
     ],
   },
   arqvantage: {
+    demoReady: true,
     shortLabel: "ArqVantage",
     label: "competitive pricing intelligence and governed repricing",
     kind: "accelerator",
@@ -419,6 +428,14 @@ const INDUSTRIES: Record<string, PageContext> = {
     ],
   },
 };
+
+/**
+ * Every accelerator as a dropdown choice for the Book a Demo form, in
+ * catalog order (verticals first, then horizontals).
+ */
+export const ACCELERATOR_CHOICES: { slug: string; name: string }[] = Object.entries(
+  ACCELERATORS
+).map(([slug, ctx]) => ({ slug, name: ctx.shortLabel }));
 
 /**
  * Resolve a site path to the topic it represents, or null for generic pages
