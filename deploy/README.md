@@ -77,13 +77,26 @@ no reason for a public Next.js process to run as root. Add to its unit:
 ```
 User=arqadmin
 Group=arqadmin
-Environment=HOSTNAME=127.0.0.1
 ```
 
-Verify the bind afterwards with `ss -lntp | grep 3001`; it should show
-`127.0.0.1:3001` rather than `*:3001`. If `HOSTNAME` does not take effect,
-the app's `start` script is passing its own `-H`, and that is where to change
-it.
+That part is done and holds: the service runs as `arqadmin` and serves
+normally.
+
+**`Environment=HOSTNAME=127.0.0.1` does not narrow the bind — do not use
+it.** It was tried on this unit and `ss -lntp` still reported `*:3001`.
+`HOSTNAME` is read by the server that `output: 'standalone'` generates;
+this app runs `next start` (its `start` script is a bare `next start`),
+which takes `-H/--hostname` and otherwise defaults to `0.0.0.0` whatever
+the variable says. Pass the flag through npm in the unit instead:
+
+```
+ExecStart=/usr/bin/npm start -- -H 127.0.0.1 -p 3001
+```
+
+Verify afterwards with `ss -lntp | grep 3001`; it should show
+`127.0.0.1:3001` rather than `*:3001`. Do not put the flag in the `start`
+script in `package.json` — thearq.ai builds from this same repo and would
+inherit it.
 
 ## Install
 
@@ -121,3 +134,55 @@ An authenticated remote-execution endpoint, narrow on purpose:
 
 Rotate a token by editing its file and restarting that hook unit, which
 revokes the old one immediately.
+
+## Troubleshooting
+
+### `Host key verification failed` on the launcher's fetch
+
+The first preview deploy came back as:
+
+```
+"stdout": "== launcher: fetching claude/arq-deploy-hooks ==\n",
+"stderr": "Host key verification failed.\nfatal: Could not read from remote repository."
+```
+
+Nothing was touched — the run stopped on the very first fetch, before any
+reset, build, or restart, and the site kept serving throughout.
+
+This is the cost of the ownership change, and it is worth naming plainly:
+the fetch used to run as root, because `arqai-preview.service` and every
+manual deploy before it ran as root. It now runs as `arqadmin`, and
+`arqadmin`'s SSH state is not root's. The message is about the *host* key,
+not the account key: ssh could not confirm github.com's identity, so it
+stopped before authentication was ever attempted.
+
+Two shapes it can take, and they need telling apart before fixing:
+
+```sh
+sudo -u arqadmin git -C /home/arqadmin/arq-website/arqai-website remote get-url origin
+sudo -u arqadmin git -C /opt/arqapi remote get-url origin
+```
+
+- **The live checkout uses HTTPS and preview uses SSH.** That is the likely
+  one: the live deploy runs as the same user and fetches fine. Point preview
+  at the same URL live uses and the problem is gone, with no key material
+  involved:
+  `sudo -u arqadmin git -C /opt/arqapi remote set-url origin <the live URL>`
+
+- **Both use SSH.** Then `arqadmin` needs github.com in its `known_hosts`.
+  Do not blind-append `ssh-keyscan` output; that trusts whatever answers on
+  the day. Take the fingerprints from GitHub's own published list
+  (https://docs.github.com/authentication/keeping-your-account-and-data-secure/githubs-ssh-key-fingerprints)
+  and check them against what the scan returned:
+
+  ```sh
+  sudo -u arqadmin bash -c 'ssh-keyscan -t ed25519 github.com > /tmp/gh.keys'
+  ssh-keygen -lf /tmp/gh.keys          # compare with the published fingerprint
+  sudo -u arqadmin bash -c 'mkdir -p ~/.ssh && chmod 700 ~/.ssh &&
+    cat /tmp/gh.keys >> ~/.ssh/known_hosts && chmod 600 ~/.ssh/known_hosts'
+  ```
+
+  If the fetch then fails with `Permission denied (publickey)` instead, the
+  host key is settled and it is the account key that is missing — that is a
+  separate decision about which key `arqadmin` should hold, not something to
+  fix by copying root's.
