@@ -1,0 +1,41 @@
+[Unit]
+Description=thearq.ai deploy hook
+After=network.target
+
+[Service]
+Type=simple
+User=arqadmin
+Group=arqadmin
+# Its own token file. Every site on this box gets a separate one, so a
+# token for one site cannot deploy another.
+EnvironmentFile=/etc/arq-live-deploy.env
+Environment=ACI_HOOK_HOST=127.0.0.1
+Environment=ACI_HOOK_PORT=9097
+Environment=ACI_SERVICE=thearq-live.service
+Environment=ACI_HEALTH_PORT=3003
+# deploy/deploy.sh in this repo, not the ACI repo's deploy/aci-deploy.sh
+# that the launcher looks for by default.
+Environment=ACI_DEPLOY_SCRIPT_PATH=deploy/deploy.sh
+# No ACI_ENV_SRC. This app's environment lives in .env.local inside the app
+# directory, which is gitignored and therefore survives `reset --hard`
+# untouched - there is no authoritative copy elsewhere to install from, and
+# nothing to drift out of step with.
+ExecStart=/usr/local/bin/aci-deploy-hook
+Restart=on-failure
+RestartSec=5
+
+# The kernel-protection options are deliberately absent. Each of
+# ProtectKernelTunables, ProtectKernelModules, ProtectControlGroups,
+# RestrictSUIDSGID and LockPersonality implies NoNewPrivileges=yes, and
+# systemd's implication beats an explicit `no`. NoNewPrivileges blocks
+# setuid outright, so `sudo systemctl restart` inside the unit fails with
+# "the no new privileges flag is set" - the sudoers rule is correct but
+# unreachable, and every deploy builds cleanly then dies at the restart.
+# Learned on the ACI hook, at some length.
+NoNewPrivileges=no
+PrivateTmp=yes
+ProtectSystem=full
+ProtectHome=no
+
+[Install]
+WantedBy=multi-user.target

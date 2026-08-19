@@ -1,0 +1,38 @@
+[Unit]
+Description=preview.thearq.ai deploy hook
+After=network.target
+
+[Service]
+Type=simple
+# arqai-preview.service currently runs with no User=, which means root.
+# This hook deliberately does not copy that: a hook runs a full npm build
+# from a network-triggered request, and doing that as root is a much larger
+# surface than the one privileged action it actually needs. It runs as
+# arqadmin and escalates only to `systemctl restart arqai-preview.service`
+# through sudoers.
+#
+# That requires /opt/arqapi/arqai-website to be owned by arqadmin. See the
+# repo's deploy/README.md - the same change should be applied to
+# arqai-preview.service itself, which has no reason to be root either.
+User=arqadmin
+Group=arqadmin
+EnvironmentFile=/etc/arq-preview-deploy.env
+Environment=ACI_HOOK_HOST=127.0.0.1
+Environment=ACI_HOOK_PORT=9096
+Environment=ACI_SERVICE=arqai-preview.service
+# PORT=3001 in the unit's own Environment. Note it binds every interface
+# rather than loopback, unlike every other Next app on this box; the
+# README covers narrowing that.
+Environment=ACI_HEALTH_PORT=3001
+Environment=ACI_DEPLOY_SCRIPT_PATH=deploy/deploy.sh
+ExecStart=/usr/local/bin/aci-deploy-hook
+Restart=on-failure
+RestartSec=5
+
+NoNewPrivileges=no
+PrivateTmp=yes
+ProtectSystem=full
+ProtectHome=no
+
+[Install]
+WantedBy=multi-user.target
