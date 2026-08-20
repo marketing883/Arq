@@ -18,7 +18,7 @@ import {
 import { inferCompanyFromEmail, getReturningVisitor } from "@/lib/attribution/smart-prefill";
 
 export const HQ_ADDRESS =
-  "220 Davidson Ave, 2nd Floor, Suite 209, Somerset, NJ 08873, United States";
+  "220 Davidson Ave, 2nd Floor, Suite 129, Somerset, NJ 08873, United States";
 
 type Props = {
   /** GTM form identifier, e.g. "contact_form" or "engagement_form". */

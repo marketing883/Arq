@@ -43,7 +43,7 @@ const glance = [
   { label: "What we are", value: "An independent AI engineering studio" },
   { label: "What we do", value: "Design, build, deploy, and run production AI for enterprise operations" },
   { label: "Founded", value: "2024" },
-  { label: "Headquarters", value: "220 Davidson Ave, 2nd Floor, Suite 209, Somerset, NJ 08873, United States" },
+  { label: "Headquarters", value: "220 Davidson Ave, 2nd Floor, Suite 129, Somerset, NJ 08873, United States" },
   { label: "Delivery partner", value: "ACI Infotech — enterprise delivery and distribution partner" },
   { label: "Industries", value: "Healthcare payers, insurance carriers, banking, retail, manufacturing" },
   { label: "How we deliver", value: "Six service lines and eight Arq-prefixed accelerators on one operating fabric" },
