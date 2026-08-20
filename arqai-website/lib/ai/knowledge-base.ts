@@ -125,7 +125,7 @@ The nav's primary button is "Book a Demo" → /engage-us (/demo redirects there 
 - Every agent we deploy generates encrypted, audit-ready proof of its actions.
 
 ## Reach
-Domain: thearq.ai. HQ: 220 Davidson Ave, 2nd Floor, Suite 129, Somerset, NJ 08873, United States. Social: LinkedIn (company/thearq-ai), X (@The_ArqAI), Instagram (thearq.ai). Recruiting/applications are handled on /careers.
+Domain: thearq.ai. HQ: 220 Davidson Ave, Suite 129, Somerset, NJ 08873, United States. Social: LinkedIn (company/thearq-ai), X (@The_ArqAI), Instagram (thearq.ai). Recruiting/applications are handled on /careers.
 
 ## IMPORTANT CONSTRAINTS (Agent must follow)
 1. NEVER promise a deployment timeline. Every engagement is scoped per operation; commit timeline is set in writing once Strategy is complete. (Accelerator "weeks not quarters" and entry-point durations are design targets from the site, hedge them, never contract them.)
@@ -331,7 +331,7 @@ export const PAGE_CONTEXT_PROMPTS: Record<string, string> = {
   "/trust": "The user is on Trust. Architectural controls first, certifications next. SOC 2 in progress, HIPAA-aligned, GDPR-aligned, MENA frameworks. Be precise; do not over-claim.",
   "/about": "The user is on About. ArqAI Labs does forward-deployed AI engineering; independent, in strategic partnership with ACI Infotech (enterprise delivery and access), not a subsidiary. HQ: Somerset, New Jersey. Beliefs: tuned beats templated, production beats pilots, engineers embedded in the problem.",
   "/engage-us": "The user is on the Book a Demo form. It's short and mostly clicks, it adapts to what they were reading, asks 2-3 pointed questions, and offers the matching entry-point assessment one-click. Encourage them to complete it; a member of the team follows up within one business day.",
-  "/contact": "The user is on the contact form. It's short and adapts to what they were reading. Route them: evaluations and demos can also use /engage-us, partnerships -> /partners, careers -> /careers, press/analyst -> this form. HQ: 220 Davidson Ave, 2nd Floor, Suite 129, Somerset, NJ 08873.",
+  "/contact": "The user is on the contact form. It's short and adapts to what they were reading. Route them: evaluations and demos can also use /engage-us, partnerships -> /partners, careers -> /careers, press/analyst -> this form. HQ: 220 Davidson Ave, Suite 129, Somerset, NJ 08873.",
   "/partners": "The user is on Partners. Help technology alliances, implementation partners, and design partners explain the customer problem and partnership fit before sending the partner intake.",
   "/case-studies/tpa-blind-spot-assessment": "The user is reading the TPA case study: a single FWA Blind Spot Assessment surfaced significant undetected waste at a mid-size TPA rated fully compliant by its prior vendor, and sharply cut manual review time. If they have a similar operation, the same assessment is the natural first step.",
   // Legacy paths (still served via redirects, but if any direct hit lands here):

@@ -36,7 +36,7 @@ export function generateOrganizationSchema(): Record<string, unknown> {
     foundingDate: "2024",
     address: {
       "@type": "PostalAddress",
-      streetAddress: "220 Davidson Ave, 2nd Floor, Suite 129",
+      streetAddress: "220 Davidson Ave, Suite 129",
       addressLocality: "Somerset",
       addressRegion: "NJ",
       postalCode: "08873",
