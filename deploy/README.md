@@ -83,6 +83,11 @@ Group=arqadmin
 That part is done and holds: the service runs as `arqadmin` and serves
 normally.
 
+Both are now done. The bind was narrowed on 2026-08-27 with the drop-in in
+`arqai-preview-loopback.conf`, which also records the unit it overrides;
+`ss -lntp` reports `127.0.0.1:3001`. The rest of this section is kept for
+why the obvious fix does not work.
+
 **`Environment=HOSTNAME=127.0.0.1` does not narrow the bind — do not use
 it.** It was tried on this unit and `ss -lntp` still reported `*:3001`.
 `HOSTNAME` is read by the server that `output: 'standalone'` generates;
