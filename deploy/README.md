@@ -23,6 +23,7 @@ than standing production access.
 | App service | `thearq-live.service` | `arqai-preview.service` |
 | Health port | 3003 | 3001 |
 | Checkout | `/home/arqadmin/arq-website/arqai-website` | `/opt/arqapi` |
+| What routes the public name | `nextjs-upstream.conf` (nginx) | `preview.thearq.ai.conf` (nginx) |
 
 Ports 9099 and 9098 belong to the ACI hooks on the same box. Do not reuse
 them.
@@ -136,6 +137,67 @@ Rotate a token by editing its file and restarting that hook unit, which
 revokes the old one immediately.
 
 ## Troubleshooting
+
+### A deploy succeeds and the site does not change
+
+This happened on thearq.ai and cost an afternoon, so the shape is worth
+knowing. Every layer reported success: the hook returned 200, the launcher
+fetched the ref, `git reset --hard` landed the right commit, `next build`
+regenerated every route, the service restarted, and the health check came
+back `http=200 service=active`. The public site kept serving the previous
+build regardless.
+
+The cause was one line in the cPanel per-domain include dir:
+
+```
+/etc/nginx/conf.d/users/arqadmin/thearq.ai/nextjs-upstream.conf
+set $CPANEL_APACHE_PROXY_PASS http://127.0.0.1:3001;
+```
+
+3001 is preview. thearq.ai had been serving the preview app, while
+`thearq-live.service` on 3003 accepted deploys nobody could see. See
+`nginx-live-upstream.conf` for the corrected file.
+
+The health check cannot catch this. It probes `127.0.0.1:3003` directly, so
+it proves the app it just restarted is alive - not that anything routes to
+it. A check through the public name would have failed loudly on the first
+deploy instead of silently succeeding for months.
+
+Two dead ends to skip if the symptom reappears, both of which look
+convincing:
+
+- **The cache.** `x-nextjs-cache: HIT` and a long `s-maxage` make a stale
+  proxy the obvious suspect. Purging `/var/cache/ea-nginx/proxy/<site>/`
+  and reloading nginx changes nothing, because the bytes are not cached -
+  they are live from a different app.
+- **Apache.** This domain has a full, correct Apache proxy config pointing
+  at 3003. It is not in the request path. Editing it, running
+  `/scripts/rebuildhttpdconf`, and restarting httpd all appear to work and
+  move nothing.
+
+Identify it in one step instead. Compare what the public name serves
+against each local port:
+
+```sh
+curl -s https://thearq.ai/about | md5sum
+for p in 3001 3003; do printf '%s ' "$p"; curl -s "http://127.0.0.1:$p/about" | md5sum; done
+```
+
+Whichever port matches the public hash is what is actually serving. If it
+is not the port the deploy restarted, the routing is the bug and no further
+deploy will fix it. To confirm the layer before changing anything, send a
+tagged request and look for it in each server's log:
+
+```sh
+P=probe$RANDOM
+curl -s -o /dev/null "https://thearq.ai/about?$P=1"
+sudo grep -rl "$P" /etc/apache2/logs/domlogs/   # silent = Apache never saw it
+sudo grep -rl "$P" /var/log/nginx/
+```
+
+Note that `grep ... | tail || echo "not found"` does not work here: the
+`||` tests the exit status of the pipeline, which is `tail`'s, and `tail`
+succeeds whether or not grep matched. Use `grep -rl` and read the output.
 
 ### `Host key verification failed` on the launcher's fetch
 
