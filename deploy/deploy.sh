@@ -37,6 +37,15 @@ set -Eeuo pipefail
 
 SERVICE="${ACI_SERVICE:-thearq-live.service}"
 HEALTH_PORT="${ACI_HEALTH_PORT:-3003}"
+# The public name this deploy is supposed to change, e.g.
+# https://thearq.ai/. Checked after the loopback health check, and for the
+# build id rather than a status code - see the public check below for why
+# a 200 here proves nothing.
+#
+# Unset means "skip the public check", which is what the ACI sites do
+# today. It costs the one guarantee that matters, so set it wherever the
+# box can reach its own public name.
+PUBLIC_URL="${ACI_PUBLIC_URL:-}"
 # Where production's real .env comes from. deploy_aci_prod.sh has always
 # copied this file over .env on every deploy; this script used to preserve
 # whatever .env happened to hold instead. That is how the app-dir copy
@@ -282,6 +291,68 @@ if [ "$ok" -ne 1 ]; then
   systemctl status "$SERVICE" --no-pager -n 40 || true
   restore
   exit 1
+fi
+
+# The loopback check above proves the app this script just restarted is
+# alive. It does not prove that anything routes to it, and those are not
+# the same claim: thearq.ai spent months pointed at 127.0.0.1:3001 by one
+# line in a cPanel include while this script restarted 3003, health-checked
+# 3003, and reported success on every run. Deploys landed correctly and
+# were invisible. See README.md, "A deploy succeeds and the site does not
+# change".
+#
+# A status code cannot catch that either. The public name returned 200
+# throughout - from the wrong app. So this checks for the build id that
+# `next build` just wrote to .next/BUILD_ID, which is regenerated per build
+# and embedded in every page Next serves - in the streamed RSC payload, as
+# `"buildId":"<id>"`. If the public name returns that id, the site the
+# world sees is running this deploy. Nothing short of that is evidence.
+#
+# Matched with grep -F against the whole body rather than against a
+# `/_next/static/<id>/` path: asset URLs carry a content hash, not the
+# build id, so matching on the id alone is what actually works.
+if [ -n "$PUBLIC_URL" ]; then
+  echo "== public check: $PUBLIC_URL =="
+  BUILD_ID=$(cat "$APP_DIR/.next/BUILD_ID" 2>/dev/null || true)
+  if [ -z "$BUILD_ID" ]; then
+    echo "!! no .next/BUILD_ID after a successful build - cannot verify" >&2
+    exit 1
+  fi
+  echo "build id: $BUILD_ID"
+
+  pub=0
+  for i in $(seq 1 10); do
+    # no-cache so an intermediate proxy cannot answer for the origin. Next
+    # sets a long s-maxage on static routes, and a cached copy of the
+    # previous build would otherwise look like a failure here.
+    body=$(curl -sS -m 30 -H 'Cache-Control: no-cache' -H 'Pragma: no-cache' \
+      "$PUBLIC_URL" 2>/dev/null || true)
+    if printf '%s' "$body" | grep -qF "$BUILD_ID"; then
+      echo "attempt $i: serving this build"
+      pub=1
+      break
+    fi
+    echo "attempt $i: public name is not serving this build yet"
+    sleep 3
+  done
+
+  if [ "$pub" -ne 1 ]; then
+    echo "!! $PUBLIC_URL does not serve build $BUILD_ID" >&2
+    echo "!! the app on 127.0.0.1:${HEALTH_PORT} is healthy and running the" >&2
+    echo "!! new commit, so this is a routing fault, not a bad build." >&2
+    echo "!! compare what the public name serves against the local port:" >&2
+    echo "!!   curl -s $PUBLIC_URL | md5sum" >&2
+    echo "!!   curl -s http://127.0.0.1:${HEALTH_PORT}/ | md5sum" >&2
+    echo "!! deliberately NOT rolling back: the previous build was not" >&2
+    echo "!! reaching the public name either, so reverting would undo a" >&2
+    echo "!! good deploy and change nothing about what visitors see." >&2
+    # This exits non-zero, so the success line below never prints. Repeat
+    # what it would have said - the checkout is on the new commit either
+    # way, and whoever reads this failure needs both shas to act on it.
+    echo "!! checkout is on $TARGET (was $PREVIOUS)" >&2
+    echo "!! roll back by hand if you must: git -C $REPO_ROOT reset --hard $PREVIOUS && cd $APP_DIR && npm ci --include=dev && npm run build && sudo systemctl restart $SERVICE" >&2
+    exit 1
+  fi
 fi
 
 echo "== deployed $TARGET (was $PREVIOUS) =="

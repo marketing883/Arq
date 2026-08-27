@@ -18,6 +18,12 @@ import { cleanupInactiveSessions } from "@/lib/analytics/tracking-service";
 
 export const runtime = "nodejs";
 export const maxDuration = 300; // 5 minutes; agent runs can be slow
+// Reads the authorization header, so it can never be statically rendered.
+// Without this, `next build` tries anyway and logs a DYNAMIC_SERVER_USAGE
+// error for this route on every deploy. Same pair every other API route in
+// this app declares.
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export async function GET(request: NextRequest) {
   try {

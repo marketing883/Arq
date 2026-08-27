@@ -2,6 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
 import { getAdminSession } from "@/lib/auth/admin-auth";
 
+// getAdminSession reads cookies, so this can never be statically rendered.
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 let supabase: SupabaseClient | null = null;
 
 function getSupabaseClient(): SupabaseClient | null {

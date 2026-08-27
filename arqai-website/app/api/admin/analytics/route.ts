@@ -18,6 +18,11 @@ import {
 import { getMarketingInsights } from "@/lib/analytics/marketing-insights";
 import { createServiceClient } from "@/lib/supabase/server";
 
+// Reads per-request query parameters and is admin-authenticated, so it can
+// never be statically rendered.
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 // ============================================
 // DATE RANGE HELPERS
 // ============================================

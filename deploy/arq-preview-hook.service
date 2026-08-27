@@ -24,6 +24,9 @@ Environment=ACI_SERVICE=arqai-preview.service
 # rather than loopback, unlike every other Next app on this box; the
 # README covers narrowing that.
 Environment=ACI_HEALTH_PORT=3001
+# See the live hook: the loopback port answering does not prove this name
+# routes to it.
+Environment=ACI_PUBLIC_URL=https://preview.thearq.ai/
 Environment=ACI_DEPLOY_SCRIPT_PATH=deploy/deploy.sh
 ExecStart=/usr/local/bin/aci-deploy-hook
 Restart=on-failure

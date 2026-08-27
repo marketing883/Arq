@@ -29,6 +29,9 @@ set -Eeuo pipefail
 SCRIPT_PATH="${ACI_DEPLOY_SCRIPT_PATH:-deploy/deploy.sh}"
 DEPLOY_USER="${ARQ_DEPLOY_USER:-arqadmin}"
 SERVICE="${ACI_SERVICE:-thearq-live.service}"
+# The public name, verified after the loopback port for the build id this
+# deploy produced. Override to deploy a site that answers on another name.
+PUBLIC_URL="${ACI_PUBLIC_URL:-https://thearq.ai/}"
 
 # git as the account that owns the checkout. These scripts are run with
 # sudo, so a bare `git` here executes as root against a checkout owned by
@@ -77,7 +80,7 @@ fi
 # matters on this box: the service accounts use cpanel's noshell, so anything
 # wanting a login shell is refused.
 if [ "$(id -un)" = "$DEPLOY_USER" ]; then
-  exec env ACI_SERVICE="$SERVICE" ACI_DEPLOY_SCRIPT_PATH="$SCRIPT_PATH" /usr/local/bin/aci-deploy "$REF"
+  exec env ACI_SERVICE="$SERVICE" ACI_PUBLIC_URL="$PUBLIC_URL" ACI_DEPLOY_SCRIPT_PATH="$SCRIPT_PATH" /usr/local/bin/aci-deploy "$REF"
 fi
 
-exec sudo -u "$DEPLOY_USER" env ACI_SERVICE="$SERVICE" ACI_DEPLOY_SCRIPT_PATH="$SCRIPT_PATH" /usr/local/bin/aci-deploy "$REF"
+exec sudo -u "$DEPLOY_USER" env ACI_SERVICE="$SERVICE" ACI_PUBLIC_URL="$PUBLIC_URL" ACI_DEPLOY_SCRIPT_PATH="$SCRIPT_PATH" /usr/local/bin/aci-deploy "$REF"

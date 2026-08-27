@@ -1,5 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 
+// Resolves the caller's own IP and geo from forwarding headers, so it is
+// per-request by definition and can never be statically rendered.
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export async function GET(request: NextRequest) {
   try {
     // Get IP from headers (works with Vercel, Cloudflare, etc.)
