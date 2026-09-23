@@ -40,8 +40,16 @@ export const sessionIdSchema = z
 // API Request Schemas
 // ============================================
 
+// Admin usernames may be a plain handle or an email address
+export const adminUsernameSchema = z
+  .string()
+  .min(3, "Username must be at least 3 characters")
+  .max(254, "Username too long")
+  .regex(/^[a-zA-Z0-9_.+@-]+$/, "Username can only contain letters, numbers, and _ . + @ -")
+  .transform((val) => val.toLowerCase().trim());
+
 export const adminLoginSchema = z.object({
-  username: usernameSchema,
+  username: adminUsernameSchema,
   password: z.string().min(1, "Password is required").max(128),
 });
 

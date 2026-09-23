@@ -86,7 +86,7 @@ export default function AdminLoginPage() {
                 htmlFor="username"
                 className="block text-sm font-medium text-[var(--arq-gray-700)] mb-2"
               >
-                Username
+                Username or email
               </label>
               <input
                 id="username"
@@ -94,7 +94,7 @@ export default function AdminLoginPage() {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 className="w-full px-4 py-3 rounded-lg border border-[var(--arq-gray-200)] focus:outline-none focus:ring-2 focus:ring-[var(--arq-blue)] focus:border-transparent transition-all"
-                placeholder="Enter username"
+                placeholder="Enter username or email"
                 required
               />
             </div>

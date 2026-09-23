@@ -27,11 +27,33 @@ function getJWTSecret(): Uint8Array {
 }
 
 // Admin credentials from environment (or database in production)
-// Password hash can be generated with: npx bcryptjs hash "your-password"
+// Password hash can be generated with: node scripts/hash-admin-password.mjs "your-password"
 const ADMIN_USERNAME = process.env.ADMIN_USERNAME || "arqadmin";
 const ADMIN_PASSWORD_HASH = process.env.ADMIN_PASSWORD_HASH ||
   // Default dev hash for "AdminDev2026!" - CHANGE IN PRODUCTION
   "$2a$12$DTnQmO4EalX9n/UeZUh.3OV2hTjtJD9dQBh2txDG8eQnTZR/GXaZu";
+
+// Additional admins, one "username:bcrypt-hash" pair per entry, comma separated:
+//   ADMIN_USERS='first@example.com:$2a$12$...,second@example.com:$2a$12$...'
+// bcrypt hashes never contain ":" or ",", so the format is unambiguous.
+// A "\$" left over from escaping the hash for dotenv is read as "$".
+function parseAdminUsers(raw: string | undefined): Map<string, string> {
+  const users = new Map<string, string>();
+  users.set(ADMIN_USERNAME.toLowerCase().trim(), ADMIN_PASSWORD_HASH);
+
+  for (const entry of (raw || "").split(",")) {
+    const separator = entry.indexOf(":");
+    if (separator <= 0) continue;
+    const username = entry.slice(0, separator).toLowerCase().trim();
+    const hash = entry.slice(separator + 1).trim().replace(/\\\$/g, "$");
+    if (username && hash) {
+      users.set(username, hash);
+    }
+  }
+  return users;
+}
+
+const ADMIN_USERS = parseAdminUsers(process.env.ADMIN_USERS);
 
 export interface AdminSession {
   username: string;
@@ -46,29 +68,17 @@ export async function verifyAdminCredentials(
   username: string,
   password: string
 ): Promise<boolean> {
-  // Timing-safe comparison for username
-  if (username.length !== ADMIN_USERNAME.length) {
-    // Still run bcrypt to prevent timing attacks
-    await bcrypt.compare(password, ADMIN_PASSWORD_HASH);
-    return false;
-  }
+  const hash = ADMIN_USERS.get(username.toLowerCase().trim());
 
-  let usernameMatch = true;
-  for (let i = 0; i < username.length; i++) {
-    if (username[i] !== ADMIN_USERNAME[i]) {
-      usernameMatch = false;
-    }
-  }
-
-  if (!usernameMatch) {
-    // Still run bcrypt to prevent timing attacks
+  if (!hash) {
+    // Still run bcrypt to prevent timing attacks / username enumeration
     await bcrypt.compare(password, ADMIN_PASSWORD_HASH);
     return false;
   }
 
   // Verify password with bcrypt
   try {
-    return await bcrypt.compare(password, ADMIN_PASSWORD_HASH);
+    return await bcrypt.compare(password, hash);
   } catch {
     return false;
   }

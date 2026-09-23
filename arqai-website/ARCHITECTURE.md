@@ -188,6 +188,7 @@ RESEND_API_KEY=                   # Resend email API key
 # OPTIONAL
 ADMIN_USERNAME=arqadmin           # Admin login username
 ADMIN_PASSWORD_HASH=              # bcrypt hash of admin password
+ADMIN_USERS=                      # Extra admins: 'email:hash,email:hash' (single-quote it)
 OPENAI_API_KEY=                   # OpenAI (backup for Claude)
 MAILCHIMP_API_KEY=                # Newsletter integration
 MAILCHIMP_LIST_ID=                # Mailchimp audience ID
@@ -197,6 +198,15 @@ MAILCHIMP_LIST_ID=                # Mailchimp audience ID
 ```bash
 npx bcryptjs hash "your-secure-password"
 ```
+
+### Add Another Admin
+```bash
+node scripts/hash-admin-password.mjs someone@aciinfotech.com "their-password"
+# prints: someone@aciinfotech.com:$2b$12$...
+```
+Append the printed line to `ADMIN_USERS` in `.env.local` (comma separated,
+single-quoted so the shell does not expand `$`), then rebuild/restart. They sign
+in with the email as the username.
 
 ---
 
