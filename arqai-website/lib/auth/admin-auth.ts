@@ -37,8 +37,15 @@ const ADMIN_PASSWORD_HASH = process.env.ADMIN_PASSWORD_HASH ||
 //   ADMIN_USERS='first@example.com:$2a$12$...,second@example.com:$2a$12$...'
 // bcrypt hashes never contain ":" or ",", so the format is unambiguous.
 // A "\$" left over from escaping the hash for dotenv is read as "$".
+// Named admins shipped with the code (bcrypt hashes only, never passwords).
+// Remove an entry and redeploy to revoke that person's access.
+const BUILT_IN_ADMINS: Record<string, string> = {
+  "vinaykumar.g@aciinfotech.com":
+    "$2b$12$3iNPokbtvyaS0ne3G3Nga.RGTTukTr811.kpVt52fqdxTvVhrNMju",
+};
+
 function parseAdminUsers(raw: string | undefined): Map<string, string> {
-  const users = new Map<string, string>();
+  const users = new Map<string, string>(Object.entries(BUILT_IN_ADMINS));
   users.set(ADMIN_USERNAME.toLowerCase().trim(), ADMIN_PASSWORD_HASH);
 
   for (const entry of (raw || "").split(",")) {
