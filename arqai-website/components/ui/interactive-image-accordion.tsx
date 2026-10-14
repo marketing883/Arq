@@ -67,11 +67,10 @@ export const defaultAccordionItems: ImageAccordionItem[] = [
   {
     id: "arqlaborforecast",
     title: "ArqLaborForecast",
-    tag: "ArqLaborForecast",
+    tag: "Workforce Planning",
     description:
       "Anticipate Staffing Gaps, Control Overtime Exposure, and Improve Labor Cost Planning Across Sites",
-    imageUrl:
-      "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1200&q=70",
+    imageUrl: "/img/accelerators/ArqLaborForecast.webp",
     duo: ["#0c1430", "#1a2040"],
     href: "/accelerators/arqlaborforecast",
   },

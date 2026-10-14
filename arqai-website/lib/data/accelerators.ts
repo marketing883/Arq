@@ -1359,7 +1359,7 @@ export const pageOnlyListings: AcceleratorListing[] = [
     summary:
       "Anticipate Staffing Gaps, Control Overtime Exposure, and Improve Labor Cost Planning Across Sites",
     builtFor: "COOs, CFOs, and VPs of Operations",
-    image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1200&q=70",
+    image: "/img/accelerators/ArqLaborForecast.webp",
   },
 ];
 
