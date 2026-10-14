@@ -157,7 +157,7 @@ export const lf = {
     restraintHeading: "Operational Restraint as a Core Governance Feature",
     restraintParagraphs: [
       "Unlike open-ended generative AI tools that risk hallucinating responses, the assistant operates under strict contextual guardrails. It queries exclusively within the active application data. If asked about metrics or variables outside the ingested HCM and operational files, the system explicitly states its boundaries and presents supported topics.",
-      "Furthermore, the system strictly respects native units. A dataset measured in labor hours is reported exclusively in labor hours, ensuring zero artificial conversions into unrecorded headcounts. This strict data restraint provides executive teams with a fully trustworthy AI layer for **predictive roster planning for multi-site enterprise operations**.",
+      "Furthermore, the system strictly respects native units. A dataset measured in labor hours is reported exclusively in labor hours, ensuring zero artificial conversions into unrecorded headcounts. This data restraint provides executive teams with a governed, data-grounded AI interface for predictive roster planning across multi-site enterprise operations.",
     ],
   },
 
