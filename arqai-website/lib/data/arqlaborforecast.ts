@@ -1,6 +1,8 @@
 // Finalized copy for /accelerators/arqlaborforecast, from
-// "Arqai Labor Forecast Landing Page" (docx). Keep it verbatim: `**text**`
-// marks the bold runs in the source and is the only markup here. Section
+// "Arqai Labor Forecast Landing Page" (docx), plus the content owner's later
+// edits (product name standardized to ArqLaborForecast, several claims
+// reworded). Keep it verbatim: `**text**` marks the bold runs in the source
+// and is the only markup here. Section
 // order follows the document.
 
 export type LfQA = { q: string; a: string };
@@ -13,7 +15,7 @@ export const lf = {
 
   definition: {
     q: "What is zero-schema labor demand forecasting?",
-    a: "**Zero-schema labor demand forecasting** with Arqai Labor Forecast provides an enterprise workforce planning engine that converts raw HCM exports into forward-looking, site-and-department demand forecasts before the operating week begins. By evaluating historical operational data against planned rosters using localized machine learning models, the platform identifies staffing deficits early, generates ranked cross-site capacity recommendations, and prevents margin erosion driven by unbudgeted overtime and premium agency spend without requiring schema mapping or custom API development.",
+    a: "**Zero-schema labor demand forecasting** with ArqLaborForecast provides an enterprise workforce planning engine that converts raw HCM exports into forward-looking, site-and-department demand forecasts before the operating week begins. By evaluating historical operational data against planned rosters using localized machine learning models, the platform identifies staffing deficits early, generates ranked cross-site capacity recommendations, and prevents margin erosion driven by unbudgeted overtime and premium agency spend without requiring schema mapping or custom API development.",
   },
 
   value: {
@@ -35,7 +37,7 @@ export const lf = {
     heading: "Multi-Site Capacity Planning Software: Turning Lead Time into Margin Protection",
     qa: {
       q: "How to reduce overtime costs in multi-site operations?",
-      a: "To **reduce overtime costs in multi-site operations**, leadership must extend roster planning lead times beyond immediate operating windows. Arqai Labor Forecast compares forecasted demand against scheduled rosters to highlight coverage gaps 7 to 14 days in advance. This lead time allows site managers to execute cost-neutral roster changes or reallocate internal labor, preventing emergency agency spend and unbudgeted overtime premiums.",
+      a: "To **reduce overtime costs in multi-site operations**, leadership must extend roster planning lead times beyond immediate operating windows. ArqLaborForecast compares forecasted demand against scheduled rosters to highlight coverage gaps 7 to 14 days in advance. This lead time allows site managers to execute cost-neutral roster changes or reallocate internal labor, preventing emergency agency spend and unbudgeted overtime premiums.",
     },
     subheading: "Extended Roster Lead Time as a Financial Lever",
     body: "The core economic driver of **multi-site capacity planning software** is operational lead time. A staffing deficit identified seven days prior to a shift represents a manageable roster adjustment. The exact same deficit identified on the day of execution forces emergency reliance on third-party agency cover or premium overtime rates.",
@@ -70,11 +72,11 @@ export const lf = {
     heading: "Driver-Based Predictive Roster Planning for Multi-Site Enterprise Operations",
     qa: {
       q: "How to predict department-level labor demand from HCM exports?",
-      a: "To **predict department-level labor demand from HCM exports**, Arqai Labor Forecast links historical workforce data with operational demand drivers such as patient census, customer foot traffic, or promotional events. By running dedicated machine learning models for each site and department series, the system automatically recalculates required headcount as demand variables shift, ensuring accurate staffing without manual formula adjustments.",
+      a: "To **predict department-level labor demand from HCM exports**, ArqLaborForecast links historical workforce data with operational demand drivers such as patient census, customer foot traffic, or promotional events. By running dedicated machine learning models for each site and department series, the system automatically recalculates required headcount as demand variables shift, ensuring accurate staffing without manual formula adjustments.",
     },
     subheading: "Algorithmic Precision Over Static Scheduling",
     paragraphs: [
-      "Legacy scheduling methods rely on flat percentage adjustments and past roster templates, leaving multi-site operations exposed when operational volume fluctuates. Arqai Labor Forecast replaces static baselines with driver-aware machine learning models that capture true labor-to-volume relationships.",
+      "Legacy scheduling methods rely on flat percentage adjustments and past roster templates, leaving multi-site operations exposed when operational volume fluctuates. ArqLaborForecast replaces static baselines with driver-aware machine learning models that capture true labor-to-volume relationships.",
       "When business conditions change, the platform dynamically rescales shift requirements across all affected departments:",
     ],
     items: [
@@ -100,11 +102,11 @@ export const lf = {
     subheading: "Prioritized Capacity Recommendations to Mitigate Emergency Agency Spend",
     qa: {
       q: "How to balance cross-site labor capacity automatically?",
-      a: "To **balance cross-site labor capacity automatically**, Arqai Labor Forecast evaluates relative operational severity across every site and department series. Instead of evaluating raw headcount deficits alone, the system flags critical coverage gaps first, such as a 6-person shortage on an 8-person team versus a 6-person shortage on a 60-person team, and scans adjacent departments or nearby sites for available internal slack before suggesting external labor.",
+      a: "To **balance cross-site labor capacity automatically**, ArqLaborForecast evaluates relative operational severity across every site and department series. Instead of evaluating raw headcount deficits alone, the system flags critical coverage gaps first, such as a 6-person shortage on an 8-person team versus a 6-person shortage on a 60-person team, and scans adjacent departments or nearby sites for available internal slack before suggesting external labor.",
     },
     stepsHeading: "Evidence-Backed Action Items Over Raw Data",
     stepsIntro:
-      "Identifying a labor gap is only half the equation; operational teams need clear, prioritized steps to resolve deficits before incurring costs. **ArqAI Labor Forecast** turns complex demand projections into actionable, evidence-backed recommendations ranked by financial and operational urgency.",
+      "Identifying a labor gap is only half the equation; operational teams need clear, prioritized steps to resolve deficits before incurring costs. **ArqLaborForecast** turns complex demand projections into actionable, evidence-backed recommendations ranked by financial and operational urgency.",
     steps: [
       {
         title: "Step 1: Severity Ranking",
@@ -129,7 +131,7 @@ export const lf = {
     subheading: "Natural Language Operational Query Engine for Instant Multi-Site Staffing Insights",
     qa: {
       q: "How to query workforce demand and roster data using plain language AI?",
-      a: "To **query workforce demand and roster data using plain language AI**, Arqai Labor Forecast embeds a natural language assistant directly over your operational datasets. Operational leaders can ask direct questions regarding upcoming headcount requirements, capacity gaps, or historical model accuracy without navigating complex BI dashboards or writing custom SQL queries.",
+      a: "To **query workforce demand and roster data using plain language AI**, ArqLaborForecast embeds a natural language assistant directly over your operational datasets. Operational leaders can ask direct questions regarding upcoming headcount requirements, capacity gaps, or historical model accuracy without navigating complex BI dashboards or writing custom SQL queries.",
     },
     answersHeading: "Verifiable Data Answers Without Dashboard Friction",
     answersParagraphs: [
@@ -165,7 +167,7 @@ export const lf = {
     heading: "Zero-IT Integration Architecture: Native Flat File Ingestion Without Schema Mapping",
     ingestHeading: "Eliminate Integration Projects and Custom Field Mapping",
     ingestParagraphs: [
-      "Enterprise software implementations frequently stall during IT schema mapping and API connector configuration. Arqai Labor Forecast bypasses multi-month IT integration pipelines by ingesting standard CSV and Excel workbook exports directly from your existing systems of record.",
+      "Enterprise software implementations frequently stall during IT schema mapping and API connector configuration. ArqLaborForecast bypasses multi-month IT integration pipelines by ingesting standard CSV and Excel workbook exports directly from your existing systems of record.",
       "The automated ingestion engine processes standard flat file exports without requiring pre-upload formatting or field renaming:",
     ],
     ingestItems: [
@@ -188,7 +190,7 @@ export const lf = {
     ] as LfItem[],
     cleanHeading: "Automated File Normalization and Error Correction",
     cleanParagraphs: [
-      "Flat files exported from operational systems often contain structural clutter. Arqai Labor Forecast automatically cleans and aligns raw data on upload without manual intervention.",
+      "Flat files exported from operational systems often contain structural clutter. ArqLaborForecast automatically cleans and aligns raw data on upload without manual intervention.",
       "The upload engine resolves common file layout issues automatically:",
     ],
     cleanItems: [
@@ -217,7 +219,7 @@ export const lf = {
 
   faqs: [
     {
-      q: "How does Arqai Labor Forecast process messy or unformatted Excel files?",
+      q: "How does ArqLaborForecast process messy or unformatted Excel files?",
       a: "The upload engine automatically cleans and normalizes incoming flat files during ingestion. It strips out title rows, removes summary total rows at the bottom, cleans text-formatted numbers or percentages, and handles multi-tab workbooks without requiring manual data preparation or schema mapping.",
     },
     {
@@ -225,7 +227,7 @@ export const lf = {
       a: "Every uploaded file receives a forecast regardless of whether roster data is included. Without a scheduled roster column, the platform provides the required period-by-period labor demand ahead, compares that requirement against the site's historical baseline, and outputs a recommended roster figure that absorbs measured model variance.",
     },
     {
-      q: "Why does Arqai Labor Forecast prioritize relative shortfall over total headcount missing?",
+      q: "Why does ArqLaborForecast prioritize relative shortfall over total headcount missing?",
       a: "A shortage of 6 staff members on a team of 8 represents a critical operational bottleneck, whereas a shortage of 6 on a team of 60 is a minor variance. The recommendation engine ranks actions by relative impact ratio so operations leadership can address high-risk coverage gaps first.",
     },
     {
