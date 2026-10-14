@@ -833,6 +833,8 @@
 /* contact two-column layout (aside + form) */
 .v5-contact-grid { display: grid; grid-template-columns: 1fr; gap: 40px; align-items: start; }
 @media (min-width: 980px) { .v5-contact-grid { grid-template-columns: 4fr 7fr; gap: 56px; } }
+/* Grid items default to min-width:auto, so the form's widest field row set the column floor and pushed the page sideways on phones. */
+.v5-contact-grid > * { min-width: 0; }
 
 /* ---------- forms ---------- */
 .v5-form-grid { display: grid; gap: 16px; }

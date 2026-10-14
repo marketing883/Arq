@@ -46,8 +46,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }));
 
-  const acceleratorPages: MetadataRoute.Sitemap = accelerators.map((accelerator) => ({
-    url: `${baseUrl}/accelerators/${accelerator.id}`,
+  // arqlaborforecast is a static route outside the accelerator data set.
+  const acceleratorPages: MetadataRoute.Sitemap = [
+    ...accelerators.map((accelerator) => accelerator.id),
+    "arqlaborforecast",
+  ].map((id) => ({
+    url: `${baseUrl}/accelerators/${id}`,
     changeFrequency: "monthly",
     priority: 0.8,
   }));
