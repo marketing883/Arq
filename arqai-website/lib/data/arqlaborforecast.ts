@@ -88,7 +88,7 @@ export const lf = {
       },
       {
         label: "Proactive Scenario Simulation",
-        body: "Operations leadership can model upcoming volume changes or promotional campaigns to project exact labor costs before finalizing rosters.",
+        body: "Operations leadership can model upcoming volume changes or promotional campaigns to estimate labor costs before finalizing rosters.",
       },
     ] as LfItem[],
     closing:
