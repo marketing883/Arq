@@ -27,7 +27,9 @@ import os
 import re
 import subprocess
 import sys
+import syslog
 import threading
+import traceback
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 TOKEN = os.environ.get("ACI_DEPLOY_TOKEN", "")
@@ -48,9 +50,42 @@ if len(TOKEN) < 32:
     sys.exit(1)
 
 
+# Logging must never be able to fail a request. stderr is a stream socket to
+# journald, and when journald restarts without handing the stream back, every
+# write to it raises. BaseHTTPRequestHandler logs inside send_response(),
+# before any byte of the reply, so one broken stream turned every request
+# into an empty reply - nginx reported 502 - while the process looked healthy
+# and nothing reached the journal. Observed live twice, both times after the
+# box restarted journald at 02:26 and left the hooks running.
+#
+# Fall back to syslog, which reconnects to /dev/log per failure and is still
+# attributed to this unit, so `journalctl -u` keeps showing the lines.
+syslog.openlog(ident="aci-deploy-hook", logoption=syslog.LOG_PID)
+
+
+def _log(line):
+    try:
+        sys.stderr.write(line + "\n")
+        sys.stderr.flush()
+    except (OSError, ValueError):
+        try:
+            syslog.syslog(syslog.LOG_INFO, line)
+        except OSError:
+            pass
+
+
+class Server(ThreadingHTTPServer):
+    def handle_error(self, request, client_address):
+        # The default prints the traceback to stderr, which can fail too.
+        _log("error handling request from %s:\n%s" % (client_address[0], traceback.format_exc().rstrip()))
+
+
 class Handler(BaseHTTPRequestHandler):
     server_version = "aci-deploy-hook"
     sys_version = ""
+
+    def log_message(self, format, *args):
+        _log("%s - - [%s] %s" % (self.address_string(), self.log_date_time_string(), format % args))
 
     def _send(self, status, payload):
         body = json.dumps(payload).encode()
@@ -128,4 +163,4 @@ class Handler(BaseHTTPRequestHandler):
 
 
 if __name__ == "__main__":
-    ThreadingHTTPServer((BIND_HOST, BIND_PORT), Handler).serve_forever()
+    Server((BIND_HOST, BIND_PORT), Handler).serve_forever()

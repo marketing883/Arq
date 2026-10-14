@@ -253,3 +253,27 @@ sudo -u arqadmin git -C /opt/arqapi remote get-url origin
   host key is settled and it is the account key that is missing — that is a
   separate decision about which key `arqadmin` should hold, not something to
   fix by copying root's.
+
+### Every request gets 502 while the hook shows `active (running)`
+
+Seen on 2026-09-28 and 2026-10-14. nginx logs `upstream prematurely closed
+connection`, a direct `curl` to the hook port gets `Empty reply from server`,
+`ss` shows the port listening, and the journal has no line for any of it.
+
+The cause was journald, not the hook. The box restarts `systemd-journald` at
+02:26 on some nights (`journalctl -u systemd-journald` shows `Received SIGTERM
+from PID 1`), and the hooks' stderr stream did not survive it. The handler
+logs inside `send_response()`, before the first byte of the reply, so with a
+dead stream every request raised and closed with no reply at all. A restart
+of the hook fixed it each time only because it opened a fresh stream.
+
+Confirm by comparing start times; a journald newer than the hook is the tell:
+
+```sh
+systemctl show systemd-journald arq-preview-hook.service -p Id -p ActiveEnterTimestamp
+```
+
+`deploy-hook.py` now falls back to syslog when a stderr write fails, so a
+dead stream costs log lines rather than deploys. The installed copy at
+`/usr/local/bin/aci-deploy-hook` is shared with the ACI hooks; the same change
+belongs in the ACI repo's copy, or the next install from there reverts it.
