@@ -20,7 +20,7 @@ export const lf = {
     heading: "Executive Value Proposition",
     paragraphs: [
       "For COOs, CFOs, and VPs of Operations, unbudgeted labor expenditure is rarely a forecasting failure; it is a lead-time failure. When operational demand shifts unexpectedly, static schedules force site managers into high-cost agency staffing or emergency overtime to maintain service levels.",
-      "Arqai Labor Forecast establishes forward-looking operational control through **predictive roster planning for multi-site enterprise operations**, translating flat file exports from Workday, UKG, SAP SuccessFactors, or local spreadsheets into precise period-by-period labor requirements. By comparing projected demand against scheduled hours weeks in advance, enterprise leaders gain the visibility required for **cross-department labor reallocation and overtime prevention**, executing **labor cost margin protection strategies** and enforcing operational governance across multi-site footprints without triggering costly IT integration projects.",
+      "ArqLaborForecast establishes forward-looking operational control through **predictive roster planning for multi-site enterprise operations**, translating flat file exports from Workday, UKG, SAP SuccessFactors, or local spreadsheets into precise period-by-period labor requirements. By comparing projected demand against scheduled hours weeks in advance, enterprise leaders gain the visibility required for **cross-department labor reallocation and overtime prevention**, executing **labor cost margin protection strategies** and enforcing operational governance across multi-site footprints without triggering costly IT integration projects.",
     ],
   },
 
