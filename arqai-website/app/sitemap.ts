@@ -1,6 +1,6 @@
 import { MetadataRoute } from "next";
 import { createClient } from "@supabase/supabase-js";
-import { accelerators } from "@/lib/data/accelerators";
+import { allListings } from "@/lib/data/accelerators";
 import { services } from "@/lib/data/services";
 import { coreStaticPaths, industryLinks } from "@/lib/data/site-navigation";
 
@@ -46,11 +46,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }));
 
-  // arqlaborforecast is a static route outside the accelerator data set.
-  const acceleratorPages: MetadataRoute.Sitemap = [
-    ...accelerators.map((accelerator) => accelerator.id),
-    "arqlaborforecast",
-  ].map((id) => ({
+  const acceleratorPages: MetadataRoute.Sitemap = allListings.map(({ id }) => ({
     url: `${baseUrl}/accelerators/${id}`,
     changeFrequency: "monthly",
     priority: 0.8,

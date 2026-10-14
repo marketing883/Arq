@@ -4,17 +4,17 @@ import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
 import ClosingCta from "@/components/v6/ClosingCta";
 import { ArrowRight, ArrowUpRight } from "@/components/home-v5/icons";
 import {
-  accelerators,
+  allListings,
   verticalAccelerators,
-  horizontalAccelerators,
-  type Accelerator,
+  horizontalListings,
+  type AcceleratorListing,
 } from "@/lib/data/accelerators";
 import { generateBreadcrumbSchema, generateFAQSchema } from "@/lib/seo/structured-data";
 
 const SITE_URL = "https://thearq.ai";
 const PAGE_TITLE = "AI Accelerators — Production-Ready, Governed From Day One";
 const PAGE_DESC =
-  "Ten production-ready AI accelerators, governed from day one: four vertical (ArqFWA, ArqLoyalty, ArqLogistics, ArqBanker) and six horizontal (ArqForecast, ArqSupport, ArqDataQ, ArqVantage, ArqSecOps, ArqEye). Every agent action carries encrypted, audit-ready proof.";
+  "Eleven production-ready AI accelerators, governed from day one: four vertical (ArqFWA, ArqLoyalty, ArqLogistics, ArqBanker) and seven horizontal (ArqForecast, ArqLaborForecast, ArqSupport, ArqDataQ, ArqVantage, ArqSecOps, ArqEye). Every agent action carries encrypted, audit-ready proof.";
 
 export const metadata: Metadata = {
   title: PAGE_TITLE,
@@ -54,7 +54,7 @@ const PORTFOLIO_FAQS = [
   {
     question: "What is the difference between vertical and horizontal accelerators?",
     answer:
-      "Vertical accelerators are built for a specific industry where domain knowledge is integral: ArqFWA for healthcare payment integrity, ArqLoyalty for loyalty platform modernization, ArqLogistics for supply chain risk, and ArqBanker for banking operations. Horizontal accelerators solve problems that appear across industries: ArqForecast (forecasting), ArqSupport (ticket management), ArqDataQ (data quality), ArqVantage (competitive pricing), ArqSecOps (security operations), and ArqEye (data observability).",
+      "Vertical accelerators are built for a specific industry where domain knowledge is integral: ArqFWA for healthcare payment integrity, ArqLoyalty for loyalty platform modernization, ArqLogistics for supply chain risk, and ArqBanker for banking operations. Horizontal accelerators solve problems that appear across industries: ArqForecast (forecasting), ArqLaborForecast (labor demand forecasting), ArqSupport (ticket management), ArqDataQ (data quality), ArqVantage (competitive pricing), ArqSecOps (security operations), and ArqEye (data observability).",
   },
   {
     question: "How are ArqAI accelerators governed?",
@@ -68,7 +68,7 @@ const PORTFOLIO_FAQS = [
   },
 ];
 
-function CatalogCard({ accelerator, index }: { accelerator: Accelerator; index: number }) {
+function CatalogCard({ accelerator, index }: { accelerator: AcceleratorListing; index: number }) {
   return (
     <Link
       href={`/accelerators/${accelerator.id}`}
@@ -103,8 +103,8 @@ export default function AcceleratorsPage() {
     "@type": "ItemList",
     name: "ArqAI Labs Accelerator Portfolio",
     description: PAGE_DESC,
-    numberOfItems: accelerators.length,
-    itemListElement: accelerators.map((a, i) => ({
+    numberOfItems: allListings.length,
+    itemListElement: allListings.map((a, i) => ({
       "@type": "ListItem",
       position: i + 1,
       item: {
@@ -146,12 +146,12 @@ export default function AcceleratorsPage() {
               <span className="v5-badge-dot" />
               Accelerators
             </span>
-            <h1 className="v5-h1">Ten production-ready accelerators. Governed from day one.</h1>
+            <h1 className="v5-h1">Eleven production-ready accelerators. Governed from day one.</h1>
             <p className="v5-lead">
               An accelerator is a proven pattern of agents, integrations, and governance
               controls for a recurring enterprise problem, configured to your data, systems,
               and policies rather than designed from scratch. Four vertical
-              accelerators for industry-specific deployment. Six horizontal accelerators for
+              accelerators for industry-specific deployment. Seven horizontal accelerators for
               cross-industry configuration.
             </p>
             <div className="v5-hero-actions">
@@ -230,7 +230,7 @@ export default function AcceleratorsPage() {
       <section className="v5-section v5-bg-grey">
         <div className="v5-container">
           <div className="v5-section-head">
-            <span className="v5-eyebrow">Horizontal · {horizontalAccelerators.length} accelerators</span>
+            <span className="v5-eyebrow">Horizontal · {horizontalListings.length} accelerators</span>
             <h2 className="v5-h2">Cross-industry problem patterns, configured to your context.</h2>
             <p className="v5-lead">
               Built for problems every enterprise shares — forecasting, service management, data
@@ -239,7 +239,7 @@ export default function AcceleratorsPage() {
             </p>
           </div>
           <div className="v5-grid v5-grid-3">
-            {horizontalAccelerators.map((accelerator, index) => (
+            {horizontalListings.map((accelerator, index) => (
               <CatalogCard accelerator={accelerator} index={index + verticalAccelerators.length} key={accelerator.id} />
             ))}
           </div>

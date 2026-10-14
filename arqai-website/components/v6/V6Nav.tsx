@@ -19,6 +19,7 @@ import {
   Gauge,
   Handshake,
   Headset,
+  UsersRound,
   Landmark,
   Layers,
   LineChart,
@@ -69,6 +70,7 @@ const ACCELERATORS_HORIZONTAL: MegaLink[] = [
   { label: "ArqVantage", desc: "Pricing intelligence & repricing", href: "/accelerators/arqvantage", icon: <LineChart size={18} /> },
   { label: "ArqSecOps", desc: "SecOps & incident intelligence", href: "/accelerators/arqsecops", icon: <Lock size={18} /> },
   { label: "ArqEye", desc: "AI-native data observability", href: "/accelerators/arqeye", icon: <Eye size={18} /> },
+  { label: "ArqLaborForecast", desc: "Labor demand forecasting & roster optimization", href: "/accelerators/arqlaborforecast", icon: <UsersRound size={18} /> },
 ];
 
 const SERVICES: MegaLink[] = [
@@ -235,7 +237,7 @@ function AcceleratorsPanel() {
       <FeatureTile
         href="/accelerators"
         tag="The portfolio"
-        title="Ten production-ready accelerators, governed from day one."
+        title="Eleven production-ready accelerators, governed from day one."
         cta="Explore all accelerators"
         video
       />

@@ -39,8 +39,9 @@ export type Accelerator = {
 const img = (id: string, w = 1600) =>
   `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=80`;
 
-// Canonical portfolio: 4 vertical + 6 horizontal accelerators, one governed
+// Template-driven portfolio: 4 vertical + 6 horizontal accelerators, one governed
 // spine. Sourced from the ArqAI Labs Accelerator Portfolio (2026).
+// ArqLaborForecast (horizontal) joins the catalog via pageOnlyListings below.
 export const accelerators: Accelerator[] = [
   // =====================================================================
   // VERTICAL
@@ -1338,3 +1339,30 @@ export function getAccelerator(id: string) {
 
 export const verticalAccelerators = accelerators.filter((a) => a.track === "Vertical");
 export const horizontalAccelerators = accelerators.filter((a) => a.track === "Horizontal");
+
+// What a catalog card, menu entry, or sitemap row needs from an accelerator.
+export type AcceleratorListing = Pick<
+  Accelerator,
+  "id" | "name" | "category" | "track" | "summary" | "builtFor" | "image"
+>;
+
+// Accelerators with their own hand-built page (app/accelerators/<id>) rather
+// than an entry above: their finalized copy does not fill the full template,
+// so they join the catalog, menus, and sitemap through this list instead.
+// Card copy is taken from the page's own content.
+export const pageOnlyListings: AcceleratorListing[] = [
+  {
+    id: "arqlaborforecast",
+    name: "ArqLaborForecast",
+    category: "Labor demand forecasting & roster optimization",
+    track: "Horizontal",
+    summary:
+      "Anticipate Staffing Gaps, Control Overtime Exposure, and Improve Labor Cost Planning Across Sites",
+    builtFor: "COOs, CFOs, and VPs of Operations",
+    image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1200&q=70",
+  },
+];
+
+/** Every accelerator in the catalog, template-driven and hand-built alike. */
+export const allListings: AcceleratorListing[] = [...accelerators, ...pageOnlyListings];
+export const horizontalListings = allListings.filter((a) => a.track === "Horizontal");

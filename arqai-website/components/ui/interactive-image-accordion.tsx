@@ -65,14 +65,15 @@ export const defaultAccordionItems: ImageAccordionItem[] = [
     href: "/accelerators/arqbanker",
   },
   {
-    id: "arqsupport",
-    title: "ArqSupport",
-    tag: "Service Management",
+    id: "arqlaborforecast",
+    title: "ArqLaborForecast",
+    tag: "Labor Demand Forecasting",
     description:
-      "Agentic L1/L2/L3 ticket triage and auto-resolution, with SLA breaches prevented rather than reported.",
-    imageUrl: "/img/accelerators/ArqSupport.webp",
-    duo: ["#120e30", "#1e1840"],
-    href: "/accelerators/arqsupport",
+      "Anticipate Staffing Gaps, Control Overtime Exposure, and Improve Labor Cost Planning Across Sites",
+    imageUrl:
+      "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1200&q=70",
+    duo: ["#0c1430", "#1a2040"],
+    href: "/accelerators/arqlaborforecast",
   },
 ];
 

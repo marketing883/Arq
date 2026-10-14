@@ -4,7 +4,7 @@ import Link from "next/link";
 
 import { useEffect, useRef, useState } from "react";
 import { LOGO } from "./content";
-import { accelerators } from "@/lib/data/accelerators";
+import { allListings } from "@/lib/data/accelerators";
 import {
   ArrowUpRight,
   BagIcon,
@@ -56,9 +56,10 @@ const ACCEL_ICONS: Record<string, React.ReactNode> = {
   arqvantage: <InsightIcon />,
   arqsecops: <LockIcon />,
   arqeye: <EyeIcon />,
+  arqlaborforecast: <UsersIcon />,
 };
 
-const ACCEL_LINKS: Link[] = accelerators.map((a) => ({
+const ACCEL_LINKS: Link[] = allListings.map((a) => ({
   title: a.name,
   desc: a.category,
   href: `/accelerators/${a.id}`,
@@ -81,7 +82,7 @@ const MENUS: Menu[] = [
   {
     label: "Accelerators",
     links: ACCEL_LINKS,
-    feature: { href: "/accelerators", image: `${A}/H4rP4HWageK0Wzp8OfGGGbv8M0.jpeg`, tag: "Catalog", title: `${accelerators.length} accelerators, production-ready` },
+    feature: { href: "/accelerators", image: `${A}/H4rP4HWageK0Wzp8OfGGGbv8M0.jpeg`, tag: "Catalog", title: `${allListings.length} accelerators, production-ready` },
   },
   {
     label: "Industries",

@@ -10,7 +10,7 @@ import { FAQS } from "@/components/v6/faqs";
 import ClosingCta from "@/components/v6/ClosingCta";
 import V6Footer from "@/components/v6/V6Footer";
 import { LandingAccordionItem } from "@/components/ui/interactive-image-accordion";
-import { accelerators } from "@/lib/data/accelerators";
+import { allListings } from "@/lib/data/accelerators";
 import "@/components/v6/v6.css";
 
 const SITE_URL = "https://thearq.ai";
@@ -167,9 +167,9 @@ function StructuredData() {
     "@id": `${SITE_URL}#accelerators`,
     name: "ArqAI Accelerators",
     description:
-      "Ten production-ready, governed AI accelerators — four vertical, six horizontal — that shorten discovery and de-risk enterprise AI delivery.",
-    numberOfItems: accelerators.length,
-    itemListElement: accelerators.map((a, i) => ({
+      "Eleven production-ready, governed AI accelerators — four vertical, seven horizontal — that shorten discovery and de-risk enterprise AI delivery.",
+    numberOfItems: allListings.length,
+    itemListElement: allListings.map((a, i) => ({
       "@type": "ListItem",
       position: i + 1,
       item: {

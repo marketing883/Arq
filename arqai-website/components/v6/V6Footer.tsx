@@ -21,6 +21,7 @@ const ACCELERATORS: FooterLink[] = [
   { label: "ArqVantage", href: "/accelerators/arqvantage" },
   { label: "ArqSecOps", href: "/accelerators/arqsecops" },
   { label: "ArqEye", href: "/accelerators/arqeye" },
+  { label: "ArqLaborForecast", href: "/accelerators/arqlaborforecast" },
 ];
 
 const SERVICES: FooterLink[] = [
@@ -177,7 +178,7 @@ export default function V6Footer() {
             </Link>
             <span className="hidden items-center gap-2 text-white/35 md:inline-flex">
               <span className="h-1.5 w-1.5 rounded-full bg-[#d0f438]/70" aria-hidden="true" />
-              Ten accelerators, governed from day one.
+              Eleven accelerators, governed from day one.
             </span>
           </div>
         </div>

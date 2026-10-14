@@ -7,7 +7,7 @@ export const GREETING_MESSAGES: Record<string, string> = {
   "/resources": "Hi. Are you looking for a guide, a case story, or a practical point of view?",
   "/use-cases": "Hi. Anything in the grid match what your team is trying to do?",
   "/how-we-work": "Hi. Want me to walk you through how an engagement actually runs?",
-  "/accelerators": "Hi. Ten accelerators, each with a fixed two-week fit check. Which workflow are you trying to speed up?",
+  "/accelerators": "Hi. Eleven accelerators, each with a defined starting point. Which workflow are you trying to speed up?",
   "/services": "Hi. Strategy, buildout, integration, governance, acceleration, or managed operations. Which fits what you need?",
   "/industries": "Hi. Which industry are you in?",
   "/industries/healthcare-payers": "Hi. Which payer workflow is the priority: FWA, claims, prior auth, UM?",
