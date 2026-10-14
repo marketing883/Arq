@@ -92,7 +92,7 @@ export const lf = {
       },
     ] as LfItem[],
     closing:
-      "By replacing subjective estimates with driver-backed forecasts, enterprise leaders achieve **operational risk reduction in labor scheduling** and maintain target EBITDA margins regardless of demand volatility.",
+      "By replacing subjective estimates with driver-backed forecasts, enterprise leaders can identify staffing risks earlier, improve workforce planning decisions, and support more disciplined labor cost management as operational demand changes.",
   },
 
   reallocation: {
