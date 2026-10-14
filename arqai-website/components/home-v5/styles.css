@@ -898,3 +898,28 @@ textarea.v5-input { resize: vertical; }
 .v5-industry-row:hover .v5-industry-media img { transform: scale(1.04); }
 .v5-industry-body { padding: clamp(24px, 4vw, 44px); display: flex; flex-direction: column; }
 @media (max-width: 760px) { .v5-industry-row { grid-template-columns: 1fr; } }
+
+/* ArqLaborForecast (/accelerators/arqlaborforecast): long-form copy with bold
+   runs, a comparison table, and list-based card grids. */
+.v5-lf-rich strong { color: var(--v5-ink); font-weight: 600; }
+.v5-card.dark.v5-lf-rich strong { color: #fff; }
+.v5-lf-p { font-size: 17px; line-height: 1.7; }
+.v5-lf-items { list-style: none; margin: 0; padding: 0; }
+.v5-lf-checks { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px 40px; max-width: 1040px; margin-top: 0; }
+.v5-lf-checks li strong { color: var(--v5-ink); }
+@media (max-width: 760px) { .v5-lf-checks { grid-template-columns: 1fr; } }
+.v5-lf-table-wrap { margin-top: 32px; border: 1px solid #ededed; border-radius: var(--v5-radius-md); overflow: hidden; background: var(--v5-white); }
+.v5-lf-table { width: 100%; border-collapse: collapse; font-size: 15px; line-height: 1.55; }
+.v5-lf-table th, .v5-lf-table td { padding: 18px 20px; text-align: left; vertical-align: top; border-bottom: 1px solid #ededed; color: var(--v5-ink-soft); }
+.v5-lf-table thead th { background: var(--v5-navy); color: #fff; font-family: var(--v5-display); font-weight: 600; font-size: 14px; letter-spacing: 0.01em; border-bottom: 0; }
+.v5-lf-table tbody th { color: var(--v5-ink); font-weight: 600; white-space: nowrap; }
+.v5-lf-table tbody tr:last-child th, .v5-lf-table tbody tr:last-child td { border-bottom: 0; }
+@media (max-width: 760px) {
+  .v5-lf-table-wrap { border: 0; background: none; overflow: visible; }
+  .v5-lf-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .v5-lf-table, .v5-lf-table tbody, .v5-lf-table tr, .v5-lf-table th, .v5-lf-table td { display: block; width: 100%; }
+  .v5-lf-table tr { background: var(--v5-white); border: 1px solid #ededed; border-radius: var(--v5-radius-md); margin-bottom: 14px; overflow: hidden; }
+  .v5-lf-table tbody th { background: var(--v5-navy); color: #fff; white-space: normal; }
+  .v5-lf-table td { border-bottom: 1px solid #f2f2f2; padding: 12px 20px; }
+  .v5-lf-table td::before { content: attr(data-label); display: block; font-size: 11.5px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--v5-grey-100); margin-bottom: 4px; }
+}
