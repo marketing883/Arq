@@ -9,7 +9,7 @@ export type LfItem = { label: string; body: string };
 export const lf = {
   title: "Enterprise Labor Demand Forecasting & Predictive Workforce Roster Optimization",
   subtitle:
-    "Protect Margins with Automated Multi-Site Staffing Forecasts and Overtime and Agency Labor Cost Reduction",
+    "Anticipate Staffing Gaps, Control Overtime Exposure, and Improve Labor Cost Planning Across Sites",
 
   definition: {
     q: "What is zero-schema labor demand forecasting?",
