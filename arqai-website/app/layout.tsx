@@ -10,6 +10,7 @@ import { LocaleProvider } from "@/contexts/LocaleContext";
 import { CookieConsent } from "@/components/compliance/CookieConsent";
 import { Tracker } from "@/components/analytics/Tracker";
 import { GoogleTagManager as GTMConsentHandler } from "@/components/analytics/GoogleTagManager";
+import { ZoomInfoTag } from "@/components/analytics/ZoomInfoTag";
 
 const GTM_ID = "GTM-ND8HXL7Z";
 
@@ -135,6 +136,7 @@ export default function RootLayout({
             <CookieConsent />
             <Tracker />
             <GTMConsentHandler />
+            <ZoomInfoTag />
           </MorphProvider>
         </LocaleProvider>
       </body>
