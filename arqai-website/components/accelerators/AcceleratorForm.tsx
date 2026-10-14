@@ -19,6 +19,8 @@ export default function AcceleratorForm({ acceleratorName, acceleratorCategory }
   const pathname = usePathname();
   const pageContext = getPageContext(pathname);
   const demoReady = !!pageContext?.demoReady;
+  // "an ArqForecast", not "a ArqForecast": every accelerator name starts with a vowel.
+  const article = /^[aeiou]/i.test(acceleratorName) ? "an" : "a";
   const [startMode, setStartMode] = useState<StartMode>("");
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
@@ -312,8 +314,8 @@ export default function AcceleratorForm({ acceleratorName, acceleratorCategory }
               ? "Request the assessment"
               : startMode === "both"
                 ? "Book the demo + assessment"
-                : `Book a ${acceleratorName} demo`
-            : `Request a ${acceleratorName} walkthrough`}
+                : `Book ${article} ${acceleratorName} demo`
+            : `Request ${article} ${acceleratorName} walkthrough`}
       </button>
 
       <p className="v5-form-note">
