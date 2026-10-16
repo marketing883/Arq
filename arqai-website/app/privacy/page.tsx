@@ -19,7 +19,7 @@ export default function PrivacyPage() {
               Legal
             </span>
             <h1 className="v5-h1">Privacy Policy</h1>
-            <p className="v5-lead">Last updated: October 2026</p>
+            <p className="v5-lead">Last updated: January 2025</p>
           </div>
         </div>
       </section>
@@ -82,23 +82,11 @@ export default function PrivacyPage() {
               </li>
               <li>
                 <strong>Marketing:</strong> Used to deliver personalized advertisements
-                and to identify the companies that visit our site
               </li>
               <li>
                 <strong>Preferences:</strong> Remember your settings and preferences
               </li>
             </ul>
-
-            <p>
-              With your Marketing consent, we use ZoomInfo&apos;s website tag to identify
-              the companies that visit our site, using your IP address and cookies, so our
-              team can follow up with relevant information. ZoomInfo processes this data
-              under its own{" "}
-              <a href="https://www.zoominfo.com/about-zoominfo/privacy-policy" target="_blank" rel="noopener noreferrer">
-                privacy policy
-              </a>
-              . The tag does not load unless you allow Marketing cookies.
-            </p>
 
             <h2>5. Data Sharing and Disclosure</h2>
             <p>We do not sell your personal information. We may share your data with:</p>
