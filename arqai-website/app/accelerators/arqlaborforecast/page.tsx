@@ -10,6 +10,7 @@ import {
   generateFAQSchema,
 } from "@/lib/seo/structured-data";
 import AcceleratorForm from "@/components/accelerators/AcceleratorForm";
+import { SITE_URL } from "@/lib/site";
 
 // A static route, so it takes precedence over app/accelerators/[id]. It
 // follows that template section for section - hero, overview split,
@@ -20,7 +21,7 @@ import AcceleratorForm from "@/components/accelerators/AcceleratorForm";
 // cases, rollout) the document does not have, so it is not reused directly.
 
 const NAME = "ArqLaborForecast";
-const URL = "https://thearq.ai/accelerators/arqlaborforecast";
+const URL = `${SITE_URL}/accelerators/arqlaborforecast`;
 const ICONS = [SparkIcon, InsightIcon, ShieldIcon, DocIcon, ChatIcon];
 
 const unsplash = (id: string) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=1600&q=62`;
@@ -154,13 +155,13 @@ export default function ArqLaborForecastPage() {
     description: plain(lf.definition.a),
     url: URL,
     image: cdn(IMG.hero, 1600),
-    provider: { "@type": "Organization", name: "ArqAI Labs", url: "https://thearq.ai" },
+    provider: { "@type": "Organization", name: "ArqAI Labs", url: `${SITE_URL}` },
     offers: { "@type": "Offer", url: `${URL}#get-started`, description: lf.cta.button },
   };
   const faqSchema = generateFAQSchema(faqItems);
   const breadcrumbSchema = generateBreadcrumbSchema([
-    { name: "Home", url: "https://thearq.ai" },
-    { name: "Accelerators", url: "https://thearq.ai/accelerators" },
+    { name: "Home", url: `${SITE_URL}` },
+    { name: "Accelerators", url: `${SITE_URL}/accelerators` },
     { name: NAME, url: URL },
   ]);
   const { value, cta, capacity, drivers, reallocation, assistant, integration } = lf;

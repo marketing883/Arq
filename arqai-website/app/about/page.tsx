@@ -6,6 +6,7 @@ import {
   generateOrganizationSchema,
   generateBreadcrumbSchema,
 } from "@/lib/seo/structured-data";
+import { SITE_URL } from "@/lib/site";
 
 // /about is the entity home for ArqAI Labs: it carries the Organization
 // schema plus an AboutPage wrapper so search and answer engines have one
@@ -16,18 +17,18 @@ function AboutStructuredData() {
     "@graph": [
       {
         "@type": "AboutPage",
-        "@id": "https://thearq.ai/about#webpage",
-        url: "https://thearq.ai/about",
+        "@id": `${SITE_URL}/about#webpage`,
+        url: `${SITE_URL}/about`,
         name: "About ArqAI Labs",
         description:
           "ArqAI Labs is an independent AI engineering studio. Production AI, bespoke to your operation. In partnership with ACI Infotech.",
         inLanguage: "en-US",
-        about: { "@id": "https://thearq.ai/#organization" },
+        about: { "@id": `${SITE_URL}/#organization` },
       },
-      { ...generateOrganizationSchema(), "@id": "https://thearq.ai/#organization" },
+      { ...generateOrganizationSchema(), "@id": `${SITE_URL}/#organization` },
       generateBreadcrumbSchema([
-        { name: "Home", url: "https://thearq.ai" },
-        { name: "About", url: "https://thearq.ai/about" },
+        { name: "Home", url: `${SITE_URL}` },
+        { name: "About", url: `${SITE_URL}/about` },
       ]),
     ],
   };
@@ -53,7 +54,7 @@ export const metadata: Metadata = {
   title: "About",
   description:
     "ArqAI Labs is an independent AI engineering studio. Production AI, bespoke to your operation. In partnership with ACI Infotech.",
-  alternates: { canonical: "https://thearq.ai/about" },
+  alternates: { canonical: `${SITE_URL}/about` },
 };
 
 const beliefs = [

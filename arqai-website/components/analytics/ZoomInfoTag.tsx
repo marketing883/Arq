@@ -12,7 +12,9 @@ import { useEffect } from "react";
 // consent handler reads. Granting consent mid-visit loads it straight away.
 const ZI_PROJECT_KEY = "7289014fe11683234019";
 const ZI_TAG_SRC = "https://js.zi-scripts.com/zi-tag.js";
-const PRODUCTION_HOSTS = ["thearq.ai", "www.thearq.ai"];
+// arqailabs.com is the production domain since November 2026; thearq.ai
+// redirects there, but stays listed in case a request reaches it directly.
+const PRODUCTION_HOSTS = ["arqailabs.com", "www.arqailabs.com", "thearq.ai", "www.thearq.ai"];
 
 function hasMarketingConsent() {
   try {

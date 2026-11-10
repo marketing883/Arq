@@ -1,7 +1,8 @@
 import { MetadataRoute } from "next";
+import { SITE_URL } from "@/lib/site";
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = "https://thearq.ai";
+  const baseUrl = SITE_URL;
 
   // AI/answer-engine crawlers get the same full access as search bots —
   // the blog, case studies, and resource library are citation targets.

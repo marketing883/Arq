@@ -6,6 +6,7 @@ import ClosingCta from "@/components/v6/ClosingCta";
 import { ArrowRight } from "@/components/home-v5/icons";
 import "@/components/v6/v6.css";
 import "@/components/home-v5/styles.css";
+import { SITE_URL } from "@/lib/site";
 
 // Server-rendered so the proof section of the site is visible to crawlers
 // and answer engines (which do not execute JavaScript).
@@ -15,12 +16,12 @@ export const metadata: Metadata = {
   title: "Case Studies: Production AI Results",
   description:
     "How enterprise teams put ArqAI Labs accelerators and agents into production — with the baseline, the intervention, and the measured outcome for each engagement.",
-  alternates: { canonical: "https://thearq.ai/case-studies" },
+  alternates: { canonical: `${SITE_URL}/case-studies` },
   openGraph: {
     title: "Case Studies: Production AI Results | ArqAI Labs",
     description:
       "How enterprise teams put ArqAI Labs accelerators and agents into production — with the baseline, the intervention, and the measured outcome for each engagement.",
-    url: "https://thearq.ai/case-studies",
+    url: `${SITE_URL}/case-studies`,
   },
 };
 

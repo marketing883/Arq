@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
 import ClosingCta from "@/components/v6/ClosingCta";
 import { generateCaseStudySchema, generateBreadcrumbSchema } from "@/lib/seo/structured-data";
+import { SITE_URL } from "@/lib/site";
 
 function getSupabase() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -43,7 +44,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       title,
       description,
       type: "article",
-      url: `https://thearq.ai/case-studies/${slug}`,
+      url: `${SITE_URL}/case-studies/${slug}`,
       images: caseStudy.hero_image ? [{ url: caseStudy.hero_image, alt: caseStudy.title }] : [],
     },
     twitter: {
@@ -55,7 +56,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       creator: "@The_ArqAI",
     },
     alternates: {
-      canonical: `https://thearq.ai/case-studies/${slug}`,
+      canonical: `${SITE_URL}/case-studies/${slug}`,
     },
   };
 }
@@ -91,7 +92,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
   const caseStudySchema = generateCaseStudySchema({
     title: caseStudy.title,
     description: caseStudy.overview || caseStudy.title,
-    url: `https://thearq.ai/case-studies/${slug}`,
+    url: `${SITE_URL}/case-studies/${slug}`,
     image: caseStudy.featured_image,
     client: caseStudy.client_name || "Enterprise Client",
     industry: caseStudy.industry,
@@ -100,9 +101,9 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
   });
 
   const breadcrumbSchema = generateBreadcrumbSchema([
-    { name: "Home", url: "https://thearq.ai" },
-    { name: "Case Studies", url: "https://thearq.ai/case-studies" },
-    { name: caseStudy.title, url: `https://thearq.ai/case-studies/${slug}` },
+    { name: "Home", url: `${SITE_URL}` },
+    { name: "Case Studies", url: `${SITE_URL}/case-studies` },
+    { name: caseStudy.title, url: `${SITE_URL}/case-studies/${slug}` },
   ]);
 
   return (

@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
 import ClosingCta from "@/components/v6/ClosingCta";
+import { SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Trust",
   description:
     "Architectural controls and compliance posture across every ArqAI Labs engagement. SOC 2 in progress. HIPAA-aligned. GDPR-aligned. Control documentation under NDA.",
-  alternates: { canonical: "https://thearq.ai/trust" },
+  alternates: { canonical: `${SITE_URL}/trust` },
 };
 
 const controls = [

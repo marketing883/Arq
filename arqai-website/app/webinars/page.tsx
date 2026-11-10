@@ -4,12 +4,13 @@ import { Metadata } from "next";
 import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
 import { ArrowRight } from "@/components/home-v5/icons";
 import ClosingCta from "@/components/v6/ClosingCta";
+import { SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Webinars",
   description:
     "Live and on-demand sessions for teams moving from AI pilots to governed enterprise workflows.",
-  alternates: { canonical: "https://thearq.ai/webinars" },
+  alternates: { canonical: `${SITE_URL}/webinars` },
 };
 
 function getSupabase() {

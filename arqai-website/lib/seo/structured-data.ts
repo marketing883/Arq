@@ -1,3 +1,4 @@
+import { SITE_URL } from "@/lib/site";
 // Structured Data for SEO/AEO (Answer Engine Optimization)
 
 export interface OrganizationData {
@@ -29,8 +30,8 @@ export function generateOrganizationSchema(): Record<string, unknown> {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: "ArqAI Labs",
-    url: "https://thearq.ai",
-    logo: "https://thearq.ai/img/ArqAI-Labs-Logo.png",
+    url: `${SITE_URL}`,
+    logo: `${SITE_URL}/img/ArqAI-Labs-Logo.png`,
     description:
       "ArqAI Labs builds production AI workflows for enterprise operations, combining workflow strategy, agentic buildout, integration, governance, accelerators, and managed AI operations.",
     foundingDate: "2024",
@@ -45,7 +46,7 @@ export function generateOrganizationSchema(): Record<string, unknown> {
     contactPoint: {
       "@type": "ContactPoint",
       contactType: "sales",
-      url: "https://thearq.ai/engage-us",
+      url: `${SITE_URL}/engage-us`,
     },
     sameAs: [
       "https://www.linkedin.com/company/thearq-ai",
@@ -78,16 +79,16 @@ export function generateSoftwareSchema(): Record<string, unknown> {
     operatingSystem: "Web-based, Cloud",
     description:
       "Operating fabric for production AI workflows across orchestration, enterprise integrations, human review, policy controls, audit evidence, and ongoing optimization.",
-    url: "https://thearq.ai/platform",
+    url: `${SITE_URL}/platform`,
     provider: {
       "@type": "Organization",
       name: "ArqAI Labs",
-      url: "https://thearq.ai",
+      url: `${SITE_URL}`,
     },
     offers: {
       "@type": "Offer",
       description: "Contact for enterprise pricing",
-      url: "https://thearq.ai/engage-us",
+      url: `${SITE_URL}/engage-us`,
     },
     featureList: [
       "Agentic Workflow Orchestration",
@@ -138,13 +139,13 @@ export function generateWebPageSchema(
       name: "ArqAI Labs",
       logo: {
         "@type": "ImageObject",
-        url: "https://thearq.ai/img/ArqAI-Labs-Logo.png",
+        url: `${SITE_URL}/img/ArqAI-Labs-Logo.png`,
       },
     },
     isPartOf: {
       "@type": "WebSite",
       name: "ArqAI Labs",
-      url: "https://thearq.ai",
+      url: `${SITE_URL}`,
     },
   };
 }
@@ -189,7 +190,7 @@ export function generateArticleSchema(article: ArticleData): Record<string, unkn
     headline: article.title,
     description: article.description,
     url: article.url,
-    image: article.image || "https://thearq.ai/og-image.png",
+    image: article.image || `${SITE_URL}/og-image.png`,
     author: {
       "@type": "Person",
       name: article.author,
@@ -199,7 +200,7 @@ export function generateArticleSchema(article: ArticleData): Record<string, unkn
       name: "ArqAI",
       logo: {
         "@type": "ImageObject",
-        url: "https://thearq.ai/logo.png",
+        url: `${SITE_URL}/logo.png`,
       },
     },
     datePublished: article.publishedDate,
@@ -235,7 +236,7 @@ export function generateCaseStudySchema(caseStudy: CaseStudyData): Record<string
     headline: caseStudy.title,
     description: caseStudy.description,
     url: caseStudy.url,
-    image: caseStudy.image || "https://thearq.ai/og-image.png",
+    image: caseStudy.image || `${SITE_URL}/og-image.png`,
     author: {
       "@type": "Organization",
       name: "ArqAI Labs",
@@ -245,7 +246,7 @@ export function generateCaseStudySchema(caseStudy: CaseStudyData): Record<string
       name: "ArqAI Labs",
       logo: {
         "@type": "ImageObject",
-        url: "https://thearq.ai/img/ArqAI-Labs-Logo.png",
+        url: `${SITE_URL}/img/ArqAI-Labs-Logo.png`,
       },
     },
     datePublished: caseStudy.publishedDate,
@@ -288,13 +289,13 @@ export function generateServiceSchema(service: ServiceSchemaData): Record<string
     provider: {
       "@type": "Organization",
       name: "ArqAI Labs",
-      url: "https://thearq.ai",
+      url: `${SITE_URL}`,
     },
     areaServed: service.areaServed || "Global",
     ...(service.image && { image: service.image }),
     offers: {
       "@type": "Offer",
-      url: "https://thearq.ai/engage-us",
+      url: `${SITE_URL}/engage-us`,
       description: "Contact for an enterprise engagement",
     },
   };
@@ -327,7 +328,7 @@ export const defaultFAQs: FAQData[] = [
   {
     question: "How do I get started with ArqAI?",
     answer:
-      "Start at thearq.ai/engage-us and share the workflow, systems, industry, and operating outcome you want to improve.",
+      "Start at arqailabs.com/engage-us and share the workflow, systems, industry, and operating outcome you want to improve.",
   },
   {
     question: "What does ArqAI build?",

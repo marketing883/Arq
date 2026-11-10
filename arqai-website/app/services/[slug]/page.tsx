@@ -6,6 +6,7 @@ import ClosingCta from "@/components/v6/ClosingCta";
 import { ArrowRight, SparkIcon, ShieldIcon, InsightIcon, DocIcon, ChatIcon } from "@/components/home-v5/icons";
 import { getService, services } from "@/lib/data/services";
 import { generateServiceSchema, generateBreadcrumbSchema } from "@/lib/seo/structured-data";
+import { SITE_URL } from "@/lib/site";
 
 const CAP_ICONS = [SparkIcon, InsightIcon, ShieldIcon, DocIcon, ChatIcon];
 
@@ -34,7 +35,7 @@ export function generateMetadata({ params }: ServicePageProps): Metadata {
   return {
     title: service.title,
     description: service.summary,
-    alternates: { canonical: `https://thearq.ai/services/${service.slug}` },
+    alternates: { canonical: `${SITE_URL}/services/${service.slug}` },
     openGraph: {
       title: `${service.title} — ArqAI Labs`,
       description: service.summary,
@@ -51,7 +52,7 @@ export default function ServiceDetailPage({ params }: ServicePageProps) {
 
   const others = services.filter((s) => s.slug !== service.slug).slice(0, 3);
 
-  const url = `https://thearq.ai/services/${service.slug}`;
+  const url = `${SITE_URL}/services/${service.slug}`;
   const serviceSchema = generateServiceSchema({
     name: service.title,
     description: service.summary,
@@ -60,8 +61,8 @@ export default function ServiceDetailPage({ params }: ServicePageProps) {
     image: service.image,
   });
   const breadcrumbSchema = generateBreadcrumbSchema([
-    { name: "Home", url: "https://thearq.ai" },
-    { name: "Services", url: "https://thearq.ai/services" },
+    { name: "Home", url: `${SITE_URL}` },
+    { name: "Services", url: `${SITE_URL}/services` },
     { name: service.title, url },
   ]);
 

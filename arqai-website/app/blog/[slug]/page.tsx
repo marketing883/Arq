@@ -15,6 +15,7 @@ import ClosingCta from "@/components/v6/ClosingCta";
 import { ArrowRight } from "@/components/home-v5/icons";
 import "@/components/v6/v6.css";
 import "@/components/home-v5/styles.css";
+import { SITE_URL } from "@/lib/site";
 
 // Blog content is DB-backed; revalidate so crawlers get fresh server HTML
 // without rebuilding the whole site.
@@ -76,7 +77,7 @@ export async function generateMetadata({
     `${post.title} — insights on operational AI from ArqAI Labs.`;
   const ogTitle = post.og_title || title;
   const ogDescription = post.og_description || description;
-  const canonical = `https://thearq.ai/blog/${post.slug}`;
+  const canonical = `${SITE_URL}/blog/${post.slug}`;
 
   return {
     title,
@@ -118,7 +119,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
   const post = await getPost(params.slug);
   if (!post) notFound();
 
-  const canonical = `https://thearq.ai/blog/${post.slug}`;
+  const canonical = `${SITE_URL}/blog/${post.slug}`;
   const faqs = Array.isArray(post.faq_schema)
     ? post.faq_schema.filter((f) => f?.question && f?.answer)
     : [];
@@ -136,8 +137,8 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
       tags: post.tags,
     }),
     generateBreadcrumbSchema([
-      { name: "Home", url: "https://thearq.ai" },
-      { name: "Blog", url: "https://thearq.ai/blog" },
+      { name: "Home", url: `${SITE_URL}` },
+      { name: "Blog", url: `${SITE_URL}/blog` },
       { name: post.title, url: canonical },
     ]),
     ...(faqs.length > 0 ? [generateFAQSchema(faqs)] : []),

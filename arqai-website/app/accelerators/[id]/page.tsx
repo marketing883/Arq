@@ -11,6 +11,7 @@ import {
 } from "@/lib/seo/structured-data";
 import AcceleratorForm from "@/components/accelerators/AcceleratorForm";
 import { getPageContext } from "@/lib/attribution/page-context";
+import { SITE_URL } from "@/lib/site";
 
 const CAP_ICONS = [SparkIcon, InsightIcon, ShieldIcon, DocIcon, ChatIcon];
 
@@ -41,7 +42,7 @@ export function generateMetadata({ params }: AcceleratorPageProps): Metadata {
     };
   }
 
-  const url = `https://thearq.ai/accelerators/${accelerator.id}`;
+  const url = `${SITE_URL}/accelerators/${accelerator.id}`;
   const title = `${accelerator.name} — ${accelerator.category}`;
 
   return {
@@ -86,7 +87,7 @@ export default function AcceleratorDetailPage({ params }: AcceleratorPageProps) 
     ...accelerators.filter((a) => a.id !== accelerator.id && a.track !== accelerator.track),
   ].slice(0, 3);
 
-  const url = `https://thearq.ai/accelerators/${accelerator.id}`;
+  const url = `${SITE_URL}/accelerators/${accelerator.id}`;
   const serviceSchema = generateServiceSchema({
     name: accelerator.name,
     description: accelerator.summary,
@@ -111,7 +112,7 @@ export default function AcceleratorDetailPage({ params }: AcceleratorPageProps) 
     provider: {
       "@type": "Organization",
       name: "ArqAI Labs",
-      url: "https://thearq.ai",
+      url: `${SITE_URL}`,
     },
     offers: {
       "@type": "Offer",
@@ -123,8 +124,8 @@ export default function AcceleratorDetailPage({ params }: AcceleratorPageProps) 
     accelerator.faqs.map((f) => ({ question: f.q, answer: f.a }))
   );
   const breadcrumbSchema = generateBreadcrumbSchema([
-    { name: "Home", url: "https://thearq.ai" },
-    { name: "Accelerators", url: "https://thearq.ai/accelerators" },
+    { name: "Home", url: `${SITE_URL}` },
+    { name: "Accelerators", url: `${SITE_URL}/accelerators` },
     { name: accelerator.name, url },
   ]);
 

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { createClient } from "@supabase/supabase-js";
 import WhitepaperDetailClient from "./WhitepaperDetailClient";
+import { SITE_URL } from "@/lib/site";
 
 export const revalidate = 300;
 
@@ -33,7 +34,7 @@ export async function generateMetadata({
   const description =
     whitepaper.description ||
     `${whitepaper.title} — a whitepaper from ArqAI Labs on operational AI.`;
-  const canonical = `https://thearq.ai/whitepapers/${whitepaper.slug}`;
+  const canonical = `${SITE_URL}/whitepapers/${whitepaper.slug}`;
 
   return {
     title,

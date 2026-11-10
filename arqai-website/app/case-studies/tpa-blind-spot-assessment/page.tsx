@@ -4,12 +4,13 @@ import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
 import ClosingCta from "@/components/v6/ClosingCta";
 import { ArrowRight } from "@/components/home-v5/icons";
 import { generateBreadcrumbSchema } from "@/lib/seo/structured-data";
+import { SITE_URL } from "@/lib/site";
 
 // The one real, publishable ArqAI Labs engagement, told in full. This static
 // route intentionally takes precedence over the CMS-driven [slug] route so
 // the site's canonical proof exists independent of database state.
 
-const CANONICAL = "https://thearq.ai/case-studies/tpa-blind-spot-assessment";
+const CANONICAL = `${SITE_URL}/case-studies/tpa-blind-spot-assessment`;
 const TITLE = "Case Study: Undetected Waste Found at a Mid-Size TPA Rated Fully Compliant";
 const DESCRIPTION =
   "A mid-size third-party administrator rated fully compliant by its payment-integrity vendor ran one ArqAI Blind Spot Assessment. It surfaced significant undetected waste and sharply cut manual claims-review time.";
@@ -83,8 +84,8 @@ function StructuredData() {
         headline: TITLE,
         description: DESCRIPTION,
         url: CANONICAL,
-        author: { "@type": "Organization", name: "ArqAI Labs", url: "https://thearq.ai" },
-        publisher: { "@type": "Organization", name: "ArqAI Labs", url: "https://thearq.ai" },
+        author: { "@type": "Organization", name: "ArqAI Labs", url: `${SITE_URL}` },
+        publisher: { "@type": "Organization", name: "ArqAI Labs", url: `${SITE_URL}` },
         articleSection: "Case Study",
         about: [
           "Payment integrity",
@@ -95,8 +96,8 @@ function StructuredData() {
         mainEntityOfPage: CANONICAL,
       },
       generateBreadcrumbSchema([
-        { name: "Home", url: "https://thearq.ai" },
-        { name: "Case Studies", url: "https://thearq.ai/case-studies" },
+        { name: "Home", url: `${SITE_URL}` },
+        { name: "Case Studies", url: `${SITE_URL}/case-studies` },
         { name: "TPA Blind Spot Assessment", url: CANONICAL },
       ]),
     ],

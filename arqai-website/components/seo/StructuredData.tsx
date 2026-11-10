@@ -7,6 +7,7 @@ import {
   defaultFAQs,
   FAQData,
 } from "@/lib/seo/structured-data";
+import { SITE_URL } from "@/lib/site";
 
 interface StructuredDataProps {
   type: "organization" | "software" | "faq" | "webpage" | "breadcrumb" | "all";
@@ -83,10 +84,10 @@ export function PlatformStructuredData({ faqs }: { faqs: FAQData[] }) {
       type="all"
       pageTitle="Platform: The Operating Fabric for Production AI | ArqAI Labs"
       pageDescription="Explore the ArqAI Operating Fabric for governed production AI workflows: orchestration, integrations, evidence, controls, and operating loops."
-      pageUrl="https://thearq.ai/platform"
+      pageUrl={`${SITE_URL}/platform`}
       breadcrumbs={[
-        { name: "Home", url: "https://thearq.ai" },
-        { name: "Platform", url: "https://thearq.ai/platform" },
+        { name: "Home", url: `${SITE_URL}` },
+        { name: "Platform", url: `${SITE_URL}/platform` },
       ]}
       faqs={faqs}
     />
@@ -103,10 +104,10 @@ export function SolutionsStructuredData({ faqs }: { faqs: FAQData[] }) {
       type="all"
       pageTitle="Industries: AI for Healthcare Payers, Banking, Insurance, Retail & Manufacturing | ArqAI Labs"
       pageDescription="Industry AI workflow systems for healthcare payers, insurance carriers, banking, retail, and manufacturing teams."
-      pageUrl="https://thearq.ai/industries"
+      pageUrl={`${SITE_URL}/industries`}
       breadcrumbs={[
-        { name: "Home", url: "https://thearq.ai" },
-        { name: "Industries", url: "https://thearq.ai/industries" },
+        { name: "Home", url: `${SITE_URL}` },
+        { name: "Industries", url: `${SITE_URL}/industries` },
       ]}
       faqs={faqs}
     />

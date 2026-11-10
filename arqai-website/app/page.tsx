@@ -12,8 +12,8 @@ import V6Footer from "@/components/v6/V6Footer";
 import { LandingAccordionItem } from "@/components/ui/interactive-image-accordion";
 import { allListings } from "@/lib/data/accelerators";
 import "@/components/v6/v6.css";
+import { SITE_URL } from "@/lib/site";
 
-const SITE_URL = "https://thearq.ai";
 const PAGE_TITLE = "Forward-Deployed AI Engineering, at Scale — ArqAI Labs";
 const PAGE_DESC =
   "ArqAI Labs embeds forward-deployed AI engineers in your operation — designing, building, deploying, and running production AI agents for regulated enterprises, with audit-ready proof on every agent action.";

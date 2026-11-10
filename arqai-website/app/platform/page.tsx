@@ -5,6 +5,7 @@ import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
 import ClosingCta from "@/components/v6/ClosingCta";
 import FAQStatic from "@/components/home-v5/FAQStatic";
 import { ArrowRight, ArrowUpRight } from "@/components/home-v5/icons";
+import { SITE_URL } from "@/lib/site";
 
 // One list feeds both the visible FAQ section and the FAQPage JSON-LD, so
 // schema and on-page content stay in parity.
@@ -35,7 +36,7 @@ export const metadata: Metadata = {
   title: "Platform: The Operating Fabric for Production AI",
   description:
     "The ArqAI Operating Fabric turns models into governed workflow execution across orchestration, integrations, evidence, controls, and managed AI operations.",
-  alternates: { canonical: "https://thearq.ai/platform" },
+  alternates: { canonical: `${SITE_URL}/platform` },
 };
 
 const layers = [

@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
+import { SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
   description: "ArqAI Privacy Policy - How we collect, use, and protect your data.",
-  alternates: { canonical: "https://thearq.ai/privacy" },
+  alternates: { canonical: `${SITE_URL}/privacy` },
 };
 
 export default function PrivacyPage() {
@@ -32,7 +33,7 @@ export default function PrivacyPage() {
             <p>
               ArqAI (&ldquo;we,&rdquo; &ldquo;our,&rdquo; or &ldquo;us&rdquo;) is committed to protecting your
               privacy. This Privacy Policy explains how we collect, use, disclose,
-              and safeguard your information when you visit our website thearq.ai
+              and safeguard your information when you visit our website arqailabs.com
               and use our services.
             </p>
 
@@ -155,7 +156,7 @@ export default function PrivacyPage() {
               <br />
               Email: <a href="mailto:privacy@thearq.ai">privacy@thearq.ai</a>
               <br />
-              Website: <a href="https://thearq.ai">thearq.ai</a>
+              Website: <a href={SITE_URL}>arqailabs.com</a>
             </p>
           </div>
         </div>

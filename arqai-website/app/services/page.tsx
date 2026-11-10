@@ -5,12 +5,13 @@ import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
 import ClosingCta from "@/components/v6/ClosingCta";
 import { ArrowRight } from "@/components/home-v5/icons";
 import { services } from "@/lib/data/services";
+import { SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "AI Services: Strategy, Buildout, Governance & Managed Operations",
   description:
     "Service lines for production AI workflows: strategy, agentic buildout, integration, governance, vertical acceleration, and managed AI operations.",
-  alternates: { canonical: "https://thearq.ai/services" },
+  alternates: { canonical: `${SITE_URL}/services` },
 };
 
 const paths = [

@@ -7,6 +7,7 @@ import ClosingCta from "@/components/v6/ClosingCta";
 import { ArrowRight } from "@/components/home-v5/icons";
 import "@/components/v6/v6.css";
 import "@/components/home-v5/styles.css";
+import { SITE_URL } from "@/lib/site";
 
 // Server-rendered listing so crawlers (including non-JS AI crawlers) see the
 // full post index. Reads searchParams for pagination, so the route is
@@ -63,7 +64,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const page = pageNumber(searchParams);
   const suffix = page > 1 ? ` — Page ${page}` : "";
-  const canonical = page > 1 ? `https://thearq.ai/blog?page=${page}` : "https://thearq.ai/blog";
+  const canonical = page > 1 ? `${SITE_URL}/blog?page=${page}` : `${SITE_URL}/blog`;
   return {
     title: `Blog: Operational AI Insights${suffix}`,
     description:

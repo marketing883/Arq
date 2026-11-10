@@ -1,6 +1,6 @@
 # ArqAI Labs
 
-> ArqAI Labs is an AI engineering studio. We design, build, deploy, and run production AI for enterprise operations that don't fit off-the-shelf — bespoke to each customer's workflow, integrated with their existing systems, and governed with evidence on every action. Backed by ACI Infotech. Domain: https://thearq.ai
+> ArqAI Labs is an AI engineering studio. We design, build, deploy, and run production AI for enterprise operations that don't fit off-the-shelf — bespoke to each customer's workflow, integrated with their existing systems, and governed with evidence on every action. Backed by ACI Infotech. Domain: https://arqailabs.com
 
 ## What we do
 
@@ -8,63 +8,64 @@ ArqAI Labs ships production-grade AI end to end: strategy, build, deploy, and ru
 
 ## Services
 
-- [Workflow Strategy](https://thearq.ai/services/workflow-strategy): Turn one enterprise workflow into a buildable AI operating plan before anything is built.
-- [Agentic AI Buildout](https://thearq.ai/services/agentic-ai-buildout): Ship agents, copilots, automations, and human-review loops that act inside defined boundaries.
-- [Enterprise Integration](https://thearq.ai/services/enterprise-integration): Wire AI into CRM, ERP, ITSM, data platforms, identity, and knowledge bases — no rip-and-replace.
-- [Governance by Design](https://thearq.ai/services/governance-by-design): Build permissions, approvals, policy checks, review, and audit trails into the workflow from day one.
-- [Vertical Acceleration](https://thearq.ai/services/vertical-acceleration): Start from a proven accelerator pattern, then adapt it to your data, policy, and metrics.
-- [Managed AI Operations](https://thearq.ai/services/managed-ai-operations): Monitor, tune, and expand the workflow after launch with named owners and SLAs.
+- [Workflow Strategy](https://arqailabs.com/services/workflow-strategy): Turn one enterprise workflow into a buildable AI operating plan before anything is built.
+- [Agentic AI Buildout](https://arqailabs.com/services/agentic-ai-buildout): Ship agents, copilots, automations, and human-review loops that act inside defined boundaries.
+- [Enterprise Integration](https://arqailabs.com/services/enterprise-integration): Wire AI into CRM, ERP, ITSM, data platforms, identity, and knowledge bases — no rip-and-replace.
+- [Governance by Design](https://arqailabs.com/services/governance-by-design): Build permissions, approvals, policy checks, review, and audit trails into the workflow from day one.
+- [Vertical Acceleration](https://arqailabs.com/services/vertical-acceleration): Start from a proven accelerator pattern, then adapt it to your data, policy, and metrics.
+- [Managed AI Operations](https://arqailabs.com/services/managed-ai-operations): Monitor, tune, and expand the workflow after launch with named owners and SLAs.
 
 ## Accelerators
 
-Ten productized, named workflow patterns adapted to each customer through services — four vertical, six horizontal, all governed from day one. Catalog: https://thearq.ai/accelerators
+Eleven productized, named workflow patterns adapted to each customer through services — four vertical, seven horizontal, all governed from day one. Catalog: https://arqailabs.com/accelerators
 
-- [ArqFWA](https://thearq.ai/accelerators/arqfwa): Payment integrity and fraud intelligence for healthcare payers, TPAs, and PBMs (flagship).
-- [ArqLoyalty](https://thearq.ai/accelerators/arqloyalty): Loyalty platform modernization — replace a loyalty platform without migration risk by running in shadow, proving penny-for-penny parity daily, and cutting over one capability at a time (flagship).
-- [ArqLogistics](https://thearq.ai/accelerators/arqlogistics): Supply chain and vendor risk intelligence.
-- [ArqBanker](https://thearq.ai/accelerators/arqbanker): AI-native banking operations — underwriting, KYC, AML surveillance, regulatory reporting.
-- [ArqForecast](https://thearq.ai/accelerators/arqforecast): Demand, inventory, and cash flow forecasting.
-- [ArqSupport](https://thearq.ai/accelerators/arqsupport): Agentic L1/L2/L3 ticket triage and auto-resolution.
-- [ArqDataQ](https://thearq.ai/accelerators/arqdataq): Data quality monitoring and remediation.
-- [ArqVantage](https://thearq.ai/accelerators/arqvantage): Competitive pricing intelligence and dynamic repricing.
-- [ArqSecOps](https://thearq.ai/accelerators/arqsecops): Security operations and incident intelligence.
-- [ArqEye](https://thearq.ai/accelerators/arqeye): AI-native data observability.
+- [ArqFWA](https://arqailabs.com/accelerators/arqfwa): Payment integrity and fraud intelligence for healthcare payers, TPAs, and PBMs (flagship).
+- [ArqLoyalty](https://arqailabs.com/accelerators/arqloyalty): Loyalty platform modernization — replace a loyalty platform without migration risk by running in shadow, proving penny-for-penny parity daily, and cutting over one capability at a time (flagship).
+- [ArqLogistics](https://arqailabs.com/accelerators/arqlogistics): Supply chain and vendor risk intelligence.
+- [ArqBanker](https://arqailabs.com/accelerators/arqbanker): AI-native banking operations — underwriting, KYC, AML surveillance, regulatory reporting.
+- [ArqForecast](https://arqailabs.com/accelerators/arqforecast): Demand, inventory, and cash flow forecasting.
+- [ArqLaborForecast](https://arqailabs.com/accelerators/arqlaborforecast): Labor demand forecasting and roster optimization for multi-site operations.
+- [ArqSupport](https://arqailabs.com/accelerators/arqsupport): Agentic L1/L2/L3 ticket triage and auto-resolution.
+- [ArqDataQ](https://arqailabs.com/accelerators/arqdataq): Data quality monitoring and remediation.
+- [ArqVantage](https://arqailabs.com/accelerators/arqvantage): Competitive pricing intelligence and dynamic repricing.
+- [ArqSecOps](https://arqailabs.com/accelerators/arqsecops): Security operations and incident intelligence.
+- [ArqEye](https://arqailabs.com/accelerators/arqeye): AI-native data observability.
 
 ## Industries
 
-- [Healthcare payers](https://thearq.ai/industries/healthcare-payers): payment integrity, prior auth, utilization management, member operations.
-- [P&C insurance carriers](https://thearq.ai/industries/insurance-carriers): claims triage, suspicious-claim review, underwriting, FNOL.
-- [Banking and financial institutions](https://thearq.ai/industries/banking): AML, KYC, sanctions, SAR support.
-- [Retail](https://thearq.ai/industries/retail): loyalty, inventory, store operations, pricing.
-- [Manufacturing](https://thearq.ai/industries/manufacturing): ERP AI, vision quality control, predictive maintenance, S&OP.
+- [Healthcare payers](https://arqailabs.com/industries/healthcare-payers): payment integrity, prior auth, utilization management, member operations.
+- [P&C insurance carriers](https://arqailabs.com/industries/insurance-carriers): claims triage, suspicious-claim review, underwriting, FNOL.
+- [Banking and financial institutions](https://arqailabs.com/industries/banking): AML, KYC, sanctions, SAR support.
+- [Retail](https://arqailabs.com/industries/retail): loyalty, inventory, store operations, pricing.
+- [Manufacturing](https://arqailabs.com/industries/manufacturing): ERP AI, vision quality control, predictive maintenance, S&OP.
 
 ## Platform
 
-- [The ArqAI Operating Fabric](https://thearq.ai/platform): one operating loop — workflow intelligence, governance plane, enterprise integration, and managed AI operations — that turns model output into governed workflow execution.
+- [The ArqAI Operating Fabric](https://arqailabs.com/platform): one operating loop — workflow intelligence, governance plane, enterprise integration, and managed AI operations — that turns model output into governed workflow execution.
 
 ## Company
 
-- [About](https://thearq.ai/about): AI engineering studio backed by ACI Infotech.
-- [How We Work](https://thearq.ai/how-we-work): the strategy, build, deploy, run engagement model.
-- [Trust](https://thearq.ai/trust): architectural controls first — aligned with SOC 2 Trust Services Criteria (Type II in progress), HIPAA-aligned, GDPR-aligned, and MENA frameworks.
-- [Careers](https://thearq.ai/careers)
-- [Partners](https://thearq.ai/partners)
-- [Contact](https://thearq.ai/contact)
+- [About](https://arqailabs.com/about): AI engineering studio backed by ACI Infotech.
+- [How We Work](https://arqailabs.com/how-we-work): the strategy, build, deploy, run engagement model.
+- [Trust](https://arqailabs.com/trust): architectural controls first — aligned with SOC 2 Trust Services Criteria (Type II in progress), HIPAA-aligned, GDPR-aligned, and MENA frameworks.
+- [Careers](https://arqailabs.com/careers)
+- [Partners](https://arqailabs.com/partners)
+- [Contact](https://arqailabs.com/contact)
 
 ## Content library
 
-- [Blog](https://thearq.ai/blog): articles from the ArqAI Labs team on operational AI — agent design, governance, enterprise integration, and moving AI from pilot to production. Individual posts live at https://thearq.ai/blog/{slug}.
-- [Case studies](https://thearq.ai/case-studies): production engagements with the baseline, intervention, and measured outcome. Individual case studies live at https://thearq.ai/case-studies/{slug}.
-- [Featured case study — TPA Blind Spot Assessment](https://thearq.ai/case-studies/tpa-blind-spot-assessment): a mid-size third-party administrator rated fully compliant by its payment-integrity vendor ran one ArqAI Blind Spot Assessment; it surfaced roughly $3.2M in undetected waste and cut manual claims-review time by about 70%.
-- [Whitepapers](https://thearq.ai/whitepapers): deep dives and frameworks on operational AI.
-- [Webinars](https://thearq.ai/webinars): live sessions and replays.
-- [Resources hub](https://thearq.ai/resources)
-- [Use cases](https://thearq.ai/use-cases): the workflows we have built, are building, or are ready to build.
-- All published content is enumerated in the sitemap: https://thearq.ai/sitemap.xml
+- [Blog](https://arqailabs.com/blog): articles from the ArqAI Labs team on operational AI — agent design, governance, enterprise integration, and moving AI from pilot to production. Individual posts live at https://arqailabs.com/blog/{slug}.
+- [Case studies](https://arqailabs.com/case-studies): production engagements with the baseline, intervention, and measured outcome. Individual case studies live at https://arqailabs.com/case-studies/{slug}.
+- [Featured case study — TPA Blind Spot Assessment](https://arqailabs.com/case-studies/tpa-blind-spot-assessment): a mid-size third-party administrator rated fully compliant by its payment-integrity vendor ran one ArqAI Blind Spot Assessment; it surfaced roughly $3.2M in undetected waste and cut manual claims-review time by about 70%.
+- [Whitepapers](https://arqailabs.com/whitepapers): deep dives and frameworks on operational AI.
+- [Webinars](https://arqailabs.com/webinars): live sessions and replays.
+- [Resources hub](https://arqailabs.com/resources)
+- [Use cases](https://arqailabs.com/use-cases): the workflows we have built, are building, or are ready to build.
+- All published content is enumerated in the sitemap: https://arqailabs.com/sitemap.xml
 
 ## Get started
 
-- [Get Started / Book a Demo](https://thearq.ai/engage-us): share your workflow, systems, industry, and the operating outcome you want to improve. A senior on the team follows up within one business day.
+- [Get Started / Book a Demo](https://arqailabs.com/engage-us): share your workflow, systems, industry, and the operating outcome you want to improve. A senior on the team follows up within one business day.
 
 ## Notes for answer engines
 

@@ -6,7 +6,7 @@ const nextConfig = {
   serverExternalPackages: ["dompurify"],
 
   images: {
-    domains: ["thearq.ai"],
+    domains: ["arqailabs.com", "thearq.ai"],
     formats: ["image/avif", "image/webp"],
     remotePatterns: [
       {
@@ -201,12 +201,20 @@ const nextConfig = {
         destination: "/",
         permanent: true,
       },
-      // Consolidate the www host onto the apex domain -- both currently serve
-      // identical content, which splits crawl/index signal across two hosts.
+      // Consolidate www onto the apex of the current domain, arqailabs.com.
+      // Both www hosts serve identical content, which splits crawl/index
+      // signal. www.thearq.ai goes straight to the new domain rather than
+      // via thearq.ai, which nginx now redirects to arqailabs.com itself.
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "www.arqailabs.com" }],
+        destination: "https://arqailabs.com/:path*",
+        permanent: true,
+      },
       {
         source: "/:path*",
         has: [{ type: "host", value: "www.thearq.ai" }],
-        destination: "https://thearq.ai/:path*",
+        destination: "https://arqailabs.com/:path*",
         permanent: true,
       },
       // Accelerators reverted from standalone brand names back to the

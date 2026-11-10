@@ -10,8 +10,8 @@ import {
   type AcceleratorListing,
 } from "@/lib/data/accelerators";
 import { generateBreadcrumbSchema, generateFAQSchema } from "@/lib/seo/structured-data";
+import { SITE_URL } from "@/lib/site";
 
-const SITE_URL = "https://thearq.ai";
 const PAGE_TITLE = "AI Accelerators — Production-Ready, Governed From Day One";
 const PAGE_DESC =
   "Eleven production-ready AI accelerators, governed from day one: four vertical (ArqFWA, ArqLoyalty, ArqLogistics, ArqBanker) and seven horizontal (ArqForecast, ArqLaborForecast, ArqSupport, ArqDataQ, ArqVantage, ArqSecOps, ArqEye). Every agent action carries encrypted, audit-ready proof.";

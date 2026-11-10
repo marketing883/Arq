@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
 import { ArrowRight } from "@/components/home-v5/icons";
 import ClosingCta from "@/components/v6/ClosingCta";
+import { SITE_URL } from "@/lib/site";
 
 type WebinarPageProps = {
   params: {
@@ -68,7 +69,7 @@ export async function generateMetadata({ params }: WebinarPageProps): Promise<Me
   return {
     title: `${webinar.title} — Webinar`,
     description: webinar.description,
-    alternates: { canonical: `https://thearq.ai/webinars/${params.slug}` },
+    alternates: { canonical: `${SITE_URL}/webinars/${params.slug}` },
     openGraph: {
       title: webinar.title,
       description: webinar.description,

@@ -3,6 +3,7 @@ import { createClient } from "@supabase/supabase-js";
 import { allListings } from "@/lib/data/accelerators";
 import { services } from "@/lib/data/services";
 import { coreStaticPaths, industryLinks } from "@/lib/data/site-navigation";
+import { SITE_URL } from "@/lib/site";
 
 // The sitemap pulls CMS content (blog posts, case studies, whitepapers,
 // webinars) from Supabase. Without this, Next.js statically renders the
@@ -19,7 +20,7 @@ function getSupabase() {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = "https://thearq.ai";
+  const baseUrl = SITE_URL;
   const currentDate = new Date().toISOString();
   // Static pages get NO lastModified: stamping the revalidation time on every
   // entry teaches crawlers the field is meaningless. Real dates flow through

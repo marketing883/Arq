@@ -31,7 +31,7 @@ DEPLOY_USER="${ARQ_DEPLOY_USER:-arqadmin}"
 SERVICE="${ACI_SERVICE:-thearq-live.service}"
 # The public name, verified after the loopback port for the build id this
 # deploy produced. Override to deploy a site that answers on another name.
-PUBLIC_URL="${ACI_PUBLIC_URL:-https://thearq.ai/}"
+PUBLIC_URL="${ACI_PUBLIC_URL:-https://arqailabs.com/}"
 
 # git as the account that owns the checkout. These scripts are run with
 # sudo, so a bare `git` here executes as root against a checkout owned by

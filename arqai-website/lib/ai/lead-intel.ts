@@ -1,5 +1,6 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { FAST_MODEL } from "./models";
+import { SITE_URL } from "@/lib/site";
 
 // Lazy initialization
 let anthropicClient: Anthropic | null = null;
@@ -151,28 +152,28 @@ export function getIntentBasedEmailContent(intent: string, name: string): {
       heading: "Your Demo is Being Prepared",
       message: "Thanks for sharing the workflow you want to improve. A member of the team will review the context and follow up to discuss the right production path.",
       ctaText: "View the Platform",
-      ctaUrl: "https://thearq.ai/platform",
+      ctaUrl: `${SITE_URL}/platform`,
     },
     pricing: {
       subject: `ArqAI Pricing Information for ${firstName}`,
       heading: "Custom Pricing Coming Your Way",
       message: "Thank you for your interest in ArqAI pricing. Pricing depends on the workflow, systems, controls, and operating scope, so our team will follow up with the right questions before recommending a path.",
       ctaText: "Explore Industries",
-      ctaUrl: "https://thearq.ai/industries",
+      ctaUrl: `${SITE_URL}/industries`,
     },
     support: {
       subject: `ArqAI Support Request Received`,
       heading: "We're On It",
       message: "Our technical team has received your support request and is reviewing it now. We'll get back to you as quickly as possible with a resolution.",
       ctaText: "View Resources",
-      ctaUrl: "https://thearq.ai/resources",
+      ctaUrl: `${SITE_URL}/resources`,
     },
     partnership: {
       subject: `Partnership Inquiry from ${firstName}`,
       heading: "Let's Explore Partnership",
       message: "Thank you for your interest in partnering with ArqAI. Our partnerships team will review your inquiry and reach out within 48 hours to discuss collaboration opportunities.",
       ctaText: "Learn About Partners",
-      ctaUrl: "https://thearq.ai/partners",
+      ctaUrl: `${SITE_URL}/partners`,
     },
     urgent: {
       subject: `Urgent: ArqAI Response to ${firstName}`,
@@ -186,7 +187,7 @@ export function getIntentBasedEmailContent(intent: string, name: string): {
       heading: "Message Received",
       message: "Thank you for your interest in ArqAI. Our team will review your inquiry and follow up to discuss how we can help you build, govern, and operate the workflow you have in mind.",
       ctaText: "Explore ArqAI",
-      ctaUrl: "https://thearq.ai/platform",
+      ctaUrl: `${SITE_URL}/platform`,
     },
   };
 

@@ -12,7 +12,7 @@
 # Env file (chmod 600, owned by the cron user) should contain:
 #         CRON_SECRET=your-secret-here
 #         # optional override:
-#         ARQ_BASE_URL=https://thearq.ai
+#         ARQ_BASE_URL=https://arqailabs.com
 
 set -euo pipefail
 
@@ -22,7 +22,7 @@ if [ -f "$ENV_FILE" ]; then
   set -a; . "$ENV_FILE"; set +a
 fi
 
-BASE_URL="${ARQ_BASE_URL:-https://thearq.ai}"
+BASE_URL="${ARQ_BASE_URL:-https://arqailabs.com}"
 ENDPOINT="${1:?usage: arq-cron.sh <endpoint-path>}"
 
 if [ -z "${CRON_SECRET:-}" ]; then

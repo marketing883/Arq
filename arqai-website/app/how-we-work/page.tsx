@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
 import ClosingCta from "@/components/v6/ClosingCta";
+import { SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "How We Work",
   description:
     "Every ArqAI Labs engagement runs on the same four steps — strategy, build, deploy, run — end-to-end, with your team in the room.",
-  alternates: { canonical: "https://thearq.ai/how-we-work" },
+  alternates: { canonical: `${SITE_URL}/how-we-work` },
 };
 
 const steps = [

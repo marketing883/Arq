@@ -1,3 +1,4 @@
+import { SITE_URL } from "@/lib/site";
 /**
  * Email Templates Module
  *
@@ -60,14 +61,14 @@ const htmlWrapper = (content: string): string => `
 <body>
   <div class="container">
     <div class="header">
-      <img src="https://thearq.ai/img/logo.png" alt="ArqAI" />
+      <img src="${SITE_URL}/img/logo.png" alt="ArqAI" />
     </div>
     <div class="content">
       ${content}
     </div>
     <div class="footer">
       <p>ArqAI - Enterprise AI Governance Platform</p>
-      <p><a href="https://thearq.ai">thearq.ai</a> | <a href="mailto:hello@thearq.ai">hello@thearq.ai</a></p>
+      <p><a href="${SITE_URL}">arqailabs.com</a> | <a href="mailto:hello@thearq.ai">hello@thearq.ai</a></p>
     </div>
   </div>
 </body>
@@ -89,9 +90,9 @@ const templates: Record<TemplateId, EmailTemplate> = {
         ${data.personalizedMessage ? `<div class="highlight"><p>${data.personalizedMessage}</p></div>` : ""}
         <p>In the meantime, you might find these resources helpful:</p>
         <ul>
-          <li><a href="https://thearq.ai/platform">Explore our platform</a></li>
-          <li><a href="https://thearq.ai/resources">Browse our resources</a></li>
-          <li><a href="https://thearq.ai/demo">Schedule a demo</a></li>
+          <li><a href="${SITE_URL}/platform">Explore our platform</a></li>
+          <li><a href="${SITE_URL}/resources">Browse our resources</a></li>
+          <li><a href="${SITE_URL}/demo">Schedule a demo</a></li>
         </ul>
         <p>We typically respond within 1 business day.</p>
         <p>Best regards,<br>The ArqAI Team</p>
@@ -104,9 +105,9 @@ Thank you for contacting ArqAI. We've received your message and our team will ge
 ${data.personalizedMessage || ""}
 
 In the meantime, you might find these resources helpful:
-- Explore our platform: https://thearq.ai/platform
-- Browse our resources: https://thearq.ai/resources
-- Schedule a demo: https://thearq.ai/demo
+- Explore our platform: ${SITE_URL}/platform
+- Browse our resources: ${SITE_URL}/resources
+- Schedule a demo: ${SITE_URL}/demo
 
 We typically respond within 1 business day.
 
@@ -140,7 +141,7 @@ The ArqAI Team
           <p><strong>Summary:</strong> ${data.aiSummary}</p>
         </div>
         ` : ""}
-        <p><a href="https://thearq.ai/admin/contacts" class="btn">View in Admin</a></p>
+        <p><a href="${SITE_URL}/admin/contacts" class="btn">View in Admin</a></p>
       `),
     text: (data) => `
 New Contact Form Submission
@@ -161,7 +162,7 @@ AI Analysis:
 - Summary: ${data.aiSummary}
 ` : ""}
 
-View in Admin: https://thearq.ai/admin/contacts
+View in Admin: ${SITE_URL}/admin/contacts
     `.trim(),
   },
 
@@ -185,7 +186,7 @@ View in Admin: https://thearq.ai/admin/contacts
         </div>
         <h3>Suggested Action</h3>
         <p>${data.suggestedAction}</p>
-        <p><a href="https://thearq.ai/admin/leads" class="btn">View Lead Details</a></p>
+        <p><a href="${SITE_URL}/admin/leads" class="btn">View Lead Details</a></p>
       `),
     text: (data) => `
 HOT LEAD ALERT
@@ -202,7 +203,7 @@ Lead Details:
 Suggested Action:
 ${data.suggestedAction}
 
-View Lead Details: https://thearq.ai/admin/leads
+View Lead Details: ${SITE_URL}/admin/leads
     `.trim(),
   },
 
@@ -219,7 +220,7 @@ View Lead Details: https://thearq.ai/admin/leads
         </p>
         <p><small>This download link will expire on ${new Date(data.expiresAt as string).toLocaleDateString()}.</small></p>
         <p>Want to learn more about how ArqAI can help your organization?</p>
-        <p><a href="https://thearq.ai/demo">Schedule a personalized demo</a></p>
+        <p><a href="${SITE_URL}/demo">Schedule a personalized demo</a></p>
         <p>Best regards,<br>The ArqAI Team</p>
       `),
     text: (data) => `
@@ -234,7 +235,7 @@ Download here: ${data.downloadUrl}
 This download link will expire on ${new Date(data.expiresAt as string).toLocaleDateString()}.
 
 Want to learn more about how ArqAI can help your organization?
-Schedule a demo: https://thearq.ai/demo
+Schedule a demo: ${SITE_URL}/demo
 
 Best regards,
 The ArqAI Team
@@ -250,7 +251,7 @@ The ArqAI Team
         <p>Thank you for your interest in partnering with ArqAI. We've received your inquiry about <strong>${data.partnershipType}</strong> partnership.</p>
         <p>Our partnerships team will review your application and get back to you within 2-3 business days.</p>
         <p>In the meantime, learn more about our partner program:</p>
-        <p><a href="https://thearq.ai/partners" class="btn">Partner Program Details</a></p>
+        <p><a href="${SITE_URL}/partners" class="btn">Partner Program Details</a></p>
         <p>Best regards,<br>The ArqAI Partnerships Team</p>
       `),
     text: (data) => `
@@ -260,7 +261,7 @@ Thank you for your interest in partnering with ArqAI. We've received your inquir
 
 Our partnerships team will review your application and get back to you within 2-3 business days.
 
-Learn more about our partner program: https://thearq.ai/partners
+Learn more about our partner program: ${SITE_URL}/partners
 
 Best regards,
 The ArqAI Partnerships Team
@@ -284,7 +285,7 @@ The ArqAI Partnerships Team
         <h3>Message</h3>
         <p>${data.message}</p>
         ` : ""}
-        <p><a href="https://thearq.ai/admin/partners" class="btn">View in Admin</a></p>
+        <p><a href="${SITE_URL}/admin/partners" class="btn">View in Admin</a></p>
       `),
     text: (data) => `
 New Partnership Inquiry
@@ -297,7 +298,7 @@ Partner Details:
 
 ${data.message ? `Message:\n${data.message}` : ""}
 
-View in Admin: https://thearq.ai/admin/partners
+View in Admin: ${SITE_URL}/admin/partners
     `.trim(),
   },
 
@@ -316,7 +317,7 @@ View in Admin: https://thearq.ai/admin/partners
           <li>Exclusive invitations to webinars and events</li>
         </ul>
         <p>Start exploring:</p>
-        <p><a href="https://thearq.ai/blog" class="btn">Read Our Blog</a></p>
+        <p><a href="${SITE_URL}/blog" class="btn">Read Our Blog</a></p>
         <p>Best regards,<br>The ArqAI Team</p>
       `),
     text: (data) => `
@@ -330,7 +331,7 @@ Thank you for subscribing to the ArqAI newsletter. You'll receive:
 - Best practices and case studies
 - Exclusive invitations to webinars and events
 
-Start exploring: https://thearq.ai/blog
+Start exploring: ${SITE_URL}/blog
 
 Best regards,
 The ArqAI Team

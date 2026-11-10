@@ -11,6 +11,7 @@ import { CookieConsent } from "@/components/compliance/CookieConsent";
 import { Tracker } from "@/components/analytics/Tracker";
 import { GoogleTagManager as GTMConsentHandler } from "@/components/analytics/GoogleTagManager";
 import { ZoomInfoTag } from "@/components/analytics/ZoomInfoTag";
+import { SITE_URL } from "@/lib/site";
 
 const GTM_ID = "GTM-ND8HXL7Z";
 
@@ -50,7 +51,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://thearq.ai",
+    url: `${SITE_URL}`,
     siteName: "ArqAI Labs",
     title: "ArqAI Labs | Production AI for enterprise operations",
     description:
@@ -79,7 +80,7 @@ export const metadata: Metadata = {
     apple: "/img/favicon/apple-touch-icon.png",
   },
   manifest: "/site.webmanifest",
-  metadataBase: new URL("https://thearq.ai"),
+  metadataBase: new URL(`${SITE_URL}`),
   verification: {
     google: "XOs-V3gSvkOFaXMEK9fgLgQRdO2pzGsySaK10Ymi0a8",
   },

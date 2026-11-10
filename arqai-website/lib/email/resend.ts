@@ -1,4 +1,5 @@
 import { Resend } from "resend";
+import { SITE_URL } from "@/lib/site";
 
 // Lazy-initialized Resend client
 let resendClient: Resend | null = null;
@@ -189,7 +190,7 @@ export async function sendLeadNotification(
               }
 
               <div class="cta">
-                <a href="${process.env.NEXT_PUBLIC_SITE_URL || "https://thearq.ai"}/admin">View in Dashboard</a>
+                <a href="${SITE_URL}/admin">View in Dashboard</a>
               </div>
             </div>
             <div class="footer">
@@ -230,8 +231,8 @@ export async function sendUserConfirmation(
     const heading = data.customHeading || "Message Received";
     const message = data.personalizedMessage || "Thank you for your interest in ArqAI. Our team will review your inquiry and follow up to discuss how we can help you build, govern, and operate the workflow you have in mind.";
     const ctaText = data.ctaText || "Explore ArqAI";
-    const ctaUrl = data.ctaUrl || "https://thearq.ai/platform";
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://thearq.ai";
+    const ctaUrl = data.ctaUrl || `${SITE_URL}/platform`;
+    const siteUrl = SITE_URL;
 
     const html = `
       <!DOCTYPE html>
@@ -295,7 +296,7 @@ export async function sendUserConfirmation(
               <div class="footer">
                 <p><strong>ArqAI</strong> | Intelligence, By Design</p>
                 <p>Enterprise AI Governance Platform</p>
-                <p style="margin-top: 12px;"><a href="${siteUrl}">thearq.ai</a></p>
+                <p style="margin-top: 12px;"><a href="${siteUrl}">arqailabs.com</a></p>
               </div>
             </div>
           </div>
@@ -510,7 +511,7 @@ export async function sendContactFormNotification(
 
                 <div class="cta">
                   <a href="mailto:${data.email}?subject=Re: Your inquiry to ArqAI" class="reply-btn">📧 Reply to ${data.name.split(' ')[0]}</a>
-                  <a href="${process.env.NEXT_PUBLIC_SITE_URL || "https://thearq.ai"}/admin" class="dashboard-btn">📊 View Dashboard</a>
+                  <a href="${SITE_URL}/admin" class="dashboard-btn">📊 View Dashboard</a>
                 </div>
               </div>
               <div class="footer">
@@ -665,7 +666,7 @@ export async function sendPartnerEnquiryNotification(
 
               <div class="cta">
                 <a href="mailto:${data.email}" class="reply-btn">Reply to ${data.name}</a>
-                <a href="${process.env.NEXT_PUBLIC_SITE_URL || "https://thearq.ai"}/admin/partners">View in Dashboard</a>
+                <a href="${SITE_URL}/admin/partners">View in Dashboard</a>
               </div>
             </div>
             <div class="footer">
@@ -876,7 +877,7 @@ export async function sendSmartAlertNotification(
 
                 <div class="cta">
                   ${data.leadEmail ? `<a href="mailto:${data.leadEmail}?subject=Following up on your ArqAI inquiry" class="primary-btn">Reply to Lead</a>` : ""}
-                  <a href="${process.env.NEXT_PUBLIC_SITE_URL || "https://thearq.ai"}/admin/leads-v2" class="secondary-btn">View in Dashboard</a>
+                  <a href="${SITE_URL}/admin/leads-v2" class="secondary-btn">View in Dashboard</a>
                 </div>
               </div>
               <div class="footer">
@@ -932,7 +933,7 @@ export async function sendAgentDossierNotification(
   if (!resend) return false;
 
   try {
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://thearq.ai";
+    const siteUrl = SITE_URL;
     const commandCenterUrl = `${siteUrl}/admin/leads-v2/${data.profileId}`;
     const who = data.leadName || data.leadEmail || "New lead";
     const subject = `🧠 Intelligence ready: ${who}${data.company ? ` @ ${data.company}` : ""}`;

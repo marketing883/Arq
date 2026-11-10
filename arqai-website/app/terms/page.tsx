@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
+import { SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Terms of Service",
   description: "ArqAI Terms of Service - Terms and conditions for using our platform.",
-  alternates: { canonical: "https://thearq.ai/terms" },
+  alternates: { canonical: `${SITE_URL}/terms` },
 };
 
 export default function TermsPage() {
@@ -30,7 +31,7 @@ export default function TermsPage() {
           <div className="v5-prose">
             <h2>1. Agreement to Terms</h2>
             <p>
-              By accessing or using ArqAI&apos;s website (thearq.ai) and services,
+              By accessing or using ArqAI&apos;s website (arqailabs.com) and services,
               you agree to be bound by these Terms of Service. If you do not agree
               to these terms, please do not use our services.
             </p>
@@ -162,7 +163,7 @@ export default function TermsPage() {
               <br />
               Email: <a href="mailto:legal@thearq.ai">legal@thearq.ai</a>
               <br />
-              Website: <a href="https://thearq.ai">thearq.ai</a>
+              Website: <a href={SITE_URL}>arqailabs.com</a>
             </p>
           </div>
         </div>

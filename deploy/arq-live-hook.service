@@ -1,5 +1,5 @@
 [Unit]
-Description=thearq.ai deploy hook
+Description=thearq.ai deploy hook (serves arqailabs.com)
 After=network.target
 
 [Service]
@@ -17,7 +17,7 @@ Environment=ACI_HEALTH_PORT=3003
 # deploy produced. 3003 answering is not evidence that thearq.ai is served
 # by it - that gap is exactly how this domain served the preview app for
 # months while deploys here reported success.
-Environment=ACI_PUBLIC_URL=https://thearq.ai/
+Environment=ACI_PUBLIC_URL=https://arqailabs.com/
 # deploy/deploy.sh in this repo, not the ACI repo's deploy/aci-deploy.sh
 # that the launcher looks for by default.
 Environment=ACI_DEPLOY_SCRIPT_PATH=deploy/deploy.sh

@@ -17,6 +17,7 @@ import type {
   IntegrationStatusInfo,
 } from "@/types/integrations";
 import type { LeadAlert, LeadProfile } from "@/types/lead-intelligence-v2";
+import { SITE_URL } from "@/lib/site";
 
 export interface NotificationResult {
   channel: string;
@@ -185,7 +186,7 @@ export async function sendLeadAlert(
     priority_tier: profile.priority_tier,
   };
 
-  const adminBaseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://thearq.ai";
+  const adminBaseUrl = SITE_URL;
 
   const payload: NotificationPayload = {
     channel_id: "", // Will be filled by matching channels
@@ -260,7 +261,7 @@ export async function testNotifications(): Promise<NotificationSendResult> {
       journey_stage: "engaged",
       priority_tier: "P2",
     },
-    action_url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://thearq.ai",
+    action_url: SITE_URL,
     action_text: "View Dashboard",
   };
 

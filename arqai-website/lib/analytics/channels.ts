@@ -1,3 +1,4 @@
+import { SITE_HOST } from "@/lib/site";
 /**
  * Marketing channel classification.
  *
@@ -90,7 +91,7 @@ export function classifySource(input: {
   siteHost?: string;
 }): ClassifiedSource {
   const { referrer, utm_source, utm_medium } = input;
-  const siteHost = (input.siteHost || "thearq.ai").toLowerCase();
+  const siteHost = (input.siteHost || SITE_HOST).toLowerCase();
 
   // Explicit campaign tagging always wins.
   if (utm_source) {
@@ -104,7 +105,9 @@ export function classifySource(input: {
   if (!host) return { channel: "Direct", source: "direct" };
 
   // Self-referrals are internal navigation, not acquisition.
-  if (host === siteHost || host.endsWith(`.${siteHost}`) || host === "localhost") {
+  // thearq.ai is the pre-November-2026 domain, which now redirects here.
+  const selfHosts = [siteHost, "thearq.ai"];
+  if (selfHosts.some((h) => host === h || host.endsWith(`.${h}`)) || host === "localhost") {
     return { channel: "Direct", source: "direct" };
   }
 

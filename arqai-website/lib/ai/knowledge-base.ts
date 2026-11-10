@@ -127,7 +127,7 @@ The nav's primary button is "Book a Demo" → /engage-us (/demo redirects there 
 - Every agent we deploy generates encrypted, audit-ready proof of its actions.
 
 ## Reach
-Domain: thearq.ai. HQ: 220 Davidson Ave, Suite 129, Somerset, NJ 08873, United States. Social: LinkedIn (company/thearq-ai), X (@The_ArqAI), Instagram (thearq.ai). Recruiting/applications are handled on /careers.
+Domain: arqailabs.com (formerly thearq.ai, which redirects there). HQ: 220 Davidson Ave, Suite 129, Somerset, NJ 08873, United States. Social: LinkedIn (company/thearq-ai), X (@The_ArqAI), Instagram (thearq.ai). Recruiting/applications are handled on /careers.
 
 ## IMPORTANT CONSTRAINTS (Agent must follow)
 1. NEVER promise a deployment timeline. Every engagement is scoped per operation; commit timeline is set in writing once Strategy is complete. (Accelerator "weeks not quarters" and entry-point durations are design targets from the site, hedge them, never contract them.)
