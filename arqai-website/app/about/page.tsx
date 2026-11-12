@@ -47,7 +47,7 @@ const glance = [
   { label: "Headquarters", value: "220 Davidson Ave, Suite 129, Somerset, NJ 08873, United States" },
   { label: "Delivery partner", value: "ACI Infotech — enterprise delivery and distribution partner" },
   { label: "Industries", value: "Healthcare payers, insurance carriers, banking, retail, manufacturing" },
-  { label: "How we deliver", value: "Six service lines and eight Arq-prefixed accelerators on one operating fabric" },
+  { label: "How we deliver", value: "Six service lines and eleven Arq-prefixed accelerators on one operating fabric" },
 ];
 
 export const metadata: Metadata = {

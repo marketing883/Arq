@@ -173,6 +173,14 @@ const nextConfig = {
         destination: "/industries/banking",
         permanent: true,
       },
+      // Any other legacy /solutions/* page (e.g. the old product pages such
+      // as /solutions/arqrelease, 404 until now) goes to the accelerator
+      // catalog. Must stay after the specific rules above: first match wins.
+      {
+        source: "/solutions/:path*",
+        destination: "/accelerators",
+        statusCode: 301,
+      },
       // v3 IA: how-it-works renamed to how-we-work; the engineering deep-dive
       // remains accessible at /how-it-works for product-page deep-links.
       // No redirect on /how-it-works -- both are valid routes.

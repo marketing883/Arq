@@ -1,6 +1,6 @@
 # ArqAI Labs
 
-> ArqAI Labs is an AI engineering studio. We design, build, deploy, and run production AI for enterprise operations that don't fit off-the-shelf — bespoke to each customer's workflow, integrated with their existing systems, and governed with evidence on every action. Backed by ACI Infotech. Domain: https://arqailabs.com
+> ArqAI Labs is an AI engineering studio. We design, build, deploy, and run production AI for enterprise operations that don't fit off-the-shelf — bespoke to each customer's workflow, integrated with their existing systems, and governed with evidence on every action. Independent, in strategic partnership with ACI Infotech. Domain: https://arqailabs.com
 
 ## What we do
 
@@ -45,7 +45,7 @@ Eleven productized, named workflow patterns adapted to each customer through ser
 
 ## Company
 
-- [About](https://arqailabs.com/about): AI engineering studio backed by ACI Infotech.
+- [About](https://arqailabs.com/about): Independent AI engineering studio in strategic partnership with ACI Infotech.
 - [How We Work](https://arqailabs.com/how-we-work): the strategy, build, deploy, run engagement model.
 - [Trust](https://arqailabs.com/trust): architectural controls first — aligned with SOC 2 Trust Services Criteria (Type II in progress), HIPAA-aligned, GDPR-aligned, and MENA frameworks.
 - [Careers](https://arqailabs.com/careers)
