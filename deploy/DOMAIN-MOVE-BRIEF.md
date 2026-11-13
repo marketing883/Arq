@@ -2,7 +2,7 @@
 
 Summary of the CEO brief "ArqAI Labs: Move to arqailabs.com" (Jag Kanumuri,
 November 8, 2026), kept here so the decision and its checklist travel with
-the code. Status notes were added on November 12, 2026, against the live
+the code. Status notes were added on November 12-13, 2026, against the live
 sites; update them as items close.
 
 ## Decision
@@ -37,12 +37,12 @@ Route every inbound address into the CRM with its source tagged. **Set up SPF, D
 | 4 | One-to-one redirect map (not everything to the home page) | Done: nginx 301 keeps each path (`thearq.ai/x` → `arqailabs.com/x`) |
 | 5 | Retire legacy pages (about-us.html, /demo, /solutions/*) | Done in code: about-us.html → /about, /demo → /engage-us, /solutions/* → /industries or /accelerators |
 | 6 | Same URL paths on arqailabs.com | Done: same app, same paths |
-| 7 | Verify arqailabs.com in Search Console and Bing | Open |
-| 8 | Canonicals, schema, sitemap, internal links on new domain | Done in code (`lib/site.ts`, NEXT_PUBLIC_SITE_URL); live after the next deploy |
+| 7 | Verify arqailabs.com in Search Console and Bing | Google: done Nov 13 (Domain property, DNS TXT at GoDaddy; keep the record). Bing: open |
+| 8 | Canonicals, schema, sitemap, internal links on new domain | Done, live Nov 12 (`lib/site.ts`, NEXT_PUBLIC_SITE_URL) |
 | 9 | 301 redirects from every thearq.ai URL | Live since early November (nginx); `/__deploy` and `/.well-known/` exempt |
-| 10 | Change of Address in Search Console | Open (after 7) |
-| 11 | Submit new sitemap to Search Console and Bing | Open |
-| 12 | Spot-check 20+ old URLs | Open |
+| 10 | Change of Address in Search Console | Done Nov 13 (in progress at Google; do not cancel) |
+| 11 | Submit new sitemap to Search Console and Bing | Google: done Nov 13 (81 pages, Success). Bing: open |
+| 12 | Spot-check 20+ old URLs | Done Nov 13: all 81 sitemap URLs 301 one-to-one; http://arqailabs.com now 301s to https (nginx `20-force-https-arqailabs.conf`) |
 | 13 | Analytics and tag manager on the new domain | Open |
 | 14 | Weekly Search Console check, weeks 1–8 | Open |
 | 15 | Ask top linking sites to update links | Open |
