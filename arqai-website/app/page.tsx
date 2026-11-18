@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   // Absolute: the brand is already in the title, so skip the layout template.
   title: { absolute: PAGE_TITLE },
   description: PAGE_DESC,
-  alternates: { canonical: `${SITE_URL}/` },
+  alternates: { canonical: SITE_URL },
   keywords: [
     "forward-deployed AI engineering",
     "forward deployed engineers",
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     type: "website",
-    url: `${SITE_URL}/`,
+    url: SITE_URL,
     title: PAGE_TITLE,
     description: PAGE_DESC,
     siteName: "ArqAI Labs",
