@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
 import { SITE_URL } from "@/lib/site";
+import { pageMetadata } from "@/lib/seo/page-metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: "/privacy",
   title: "Privacy Policy",
   description: "ArqAI Privacy Policy - How we collect, use, and protect your data.",
-  alternates: { canonical: `${SITE_URL}/privacy` },
-};
+});
 
 export default function PrivacyPage() {
   return (

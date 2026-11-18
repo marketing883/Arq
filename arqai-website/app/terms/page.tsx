@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
 import { SITE_URL } from "@/lib/site";
+import { pageMetadata } from "@/lib/seo/page-metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: "/terms",
   title: "Terms of Service",
   description: "ArqAI Terms of Service - Terms and conditions for using our platform.",
-  alternates: { canonical: `${SITE_URL}/terms` },
-};
+});
 
 export default function TermsPage() {
   return (

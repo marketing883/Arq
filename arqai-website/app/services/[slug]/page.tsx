@@ -37,6 +37,9 @@ export function generateMetadata({ params }: ServicePageProps): Metadata {
     description: service.summary,
     alternates: { canonical: `${SITE_URL}/services/${service.slug}` },
     openGraph: {
+      type: "website",
+      siteName: "ArqAI Labs",
+      url: `${SITE_URL}/services/${service.slug}`,
       title: `${service.title} — ArqAI Labs`,
       description: service.summary,
       images: [{ url: service.heroImage }],

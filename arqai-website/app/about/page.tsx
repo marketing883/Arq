@@ -7,6 +7,7 @@ import {
   generateBreadcrumbSchema,
 } from "@/lib/seo/structured-data";
 import { SITE_URL } from "@/lib/site";
+import { pageMetadata } from "@/lib/seo/page-metadata";
 
 // /about is the entity home for ArqAI Labs: it carries the Organization
 // schema plus an AboutPage wrapper so search and answer engines have one
@@ -50,12 +51,12 @@ const glance = [
   { label: "How we deliver", value: "Six service lines and eleven Arq-prefixed accelerators on one operating fabric" },
 ];
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: "/about",
   title: "About",
   description:
     "ArqAI Labs is an independent AI engineering studio. Production AI, bespoke to your operation. In partnership with ACI Infotech.",
-  alternates: { canonical: `${SITE_URL}/about` },
-};
+});
 
 const beliefs = [
   {

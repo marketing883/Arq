@@ -4,14 +4,14 @@ import { Metadata } from "next";
 import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
 import { ArrowRight } from "@/components/home-v5/icons";
 import ClosingCta from "@/components/v6/ClosingCta";
-import { SITE_URL } from "@/lib/site";
+import { pageMetadata } from "@/lib/seo/page-metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: "/webinars",
   title: "Webinars",
   description:
     "Live and on-demand sessions for teams moving from AI pilots to governed enterprise workflows.",
-  alternates: { canonical: `${SITE_URL}/webinars` },
-};
+});
 
 function getSupabase() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;

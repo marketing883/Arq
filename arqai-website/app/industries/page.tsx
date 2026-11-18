@@ -31,14 +31,14 @@ const faqs = [
   },
 ];
 import { ArrowRight, ArrowUpRight } from "@/components/home-v5/icons";
-import { SITE_URL } from "@/lib/site";
+import { pageMetadata } from "@/lib/seo/page-metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: "/industries",
   title: "Industries: AI for Healthcare Payers, Banking, Insurance, Retail & Manufacturing",
   description:
     "AI workflow systems for healthcare payers, insurance carriers, banking, retail, and manufacturing teams operating in high-stakes, data-rich environments.",
-  alternates: { canonical: `${SITE_URL}/industries` },
-};
+});
 
 const industries = [
   {

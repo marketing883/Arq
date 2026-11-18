@@ -3,14 +3,14 @@ import Link from "next/link";
 import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
 import ClosingCta from "@/components/v6/ClosingCta";
 import { ArrowRight } from "@/components/home-v5/icons";
-import { SITE_URL } from "@/lib/site";
+import { pageMetadata } from "@/lib/seo/page-metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: "/how-it-works",
   title: "How It Works: Inside the Agent Runtime",
   description:
     "Inside the governance plane of the ArqAI Operating Fabric, every agent runs on the same three runtime guarantees: scoped agent identity, runtime policy enforcement, and observable retrieval.",
-  alternates: { canonical: `${SITE_URL}/how-it-works` },
-};
+});
 
 const layers = [
   {

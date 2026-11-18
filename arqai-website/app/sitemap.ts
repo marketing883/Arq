@@ -36,7 +36,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Core pages with high priority
   const corePages: MetadataRoute.Sitemap = coreStaticPaths.map((path) => ({
-    url: path === "/" ? baseUrl : `${baseUrl}${path}`,
+    url: `${baseUrl}${path}`,
     changeFrequency: path === "/blog" ? "daily" : "weekly",
     priority: corePriority(path),
   }));

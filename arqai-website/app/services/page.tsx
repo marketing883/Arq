@@ -5,14 +5,14 @@ import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
 import ClosingCta from "@/components/v6/ClosingCta";
 import { ArrowRight } from "@/components/home-v5/icons";
 import { services } from "@/lib/data/services";
-import { SITE_URL } from "@/lib/site";
+import { pageMetadata } from "@/lib/seo/page-metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: "/services",
   title: "AI Services: Strategy, Buildout, Governance & Managed Operations",
   description:
     "Service lines for production AI workflows: strategy, agentic buildout, integration, governance, vertical acceleration, and managed AI operations.",
-  alternates: { canonical: `${SITE_URL}/services` },
-};
+});
 
 const paths = [
   {

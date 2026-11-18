@@ -3,14 +3,14 @@ import { Metadata } from "next";
 import V5SiteLayout from "@/components/home-v5/V5SiteLayout";
 import ClosingCta from "@/components/v6/ClosingCta";
 import { ArrowRight } from "@/components/home-v5/icons";
-import { SITE_URL } from "@/lib/site";
+import { pageMetadata } from "@/lib/seo/page-metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: "/resources",
   title: "Resources",
   description:
     "ArqAI Labs resources for enterprise AI leaders: blogs, case studies, whitepapers, webinars, and trust material for production AI workflows.",
-  alternates: { canonical: `${SITE_URL}/resources` },
-};
+});
 
 const resources = [
   {
