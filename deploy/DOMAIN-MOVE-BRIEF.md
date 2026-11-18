@@ -1,5 +1,14 @@
 # ArqAI Labs: move to arqailabs.com
 
+> **REVERSED, November 18, 2026: thearq.ai is the primary domain again.**
+> nginx now 301-redirects arqailabs.com to thearq.ai, and the site code
+> (`lib/site.ts`, llms.txt, www rules) points canonicals, the sitemap and
+> structured data back at thearq.ai. Follow-ups: cancel the Search Console
+> Change of Address (thearq.ai to arqailabs.com, started Nov 13), set the GA4
+> web stream URL back to https://thearq.ai, and set NEXT_PUBLIC_SITE_URL /
+> NEXT_PUBLIC_APP_URL in the server's `.env.local` to https://thearq.ai.
+> The rest of this file is the original brief, kept for the record.
+
 Summary of the CEO brief "ArqAI Labs: Move to arqailabs.com" (Jag Kanumuri,
 November 8, 2026), kept here so the decision and its checklist travel with
 the code. Status notes were added on November 12-13, 2026, against the live

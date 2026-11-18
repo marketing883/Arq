@@ -209,20 +209,19 @@ const nextConfig = {
         destination: "/",
         permanent: true,
       },
-      // Consolidate www onto the apex of the current domain, arqailabs.com.
-      // Both www hosts serve identical content, which splits crawl/index
-      // signal. www.thearq.ai goes straight to the new domain rather than
-      // via thearq.ai, which nginx now redirects to arqailabs.com itself.
+      // Consolidate www onto the apex of the primary domain, thearq.ai.
+      // www.arqailabs.com goes straight there rather than via arqailabs.com,
+      // which nginx redirects to thearq.ai itself.
       {
         source: "/:path*",
-        has: [{ type: "host", value: "www.arqailabs.com" }],
-        destination: "https://arqailabs.com/:path*",
+        has: [{ type: "host", value: "www.thearq.ai" }],
+        destination: "https://thearq.ai/:path*",
         permanent: true,
       },
       {
         source: "/:path*",
-        has: [{ type: "host", value: "www.thearq.ai" }],
-        destination: "https://arqailabs.com/:path*",
+        has: [{ type: "host", value: "www.arqailabs.com" }],
+        destination: "https://thearq.ai/:path*",
         permanent: true,
       },
       // Accelerators reverted from standalone brand names back to the

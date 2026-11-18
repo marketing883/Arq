@@ -105,8 +105,8 @@ export function classifySource(input: {
   if (!host) return { channel: "Direct", source: "direct" };
 
   // Self-referrals are internal navigation, not acquisition.
-  // thearq.ai is the pre-November-2026 domain, which now redirects here.
-  const selfHosts = [siteHost, "thearq.ai"];
+  // arqailabs.com briefly served as the domain in Nov 2026 and now redirects here.
+  const selfHosts = [siteHost, "thearq.ai", "arqailabs.com"];
   if (selfHosts.some((h) => host === h || host.endsWith(`.${h}`)) || host === "localhost") {
     return { channel: "Direct", source: "direct" };
   }

@@ -33,7 +33,7 @@ export default function PrivacyPage() {
             <p>
               ArqAI (&ldquo;we,&rdquo; &ldquo;our,&rdquo; or &ldquo;us&rdquo;) is committed to protecting your
               privacy. This Privacy Policy explains how we collect, use, disclose,
-              and safeguard your information when you visit our website arqailabs.com
+              and safeguard your information when you visit our website thearq.ai
               and use our services.
             </p>
 
@@ -156,7 +156,7 @@ export default function PrivacyPage() {
               <br />
               Email: <a href="mailto:privacy@thearq.ai">privacy@thearq.ai</a>
               <br />
-              Website: <a href={SITE_URL}>arqailabs.com</a>
+              Website: <a href={SITE_URL}>thearq.ai</a>
             </p>
           </div>
         </div>

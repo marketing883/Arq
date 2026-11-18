@@ -296,7 +296,7 @@ export async function sendUserConfirmation(
               <div class="footer">
                 <p><strong>ArqAI</strong> | Intelligence, By Design</p>
                 <p>Enterprise AI Governance Platform</p>
-                <p style="margin-top: 12px;"><a href="${siteUrl}">arqailabs.com</a></p>
+                <p style="margin-top: 12px;"><a href="${siteUrl}">thearq.ai</a></p>
               </div>
             </div>
           </div>

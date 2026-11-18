@@ -68,7 +68,7 @@ const htmlWrapper = (content: string): string => `
     </div>
     <div class="footer">
       <p>ArqAI - Enterprise AI Governance Platform</p>
-      <p><a href="${SITE_URL}">arqailabs.com</a> | <a href="mailto:hello@thearq.ai">hello@thearq.ai</a></p>
+      <p><a href="${SITE_URL}">thearq.ai</a> | <a href="mailto:hello@thearq.ai">hello@thearq.ai</a></p>
     </div>
   </div>
 </body>

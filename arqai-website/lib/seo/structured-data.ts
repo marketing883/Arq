@@ -328,7 +328,7 @@ export const defaultFAQs: FAQData[] = [
   {
     question: "How do I get started with ArqAI?",
     answer:
-      "Start at arqailabs.com/engage-us and share the workflow, systems, industry, and operating outcome you want to improve.",
+      "Start at thearq.ai/engage-us and share the workflow, systems, industry, and operating outcome you want to improve.",
   },
   {
     question: "What does ArqAI build?",
